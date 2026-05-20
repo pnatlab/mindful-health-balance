@@ -1,4 +1,4 @@
-# Mindful Health Balance by MSxAI v1.1
+# Mindful Health Balance by MSxAI v1.3
 
 Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ static สำหรับ self-care reflection ของ pnat เพื่อช่วยดู pattern และ balance recovery ในชีวิตประจำวัน โดยเน้น 4 แกนหลัก:
 
@@ -8,6 +8,18 @@ Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ stati
 - Mind State / ความเครียดและการกดดันตัวเอง
 
 แนวคิดหลักของแอปคือ “ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง” แอปนี้ตั้งใจช่วยให้เห็นภาพรวมของวันแบบอ่อนโยน ไม่ดุ ไม่ทำให้กลัว และไม่ทำให้รู้สึกผิดกับสุขภาพ
+
+v1.3 รองรับ UI 3 ภาษา:
+
+- TH / ภาษาไทย
+- EN / English
+- 中文 / Chinese (Simplified)
+
+ภาษาที่เลือกจะถูกบันทึกไว้ใน browser/localStorage key:
+
+```text
+mindfulHealthLanguage
+```
 
 ## วิธีเปิดใช้งาน
 
@@ -28,6 +40,16 @@ Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ stati
 - Clear Daily Log เพื่อล้างตารางย้อนหลังใน browser นี้
 - Export Master Excel เป็นไฟล์รวมข้อมูลทั้งหมด
 - Import Master Excel เพื่อนำข้อมูลจากไฟล์ `.xlsx` กลับเข้าตาราง
+- เปลี่ยนภาษา UI ได้ระหว่าง TH / EN / 中文 โดยไม่ลบ Daily Log เดิม
+- Mind Note Layer สำหรับวางบันทึกใจหนึ่งบรรทัดคู่กับข้อมูลสุขภาพของวัน
+
+## Mind Note Layer
+
+Mind Note Layer เป็นพื้นที่บันทึกใจแบบเบา ๆ ที่ได้แรงบันดาลใจจากแนวคิด MindHome by MSxAI แต่แอปนี้ยังเป็น self-care reflection dashboard สำหรับดู pattern และ balance recovery เป็นหลัก
+
+ใช้ Mind Note เพื่อจดสั้น ๆ ว่าวันนี้ใจถืออะไรอยู่ เลือกความรู้สึก และเลือก support need ที่ต้องการตอนนี้ ข้อมูลนี้ช่วยเชื่อม hydration, recovery, load, sleep และ mind state เข้าด้วยกัน
+
+Mind Note ไม่ใช่ therapy tool, diagnosis tool, crisis support หรือ medical advice
 
 ## ข้อมูลอยู่ที่ไหน
 

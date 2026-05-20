@@ -116,6 +116,35 @@ h2 {
   font-weight: 700;
 }
 
+.hero-side {
+  display: grid;
+  gap: 12px;
+  justify-items: end;
+}
+
+.language-toggle {
+  display: inline-flex;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.language-toggle button {
+  min-height: 34px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--muted);
+  background: transparent;
+  font-weight: 800;
+}
+
+.language-toggle button.is-active {
+  color: var(--white);
+  background: linear-gradient(135deg, var(--sea-deep), #4fb6ac);
+}
+
 .notice-card,
 .glass-card,
 .control-panel,
@@ -199,6 +228,10 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.segmented.wrap button {
+  flex: 1 1 140px;
 }
 
 .segmented button,
@@ -313,6 +346,26 @@ h2 {
   grid-column: span 2;
 }
 
+.mind-note-card {
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(216, 241, 236, 0.44));
+}
+
+.mind-note-subtitle {
+  margin-bottom: 14px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.mind-note-field {
+  display: grid;
+  gap: 10px;
+}
+
+.mind-note-field textarea {
+  min-height: 92px;
+}
+
 textarea {
   width: 100%;
   margin-top: 14px;
@@ -374,7 +427,7 @@ button:focus-visible {
 
 table {
   width: 100%;
-  min-width: 1280px;
+  min-width: 1560px;
   border-collapse: collapse;
 }
 
@@ -443,7 +496,8 @@ td:nth-child(10) {
     grid-template-columns: 1fr;
   }
 
-  .reflection-card {
+  .reflection-card,
+  .mind-note-card {
     grid-column: auto;
   }
 
@@ -453,6 +507,10 @@ td:nth-child(10) {
 
   .date-pill {
     width: fit-content;
+  }
+
+  .hero-side {
+    justify-items: start;
   }
 }
 
