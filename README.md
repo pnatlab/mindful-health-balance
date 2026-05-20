@@ -66,6 +66,10 @@ mindfulHealthTheme
 
 v1.5 เพิ่ม Drink Profile แบบ structured เพื่อให้เห็น pattern ของ sugar, caffeine, milk drink และ hydration support ชัดขึ้น โดยยังตั้งใจให้กรอกเท่าที่จำเป็น ไม่ใช่เพิ่มภาระให้ผู้ใช้
 
+Hydration card ใช้บันทึกน้ำเปล่าและปริมาณน้ำเป็น `ml` ส่วน Drink Profile ใช้บันทึกเครื่องดื่มอื่นที่ไม่ใช่น้ำเปล่า เช่น กาแฟ ชา โกโก้ น้ำหวาน หรือน้ำผลไม้ เพื่อไม่ให้ผู้ใช้ต้องกรอกน้ำเปล่าซ้ำสองที่
+
+เพื่อรักษา backward compatibility แอปยังรู้จักค่า `water` ใน log/import เดิมได้ แต่ UI ใหม่จะไม่แสดง `water` เป็นตัวเลือก Drink Type ใหม่ และ `Hydration_Support_Count` จะนับเฉพาะเครื่องดื่มที่ช่วย hydration แบบอ่อน ๆ เช่น lemon water หรือ coconut water เท่านั้น
+
 ข้อมูล Daily Log และ Master Excel เพิ่ม columns:
 
 - `Drink_Profile_JSON`

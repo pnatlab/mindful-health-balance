@@ -62,6 +62,7 @@ const translations = {
     resetButton: "Reset",
     drinks: "Drinks",
     drinksHeading: "Drink Profile วันนี้",
+    drinksHelper: "บันทึกเครื่องดื่มอื่นนอกจากน้ำเปล่า เช่น กาแฟ ชา โกโก้ น้ำหวาน หรือน้ำผลไม้",
     drinkTypeLabel: "Drink Type",
     sweetnessLabel: "Sweetness",
     caffeineLabel: "Caffeine",
@@ -73,8 +74,8 @@ const translations = {
     sugarScoreLabel: "Sugar {score}",
     caffeineScoreLabel: "Caffeine {score}",
     milkCountLabel: "Milk {count}",
-    hydrationSupportLabel: "Hydration {count}",
-    emptyDrinkList: "ยังไม่มี drink profile วันนี้ เพิ่มเท่าที่จำเป็นก็พอ",
+    hydrationSupportLabel: "Support {count}",
+    emptyDrinkList: "ยังไม่มีเครื่องดื่มอื่นนอกจากน้ำเปล่า วันนี้ถือว่าเบาดีแล้ว",
     energyCauseLabel: "Energy Cause / เหตุที่น่ามีผลต่อพลังงาน",
     loadRecovery: "Load & Recovery",
     loadHeading: "วันนี้ใช้พลังไปกับอะไร",
@@ -157,7 +158,8 @@ const translations = {
       blackCoffee: "กาแฟได้ แต่อย่าให้แทนน้ำ",
       sugarHigh: "วันนี้น้ำตาลจากเครื่องดื่มเริ่มเยอะ ลดแก้วถัดไปก็พอ",
       caffeineHigh: "คาเฟอีนวันนี้เริ่มสูง อย่าให้กาแฟแทนน้ำและการพัก",
-      lightAndHydrated: "เครื่องดื่มวันนี้เบาขึ้นแล้ว รักษาความสม่ำเสมอก็พอ"
+      lightAndHydrated: "เครื่องดื่มวันนี้เบาขึ้นแล้ว รักษาความสม่ำเสมอก็พอ",
+      noExtraDrinks: "ยังไม่มีเครื่องดื่มอื่นนอกจากน้ำเปล่า วันนี้ถือว่าเบาดีแล้ว"
     },
     drinkReflection: {
       sugar: "เครื่องดื่มหวานวันนี้เริ่มสะสม แต่ไม่ต้องแก้ด้วยการหักดิบ แค่ลดแก้วถัดไป",
@@ -301,6 +303,7 @@ const translations = {
     resetButton: "Reset",
     drinks: "Drinks",
     drinksHeading: "Drink Profile today",
+    drinksHelper: "Log drinks other than plain water, such as coffee, tea, cocoa, sweet drinks, or juice.",
     drinkTypeLabel: "Drink Type",
     sweetnessLabel: "Sweetness",
     caffeineLabel: "Caffeine",
@@ -312,8 +315,8 @@ const translations = {
     sugarScoreLabel: "Sugar {score}",
     caffeineScoreLabel: "Caffeine {score}",
     milkCountLabel: "Milk {count}",
-    hydrationSupportLabel: "Hydration {count}",
-    emptyDrinkList: "No drink profile yet. Add only what is useful.",
+    hydrationSupportLabel: "Support {count}",
+    emptyDrinkList: "No extra drinks beyond plain water yet. Today is staying light.",
     energyCauseLabel: "Energy Cause",
     loadRecovery: "Load & Recovery",
     loadHeading: "What used your energy today?",
@@ -396,7 +399,8 @@ const translations = {
       blackCoffee: "Coffee is okay, but do not let it replace water.",
       sugarHigh: "Sugary drinks are adding up today. Reducing the next one is enough.",
       caffeineHigh: "Caffeine is getting high today. Let it not replace water or rest.",
-      lightAndHydrated: "Today's drinks are lighter. Consistency is enough."
+      lightAndHydrated: "Today's drinks are lighter. Consistency is enough.",
+      noExtraDrinks: "No extra drinks beyond plain water yet. Today is staying light."
     },
     drinkReflection: {
       sugar: "Sugary drinks are adding up today, but no need to go extreme. Reducing the next one is enough.",
@@ -539,7 +543,8 @@ const translations = {
     halfBottle: "+半瓶",
     resetButton: "重置",
     drinks: "饮品",
-    drinksHeading: "今天的饮品记录",
+    drinksHeading: "今日饮品记录",
+    drinksHelper: "记录白水以外的饮品，例如咖啡、茶、可可、甜饮或果汁。",
     drinkTypeLabel: "饮品类型",
     sweetnessLabel: "甜度",
     caffeineLabel: "咖啡因",
@@ -551,8 +556,8 @@ const translations = {
     sugarScoreLabel: "糖分 {score}",
     caffeineScoreLabel: "咖啡因 {score}",
     milkCountLabel: "奶类 {count}",
-    hydrationSupportLabel: "补水 {count}",
-    emptyDrinkList: "今天还没有饮品记录。只记录有帮助的就好。",
+    hydrationSupportLabel: "支持 {count}",
+    emptyDrinkList: "目前还没有白水以外的饮品，今天的负担很轻。",
     energyCauseLabel: "Energy Cause / 可能影响能量的原因",
     loadRecovery: "Load & Recovery",
     loadHeading: "今天把能量用在哪里？",
@@ -635,7 +640,8 @@ const translations = {
       blackCoffee: "咖啡可以，但不要让它取代水。",
       sugarHigh: "今天饮料中的糖分开始累积，下一杯少一点就够了。",
       caffeineHigh: "今天咖啡因偏高，别让它取代水和休息。",
-      lightAndHydrated: "今天的饮料负担较轻，保持稳定就好。"
+      lightAndHydrated: "今天的饮料负担较轻，保持稳定就好。",
+      noExtraDrinks: "目前还没有白水以外的饮品，今天的负担很轻。"
     },
     drinkReflection: {
       sugar: "今天甜饮开始累积，但不需要极端调整，下一杯少一点就够了。",
@@ -764,7 +770,7 @@ const drinkOptions = [
 ];
 
 const drinkTypeOptions = drinkOptions.filter((drink, index, options) =>
-  options.findIndex((item) => item.type === drink.type) === index
+  drink.type !== "water" && options.findIndex((item) => item.type === drink.type) === index
 );
 
 const sweetnessScores = { none: 0, low: 1, normal: 2, high: 3 };
@@ -1266,7 +1272,7 @@ function legacyDrinksToProfiles(drinks = []) {
 }
 
 function applyDrinkDefaults() {
-  const type = document.querySelector("#drinkTypeSelect")?.value || "water";
+  const type = document.querySelector("#drinkTypeSelect")?.value || "black_coffee";
   const meta = getDrinkMetaByType(type);
   if (!meta) return;
   document.querySelector("#sweetnessSelect").value = meta.defaultSweetness;
@@ -1294,7 +1300,7 @@ function getDrinkScores(profiles = appState.drinkProfiles || []) {
     scores.sugarScore += sugarScore;
     scores.caffeineScore += caffeineScores[profile.caffeine] || 0;
     scores.milkDrinkCount += profile.milk === "yes" ? 1 : 0;
-    scores.hydrationSupportCount += meta?.hydration ? 1 : 0;
+    scores.hydrationSupportCount += meta?.hydration && profile.type !== "water" ? 1 : 0;
     scores.sweetDrinksCount += sugarScore >= 2 ? 1 : 0;
     return scores;
   }, {
@@ -1355,6 +1361,7 @@ function countSweetDrinks() {
 
 function getDrinksFeedback() {
   const scores = getDrinkScores();
+  if (!(appState.drinkProfiles || []).length) return t("drinksFeedback.noExtraDrinks");
   if (scores.sugarScore >= 5) return t("drinksFeedback.sugarHigh");
   if (scores.caffeineScore >= 5) return t("drinksFeedback.caffeineHigh");
   if (scores.sugarScore <= 1 && appState.waterMl >= 1500) return t("drinksFeedback.lightAndHydrated");

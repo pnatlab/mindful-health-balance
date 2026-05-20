@@ -622,6 +622,14 @@ h2 {
   margin-bottom: 20px;
 }
 
+.section-helper {
+  max-width: 520px;
+  margin: 8px 0 0;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
 .metric {
   display: grid;
   min-width: 110px;
