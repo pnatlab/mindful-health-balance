@@ -1,4 +1,4 @@
-# Mindful Health Balance by MSxAI v1.5
+# Mindful Health Balance by MSxAI v1.6
 
 Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ static สำหรับ self-care reflection ของ pnat เพื่อช่วยดู pattern และ balance recovery ในชีวิตประจำวัน โดยเน้น 4 แกนหลัก:
 
@@ -80,6 +80,20 @@ Hydration card ใช้บันทึกน้ำเปล่าและป�
 - `Energy_Causes`
 
 แอปยังรองรับ log เดิมที่ไม่มี columns เหล่านี้ โดย import แล้วตั้งค่า default เป็นค่าว่างหรือ `0` เพื่อรักษา backward compatibility
+
+## v1.6 NuTuenSai Reflection Processing Layer
+
+v1.6 เพิ่ม NuTuenSai Reflection Processing Layer เพื่อให้ Mindful Reminder, End-of-Day Reflection, Tomorrow Focus และ NuTuenSai Reminder อ่านความสัมพันธ์ของ signal มากขึ้น ไม่ตอบจากตัวเลขเดี่ยว ๆ
+
+ระบบจัด input ที่มีอยู่เป็น 5 signals:
+
+- Hydration Signal
+- Drink Load Signal
+- Recovery Load Signal
+- Energy & Sleep Signal
+- Mind Note Signal
+
+Layer นี้ยังคงเป็น self-care reflection layer ไม่ใช่ medical diagnosis tool, therapy tool หรือคำแนะนำแทนแพทย์ เป้าหมายคือช่วยให้เห็น pattern ของน้ำ เครื่องดื่ม การพัก พลังงาน การนอน และใจอย่างมีโครงสร้าง โดยไม่เพิ่มแรงกดดันและไม่เปลี่ยน data schema
 
 ## วิธีเปิดใช้งาน
 

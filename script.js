@@ -35,7 +35,7 @@ const translations = {
     htmlLang: "th",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.5 Structured Drink & Energy Profile",
+    version: "v1.6 NuTuenSai Reflection Processing Layer",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
     welcomeKicker: "NuTuenSai Welcome Threshold",
     welcomeTitle: "ยินดีต้อนรับกลับมา",
@@ -166,6 +166,26 @@ const translations = {
       caffeine: "คาเฟอีนวันนี้เริ่มสูง ให้มันเป็นข้อมูล ไม่ใช่สิ่งที่มาแทนการพัก",
       energyCauses: "วันนี้พลังงานอาจถูกกระทบจาก {causes} มากกว่าความผิดพลาดของตัวเอง"
     },
+    signalReminder: {
+      sleepLoadRecovery: "วันนี้ recovery ควรมาก่อนการเพิ่ม performance อีกนิดนะพี่",
+      hydrationCaffeine: "วันนี้ระบบชวนกลับมาดูน้ำและการพักก่อนให้กาแฟนำจังหวะทั้งวัน",
+      doublePressure: "วันนี้ไม่ต้องเร่งแก้ตัวเลข แค่ลดแรงกดดันลงหนึ่งระดับก็พอ",
+      sugarHigh: "เครื่องดื่มหวานเริ่มสะสมแล้ว ลดแก้วถัดไปหนึ่งจุดก็พอ",
+      consistency: "วันนี้จังหวะค่อนข้างเบาและน้ำพอเห็นแล้ว รักษาความสม่ำเสมอก็พอ",
+      endorphin: "วันนี้พลังอาจดูดี แต่ถ้านอนน้อยหรือ load สูง ให้เผื่อพื้นที่พักไว้ด้วย",
+      resourceLow: "พลังงานต่ำวันนี้อาจมาจากทรัพยากรไม่พอ ไม่ใช่ความผิดพลาดของพี่",
+      restFirst: "ถ้าใจขอพักก่อน วันนี้อนุญาตให้ pause ได้โดยไม่ต้องรู้สึกผิด"
+    },
+    signalReflection: {
+      goodConsistency: "เห็นจังหวะน้ำและ load ที่ไม่กดดันระบบเกินไป",
+      noExtraDrinks: "เครื่องดื่มอื่นนอกจากน้ำเปล่ายังเบาอยู่",
+      noticedSignals: "เริ่มเห็นความสัมพันธ์ของน้ำ เครื่องดื่ม การพัก และใจ",
+      sleepLoadRecovery: "วันนี้นอนน้อยหรือ load สูงพอให้ recovery ควรมาก่อน",
+      hydrationCaffeine: "น้ำยังน้อยและคาเฟอีนเริ่มนำจังหวะ ค่อย ๆ กลับมาจิบน้ำกับพักให้สม่ำเสมอ",
+      pressure: "ความกดดันถูกเห็นแล้ว ไม่ต้องใช้การเร่งแก้เป็นคำตอบของวันนี้",
+      resourceLow: "พลังงานอาจต่ำจากน้ำ อาหาร หรือการนอน ไม่ใช่เรื่องที่ต้องโทษตัวเอง",
+      steadyHydration: "วางจุดจิบน้ำให้สม่ำเสมอขึ้น โดยไม่ต้องอัดทีเดียว"
+    },
     loadLevel: {
       light: "Load เบา",
       medium: "Load กลาง",
@@ -188,6 +208,8 @@ const translations = {
       hydrate_gently: "วันนี้จิบน้ำเบา ๆ ให้ระบบกลับมานิ่ง ไม่ต้องอัดน้ำเพื่อเอาชนะตัวเลข"
     },
     recoveryNote: {
+      sleepLoadHigh: "วันนี้ระบบใช้พลังมากพร้อมกับพักไม่เต็ม ให้ recovery มาก่อนการเพิ่มรอบใหม่",
+      endorphin: "พลังงานที่รู้สึกดีอาจบังสัญญาณล้าไว้เล็กน้อย พักเผื่อระบบไว้ก็ดี",
       high: "Recovery คือส่วนหนึ่งของ performance วันนี้พอแล้วกับการใช้ร่างกายหนัก ๆ",
       lowSleep: "อย่าตัดสินสุขภาพตัวเองจากวันที่นอนน้อย ให้การพักช่วยปรับภาพรวมก่อน",
       medium: "Load กลาง ๆ ต้องมีช่วงผ่อน ไม่ต้องเติมงานหนักเพราะรู้สึกว่ายังทำได้",
@@ -197,6 +219,8 @@ const translations = {
       recovery: "Recovery ก่อน แล้วค่อยดูว่าร่างกายพร้อมแค่ไหน",
       water: "วางจุดจิบน้ำเล็ก ๆ ให้กระจายทั้งวัน",
       sweet: "ลดหวานหนึ่งจุด โดยไม่ต้องทำให้วันนี้กลายเป็นบทลงโทษ",
+      caffeine: "ลดคาเฟอีนลงหนึ่งจังหวะ แล้วคืนพื้นที่ให้น้ำกับการพัก",
+      restNoGuilt: "พักโดยไม่ต้องรู้สึกผิด แล้วค่อยกลับมาดู pattern ต่อ",
       steady: "รักษาระบบที่อยู่ได้จริงต่ออีกหนึ่งวัน"
     },
     options: {
@@ -276,7 +300,7 @@ const translations = {
     htmlLang: "en",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.5 Structured Drink & Energy Profile",
+    version: "v1.6 NuTuenSai Reflection Processing Layer",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
     welcomeKicker: "NuTuenSai Welcome Threshold",
     welcomeTitle: "Welcome back,",
@@ -407,6 +431,26 @@ const translations = {
       caffeine: "Caffeine is getting high today. Let it be information, not a replacement for rest.",
       energyCauses: "Today's energy may be affected by {causes} more than by any personal mistake."
     },
+    signalReminder: {
+      sleepLoadRecovery: "Recovery may need to come before adding more performance today.",
+      hydrationCaffeine: "Today may need steadier hydration and rest before caffeine leads the rhythm.",
+      doublePressure: "Today does not need more fixing. Lowering pressure by one step is enough.",
+      sugarHigh: "Sugary drinks are adding up. Reducing the next one by one step is enough.",
+      consistency: "Hydration is visible and load is light today. Consistency is enough.",
+      endorphin: "Energy may feel good today, but low sleep or high load still deserves recovery space.",
+      resourceLow: "Low energy today may come from low resources, not from a personal mistake.",
+      restFirst: "If the mind is asking to rest first, pausing today is allowed without guilt."
+    },
+    signalReflection: {
+      goodConsistency: "You noticed a rhythm where hydration and load are not pressuring the system too much",
+      noExtraDrinks: "Extra drinks beyond plain water are staying light",
+      noticedSignals: "You started seeing the relationship between water, drinks, recovery, and mind state",
+      sleepLoadRecovery: "Low sleep or high load makes recovery the first useful signal today",
+      hydrationCaffeine: "Water is still low while caffeine is rising. Steadier sips and rest are enough to return the rhythm.",
+      pressure: "Pressure has been noticed. Rushing to fix does not need to be today's answer.",
+      resourceLow: "Energy may be low because water, food, or sleep resources are low; this is information, not blame.",
+      steadyHydration: "Place steadier water moments across the day without forcing it all at once."
+    },
     loadLevel: {
       light: "Light Load",
       medium: "Moderate Load",
@@ -429,6 +473,8 @@ const translations = {
       hydrate_gently: "Hydrate gently today. Let the system settle without forcing the numbers."
     },
     recoveryNote: {
+      sleepLoadHigh: "The system used a lot while rest was not full. Let recovery come before adding another round.",
+      endorphin: "Good-feeling energy can sometimes hide tired signals. Leave some room for recovery.",
       high: "Recovery is part of performance. Today is enough for heavy body use.",
       lowSleep: "Do not judge your health from a low-sleep day. Let rest help rebalance the picture.",
       medium: "Moderate load needs a softer window. Do not add more just because you still can.",
@@ -438,6 +484,8 @@ const translations = {
       recovery: "Recovery first, then see how ready the body feels.",
       water: "Place small water-sipping moments across the day.",
       sweet: "Reduce sweetness by one step without turning today into punishment.",
+      caffeine: "Lower caffeine by one step and give water and rest more space.",
+      restNoGuilt: "Rest without guilt, then come back to the pattern gently.",
       steady: "Keep the system sustainable for one more day."
     },
     options: {
@@ -517,7 +565,7 @@ const translations = {
     htmlLang: "zh-CN",
     eyebrow: "个人正念健康仪表板",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.5 结构化饮品与能量记录",
+    version: "v1.6 NuTuenSai 反思处理层",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
     welcomeKicker: "NuTuenSai 欢迎门槛",
     welcomeTitle: "欢迎回来",
@@ -648,6 +696,26 @@ const translations = {
       caffeine: "今天咖啡因偏高，把它当作信息，不要让它取代休息。",
       energyCauses: "今天的能量可能更多受到 {causes} 影响，而不是自己的错误。"
     },
+    signalReminder: {
+      sleepLoadRecovery: "今天 recovery 可以先于继续增加 performance。",
+      hydrationCaffeine: "今天可以先让补水和休息稳定一点，不让咖啡带走整天的节奏。",
+      doublePressure: "今天不需要急着修正，先把压力放低一点就够了。",
+      sugarHigh: "甜饮开始累积了，下一杯少一点就够了。",
+      consistency: "今天补水已经被看见，load 也比较轻，保持稳定就好。",
+      endorphin: "今天能量感觉不错，但睡少或 load 高时，仍然值得留一点恢复空间。",
+      resourceLow: "今天能量低可能来自资源不足，不是自己的错误。",
+      restFirst: "如果心里需要先休息，今天可以允许自己 pause，不需要内疚。"
+    },
+    signalReflection: {
+      goodConsistency: "已经看见补水与 load 没有过度压迫系统的节奏",
+      noExtraDrinks: "白水以外的饮品负担仍然较轻",
+      noticedSignals: "开始看见水、饮品、恢复与内在状态之间的关系",
+      sleepLoadRecovery: "睡少或 load 高，让 recovery 成为今天最需要先照顾的信号",
+      hydrationCaffeine: "水还偏少，同时咖啡因正在上升。稳定小口补水和休息就够了。",
+      pressure: "压力已经被看见了。今天不需要用急着修正来回答它。",
+      resourceLow: "能量低可能来自水、食物或睡眠资源不足，这是信息，不是责备。",
+      steadyHydration: "把补水点放得更稳定，不需要一次硬灌。"
+    },
     loadLevel: {
       light: "Load 轻",
       medium: "Load 中",
@@ -670,6 +738,8 @@ const translations = {
       hydrate_gently: "今天温和补水，让系统慢慢稳定，不需要为了数字而勉强自己。"
     },
     recoveryNote: {
+      sleepLoadHigh: "今天系统用了不少力，同时休息不够完整。先让 recovery 回到前面。",
+      endorphin: "感觉不错的能量有时会盖住疲惫信号，留一点恢复空间会更稳。",
       high: "Recovery 是 performance 的一部分。今天身体已经用了很多。",
       lowSleep: "不要用睡少的一天来判断健康，让休息先帮整体恢复平衡。",
       medium: "中等 Load 也需要放松的窗口，不要因为还可以做就继续加。",
@@ -679,6 +749,8 @@ const translations = {
       recovery: "先 recovery，再看身体准备好了多少。",
       water: "把小口喝水安排在一天里几个自然的点。",
       sweet: "甜度少一步就好，不要把今天变成惩罚。",
+      caffeine: "明天把咖啡因降一个节奏，把空间还给水和休息。",
+      restNoGuilt: "不带内疚地休息，然后再温和地回来看 pattern。",
       steady: "让这个系统再稳定地走一天。"
     },
     options: {
@@ -1390,21 +1462,117 @@ function getLoadFeedback() {
   return t("loadLightWithNote");
 }
 
+function buildSignals() {
+  const loadScore = calculateLoadScore();
+  const drinkScores = getDrinkScores();
+
+  return {
+    hydration: getHydrationSignal(),
+    drinkLoad: getDrinkLoadSignal(drinkScores),
+    recoveryLoad: getRecoveryLoadSignal(loadScore),
+    energySleep: getEnergySleepSignal(loadScore),
+    mindNote: getMindNoteSignal()
+  };
+}
+
+function getHydrationSignal() {
+  const waterMl = appState.waterMl || 0;
+  return {
+    waterMl,
+    status: getHydrationStatus(waterMl),
+    low: waterMl <= 750,
+    rising: waterMl > 750 && waterMl <= 1500,
+    steady: waterMl > 1500 && waterMl <= 2200,
+    enough: waterMl > 2200
+  };
+}
+
+function getDrinkLoadSignal(scores = getDrinkScores()) {
+  const profiles = appState.drinkProfiles || [];
+  return {
+    profiles,
+    sugarScore: scores.sugarScore,
+    caffeineScore: scores.caffeineScore,
+    milkDrinkCount: scores.milkDrinkCount,
+    hydrationSupportCount: scores.hydrationSupportCount,
+    sweetDrinksCount: scores.sweetDrinksCount,
+    noExtraDrinks: profiles.length === 0,
+    sugarHigh: scores.sugarScore >= 5,
+    caffeineHigh: scores.caffeineScore >= 5,
+    hasCaffeine: scores.caffeineScore > 0,
+    light: profiles.length === 0 || (scores.sugarScore <= 1 && scores.caffeineScore <= 1)
+  };
+}
+
+function getRecoveryLoadSignal(loadScore = calculateLoadScore()) {
+  const activities = appState.activities || [];
+  return {
+    activities,
+    loadScore,
+    high: loadScore >= 6,
+    medium: loadScore >= 3 && loadScore < 6,
+    light: loadScore < 3,
+    hasHeavyCombo: activities.includes("Long run") && activities.includes("ปิงปองหนัก")
+  };
+}
+
+function getEnergySleepSignal(loadScore = calculateLoadScore()) {
+  const energy = appState.selectedState.energy;
+  const sleep = appState.selectedState.sleep;
+  const causes = appState.energyCauses || [];
+  const sleepLow = sleep === "น้อย" || causes.includes("sleep_low");
+  const energyGood = energy === "ดี";
+  const energyLow = energy === "ต่ำ";
+  const lowResource = causes.some((cause) => ["low_water", "low_food", "sleep_low"].includes(cause));
+
+  return {
+    energy,
+    sleep,
+    causes,
+    sleepLow,
+    energyGood,
+    energyLow,
+    lowResource,
+    endorphinBlindSpot: energyGood && (sleepLow || loadScore >= 6)
+  };
+}
+
+function getMindNoteSignal() {
+  const mind = appState.selectedState.mind;
+  const feeling = appState.mindNoteFeeling;
+  const support = appState.mindNoteSupport;
+  return {
+    mind,
+    text: appState.mindNoteText || "",
+    feeling,
+    support,
+    pressured: mind === "กดดัน" || feeling === "pressured",
+    doublePressure: mind === "กดดัน" && feeling === "pressured",
+    worried: mind === "กังวล" || feeling === "worried",
+    restFirst: support === "rest_first",
+    hydrateGently: support === "hydrate_gently"
+  };
+}
+
 function getMindfulReminder() {
-  const mindNoteReminder = getMindNoteReminder();
-  if (mindNoteReminder) return mindNoteReminder;
-  if (appState.selectedState.mind === "กดดัน") {
-    return t("reminder.pressured");
-  }
-  if (appState.selectedState.mind === "กังวล") {
-    return t("reminder.worried");
-  }
-  if (appState.selectedState.sleep === "น้อย") {
-    return t("reminder.lowSleep");
-  }
-  if (appState.loadScore >= 6) {
-    return t("reminder.highLoad");
-  }
+  return getReminderFromSignals(buildSignals());
+}
+
+function getReminderFromSignals(signals) {
+  if (signals.energySleep.endorphinBlindSpot && signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("signalReminder.endorphin");
+  if (signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("signalReminder.sleepLoadRecovery");
+  if (signals.hydration.low && signals.drinkLoad.caffeineHigh) return t("signalReminder.hydrationCaffeine");
+  if (signals.mindNote.doublePressure) return t("signalReminder.doublePressure");
+  if (signals.drinkLoad.sugarHigh) return t("signalReminder.sugarHigh");
+  if (signals.hydration.steady && signals.recoveryLoad.light) return t("signalReminder.consistency");
+  if (signals.energySleep.endorphinBlindSpot) return t("signalReminder.endorphin");
+  if (signals.energySleep.energyLow && signals.energySleep.lowResource) return t("signalReminder.resourceLow");
+  if (signals.mindNote.restFirst) return t("signalReminder.restFirst");
+  if (signals.mindNote.pressured) return t("mindNoteReminder.pressured");
+  if (signals.mindNote.worried) return t("mindNoteReminder.worried");
+  if (signals.mindNote.hydrateGently) return t("mindNoteReminder.hydrate_gently");
+  if (signals.energySleep.sleepLow) return t("reminder.lowSleep");
+  if (signals.recoveryLoad.high) return t("reminder.highLoad");
   return t("reminder.steady");
 }
 
@@ -1416,24 +1584,45 @@ function getMindNoteReminder() {
 }
 
 function buildReflection() {
-  const drinkScores = getDrinkScores();
+  return buildReflectionFromSignals(buildSignals());
+}
+
+function buildReflectionFromSignals(signals) {
   const goodThings = [];
   const adjustments = [];
 
-  if (appState.waterMl > 0) goodThings.push(t("reflection.waterSeen", { water: appState.waterMl }));
-  if (appState.drinkProfiles.some((drink) => drink.type === "water")) goodThings.push(t("reflection.plainWaterBase"));
+  if (signals.hydration.steady && signals.recoveryLoad.light) {
+    goodThings.push(t("signalReflection.goodConsistency"));
+  } else if (signals.drinkLoad.noExtraDrinks) {
+    goodThings.push(t("signalReflection.noExtraDrinks"));
+  } else if (signals.hydration.waterMl > 0) {
+    goodThings.push(t("reflection.waterSeen", { water: signals.hydration.waterMl }));
+  }
   if (appState.selectedState.energy || appState.selectedState.mind || appState.selectedState.sleep) {
     goodThings.push(t("reflection.checkedState"));
   }
   if (!goodThings.length) goodThings.push(t("reflection.openedPattern"));
 
-  if (drinkScores.sugarScore >= 5) adjustments.push(t("drinkReflection.sugar"));
-  if (drinkScores.caffeineScore >= 5) adjustments.push(t("drinkReflection.caffeine"));
-  if (appState.waterMl <= 750) adjustments.push(t("reflection.addSips"));
-  if (appState.loadScore >= 6) adjustments.push(t("reflection.stopPush"));
+  if (signals.energySleep.sleepLow && signals.recoveryLoad.high) {
+    adjustments.push(t("signalReflection.sleepLoadRecovery"));
+  } else if (signals.hydration.low && signals.drinkLoad.caffeineHigh) {
+    adjustments.push(t("signalReflection.hydrationCaffeine"));
+  } else if (signals.mindNote.doublePressure) {
+    adjustments.push(t("signalReflection.pressure"));
+  } else if (signals.energySleep.energyLow && signals.energySleep.lowResource) {
+    adjustments.push(t("signalReflection.resourceLow"));
+  } else if (signals.drinkLoad.sugarHigh) {
+    adjustments.push(t("drinkReflection.sugar"));
+  } else if (signals.drinkLoad.caffeineHigh) {
+    adjustments.push(t("drinkReflection.caffeine"));
+  } else if (signals.hydration.low) {
+    adjustments.push(t("signalReflection.steadyHydration"));
+  } else if (signals.recoveryLoad.high) {
+    adjustments.push(t("reflection.stopPush"));
+  }
   if (!adjustments.length) adjustments.push(t("reflection.keepBalance"));
 
-  const energyCauseNote = appState.energyCauses.length
+  const energyCauseNote = signals.energySleep.causes.length
     ? `${t("drinkReflection.energyCauses", { causes: getEnergyCauseSummary() })}\n`
     : "";
 
@@ -1441,12 +1630,12 @@ function buildReflection() {
     `${t("reflection.good")} ${goodThings.join(" / ")}`,
     `${t("reflection.adjust")} ${adjustments.join(" / ")}`,
     energyCauseNote.trim(),
-    `${t("reflection.recovery")} ${getRecoveryNote()}`,
-    `${t("reflection.hydration")} ${appState.hydrationStatus}`,
-    `${t("reflection.tomorrow")} ${getTomorrowFocus()}`,
+    `${t("reflection.recovery")} ${getRecoveryNote(signals)}`,
+    `${t("reflection.hydration")} ${getHydrationNoteFromSignals(signals)}`,
+    `${t("reflection.tomorrow")} ${getTomorrowFocus(signals)}`,
     `${t("reflection.mindNote")} ${getMindNoteSummary()}`,
     `${t("reflection.mindHolding")} ${appState.mindNoteText?.trim() || t("reflection.noMindNote")}`,
-    `${t("reflection.reminder")} ${getMindfulReminder()}`,
+    `${t("reflection.reminder")} ${getReminderFromSignals(signals)}`,
     "",
     t("reflection.closing1"),
     t("reflection.closing2")
@@ -1466,19 +1655,28 @@ function getMindNoteSummary() {
   return parts.length ? parts.join(" / ") : t("reflection.noMindNote");
 }
 
-function getRecoveryNote() {
-  if (appState.loadScore >= 6) return t("recoveryNote.high");
-  if (appState.selectedState.sleep === "น้อย") return t("recoveryNote.lowSleep");
-  if (appState.loadScore >= 3) return t("recoveryNote.medium");
+function getRecoveryNote(signals = buildSignals()) {
+  if (signals.energySleep.endorphinBlindSpot) return t("recoveryNote.endorphin");
+  if (signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("recoveryNote.sleepLoadHigh");
+  if (signals.recoveryLoad.high) return t("recoveryNote.high");
+  if (signals.energySleep.sleepLow) return t("recoveryNote.lowSleep");
+  if (signals.recoveryLoad.medium) return t("recoveryNote.medium");
   return t("recoveryNote.light");
 }
 
-function getTomorrowFocus() {
-  if (appState.loadScore >= 6 || appState.selectedState.sleep === "น้อย") {
-    return t("tomorrowFocus.recovery");
-  }
-  if (appState.waterMl <= 1500) return t("tomorrowFocus.water");
-  if (countSweetDrinks() >= 1) return t("tomorrowFocus.sweet");
+function getHydrationNoteFromSignals(signals = buildSignals()) {
+  if (signals.hydration.low && signals.drinkLoad.caffeineHigh) return t("signalReflection.hydrationCaffeine");
+  return signals.hydration.status;
+}
+
+function getTomorrowFocus(signals = buildSignals()) {
+  if (signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("tomorrowFocus.recovery");
+  if (signals.mindNote.restFirst) return t("tomorrowFocus.restNoGuilt");
+  if (signals.hydration.low && signals.drinkLoad.caffeineHigh) return t("tomorrowFocus.water");
+  if (signals.drinkLoad.caffeineHigh) return t("tomorrowFocus.caffeine");
+  if (signals.recoveryLoad.high || signals.energySleep.sleepLow) return t("tomorrowFocus.recovery");
+  if (signals.hydration.low || signals.hydration.rising) return t("tomorrowFocus.water");
+  if (signals.drinkLoad.sugarHigh || signals.drinkLoad.sweetDrinksCount >= 1) return t("tomorrowFocus.sweet");
   return t("tomorrowFocus.steady");
 }
 
@@ -1754,7 +1952,10 @@ function localizeLogCell(column, value) {
   if (column === "Tomorrow_Focus") return localizeKnownText(value, "tomorrowFocus");
   if (column === "NuTuenSai_Reminder") {
     const reminderText = localizeKnownText(value, "reminder");
-    return reminderText === value ? localizeKnownText(value, "mindNoteReminder") : reminderText;
+    if (reminderText !== value) return reminderText;
+    const mindNoteText = localizeKnownText(value, "mindNoteReminder");
+    if (mindNoteText !== value) return mindNoteText;
+    return localizeKnownText(value, "signalReminder");
   }
   if (column === "Mind_Note_Feeling" || column === "Mind_Note_Support") return localizeMindNoteValue(column, value);
   return value;
