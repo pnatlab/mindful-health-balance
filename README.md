@@ -103,6 +103,12 @@ Mindful_Health_Balance_Master.xlsx
 https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js
 ```
 
+## Technical Note
+
+ใน v1.3 option บางส่วนยังใช้ label ภาษาไทยเป็น canonical value ภายใน state เพื่อรักษาความเข้ากันได้กับข้อมูลเดิมใน localStorage, Daily Log, Import และ Export
+
+หากจะ refactor canonical state ในอนาคต ควรทำเป็น v1.4 Canonical State Refactor พร้อม migration layer เพื่อไม่ให้ข้อมูลเดิมของผู้ใช้เสีย compatibility
+
 ## หมายเหตุสำคัญ
 
 แอปนี้ไม่ใช่ medical diagnosis tool และไม่ใช้แทนแพทย์ การตรวจตามนัด หรือคำแนะนำจากบุคลากรทางการแพทย์
