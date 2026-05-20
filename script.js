@@ -174,13 +174,14 @@ const translations = {
       consistency: "วันนี้จังหวะค่อนข้างเบาและน้ำพอเห็นแล้ว รักษาความสม่ำเสมอก็พอ",
       endorphin: "วันนี้พลังอาจดูดี แต่ถ้านอนน้อยหรือ load สูง ให้เผื่อพื้นที่พักไว้ด้วย",
       resourceLow: "พลังงานต่ำวันนี้อาจมาจากทรัพยากรไม่พอ ไม่ใช่ความผิดพลาดของพี่",
-      restFirst: "ถ้าใจขอพักก่อน วันนี้อนุญาตให้ pause ได้โดยไม่ต้องรู้สึกผิด"
+      restFirst: "วันนี้พี่เลือกพักก่อนได้ โดยไม่ต้องรู้สึกว่าต้องทำให้ทุกอย่างคืบหน้าทันที"
     },
     signalReflection: {
       goodConsistency: "เห็นจังหวะน้ำและ load ที่ไม่กดดันระบบเกินไป",
       noExtraDrinks: "เครื่องดื่มอื่นนอกจากน้ำเปล่ายังเบาอยู่",
       noticedSignals: "เริ่มเห็นความสัมพันธ์ของน้ำ เครื่องดื่ม การพัก และใจ",
       sleepLoadRecovery: "วันนี้นอนน้อยหรือ load สูงพอให้ recovery ควรมาก่อน",
+      endorphin: "แม้วันนี้พลังดูดี แต่ recovery อาจยังต้องการพื้นที่อยู่",
       hydrationCaffeine: "น้ำยังน้อยและคาเฟอีนเริ่มนำจังหวะ ค่อย ๆ กลับมาจิบน้ำกับพักให้สม่ำเสมอ",
       pressure: "ความกดดันถูกเห็นแล้ว ไม่ต้องใช้การเร่งแก้เป็นคำตอบของวันนี้",
       resourceLow: "พลังงานอาจต่ำจากน้ำ อาหาร หรือการนอน ไม่ใช่เรื่องที่ต้องโทษตัวเอง",
@@ -439,13 +440,14 @@ const translations = {
       consistency: "Hydration is visible and load is light today. Consistency is enough.",
       endorphin: "Energy may feel good today, but low sleep or high load still deserves recovery space.",
       resourceLow: "Low energy today may come from low resources, not from a personal mistake.",
-      restFirst: "If the mind is asking to rest first, pausing today is allowed without guilt."
+      restFirst: "Today, pausing is allowed. Not everything needs to move forward immediately."
     },
     signalReflection: {
       goodConsistency: "You noticed a rhythm where hydration and load are not pressuring the system too much",
       noExtraDrinks: "Extra drinks beyond plain water are staying light",
       noticedSignals: "You started seeing the relationship between water, drinks, recovery, and mind state",
       sleepLoadRecovery: "Low sleep or high load makes recovery the first useful signal today",
+      endorphin: "Even when energy feels good, recovery may still need some space.",
       hydrationCaffeine: "Water is still low while caffeine is rising. Steadier sips and rest are enough to return the rhythm.",
       pressure: "Pressure has been noticed. Rushing to fix does not need to be today's answer.",
       resourceLow: "Energy may be low because water, food, or sleep resources are low; this is information, not blame.",
@@ -704,13 +706,14 @@ const translations = {
       consistency: "今天补水已经被看见，load 也比较轻，保持稳定就好。",
       endorphin: "今天能量感觉不错，但睡少或 load 高时，仍然值得留一点恢复空间。",
       resourceLow: "今天能量低可能来自资源不足，不是自己的错误。",
-      restFirst: "如果心里需要先休息，今天可以允许自己 pause，不需要内疚。"
+      restFirst: "今天可以先暂停。不需要让所有事情立刻推进。"
     },
     signalReflection: {
       goodConsistency: "已经看见补水与 load 没有过度压迫系统的节奏",
       noExtraDrinks: "白水以外的饮品负担仍然较轻",
       noticedSignals: "开始看见水、饮品、恢复与内在状态之间的关系",
       sleepLoadRecovery: "睡少或 load 高，让 recovery 成为今天最需要先照顾的信号",
+      endorphin: "即使今天感觉有能量，recovery 可能仍然需要一点空间。",
       hydrationCaffeine: "水还偏少，同时咖啡因正在上升。稳定小口补水和休息就够了。",
       pressure: "压力已经被看见了。今天不需要用急着修正来回答它。",
       resourceLow: "能量低可能来自水、食物或睡眠资源不足，这是信息，不是责备。",
@@ -1564,10 +1567,10 @@ function getReminderFromSignals(signals) {
   if (signals.hydration.low && signals.drinkLoad.caffeineHigh) return t("signalReminder.hydrationCaffeine");
   if (signals.mindNote.doublePressure) return t("signalReminder.doublePressure");
   if (signals.drinkLoad.sugarHigh) return t("signalReminder.sugarHigh");
+  if (signals.mindNote.restFirst) return t("signalReminder.restFirst");
   if (signals.hydration.steady && signals.recoveryLoad.light) return t("signalReminder.consistency");
   if (signals.energySleep.endorphinBlindSpot) return t("signalReminder.endorphin");
   if (signals.energySleep.energyLow && signals.energySleep.lowResource) return t("signalReminder.resourceLow");
-  if (signals.mindNote.restFirst) return t("signalReminder.restFirst");
   if (signals.mindNote.pressured) return t("mindNoteReminder.pressured");
   if (signals.mindNote.worried) return t("mindNoteReminder.worried");
   if (signals.mindNote.hydrateGently) return t("mindNoteReminder.hydrate_gently");
@@ -1603,7 +1606,9 @@ function buildReflectionFromSignals(signals) {
   }
   if (!goodThings.length) goodThings.push(t("reflection.openedPattern"));
 
-  if (signals.energySleep.sleepLow && signals.recoveryLoad.high) {
+  if (signals.energySleep.endorphinBlindSpot) {
+    adjustments.push(t("signalReflection.endorphin"));
+  } else if (signals.energySleep.sleepLow && signals.recoveryLoad.high) {
     adjustments.push(t("signalReflection.sleepLoadRecovery"));
   } else if (signals.hydration.low && signals.drinkLoad.caffeineHigh) {
     adjustments.push(t("signalReflection.hydrationCaffeine"));
