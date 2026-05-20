@@ -65,7 +65,8 @@ const translations = {
     drinksHelper: "บันทึกเครื่องดื่มอื่นนอกจากน้ำเปล่า เช่น กาแฟ ชา โกโก้ น้ำหวาน หรือน้ำผลไม้",
     drinkTypeLabel: "Drink Type",
     sweetnessLabel: "Sweetness",
-    caffeineLabel: "Caffeine",
+    caffeineLabel: "คาเฟอีนโดยประมาณ",
+    caffeineHelper: "เลือกคร่าว ๆ ก็พอ ไม่ต้องคำนวณเป๊ะ",
     milkLabel: "Milk",
     amountLabel: "Amount",
     amountPlaceholder: "1 glass / 1 bottle / หรือระบุเอง",
@@ -75,6 +76,10 @@ const translations = {
     caffeineScoreLabel: "Caffeine {score}",
     milkCountLabel: "Milk {count}",
     hydrationSupportLabel: "Support {count}",
+    caffeineCupTitle: "แก้วคาเฟอีนวันนี้",
+    caffeineCupEmpty: "ยังไม่มีแก้วคาเฟอีนวันนี้",
+    caffeineCupSingle: "วันนี้มีคาเฟอีน 1 แก้ว",
+    caffeineCupPlural: "วันนี้มีคาเฟอีน {count} แก้ว",
     emptyDrinkList: "ยังไม่มีเครื่องดื่มอื่นนอกจากน้ำเปล่า วันนี้ถือว่าเบาดีแล้ว",
     energyCauseLabel: "Energy Cause / เหตุที่น่ามีผลต่อพลังงาน",
     loadRecovery: "Load & Recovery",
@@ -331,7 +336,8 @@ const translations = {
     drinksHelper: "Log drinks other than plain water, such as coffee, tea, cocoa, sweet drinks, or juice.",
     drinkTypeLabel: "Drink Type",
     sweetnessLabel: "Sweetness",
-    caffeineLabel: "Caffeine",
+    caffeineLabel: "Approx. caffeine",
+    caffeineHelper: "A rough estimate is enough.",
     milkLabel: "Milk",
     amountLabel: "Amount",
     amountPlaceholder: "1 glass / 1 bottle / custom",
@@ -341,6 +347,10 @@ const translations = {
     caffeineScoreLabel: "Caffeine {score}",
     milkCountLabel: "Milk {count}",
     hydrationSupportLabel: "Support {count}",
+    caffeineCupTitle: "Caffeine cups today",
+    caffeineCupEmpty: "No caffeine cups logged yet.",
+    caffeineCupSingle: "1 caffeine cup logged today.",
+    caffeineCupPlural: "{count} caffeine cups logged today.",
     emptyDrinkList: "No extra drinks beyond plain water yet. Today is staying light.",
     energyCauseLabel: "Energy Cause",
     loadRecovery: "Load & Recovery",
@@ -597,7 +607,8 @@ const translations = {
     drinksHelper: "记录白水以外的饮品，例如咖啡、茶、可可、甜饮或果汁。",
     drinkTypeLabel: "饮品类型",
     sweetnessLabel: "甜度",
-    caffeineLabel: "咖啡因",
+    caffeineLabel: "大约咖啡因",
+    caffeineHelper: "粗略选择就可以。",
     milkLabel: "奶",
     amountLabel: "份量",
     amountPlaceholder: "1 glass / 1 bottle / 自定义",
@@ -607,6 +618,10 @@ const translations = {
     caffeineScoreLabel: "咖啡因 {score}",
     milkCountLabel: "奶类 {count}",
     hydrationSupportLabel: "支持 {count}",
+    caffeineCupTitle: "今日咖啡因杯数",
+    caffeineCupEmpty: "今天还没有记录咖啡因饮品。",
+    caffeineCupSingle: "今天已记录 1 杯咖啡因饮品。",
+    caffeineCupPlural: "今天已记录 {count} 杯咖啡因饮品。",
     emptyDrinkList: "目前还没有白水以外的饮品，今天的负担很轻。",
     energyCauseLabel: "Energy Cause / 可能影响能量的原因",
     loadRecovery: "Load & Recovery",
@@ -1284,6 +1299,7 @@ function updateDrinkUI() {
   document.querySelector("#caffeineScoreBadge").textContent = t("caffeineScoreLabel", { score: scores.caffeineScore });
   document.querySelector("#milkCountBadge").textContent = t("milkCountLabel", { count: scores.milkDrinkCount });
   document.querySelector("#hydrationSupportBadge").textContent = t("hydrationSupportLabel", { count: scores.hydrationSupportCount });
+  renderCaffeineCupVisual();
   renderDrinkProfileList();
   document.querySelector("#drinksFeedback").textContent = getDrinksFeedback();
 }
@@ -1387,11 +1403,33 @@ function getDrinkScores(profiles = appState.drinkProfiles || []) {
   });
 }
 
+function getCaffeineCupCount(profiles = appState.drinkProfiles || []) {
+  return profiles
+    .filter((profile) => caffeineOptions.includes(profile?.caffeine) && profile.caffeine !== "none")
+    .length;
+}
+
 function getDrinkSummaryLabels(profiles = appState.drinkProfiles || []) {
   return profiles.map((profile) => {
     const meta = getDrinkMetaByType(profile.type);
     return meta?.label || profile.type || "";
   }).filter(Boolean);
+}
+
+function renderCaffeineCupVisual() {
+  const row = document.querySelector("#caffeineCupRow");
+  const caption = document.querySelector("#caffeineCupCaption");
+  if (!row || !caption) return;
+
+  const count = getCaffeineCupCount();
+  row.innerHTML = count
+    ? Array.from({ length: count }, () => '<span class="coffee-cup-icon active" aria-hidden="true"></span>').join("")
+    : '<span class="coffee-cup-icon" aria-hidden="true"></span>';
+  caption.textContent = count === 0
+    ? t("caffeineCupEmpty")
+    : count === 1
+      ? t("caffeineCupSingle")
+      : t("caffeineCupPlural", { count });
 }
 
 function renderDrinkProfileList() {

@@ -157,6 +157,7 @@
           <label>
             <span class="choice-label" data-i18n="caffeineLabel">Caffeine</span>
             <select id="caffeineSelect"></select>
+            <span class="field-helper" data-i18n="caffeineHelper">เลือกคร่าว ๆ ก็พอ ไม่ต้องคำนวณเป๊ะ</span>
           </label>
           <label>
             <span class="choice-label" data-i18n="milkLabel">Milk</span>
@@ -180,6 +181,11 @@
           <span class="soft-badge" id="caffeineScoreBadge">Caffeine 0</span>
           <span class="soft-badge" id="milkCountBadge">Milk 0</span>
           <span class="soft-badge" id="hydrationSupportBadge">Hydration 0</span>
+        </div>
+        <div class="caffeine-cup-visual" aria-live="polite">
+          <div class="caffeine-cup-header" data-i18n="caffeineCupTitle">แก้วคาเฟอีนวันนี้</div>
+          <div class="caffeine-cup-row" id="caffeineCupRow" aria-hidden="true"></div>
+          <p class="caffeine-cup-caption" id="caffeineCupCaption">ยังไม่มีแก้วคาเฟอีนวันนี้</p>
         </div>
         <ul class="drink-list" id="drinkProfileList" aria-label="Drink list"></ul>
         <p class="feedback" id="drinksFeedback">เลือกเครื่องดื่มวันนี้เพื่อดู reminder แบบเบา ๆ</p>

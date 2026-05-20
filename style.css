@@ -752,6 +752,12 @@ h2 {
   gap: 8px;
 }
 
+.field-helper {
+  color: var(--text-soft);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
 select,
 input[type="text"] {
   min-height: 44px;
@@ -768,6 +774,108 @@ input[type="text"] {
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 14px;
+}
+
+.caffeine-cup-visual {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--panel-inner-bg), rgba(232, 229, 255, 0.34));
+}
+
+.caffeine-cup-header {
+  color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.caffeine-cup-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 30px;
+  align-items: center;
+}
+
+.coffee-cup-icon {
+  position: relative;
+  display: inline-block;
+  width: 26px;
+  height: 22px;
+  border: 2px solid var(--border-soft);
+  border-top: 0;
+  border-radius: 4px 4px 8px 8px;
+  background: rgba(255, 255, 255, 0.32);
+  box-shadow: inset 0 -8px 0 rgba(140, 120, 223, 0.12);
+}
+
+.coffee-cup-icon::before {
+  content: "";
+  position: absolute;
+  right: -9px;
+  top: 5px;
+  width: 8px;
+  height: 9px;
+  border: 2px solid var(--border-soft);
+  border-left: 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.coffee-cup-icon::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: -5px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--border-soft);
+  box-shadow: 6px -5px 0 -1px var(--border-soft);
+  opacity: 0.72;
+}
+
+.coffee-cup-icon.active {
+  border-color: rgba(111, 127, 213, 0.66);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(185, 167, 244, 0.34));
+  box-shadow: inset 0 -9px 0 rgba(111, 127, 213, 0.22), 0 8px 18px rgba(111, 127, 213, 0.12);
+}
+
+.coffee-cup-icon.active::before {
+  border-color: rgba(111, 127, 213, 0.66);
+}
+
+.coffee-cup-icon.active::after {
+  background: rgba(111, 127, 213, 0.64);
+  box-shadow: 6px -5px 0 -1px rgba(111, 127, 213, 0.52);
+}
+
+.caffeine-cup-caption {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+body[data-theme="dark"] .caffeine-cup-visual {
+  background: linear-gradient(135deg, var(--panel-inner-bg), rgba(142, 167, 255, 0.1));
+}
+
+body[data-theme="dark"] .coffee-cup-icon.active {
+  border-color: rgba(190, 170, 255, 0.72);
+  background: linear-gradient(180deg, rgba(142, 167, 255, 0.18), rgba(167, 139, 250, 0.24));
+  box-shadow: inset 0 -9px 0 rgba(142, 167, 255, 0.22), 0 8px 18px rgba(167, 139, 250, 0.16);
+}
+
+body[data-theme="dark"] .coffee-cup-icon.active::before {
+  border-color: rgba(190, 170, 255, 0.72);
+}
+
+body[data-theme="dark"] .coffee-cup-icon.active::after {
+  background: rgba(190, 170, 255, 0.68);
+  box-shadow: 6px -5px 0 -1px rgba(142, 167, 255, 0.58);
 }
 
 .drink-list {
