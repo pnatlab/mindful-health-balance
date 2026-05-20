@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mindful Health Balance by MSxAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Personal mindful dashboard</p>
+        <h1>Mindful Health Balance by MSxAI</h1>
+        <p class="version">v1.1 Daily Log</p>
+        <p class="subtitle">ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง</p>
+      </div>
+      <div class="date-pill" id="currentDate" aria-live="polite"></div>
+    </header>
+
+    <section class="notice-card">
+      <strong>Self-care reflection tool</strong>
+      <span>แอปนี้ช่วยดู pattern และ balance recovery เท่านั้น ไม่ใช่เครื่องมือวินิจฉัย และไม่ใช้แทนแพทย์หรือการติดตามตามนัด</span>
+    </section>
+
+    <section class="dashboard-grid" aria-label="Mindful Health Balance dashboard">
+      <article class="glass-card">
+        <div class="card-heading">
+          <div>
+            <p class="section-kicker">Today State</p>
+            <h2>วันนี้ร่างกายกับใจเป็นอย่างไร</h2>
+          </div>
+        </div>
+
+        <div class="choice-group" data-field="energy">
+          <span class="choice-label">Energy</span>
+          <div class="segmented" role="group" aria-label="Energy">
+            <button type="button" data-value="ต่ำ">ต่ำ</button>
+            <button type="button" data-value="กลาง">กลาง</button>
+            <button type="button" data-value="ดี">ดี</button>
+          </div>
+        </div>
+
+        <div class="choice-group" data-field="mind">
+          <span class="choice-label">Mind</span>
+          <div class="segmented" role="group" aria-label="Mind">
+            <button type="button" data-value="นิ่ง">นิ่ง</button>
+            <button type="button" data-value="กังวล">กังวล</button>
+            <button type="button" data-value="กดดัน">กดดัน</button>
+            <button type="button" data-value="ฟุ้ง">ฟุ้ง</button>
+          </div>
+        </div>
+
+        <div class="choice-group" data-field="sleep">
+          <span class="choice-label">Sleep</span>
+          <div class="segmented" role="group" aria-label="Sleep">
+            <button type="button" data-value="น้อย">น้อย</button>
+            <button type="button" data-value="พอใช้">พอใช้</button>
+            <button type="button" data-value="ดี">ดี</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="glass-card hydration-card">
+        <div class="card-heading">
+          <div>
+            <p class="section-kicker">Hydration</p>
+            <h2>น้ำวันนี้</h2>
+          </div>
+          <div class="metric">
+            <span id="waterMl">0</span>
+            <small>ml</small>
+          </div>
+        </div>
+        <div class="button-row">
+          <button type="button" class="action-button" data-water="250">+250 ml</button>
+          <button type="button" class="action-button" data-water="500">+500 ml</button>
+          <button type="button" class="action-button" data-water="750">+ครึ่งขวด</button>
+          <button type="button" class="ghost-button" id="resetWater">Reset</button>
+        </div>
+        <p class="feedback" id="hydrationFeedback">วันนี้น้ำยังน้อยไปนิด ค่อย ๆ จิบเพิ่มนะ</p>
+      </article>
+
+      <article class="glass-card">
+        <div class="card-heading">
+          <div>
+            <p class="section-kicker">Drinks</p>
+            <h2>เครื่องดื่มที่เลือกวันนี้</h2>
+          </div>
+          <span class="soft-badge" id="sweetCount">หวาน 0</span>
+        </div>
+        <div class="toggle-grid" id="drinksList" aria-label="Drinks"></div>
+        <p class="feedback" id="drinksFeedback">เลือกเครื่องดื่มวันนี้เพื่อดู reminder แบบเบา ๆ</p>
+      </article>
+
+      <article class="glass-card">
+        <div class="card-heading">
+          <div>
+            <p class="section-kicker">Load & Recovery</p>
+            <h2>วันนี้ใช้พลังไปกับอะไร</h2>
+          </div>
+          <div class="metric compact">
+            <span id="loadScore">0</span>
+            <small>score</small>
+          </div>
+        </div>
+        <div class="activity-grid" id="activitiesList" aria-label="Activities"></div>
+        <div class="load-summary">
+          <span id="loadLevel">Load เบา</span>
+          <p id="loadFeedback">วันนี้ยังมีพื้นที่ให้ recovery แบบสบาย ๆ</p>
+        </div>
+      </article>
+
+      <article class="glass-card reminder-card">
+        <div class="card-heading">
+          <div>
+            <p class="section-kicker">Mindful Reminder</p>
+            <h2>NuTuenSai note</h2>
+          </div>
+        </div>
+        <p id="mindfulReminder">พี่ไม่ต้องแก้ทุกอย่างในวันเดียว แค่เห็น pattern ชัดขึ้นก็ถือว่าระบบเริ่มทำงานแล้ว</p>
+      </article>
+
+      <article class="glass-card reflection-card">
+        <div class="card-heading">
+          <div>
+            <p class="section-kicker">Reflection Generator</p>
+            <h2>End-of-Day Reflection</h2>
+          </div>
+        </div>
+        <button type="button" class="primary-button" id="generateReflection">Generate End-of-Day Reflection</button>
+        <textarea id="reflectionOutput" rows="12" aria-label="Generated reflection" placeholder="กด Generate เพื่อสร้าง reflection จากข้อมูลวันนี้"></textarea>
+      </article>
+    </section>
+
+    <section class="control-panel">
+      <div>
+        <p class="section-kicker">Local only</p>
+        <h2>Daily Log Controls</h2>
+        <p>บันทึกเป็นตารางใน browser/localStorage ของเครื่องนี้ แล้ว export เป็น Master Excel เมื่อพี่ต้องการ</p>
+      </div>
+      <div class="control-buttons">
+        <button type="button" class="primary-button" id="saveDailyLog">Save to Daily Log</button>
+        <button type="button" class="ghost-button" id="clearDailyLog">Clear Daily Log</button>
+        <button type="button" class="action-button" id="exportMasterExcel">Export Master Excel</button>
+        <button type="button" class="action-button" id="importMasterExcel">Import Master Excel</button>
+        <input type="file" id="importExcelFile" accept=".xlsx,.xls" hidden>
+      </div>
+      <p class="save-status" id="saveStatus" aria-live="polite"></p>
+    </section>
+
+    <section class="daily-log-section glass-card" aria-labelledby="dailyLogTitle">
+      <div class="card-heading">
+        <div>
+          <p class="section-kicker">Daily Log Table</p>
+          <h2 id="dailyLogTitle">Daily Log Table</h2>
+        </div>
+        <span class="soft-badge" id="logCount">0 logs</span>
+      </div>
+      <p class="table-helper">ตารางนี้คือบันทึกย้อนหลังใน browser นี้ ใช้ดู pattern แบบไม่ต้องกรอกละเอียดเกินไป</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Energy</th>
+              <th>Mind</th>
+              <th>Sleep</th>
+              <th>Water_ml</th>
+              <th>Drinks</th>
+              <th>Sweet_Drinks_Count</th>
+              <th>Activities</th>
+              <th>Load_Score</th>
+              <th>Load_Level</th>
+              <th>Hydration_Status</th>
+              <th>Tomorrow_Focus</th>
+              <th>NuTuenSai_Reminder</th>
+            </tr>
+          </thead>
+          <tbody id="dailyLogBody"></tbody>
+        </table>
+      </div>
+      <p class="empty-state" id="emptyLogState">ยังไม่มี log วันนี้ เริ่มจาก Save to Daily Log ได้เลย</p>
+    </section>
+  </main>
+</body>
+</html>
