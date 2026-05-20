@@ -272,7 +272,12 @@ body.welcome-open {
 .welcome-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
+}
+
+.welcome-actions .primary-button {
+  min-width: min(100%, 180px);
 }
 
 @keyframes welcomeRise {
