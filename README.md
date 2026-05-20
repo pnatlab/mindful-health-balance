@@ -1,4 +1,4 @@
-# Mindful Health Balance by MSxAI v1.3
+# Mindful Health Balance by MSxAI v1.5
 
 Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ static สำหรับ self-care reflection ของ pnat เพื่อช่วยดู pattern และ balance recovery ในชีวิตประจำวัน โดยเน้น 4 แกนหลัก:
 
@@ -9,7 +9,7 @@ Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ stati
 
 แนวคิดหลักของแอปคือ “ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง” แอปนี้ตั้งใจช่วยให้เห็นภาพรวมของวันแบบอ่อนโยน ไม่ดุ ไม่ทำให้กลัว และไม่ทำให้รู้สึกผิดกับสุขภาพ
 
-v1.3 รองรับ UI 3 ภาษา:
+ตั้งแต่ v1.3 รองรับ UI 3 ภาษา:
 
 - TH / ภาษาไทย
 - EN / English
@@ -20,6 +20,62 @@ v1.3 รองรับ UI 3 ภาษา:
 ```text
 mindfulHealthLanguage
 ```
+
+## v1.4 Lavender Glass Welcome UI
+
+v1.4 เพิ่ม Welcome Glass / NuTuenSai Welcome Threshold เป็นหน้ากระจกต้อนรับก่อนเข้า dashboard เพื่อให้ผู้ใช้เริ่มการบันทึกสุขภาพจากความอ่อนโยนและ human agency ไม่ใช่จากความกลัวหรือความรู้สึกว่าต้องรีบแก้ตัวเลข
+
+หน้าต้อนรับนี้ใช้โทน lavender glass, white mist และ soft loop motif เพื่อช่วยวางจังหวะก่อนเริ่มดู hydration, recovery, daily load และ mind state แบบเบา ๆ
+
+เมื่อกดเริ่มดูแลวันนี้หรือเข้าสู่ dashboard แอปจะจำเฉพาะ session ของวันนั้นไว้ด้วย key:
+
+```text
+mindfulHealthWelcomeSeen:<date>
+```
+
+ข้อมูลนี้เป็นเพียงสถานะ UI ของ welcome threshold ไม่เกี่ยวกับ Daily Log, localStorage สุขภาพ, Import หรือ Export
+
+## v1.4.1 Dark Lavender Mode
+
+v1.4.1 เพิ่มโหมดสว่าง/โหมดมืด โดยยังรักษาโทน glassmorphism, calm wellness-tech และความอ่อนโยนของระบบไว้
+
+ค่าธีมที่เลือกจะถูกบันทึกไว้ใน browser/localStorage key:
+
+```text
+mindfulHealthTheme
+```
+
+การเปลี่ยนธีมเปลี่ยนเฉพาะการแสดงผล ไม่กระทบ Daily Log, Import หรือ Export
+
+## v1.4.2 Auto Theme by Local Time
+
+v1.4.2 เพิ่ม Auto theme ที่ใช้เวลาบนเครื่องผู้ใช้เพื่อเลือกธีมอัตโนมัติ:
+
+- 07:00-18:59 = Light mode
+- 19:00-06:59 = Dark mode
+
+ผู้ใช้ยังสามารถเลือก Light หรือ Dark เองได้ ถ้าเลือกเองแอปจะคงธีมนั้นไว้ ไม่เปลี่ยนตามเวลา
+
+theme preference ถูกบันทึกใน browser/localStorage key:
+
+```text
+mindfulHealthTheme
+```
+
+## v1.5 Structured Drink & Energy Profile
+
+v1.5 เพิ่ม Drink Profile แบบ structured เพื่อให้เห็น pattern ของ sugar, caffeine, milk drink และ hydration support ชัดขึ้น โดยยังตั้งใจให้กรอกเท่าที่จำเป็น ไม่ใช่เพิ่มภาระให้ผู้ใช้
+
+ข้อมูล Daily Log และ Master Excel เพิ่ม columns:
+
+- `Drink_Profile_JSON`
+- `Sugar_Score`
+- `Caffeine_Score`
+- `Milk_Drink_Count`
+- `Hydration_Support_Count`
+- `Energy_Causes`
+
+แอปยังรองรับ log เดิมที่ไม่มี columns เหล่านี้ โดย import แล้วตั้งค่า default เป็นค่าว่างหรือ `0` เพื่อรักษา backward compatibility
 
 ## วิธีเปิดใช้งาน
 
@@ -34,6 +90,8 @@ mindfulHealthLanguage
 - เลือก Today State: Energy, Mind, Sleep
 - นับปริมาณน้ำเป็น ml พร้อม feedback ที่เน้นความพอดี ไม่ใช่การดื่มให้เยอะที่สุด
 - เลือกเครื่องดื่มของวัน และดู reminder เรื่องเครื่องดื่มหวาน/กาแฟแบบไม่กดดัน
+- เพิ่ม Drink Profile แบบพอดี เพื่อดู sugar/caffeine/milk/hydration support
+- เลือก Energy Cause แบบ optional เพื่อช่วยตีความพลังงานของวัน
 - เลือกกิจกรรมเพื่อคำนวณ Load Score และ Load Level
 - สร้าง End-of-Day Reflection ในโทน NuTuenSai
 - Save to Daily Log เพื่อบันทึกข้อมูลวันนี้เป็น 1 row ในตาราง
@@ -107,7 +165,7 @@ https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js
 
 ใน v1.3 option บางส่วนยังใช้ label ภาษาไทยเป็น canonical value ภายใน state เพื่อรักษาความเข้ากันได้กับข้อมูลเดิมใน localStorage, Daily Log, Import และ Export
 
-หากจะ refactor canonical state ในอนาคต ควรทำเป็น v1.4 Canonical State Refactor พร้อม migration layer เพื่อไม่ให้ข้อมูลเดิมของผู้ใช้เสีย compatibility
+หากจะ refactor canonical state ในอนาคต ควรทำเป็น Canonical State Refactor release พร้อม migration layer เพื่อไม่ให้ข้อมูลเดิมของผู้ใช้เสีย compatibility
 
 ## หมายเหตุสำคัญ
 

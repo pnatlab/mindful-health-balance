@@ -1,6 +1,8 @@
 const STORAGE_PREFIX = "mindfulHealthBalance";
 const DAILY_LOG_KEY = "mindfulHealthDailyLog";
 const LANGUAGE_KEY = "mindfulHealthLanguage";
+const WELCOME_KEY_PREFIX = "mindfulHealthWelcomeSeen";
+const THEME_KEY = "mindfulHealthTheme";
 const DAILY_LOG_COLUMNS = [
   "Date",
   "Energy",
@@ -9,7 +11,13 @@ const DAILY_LOG_COLUMNS = [
   "Water_ml",
   "Drinks",
   "Sweet_Drinks_Count",
+  "Drink_Profile_JSON",
+  "Sugar_Score",
+  "Caffeine_Score",
+  "Milk_Drink_Count",
+  "Hydration_Support_Count",
   "Activities",
+  "Energy_Causes",
   "Load_Score",
   "Load_Level",
   "Hydration_Status",
@@ -27,8 +35,20 @@ const translations = {
     htmlLang: "th",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.3 Mind Note Layer",
+    version: "v1.5 Structured Drink & Energy Profile",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
+    welcomeKicker: "NuTuenSai Welcome Threshold",
+    welcomeTitle: "ยินดีต้อนรับกลับมา",
+    welcomeSubtitle: "ดูแลอื่นมาเยอะแล้ว\nอย่าลืมดูแลตัวเองด้วยน๊าา",
+    welcomeQuote: "สมดุลเริ่มจากการเห็น ไม่ใช่การฝืน",
+    welcomeBegin: "เริ่มวันนี้",
+    welcomeSkip: "เข้าสู่ Dashboard",
+    openWelcome: "Open Welcome",
+    themeAuto: "อัตโนมัติ",
+    themeLight: "สว่าง",
+    themeDark: "มืด",
+    themeStatusLight: "ตอนนี้ใช้โหมดสว่างตามเวลาบนเครื่อง",
+    themeStatusDark: "ตอนนี้ใช้โหมดมืดตามเวลาบนเครื่อง",
     noticeTitle: "Self-care reflection tool",
     noticeText: "แอปนี้ช่วยดู pattern และ balance recovery เท่านั้น ไม่ใช่เครื่องมือวินิจฉัย และไม่ใช้แทนแพทย์หรือการติดตามตามนัด",
     todayState: "Today State",
@@ -41,7 +61,21 @@ const translations = {
     halfBottle: "+ครึ่งขวด",
     resetButton: "Reset",
     drinks: "Drinks",
-    drinksHeading: "เครื่องดื่มที่เลือกวันนี้",
+    drinksHeading: "Drink Profile วันนี้",
+    drinkTypeLabel: "Drink Type",
+    sweetnessLabel: "Sweetness",
+    caffeineLabel: "Caffeine",
+    milkLabel: "Milk",
+    amountLabel: "Amount",
+    amountPlaceholder: "1 glass / 1 bottle / หรือระบุเอง",
+    addDrink: "Add Drink",
+    clearDrinks: "Clear Drinks",
+    sugarScoreLabel: "Sugar {score}",
+    caffeineScoreLabel: "Caffeine {score}",
+    milkCountLabel: "Milk {count}",
+    hydrationSupportLabel: "Hydration {count}",
+    emptyDrinkList: "ยังไม่มี drink profile วันนี้ เพิ่มเท่าที่จำเป็นก็พอ",
+    energyCauseLabel: "Energy Cause / เหตุที่น่ามีผลต่อพลังงาน",
     loadRecovery: "Load & Recovery",
     loadHeading: "วันนี้ใช้พลังไปกับอะไร",
     mindfulReminder: "Mindful Reminder",
@@ -120,7 +154,15 @@ const translations = {
     drinksFeedback: {
       sweetMany: "แก้วหวาน = ของหวาน ไม่ใช่น้ำ วันนี้ลดแก้วถัดไปก็พอ",
       sweetSome: "ลดหวานก่อน ลดกลัวทีหลัง",
-      blackCoffee: "กาแฟได้ แต่อย่าให้แทนน้ำ"
+      blackCoffee: "กาแฟได้ แต่อย่าให้แทนน้ำ",
+      sugarHigh: "วันนี้น้ำตาลจากเครื่องดื่มเริ่มเยอะ ลดแก้วถัดไปก็พอ",
+      caffeineHigh: "คาเฟอีนวันนี้เริ่มสูง อย่าให้กาแฟแทนน้ำและการพัก",
+      lightAndHydrated: "เครื่องดื่มวันนี้เบาขึ้นแล้ว รักษาความสม่ำเสมอก็พอ"
+    },
+    drinkReflection: {
+      sugar: "เครื่องดื่มหวานวันนี้เริ่มสะสม แต่ไม่ต้องแก้ด้วยการหักดิบ แค่ลดแก้วถัดไป",
+      caffeine: "คาเฟอีนวันนี้เริ่มสูง ให้มันเป็นข้อมูล ไม่ใช่สิ่งที่มาแทนการพัก",
+      energyCauses: "วันนี้พลังงานอาจถูกกระทบจาก {causes} มากกว่าความผิดพลาดของตัวเอง"
     },
     loadLevel: {
       light: "Load เบา",
@@ -160,12 +202,34 @@ const translations = {
       mind: { calm: "นิ่ง", worried: "กังวล", pressured: "กดดัน", scattered: "ฟุ้ง" },
       sleep: { low: "น้อย", okay: "พอใช้", good: "ดี" },
       drinks: {
+        water: "น้ำเปล่า",
         blackCoffee: "กาแฟดำ",
         milkCoffee: "กาแฟใส่นม",
+        tea: "ชา",
+        matcha: "มัทฉะ",
         cocoa: "โกโก้",
+        coconutWater: "น้ำมะพร้าว",
+        juice: "น้ำผลไม้",
         sweetDrink: "น้ำชมพู/เครื่องดื่มหวาน",
+        lemonWater: "น้ำมะนาว",
         unsweetLime: "น้ำมะนาวไม่หวาน",
-        water: "น้ำเปล่า"
+        other: "อื่น ๆ"
+      },
+      sweetness: {
+        none: "ไม่หวาน",
+        low: "หวานน้อย",
+        normal: "หวานปกติ",
+        high: "หวานมาก"
+      },
+      caffeine: {
+        none: "ไม่มี",
+        low: "ต่ำ",
+        medium: "กลาง",
+        high: "สูง"
+      },
+      milk: {
+        no: "ไม่ใส่นม",
+        yes: "ใส่นม"
       },
       activities: {
         rest: "Rest day",
@@ -192,6 +256,15 @@ const translations = {
           hydrate_gently: "จิบน้ำเบา ๆ",
           set_down: "วางไว้ก่อน"
         }
+      },
+      energyCauses: {
+        sleep_low: "นอนน้อย",
+        heavy_exercise: "ออกกำลังหนัก",
+        deep_work: "Deep work",
+        stress: "ความเครียด",
+        low_water: "น้ำน้อย",
+        low_food: "อาหารน้อย",
+        unknown: "ยังไม่แน่ใจ"
       }
     }
   },
@@ -201,8 +274,20 @@ const translations = {
     htmlLang: "en",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.3 Mind Note Layer",
+    version: "v1.5 Structured Drink & Energy Profile",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
+    welcomeKicker: "NuTuenSai Welcome Threshold",
+    welcomeTitle: "Welcome back,",
+    welcomeSubtitle: "You have cared for many things today.\nDon't forget to care for yourself too.",
+    welcomeQuote: "Balance begins with noticing, not forcing.",
+    welcomeBegin: "Begin Today",
+    welcomeSkip: "Go to Dashboard",
+    openWelcome: "Open Welcome",
+    themeAuto: "Auto",
+    themeLight: "Light",
+    themeDark: "Dark",
+    themeStatusLight: "Currently using Light mode based on local time.",
+    themeStatusDark: "Currently using Dark mode based on local time.",
     noticeTitle: "Self-care reflection tool",
     noticeText: "This app helps you notice patterns and balance recovery only. It is not a diagnosis tool and does not replace medical care or follow-up appointments.",
     todayState: "Today State",
@@ -215,7 +300,21 @@ const translations = {
     halfBottle: "+half bottle",
     resetButton: "Reset",
     drinks: "Drinks",
-    drinksHeading: "Drinks chosen today",
+    drinksHeading: "Drink Profile today",
+    drinkTypeLabel: "Drink Type",
+    sweetnessLabel: "Sweetness",
+    caffeineLabel: "Caffeine",
+    milkLabel: "Milk",
+    amountLabel: "Amount",
+    amountPlaceholder: "1 glass / 1 bottle / custom",
+    addDrink: "Add Drink",
+    clearDrinks: "Clear Drinks",
+    sugarScoreLabel: "Sugar {score}",
+    caffeineScoreLabel: "Caffeine {score}",
+    milkCountLabel: "Milk {count}",
+    hydrationSupportLabel: "Hydration {count}",
+    emptyDrinkList: "No drink profile yet. Add only what is useful.",
+    energyCauseLabel: "Energy Cause",
     loadRecovery: "Load & Recovery",
     loadHeading: "What used your energy today?",
     mindfulReminder: "Mindful Reminder",
@@ -294,7 +393,15 @@ const translations = {
     drinksFeedback: {
       sweetMany: "Sweet drinks count as dessert, not water. Reducing the next one is enough.",
       sweetSome: "Reduce sweetness first. Reduce fear later.",
-      blackCoffee: "Coffee is okay, but do not let it replace water."
+      blackCoffee: "Coffee is okay, but do not let it replace water.",
+      sugarHigh: "Sugary drinks are adding up today. Reducing the next one is enough.",
+      caffeineHigh: "Caffeine is getting high today. Let it not replace water or rest.",
+      lightAndHydrated: "Today's drinks are lighter. Consistency is enough."
+    },
+    drinkReflection: {
+      sugar: "Sugary drinks are adding up today, but no need to go extreme. Reducing the next one is enough.",
+      caffeine: "Caffeine is getting high today. Let it be information, not a replacement for rest.",
+      energyCauses: "Today's energy may be affected by {causes} more than by any personal mistake."
     },
     loadLevel: {
       light: "Light Load",
@@ -334,12 +441,34 @@ const translations = {
       mind: { calm: "Calm", worried: "Worried", pressured: "Pressured", scattered: "Scattered" },
       sleep: { low: "Low", okay: "Okay", good: "Good" },
       drinks: {
+        water: "Plain water",
         blackCoffee: "Black coffee",
         milkCoffee: "Coffee with milk",
+        tea: "Tea",
+        matcha: "Matcha",
         cocoa: "Cocoa",
+        coconutWater: "Coconut water",
+        juice: "Juice",
         sweetDrink: "Pink milk / sweet drink",
+        lemonWater: "Lemon water",
         unsweetLime: "Unsweetened lime water",
-        water: "Plain water"
+        other: "Other"
+      },
+      sweetness: {
+        none: "None",
+        low: "Low",
+        normal: "Normal",
+        high: "High"
+      },
+      caffeine: {
+        none: "None",
+        low: "Low",
+        medium: "Medium",
+        high: "High"
+      },
+      milk: {
+        no: "No milk",
+        yes: "Milk"
       },
       activities: {
         rest: "Rest day",
@@ -366,6 +495,15 @@ const translations = {
           hydrate_gently: "Hydrate gently",
           set_down: "Set it down"
         }
+      },
+      energyCauses: {
+        sleep_low: "Low sleep",
+        heavy_exercise: "Heavy exercise",
+        deep_work: "Deep work",
+        stress: "Stress",
+        low_water: "Low water",
+        low_food: "Low food",
+        unknown: "Not sure yet"
       }
     }
   },
@@ -375,8 +513,20 @@ const translations = {
     htmlLang: "zh-CN",
     eyebrow: "个人正念健康仪表板",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.3 心念记录层",
+    version: "v1.5 结构化饮品与能量记录",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
+    welcomeKicker: "NuTuenSai 欢迎门槛",
+    welcomeTitle: "欢迎回来",
+    welcomeSubtitle: "今天你已经照顾了很多事情。\n也别忘了温柔地照顾自己。",
+    welcomeQuote: "平衡始于看见，而不是强迫。",
+    welcomeBegin: "开始今天",
+    welcomeSkip: "进入 Dashboard",
+    openWelcome: "打开欢迎页",
+    themeAuto: "自动",
+    themeLight: "浅色",
+    themeDark: "深色",
+    themeStatusLight: "当前根据本地时间使用浅色模式。",
+    themeStatusDark: "当前根据本地时间使用深色模式。",
     noticeTitle: "自我照顾反思工具",
     noticeText: "这个应用只帮助你观察 pattern 和 balance recovery，不是诊断工具，也不能替代医生或复诊。",
     todayState: "今日状态",
@@ -389,7 +539,21 @@ const translations = {
     halfBottle: "+半瓶",
     resetButton: "重置",
     drinks: "饮品",
-    drinksHeading: "今天选择的饮品",
+    drinksHeading: "今天的饮品记录",
+    drinkTypeLabel: "饮品类型",
+    sweetnessLabel: "甜度",
+    caffeineLabel: "咖啡因",
+    milkLabel: "奶",
+    amountLabel: "份量",
+    amountPlaceholder: "1 glass / 1 bottle / 自定义",
+    addDrink: "添加饮品",
+    clearDrinks: "清空饮品",
+    sugarScoreLabel: "糖分 {score}",
+    caffeineScoreLabel: "咖啡因 {score}",
+    milkCountLabel: "奶类 {count}",
+    hydrationSupportLabel: "补水 {count}",
+    emptyDrinkList: "今天还没有饮品记录。只记录有帮助的就好。",
+    energyCauseLabel: "Energy Cause / 可能影响能量的原因",
     loadRecovery: "Load & Recovery",
     loadHeading: "今天把能量用在哪里？",
     mindfulReminder: "正念提醒",
@@ -468,7 +632,15 @@ const translations = {
     drinksFeedback: {
       sweetMany: "甜饮 = 甜点，不是水。今天下一杯少一点就够了。",
       sweetSome: "先减少甜，再减少害怕。",
-      blackCoffee: "咖啡可以，但不要让它取代水。"
+      blackCoffee: "咖啡可以，但不要让它取代水。",
+      sugarHigh: "今天饮料中的糖分开始累积，下一杯少一点就够了。",
+      caffeineHigh: "今天咖啡因偏高，别让它取代水和休息。",
+      lightAndHydrated: "今天的饮料负担较轻，保持稳定就好。"
+    },
+    drinkReflection: {
+      sugar: "今天甜饮开始累积，但不需要极端调整，下一杯少一点就够了。",
+      caffeine: "今天咖啡因偏高，把它当作信息，不要让它取代休息。",
+      energyCauses: "今天的能量可能更多受到 {causes} 影响，而不是自己的错误。"
     },
     loadLevel: {
       light: "Load 轻",
@@ -508,12 +680,34 @@ const translations = {
       mind: { calm: "平静", worried: "担心", pressured: "有压力", scattered: "分散" },
       sleep: { low: "少", okay: "还可以", good: "好" },
       drinks: {
+        water: "白水",
         blackCoffee: "黑咖啡",
         milkCoffee: "加奶咖啡",
+        tea: "茶",
+        matcha: "抹茶",
         cocoa: "可可",
+        coconutWater: "椰子水",
+        juice: "果汁",
         sweetDrink: "粉红奶/甜饮",
+        lemonWater: "柠檬水",
         unsweetLime: "无糖柠檬水",
-        water: "白水"
+        other: "其他"
+      },
+      sweetness: {
+        none: "无糖",
+        low: "低",
+        normal: "正常",
+        high: "高"
+      },
+      caffeine: {
+        none: "无",
+        low: "低",
+        medium: "中",
+        high: "高"
+      },
+      milk: {
+        no: "不含奶",
+        yes: "含奶"
       },
       activities: {
         rest: "休息日",
@@ -540,18 +734,53 @@ const translations = {
           hydrate_gently: "温和补水",
           set_down: "先放下"
         }
+      },
+      energyCauses: {
+        sleep_low: "睡得少",
+        heavy_exercise: "高强度运动",
+        deep_work: "Deep work",
+        stress: "压力",
+        low_water: "水少",
+        low_food: "吃得少",
+        unknown: "还不确定"
       }
     }
   }
 };
 
 const drinkOptions = [
-  { key: "blackCoffee", label: "กาแฟดำ", sweet: false },
-  { key: "milkCoffee", label: "กาแฟใส่นม", sweet: true },
-  { key: "cocoa", label: "โกโก้", sweet: true },
-  { key: "sweetDrink", label: "น้ำชมพู/เครื่องดื่มหวาน", sweet: true },
-  { key: "unsweetLime", label: "น้ำมะนาวไม่หวาน", sweet: false },
-  { key: "water", label: "น้ำเปล่า", sweet: false }
+  { key: "water", type: "water", label: "น้ำเปล่า", sweet: false, hydration: true, defaultSweetness: "none", defaultCaffeine: "none", defaultMilk: "no" },
+  { key: "blackCoffee", type: "black_coffee", label: "กาแฟดำ", sweet: false, hydration: false, defaultSweetness: "none", defaultCaffeine: "medium", defaultMilk: "no" },
+  { key: "milkCoffee", type: "milk_coffee", label: "กาแฟใส่นม", sweet: true, hydration: false, defaultSweetness: "normal", defaultCaffeine: "medium", defaultMilk: "yes" },
+  { key: "tea", type: "tea", label: "ชา", sweet: false, hydration: false, defaultSweetness: "none", defaultCaffeine: "low", defaultMilk: "no" },
+  { key: "matcha", type: "matcha", label: "มัทฉะ", sweet: false, hydration: false, defaultSweetness: "low", defaultCaffeine: "medium", defaultMilk: "no" },
+  { key: "cocoa", type: "cocoa", label: "โกโก้", sweet: true, hydration: false, defaultSweetness: "normal", defaultCaffeine: "low", defaultMilk: "yes" },
+  { key: "coconutWater", type: "coconut_water", label: "น้ำมะพร้าว", sweet: false, hydration: true, defaultSweetness: "low", defaultCaffeine: "none", defaultMilk: "no" },
+  { key: "juice", type: "juice", label: "น้ำผลไม้", sweet: true, hydration: false, defaultSweetness: "normal", defaultCaffeine: "none", defaultMilk: "no" },
+  { key: "sweetDrink", type: "sweet_drink", label: "น้ำชมพู/เครื่องดื่มหวาน", sweet: true, hydration: false, defaultSweetness: "high", defaultCaffeine: "none", defaultMilk: "no" },
+  { key: "lemonWater", type: "lemon_water", label: "น้ำมะนาว", sweet: false, hydration: true, defaultSweetness: "none", defaultCaffeine: "none", defaultMilk: "no" },
+  { key: "unsweetLime", type: "lemon_water", label: "น้ำมะนาวไม่หวาน", sweet: false, hydration: true, defaultSweetness: "none", defaultCaffeine: "none", defaultMilk: "no" },
+  { key: "other", type: "other", label: "อื่น ๆ", sweet: false, hydration: false, defaultSweetness: "none", defaultCaffeine: "none", defaultMilk: "no" }
+];
+
+const drinkTypeOptions = drinkOptions.filter((drink, index, options) =>
+  options.findIndex((item) => item.type === drink.type) === index
+);
+
+const sweetnessScores = { none: 0, low: 1, normal: 2, high: 3 };
+const caffeineScores = { none: 0, low: 1, medium: 2, high: 3 };
+const sweetnessOptions = ["none", "low", "normal", "high"];
+const caffeineOptions = ["none", "low", "medium", "high"];
+const milkOptions = ["no", "yes"];
+
+const energyCauseOptions = [
+  "sleep_low",
+  "heavy_exercise",
+  "deep_work",
+  "stress",
+  "low_water",
+  "low_food",
+  "unknown"
 ];
 
 const activityOptions = [
@@ -570,7 +799,9 @@ const defaultState = {
   date: todayIso,
   waterMl: 0,
   drinks: [],
+  drinkProfiles: [],
   activities: [],
+  energyCauses: [],
   selectedState: {
     energy: "",
     mind: "",
@@ -586,14 +817,20 @@ const defaultState = {
 };
 
 let currentLanguage = loadLanguage();
+let currentThemePreference = getThemePreference();
 let appState = loadState();
+let themeIntervalId;
 
 document.addEventListener("DOMContentLoaded", () => {
+  applyThemePreference(currentThemePreference);
   applyTranslations();
   renderDate();
   renderDrinkOptions();
   renderActivityOptions();
+  renderEnergyCauseOptions();
   bindEvents();
+  initWelcome();
+  startThemeAutoRefresh();
   syncUI();
   renderDailyLogTable();
 });
@@ -602,9 +839,28 @@ function storageKey() {
   return `${STORAGE_PREFIX}:${todayIso}`;
 }
 
+function welcomeStorageKey() {
+  return `${WELCOME_KEY_PREFIX}:${todayIso}`;
+}
+
 function loadLanguage() {
   const savedLanguage = localStorage.getItem(LANGUAGE_KEY);
   return translations[savedLanguage] ? savedLanguage : "th";
+}
+
+function getThemePreference() {
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  return ["auto", "light", "dark"].includes(savedTheme) ? savedTheme : "auto";
+}
+
+function getThemeFromLocalTime() {
+  const hour = new Date().getHours();
+  return hour >= 7 && hour < 19 ? "light" : "dark";
+}
+
+function resolveTheme(preference) {
+  if (preference === "light" || preference === "dark") return preference;
+  return getThemeFromLocalTime();
 }
 
 function t(key, replacements = {}) {
@@ -630,6 +886,49 @@ function applyTranslations() {
   document.querySelectorAll("[data-lang]").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.lang === currentLanguage);
   });
+  updateThemeButtons();
+}
+
+function applyThemePreference(preference = currentThemePreference) {
+  const safePreference = ["auto", "light", "dark"].includes(preference) ? preference : "auto";
+  const resolvedTheme = resolveTheme(safePreference);
+  currentThemePreference = safePreference;
+  document.body.dataset.theme = resolvedTheme;
+  localStorage.setItem(THEME_KEY, safePreference);
+  updateThemeToggle(safePreference, resolvedTheme);
+}
+
+function setThemePreference(preference) {
+  if (!["auto", "light", "dark"].includes(preference)) return;
+  applyThemePreference(preference);
+}
+
+function updateThemeButtons() {
+  updateThemeToggle(currentThemePreference, document.body.dataset.theme || resolveTheme(currentThemePreference));
+}
+
+function updateThemeToggle(preference, resolvedTheme) {
+  document.querySelectorAll("[data-theme-value]").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.themeValue === preference);
+  });
+  updateThemeStatus(preference, resolvedTheme);
+}
+
+function updateThemeStatus(preference = currentThemePreference, resolvedTheme = document.body.dataset.theme || "light") {
+  const themeStatus = document.querySelector("#themeStatus");
+  if (!themeStatus) return;
+  themeStatus.textContent = preference === "auto"
+    ? t(resolvedTheme === "dark" ? "themeStatusDark" : "themeStatusLight")
+    : "";
+}
+
+function startThemeAutoRefresh() {
+  if (themeIntervalId) clearInterval(themeIntervalId);
+  themeIntervalId = setInterval(() => {
+    if (currentThemePreference === "auto") {
+      applyThemePreference("auto");
+    }
+  }, 60 * 1000);
 }
 
 function loadState() {
@@ -639,7 +938,12 @@ function loadState() {
   }
 
   try {
-    return { ...structuredClone(defaultState), ...JSON.parse(saved), date: todayIso };
+    const parsed = { ...structuredClone(defaultState), ...JSON.parse(saved), date: todayIso };
+    parsed.drinkProfiles = Array.isArray(parsed.drinkProfiles) && parsed.drinkProfiles.length
+      ? parsed.drinkProfiles.map(normalizeDrinkProfile)
+      : legacyDrinksToProfiles(parsed.drinks || []);
+    parsed.energyCauses = Array.isArray(parsed.energyCauses) ? parsed.energyCauses : [];
+    return parsed;
   } catch {
     return structuredClone(defaultState);
   }
@@ -656,13 +960,20 @@ function renderDate() {
 }
 
 function renderDrinkOptions() {
-  const list = document.querySelector("#drinksList");
-  list.innerHTML = drinkOptions.map((drink) => `
-    <label class="toggle-card" data-drink="${drink.label}">
-      <input type="checkbox" value="${drink.label}">
-      <span>${t(`options.drinks.${drink.key}`)}</span>
-    </label>
-  `).join("");
+  renderSelectOptions("#drinkTypeSelect", drinkTypeOptions, (drink) => t(`options.drinks.${drink.key}`), "type");
+  renderSelectOptions("#sweetnessSelect", sweetnessOptions, (key) => t(`options.sweetness.${key}`));
+  renderSelectOptions("#caffeineSelect", caffeineOptions, (key) => t(`options.caffeine.${key}`));
+  renderSelectOptions("#milkSelect", milkOptions, (key) => t(`options.milk.${key}`));
+  applyDrinkDefaults();
+}
+
+function renderSelectOptions(selector, options, labelGetter, valueKey = "") {
+  const select = document.querySelector(selector);
+  if (!select) return;
+  select.innerHTML = options.map((option) => {
+    const value = valueKey ? option[valueKey] : option;
+    return `<option value="${escapeHtml(value)}">${escapeHtml(labelGetter(option))}</option>`;
+  }).join("");
 }
 
 function renderActivityOptions() {
@@ -674,7 +985,27 @@ function renderActivityOptions() {
   `).join("");
 }
 
+function renderEnergyCauseOptions() {
+  const list = document.querySelector("#energyCausesList");
+  if (!list) return;
+  list.innerHTML = energyCauseOptions.map((key) => `
+    <button type="button" class="activity-button" data-energy-cause="${key}">
+      ${t(`options.energyCauses.${key}`)}
+    </button>
+  `).join("");
+}
+
 function bindEvents() {
+  document.querySelector("#beginWelcome").addEventListener("click", hideWelcome);
+  document.querySelector("#skipWelcome").addEventListener("click", hideWelcome);
+  document.querySelector("#openWelcome").addEventListener("click", () => showWelcome({ remember: false }));
+
+  document.querySelector(".theme-toggle").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-theme-value]");
+    if (!button || !["auto", "light", "dark"].includes(button.dataset.themeValue)) return;
+    setThemePreference(button.dataset.themeValue);
+  });
+
   document.querySelector(".language-toggle").addEventListener("click", (event) => {
     const button = event.target.closest("[data-lang]");
     if (!button || !translations[button.dataset.lang]) return;
@@ -684,6 +1015,8 @@ function bindEvents() {
     renderDate();
     renderDrinkOptions();
     renderActivityOptions();
+    renderEnergyCauseOptions();
+    applyThemePreference();
     syncUI();
     renderDailyLogTable();
   });
@@ -712,12 +1045,14 @@ function bindEvents() {
     syncUI();
   });
 
-  document.querySelector("#drinksList").addEventListener("change", (event) => {
-    const input = event.target.closest("input[type='checkbox']");
-    if (!input) return;
-    appState.drinks = input.checked
-      ? unique([...appState.drinks, input.value])
-      : appState.drinks.filter((drink) => drink !== input.value);
+  document.querySelector("#drinkTypeSelect").addEventListener("change", applyDrinkDefaults);
+  document.querySelector("#addDrink").addEventListener("click", () => {
+    appState.drinkProfiles = [...(appState.drinkProfiles || []), getDrinkProfileFromForm()];
+    syncUI();
+  });
+  document.querySelector("#clearDrinks").addEventListener("click", () => {
+    appState.drinkProfiles = [];
+    appState.drinks = [];
     syncUI();
   });
 
@@ -740,6 +1075,16 @@ function bindEvents() {
       appState.selectedState.sleep = isSelected ? "" : "น้อย";
     }
 
+    syncUI();
+  });
+
+  document.querySelector("#energyCausesList").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-energy-cause]");
+    if (!button) return;
+    const cause = button.dataset.energyCause;
+    appState.energyCauses = appState.energyCauses.includes(cause)
+      ? appState.energyCauses.filter((item) => item !== cause)
+      : [...appState.energyCauses, cause];
     syncUI();
   });
 
@@ -773,6 +1118,44 @@ function bindEvents() {
   document.querySelector("#importExcelFile").addEventListener("change", importMasterExcel);
 }
 
+function initWelcome() {
+  const hasSeenWelcome = sessionStorage.getItem(welcomeStorageKey()) === "true";
+  if (hasSeenWelcome) {
+    hideWelcome({ remember: false, instant: true });
+    return;
+  }
+  showWelcome({ remember: false });
+}
+
+function showWelcome() {
+  const overlay = document.querySelector("#welcomeOverlay");
+  if (!overlay) return;
+  overlay.classList.remove("is-hidden");
+  overlay.setAttribute("aria-hidden", "false");
+  document.body.classList.add("welcome-open");
+}
+
+function hideWelcome({ remember = true, instant = false } = {}) {
+  const overlay = document.querySelector("#welcomeOverlay");
+  if (!overlay) return;
+  if (remember) {
+    sessionStorage.setItem(welcomeStorageKey(), "true");
+  }
+  if (instant) {
+    overlay.style.transition = "none";
+    overlay.classList.add("is-hidden");
+    overlay.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("welcome-open");
+    requestAnimationFrame(() => {
+      overlay.style.transition = "";
+    });
+    return;
+  }
+  overlay.classList.add("is-hidden");
+  overlay.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("welcome-open");
+}
+
 function syncUI() {
   appState.loadScore = calculateLoadScore();
   appState.loadLevel = getLoadLevel(appState.loadScore);
@@ -780,6 +1163,7 @@ function syncUI() {
 
   document.querySelector("#waterMl").textContent = appState.waterMl.toLocaleString(translations[currentLanguage].locale);
   document.querySelector("#hydrationFeedback").textContent = appState.hydrationStatus;
+  updateHydrationVisual();
   document.querySelector("#loadScore").textContent = appState.loadScore;
   document.querySelector("#loadLevel").textContent = appState.loadLevel;
   document.querySelector("#loadFeedback").textContent = getLoadFeedback();
@@ -791,6 +1175,14 @@ function syncUI() {
   updateMindNoteButtons();
   updateDrinkUI();
   updateActivityUI();
+  updateEnergyCauseUI();
+}
+
+function updateHydrationVisual() {
+  const visual = document.querySelector(".water-glass-visual");
+  if (!visual) return;
+  const waterLevel = Math.min(Math.max(appState.waterMl / 2200, 0), 1) * 100;
+  visual.style.setProperty("--water-level", `${waterLevel}%`);
 }
 
 function updateStateButtons() {
@@ -803,20 +1195,27 @@ function updateStateButtons() {
 }
 
 function updateDrinkUI() {
-  document.querySelectorAll(".toggle-card").forEach((label) => {
-    const input = label.querySelector("input");
-    const checked = appState.drinks.includes(input.value);
-    input.checked = checked;
-    label.classList.toggle("is-active", checked);
-  });
-
+  appState.drinkProfiles = (appState.drinkProfiles || []).map(normalizeDrinkProfile);
+  appState.drinks = getDrinkSummaryLabels(appState.drinkProfiles);
+  const scores = getDrinkScores();
   document.querySelector("#sweetCount").textContent = t("sweetCount", { count: countSweetDrinks() });
+  document.querySelector("#sugarScoreBadge").textContent = t("sugarScoreLabel", { score: scores.sugarScore });
+  document.querySelector("#caffeineScoreBadge").textContent = t("caffeineScoreLabel", { score: scores.caffeineScore });
+  document.querySelector("#milkCountBadge").textContent = t("milkCountLabel", { count: scores.milkDrinkCount });
+  document.querySelector("#hydrationSupportBadge").textContent = t("hydrationSupportLabel", { count: scores.hydrationSupportCount });
+  renderDrinkProfileList();
   document.querySelector("#drinksFeedback").textContent = getDrinksFeedback();
 }
 
 function updateActivityUI() {
   document.querySelectorAll("[data-activity]").forEach((button) => {
     button.classList.toggle("is-active", appState.activities.includes(button.dataset.activity));
+  });
+}
+
+function updateEnergyCauseUI() {
+  document.querySelectorAll("[data-energy-cause]").forEach((button) => {
+    button.classList.toggle("is-active", appState.energyCauses.includes(button.dataset.energyCause));
   });
 }
 
@@ -834,6 +1233,109 @@ function calculateLoadScore() {
   }, 0);
 }
 
+function getDrinkMetaByType(type) {
+  return drinkOptions.find((drink) => drink.type === type) || drinkOptions.find((drink) => drink.type === "other");
+}
+
+function getDrinkMetaByLegacyLabel(label) {
+  return drinkOptions.find((drink) => drink.label === label) || drinkOptions.find((drink) => t(`options.drinks.${drink.key}`) === label);
+}
+
+function normalizeDrinkProfile(profile = {}) {
+  const meta = getDrinkMetaByType(profile.type) || getDrinkMetaByLegacyLabel(profile.label);
+  return {
+    type: meta?.type || "other",
+    sweetness: sweetnessOptions.includes(profile.sweetness) ? profile.sweetness : (meta?.defaultSweetness || "none"),
+    caffeine: caffeineOptions.includes(profile.caffeine) ? profile.caffeine : (meta?.defaultCaffeine || "none"),
+    milk: milkOptions.includes(profile.milk) ? profile.milk : (meta?.defaultMilk || "no"),
+    amount: String(profile.amount || "1 glass").trim()
+  };
+}
+
+function legacyDrinksToProfiles(drinks = []) {
+  return drinks
+    .map((label) => getDrinkMetaByLegacyLabel(label))
+    .filter(Boolean)
+    .map((meta) => normalizeDrinkProfile({
+      type: meta.type,
+      sweetness: meta.defaultSweetness,
+      caffeine: meta.defaultCaffeine,
+      milk: meta.defaultMilk,
+      amount: "1 glass"
+    }));
+}
+
+function applyDrinkDefaults() {
+  const type = document.querySelector("#drinkTypeSelect")?.value || "water";
+  const meta = getDrinkMetaByType(type);
+  if (!meta) return;
+  document.querySelector("#sweetnessSelect").value = meta.defaultSweetness;
+  document.querySelector("#caffeineSelect").value = meta.defaultCaffeine;
+  document.querySelector("#milkSelect").value = meta.defaultMilk;
+  const amountInput = document.querySelector("#drinkAmountInput");
+  if (amountInput && !amountInput.value.trim()) amountInput.value = "1 glass";
+}
+
+function getDrinkProfileFromForm() {
+  return normalizeDrinkProfile({
+    type: document.querySelector("#drinkTypeSelect").value,
+    sweetness: document.querySelector("#sweetnessSelect").value,
+    caffeine: document.querySelector("#caffeineSelect").value,
+    milk: document.querySelector("#milkSelect").value,
+    amount: document.querySelector("#drinkAmountInput").value || "1 glass"
+  });
+}
+
+function getDrinkScores(profiles = appState.drinkProfiles || []) {
+  const normalizedProfiles = profiles.map(normalizeDrinkProfile);
+  return normalizedProfiles.reduce((scores, profile) => {
+    const meta = getDrinkMetaByType(profile.type);
+    const sugarScore = sweetnessScores[profile.sweetness] || 0;
+    scores.sugarScore += sugarScore;
+    scores.caffeineScore += caffeineScores[profile.caffeine] || 0;
+    scores.milkDrinkCount += profile.milk === "yes" ? 1 : 0;
+    scores.hydrationSupportCount += meta?.hydration ? 1 : 0;
+    scores.sweetDrinksCount += sugarScore >= 2 ? 1 : 0;
+    return scores;
+  }, {
+    sweetDrinksCount: 0,
+    sugarScore: 0,
+    caffeineScore: 0,
+    milkDrinkCount: 0,
+    hydrationSupportCount: 0
+  });
+}
+
+function getDrinkSummaryLabels(profiles = appState.drinkProfiles || []) {
+  return profiles.map((profile) => {
+    const meta = getDrinkMetaByType(profile.type);
+    return meta?.label || profile.type || "";
+  }).filter(Boolean);
+}
+
+function renderDrinkProfileList() {
+  const list = document.querySelector("#drinkProfileList");
+  if (!list) return;
+  const profiles = appState.drinkProfiles || [];
+  if (!profiles.length) {
+    list.innerHTML = `<li class="empty-drink">${escapeHtml(t("emptyDrinkList"))}</li>`;
+    return;
+  }
+  list.innerHTML = profiles.map((profile) => `<li>${escapeHtml(formatDrinkProfile(profile))}</li>`).join("");
+}
+
+function formatDrinkProfile(profile) {
+  const normalized = normalizeDrinkProfile(profile);
+  const meta = getDrinkMetaByType(normalized.type);
+  return [
+    t(`options.drinks.${meta?.key || "other"}`),
+    t(`options.sweetness.${normalized.sweetness}`),
+    t(`options.caffeine.${normalized.caffeine}`),
+    t(`options.milk.${normalized.milk}`),
+    normalized.amount
+  ].join(" / ");
+}
+
 function getLoadLevel(score) {
   if (score >= 6) return t("loadLevel.high");
   if (score >= 3) return t("loadLevel.medium");
@@ -848,20 +1350,20 @@ function getHydrationStatus(waterMl) {
 }
 
 function countSweetDrinks() {
-  return appState.drinks.filter((drink) => {
-    const drinkMeta = drinkOptions.find((item) => item.label === drink);
-    return drinkMeta?.sweet;
-  }).length;
+  return getDrinkScores().sweetDrinksCount;
 }
 
 function getDrinksFeedback() {
-  const sweetCount = countSweetDrinks();
-  if (sweetCount >= 2) return t("drinksFeedback.sweetMany");
-  if (appState.drinks.some((drink) => ["กาแฟใส่นม", "โกโก้", "น้ำชมพู/เครื่องดื่มหวาน"].includes(drink))) {
+  const scores = getDrinkScores();
+  if (scores.sugarScore >= 5) return t("drinksFeedback.sugarHigh");
+  if (scores.caffeineScore >= 5) return t("drinksFeedback.caffeineHigh");
+  if (scores.sugarScore <= 1 && appState.waterMl >= 1500) return t("drinksFeedback.lightAndHydrated");
+  if (scores.sweetDrinksCount >= 2) return t("drinksFeedback.sweetMany");
+  if (appState.drinkProfiles.some((drink) => ["milk_coffee", "cocoa", "sweet_drink", "juice"].includes(drink.type))) {
     return t("drinksFeedback.sweetSome");
   }
-  if (appState.drinks.includes("กาแฟดำ")) return t("drinksFeedback.blackCoffee");
-  if (appState.drinks.includes("น้ำเปล่า")) return t("waterBase");
+  if (appState.drinkProfiles.some((drink) => drink.type === "black_coffee")) return t("drinksFeedback.blackCoffee");
+  if (appState.drinkProfiles.some((drink) => drink.type === "water")) return t("waterBase");
   return t("drinksDefault");
 }
 
@@ -907,25 +1409,31 @@ function getMindNoteReminder() {
 }
 
 function buildReflection() {
-  const sweetCount = countSweetDrinks();
+  const drinkScores = getDrinkScores();
   const goodThings = [];
   const adjustments = [];
 
   if (appState.waterMl > 0) goodThings.push(t("reflection.waterSeen", { water: appState.waterMl }));
-  if (appState.drinks.includes("น้ำเปล่า")) goodThings.push(t("reflection.plainWaterBase"));
+  if (appState.drinkProfiles.some((drink) => drink.type === "water")) goodThings.push(t("reflection.plainWaterBase"));
   if (appState.selectedState.energy || appState.selectedState.mind || appState.selectedState.sleep) {
     goodThings.push(t("reflection.checkedState"));
   }
   if (!goodThings.length) goodThings.push(t("reflection.openedPattern"));
 
-  if (sweetCount >= 2) adjustments.push(t("reflection.reduceSweet"));
+  if (drinkScores.sugarScore >= 5) adjustments.push(t("drinkReflection.sugar"));
+  if (drinkScores.caffeineScore >= 5) adjustments.push(t("drinkReflection.caffeine"));
   if (appState.waterMl <= 750) adjustments.push(t("reflection.addSips"));
   if (appState.loadScore >= 6) adjustments.push(t("reflection.stopPush"));
   if (!adjustments.length) adjustments.push(t("reflection.keepBalance"));
 
+  const energyCauseNote = appState.energyCauses.length
+    ? `${t("drinkReflection.energyCauses", { causes: getEnergyCauseSummary() })}\n`
+    : "";
+
   return [
     `${t("reflection.good")} ${goodThings.join(" / ")}`,
     `${t("reflection.adjust")} ${adjustments.join(" / ")}`,
+    energyCauseNote.trim(),
     `${t("reflection.recovery")} ${getRecoveryNote()}`,
     `${t("reflection.hydration")} ${appState.hydrationStatus}`,
     `${t("reflection.tomorrow")} ${getTomorrowFocus()}`,
@@ -935,7 +1443,13 @@ function buildReflection() {
     "",
     t("reflection.closing1"),
     t("reflection.closing2")
-  ].join("\n");
+  ].filter((line) => line !== "").join("\n");
+}
+
+function getEnergyCauseSummary() {
+  return (appState.energyCauses || [])
+    .map((cause) => t(`options.energyCauses.${cause}`))
+    .join(" / ");
 }
 
 function getMindNoteSummary() {
@@ -965,6 +1479,8 @@ function buildDailyLogRow() {
   const reflection = appState.generatedReflection || buildReflection();
   const tomorrowFocus = getTomorrowFocus();
   const reminder = getMindfulReminder();
+  const drinkScores = getDrinkScores();
+  const drinkProfiles = (appState.drinkProfiles || []).map(normalizeDrinkProfile);
 
   return {
     Date: appState.date,
@@ -972,9 +1488,15 @@ function buildDailyLogRow() {
     Mind: appState.selectedState.mind,
     Sleep: appState.selectedState.sleep,
     Water_ml: appState.waterMl,
-    Drinks: appState.drinks.join(" | "),
-    Sweet_Drinks_Count: countSweetDrinks(),
+    Drinks: getDrinkSummaryLabels(drinkProfiles).join(" | "),
+    Sweet_Drinks_Count: drinkScores.sweetDrinksCount,
+    Drink_Profile_JSON: JSON.stringify(drinkProfiles),
+    Sugar_Score: drinkScores.sugarScore,
+    Caffeine_Score: drinkScores.caffeineScore,
+    Milk_Drink_Count: drinkScores.milkDrinkCount,
+    Hydration_Support_Count: drinkScores.hydrationSupportCount,
     Activities: appState.activities.join(" | "),
+    Energy_Causes: (appState.energyCauses || []).join(" | "),
     Load_Score: appState.loadScore,
     Load_Level: appState.loadLevel,
     Hydration_Status: appState.hydrationStatus,
@@ -1026,7 +1548,13 @@ function normalizeLogRow(row) {
   normalized.Date = normalizeExcelDate(normalized.Date);
   normalized.Water_ml = Number(normalized.Water_ml) || 0;
   normalized.Sweet_Drinks_Count = Number(normalized.Sweet_Drinks_Count) || 0;
+  normalized.Drink_Profile_JSON = normalized.Drink_Profile_JSON || "";
+  normalized.Sugar_Score = Number(normalized.Sugar_Score) || 0;
+  normalized.Caffeine_Score = Number(normalized.Caffeine_Score) || 0;
+  normalized.Milk_Drink_Count = Number(normalized.Milk_Drink_Count) || 0;
+  normalized.Hydration_Support_Count = Number(normalized.Hydration_Support_Count) || 0;
   normalized.Load_Score = Number(normalized.Load_Score) || 0;
+  normalized.Energy_Causes = normalized.Energy_Causes || "";
   normalized.Reflection_Text = row.Reflection_Text ?? row.Reflection ?? "";
   return normalized;
 }
@@ -1211,7 +1739,9 @@ function localizeLogCell(column, value) {
   if (value === undefined || value === null || value === "") return "";
   if (["Energy", "Mind", "Sleep"].includes(column)) return localizeStateValue(column, value);
   if (column === "Drinks") return localizeJoinedValues(value, drinkOptions, "drinks");
+  if (column === "Drink_Profile_JSON") return localizeDrinkProfileJson(value);
   if (column === "Activities") return localizeJoinedValues(value, activityOptions, "activities");
+  if (column === "Energy_Causes") return localizeEnergyCauses(value);
   if (column === "Load_Level") return localizeLoadLevel(value);
   if (column === "Hydration_Status") return localizeKnownText(value, "hydrationFeedback");
   if (column === "Tomorrow_Focus") return localizeKnownText(value, "tomorrowFocus");
@@ -1221,6 +1751,25 @@ function localizeLogCell(column, value) {
   }
   if (column === "Mind_Note_Feeling" || column === "Mind_Note_Support") return localizeMindNoteValue(column, value);
   return value;
+}
+
+function localizeDrinkProfileJson(value) {
+  try {
+    const profiles = JSON.parse(value);
+    if (!Array.isArray(profiles)) return value;
+    return profiles.map((profile) => formatDrinkProfile(profile)).join(" | ");
+  } catch {
+    return value;
+  }
+}
+
+function localizeEnergyCauses(value) {
+  return String(value)
+    .split("|")
+    .map((entry) => entry.trim())
+    .filter(Boolean)
+    .map((cause) => t(`options.energyCauses.${cause}`))
+    .join(" | ");
 }
 
 function localizeMindNoteValue(column, value) {

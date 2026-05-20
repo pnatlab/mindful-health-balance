@@ -12,12 +12,29 @@
   <script defer src="script.js"></script>
 </head>
 <body>
+  <section class="welcome-overlay" id="welcomeOverlay" aria-labelledby="welcomeTitle" aria-modal="true" role="dialog">
+    <div class="welcome-glow" aria-hidden="true"></div>
+    <div class="welcome-card">
+      <div class="loop-mark" aria-hidden="true">
+        <span></span>
+      </div>
+      <p class="section-kicker" data-i18n="welcomeKicker">NuTuenSai Welcome Threshold</p>
+      <h2 id="welcomeTitle" data-i18n="welcomeTitle">ยินดีต้อนรับกลับมา</h2>
+      <p class="welcome-subtitle" data-i18n="welcomeSubtitle">ดูแลอื่นมาเยอะแล้ว<br>อย่าลืมดูแลตัวเองด้วยน๊าา</p>
+      <blockquote data-i18n="welcomeQuote">สมดุลเริ่มจากการเห็น ไม่ใช่การฝืน</blockquote>
+      <div class="welcome-actions">
+        <button type="button" class="primary-button" id="beginWelcome" data-i18n="welcomeBegin">เริ่มวันนี้</button>
+        <button type="button" class="ghost-button" id="skipWelcome" data-i18n="welcomeSkip">เข้าสู่ Dashboard</button>
+      </div>
+    </div>
+  </section>
+
   <main class="app-shell">
     <header class="hero">
       <div>
         <p class="eyebrow" data-i18n="eyebrow">Personal mindful dashboard</p>
         <h1 data-i18n="title">Mindful Health Balance by MSxAI</h1>
-        <p class="version" data-i18n="version">v1.3 Mind Note Layer</p>
+        <p class="version" data-i18n="version">v1.5 Structured Drink & Energy Profile</p>
         <p class="subtitle" data-i18n="subtitle">ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง</p>
       </div>
       <div class="hero-side">
@@ -26,6 +43,13 @@
           <button type="button" data-lang="en">EN</button>
           <button type="button" data-lang="zh">中文</button>
         </div>
+        <div class="theme-toggle" aria-label="Theme">
+          <button type="button" data-theme-value="auto" data-i18n="themeAuto">อัตโนมัติ</button>
+          <button type="button" data-theme-value="light" data-i18n="themeLight">สว่าง</button>
+          <button type="button" data-theme-value="dark" data-i18n="themeDark">มืด</button>
+        </div>
+        <p class="theme-status" id="themeStatus" aria-live="polite"></p>
+        <button type="button" class="open-welcome-button" id="openWelcome" data-i18n="openWelcome">Open Welcome</button>
         <div class="date-pill" id="currentDate" aria-live="polite"></div>
       </div>
     </header>
@@ -51,6 +75,11 @@
             <button type="button" data-value="กลาง" data-option-group="energy" data-option-key="medium">กลาง</button>
             <button type="button" data-value="ดี" data-option-group="energy" data-option-key="good">ดี</button>
           </div>
+        </div>
+
+        <div class="choice-group">
+          <span class="choice-label" data-i18n="energyCauseLabel">Energy Cause / เหตุที่น่ามีผลต่อพลังงาน</span>
+          <div class="energy-cause-grid" id="energyCausesList" aria-label="Energy causes"></div>
         </div>
 
         <div class="choice-group" data-field="mind">
@@ -84,24 +113,74 @@
             <small>ml</small>
           </div>
         </div>
-        <div class="button-row">
-          <button type="button" class="action-button" data-water="250">+250 ml</button>
-          <button type="button" class="action-button" data-water="500">+500 ml</button>
-          <button type="button" class="action-button" data-water="750" data-i18n="halfBottle">+ครึ่งขวด</button>
-          <button type="button" class="ghost-button" id="resetWater" data-i18n="resetButton">Reset</button>
+        <div class="hydration-content">
+          <div class="hydration-controls">
+            <div class="button-row">
+              <button type="button" class="action-button" data-water="250">+250 ml</button>
+              <button type="button" class="action-button" data-water="500">+500 ml</button>
+              <button type="button" class="action-button" data-water="750" data-i18n="halfBottle">+ครึ่งขวด</button>
+              <button type="button" class="ghost-button" id="resetWater" data-i18n="resetButton">Reset</button>
+            </div>
+            <p class="feedback" id="hydrationFeedback">วันนี้น้ำยังน้อยไปนิด ค่อย ๆ จิบเพิ่มนะ</p>
+          </div>
+          <div class="water-glass-visual" aria-hidden="true">
+            <div class="water-glass-shine"></div>
+            <div class="water-fill">
+              <span class="water-wave water-wave-one"></span>
+              <span class="water-wave water-wave-two"></span>
+            </div>
+            <span class="water-bubble bubble-one"></span>
+            <span class="water-bubble bubble-two"></span>
+            <span class="water-bubble bubble-three"></span>
+          </div>
         </div>
-        <p class="feedback" id="hydrationFeedback">วันนี้น้ำยังน้อยไปนิด ค่อย ๆ จิบเพิ่มนะ</p>
       </article>
 
       <article class="glass-card">
         <div class="card-heading">
           <div>
             <p class="section-kicker" data-i18n="drinks">Drinks</p>
-            <h2 data-i18n="drinksHeading">เครื่องดื่มที่เลือกวันนี้</h2>
+            <h2 data-i18n="drinksHeading">Drink Profile วันนี้</h2>
           </div>
           <span class="soft-badge" id="sweetCount">หวาน 0</span>
         </div>
-        <div class="toggle-grid" id="drinksList" aria-label="Drinks"></div>
+        <div class="drink-profile-form" aria-label="Drink profile form">
+          <label>
+            <span class="choice-label" data-i18n="drinkTypeLabel">Drink Type</span>
+            <select id="drinkTypeSelect"></select>
+          </label>
+          <label>
+            <span class="choice-label" data-i18n="sweetnessLabel">Sweetness</span>
+            <select id="sweetnessSelect"></select>
+          </label>
+          <label>
+            <span class="choice-label" data-i18n="caffeineLabel">Caffeine</span>
+            <select id="caffeineSelect"></select>
+          </label>
+          <label>
+            <span class="choice-label" data-i18n="milkLabel">Milk</span>
+            <select id="milkSelect"></select>
+          </label>
+          <label class="drink-amount-field">
+            <span class="choice-label" data-i18n="amountLabel">Amount</span>
+            <input type="text" id="drinkAmountInput" list="amountPresets" data-i18n-placeholder="amountPlaceholder" placeholder="1 glass">
+            <datalist id="amountPresets">
+              <option value="1 glass"></option>
+              <option value="1 bottle"></option>
+            </datalist>
+          </label>
+        </div>
+        <div class="button-row">
+          <button type="button" class="primary-button" id="addDrink" data-i18n="addDrink">Add Drink</button>
+          <button type="button" class="ghost-button" id="clearDrinks" data-i18n="clearDrinks">Clear Drinks</button>
+        </div>
+        <div class="drink-score-row">
+          <span class="soft-badge" id="sugarScoreBadge">Sugar 0</span>
+          <span class="soft-badge" id="caffeineScoreBadge">Caffeine 0</span>
+          <span class="soft-badge" id="milkCountBadge">Milk 0</span>
+          <span class="soft-badge" id="hydrationSupportBadge">Hydration 0</span>
+        </div>
+        <ul class="drink-list" id="drinkProfileList" aria-label="Drink list"></ul>
         <p class="feedback" id="drinksFeedback">เลือกเครื่องดื่มวันนี้เพื่อดู reminder แบบเบา ๆ</p>
       </article>
 
@@ -219,7 +298,13 @@
               <th>Water_ml</th>
               <th>Drinks</th>
               <th>Sweet_Drinks_Count</th>
+              <th>Drink_Profile_JSON</th>
+              <th>Sugar_Score</th>
+              <th>Caffeine_Score</th>
+              <th>Milk_Drink_Count</th>
+              <th>Hydration_Support_Count</th>
               <th>Activities</th>
+              <th>Energy_Causes</th>
               <th>Load_Score</th>
               <th>Load_Level</th>
               <th>Hydration_Status</th>
