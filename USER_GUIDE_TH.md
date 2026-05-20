@@ -60,6 +60,16 @@ TH | EN | 中文
 
 ถ้าเลือก `สว่าง` หรือ `มืด` เอง ระบบจะคงค่าที่เลือกไว้ และจะไม่เปลี่ยนตามเวลา จนกว่าจะกลับมาเลือก `อัตโนมัติ` อีกครั้ง
 
+## 2.5 โครงหน้าแบบ 3 ชั้น
+
+หลังผ่านหน้ากระจกต้อนรับ แอปจะแบ่งเป็น 3 view:
+
+- `วันนี้` สำหรับกรอกข้อมูลวันนี้ เช่น Energy, Mind, Sleep, น้ำ, Drink Profile, Load & Recovery, Mind Note และเคลียร์หน้าปัจจุบัน
+- `Reflection` สำหรับดู NuTuenSai note, generate/review/edit reflection และ Save to Daily Log
+- `Log` สำหรับดู Daily Log Table, Export Master Excel, Import Master Excel และ Clear Daily Log
+
+การเปลี่ยน view ไม่ลบข้อมูลที่กรอกอยู่ และไม่ลบ Daily Log เดิม
+
 ## 3. วิธีใช้งานแต่ละส่วน
 
 ### Today State

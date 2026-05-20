@@ -35,14 +35,25 @@ const translations = {
     htmlLang: "th",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.6 NuTuenSai Reflection Processing Layer",
+    version: "v1.7 Minimal Layered UI",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
+    viewTabsAria: "เลือกมุมมองของแอป",
+    tabToday: "วันนี้",
+    tabReflection: "Reflection",
+    tabLog: "Log",
+    todayViewTitle: "Today Input",
+    reflectionViewTitle: "Reflection",
+    reflectionViewHelper: "ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม",
+    reflectionGeneratorHelper: "Generate จะสร้าง reflection จากข้อมูลวันนี้ และยังแก้ไขเล็กน้อยก่อนบันทึกได้",
+    reflectionActionsKicker: "Ready to save",
+    logViewTitle: "Log & Export",
+    logViewHelper: "ดูบันทึกย้อนหลังและจัดการไฟล์ backup ของระบบ",
+    logControlsTitle: "Backup Controls",
     welcomeKicker: "NuTuenSai Welcome Threshold",
     welcomeTitle: "ยินดีต้อนรับกลับมา",
     welcomeSubtitle: "ดูแลอื่นมาเยอะแล้ว\nอย่าลืมดูแลตัวเองด้วยน๊าา",
     welcomeQuote: "สมดุลเริ่มจากการเห็น ไม่ใช่การฝืน",
     welcomeBegin: "เริ่มวันนี้",
-    welcomeSkip: "เข้าสู่ Dashboard",
     openWelcome: "Open Welcome",
     themeAuto: "อัตโนมัติ",
     themeLight: "สว่าง",
@@ -88,6 +99,10 @@ const translations = {
     nuTuenSaiNote: "NuTuenSai note",
     reflectionGenerator: "Reflection Generator",
     endReflection: "End-of-Day Reflection",
+    reflectionEmptyTitle: "ยังไม่มี Reflection",
+    reflectionEmptyText: "กด Generate เพื่อให้ระบบสรุปจากข้อมูลวันนี้",
+    editReflection: "แก้ไขเล็กน้อย",
+    doneEditingReflection: "เสร็จสิ้นการแก้ไข",
     mindNoteKicker: "Mind Note — วางใจหนึ่งบรรทัด",
     mindNoteTitle: "Mind Note",
     mindNoteSubtitle: "วางสิ่งที่ใจถืออยู่เบา ๆ โดยไม่ต้องรีบแก้",
@@ -101,6 +116,8 @@ const translations = {
     dailyLogControls: "Daily Log Controls",
     controlsHelp: "บันทึกเป็นตารางใน browser/localStorage ของเครื่องนี้ แล้ว export เป็น Master Excel เมื่อพี่ต้องการ",
     saveDailyLog: "Save to Daily Log",
+    todayResetTitle: "Current Form",
+    resetCurrentForm: "เคลียร์หน้าปัจจุบัน",
     clearDailyLog: "Clear Daily Log",
     exportMasterExcel: "Export Master Excel",
     importMasterExcel: "Import Master Excel",
@@ -116,6 +133,8 @@ const translations = {
     loadMediumWithNote: "Load วันนี้อยู่ระดับกลาง ฟังสัญญาณร่างกายแล้วค่อยเพิ่มหรือลด",
     loadHeavyCombo: "วันนี้ร่างกายถูกใช้เยอะแล้ว พรุ่งนี้ให้ recovery เป็นส่วนหนึ่งของ performance",
     saveTodayDone: "บันทึกวันนี้แล้ว พี่ไม่ต้องแบกต่อในหัวแล้วนะ",
+    resetCurrentFormConfirm: "เคลียร์เฉพาะข้อมูลที่กำลังกรอกอยู่ ไม่ลบ Daily Log เดิม",
+    resetCurrentFormDone: "เคลียร์หน้าปัจจุบันแล้ว Daily Log เดิมยังอยู่",
     replaceConfirm: "มี log ของวันนี้อยู่แล้ว ต้องการ replace/update row เดิมไหม?",
     replaceCancelled: "ยังไม่บันทึกทับ row เดิม พี่ไม่ต้องรีบตัดสินใจก็ได้",
     savedDailyLog: "บันทึกลง Daily Log แล้ว พี่ไม่ต้องแบกต่อในหัวแล้วนะ",
@@ -306,14 +325,25 @@ const translations = {
     htmlLang: "en",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.6 NuTuenSai Reflection Processing Layer",
+    version: "v1.7 Minimal Layered UI",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
+    viewTabsAria: "Choose app view",
+    tabToday: "Today",
+    tabReflection: "Reflection",
+    tabLog: "Log",
+    todayViewTitle: "Today Input",
+    reflectionViewTitle: "Reflection",
+    reflectionViewHelper: "Review today’s reflection, then save it to the Daily Log when ready.",
+    reflectionGeneratorHelper: "Generate creates a reflection from today's signals. You can still edit it lightly before saving.",
+    reflectionActionsKicker: "Ready to save",
+    logViewTitle: "Log & Export",
+    logViewHelper: "Review saved logs and manage your backup files.",
+    logControlsTitle: "Backup Controls",
     welcomeKicker: "NuTuenSai Welcome Threshold",
     welcomeTitle: "Welcome back,",
     welcomeSubtitle: "You have cared for many things today.\nDon't forget to care for yourself too.",
     welcomeQuote: "Balance begins with noticing, not forcing.",
     welcomeBegin: "Begin Today",
-    welcomeSkip: "Go to Dashboard",
     openWelcome: "Open Welcome",
     themeAuto: "Auto",
     themeLight: "Light",
@@ -359,6 +389,10 @@ const translations = {
     nuTuenSaiNote: "NuTuenSai note",
     reflectionGenerator: "Reflection Generator",
     endReflection: "End-of-Day Reflection",
+    reflectionEmptyTitle: "No reflection yet",
+    reflectionEmptyText: "Click Generate to create a reflection from today’s signals.",
+    editReflection: "Light edit",
+    doneEditingReflection: "Done Editing",
     mindNoteKicker: "Mind Note — one line to set down",
     mindNoteTitle: "Mind Note",
     mindNoteSubtitle: "Set down what the mind is holding, without rushing to fix it.",
@@ -367,11 +401,13 @@ const translations = {
     mindNoteFeelingLabel: "Mind Note Feeling",
     mindNoteSupportLabel: "Support Need",
     generateReflection: "Generate End-of-Day Reflection",
-    reflectionPlaceholder: "Press Generate to create a reflection from today's inputs",
+    reflectionPlaceholder: "Click Generate to create a reflection from today’s signals.",
     localOnly: "Local only",
     dailyLogControls: "Daily Log Controls",
     controlsHelp: "Save today into a local browser table, then export a Master Excel file when you need it.",
     saveDailyLog: "Save to Daily Log",
+    todayResetTitle: "Current Form",
+    resetCurrentForm: "Reset Current Form",
     clearDailyLog: "Clear Daily Log",
     exportMasterExcel: "Export Master Excel",
     importMasterExcel: "Import Master Excel",
@@ -387,6 +423,8 @@ const translations = {
     loadMediumWithNote: "Moderate load today. Listen to your body before adding or reducing more.",
     loadHeavyCombo: "Your body has been used a lot today. Let recovery be part of performance tomorrow.",
     saveTodayDone: "Today is saved. You do not have to carry it all in your head now.",
+    resetCurrentFormConfirm: "This resets only the current form. Saved Daily Logs will not be deleted.",
+    resetCurrentFormDone: "Current form reset. Saved Daily Logs are still here.",
     replaceConfirm: "A log for this date already exists. Replace/update the existing row?",
     replaceCancelled: "Not replacing the existing row. No need to rush the decision.",
     savedDailyLog: "Saved to Daily Log. You do not have to carry it all in your head now.",
@@ -577,14 +615,25 @@ const translations = {
     htmlLang: "zh-CN",
     eyebrow: "个人正念健康仪表板",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.6 NuTuenSai 反思处理层",
+    version: "v1.7 Minimal Layered UI",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
+    viewTabsAria: "选择应用视图",
+    tabToday: "今天",
+    tabReflection: "反思",
+    tabLog: "记录",
+    todayViewTitle: "今日输入",
+    reflectionViewTitle: "反思",
+    reflectionViewHelper: "查看今天的反思内容，准备好后再保存到每日记录。",
+    reflectionGeneratorHelper: "Generate 会根据今天的信号生成反思，保存前仍可轻微编辑。",
+    reflectionActionsKicker: "准备保存",
+    logViewTitle: "记录与导出",
+    logViewHelper: "查看已保存的记录，并管理备份文件。",
+    logControlsTitle: "备份控制",
     welcomeKicker: "NuTuenSai 欢迎门槛",
     welcomeTitle: "欢迎回来",
     welcomeSubtitle: "今天你已经照顾了很多事情。\n也别忘了温柔地照顾自己。",
     welcomeQuote: "平衡始于看见，而不是强迫。",
     welcomeBegin: "开始今天",
-    welcomeSkip: "进入 Dashboard",
     openWelcome: "打开欢迎页",
     themeAuto: "自动",
     themeLight: "浅色",
@@ -630,6 +679,10 @@ const translations = {
     nuTuenSaiNote: "NuTuenSai 提醒",
     reflectionGenerator: "反思生成器",
     endReflection: "每日结束反思",
+    reflectionEmptyTitle: "还没有反思内容",
+    reflectionEmptyText: "点击 Generate 根据今天的信号生成反思。",
+    editReflection: "轻微编辑",
+    doneEditingReflection: "完成编辑",
     mindNoteKicker: "Mind Note — 轻轻放下一行",
     mindNoteTitle: "Mind Note",
     mindNoteSubtitle: "把心里拿着的东西轻轻放下，不需要急着修正。",
@@ -638,11 +691,13 @@ const translations = {
     mindNoteFeelingLabel: "Mind Note 感受",
     mindNoteSupportLabel: "此刻需要的支持",
     generateReflection: "生成每日结束反思",
-    reflectionPlaceholder: "点击 Generate，根据今天的数据生成反思",
+    reflectionPlaceholder: "点击 Generate 根据今天的信号生成反思。",
     localOnly: "仅本机",
     dailyLogControls: "Daily Log 控制",
     controlsHelp: "把今天保存到本机浏览器表格，需要时再导出 Master Excel。",
     saveDailyLog: "保存到 Daily Log",
+    todayResetTitle: "当前表单",
+    resetCurrentForm: "重置当前表单",
     clearDailyLog: "清空 Daily Log",
     exportMasterExcel: "导出 Master Excel",
     importMasterExcel: "导入 Master Excel",
@@ -658,6 +713,8 @@ const translations = {
     loadMediumWithNote: "今天是中等 Load。先听身体信号，再决定要不要增减。",
     loadHeavyCombo: "今天身体已经用了很多。明天让 recovery 成为 performance 的一部分。",
     saveTodayDone: "今天已保存。现在不用再把它都放在脑子里了。",
+    resetCurrentFormConfirm: "只会重置当前表单，不会删除已保存的每日记录。",
+    resetCurrentFormDone: "当前表单已重置，已保存的每日记录仍然保留。",
     replaceConfirm: "这个日期已经有记录了。要替换/更新原本的 row 吗？",
     replaceCancelled: "没有覆盖旧记录。不需要急着决定。",
     savedDailyLog: "已保存到 Daily Log。现在不用再把它都放在脑子里了。",
@@ -916,6 +973,8 @@ let currentLanguage = loadLanguage();
 let currentThemePreference = getThemePreference();
 let appState = loadState();
 let themeIntervalId;
+let currentView = "today";
+let isEditingReflection = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   applyThemePreference(currentThemePreference);
@@ -973,6 +1032,9 @@ function applyTranslations() {
   document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
     element.placeholder = t(element.dataset.i18nPlaceholder);
   });
+  document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+    element.setAttribute("aria-label", t(element.dataset.i18nAriaLabel));
+  });
   document.querySelectorAll("[data-option-group][data-option-key]").forEach((button) => {
     button.textContent = t(`options.${button.dataset.optionGroup}.${button.dataset.optionKey}`);
   });
@@ -983,6 +1045,7 @@ function applyTranslations() {
     button.classList.toggle("is-active", button.dataset.lang === currentLanguage);
   });
   updateThemeButtons();
+  updateViewPanels();
 }
 
 function applyThemePreference(preference = currentThemePreference) {
@@ -1093,8 +1156,13 @@ function renderEnergyCauseOptions() {
 
 function bindEvents() {
   document.querySelector("#beginWelcome").addEventListener("click", hideWelcome);
-  document.querySelector("#skipWelcome").addEventListener("click", hideWelcome);
   document.querySelector("#openWelcome").addEventListener("click", () => showWelcome({ remember: false }));
+
+  document.querySelector(".view-tabs").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-view]");
+    if (!button) return;
+    setActiveView(button.dataset.view);
+  });
 
   document.querySelector(".theme-toggle").addEventListener("click", (event) => {
     const button = event.target.closest("[data-theme-value]");
@@ -1186,11 +1254,19 @@ function bindEvents() {
 
   document.querySelector("#generateReflection").addEventListener("click", () => {
     appState.generatedReflection = buildReflection();
+    isEditingReflection = false;
     syncUI();
   });
 
   document.querySelector("#reflectionOutput").addEventListener("input", (event) => {
     appState.generatedReflection = event.target.value;
+    updateReflectionPreview();
+  });
+
+  document.querySelector("#toggleReflectionEdit").addEventListener("click", () => {
+    if (!appState.generatedReflection.trim()) return;
+    isEditingReflection = !isEditingReflection;
+    updateReflectionPreview();
   });
 
   document.querySelector("#mindNoteText").addEventListener("input", (event) => {
@@ -1206,6 +1282,7 @@ function bindEvents() {
   });
 
   document.querySelector("#saveDailyLog").addEventListener("click", saveToDailyLog);
+  document.querySelector("#resetCurrentForm").addEventListener("click", resetCurrentForm);
   document.querySelector("#clearDailyLog").addEventListener("click", clearDailyLog);
   document.querySelector("#exportMasterExcel").addEventListener("click", exportMasterExcel);
   document.querySelector("#importMasterExcel").addEventListener("click", () => {
@@ -1250,6 +1327,27 @@ function hideWelcome({ remember = true, instant = false } = {}) {
   overlay.classList.add("is-hidden");
   overlay.setAttribute("aria-hidden", "true");
   document.body.classList.remove("welcome-open");
+  setActiveView("today");
+}
+
+function setActiveView(view) {
+  if (!["today", "reflection", "log"].includes(view)) return;
+  currentView = view;
+  updateViewPanels();
+}
+
+function updateViewPanels() {
+  document.querySelectorAll("[data-view-panel]").forEach((panel) => {
+    const isActive = panel.dataset.viewPanel === currentView;
+    panel.classList.toggle("is-active", isActive);
+    panel.setAttribute("aria-hidden", String(!isActive));
+  });
+
+  document.querySelectorAll("[data-view]").forEach((button) => {
+    const isActive = button.dataset.view === currentView;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
 }
 
 function syncUI() {
@@ -1267,11 +1365,34 @@ function syncUI() {
   document.querySelector("#reflectionOutput").value = appState.generatedReflection;
   document.querySelector("#mindNoteText").value = appState.mindNoteText || "";
 
+  updateReflectionPreview();
   updateStateButtons();
   updateMindNoteButtons();
   updateDrinkUI();
   updateActivityUI();
   updateEnergyCauseUI();
+}
+
+function updateReflectionPreview() {
+  const reflectionText = appState.generatedReflection || "";
+  const hasReflection = reflectionText.trim().length > 0;
+  const emptyState = document.querySelector("#reflectionEmptyState");
+  const previewText = document.querySelector("#reflectionPreviewText");
+  const textarea = document.querySelector("#reflectionOutput");
+  const toggleButton = document.querySelector("#toggleReflectionEdit");
+
+  if (emptyState) emptyState.classList.toggle("is-hidden", hasReflection);
+  if (previewText) {
+    previewText.textContent = reflectionText;
+    previewText.classList.toggle("is-hidden", !hasReflection || isEditingReflection);
+  }
+  if (textarea) {
+    textarea.classList.toggle("is-hidden", !hasReflection || !isEditingReflection);
+  }
+  if (toggleButton) {
+    toggleButton.classList.toggle("is-hidden", !hasReflection);
+    toggleButton.textContent = t(isEditingReflection ? "doneEditingReflection" : "editReflection");
+  }
 }
 
 function updateHydrationVisual() {
@@ -1371,6 +1492,16 @@ function applyDrinkDefaults() {
   document.querySelector("#milkSelect").value = meta.defaultMilk;
   const amountInput = document.querySelector("#drinkAmountInput");
   if (amountInput && !amountInput.value.trim()) amountInput.value = "1 glass";
+}
+
+function resetDrinkProfileForm() {
+  const drinkTypeSelect = document.querySelector("#drinkTypeSelect");
+  if (drinkTypeSelect) {
+    drinkTypeSelect.value = drinkTypeOptions[0]?.type || "black_coffee";
+  }
+  const amountInput = document.querySelector("#drinkAmountInput");
+  if (amountInput) amountInput.value = "";
+  applyDrinkDefaults();
 }
 
 function getDrinkProfileFromForm() {
@@ -1764,6 +1895,17 @@ function saveToday() {
   localStorage.setItem(storageKey(), JSON.stringify(appState));
   document.querySelector("#saveStatus").textContent = t("saveTodayDone");
   syncUI();
+}
+
+function resetCurrentForm() {
+  if (!confirm(t("resetCurrentFormConfirm"))) return;
+
+  isEditingReflection = false;
+  appState = structuredClone(defaultState);
+  localStorage.removeItem(storageKey());
+  resetDrinkProfileForm();
+  syncUI();
+  document.querySelector("#saveStatus").textContent = t("resetCurrentFormDone");
 }
 
 function getDailyLog() {

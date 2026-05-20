@@ -24,7 +24,6 @@
       <blockquote data-i18n="welcomeQuote">สมดุลเริ่มจากการเห็น ไม่ใช่การฝืน</blockquote>
       <div class="welcome-actions">
         <button type="button" class="primary-button" id="beginWelcome" data-i18n="welcomeBegin">เริ่มวันนี้</button>
-        <button type="button" class="ghost-button" id="skipWelcome" data-i18n="welcomeSkip">เข้าสู่ Dashboard</button>
       </div>
     </div>
   </section>
@@ -34,7 +33,7 @@
       <div>
         <p class="eyebrow" data-i18n="eyebrow">Personal mindful dashboard</p>
         <h1 data-i18n="title">Mindful Health Balance by MSxAI</h1>
-        <p class="version" data-i18n="version">v1.5 Structured Drink & Energy Profile</p>
+        <p class="version" data-i18n="version">v1.7 Minimal Layered UI</p>
         <p class="subtitle" data-i18n="subtitle">ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง</p>
       </div>
       <div class="hero-side">
@@ -59,7 +58,20 @@
       <span data-i18n="noticeText">แอปนี้ช่วยดู pattern และ balance recovery เท่านั้น ไม่ใช่เครื่องมือวินิจฉัย และไม่ใช้แทนแพทย์หรือการติดตามตามนัด</span>
     </section>
 
-    <section class="dashboard-grid" aria-label="Mindful Health Balance dashboard">
+    <nav class="view-tabs" data-i18n-aria-label="viewTabsAria" aria-label="Mindful Health Balance views">
+      <button type="button" data-view="today" data-i18n="tabToday">วันนี้</button>
+      <button type="button" data-view="reflection" data-i18n="tabReflection">Reflection</button>
+      <button type="button" data-view="log" data-i18n="tabLog">Log</button>
+    </nav>
+    <p class="save-status global-status" id="saveStatus" aria-live="polite"></p>
+
+    <section class="view-panel is-active" data-view-panel="today" aria-labelledby="todayViewTitle">
+      <div class="view-heading">
+        <p class="section-kicker" data-i18n="tabToday">วันนี้</p>
+        <h2 id="todayViewTitle" data-i18n="todayViewTitle">Today Input</h2>
+      </div>
+
+      <section class="dashboard-grid" aria-label="Mindful Health Balance dashboard">
       <article class="glass-card">
         <div class="card-heading">
           <div>
@@ -209,16 +221,6 @@
         </div>
       </article>
 
-      <article class="glass-card reminder-card">
-        <div class="card-heading">
-          <div>
-            <p class="section-kicker" data-i18n="mindfulReminder">Mindful Reminder</p>
-            <h2 data-i18n="nuTuenSaiNote">NuTuenSai note</h2>
-          </div>
-        </div>
-        <p id="mindfulReminder">พี่ไม่ต้องแก้ทุกอย่างในวันเดียว แค่เห็น pattern ชัดขึ้นก็ถือว่าระบบเริ่มทำงานแล้ว</p>
-      </article>
-
       <article class="glass-card mind-note-card">
         <div class="card-heading">
           <div>
@@ -256,36 +258,95 @@
           </div>
         </div>
       </article>
+      </section>
 
-      <article class="glass-card reflection-card">
+      <section class="control-panel today-actions">
+        <div>
+          <p class="section-kicker" data-i18n="tabToday">วันนี้</p>
+          <h2 data-i18n="todayResetTitle">Current Form</h2>
+          <p data-i18n="resetCurrentFormConfirm">เคลียร์เฉพาะข้อมูลที่กำลังกรอกอยู่ ไม่ลบ Daily Log เดิม</p>
+        </div>
+        <div class="control-buttons">
+          <button type="button" class="ghost-button" id="resetCurrentForm" data-i18n="resetCurrentForm">เคลียร์หน้าปัจจุบัน</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="view-panel" data-view-panel="reflection" aria-labelledby="reflectionViewTitle">
+      <div class="view-heading">
+        <p class="section-kicker" data-i18n="tabReflection">Reflection</p>
+        <h2 id="reflectionViewTitle" data-i18n="reflectionViewTitle">Reflection</h2>
+        <p class="section-helper" data-i18n="reflectionViewHelper">ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม</p>
+      </div>
+
+      <section class="reflection-grid" aria-label="Reflection and save">
+        <article class="glass-card reminder-card">
+          <div class="card-heading">
+            <div>
+              <p class="section-kicker" data-i18n="mindfulReminder">Mindful Reminder</p>
+              <h2 data-i18n="nuTuenSaiNote">NuTuenSai note</h2>
+            </div>
+          </div>
+          <p id="mindfulReminder">พี่ไม่ต้องแก้ทุกอย่างในวันเดียว แค่เห็น pattern ชัดขึ้นก็ถือว่าระบบเริ่มทำงานแล้ว</p>
+        </article>
+
+        <article class="glass-card reflection-card">
         <div class="card-heading">
           <div>
             <p class="section-kicker" data-i18n="reflectionGenerator">Reflection Generator</p>
             <h2 data-i18n="endReflection">End-of-Day Reflection</h2>
+            <p class="section-helper" data-i18n="reflectionGeneratorHelper">ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม</p>
           </div>
         </div>
         <button type="button" class="primary-button" id="generateReflection" data-i18n="generateReflection">Generate End-of-Day Reflection</button>
-        <textarea id="reflectionOutput" rows="12" aria-label="Generated reflection" data-i18n-placeholder="reflectionPlaceholder" placeholder="กด Generate เพื่อสร้าง reflection จากข้อมูลวันนี้"></textarea>
-      </article>
-    </section>
+        <div class="reflection-preview" id="reflectionPreview" aria-live="polite">
+          <div class="reflection-empty-state" id="reflectionEmptyState">
+            <strong data-i18n="reflectionEmptyTitle">ยังไม่มี Reflection</strong>
+            <span data-i18n="reflectionEmptyText">กด Generate เพื่อให้ระบบสรุปจากข้อมูลวันนี้</span>
+          </div>
+          <pre class="reflection-preview-text" id="reflectionPreviewText"></pre>
+        </div>
+        <div class="reflection-edit-actions">
+          <button type="button" class="subtle-link-button" id="toggleReflectionEdit" data-i18n="editReflection">แก้ไขเล็กน้อย</button>
+        </div>
+        <textarea class="reflection-output is-hidden" id="reflectionOutput" rows="12" aria-label="Generated reflection" data-i18n-placeholder="reflectionPlaceholder" placeholder="กด Generate เพื่อสร้าง reflection จากข้อมูลวันนี้"></textarea>
+        </article>
+      </section>
 
-    <section class="control-panel">
+    <section class="control-panel reflection-actions">
       <div>
-        <p class="section-kicker" data-i18n="localOnly">Local only</p>
+        <p class="section-kicker" data-i18n="reflectionActionsKicker">Ready to save</p>
         <h2 data-i18n="dailyLogControls">Daily Log Controls</h2>
-        <p data-i18n="controlsHelp">บันทึกเป็นตารางใน browser/localStorage ของเครื่องนี้ แล้ว export เป็น Master Excel เมื่อพี่ต้องการ</p>
+        <p data-i18n="reflectionViewHelper">ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม</p>
       </div>
       <div class="control-buttons">
         <button type="button" class="primary-button" id="saveDailyLog" data-i18n="saveDailyLog">Save to Daily Log</button>
-        <button type="button" class="ghost-button" id="clearDailyLog" data-i18n="clearDailyLog">Clear Daily Log</button>
-        <button type="button" class="action-button" id="exportMasterExcel" data-i18n="exportMasterExcel">Export Master Excel</button>
-        <button type="button" class="action-button" id="importMasterExcel" data-i18n="importMasterExcel">Import Master Excel</button>
-        <input type="file" id="importExcelFile" accept=".xlsx,.xls" hidden>
       </div>
-      <p class="save-status" id="saveStatus" aria-live="polite"></p>
+    </section>
     </section>
 
-    <section class="daily-log-section glass-card" aria-labelledby="dailyLogTitle">
+    <section class="view-panel" data-view-panel="log" aria-labelledby="logViewTitle">
+      <div class="view-heading">
+        <p class="section-kicker" data-i18n="tabLog">Log</p>
+        <h2 id="logViewTitle" data-i18n="logViewTitle">Log & Export</h2>
+        <p class="section-helper" data-i18n="logViewHelper">ดูบันทึกย้อนหลังและจัดการไฟล์ backup ของระบบ</p>
+      </div>
+
+      <section class="control-panel log-actions">
+        <div>
+          <p class="section-kicker" data-i18n="localOnly">Local only</p>
+          <h2 data-i18n="logControlsTitle">Backup Controls</h2>
+          <p data-i18n="logViewHelper">ดูบันทึกย้อนหลังและจัดการไฟล์ backup ของระบบ</p>
+        </div>
+        <div class="control-buttons">
+          <button type="button" class="action-button" id="exportMasterExcel" data-i18n="exportMasterExcel">Export Master Excel</button>
+          <button type="button" class="action-button" id="importMasterExcel" data-i18n="importMasterExcel">Import Master Excel</button>
+          <button type="button" class="ghost-button danger-action" id="clearDailyLog" data-i18n="clearDailyLog">Clear Daily Log</button>
+          <input type="file" id="importExcelFile" accept=".xlsx,.xls" hidden>
+        </div>
+      </section>
+
+      <section class="daily-log-section glass-card" aria-labelledby="dailyLogTitle">
       <div class="card-heading">
         <div>
           <p class="section-kicker" data-i18n="dailyLogTable">Daily Log Table</p>
@@ -326,6 +387,7 @@
         </table>
       </div>
       <p class="empty-state" id="emptyLogState" data-i18n="emptyLog">ยังไม่มี log วันนี้ เริ่มจาก Save to Daily Log ได้เลย</p>
+      </section>
     </section>
   </main>
 </body>

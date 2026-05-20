@@ -452,10 +452,66 @@ h2 {
   color: var(--text-main);
 }
 
+.view-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 6px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: var(--version-bg);
+  backdrop-filter: blur(18px);
+}
+
+.view-tabs button {
+  flex: 1 1 130px;
+  min-height: 42px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text-soft);
+  background: transparent;
+  font-weight: 800;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.view-tabs button.is-active {
+  border-color: var(--border-soft);
+  color: var(--active-text);
+  background: var(--active-bg);
+}
+
+.view-panel {
+  display: none;
+}
+
+.view-panel.is-active {
+  display: block;
+}
+
+.view-heading {
+  margin: 0 0 18px;
+}
+
+.view-heading h2 {
+  font-size: 1.38rem;
+}
+
+.today-actions {
+  margin-top: 18px;
+}
+
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
+}
+
+.reflection-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.82fr) minmax(0, 1.18fr);
+  gap: 18px;
+  align-items: stretch;
 }
 
 .glass-card {
@@ -673,6 +729,12 @@ h2 {
   gap: 10px;
 }
 
+.control-buttons .danger-action {
+  margin-left: auto;
+  border-color: rgba(217, 137, 184, 0.34);
+  color: var(--coral);
+}
+
 .segmented.wrap button {
   flex: 1 1 140px;
 }
@@ -681,8 +743,10 @@ h2 {
 .action-button,
 .ghost-button,
 .primary-button,
+.subtle-link-button,
 .toggle-card,
-.activity-button {
+.activity-button,
+.view-tabs button {
   min-height: 44px;
   border: 1px solid var(--border-soft);
   border-radius: 8px;
@@ -703,16 +767,19 @@ h2 {
 .action-button:hover,
 .ghost-button:hover,
 .primary-button:hover,
+.subtle-link-button:hover,
 .toggle-card:hover,
 .activity-button:hover,
-.open-welcome-button:hover {
+.open-welcome-button:hover,
+.view-tabs button:hover {
   transform: translateY(-1px);
   border-color: var(--accent);
 }
 
 .segmented button.is-active,
 .toggle-card.is-active,
-.activity-button.is-active {
+.activity-button.is-active,
+.view-tabs button.is-active {
   border-color: var(--accent);
   color: var(--active-text);
   background: var(--active-bg);
@@ -946,6 +1013,10 @@ body[data-theme="dark"] .coffee-cup-icon.active::after {
   grid-column: span 2;
 }
 
+.reflection-grid .reflection-card {
+  grid-column: auto;
+}
+
 .mind-note-card {
   grid-column: span 2;
   background: var(--mind-note-bg);
@@ -983,6 +1054,13 @@ textarea::placeholder {
   opacity: 0.78;
 }
 
+.reflection-output {
+  min-height: 300px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 70%),
+    var(--textarea-bg);
+}
+
 textarea:focus,
 button:focus-visible {
   outline: 3px solid var(--focus-ring);
@@ -1008,6 +1086,71 @@ button:focus-visible {
   min-height: 1.6em;
   color: var(--accent);
   font-weight: 700;
+}
+
+.global-status {
+  margin: -8px 0 16px;
+}
+
+.reflection-preview {
+  min-height: 300px;
+  margin-top: 14px;
+  padding: 18px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  color: var(--text-main);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 72%),
+    var(--panel-inner-bg);
+  line-height: 1.75;
+}
+
+.reflection-empty-state {
+  display: grid;
+  min-height: 246px;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+.reflection-empty-state strong {
+  color: var(--accent);
+  font-size: 1.05rem;
+}
+
+.reflection-preview-text {
+  margin: 0;
+  white-space: pre-wrap;
+  font: inherit;
+}
+
+.reflection-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.subtle-link-button {
+  min-height: auto;
+  padding: 4px 2px;
+  border-color: transparent;
+  color: var(--text-soft);
+  background: transparent;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.subtle-link-button:hover {
+  color: var(--accent);
+  background: transparent;
+}
+
+.is-hidden {
+  display: none !important;
 }
 
 .daily-log-section {
@@ -1106,6 +1249,7 @@ td:nth-child(10) {
   }
 
   .dashboard-grid,
+  .reflection-grid,
   .control-panel {
     grid-template-columns: 1fr;
   }
@@ -1194,7 +1338,12 @@ td:nth-child(10) {
   .segmented button,
   .action-button,
   .ghost-button,
-  .primary-button {
+  .primary-button,
+  .view-tabs button {
     flex: 1 1 auto;
+  }
+
+  .control-buttons .danger-action {
+    margin-left: 0;
   }
 }
