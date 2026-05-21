@@ -123,6 +123,11 @@ load type เหล่านี้ถูก derive จาก activity chips ท�
 ~/Desktop/MindfulSystem_xAi/apps/mindful-health-balance/index.html
 ```
 
+## User Guides
+
+- Thai: `USER_GUIDE_TH.md`
+- English: `USER_GUIDE_EN.md`
+
 ## สิ่งที่แอปทำได้
 
 - เลือก Today State: Energy, Mind, Sleep
