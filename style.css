@@ -812,6 +812,28 @@ h2 {
   gap: 10px;
 }
 
+.activity-grid {
+  grid-template-columns: 1fr;
+}
+
+.activity-group {
+  display: grid;
+  gap: 8px;
+}
+
+.activity-group-label {
+  margin: 4px 0 0;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.activity-group-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
 .drink-profile-form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1006,12 +1028,183 @@ body[data-theme="dark"] .coffee-cup-icon.active::after {
 
 .reminder-card {
   background: var(--reminder-bg);
+  overflow: hidden;
 }
 
-.reminder-card p {
+.reminder-layout {
+  display: grid;
+  gap: 18px;
+}
+
+.reminder-copy {
+  min-width: 0;
+}
+
+.reminder-copy .section-helper {
+  max-width: 620px;
+  margin: 8px 0 0;
+}
+
+.reminder-card #mindfulReminder {
   margin-bottom: 0;
   font-size: 1.2rem;
   line-height: 1.8;
+}
+
+.nutuensai-soundwave {
+  position: relative;
+  width: min(100%, 560px);
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 243, 210, 0.18);
+  border-radius: 8px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 50%, rgba(255, 248, 222, 0.84), transparent 34%),
+    radial-gradient(circle at 78% 48%, rgba(197, 232, 255, 0.42), transparent 38%),
+    linear-gradient(90deg, rgba(255, 253, 242, 0.72), rgba(255, 232, 176, 0.28) 46%, rgba(187, 226, 255, 0.3)),
+    rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 12px 34px rgba(255, 214, 138, 0.16),
+    0 0 34px rgba(192, 226, 255, 0.22);
+}
+
+.nutuensai-soundwave::before {
+  content: "";
+  position: absolute;
+  inset: 50% 16px auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 220, 145, 0.72), rgba(186, 226, 255, 0.66), transparent);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.nutuensai-soundwave::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 14%, rgba(255, 255, 240, 0.72) 42%, rgba(190, 230, 255, 0.38) 54%, transparent 76%);
+  opacity: 0.7;
+  transform: translateX(-120%);
+  animation: soundwaveSweep 6.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.soundwave-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(4px, 1fr));
+  align-items: center;
+  gap: clamp(5px, 1vw, 10px);
+  z-index: 1;
+  min-height: 46px;
+}
+
+.soundwave-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 220, 145, 0.62), rgba(181, 226, 255, 0.62), transparent);
+  transform: translateY(-50%);
+  animation: soundwaveLineGlow 4.8s ease-in-out infinite;
+}
+
+.soundwave-bar {
+  width: 100%;
+  max-width: 10px;
+  justify-self: center;
+  height: 18px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 248, 0.96), rgba(255, 224, 153, 0.76), rgba(180, 224, 255, 0.68));
+  box-shadow:
+    0 0 14px rgba(255, 226, 164, 0.44),
+    0 0 24px rgba(181, 226, 255, 0.24);
+  opacity: 0.82;
+  transform-origin: center;
+  animation: soundwavePulse 3.8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.soundwave-bar:nth-of-type(2) { height: 26px; animation-delay: -0.2s; animation-duration: 3.4s; }
+.soundwave-bar:nth-of-type(3) { height: 34px; animation-delay: -0.7s; animation-duration: 4.1s; }
+.soundwave-bar:nth-of-type(4) { height: 22px; animation-delay: -1.2s; animation-duration: 3.6s; }
+.soundwave-bar:nth-of-type(5) { height: 40px; animation-delay: -1.8s; animation-duration: 4.4s; }
+.soundwave-bar:nth-of-type(6) { height: 30px; animation-delay: -2.3s; animation-duration: 3.5s; }
+.soundwave-bar:nth-of-type(7) { height: 46px; animation-delay: -2.8s; animation-duration: 4.2s; }
+.soundwave-bar:nth-of-type(8) { height: 28px; animation-delay: -3.2s; animation-duration: 3.7s; }
+.soundwave-bar:nth-of-type(9) { height: 38px; animation-delay: -3.8s; animation-duration: 4.5s; }
+.soundwave-bar:nth-of-type(10) { height: 24px; animation-delay: -4.2s; animation-duration: 3.4s; }
+.soundwave-bar:nth-of-type(11) { height: 32px; animation-delay: -4.8s; animation-duration: 4s; }
+.soundwave-bar:nth-of-type(12) { height: 20px; animation-delay: -5.1s; animation-duration: 3.6s; }
+.soundwave-bar:nth-of-type(13) { height: 28px; animation-delay: -5.6s; animation-duration: 4.3s; }
+
+body[data-theme="dark"] .nutuensai-soundwave {
+  border-color: rgba(255, 240, 202, 0.12);
+  background:
+    radial-gradient(circle at 18% 50%, rgba(255, 234, 177, 0.32), transparent 36%),
+    radial-gradient(circle at 76% 48%, rgba(168, 219, 255, 0.24), transparent 40%),
+    linear-gradient(90deg, rgba(255, 243, 207, 0.16), rgba(255, 220, 145, 0.12) 44%, rgba(175, 224, 255, 0.14)),
+    rgba(17, 16, 37, 0.48);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 246, 215, 0.1),
+    inset 0 0 0 1px rgba(180, 225, 255, 0.06),
+    0 12px 38px rgba(255, 218, 145, 0.14),
+    0 0 34px rgba(174, 222, 255, 0.18);
+}
+
+body[data-theme="dark"] .soundwave-bar {
+  background: linear-gradient(180deg, rgba(255, 255, 238, 0.9), rgba(255, 220, 145, 0.72), rgba(166, 219, 255, 0.72));
+  box-shadow:
+    0 0 18px rgba(255, 224, 153, 0.3),
+    0 0 30px rgba(166, 219, 255, 0.22);
+}
+
+@keyframes soundwavePulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scaleY(0.58);
+  }
+  28% {
+    opacity: 0.92;
+    transform: scaleY(1.28);
+  }
+  58% {
+    opacity: 0.96;
+    transform: scaleY(0.88);
+  }
+  78% {
+    opacity: 0.72;
+    transform: scaleY(1.12);
+  }
+}
+
+@keyframes soundwaveSweep {
+  0%, 28% {
+    transform: translateX(-120%);
+  }
+  58%, 100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes soundwaveLineGlow {
+  0%, 100% {
+    opacity: 0.48;
+  }
+  50% {
+    opacity: 0.92;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .soundwave-bar,
+  .soundwave-line,
+  .nutuensai-soundwave::after {
+    animation: none;
+  }
 }
 
 .reflection-card {
@@ -1315,6 +1508,24 @@ td:nth-child(10) {
     display: grid;
   }
 
+  .reminder-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .nutuensai-soundwave {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .soundwave-track {
+    min-height: 38px;
+    gap: 5px;
+  }
+
+  .soundwave-bar {
+    max-width: 8px;
+  }
+
   .hydration-card {
     min-height: auto;
   }
@@ -1335,6 +1546,7 @@ td:nth-child(10) {
 
   .toggle-grid,
   .activity-grid,
+  .activity-group-grid,
   .energy-cause-grid,
   .drink-profile-form {
     grid-template-columns: 1fr;

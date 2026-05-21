@@ -33,7 +33,7 @@
       <div>
         <p class="eyebrow" data-i18n="eyebrow">Personal mindful dashboard</p>
         <h1 data-i18n="title">Mindful Health Balance by MSxAI</h1>
-        <p class="version" data-i18n="version">v1.7 Minimal Layered UI</p>
+        <p class="version" data-i18n="version">v1.8 Activity-aware Load Presets</p>
         <p class="subtitle" data-i18n="subtitle">ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง</p>
       </div>
       <div class="hero-side">
@@ -60,7 +60,7 @@
 
     <nav class="view-tabs" data-i18n-aria-label="viewTabsAria" aria-label="Mindful Health Balance views">
       <button type="button" data-view="today" data-i18n="tabToday">วันนี้</button>
-      <button type="button" data-view="reflection" data-i18n="tabReflection">Reflection</button>
+      <button type="button" data-view="reflection" data-i18n="tabReflection">Reflection/NuTuenSai</button>
       <button type="button" data-view="log" data-i18n="tabLog">Log</button>
     </nav>
     <p class="save-status global-status" id="saveStatus" aria-live="polite"></p>
@@ -208,6 +208,7 @@
           <div>
             <p class="section-kicker" data-i18n="loadRecovery">Load & Recovery</p>
             <h2 data-i18n="loadHeading">วันนี้ใช้พลังไปกับอะไร</h2>
+            <p class="section-helper" data-i18n="loadHelper">เลือกสิ่งที่ใช้พลังวันนี้ ระบบจะดูทั้งร่างกาย สมอง และการฟื้นตัว</p>
           </div>
           <div class="metric compact">
             <span id="loadScore">0</span>
@@ -274,20 +275,38 @@
 
     <section class="view-panel" data-view-panel="reflection" aria-labelledby="reflectionViewTitle">
       <div class="view-heading">
-        <p class="section-kicker" data-i18n="tabReflection">Reflection</p>
+        <p class="section-kicker" data-i18n="tabReflection">Reflection/NuTuenSai</p>
         <h2 id="reflectionViewTitle" data-i18n="reflectionViewTitle">Reflection</h2>
         <p class="section-helper" data-i18n="reflectionViewHelper">ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม</p>
       </div>
 
       <section class="reflection-grid" aria-label="Reflection and save">
         <article class="glass-card reminder-card">
-          <div class="card-heading">
-            <div>
+          <div class="reminder-layout">
+            <div class="reminder-copy">
               <p class="section-kicker" data-i18n="mindfulReminder">Mindful Reminder</p>
               <h2 data-i18n="nuTuenSaiNote">NuTuenSai note</h2>
+              <p class="section-helper" data-i18n="nuTuenSaiRole">NuTuenSai เป็นชั้นสะท้อน pattern อย่างอ่อนโยน ไม่ใช่เครื่องมือวินิจฉัยหรือคำแนะนำแทนแพทย์</p>
             </div>
+            <div class="nutuensai-soundwave" aria-hidden="true">
+              <div class="soundwave-track">
+                <span class="soundwave-line"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+                <span class="soundwave-bar"></span>
+              </div>
+            </div>
+            <p id="mindfulReminder">พี่ไม่ต้องแก้ทุกอย่างในวันเดียว แค่เห็น pattern ชัดขึ้นก็ถือว่าระบบเริ่มทำงานแล้ว</p>
           </div>
-          <p id="mindfulReminder">พี่ไม่ต้องแก้ทุกอย่างในวันเดียว แค่เห็น pattern ชัดขึ้นก็ถือว่าระบบเริ่มทำงานแล้ว</p>
         </article>
 
         <article class="glass-card reflection-card">

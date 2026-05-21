@@ -1,4 +1,4 @@
-# Mindful Health Balance by MSxAI v1.7
+# Mindful Health Balance by MSxAI v1.8
 
 Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ static สำหรับ self-care reflection ของ pnat เพื่อช่วยดู pattern และ balance recovery ในชีวิตประจำวัน โดยเน้น 4 แกนหลัก:
 
@@ -107,6 +107,14 @@ v1.7 จัดหน้าแอปใหม่เป็น Minimal Layered UI �
 
 การเปลี่ยน view เปลี่ยนเฉพาะ layout การแสดงผล ไม่เปลี่ยน data schema, canonical value, Save / Export / Import logic หรือ NuTuenSai Reflection Processing Layer
 
+## v1.8 Activity / Profession-aware Load Presets
+
+v1.8 เพิ่ม Activity / Profession-aware Load Presets ใน Load & Recovery เพื่อให้ระบบสะท้อนชนิดของ load ได้ละเอียดขึ้น เช่น physical load, cognitive load, clinical focus, service/standing load, market decision load, outdoor heat load, sport intensity load และ sleep debt load
+
+load type เหล่านี้ถูก derive จาก activity chips ที่เลือกในวันนั้น ไม่ได้เพิ่ม column ใหม่ใน Daily Log หรือ Master Excel และไม่เปลี่ยน data schema, Save / Export / Import logic หรือ canonical value เดิม
+
+เป้าหมายของ v1.8 คือช่วยให้ NuTuenSai Reflection Processing Layer เข้าใจว่า load ไม่ได้มาจากกีฬาเท่านั้น งานที่ใช้สมาธิ ความละเอียด การยืน เดิน แบกของ การเฝ้าตลาด หรืองานกลางแจ้งก็ใช้พลังได้เหมือนกัน โดยยังคงเป็น self-care reflection dashboard ไม่ใช่ medical tool, therapy tool หรือ performance tracking
+
 ## วิธีเปิดใช้งาน
 
 เปิดไฟล์ `index.html` ด้วย browser ได้ทันที ไม่ต้องใช้ backend, server หรือ framework
@@ -123,6 +131,7 @@ v1.7 จัดหน้าแอปใหม่เป็น Minimal Layered UI �
 - เพิ่ม Drink Profile แบบพอดี เพื่อดู sugar/caffeine/milk/hydration support
 - เลือก Energy Cause แบบ optional เพื่อช่วยตีความพลังงานของวัน
 - เลือกกิจกรรมเพื่อคำนวณ Load Score และ Load Level
+- เลือก Activity / Profession-aware Load Presets เพื่อให้ reflection เห็นชนิดของความเหนื่อย เช่น งานใช้สมาธิ งานคลินิก งานกลางแจ้ง กีฬา หรือวันที่นอนน้อย
 - สร้าง End-of-Day Reflection ในโทน NuTuenSai
 - Save to Daily Log เพื่อบันทึกข้อมูลวันนี้เป็น 1 row ในตาราง
 - Clear Daily Log เพื่อล้างตารางย้อนหลังใน browser นี้

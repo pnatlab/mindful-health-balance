@@ -35,11 +35,11 @@ const translations = {
     htmlLang: "th",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.7 Minimal Layered UI",
+    version: "v1.8 Activity-aware Load Presets",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
-    tabReflection: "Reflection",
+    tabReflection: "Reflection/NuTuenSai",
     tabLog: "Log",
     todayViewTitle: "Today Input",
     reflectionViewTitle: "Reflection",
@@ -95,8 +95,10 @@ const translations = {
     energyCauseLabel: "Energy Cause / เหตุที่น่ามีผลต่อพลังงาน",
     loadRecovery: "Load & Recovery",
     loadHeading: "วันนี้ใช้พลังไปกับอะไร",
+    loadHelper: "เลือกสิ่งที่ใช้พลังวันนี้ ระบบจะดูทั้งร่างกาย สมอง และการฟื้นตัว",
     mindfulReminder: "Mindful Reminder",
     nuTuenSaiNote: "NuTuenSai note",
+    nuTuenSaiRole: "NuTuenSai เป็นชั้นสะท้อน pattern อย่างอ่อนโยน ไม่ใช่เครื่องมือวินิจฉัยหรือคำแนะนำแทนแพทย์",
     reflectionGenerator: "Reflection Generator",
     endReflection: "End-of-Day Reflection",
     reflectionEmptyTitle: "ยังไม่มี Reflection",
@@ -211,6 +213,17 @@ const translations = {
       resourceLow: "พลังงานอาจต่ำจากน้ำ อาหาร หรือการนอน ไม่ใช่เรื่องที่ต้องโทษตัวเอง",
       steadyHydration: "วางจุดจิบน้ำให้สม่ำเสมอขึ้น โดยไม่ต้องอัดทีเดียว"
     },
+    loadTypeReflection: {
+      clinical_focus: "วันนี้ใช้ความละเอียด สมาธิ มือ ตา และระบบประสาทต่อเนื่องมากกว่าที่คะแนน load บอกได้ ให้การพักแบบเงียบ ๆ มีพื้นที่พอ ๆ กับการทำงาน",
+      service_standing_load: "วันนี้ร่างกายอาจใช้พลังจากการยืน เดิน แบกของ และดูแลคนตรงหน้า แม้ไม่ได้เรียกว่าออกกำลังกายโดยตรง",
+      market_decision_load: "วันนี้ load อาจมาจากการเฝ้าจังหวะและแรงตัดสินใจมากกว่าการเคลื่อนไหวร่างกาย ปิดจอเป็นช่วง ๆ พักสายตา และไม่พาตลาดไปนอนก็พอ",
+      outdoor_heat_load: "วันนี้ร่างกายอาจใช้น้ำและพลังมากกว่าที่รู้สึก ค่อย ๆ จิบน้ำและพักเป็นช่วง ๆ ก็พอ",
+      sport_intensity_load: "วันนี้ร่างกายใช้แรงจริง ให้ recovery เป็นส่วนหนึ่งของการซ้อม ไม่ใช่การถอยหลัง",
+      cognitive_load: "วันนี้ใช้สมองและสายตาต่อเนื่อง ให้พักตาและลดการวนคิดเป็นส่วนหนึ่งของ recovery",
+      sleep_debt_load: "วันนี้อย่าตัดสินพลังงานจากวันที่นอนน้อย ให้ recovery มาก่อนการเพิ่มรอบใหม่",
+      physical_load: "วันนี้ร่างกายได้ใช้พลังพอสมควร ให้ recovery มีพื้นที่แบบไม่ต้องเร่งเพิ่ม",
+      recovery: "วันนี้มีพื้นที่ให้ระบบค่อย ๆ ฟื้นตัวและรักษาจังหวะที่อยู่ได้จริง"
+    },
     loadLevel: {
       light: "Load เบา",
       medium: "Load กลาง",
@@ -248,6 +261,17 @@ const translations = {
       restNoGuilt: "พักโดยไม่ต้องรู้สึกผิด แล้วค่อยกลับมาดู pattern ต่อ",
       steady: "รักษาระบบที่อยู่ได้จริงต่ออีกหนึ่งวัน"
     },
+    tomorrowFocusByLoadType: {
+      clinical_focus: "พักมือ ตา และระบบประสาทแบบเบา ๆ ให้มีพื้นที่เท่ากับงานละเอียด",
+      market_decision_load: "พักสายตา ปิดจอเป็นช่วง ๆ และลดการวนคิดหลังตลาดปิด",
+      cognitive_load: "พักตา ขยับตัวสั้น ๆ และลด mental loop ลงหนึ่งจังหวะ",
+      service_standing_load: "คืนพื้นที่ให้หลัง ขา ไหล่ และดื่มน้ำให้กระจายกว่าเดิม",
+      outdoor_heat_load: "จิบน้ำเป็นช่วง ๆ และพักแดดหรือพักร่างกายแบบไม่ต้องฝืน",
+      sport_intensity_load: "ให้ recovery เป็นส่วนหนึ่งของการซ้อม ไม่ใช่การถอยหลัง",
+      physical_load: "คืนพื้นที่ให้ร่างกายด้วยการขยับเบา ๆ และพักให้พอดี",
+      sleep_debt_load: "ให้การนอนและ recovery มาก่อนการเพิ่ม load รอบใหม่",
+      recovery: "รักษาความสม่ำเสมอ ไม่ต้องเพิ่มอะไรเพราะความกลัว"
+    },
     options: {
       energy: { low: "ต่ำ", medium: "กลาง", good: "ดี" },
       mind: { calm: "นิ่ง", worried: "กังวล", pressured: "กดดัน", scattered: "ฟุ้ง" },
@@ -284,12 +308,24 @@ const translations = {
       },
       activities: {
         rest: "Rest day",
+        officeWork: "งานออฟฟิศ / ประชุมและเอกสาร",
+        outdoorWork: "ทำงานกลางแจ้ง / ใช้แรงและเสียเหงื่อ",
+        dentalFocus: "หมอฟัน / เคสคลินิกละเอียด",
+        clinicalShift: "แพทย์ / เวรตรวจหรือดูแลคนไข้",
+        photoshoot: "ช่างภาพ / งานถ่ายยาว",
+        marketWatch: "นักลงทุน / เฝ้าตลาดหรือวิเคราะห์",
+        badminton: "แบดมินตัน",
         easyRun: "Easy run",
         longRun: "Long run",
         heavyPingPong: "ปิงปองหนัก",
         longWalk: "เดินเยอะ",
         deepWork: "Deep work / coding นาน",
         lowSleep: "นอนน้อย"
+      },
+      activityGroups: {
+        work: "งาน",
+        sports: "กีฬา",
+        recovery: "พักฟื้น"
       },
       mindNote: {
         feeling: {
@@ -325,11 +361,11 @@ const translations = {
     htmlLang: "en",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.7 Minimal Layered UI",
+    version: "v1.8 Activity-aware Load Presets",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
-    tabReflection: "Reflection",
+    tabReflection: "Reflection/NuTuenSai",
     tabLog: "Log",
     todayViewTitle: "Today Input",
     reflectionViewTitle: "Reflection",
@@ -385,8 +421,10 @@ const translations = {
     energyCauseLabel: "Energy Cause",
     loadRecovery: "Load & Recovery",
     loadHeading: "What used your energy today?",
+    loadHelper: "Choose what used energy today. The system considers body, focus, and recovery.",
     mindfulReminder: "Mindful Reminder",
     nuTuenSaiNote: "NuTuenSai note",
+    nuTuenSaiRole: "NuTuenSai is a gentle reflection layer for noticing patterns, not a diagnosis tool or medical advice.",
     reflectionGenerator: "Reflection Generator",
     endReflection: "End-of-Day Reflection",
     reflectionEmptyTitle: "No reflection yet",
@@ -501,6 +539,17 @@ const translations = {
       resourceLow: "Energy may be low because water, food, or sleep resources are low; this is information, not blame.",
       steadyHydration: "Place steadier water moments across the day without forcing it all at once."
     },
+    loadTypeReflection: {
+      clinical_focus: "Today used sustained precision, eyes, hands, and nervous-system focus beyond what a simple load score can show. Quiet recovery deserves space too.",
+      service_standing_load: "Today may have used energy through standing, moving, carrying, and holding space for others, even if it was not formal exercise.",
+      market_decision_load: "Today’s load may come more from market attention and decision pressure than physical movement. Short screen breaks, resting the eyes, and not carrying the market into sleep may be enough.",
+      outdoor_heat_load: "Today may have used more water and energy than it felt. Small sips and short pauses are enough.",
+      sport_intensity_load: "Today used real physical effort. Recovery is part of training, not a step backward.",
+      cognitive_load: "Today used sustained focus and visual attention. Resting the eyes and reducing mental loops are part of recovery.",
+      sleep_debt_load: "Do not judge your energy from a low-sleep day. Recovery comes before adding more load.",
+      physical_load: "Today used some body energy. Let recovery have space without adding more too quickly.",
+      recovery: "Today has room for the system to recover and keep a rhythm that can last."
+    },
     loadLevel: {
       light: "Light Load",
       medium: "Moderate Load",
@@ -538,6 +587,17 @@ const translations = {
       restNoGuilt: "Rest without guilt, then come back to the pattern gently.",
       steady: "Keep the system sustainable for one more day."
     },
+    tomorrowFocusByLoadType: {
+      clinical_focus: "Give the hands, eyes, and nervous-system focus a quiet recovery window.",
+      market_decision_load: "Rest the eyes, close screens in small windows, and reduce the market loop after closing.",
+      cognitive_load: "Rest the eyes, move briefly, and lower the mental loop by one step.",
+      service_standing_load: "Give the back, legs, and shoulders some space, with water spread across the day.",
+      outdoor_heat_load: "Sip water in small rounds and take short sun/body pauses without forcing it.",
+      sport_intensity_load: "Let recovery be part of training, not a step backward.",
+      physical_load: "Return space to the body with light movement and enough rest.",
+      sleep_debt_load: "Let sleep and recovery come before adding another load round.",
+      recovery: "Keep consistency without adding more from fear."
+    },
     options: {
       energy: { low: "Low", medium: "Medium", good: "Good" },
       mind: { calm: "Calm", worried: "Worried", pressured: "Pressured", scattered: "Scattered" },
@@ -574,12 +634,24 @@ const translations = {
       },
       activities: {
         rest: "Rest day",
+        officeWork: "Office work / meetings & documents",
+        outdoorWork: "Outdoor work / heat & physical effort",
+        dentalFocus: "Dentist / detailed clinical cases",
+        clinicalShift: "Doctor / clinical shift or patient care",
+        photoshoot: "Photographer / long shoot",
+        marketWatch: "Investor / market watch & analysis",
+        badminton: "Badminton",
         easyRun: "Easy run",
         longRun: "Long run",
-        heavyPingPong: "Heavy ping-pong",
+        heavyPingPong: "Heavy pingpong",
         longWalk: "Lots of walking",
-        deepWork: "Long deep work / coding",
+        deepWork: "Deep work / coding",
         lowSleep: "Low sleep"
+      },
+      activityGroups: {
+        work: "Work",
+        sports: "Sports",
+        recovery: "Recovery"
       },
       mindNote: {
         feeling: {
@@ -615,11 +687,11 @@ const translations = {
     htmlLang: "zh-CN",
     eyebrow: "个人正念健康仪表板",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.7 Minimal Layered UI",
+    version: "v1.8 Activity-aware Load Presets",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
-    tabReflection: "反思",
+    tabReflection: "反思/NuTuenSai",
     tabLog: "记录",
     todayViewTitle: "今日输入",
     reflectionViewTitle: "反思",
@@ -675,8 +747,10 @@ const translations = {
     energyCauseLabel: "Energy Cause / 可能影响能量的原因",
     loadRecovery: "Load & Recovery",
     loadHeading: "今天把能量用在哪里？",
+    loadHelper: "选择今天消耗能量的事项。系统会同时参考身体、专注力与恢复。",
     mindfulReminder: "正念提醒",
     nuTuenSaiNote: "NuTuenSai 提醒",
+    nuTuenSaiRole: "NuTuenSai 是一个温和的反思层，用来观察模式，并不是诊断工具或医疗建议。",
     reflectionGenerator: "反思生成器",
     endReflection: "每日结束反思",
     reflectionEmptyTitle: "还没有反思内容",
@@ -791,6 +865,17 @@ const translations = {
       resourceLow: "能量低可能来自水、食物或睡眠资源不足，这是信息，不是责备。",
       steadyHydration: "把补水点放得更稳定，不需要一次硬灌。"
     },
+    loadTypeReflection: {
+      clinical_focus: "今天消耗的是持续的精细度、眼睛、手部与神经系统专注力，不只是分数能表达的负荷。安静恢复也需要空间。",
+      service_standing_load: "今天的能量可能用在站立、走动、搬东西和照顾眼前的人，即使它不是正式运动。",
+      market_decision_load: "今天的负荷可能更多来自市场注意力与决策压力，而不是身体活动。短暂离开屏幕、休息眼睛、不要把市场带进睡眠里，就已经足够。",
+      outdoor_heat_load: "今天身体可能用了比感觉中更多的水和能量。小口补水和短暂停顿就够了。",
+      sport_intensity_load: "今天身体确实用了力。Recovery 是训练的一部分，不是退后。",
+      cognitive_load: "今天用了持续的专注力和视觉注意力。让眼睛休息、减少反复思考也是 recovery。",
+      sleep_debt_load: "不要用睡少的一天来判断能量。先 recovery，再增加新的 load。",
+      physical_load: "今天身体用了不少能量，给 recovery 一点空间，不需要太快再增加。",
+      recovery: "今天有空间让系统慢慢恢复，并维持可持续的节奏。"
+    },
     loadLevel: {
       light: "Load 轻",
       medium: "Load 中",
@@ -828,6 +913,17 @@ const translations = {
       restNoGuilt: "不带内疚地休息，然后再温和地回来看 pattern。",
       steady: "让这个系统再稳定地走一天。"
     },
+    tomorrowFocusByLoadType: {
+      clinical_focus: "给手、眼睛和神经系统专注力一个安静恢复的窗口。",
+      market_decision_load: "让眼睛休息，分段关掉屏幕，并减少收盘后的反复思考。",
+      cognitive_load: "休息眼睛，短暂活动身体，把 mental loop 降低一点。",
+      service_standing_load: "把空间还给后背、腿和肩膀，也把喝水分散到一天里。",
+      outdoor_heat_load: "分段小口补水，也给太阳下的身体短暂停顿。",
+      sport_intensity_load: "让 recovery 成为训练的一部分，不是退后。",
+      physical_load: "用轻一点的活动和足够休息，把空间还给身体。",
+      sleep_debt_load: "先把睡眠和 recovery 放前面，再增加新的 load。",
+      recovery: "维持稳定，不需要因为害怕而增加更多。"
+    },
     options: {
       energy: { low: "低", medium: "中", good: "好" },
       mind: { calm: "平静", worried: "担心", pressured: "有压力", scattered: "分散" },
@@ -864,12 +960,24 @@ const translations = {
       },
       activities: {
         rest: "休息日",
+        officeWork: "办公室工作 / 会议与文件",
+        outdoorWork: "户外工作 / 体力与出汗",
+        dentalFocus: "牙科 / 精细临床病例",
+        clinicalShift: "医生 / 门诊或病患照护",
+        photoshoot: "摄影师 / 长时间拍摄",
+        marketWatch: "投资者 / 盯盘与分析",
+        badminton: "羽毛球",
         easyRun: "轻松跑",
         longRun: "长距离跑",
         heavyPingPong: "高强度乒乓球",
         longWalk: "走很多路",
-        deepWork: "长时间 deep work / coding",
-        lowSleep: "睡得少"
+        deepWork: "深度工作 / 编程",
+        lowSleep: "睡眠不足"
+      },
+      activityGroups: {
+        work: "工作",
+        sports: "运动",
+        recovery: "恢复"
       },
       mindNote: {
         feeling: {
@@ -937,13 +1045,33 @@ const energyCauseOptions = [
 ];
 
 const activityOptions = [
-  { key: "rest", label: "Rest day", score: -1 },
-  { key: "easyRun", label: "Easy run", score: 1 },
-  { key: "longRun", label: "Long run", score: 3 },
-  { key: "heavyPingPong", label: "ปิงปองหนัก", score: 3 },
-  { key: "longWalk", label: "เดินเยอะ", score: 1 },
-  { key: "deepWork", label: "Deep work / coding นาน", score: 2 },
-  { key: "lowSleep", label: "นอนน้อย", score: 2 }
+  { key: "officeWork", label: "งานออฟฟิศ", score: 1, type: "cognitive_load", group: "work" },
+  { key: "outdoorWork", label: "ทำงานกลางแจ้ง", score: 3, type: "outdoor_heat_load", group: "work" },
+  { key: "deepWork", label: "Deep work / coding นาน", score: 2, type: "cognitive_load", group: "work", legacyLabels: ["Long deep work / coding", "长时间 deep work / coding"] },
+  { key: "dentalFocus", label: "หมอฟัน", score: 3, type: "clinical_focus", group: "work" },
+  { key: "clinicalShift", label: "แพทย์", score: 3, type: "clinical_focus", group: "work" },
+  { key: "photoshoot", label: "ช่างภาพ", score: 3, type: "service_standing_load", group: "work" },
+  { key: "marketWatch", label: "นักลงทุน", score: 2, type: "market_decision_load", group: "work" },
+  { key: "badminton", label: "แบดมินตัน", score: 3, type: "sport_intensity_load", group: "sports" },
+  { key: "heavyPingPong", label: "ปิงปองหนัก", score: 3, type: "sport_intensity_load", group: "sports", legacyLabels: ["Heavy ping-pong"] },
+  { key: "easyRun", label: "Easy run", score: 2, type: "physical_load", group: "sports" },
+  { key: "longRun", label: "Long run", score: 4, type: "sport_intensity_load", group: "sports" },
+  { key: "longWalk", label: "เดินเยอะ", score: 2, type: "physical_load", group: "sports" },
+  { key: "lowSleep", label: "นอนน้อย", score: 2, type: "sleep_debt_load", group: "recovery", legacyLabels: ["睡得少"] },
+  { key: "rest", label: "Rest day", score: 0, type: "recovery", group: "recovery" }
+];
+
+const activityGroups = ["work", "sports", "recovery"];
+const loadTypePriority = [
+  "sleep_debt_load",
+  "clinical_focus",
+  "outdoor_heat_load",
+  "sport_intensity_load",
+  "service_standing_load",
+  "market_decision_load",
+  "cognitive_load",
+  "physical_load",
+  "recovery"
 ];
 
 const todayIso = new Date().toLocaleDateString("en-CA");
@@ -1137,11 +1265,21 @@ function renderSelectOptions(selector, options, labelGetter, valueKey = "") {
 
 function renderActivityOptions() {
   const list = document.querySelector("#activitiesList");
-  list.innerHTML = activityOptions.map((activity) => `
-    <button type="button" class="activity-button" data-activity="${activity.label}">
-      ${t(`options.activities.${activity.key}`)}
-    </button>
-  `).join("");
+  list.innerHTML = activityGroups.map((group) => {
+    const activities = activityOptions.filter((activity) => activity.group === group);
+    return `
+      <div class="activity-group">
+        <p class="activity-group-label">${t(`options.activityGroups.${group}`)}</p>
+        <div class="activity-group-grid">
+          ${activities.map((activity) => `
+            <button type="button" class="activity-button" data-activity="${escapeHtml(activity.label)}">
+              ${escapeHtml(t(`options.activities.${activity.key}`))}
+            </button>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  }).join("");
 }
 
 function renderEnergyCauseOptions() {
@@ -1446,9 +1584,19 @@ function updateMindNoteButtons() {
 
 function calculateLoadScore() {
   return appState.activities.reduce((total, selected) => {
-    const activity = activityOptions.find((item) => item.label === selected);
+    const activity = getActivityOptionByValue(selected);
     return total + (activity ? activity.score : 0);
   }, 0);
+}
+
+function getActivityOptionByValue(value) {
+  const normalized = String(value || "").trim();
+  if (!normalized) return null;
+  return activityOptions.find((activity) => {
+    if (activity.label === normalized) return true;
+    if (activity.legacyLabels?.includes(normalized)) return true;
+    return Object.keys(translations).some((lang) => translations[lang].options.activities[activity.key] === normalized);
+  }) || null;
 }
 
 function getDrinkMetaByType(type) {
@@ -1619,8 +1767,14 @@ function getDrinksFeedback() {
 }
 
 function getLoadFeedback() {
-  const hasHeavyCombo = appState.activities.includes("Long run") && appState.activities.includes("ปิงปองหนัก");
-  const highLoadWithLowSleep = appState.loadScore >= 6 && appState.activities.includes("นอนน้อย");
+  const signals = buildSignals();
+  const hasHeavyCombo = signals.recoveryLoad.hasHeavyCombo;
+  const highLoadWithLowSleep = signals.recoveryLoad.loadScore >= 6 && signals.recoveryLoad.loadTypes.includes("sleep_debt_load");
+  const loadTypeNote = getLoadTypeReflections(signals, { limit: 2 }).join(" ");
+
+  if (loadTypeNote) {
+    return loadTypeNote;
+  }
 
   if (hasHeavyCombo || highLoadWithLowSleep) {
     return t("loadHeavyCombo");
@@ -1678,14 +1832,49 @@ function getDrinkLoadSignal(scores = getDrinkScores()) {
 
 function getRecoveryLoadSignal(loadScore = calculateLoadScore()) {
   const activities = appState.activities || [];
+  const loadTypes = getSelectedLoadTypes(activities);
   return {
     activities,
+    loadTypes,
+    primaryLoadType: getPrimaryLoadType(loadTypes),
     loadScore,
     high: loadScore >= 6,
     medium: loadScore >= 3 && loadScore < 6,
     light: loadScore < 3,
-    hasHeavyCombo: activities.includes("Long run") && activities.includes("ปิงปองหนัก")
+    hasHeavyCombo: activities.some((activity) => getActivityOptionByValue(activity)?.key === "longRun")
+      && activities.some((activity) => getActivityOptionByValue(activity)?.key === "heavyPingPong")
   };
+}
+
+function getSelectedLoadTypes(activities = appState.activities || []) {
+  return [...new Set(activities
+    .map(getActivityOptionByValue)
+    .filter(Boolean)
+    .map((activity) => activity.type))];
+}
+
+function getPrimaryLoadType(loadTypes = []) {
+  return loadTypePriority.find((type) => loadTypes.includes(type)) || "";
+}
+
+function getOrderedLoadTypes(loadTypes = []) {
+  return loadTypePriority.filter((type) => loadTypes.includes(type));
+}
+
+function getLoadTypeReflections(signals = buildSignals(), { includeRecovery = false, limit = 1 } = {}) {
+  return getOrderedLoadTypes(signals.recoveryLoad.loadTypes)
+    .filter((type) => includeRecovery || type !== "recovery")
+    .slice(0, limit)
+    .map((type) => t(`loadTypeReflection.${type}`));
+}
+
+function getLoadTypeReflection(signals = buildSignals()) {
+  return getLoadTypeReflections(signals, { limit: 1 })[0] || "";
+}
+
+function getLoadTypeTomorrowFocus(signals = buildSignals()) {
+  const type = getOrderedLoadTypes(signals.recoveryLoad.loadTypes)[0];
+  return type ? t(`tomorrowFocusByLoadType.${type}`) : "";
 }
 
 function getEnergySleepSignal(loadScore = calculateLoadScore()) {
@@ -1762,6 +1951,7 @@ function buildReflection() {
 function buildReflectionFromSignals(signals) {
   const goodThings = [];
   const adjustments = [];
+  const loadTypeAdjustments = getLoadTypeReflections(signals, { limit: 2 });
 
   if (signals.hydration.steady && signals.recoveryLoad.light) {
     goodThings.push(t("signalReflection.goodConsistency"));
@@ -1794,6 +1984,9 @@ function buildReflectionFromSignals(signals) {
   } else if (signals.recoveryLoad.high) {
     adjustments.push(t("reflection.stopPush"));
   }
+  loadTypeAdjustments.forEach((note) => {
+    if (!adjustments.includes(note)) adjustments.push(note);
+  });
   if (!adjustments.length) adjustments.push(t("reflection.keepBalance"));
 
   const energyCauseNote = signals.energySleep.causes.length
@@ -1832,6 +2025,8 @@ function getMindNoteSummary() {
 function getRecoveryNote(signals = buildSignals()) {
   if (signals.energySleep.endorphinBlindSpot) return t("recoveryNote.endorphin");
   if (signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("recoveryNote.sleepLoadHigh");
+  const loadTypeNote = getLoadTypeReflection(signals);
+  if (loadTypeNote) return loadTypeNote;
   if (signals.recoveryLoad.high) return t("recoveryNote.high");
   if (signals.energySleep.sleepLow) return t("recoveryNote.lowSleep");
   if (signals.recoveryLoad.medium) return t("recoveryNote.medium");
@@ -1847,6 +2042,8 @@ function getTomorrowFocus(signals = buildSignals()) {
   if (signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("tomorrowFocus.recovery");
   if (signals.mindNote.restFirst) return t("tomorrowFocus.restNoGuilt");
   if (signals.hydration.low && signals.drinkLoad.caffeineHigh) return t("tomorrowFocus.water");
+  const loadTypeFocus = getLoadTypeTomorrowFocus(signals);
+  if (loadTypeFocus) return loadTypeFocus;
   if (signals.drinkLoad.caffeineHigh) return t("tomorrowFocus.caffeine");
   if (signals.recoveryLoad.high || signals.energySleep.sleepLow) return t("tomorrowFocus.recovery");
   if (signals.hydration.low || signals.hydration.rising) return t("tomorrowFocus.water");
@@ -2134,7 +2331,11 @@ function localizeLogCell(column, value) {
   if (column === "Energy_Causes") return localizeEnergyCauses(value);
   if (column === "Load_Level") return localizeLoadLevel(value);
   if (column === "Hydration_Status") return localizeKnownText(value, "hydrationFeedback");
-  if (column === "Tomorrow_Focus") return localizeKnownText(value, "tomorrowFocus");
+  if (column === "Tomorrow_Focus") {
+    const tomorrowText = localizeKnownText(value, "tomorrowFocus");
+    if (tomorrowText !== value) return tomorrowText;
+    return localizeKnownText(value, "tomorrowFocusByLoadType");
+  }
   if (column === "NuTuenSai_Reminder") {
     const reminderText = localizeKnownText(value, "reminder");
     if (reminderText !== value) return reminderText;
@@ -2227,7 +2428,9 @@ function localizeJoinedValues(value, options, translationGroup) {
     .map((entry) => entry.trim())
     .filter(Boolean)
     .map((entry) => {
-      const option = options.find((item) => item.label === entry || t(`options.${translationGroup}.${item.key}`) === entry);
+      const option = translationGroup === "activities"
+        ? getActivityOptionByValue(entry)
+        : options.find((item) => item.label === entry || t(`options.${translationGroup}.${item.key}`) === entry);
       return option ? t(`options.${translationGroup}.${option.key}`) : entry;
     })
     .join(" | ");
