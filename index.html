@@ -115,6 +115,7 @@
           <div>
             <p class="section-kicker" data-i18n="todayState">Today State</p>
             <h2 data-i18n="todayStateHeading">วันนี้ร่างกายกับใจเป็นอย่างไร</h2>
+            <p class="micro-cue" data-i18n="todayStateCue">สังเกตเร็ว ๆ ของวันนี้</p>
           </div>
         </div>
 
@@ -133,7 +134,10 @@
         </div>
 
         <div class="choice-group" data-field="mind">
-          <span class="choice-label" data-i18n="mindLabel">Mind</span>
+          <span class="choice-label observation-label observation-label--mind">
+            <span class="blue-heart-cue" aria-hidden="true"></span>
+            <span data-i18n="mindLabel">Mind</span>
+          </span>
           <div class="segmented" role="group" aria-label="Mind">
             <button type="button" data-value="นิ่ง" data-option-group="mind" data-option-key="calm">นิ่ง</button>
             <button type="button" data-value="กังวล" data-option-group="mind" data-option-key="worried">กังวล</button>
@@ -234,6 +238,7 @@
           </div>
         </div>
         <p class="mind-note-subtitle" data-i18n="mindNoteSubtitle">วางสิ่งที่ใจถืออยู่เบา ๆ โดยไม่ต้องรีบแก้</p>
+        <p class="micro-cue micro-cue--note" data-i18n="mindNoteCue">โน้ตสะท้อนเฉพาะบันทึกนี้</p>
 
         <label class="mind-note-field" for="mindNoteText">
           <span class="choice-label" data-i18n="mindNoteTextLabel">วันนี้ใจถืออะไรอยู่</span>

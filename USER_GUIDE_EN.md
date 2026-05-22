@@ -89,10 +89,12 @@ Switching views does not reset current inputs and does not delete saved Daily Lo
 Choose the current state as honestly and simply as possible:
 
 - Energy: Low / Medium / Good
-- Mind: Calm / Worried / Pressured / Scattered
+- Overall Mind Today: Calm / Worried / Pressured / Scattered
 - Sleep: Low / Okay / Good
 
 This gives the day context. For example, a low-sleep day or a scattered-mind day should not be used to judge the whole picture.
+
+The small blue heart beside `Overall Mind Today` marks the main mind observation for the day. `Feeling of This Note` in Mind Note is the feeling of that specific note, not a judgment of the whole day.
 
 On the Today page, this card includes a small sun or moon visual based on the browser's local time. It is only a gentle energy-rhythm cue and does not affect saved data or processing.
 
@@ -185,7 +187,7 @@ Mind Note is a small space for one line of inner context. It is not a therapy to
 Use it lightly:
 
 - Write one short line about what your mind is holding today
-- Choose a feeling, such as calm, worried, pressured, tired, scattered, or grateful
+- Choose `Feeling of This Note`, such as calm, worried, pressured, tired, scattered, or grateful
 - Choose a support need, such as rest first, see the pattern, reduce pressure, hydrate gently, or leave it for now
 - Keep it short if that feels right
 - Use it to notice patterns between mind state, hydration, load, recovery, and sleep
