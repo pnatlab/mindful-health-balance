@@ -115,6 +115,10 @@ load type เหล่านี้ถูก derive จาก activity chips ท�
 
 เป้าหมายของ v1.8 คือช่วยให้ NuTuenSai Reflection Processing Layer เข้าใจว่า load ไม่ได้มาจากกีฬาเท่านั้น งานที่ใช้สมาธิ ความละเอียด การยืน เดิน แบกของ การเฝ้าตลาด หรืองานกลางแจ้งก็ใช้พลังได้เหมือนกัน โดยยังคงเป็น self-care reflection dashboard ไม่ใช่ medical tool, therapy tool หรือ performance tracking
 
+### v1.8 Today Visual Identity Refinement
+
+หน้า `Today` ถูกปรับให้รู้สึกเป็น personal health journal มากขึ้น โดยให้ Hydration เป็น water-glass visual anchor และเพิ่ม sun/moon rhythm object ใน Today State ตามเวลาท้องถิ่นของ browser เพื่อสื่อพลังงานของวันแบบเบา ๆ การปรับนี้เป็น UI-only ไม่เปลี่ยน input, scoring, data schema, localStorage, Save / Export / Import หรือ reflection logic
+
 ## วิธีเปิดใช้งาน
 
 เปิดไฟล์ `index.html` ด้วย browser ได้ทันที ไม่ต้องใช้ backend, server หรือ framework

@@ -1101,6 +1101,7 @@ let currentLanguage = loadLanguage();
 let currentThemePreference = getThemePreference();
 let appState = loadState();
 let themeIntervalId;
+let stateOrbIntervalId;
 let currentView = "today";
 let isEditingReflection = false;
 
@@ -1114,6 +1115,8 @@ document.addEventListener("DOMContentLoaded", () => {
   bindEvents();
   initWelcome();
   startThemeAutoRefresh();
+  updateTodayStateOrb();
+  startTodayStateOrbRefresh();
   syncUI();
   renderDailyLogTable();
 });
@@ -1215,6 +1218,26 @@ function startThemeAutoRefresh() {
     if (currentThemePreference === "auto") {
       applyThemePreference("auto");
     }
+  }, 60 * 1000);
+}
+
+function getTodayStateOrbMode(date = new Date()) {
+  const hour = date.getHours();
+  return hour >= 19 || hour < 5 ? "moon" : "sun";
+}
+
+function updateTodayStateOrb(date = new Date()) {
+  const orb = document.querySelector(".state-orb");
+  if (!orb) return;
+  const mode = getTodayStateOrbMode(date);
+  orb.classList.toggle("state-orb--sun", mode === "sun");
+  orb.classList.toggle("state-orb--moon", mode === "moon");
+}
+
+function startTodayStateOrbRefresh() {
+  if (stateOrbIntervalId) clearInterval(stateOrbIntervalId);
+  stateOrbIntervalId = setInterval(() => {
+    updateTodayStateOrb();
   }, 60 * 1000);
 }
 

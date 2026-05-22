@@ -94,6 +94,8 @@ Choose the current state as honestly and simply as possible:
 
 This gives the day context. For example, a low-sleep day or a scattered-mind day should not be used to judge the whole picture.
 
+On the Today page, this card includes a small sun or moon visual based on the browser's local time. It is only a gentle energy-rhythm cue and does not affect saved data or processing.
+
 You can also choose optional `Energy Cause` chips, such as low sleep, heavy exercise, deep work, stress, low water, low food, or unknown.
 
 ## 9. Hydration
