@@ -112,7 +112,7 @@ const translations = {
     mindNoteCue: "โน้ตสะท้อนเฉพาะบันทึกนี้",
     mindNoteTextLabel: "วันนี้ใจถืออะไรอยู่",
     mindNotePlaceholder: "เช่น อยากให้เลขดีขึ้นเร็ว แต่ก็ไม่อยากกดดันตัวเอง",
-    mindNoteFeelingLabel: "รสใจของบันทึกนี้",
+    mindNoteFeelingLabel: "ความรู้สึกของบันทึกนี้",
     mindNoteSupportLabel: "Support Need",
     generateReflection: "Generate End-of-Day Reflection",
     reflectionPlaceholder: "กด Generate เพื่อสร้าง reflection จากข้อมูลวันนี้",
@@ -245,7 +245,7 @@ const translations = {
     mindNoteReminder: {
       pressured: "เห็นความกดดันแล้วนะพี่ วันนี้ไม่ต้องรีบแก้ทุกอย่าง แค่กลับมาสม่ำเสมอก็พอ",
       worried: "ความกังวลเป็นสัญญาณให้ดูแล ไม่ใช่คำสั่งให้เร่งแก้",
-      hydrate_gently: "วันนี้จิบน้ำเบา ๆ ให้ระบบกลับมานิ่ง ไม่ต้องอัดน้ำเพื่อเอาชนะตัวเลข"
+      hydrate_gently: "วันนี้จิบน้ำเบา ๆ ให้ระบบกลับมาพอวางได้ ไม่ต้องอัดน้ำเพื่อเอาชนะตัวเลข"
     },
     recoveryNote: {
       sleepLoadHigh: "วันนี้ระบบใช้พลังมากพร้อมกับพักไม่เต็ม ให้ recovery มาก่อนการเพิ่มรอบใหม่",
@@ -276,7 +276,7 @@ const translations = {
     },
     options: {
       energy: { low: "ต่ำ", medium: "กลาง", good: "ดี" },
-      mind: { calm: "นิ่ง", worried: "กังวล", pressured: "กดดัน", scattered: "ฟุ้ง" },
+      mind: { calm: "เฉย ๆ", worried: "กังวล", pressured: "กดดัน", scattered: "ฟุ้ง" },
       sleep: { low: "น้อย", okay: "พอใช้", good: "ดี" },
       drinks: {
         water: "น้ำเปล่า",
@@ -331,7 +331,7 @@ const translations = {
       },
       mindNote: {
         feeling: {
-          calm: "นิ่ง",
+          calm: "เฉย ๆ",
           worried: "กังวล",
           pressured: "กดดัน",
           tired: "ล้า",
@@ -604,7 +604,7 @@ const translations = {
     },
     options: {
       energy: { low: "Low", medium: "Medium", good: "Good" },
-      mind: { calm: "Calm", worried: "Worried", pressured: "Pressured", scattered: "Scattered" },
+      mind: { calm: "Neutral", worried: "Worried", pressured: "Pressured", scattered: "Scattered" },
       sleep: { low: "Low", okay: "Okay", good: "Good" },
       drinks: {
         water: "Plain water",
@@ -659,7 +659,7 @@ const translations = {
       },
       mindNote: {
         feeling: {
-          calm: "Calm",
+          calm: "Neutral",
           worried: "Worried",
           pressured: "Pressured",
           tired: "Tired",
@@ -932,7 +932,7 @@ const translations = {
     },
     options: {
       energy: { low: "低", medium: "中", good: "好" },
-      mind: { calm: "平静", worried: "担心", pressured: "有压力", scattered: "分散" },
+      mind: { calm: "一般", worried: "担心", pressured: "有压力", scattered: "分散" },
       sleep: { low: "少", okay: "还可以", good: "好" },
       drinks: {
         water: "白水",
@@ -987,7 +987,7 @@ const translations = {
       },
       mindNote: {
         feeling: {
-          calm: "平静",
+          calm: "一般",
           worried: "担心",
           pressured: "有压力",
           tired: "疲惫",
@@ -2401,6 +2401,20 @@ function localizeMindNoteValue(column, value) {
   if (!key) return "";
   if (translations.th.options.mindNote[group][key]) return t(`options.mindNote.${group}.${key}`);
 
+  const mindNoteAliases = {
+    feeling: {
+      "นิ่ง": "calm",
+      "เฉย ๆ": "calm",
+      "Calm": "calm",
+      "Neutral": "calm",
+      "平静": "calm",
+      "一般": "calm"
+    },
+    support: {}
+  };
+  const aliasKey = mindNoteAliases[group]?.[key];
+  if (aliasKey) return t(`options.mindNote.${group}.${aliasKey}`);
+
   for (const lang of Object.keys(translations)) {
     const entries = translations[lang].options.mindNote[group];
     const found = Object.entries(entries).find(([, label]) => label === key);
@@ -2424,8 +2438,11 @@ function localizeStateValue(column, value) {
     },
     Mind: {
       "นิ่ง": "options.mind.calm",
+      "เฉย ๆ": "options.mind.calm",
       "Calm": "options.mind.calm",
+      "Neutral": "options.mind.calm",
       "平静": "options.mind.calm",
+      "一般": "options.mind.calm",
       "กังวล": "options.mind.worried",
       "Worried": "options.mind.worried",
       "担心": "options.mind.worried",
