@@ -111,9 +111,9 @@ Use Hydration to roughly log plain water:
 
 Hydration is about steadiness, not forcing a large amount at once. Small sips across the day are enough.
 
-Starting in v1.9.x, the Hydration card shows a flexible estimated target based on the day's load. A rest day can stay near the base target, while running, sport, outdoor heat, sweating, deep work, or higher load may show a slightly higher estimated range with a cue to sip gradually.
+Starting in v1.9.x, the Hydration card shows a flexible estimated target based on the day's context. A rest day can stay near the base target, while running, sport, outdoor heat, sweating, deep work, or sustained focused work may show a slightly higher estimated range with a cue to sip gradually.
 
-This guidance uses existing activity, load, sleep, and caffeine signals. It does not add new input fields. It is self-care guidance only, not medical advice, not diagnosis, and not an exact requirement. The user should still listen to their own body first.
+The system separates activity load from recovery-only signals such as low sleep, low energy, or scattered mind. If only a recovery signal is present, it should not describe the day as heavy activity load; it should keep hydration as a gentle base alongside rest. This guidance uses existing signals, adds no new inputs, and is not medical advice, diagnosis, or an exact requirement.
 
 ## 10. Drinks / Drink Profile
 

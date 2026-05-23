@@ -132,9 +132,9 @@ Excel export ยังรักษา sheet เดิม (`Daily_Log`, `Summary`
 
 ### v1.9.x Adaptive Hydration Guidance
 
-Hydration card เพิ่ม adaptive guidance แบบ display-only เพื่อสะท้อนว่าเป้าหมายน้ำเป็นช่วงยืดหยุ่นตาม load ของวัน ไม่ใช่ตัวเลขตายตัว ระบบใช้ signals ที่มีอยู่แล้ว เช่น activity/load type, outdoor heat, sport intensity, sleep debt และ caffeine เพื่อแสดง estimated range และ cue แบบอ่อนโยน
+Hydration card เพิ่ม adaptive guidance แบบ display-only เพื่อสะท้อนว่าเป้าหมายน้ำเป็นช่วงยืดหยุ่นตามบริบทของวัน ไม่ใช่ตัวเลขตายตัว ระบบใช้ signals ที่มีอยู่แล้ว เช่น activity/load type, outdoor heat, sport intensity, sleep debt และ caffeine เพื่อแสดง estimated range หรือ recovery cue แบบอ่อนโยน
 
-ฟีเจอร์นี้ไม่เพิ่ม input ใหม่ ไม่เปลี่ยน data schema, localStorage, Save / Import / Export compatibility หรือ scoring logic และไม่ใช่ medical advice เป้าหมายคือช่วยให้ผู้ใช้เห็นว่าวันที่มีเหงื่อ กีฬา งานกลางแจ้ง หรือ load สูง อาจต้องวางจังหวะจิบน้ำให้ตามร่างกายทัน โดยยังฟังร่างกายตัวเองเป็นหลัก
+ฟีเจอร์นี้แยก strong activity load ออกจาก recovery-only signal เช่น นอนน้อย พลังงานต่ำ หรือใจฟุ้ง ถ้ามีแค่สัญญาณ recovery ระบบจะไม่สรุปว่าเป็นวันที่ activity load สูง แต่จะชวนวางน้ำเป็นฐานคู่กับการพัก โดยไม่เพิ่ม input ใหม่ ไม่เปลี่ยน data schema, localStorage, Save / Import / Export compatibility หรือ scoring logic และไม่ใช่ medical advice
 
 ## วิธีเปิดใช้งาน
 

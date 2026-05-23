@@ -33,14 +33,19 @@ It does not add new input fields, localStorage keys, data schema, Excel columns,
 
 The base estimated target is 2,000 ml.
 
-When load is higher, the UI may show a soft estimated range:
+The guidance separates strong activity/load signals from recovery-only signals.
+
+When strong activity load is present, the UI may show a soft estimated range:
 
 - Sport intensity load: raises the range gently.
 - Outdoor heat load: raises the range gently.
 - Physical or standing/service load: raises the range moderately.
 - Cognitive or market-decision load: raises the range lightly.
-- Low sleep plus high load: gives a hydration-and-recovery cue.
 - High caffeine: keeps plain water as the base without turning caffeine into fear.
+
+When recovery-only signals are present, such as low sleep, low energy, scattered mind, or pressure without a clear activity load, the UI should keep the base target and use recovery wording. Low sleep alone does not mean activity load is high.
+
+When strong activity and recovery signals both appear, the UI can keep the activity range while using a hydration-and-recovery cue.
 
 The target is display-only. It is not saved as a new canonical value and should not be treated as a medical recommendation.
 
@@ -70,4 +75,3 @@ Preferred language:
 - "sip gradually"
 - "hydration as part of recovery"
 - "plain water can remain the base"
-
