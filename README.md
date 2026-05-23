@@ -158,7 +158,7 @@ Hydration card เพิ่ม adaptive guidance แบบ display-only เพ�
 - เลือก Energy Cause แบบ optional เพื่อช่วยตีความพลังงานของวัน
 - เลือกกิจกรรมเพื่อคำนวณ Load Score และ Load Level
 - เลือก Activity / Profession-aware Load Presets เพื่อให้ reflection เห็นชนิดของความเหนื่อย เช่น งานใช้สมาธิ งานคลินิก งานกลางแจ้ง กีฬา หรือวันที่นอนน้อย
-- สร้าง End-of-Day Reflection ในโทน NuTuenSai
+- สร้าง End-of-Day Reflection ในโทน NuTuenSai โดยหน้า preview แสดง synthesis สั้น ๆ ขณะที่รายละเอียดเต็มยังอยู่ใน Daily Log / Reflections / Excel
 - Save to Daily Log เพื่อบันทึกข้อมูลวันนี้เป็น 1 row ในตาราง
 - Clear Daily Log เพื่อล้างตารางย้อนหลังใน browser นี้
 - Export Master Excel เป็นไฟล์รวมข้อมูลทั้งหมด

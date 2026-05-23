@@ -183,6 +183,26 @@ const translations = {
       closing1: "วันนี้พี่ไม่ได้ต้องแก้ทุกอย่าง แค่เห็น pattern ชัดขึ้นก็ถือว่าระบบทำงานแล้ว",
       closing2: "เป้าหมายไม่ใช่เลขดีเร็ว แต่คือระบบที่ไม่พังซ้ำเพราะการรีบแก้"
     },
+    reflectionDisplay: {
+      overviewRecoveryHydratedRest: "วันนี้ภาพรวมเหมือนเป็นวันที่ร่างกายต้องการ recovery มากกว่าการเพิ่มอะไรใหม่ น้ำพอเป็นฐานได้แล้ว และการเลือกพักก่อนถือว่าเข้ากับพลังงานของวัน",
+      overviewRecoveryHydrated: "วันนี้เหมือนร่างกายต้องการจังหวะฟื้นตัวมากกว่าการเพิ่มอะไรใหม่ น้ำพอเป็นฐานได้แล้ว และไม่ต้องรีบสรุปตัวเองจากวันเดียว",
+      overviewRecovery: "วันนี้เหมือนร่างกายขอจังหวะ recovery มากกว่าการเพิ่มอะไรใหม่ ค่อย ๆ วางน้ำ การพัก และใจให้กลับมาเป็นฐานเดียวกันก็พอ",
+      overviewActivityHydrated: "วันนี้มีการใช้พลังงานมากกว่าวันพัก น้ำพอเป็นฐานได้แล้ว และ recovery ควรเดินไปด้วยกันกับ load ของวัน",
+      overviewActivity: "วันนี้มีการใช้พลังงานมากกว่าวันพัก ถ้ามีเหงื่อหรือกิจกรรมต่อเนื่อง น้ำกับ recovery ค่อย ๆ เดินตามร่างกายให้ทันก็พอ",
+      overviewCaffeine: "วันนี้คาเฟอีนอาจช่วยให้ตื่นหรือพยุงจังหวะของวันได้ แค่ให้น้ำเปล่ากลับมาเป็นฐานโดยไม่ต้องดุกาแฟก็พอ",
+      overviewSteadyHydration: "วันนี้น้ำพอเป็นฐานของวันแล้ว ภาพรวมจึงเหมาะกับการรักษาความสม่ำเสมอมากกว่าการเติมอะไรเพราะความกลัว",
+      overviewBase: "วันนี้เป็นวันที่เหมาะกับการสังเกต pattern แบบเบา ๆ น้ำ การพัก และใจยังค่อย ๆ กลับมาอยู่ในจังหวะที่พอดีได้",
+      adjustRecovery: "ถ้าจะปรับเล็ก ๆ วันนี้ แค่ให้การพักกับน้ำเดินไปด้วยกัน โดยไม่ต้องรีบแก้ทุกอย่างในวันเดียวก็พอ",
+      adjustActivity: "ถ้าจะปรับเล็ก ๆ วันนี้ ให้มองน้ำเป็นส่วนหนึ่งของ recovery หลัง load ไม่ใช่ตัวเลขที่ต้องรีบทำให้ครบ",
+      adjustCaffeine: "ถ้าจะปรับเล็ก ๆ วันนี้ แค่คืนพื้นที่ให้น้ำเปล่าระหว่างคาเฟอีนกับการพักก็พอ",
+      adjustWater: "ถ้าจะปรับเล็ก ๆ วันนี้ ลองวางจุดจิบน้ำให้กระจายขึ้น โดยไม่ต้องอัดทีเดียว",
+      adjustSteady: "ถ้าจะปรับเล็ก ๆ วันนี้ คือรักษาจังหวะที่พอดีไว้ โดยไม่ต้องเพิ่มอะไรเพราะความกลัว",
+      tomorrowRecovery: "พรุ่งนี้ให้ recovery มาก่อน แล้วค่อยกลับมาดู pattern ต่อแบบไม่เร่งตัวเอง",
+      tomorrowActivity: "พรุ่งนี้ให้ recovery กับน้ำเดินไปด้วยกัน แล้วค่อยดูว่าร่างกายพร้อมเพิ่มอะไรไหม",
+      tomorrowCaffeine: "พรุ่งนี้ลดคาเฟอีนลงหนึ่งจังหวะ แล้วให้น้ำเปล่ากลับมาเป็นฐาน",
+      tomorrowSteady: "พรุ่งนี้รักษาจังหวะที่พอดี แล้วกลับมาดู pattern แบบไม่เร่งตัวเอง",
+      mindNote: "Mind Note: {note}"
+    },
     hydrationFeedback: {
       low: "วันนี้น้ำยังน้อยไปนิด ค่อย ๆ จิบเพิ่มนะ",
       rising: "กำลังดีขึ้นแล้ว อย่าอัดทีเดียว",
@@ -527,6 +547,26 @@ const translations = {
       closing1: "You do not have to fix everything today. Seeing the pattern more clearly already means the system is working.",
       closing2: "The goal is not a better number quickly. The goal is a system that does not break from rushing."
     },
+    reflectionDisplay: {
+      overviewRecoveryHydratedRest: "Today looks like a day where recovery mattered more than adding more effort. Hydration was enough to serve as a base, and choosing rest first matched the day's energy.",
+      overviewRecoveryHydrated: "Today looks like a day where the body needed recovery more than adding anything new. Hydration was enough to serve as a base, and the day does not need to be judged from one signal.",
+      overviewRecovery: "Today seems to ask for recovery more than adding anything new. Let hydration, rest, and mind state return to a steady base gradually.",
+      overviewActivityHydrated: "Today had more activity load than a rest day. Hydration was enough to serve as a base, and recovery can move together with the day's load.",
+      overviewActivity: "Today had more activity load than a rest day. If sweat or sustained effort was part of it, hydration and recovery can gradually catch up with the body.",
+      overviewCaffeine: "Today, caffeine may have supported alertness or rhythm. Plain water can return as the base without making coffee something to feel bad about.",
+      overviewSteadyHydration: "Hydration was enough to serve as a base today, so the picture is more about keeping consistency than adding more from fear.",
+      overviewBase: "Today is a day for noticing the pattern gently. Hydration, rest, and mind state can keep returning to a workable rhythm.",
+      adjustRecovery: "If there is one gentle adjustment, it may be to let rest and hydration move together without trying to fix the whole day at once.",
+      adjustActivity: "If there is one gentle adjustment, treat hydration as part of recovery after load, not as a number to rush.",
+      adjustCaffeine: "If there is one gentle adjustment, give plain water some space between caffeine and rest.",
+      adjustWater: "If there is one gentle adjustment, place small water moments across the day without forcing them all at once.",
+      adjustSteady: "If there is one gentle adjustment, keep the rhythm that already feels workable without adding more from fear.",
+      tomorrowRecovery: "Tomorrow, let recovery come first, then return to the pattern without rushing yourself.",
+      tomorrowActivity: "Tomorrow, let recovery and hydration move together, then see what the body is ready to add.",
+      tomorrowCaffeine: "Tomorrow, lower caffeine by one step and let plain water return as the base.",
+      tomorrowSteady: "Tomorrow, keep the workable rhythm and return to the pattern without rushing yourself.",
+      mindNote: "Mind Note: {note}"
+    },
     hydrationFeedback: {
       low: "Water is still a little low today. Add small sips gently.",
       rising: "Getting better. Do not force it all at once.",
@@ -870,6 +910,26 @@ const translations = {
       keepBalance: "维持刚刚好的节奏，不要因为害怕而增加更多。",
       closing1: "今天不需要把所有事都修好。能更清楚看见 pattern，就说明系统已经在运作。",
       closing2: "目标不是数字很快变好，而是建立一个不会因为急着修正而反复崩掉的系统。"
+    },
+    reflectionDisplay: {
+      overviewRecoveryHydratedRest: "今天整体像是 recovery 比增加更多事情更重要。饮水已经可以作为基础，先休息也符合今天的能量。",
+      overviewRecoveryHydrated: "今天像是身体更需要恢复节奏，而不是增加新的负荷。饮水已经可以作为基础，也不需要用单一天来判断自己。",
+      overviewRecovery: "今天像是在提醒 recovery 比增加更多事情更重要。让补水、休息和心里的状态慢慢回到一个稳定基础就好。",
+      overviewActivityHydrated: "今天有比休息日更多的活动消耗。饮水已经可以作为基础，recovery 可以和今天的 load 一起往前走。",
+      overviewActivity: "今天有比休息日更多的活动消耗。如果有出汗或持续用力，补水和 recovery 慢慢跟上身体就好。",
+      overviewCaffeine: "今天咖啡因可能帮助清醒或维持节奏。让白水回到基础就好，不需要因此责备咖啡。",
+      overviewSteadyHydration: "今天饮水已经可以作为基础，整体更适合维持稳定，而不是因为害怕再增加更多。",
+      overviewBase: "今天适合温和地观察 pattern。补水、休息和心里的状态都可以慢慢回到可持续的节奏。",
+      adjustRecovery: "如果要轻轻调整一点，可以让休息和补水一起走，不需要一天内修好全部。",
+      adjustActivity: "如果要轻轻调整一点，可以把补水看作 load 后 recovery 的一部分，而不是急着追数字。",
+      adjustCaffeine: "如果要轻轻调整一点，可以在咖啡因和休息之间，把空间还给白水。",
+      adjustWater: "如果要轻轻调整一点，把小口喝水分散到一天里，不需要一次喝完。",
+      adjustSteady: "如果要轻轻调整一点，就是维持已经可行的节奏，不因为害怕而增加更多。",
+      tomorrowRecovery: "明天先让 recovery 在前面，再不急地回来观察 pattern。",
+      tomorrowActivity: "明天让 recovery 和补水一起走，再看身体准备好增加什么。",
+      tomorrowCaffeine: "明天把咖啡因降一个节奏，让白水回到基础。",
+      tomorrowSteady: "明天维持可持续的节奏，再不急地回来观察 pattern。",
+      mindNote: "Mind Note: {note}"
     },
     hydrationFeedback: {
       low: "今天水还少了一点，慢慢小口补就好。",
@@ -1599,7 +1659,7 @@ function updateReflectionPreview() {
 
   if (emptyState) emptyState.classList.toggle("is-hidden", hasReflection);
   if (previewText) {
-    previewText.textContent = reflectionText;
+    previewText.textContent = buildReflectionDisplay();
     previewText.classList.toggle("is-hidden", !hasReflection || isEditingReflection);
   }
   if (textarea) {
@@ -2133,6 +2193,78 @@ function getMindNoteReminder() {
 
 function buildReflection() {
   return buildReflectionFromSignals(buildSignals());
+}
+
+function buildReflectionDisplay() {
+  return buildReflectionDisplayFromSignals(buildSignals());
+}
+
+function buildReflectionDisplayFromSignals(signals) {
+  return [
+    getReflectionDisplayOverview(signals),
+    getReflectionDisplayAdjustment(signals),
+    getReflectionDisplayTomorrow(signals),
+    getReflectionDisplayMindNote()
+  ].filter(Boolean).join("\n\n");
+}
+
+function getReflectionDisplayOverview(signals) {
+  const hydrationIsBase = signals.hydration.steady || signals.hydration.enough;
+  const hasActivityLoad = signals.hydration.strongActivityHydration;
+  const hasRecoveryOnly = isRecoveryOnlyReflection(signals);
+
+  if (hasActivityLoad && hydrationIsBase) return t("reflectionDisplay.overviewActivityHydrated");
+  if (hasActivityLoad) return t("reflectionDisplay.overviewActivity");
+  if (hasRecoveryOnly && hydrationIsBase && signals.mindNote.restFirst) return t("reflectionDisplay.overviewRecoveryHydratedRest");
+  if (hasRecoveryOnly && hydrationIsBase) return t("reflectionDisplay.overviewRecoveryHydrated");
+  if (hasRecoveryOnly) return t("reflectionDisplay.overviewRecovery");
+  if (signals.drinkLoad.caffeineHigh) return t("reflectionDisplay.overviewCaffeine");
+  if (hydrationIsBase) return t("reflectionDisplay.overviewSteadyHydration");
+  return t("reflectionDisplay.overviewBase");
+}
+
+function getReflectionDisplayAdjustment(signals) {
+  if (signals.hydration.strongActivityHydration) return t("reflectionDisplay.adjustActivity");
+  if (isRecoveryOnlyReflection(signals)) return t("reflectionDisplay.adjustRecovery");
+  if (signals.drinkLoad.caffeineHigh) return t("reflectionDisplay.adjustCaffeine");
+  if (signals.hydration.low || signals.hydration.rising) return t("reflectionDisplay.adjustWater");
+  return t("reflectionDisplay.adjustSteady");
+}
+
+function getReflectionDisplayTomorrow(signals) {
+  if (signals.hydration.strongActivityHydration) return t("reflectionDisplay.tomorrowActivity");
+  if (isRecoveryOnlyReflection(signals)) return t("reflectionDisplay.tomorrowRecovery");
+  if (signals.drinkLoad.caffeineHigh) return t("reflectionDisplay.tomorrowCaffeine");
+  return t("reflectionDisplay.tomorrowSteady");
+}
+
+function getReflectionDisplayMindNote() {
+  const summary = getCompactMindNoteSummary();
+  return summary ? t("reflectionDisplay.mindNote", { note: summary }) : "";
+}
+
+function getCompactMindNoteSummary() {
+  const parts = [];
+  if (appState.mindNoteSupport) parts.push(localizeMindNoteValue("Mind_Note_Support", appState.mindNoteSupport));
+  if (appState.mindNoteFeeling) parts.push(localizeMindNoteValue("Mind_Note_Feeling", appState.mindNoteFeeling));
+  if (parts.length) return parts.join(" / ");
+  return truncateText(appState.mindNoteText || "", 80);
+}
+
+function isRecoveryOnlyReflection(signals) {
+  if (signals.hydration.strongActivityHydration) return false;
+  return signals.hydration.recoveryOnlyHydration
+    || signals.energySleep.sleepLow
+    || signals.energySleep.energyLow
+    || signals.mindNote.pressured
+    || signals.mindNote.worried
+    || signals.mindNote.restFirst;
+}
+
+function truncateText(value, limit) {
+  const text = String(value || "").trim();
+  if (text.length <= limit) return text;
+  return `${text.slice(0, limit - 1).trim()}…`;
 }
 
 function buildReflectionFromSignals(signals) {

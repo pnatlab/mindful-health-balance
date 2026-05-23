@@ -202,14 +202,14 @@ Click `Generate End-of-Day Reflection` to create a NuTuenSai-style reflection fo
 
 The reflection includes:
 
-- What went well today
-- What may need adjustment
-- Recovery Note
-- Hydration Note
-- Tomorrow Focus
-- NuTuenSai Reminder
+- What the day seems to show
+- One gentle adjustment
+- A short Tomorrow Focus
+- A compact Mind Note line when available
 
-The generated reflection is a preview. You can lightly edit the wording before saving it if you want the reflection to better match the real day.
+The preview intentionally shows a synthesis instead of every detected field. This keeps it distinct from the NuTuenSai note card and avoids a raw data dump. Details such as Recovery Note, Hydration Note, NuTuenSai Reminder, Mind Note, and Tomorrow Focus still remain in Daily Log / Reflections / Excel.
+
+If you want to adjust the stored detail, use the small edit action to view and edit the stored reflection before saving.
 
 ## 16. Save To Daily Log
 

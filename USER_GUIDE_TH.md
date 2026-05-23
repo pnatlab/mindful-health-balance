@@ -176,14 +176,14 @@ Mind Note เป็นช่องบันทึกใจแบบบาง ๆ
 
 กด `Generate End-of-Day Reflection` เพื่อให้ระบบสรุปวันนั้นในโทน NuTuenSai:
 
-- วันนี้ทำได้ดี
-- สิ่งที่ควรปรับ
-- Recovery Note
-- Hydration Note
-- Tomorrow Focus
-- NuTuenSai Reminder
+- ภาพรวมของวันที่ระบบเห็น
+- สิ่งที่อาจปรับแบบเบา ๆ
+- Tomorrow Focus สั้น ๆ
+- Mind Note แบบ compact ถ้ามีข้อมูล
 
-ถ้าข้อความไหนอยากแก้ให้นุ่มขึ้นหรือเข้ากับวันจริงมากขึ้น สามารถแก้ในกล่อง reflection ก่อนบันทึกได้
+หน้า preview ตั้งใจแสดง reflection แบบ synthesis ไม่แสดงทุก field ที่ระบบตรวจเจอ เพื่อไม่ให้ซ้ำกับ NuTuenSai note ด้านซ้ายหรือกลายเป็น raw data dump ส่วนรายละเอียด เช่น Recovery Note, Hydration Note, NuTuenSai Reminder, Mind Note และ Tomorrow Focus ยังถูกเก็บใน Daily Log / Reflections / Excel เหมือนเดิม
+
+ถ้าต้องการแก้รายละเอียดที่บันทึก สามารถกดแก้ไขเล็กน้อยเพื่อดูและปรับข้อความ stored reflection ก่อนบันทึกได้
 
 ## 4. การบันทึกข้อมูล
 
