@@ -111,6 +111,8 @@ Potential scope:
 
 v1.9 should focus on export readiness, not automated interpretation.
 
+Current implementation note: v1.9 adds `Field_Context` and `Field_Review` to the exported workbook while preserving the existing `Daily_Log`, `Summary`, and `Reflections` sheets. `Field_Context` explains ownership, local-first handling, AI reading boundaries, and non-medical limits. `Field_Review` provides a lightweight descriptive summary from available entries without diagnosis, medical interpretation, personal baseline modeling, or additional user input burden.
+
 ## Proposed Future Phases
 
 ### v1.9: Export Readiness / Portable Field Memory Foundation
@@ -149,4 +151,3 @@ The design should keep reflection gentle, structured, and user-owned.
 This design originates from the MSxAI/NuTuenSai use case, where pnat uses Mindful Health Balance to export Excel logs and periodically bring them back to NuTuenSai for reflection.
 
 However, the design principle is general. Any user should be able to create their own portable field memory, keep it privately, review it themselves, and decide when or how an AI may read it.
-

@@ -35,7 +35,7 @@ const translations = {
     htmlLang: "th",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.8 Activity-aware Load Presets",
+    version: "v1.9 Portable Field Memory Foundation",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
@@ -363,7 +363,7 @@ const translations = {
     htmlLang: "en",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.8 Activity-aware Load Presets",
+    version: "v1.9 Portable Field Memory Foundation",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
@@ -691,7 +691,7 @@ const translations = {
     htmlLang: "zh-CN",
     eyebrow: "个人正念健康仪表板",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.8 Activity-aware Load Presets",
+    version: "v1.9 Portable Field Memory Foundation",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
@@ -2270,12 +2270,148 @@ function exportMasterExcel() {
   const reflectionSheet = XLSX.utils.json_to_sheet(reflectionRows, {
     header: ["Date", "Mind_Note_Text", "Mind_Note_Feeling", "Mind_Note_Support", "Reflection_Text"]
   });
+  const fieldContextSheet = XLSX.utils.json_to_sheet(buildFieldContextRows(), {
+    header: ["Section", "Value"]
+  });
+  const fieldReviewSheet = XLSX.utils.json_to_sheet([buildFieldReview(rows)]);
 
   XLSX.utils.book_append_sheet(workbook, dailySheet, "Daily_Log");
   XLSX.utils.book_append_sheet(workbook, summarySheet, "Summary");
   XLSX.utils.book_append_sheet(workbook, reflectionSheet, "Reflections");
+  XLSX.utils.book_append_sheet(workbook, fieldContextSheet, "Field_Context");
+  XLSX.utils.book_append_sheet(workbook, fieldReviewSheet, "Field_Review");
   XLSX.writeFile(workbook, "Mindful_Health_Balance_Master.xlsx");
   document.querySelector("#saveStatus").textContent = t("exportedMaster");
+}
+
+function buildFieldContextRows() {
+  return [
+    {
+      Section: "File_Purpose",
+      Value: "Local-first self-care log for pattern reflection."
+    },
+    {
+      Section: "Data_Ownership",
+      Value: "The user owns this file and chooses when to export, keep, review, or share it."
+    },
+    {
+      Section: "Local_First_Data_Handling",
+      Value: "The app stores data in the user's browser/localStorage and exports a portable workbook. Exporting does not imply upload or cloud sync."
+    },
+    {
+      Section: "AI_Reading_Boundary",
+      Value: "Read this file for lifestyle, recovery, mind-state, and self-care pattern reflection only. Do not use it for diagnosis."
+    },
+    {
+      Section: "Non_Medical_Note",
+      Value: "This workbook is not medical advice, not a diagnosis, and not a replacement for professional care."
+    },
+    {
+      Section: "Suggested_AI_Reading_Style",
+      Value: "Look for relationships across hydration, drinks, sleep, load, activities, mind state, support need, mind note, reflection, and tomorrow focus."
+    },
+    {
+      Section: "Avoid",
+      Value: "Diagnostic claims, fear-based wording, moral judgment, or prescriptive medical advice."
+    },
+    {
+      Section: "Human_Agency",
+      Value: "The AI should support the user's reflection, not become the authority over the user's life."
+    },
+    {
+      Section: "App_Concept",
+      Value: "Portable Field Memory / LLI Field Dataset / Personal Rhythm Dataset."
+    }
+  ];
+}
+
+function buildFieldReview(rows = []) {
+  const cleanRows = rows
+    .filter((row) => row && row.Date)
+    .map(normalizeLogRow)
+    .sort((a, b) => String(a.Date).localeCompare(String(b.Date)));
+  const totalDays = cleanRows.length;
+  const waterValues = cleanRows.map((row) => Number(row.Water_ml) || 0);
+  const averageWater = totalDays
+    ? Math.round(waterValues.reduce((sum, value) => sum + value, 0) / totalDays)
+    : 0;
+  const mindStates = cleanRows.map((row) => row.Mind).filter(Boolean);
+  const supportNeeds = cleanRows.map((row) => row.Mind_Note_Support).filter(Boolean);
+
+  return {
+    Review_Period_Start: cleanRows[0]?.Date || "",
+    Review_Period_End: cleanRows[totalDays - 1]?.Date || "",
+    Total_Days: totalDays,
+    Average_Water_ml: averageWater,
+    Highest_Water_ml: totalDays ? Math.max(...waterValues) : 0,
+    Lowest_Water_ml: totalDays ? Math.min(...waterValues) : 0,
+    High_Load_Days: cleanRows.filter(isHighLoadRow).length,
+    Low_Energy_Days: cleanRows.filter((row) => isLowEnergyValue(row.Energy)).length,
+    Common_Mind_States: getCommonValues(mindStates, 3),
+    Common_Support_Needs: getCommonValues(supportNeeds, 3),
+    Days_With_Mind_Note: cleanRows.filter((row) => String(row.Mind_Note_Text || "").trim()).length,
+    Days_With_Reflection: cleanRows.filter((row) => String(row.Reflection_Text || "").trim()).length,
+    Days_With_Caffeine: cleanRows.filter((row) => Number(row.Caffeine_Score) > 0).length,
+    Days_With_Sport_or_Run: cleanRows.filter((row) => rowHasActivityGroup(row, "sports")).length,
+    Days_With_Deep_Work: cleanRows.filter(rowHasDeepWork).length,
+    Gentle_Observation: getFieldReviewObservation(cleanRows),
+    Non_Diagnostic_Note: "Descriptive self-care summary only. Not medical advice, not diagnosis, and not a replacement for professional care."
+  };
+}
+
+function getCommonValues(values, limit = 3) {
+  const counts = values.reduce((acc, value) => {
+    const key = String(value || "").trim();
+    if (key) acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+
+  return Object.entries(counts)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([value, count]) => `${value} (${count})`)
+    .join(" | ");
+}
+
+function isHighLoadRow(row) {
+  return Number(row.Load_Score) >= 6 || ["Load สูง", "High load", "Load 高"].includes(row.Load_Level);
+}
+
+function isLowEnergyValue(value) {
+  return ["ต่ำ", "Low", "低"].includes(String(value || "").trim());
+}
+
+function rowHasActivityGroup(row, group) {
+  return splitLogValues(row.Activities)
+    .map(getActivityOptionByValue)
+    .filter(Boolean)
+    .some((activity) => activity.group === group);
+}
+
+function rowHasDeepWork(row) {
+  return splitLogValues(row.Activities)
+    .map(getActivityOptionByValue)
+    .filter(Boolean)
+    .some((activity) => activity.key === "deepWork");
+}
+
+function splitLogValues(value) {
+  return String(value || "")
+    .split("|")
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+}
+
+function getFieldReviewObservation(rows = []) {
+  if (!rows.length) {
+    return "No daily log entries are available in this export. Summary is limited by available entries.";
+  }
+
+  if (rows.length < 3) {
+    return "Summary is limited by available entries. Use this sheet as a gentle starting point for pattern reflection.";
+  }
+
+  return "This is a lightweight descriptive review across available entries. Look for relationships gently, without diagnosis or moral judgment.";
 }
 
 function buildMasterSummary(rows) {

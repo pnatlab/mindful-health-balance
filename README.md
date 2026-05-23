@@ -1,4 +1,4 @@
-# Mindful Health Balance by MSxAI v1.8
+# Mindful Health Balance by MSxAI v1.9 Portable Field Memory Foundation
 
 Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ static สำหรับ self-care reflection ของ pnat เพื่อช่วยดู pattern และ balance recovery ในชีวิตประจำวัน โดยเน้น 4 แกนหลัก:
 
@@ -119,6 +119,17 @@ load type เหล่านี้ถูก derive จาก activity chips ท�
 
 หน้า `Today` ถูกปรับให้รู้สึกเป็น personal health journal มากขึ้น โดยให้ Hydration เป็น water-glass visual anchor และเพิ่ม sun/moon rhythm object ใน Today State ตามเวลาท้องถิ่นของ browser เพื่อสื่อพลังงานของวันแบบเบา ๆ การปรับนี้เป็น UI-only ไม่เปลี่ยน input, scoring, data schema, localStorage, Save / Export / Import หรือ reflection logic
 
+## v1.9 Portable Field Memory Foundation
+
+v1.9 เพิ่ม AI-readable Excel context และ lightweight `Field_Review` ให้ไฟล์ `Export Master Excel` เพื่อให้ workbook อ่านได้ชัดขึ้นทั้งสำหรับมนุษย์และ AI/LLM โดยยังคง local-first, user-owned และไม่เพิ่ม input ใหม่
+
+Excel export ยังรักษา sheet เดิม (`Daily_Log`, `Summary`, `Reflections`) และเพิ่ม:
+
+- `Field_Context` สำหรับอธิบายเจตนาของไฟล์, data ownership, local-first boundary, AI reading boundary และ non-medical note
+- `Field_Review` สำหรับสรุป descriptive pattern เบา ๆ จากข้อมูลที่มี เช่น ช่วงวันที่, ค่าเฉลี่ยน้ำ, high load days, mind/support ที่พบบ่อย และจำนวนวันที่มี note/reflection
+
+`Field_Review` เป็น summary เพื่อ pattern reflection เท่านั้น ไม่ใช่ diagnosis, medical advice, therapy interpretation หรือ health-risk prediction ผู้ใช้ยังเป็นเจ้าของไฟล์และเลือกเองว่าจะ export, เก็บ, review หรือ share ให้ AI อ่านเมื่อไหร่
+
 ## วิธีเปิดใช้งาน
 
 เปิดไฟล์ `index.html` ด้วย browser ได้ทันที ไม่ต้องใช้ backend, server หรือ framework
@@ -183,11 +194,13 @@ Daily Log Table คือบันทึกย้อนหลังในหน�
 Mindful_Health_Balance_Master.xlsx
 ```
 
-ไฟล์ Excel มี 3 sheets:
+ไฟล์ Excel มี 5 sheets:
 
 - `Daily_Log`
 - `Summary`
 - `Reflections`
+- `Field_Context`
+- `Field_Review`
 
 ไฟล์ Excel จะถูกดาวน์โหลดลงเครื่องผู้ใช้โดยตรงผ่าน browser
 

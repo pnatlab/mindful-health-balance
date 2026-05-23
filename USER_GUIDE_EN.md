@@ -237,13 +237,19 @@ Click `Export Master Excel` to download:
 Mindful_Health_Balance_Master.xlsx
 ```
 
-The file includes three sheets:
+The file includes five sheets:
 
 - Daily_Log
 - Summary
 - Reflections
+- Field_Context
+- Field_Review
 
 Use this file as a master backup or open it in Excel when you want to review a longer period.
+
+Starting in v1.9, `Field_Context` explains that the workbook is a local-first self-care log owned by the user. If the user chooses to share it with an AI/LLM, the AI should read it for pattern reflection only, not for diagnosis or medical advice.
+
+`Field_Review` is a lightweight descriptive summary of available entries, such as review period, average water, high-load days, common mind/support patterns, and days with Mind Note or Reflection. It is for gentle pattern reflection, not disease diagnosis or health-risk prediction.
 
 ### Import Master Excel
 

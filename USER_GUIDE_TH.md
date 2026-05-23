@@ -213,13 +213,19 @@ Daily Log Table คือตารางดูย้อนหลังในห�
 Mindful_Health_Balance_Master.xlsx
 ```
 
-ไฟล์นี้มี 3 sheets:
+ไฟล์นี้มี 5 sheets:
 
 - Daily_Log
 - Summary
 - Reflections
+- Field_Context
+- Field_Review
 
 ใช้ไฟล์นี้เป็น master backup หรือเปิดดูใน Excel ได้เมื่ออยากเห็นภาพรวมหลายวัน
+
+ตั้งแต่ v1.9 เป็นต้นไป `Field_Context` จะอธิบายว่าไฟล์นี้เป็น local-first self-care log ที่ผู้ใช้เป็นเจ้าของเอง และถ้าผู้ใช้เลือกนำไปให้ AI/LLM อ่าน ควรอ่านเพื่อ pattern reflection เท่านั้น ไม่ใช่ diagnosis หรือ medical advice
+
+`Field_Review` เป็น summary เบา ๆ ของข้อมูลที่มีอยู่ เช่น ช่วงวันที่ ค่าเฉลี่ยน้ำ วันที่ load สูง mind/support ที่พบบ่อย และจำนวนวันที่มี Mind Note หรือ Reflection ข้อมูลนี้ใช้เพื่อช่วยเห็น pattern อย่างอ่อนโยน ไม่ใช่การวินิจฉัยโรคหรือการประเมินความเสี่ยงสุขภาพ
 
 ### Import Master Excel
 
