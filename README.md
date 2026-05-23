@@ -130,6 +130,12 @@ Excel export ยังรักษา sheet เดิม (`Daily_Log`, `Summary`
 
 `Field_Review` เป็น summary เพื่อ pattern reflection เท่านั้น ไม่ใช่ diagnosis, medical advice, therapy interpretation หรือ health-risk prediction ผู้ใช้ยังเป็นเจ้าของไฟล์และเลือกเองว่าจะ export, เก็บ, review หรือ share ให้ AI อ่านเมื่อไหร่
 
+### v1.9.x Adaptive Hydration Guidance
+
+Hydration card เพิ่ม adaptive guidance แบบ display-only เพื่อสะท้อนว่าเป้าหมายน้ำเป็นช่วงยืดหยุ่นตาม load ของวัน ไม่ใช่ตัวเลขตายตัว ระบบใช้ signals ที่มีอยู่แล้ว เช่น activity/load type, outdoor heat, sport intensity, sleep debt และ caffeine เพื่อแสดง estimated range และ cue แบบอ่อนโยน
+
+ฟีเจอร์นี้ไม่เพิ่ม input ใหม่ ไม่เปลี่ยน data schema, localStorage, Save / Import / Export compatibility หรือ scoring logic และไม่ใช่ medical advice เป้าหมายคือช่วยให้ผู้ใช้เห็นว่าวันที่มีเหงื่อ กีฬา งานกลางแจ้ง หรือ load สูง อาจต้องวางจังหวะจิบน้ำให้ตามร่างกายทัน โดยยังฟังร่างกายตัวเองเป็นหลัก
+
 ## วิธีเปิดใช้งาน
 
 เปิดไฟล์ `index.html` ด้วย browser ได้ทันที ไม่ต้องใช้ backend, server หรือ framework
@@ -146,7 +152,7 @@ Excel export ยังรักษา sheet เดิม (`Daily_Log`, `Summary`
 ## สิ่งที่แอปทำได้
 
 - เลือก Today State: Energy, Mind, Sleep
-- นับปริมาณน้ำเป็น ml พร้อม feedback ที่เน้นความพอดี ไม่ใช่การดื่มให้เยอะที่สุด
+- นับปริมาณน้ำเป็น ml พร้อม adaptive guidance ที่เน้นช่วงยืดหยุ่นตาม load ของวัน ไม่ใช่การดื่มให้เยอะที่สุด
 - เลือกเครื่องดื่มของวัน และดู reminder เรื่องเครื่องดื่มหวาน/กาแฟแบบไม่กดดัน
 - เพิ่ม Drink Profile แบบพอดี เพื่อดู sugar/caffeine/milk/hydration support
 - เลือก Energy Cause แบบ optional เพื่อช่วยตีความพลังงานของวัน

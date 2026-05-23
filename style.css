@@ -582,6 +582,14 @@ body[data-theme="dark"] .today-hydration-hero .feedback {
   background: rgba(17, 16, 37, 0.34);
 }
 
+.hydration-guidance {
+  max-width: 440px;
+  margin: -6px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
 .today-hydration-hero .water-glass-visual {
   width: clamp(180px, 18vw, 235px);
   max-height: 340px;

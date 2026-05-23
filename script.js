@@ -70,6 +70,14 @@ const translations = {
     sleepLabel: "Sleep",
     hydration: "Hydration",
     hydrationHeading: "น้ำวันนี้",
+    hydrationGuidanceBase: "เป้าหมายวันนี้โดยประมาณ: {target} ml",
+    hydrationGuidanceRange: "วันนี้มี load มากขึ้น: ลองตั้งช่วงน้ำประมาณ {min}-{max} ml",
+    hydrationGuidanceCueBase: "ค่อย ๆ จิบน้ำเป็นช่วง ๆ โดยไม่ต้องเร่งตัวเลข",
+    hydrationGuidanceCueLoad: "วันนี้ใช้พลังมากกว่าวันพัก ให้จิบน้ำกระจายระหว่างวัน",
+    hydrationGuidanceCueSport: "ถ้ามีวิ่งหรือเหงื่อมากขึ้น ให้น้ำเป็นส่วนหนึ่งของ recovery",
+    hydrationGuidanceCueOutdoor: "ถ้ามีแดดหรือความร้อน ให้คืนทั้งน้ำและการพักเป็นช่วง ๆ",
+    hydrationGuidanceCueCaffeine: "คาเฟอีนช่วยให้ตื่นได้ แต่อย่าลืมให้น้ำเปล่ากลับมาเป็นฐาน",
+    hydrationGuidanceCueSleepLoad: "นอนน้อยร่วมกับ load สูง ให้จิบน้ำเบา ๆ คู่กับ recovery",
     halfBottle: "+ครึ่งขวด",
     resetButton: "Reset",
     drinks: "Drinks",
@@ -197,6 +205,8 @@ const translations = {
     signalReminder: {
       sleepLoadRecovery: "วันนี้ recovery ควรมาก่อนการเพิ่ม performance อีกนิดนะพี่",
       hydrationCaffeine: "วันนี้ระบบชวนกลับมาดูน้ำและการพักก่อนให้กาแฟนำจังหวะทั้งวัน",
+      hydrationLoad: "วันนี้มี load มากกว่าวันพัก น้ำอาจค่อย ๆ ตามร่างกายให้ทันโดยไม่ต้องเร่งดื่มทีเดียว",
+      caffeineBase: "คาเฟอีนช่วยให้ตื่นได้ แต่วันนี้อย่าลืมให้น้ำเปล่ากลับมาเป็นฐาน",
       doublePressure: "วันนี้ไม่ต้องเร่งแก้ตัวเลข แค่ลดแรงกดดันลงหนึ่งระดับก็พอ",
       sugarHigh: "เครื่องดื่มหวานเริ่มสะสมแล้ว ลดแก้วถัดไปหนึ่งจุดก็พอ",
       consistency: "วันนี้จังหวะค่อนข้างเบาและน้ำพอเห็นแล้ว รักษาความสม่ำเสมอก็พอ",
@@ -211,6 +221,7 @@ const translations = {
       sleepLoadRecovery: "วันนี้นอนน้อยหรือ load สูงพอให้ recovery ควรมาก่อน",
       endorphin: "แม้วันนี้พลังดูดี แต่ recovery อาจยังต้องการพื้นที่อยู่",
       hydrationCaffeine: "น้ำยังน้อยและคาเฟอีนเริ่มนำจังหวะ ค่อย ๆ กลับมาจิบน้ำกับพักให้สม่ำเสมอ",
+      hydrationLoad: "วันนี้มี load หรือเหงื่อมากกว่าวันพัก น้ำเป็นส่วนหนึ่งของ recovery ไม่ใช่แค่ตัวเลข",
       pressure: "ความกดดันถูกเห็นแล้ว ไม่ต้องใช้การเร่งแก้เป็นคำตอบของวันนี้",
       resourceLow: "พลังงานอาจต่ำจากน้ำ อาหาร หรือการนอน ไม่ใช่เรื่องที่ต้องโทษตัวเอง",
       steadyHydration: "วางจุดจิบน้ำให้สม่ำเสมอขึ้น โดยไม่ต้องอัดทีเดียว"
@@ -258,6 +269,7 @@ const translations = {
     tomorrowFocus: {
       recovery: "Recovery ก่อน แล้วค่อยดูว่าร่างกายพร้อมแค่ไหน",
       water: "วางจุดจิบน้ำเล็ก ๆ ให้กระจายทั้งวัน",
+      hydrationLoad: "ให้น้ำค่อย ๆ ตาม load ของวัน โดยไม่ต้องเร่งดื่มทีเดียว",
       sweet: "ลดหวานหนึ่งจุด โดยไม่ต้องทำให้วันนี้กลายเป็นบทลงโทษ",
       caffeine: "ลดคาเฟอีนลงหนึ่งจังหวะ แล้วคืนพื้นที่ให้น้ำกับการพัก",
       restNoGuilt: "พักโดยไม่ต้องรู้สึกผิด แล้วค่อยกลับมาดู pattern ต่อ",
@@ -398,6 +410,14 @@ const translations = {
     sleepLabel: "Sleep",
     hydration: "Hydration",
     hydrationHeading: "Water today",
+    hydrationGuidanceBase: "Estimated target today: {target} ml",
+    hydrationGuidanceRange: "Today's load is higher: try an estimated range around {min}-{max} ml",
+    hydrationGuidanceCueBase: "Sip gradually without rushing the number.",
+    hydrationGuidanceCueLoad: "Today's load may ask for steadier hydration than a rest day.",
+    hydrationGuidanceCueSport: "If exercise or sweat was part of the day, treat hydration as part of recovery.",
+    hydrationGuidanceCueOutdoor: "If heat or outdoor work was part of the day, return water and rest in small rounds.",
+    hydrationGuidanceCueCaffeine: "Caffeine may support alertness, but plain water can remain the base.",
+    hydrationGuidanceCueSleepLoad: "With low sleep and higher load, pair gentle sips with recovery.",
     halfBottle: "+half bottle",
     resetButton: "Reset",
     drinks: "Drinks",
@@ -525,6 +545,8 @@ const translations = {
     signalReminder: {
       sleepLoadRecovery: "Recovery may need to come before adding more performance today.",
       hydrationCaffeine: "Today may need steadier hydration and rest before caffeine leads the rhythm.",
+      hydrationLoad: "Today's load may ask for steadier hydration than a rest day. Sip gradually rather than rushing the number.",
+      caffeineBase: "Caffeine may support alertness, but plain water can remain the base.",
       doublePressure: "Today does not need more fixing. Lowering pressure by one step is enough.",
       sugarHigh: "Sugary drinks are adding up. Reducing the next one by one step is enough.",
       consistency: "Hydration is visible and load is light today. Consistency is enough.",
@@ -539,6 +561,7 @@ const translations = {
       sleepLoadRecovery: "Low sleep or high load makes recovery the first useful signal today",
       endorphin: "Even when energy feels good, recovery may still need some space.",
       hydrationCaffeine: "Water is still low while caffeine is rising. Steadier sips and rest are enough to return the rhythm.",
+      hydrationLoad: "If exercise, heat, or heavier load was part of the day, hydration can be part of recovery, not just a target.",
       pressure: "Pressure has been noticed. Rushing to fix does not need to be today's answer.",
       resourceLow: "Energy may be low because water, food, or sleep resources are low; this is information, not blame.",
       steadyHydration: "Place steadier water moments across the day without forcing it all at once."
@@ -586,6 +609,7 @@ const translations = {
     tomorrowFocus: {
       recovery: "Recovery first, then see how ready the body feels.",
       water: "Place small water-sipping moments across the day.",
+      hydrationLoad: "Let hydration follow the day's load gently, without rushing it all at once.",
       sweet: "Reduce sweetness by one step without turning today into punishment.",
       caffeine: "Lower caffeine by one step and give water and rest more space.",
       restNoGuilt: "Rest without guilt, then come back to the pattern gently.",
@@ -726,6 +750,14 @@ const translations = {
     sleepLabel: "Sleep",
     hydration: "Hydration",
     hydrationHeading: "今天的饮水",
+    hydrationGuidanceBase: "今天的大致目标：{target} ml",
+    hydrationGuidanceRange: "今天的 load 较高：可以把饮水区间温和放在 {min}-{max} ml 左右",
+    hydrationGuidanceCueBase: "慢慢小口喝，不需要急着追数字。",
+    hydrationGuidanceCueLoad: "今天比休息日更消耗，可以把喝水分散到一天里。",
+    hydrationGuidanceCueSport: "如果今天有运动或出汗，把补水也看作 recovery 的一部分。",
+    hydrationGuidanceCueOutdoor: "如果今天有户外或炎热环境，分段补水，也给身体短暂停顿。",
+    hydrationGuidanceCueCaffeine: "咖啡因可以帮助清醒，但白水仍然可以作为基础。",
+    hydrationGuidanceCueSleepLoad: "睡少又 load 高时，温和小口补水，并把 recovery 放前面。",
     halfBottle: "+半瓶",
     resetButton: "重置",
     drinks: "饮品",
@@ -853,6 +885,8 @@ const translations = {
     signalReminder: {
       sleepLoadRecovery: "今天 recovery 可以先于继续增加 performance。",
       hydrationCaffeine: "今天可以先让补水和休息稳定一点，不让咖啡带走整天的节奏。",
+      hydrationLoad: "今天比休息日更消耗，可以慢慢小口补水，不需要一次追数字。",
+      caffeineBase: "咖啡因可以帮助清醒，但白水仍然可以作为基础。",
       doublePressure: "今天不需要急着修正，先把压力放低一点就够了。",
       sugarHigh: "甜饮开始累积了，下一杯少一点就够了。",
       consistency: "今天补水已经被看见，load 也比较轻，保持稳定就好。",
@@ -867,6 +901,7 @@ const translations = {
       sleepLoadRecovery: "睡少或 load 高，让 recovery 成为今天最需要先照顾的信号",
       endorphin: "即使今天感觉有能量，recovery 可能仍然需要一点空间。",
       hydrationCaffeine: "水还偏少，同时咖啡因正在上升。稳定小口补水和休息就够了。",
+      hydrationLoad: "如果今天有运动、炎热或较高 load，补水可以是 recovery 的一部分，不只是目标数字。",
       pressure: "压力已经被看见了。今天不需要用急着修正来回答它。",
       resourceLow: "能量低可能来自水、食物或睡眠资源不足，这是信息，不是责备。",
       steadyHydration: "把补水点放得更稳定，不需要一次硬灌。"
@@ -914,6 +949,7 @@ const translations = {
     tomorrowFocus: {
       recovery: "先 recovery，再看身体准备好了多少。",
       water: "把小口喝水安排在一天里几个自然的点。",
+      hydrationLoad: "让补水温和跟上今天的 load，不需要一次喝完。",
       sweet: "甜度少一步就好，不要把今天变成惩罚。",
       caffeine: "明天把咖啡因降一个节奏，把空间还给水和休息。",
       restNoGuilt: "不带内疚地休息，然后再温和地回来看 pattern。",
@@ -1524,6 +1560,7 @@ function syncUI() {
 
   document.querySelector("#waterMl").textContent = appState.waterMl.toLocaleString(translations[currentLanguage].locale);
   document.querySelector("#hydrationFeedback").textContent = appState.hydrationStatus;
+  document.querySelector("#hydrationGuidance").textContent = getHydrationGuidanceText();
   updateHydrationVisual();
   document.querySelector("#loadScore").textContent = appState.loadScore;
   document.querySelector("#loadLevel").textContent = appState.loadLevel;
@@ -1776,6 +1813,82 @@ function getHydrationStatus(waterMl) {
   return t("hydrationFeedback.enough");
 }
 
+function getHydrationBaseTarget() {
+  return 2000;
+}
+
+function getHydrationAdjustmentFromLoad({
+  activities = appState.activities || [],
+  loadScore = calculateLoadScore(),
+  sleepLow = appState.selectedState.sleep === "น้อย" || (appState.energyCauses || []).includes("sleep_low")
+} = {}) {
+  const loadTypes = getSelectedLoadTypes(activities);
+  const hasType = (type) => loadTypes.includes(type);
+  let adjustment = 0;
+  let cueKey = "Base";
+
+  if (hasType("sport_intensity_load")) {
+    adjustment = 500;
+    cueKey = "Sport";
+  } else if (hasType("outdoor_heat_load")) {
+    adjustment = 500;
+    cueKey = "Outdoor";
+  } else if (sleepLow && loadScore >= 6) {
+    adjustment = 300;
+    cueKey = "SleepLoad";
+  } else if (hasType("physical_load") || hasType("service_standing_load")) {
+    adjustment = 300;
+    cueKey = "Load";
+  } else if (hasType("cognitive_load") || hasType("market_decision_load") || loadScore >= 3) {
+    adjustment = 200;
+    cueKey = "Load";
+  }
+
+  if (sleepLow && loadScore >= 6) {
+    adjustment = Math.max(adjustment, 300);
+    cueKey = "SleepLoad";
+  }
+
+  return { adjustment, cueKey, loadTypes };
+}
+
+function getAdaptiveHydrationTarget({
+  activities = appState.activities || [],
+  loadScore = calculateLoadScore(),
+  drinkScores = getDrinkScores(),
+  sleepLow = appState.selectedState.sleep === "น้อย" || (appState.energyCauses || []).includes("sleep_low")
+} = {}) {
+  const baseTarget = getHydrationBaseTarget();
+  const loadAdjustment = getHydrationAdjustmentFromLoad({ activities, loadScore, sleepLow });
+  const hasHighCaffeine = drinkScores.caffeineScore >= 5;
+  const cueKey = hasHighCaffeine && loadAdjustment.adjustment === 0 ? "Caffeine" : loadAdjustment.cueKey;
+  const rangeMin = baseTarget + Math.max(loadAdjustment.adjustment - 100, 0);
+  const rangeMax = baseTarget + loadAdjustment.adjustment + (loadAdjustment.adjustment > 0 ? 200 : 0);
+
+  return {
+    baseTarget,
+    adjustment: loadAdjustment.adjustment,
+    rangeMin,
+    rangeMax,
+    midpoint: Math.round((rangeMin + rangeMax) / 2),
+    cueKey,
+    loadTypes: loadAdjustment.loadTypes,
+    hasHighCaffeine
+  };
+}
+
+function getHydrationGuidanceText(target = getAdaptiveHydrationTarget()) {
+  const targetText = target.adjustment > 0
+    ? t("hydrationGuidanceRange", {
+      min: target.rangeMin.toLocaleString(translations[currentLanguage].locale),
+      max: target.rangeMax.toLocaleString(translations[currentLanguage].locale)
+    })
+    : t("hydrationGuidanceBase", {
+      target: target.baseTarget.toLocaleString(translations[currentLanguage].locale)
+    });
+  return `${targetText} · ${t(`hydrationGuidanceCue${target.cueKey}`)}`;
+}
+
 function countSweetDrinks() {
   return getDrinkScores().sweetDrinksCount;
 }
@@ -1832,13 +1945,18 @@ function buildSignals() {
 
 function getHydrationSignal() {
   const waterMl = appState.waterMl || 0;
+  const adaptiveTarget = getAdaptiveHydrationTarget();
   return {
     waterMl,
     status: getHydrationStatus(waterMl),
+    adaptiveTarget,
+    adaptiveGuidance: getHydrationGuidanceText(adaptiveTarget),
+    adaptiveRaised: adaptiveTarget.adjustment > 0,
     low: waterMl <= 750,
     rising: waterMl > 750 && waterMl <= 1500,
     steady: waterMl > 1500 && waterMl <= 2200,
-    enough: waterMl > 2200
+    enough: waterMl > 2200,
+    belowAdaptiveRange: adaptiveTarget.adjustment > 0 && waterMl < adaptiveTarget.rangeMin
   };
 }
 
@@ -1952,6 +2070,8 @@ function getReminderFromSignals(signals) {
   if (signals.energySleep.endorphinBlindSpot && signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("signalReminder.endorphin");
   if (signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("signalReminder.sleepLoadRecovery");
   if (signals.hydration.low && signals.drinkLoad.caffeineHigh) return t("signalReminder.hydrationCaffeine");
+  if (signals.hydration.belowAdaptiveRange) return t("signalReminder.hydrationLoad");
+  if (signals.drinkLoad.caffeineHigh) return t("signalReminder.caffeineBase");
   if (signals.mindNote.doublePressure) return t("signalReminder.doublePressure");
   if (signals.drinkLoad.sugarHigh) return t("signalReminder.sugarHigh");
   if (signals.mindNote.restFirst) return t("signalReminder.restFirst");
@@ -2000,6 +2120,8 @@ function buildReflectionFromSignals(signals) {
     adjustments.push(t("signalReflection.sleepLoadRecovery"));
   } else if (signals.hydration.low && signals.drinkLoad.caffeineHigh) {
     adjustments.push(t("signalReflection.hydrationCaffeine"));
+  } else if (signals.hydration.belowAdaptiveRange) {
+    adjustments.push(t("signalReflection.hydrationLoad"));
   } else if (signals.mindNote.doublePressure) {
     adjustments.push(t("signalReflection.pressure"));
   } else if (signals.energySleep.energyLow && signals.energySleep.lowResource) {
@@ -2064,6 +2186,7 @@ function getRecoveryNote(signals = buildSignals()) {
 
 function getHydrationNoteFromSignals(signals = buildSignals()) {
   if (signals.hydration.low && signals.drinkLoad.caffeineHigh) return t("signalReflection.hydrationCaffeine");
+  if (signals.hydration.adaptiveRaised) return signals.hydration.adaptiveGuidance;
   return signals.hydration.status;
 }
 
@@ -2071,6 +2194,7 @@ function getTomorrowFocus(signals = buildSignals()) {
   if (signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("tomorrowFocus.recovery");
   if (signals.mindNote.restFirst) return t("tomorrowFocus.restNoGuilt");
   if (signals.hydration.low && signals.drinkLoad.caffeineHigh) return t("tomorrowFocus.water");
+  if (signals.hydration.belowAdaptiveRange) return t("tomorrowFocus.hydrationLoad");
   const loadTypeFocus = getLoadTypeTomorrowFocus(signals);
   if (loadTypeFocus) return loadTypeFocus;
   if (signals.drinkLoad.caffeineHigh) return t("tomorrowFocus.caffeine");
