@@ -98,7 +98,11 @@ The small blue heart beside `Overall Mind Today` marks the main mind observation
 
 On the Today page, this card includes a small sun or moon visual based on the browser's local time. It is only a gentle energy-rhythm cue and does not affect saved data or processing.
 
-You can also choose optional `Energy Cause` chips, such as low sleep, heavy exercise, deep work, stress, low water, low food, or unknown.
+You can also choose optional `Energy Cause` chips, such as low sleep, heavy exercise, deep work, stress, low water, low food, enough sleep, light mind, or unknown.
+
+Energy Cause is not only for factors that lower energy. It can also record what supports a good-energy day, so the dataset can see both depletion factors and recovery/support factors.
+
+Some days, Energy level and Energy Cause may seem to point in different directions, such as low energy with enough sleep or good energy with stress. The app treats this as a layered signal, not a data entry error: body, mind, and recovery may be speaking from different layers.
 
 ## 9. Hydration
 

@@ -184,6 +184,7 @@ const translations = {
       closing2: "เป้าหมายไม่ใช่เลขดีเร็ว แต่คือระบบที่ไม่พังซ้ำเพราะการรีบแก้"
     },
     reflectionDisplay: {
+      overviewEnergyLayered: "วันนี้พลังงานกับเหตุที่เลือกเหมือนกำลังบอกคนละชั้นของระบบ ทั้งสองอย่างอยู่ร่วมกันได้ โดยไม่ต้องให้สัญญาณหนึ่งลบอีกสัญญาณ",
       overviewRecoveryHydratedRest: "วันนี้ภาพรวมเหมือนเป็นวันที่ร่างกายต้องการ recovery มากกว่าการเพิ่มอะไรใหม่ น้ำพอเป็นฐานได้แล้ว และการเลือกพักก่อนถือว่าเข้ากับพลังงานของวัน",
       overviewRecoveryHydrated: "วันนี้เหมือนร่างกายต้องการจังหวะฟื้นตัวมากกว่าการเพิ่มอะไรใหม่ น้ำพอเป็นฐานได้แล้ว และไม่ต้องรีบสรุปตัวเองจากวันเดียว",
       overviewRecovery: "วันนี้เหมือนร่างกายขอจังหวะ recovery มากกว่าการเพิ่มอะไรใหม่ ค่อย ๆ วางน้ำ การพัก และใจให้กลับมาเป็นฐานเดียวกันก็พอ",
@@ -197,11 +198,25 @@ const translations = {
       adjustCaffeine: "ถ้าจะปรับเล็ก ๆ วันนี้ แค่คืนพื้นที่ให้น้ำเปล่าระหว่างคาเฟอีนกับการพักก็พอ",
       adjustWater: "ถ้าจะปรับเล็ก ๆ วันนี้ ลองวางจุดจิบน้ำให้กระจายขึ้น โดยไม่ต้องอัดทีเดียว",
       adjustSteady: "ถ้าจะปรับเล็ก ๆ วันนี้ คือรักษาจังหวะที่พอดีไว้ โดยไม่ต้องเพิ่มอะไรเพราะความกลัว",
+      adjustEnergyLayered: "ถ้าจะปรับเล็ก ๆ วันนี้ ลองฟังทั้งสัญญาณกายและใจคนละชั้น โดยไม่ต้องรีบตัดสินว่าวันนี้ดีหรือแย่",
       tomorrowRecovery: "พรุ่งนี้ให้ recovery มาก่อน แล้วค่อยกลับมาดู pattern ต่อแบบไม่เร่งตัวเอง",
       tomorrowActivity: "พรุ่งนี้ให้ recovery กับน้ำเดินไปด้วยกัน แล้วค่อยดูว่าร่างกายพร้อมเพิ่มอะไรไหม",
       tomorrowCaffeine: "พรุ่งนี้ลดคาเฟอีนลงหนึ่งจังหวะ แล้วให้น้ำเปล่ากลับมาเป็นฐาน",
+      tomorrowEnergyLayered: "พรุ่งนี้ดูสัญญาณกายกับใจแยกชั้นกัน แล้วค่อยเลือกจังหวะที่พอดี",
       tomorrowSteady: "พรุ่งนี้รักษาจังหวะที่พอดี แล้วกลับมาดู pattern แบบไม่เร่งตัวเอง",
       mindNote: "Mind Note: {note}"
+    },
+    energyCauseInsight: {
+      alignedLow: "พลังงานต่ำวันนี้สัมพันธ์กับปัจจัยที่ใช้พลังงานหรือฟื้นตัวยังไม่พอได้ โดยไม่ต้องมองว่าเป็นความผิดพลาด",
+      alignedGood: "พลังงานดีวันนี้ดูเหมือนมีฐานจากการพักหรือใจที่เบาขึ้น รักษาจังหวะนี้ไว้แบบไม่ต้องเร่งเพิ่มอะไรเกินจำเป็น",
+      lowWithSupport: "แม้วันนี้จะมีฐานจากการพักหรือใจที่เบาขึ้น แต่พลังงานยังต่ำได้อยู่ อาจเป็นสัญญาณว่าร่างกายยังต้องการ recovery ต่อ ไม่ใช่ว่าพักแล้วต้องพร้อมทันที",
+      goodWithDepletion: "แม้มีปัจจัยใช้พลังอยู่ แต่วันนี้พลังงานยังพอพาไปได้ ให้ใช้แรงแบบพอดี และอย่าลืมคืน recovery ภายหลัง",
+      goodWithStress: "แม้มีความเครียดอยู่ แต่พลังงานวันนี้ยังพอพาไปได้ ลองใช้จังหวะนี้อย่างไม่เร่งจนเกินไป",
+      lowWithLightMind: "ใจอาจเบากว่าปกติ แต่ร่างกายยังล้าได้ ทั้งสองอย่างอยู่ร่วมกันได้ แค่บอกว่าควรดูแลทั้งกายและใจคนละชั้น",
+      mediumMixed: "วันนี้มีทั้งแรงหนุนและแรงใช้พลัง ให้มองเป็นวัน balance มากกว่าวันที่ต้องตัดสินว่าดีหรือแย่"
+    },
+    energyCauseReminder: {
+      layered: "วันนี้กาย ใจ และเหตุของพลังงานอาจกำลังบอกคนละชั้น ค่อย ๆ ฟังโดยไม่ต้องให้สัญญาณหนึ่งลบอีกสัญญาณ"
     },
     hydrationFeedback: {
       low: "วันนี้น้ำยังน้อยไปนิด ค่อย ๆ จิบเพิ่มนะ",
@@ -221,7 +236,11 @@ const translations = {
     drinkReflection: {
       sugar: "เครื่องดื่มหวานวันนี้เริ่มสะสม แต่ไม่ต้องแก้ด้วยการหักดิบ แค่ลดแก้วถัดไป",
       caffeine: "คาเฟอีนวันนี้เริ่มสูง ให้มันเป็นข้อมูล ไม่ใช่สิ่งที่มาแทนการพัก",
-      energyCauses: "วันนี้พลังงานอาจถูกกระทบจาก {causes} มากกว่าความผิดพลาดของตัวเอง"
+      energyCauses: "วันนี้พลังงานอาจถูกกระทบจาก {causes} มากกว่าความผิดพลาดของตัวเอง",
+      energyCause: {
+        enough_sleep: "วันนี้พลังงานดูเหมือนมีฐานจากการพักที่พอขึ้น รักษาจังหวะนี้ไว้แบบไม่ต้องเร่งเพิ่มอะไรเกินจำเป็น",
+        light_mind: "วันนี้ใจดูเบากว่าปกติ พลังงานจึงอาจไม่ถูกดึงไปกับแรงกดดันมากนัก"
+      }
     },
     signalReminder: {
       sleepLoadRecovery: "วันนี้ recovery ควรมาก่อนการเพิ่ม performance อีกนิดนะพี่",
@@ -294,6 +313,7 @@ const translations = {
       water: "วางจุดจิบน้ำเล็ก ๆ ให้กระจายทั้งวัน",
       hydrationLoad: "ให้น้ำค่อย ๆ ตาม load ของวัน โดยไม่ต้องเร่งดื่มทีเดียว",
       hydrationRecovery: "ให้ recovery และน้ำค่อย ๆ เดินไปด้วยกัน โดยไม่ต้องเพิ่มตัวเลขใหญ่",
+      energyLayered: "ดูสัญญาณกายกับใจคนละชั้น แล้วเลือกจังหวะที่พอดีกับพรุ่งนี้",
       sweet: "ลดหวานหนึ่งจุด โดยไม่ต้องทำให้วันนี้กลายเป็นบทลงโทษ",
       caffeine: "ลดคาเฟอีนลงหนึ่งจังหวะ แล้วคืนพื้นที่ให้น้ำกับการพัก",
       restNoGuilt: "พักโดยไม่ต้องรู้สึกผิด แล้วค่อยกลับมาดู pattern ต่อ",
@@ -389,6 +409,8 @@ const translations = {
         stress: "ความเครียด",
         low_water: "น้ำน้อย",
         low_food: "อาหารน้อย",
+        enough_sleep: "นอนพอ",
+        light_mind: "ใจเบา",
         unknown: "ยังไม่แน่ใจ"
       }
     }
@@ -548,6 +570,7 @@ const translations = {
       closing2: "The goal is not a better number quickly. The goal is a system that does not break from rushing."
     },
     reflectionDisplay: {
+      overviewEnergyLayered: "Today, the energy level and its causes may be describing different layers of the system. Both can be true without one signal canceling the other.",
       overviewRecoveryHydratedRest: "Today looks like a day where recovery mattered more than adding more effort. Hydration was enough to serve as a base, and choosing rest first matched the day's energy.",
       overviewRecoveryHydrated: "Today looks like a day where the body needed recovery more than adding anything new. Hydration was enough to serve as a base, and the day does not need to be judged from one signal.",
       overviewRecovery: "Today seems to ask for recovery more than adding anything new. Let hydration, rest, and mind state return to a steady base gradually.",
@@ -561,11 +584,25 @@ const translations = {
       adjustCaffeine: "If there is one gentle adjustment, give plain water some space between caffeine and rest.",
       adjustWater: "If there is one gentle adjustment, place small water moments across the day without forcing them all at once.",
       adjustSteady: "If there is one gentle adjustment, keep the rhythm that already feels workable without adding more from fear.",
+      adjustEnergyLayered: "If there is one gentle adjustment, listen to body and mind as layered signals without deciding that the day must be good or bad.",
       tomorrowRecovery: "Tomorrow, let recovery come first, then return to the pattern without rushing yourself.",
       tomorrowActivity: "Tomorrow, let recovery and hydration move together, then see what the body is ready to add.",
       tomorrowCaffeine: "Tomorrow, lower caffeine by one step and let plain water return as the base.",
+      tomorrowEnergyLayered: "Tomorrow, notice body and mind as layered signals, then choose a rhythm that fits.",
       tomorrowSteady: "Tomorrow, keep the workable rhythm and return to the pattern without rushing yourself.",
       mindNote: "Mind Note: {note}"
+    },
+    energyCauseInsight: {
+      alignedLow: "Low energy today may relate to factors that used energy or left recovery incomplete. This is information, not a mistake.",
+      alignedGood: "Today’s energy seems supported by enough rest or a lighter mind. Keeping this rhythm may be enough without adding too much.",
+      lowWithSupport: "Even with support from rest or a lighter mind, low energy can still be true. The body may simply need more recovery time, not instant readiness.",
+      goodWithDepletion: "Even with energy-using factors present, today’s energy may still carry you. Use that capacity gently and return recovery later.",
+      goodWithStress: "Even with stress present, today’s energy may still carry you. Try using this rhythm without pushing it too far.",
+      lowWithLightMind: "The mind may feel lighter while the body still feels tired. Both can be true, and they may ask for care on different layers.",
+      mediumMixed: "Today has both support and energy-use signals. It may be a balance day rather than a day to judge as good or bad."
+    },
+    energyCauseReminder: {
+      layered: "Body, mind, and energy causes may be speaking from different layers today. Listen gently without deciding that one signal cancels the other."
     },
     hydrationFeedback: {
       low: "Water is still a little low today. Add small sips gently.",
@@ -585,7 +622,11 @@ const translations = {
     drinkReflection: {
       sugar: "Sugary drinks are adding up today, but no need to go extreme. Reducing the next one is enough.",
       caffeine: "Caffeine is getting high today. Let it be information, not a replacement for rest.",
-      energyCauses: "Today's energy may be affected by {causes} more than by any personal mistake."
+      energyCauses: "Today's energy may be affected by {causes} more than by any personal mistake.",
+      energyCause: {
+        enough_sleep: "Today's energy seems supported by enough rest. Keeping this rhythm may be enough without adding too much.",
+        light_mind: "Today the mind seems lighter, so energy may not be pulled as much by pressure."
+      }
     },
     signalReminder: {
       sleepLoadRecovery: "Recovery may need to come before adding more performance today.",
@@ -658,6 +699,7 @@ const translations = {
       water: "Place small water-sipping moments across the day.",
       hydrationLoad: "Let hydration follow the day's load gently, without rushing it all at once.",
       hydrationRecovery: "Let recovery and gentle hydration move together without chasing a bigger number.",
+      energyLayered: "Notice body and mind as layered signals, then choose tomorrow's rhythm gently.",
       sweet: "Reduce sweetness by one step without turning today into punishment.",
       caffeine: "Lower caffeine by one step and give water and rest more space.",
       restNoGuilt: "Rest without guilt, then come back to the pattern gently.",
@@ -753,6 +795,8 @@ const translations = {
         stress: "Stress",
         low_water: "Low water",
         low_food: "Low food",
+        enough_sleep: "Enough sleep",
+        light_mind: "Light mind",
         unknown: "Not sure yet"
       }
     }
@@ -912,6 +956,7 @@ const translations = {
       closing2: "目标不是数字很快变好，而是建立一个不会因为急着修正而反复崩掉的系统。"
     },
     reflectionDisplay: {
+      overviewEnergyLayered: "今天的能量状态和原因，可能在描述系统的不同层次。两种信号可以同时成立，不代表资料有问题。",
       overviewRecoveryHydratedRest: "今天整体像是 recovery 比增加更多事情更重要。饮水已经可以作为基础，先休息也符合今天的能量。",
       overviewRecoveryHydrated: "今天像是身体更需要恢复节奏，而不是增加新的负荷。饮水已经可以作为基础，也不需要用单一天来判断自己。",
       overviewRecovery: "今天像是在提醒 recovery 比增加更多事情更重要。让补水、休息和心里的状态慢慢回到一个稳定基础就好。",
@@ -925,11 +970,25 @@ const translations = {
       adjustCaffeine: "如果要轻轻调整一点，可以在咖啡因和休息之间，把空间还给白水。",
       adjustWater: "如果要轻轻调整一点，把小口喝水分散到一天里，不需要一次喝完。",
       adjustSteady: "如果要轻轻调整一点，就是维持已经可行的节奏，不因为害怕而增加更多。",
+      adjustEnergyLayered: "如果要轻轻调整一点，可以把身体和心的信号分层听，不急着判断今天是好或不好。",
       tomorrowRecovery: "明天先让 recovery 在前面，再不急地回来观察 pattern。",
       tomorrowActivity: "明天让 recovery 和补水一起走，再看身体准备好增加什么。",
       tomorrowCaffeine: "明天把咖啡因降一个节奏，让白水回到基础。",
+      tomorrowEnergyLayered: "明天把身体和心的信号分层看，再选择合适的节奏。",
       tomorrowSteady: "明天维持可持续的节奏，再不急地回来观察 pattern。",
       mindNote: "Mind Note: {note}"
+    },
+    energyCauseInsight: {
+      alignedLow: "今天能量低，可能和消耗能量或 recovery 还不够完整有关。这是信息，不是错误。",
+      alignedGood: "今天的能量看起来有一部分来自比较足够的休息或比较轻的心。保持这个节奏就好，不需要再额外加很多。",
+      lowWithSupport: "即使有休息或心比较轻的支持，能量低也仍然可以成立。身体可能只是还需要更多 recovery，不代表休息后必须马上准备好。",
+      goodWithDepletion: "即使有消耗能量的因素，今天的能量仍然可能够用。温和使用这份能量，之后再把 recovery 还回来。",
+      goodWithStress: "即使有压力在，今天的能量仍然可能够用。可以使用这个节奏，但不需要推得太远。",
+      lowWithLightMind: "心可能比较轻，但身体仍然会累。两种信号可以同时成立，也许是在提醒身体和心需要分层照顾。",
+      mediumMixed: "今天同时有支持能量和使用能量的信号。可以把它看作 balance 的一天，而不是急着判断好或不好。"
+    },
+    energyCauseReminder: {
+      layered: "今天身体、心和能量原因可能在不同层次说话。温和地听，不需要让一个信号取消另一个。"
     },
     hydrationFeedback: {
       low: "今天水还少了一点，慢慢小口补就好。",
@@ -949,7 +1008,11 @@ const translations = {
     drinkReflection: {
       sugar: "今天甜饮开始累积，但不需要极端调整，下一杯少一点就够了。",
       caffeine: "今天咖啡因偏高，把它当作信息，不要让它取代休息。",
-      energyCauses: "今天的能量可能更多受到 {causes} 影响，而不是自己的错误。"
+      energyCauses: "今天的能量可能更多受到 {causes} 影响，而不是自己的错误。",
+      energyCause: {
+        enough_sleep: "今天的能量看起来有一部分来自比较足够的休息。保持这个节奏就好，不需要再额外加很多。",
+        light_mind: "今天心里看起来比较轻，能量也许没有被压力拉走太多。"
+      }
     },
     signalReminder: {
       sleepLoadRecovery: "今天 recovery 可以先于继续增加 performance。",
@@ -1022,6 +1085,7 @@ const translations = {
       water: "把小口喝水安排在一天里几个自然的点。",
       hydrationLoad: "让补水温和跟上今天的 load，不需要一次喝完。",
       hydrationRecovery: "让 recovery 和温和补水一起走，不需要追更大的数字。",
+      energyLayered: "把身体和心的信号分层看，再温和选择明天的节奏。",
       sweet: "甜度少一步就好，不要把今天变成惩罚。",
       caffeine: "明天把咖啡因降一个节奏，把空间还给水和休息。",
       restNoGuilt: "不带内疚地休息，然后再温和地回来看 pattern。",
@@ -1117,6 +1181,8 @@ const translations = {
         stress: "压力",
         low_water: "水少",
         low_food: "吃得少",
+        enough_sleep: "睡够了",
+        light_mind: "心比较轻",
         unknown: "还不确定"
       }
     }
@@ -1155,6 +1221,8 @@ const energyCauseOptions = [
   "stress",
   "low_water",
   "low_food",
+  "enough_sleep",
+  "light_mind",
   "unknown"
 ];
 
@@ -2125,6 +2193,7 @@ function getEnergySleepSignal(loadScore = calculateLoadScore()) {
   const energy = appState.selectedState.energy;
   const sleep = appState.selectedState.sleep;
   const causes = appState.energyCauses || [];
+  const energyCausePattern = getEnergyCausePattern(energy, causes);
   const sleepLow = sleep === "น้อย" || causes.includes("sleep_low");
   const energyGood = energy === "ดี";
   const energyLow = energy === "ต่ำ";
@@ -2134,12 +2203,70 @@ function getEnergySleepSignal(loadScore = calculateLoadScore()) {
     energy,
     sleep,
     causes,
+    energyCausePattern,
     sleepLow,
     energyGood,
     energyLow,
     lowResource,
     endorphinBlindSpot: energyGood && (sleepLow || loadScore >= 6)
   };
+}
+
+function getEnergyCausePattern(energy = appState.selectedState.energy, causes = appState.energyCauses || []) {
+  const depletionCauses = causes.filter(isDepletionEnergyCause);
+  const supportCauses = causes.filter(isSupportEnergyCause);
+  const hasDepletion = depletionCauses.length > 0;
+  const hasSupport = supportCauses.length > 0;
+  const hasStress = causes.includes("stress");
+  const hasLightMind = causes.includes("light_mind");
+  const energyLow = energy === "ต่ำ";
+  const energyMedium = energy === "กลาง";
+  const energyGood = energy === "ดี";
+  let key = "";
+
+  if (energyLow && hasLightMind) {
+    key = "lowWithLightMind";
+  } else if (energyLow && hasSupport) {
+    key = "lowWithSupport";
+  } else if (energyGood && hasStress) {
+    key = "goodWithStress";
+  } else if (energyGood && hasDepletion) {
+    key = "goodWithDepletion";
+  } else if (energyMedium && hasDepletion && hasSupport) {
+    key = "mediumMixed";
+  } else if (energyLow && hasDepletion) {
+    key = "alignedLow";
+  } else if (energyGood && hasSupport) {
+    key = "alignedGood";
+  } else if (hasDepletion && hasSupport) {
+    key = "mediumMixed";
+  }
+
+  return {
+    key,
+    depletionCauses,
+    supportCauses,
+    hasDepletion,
+    hasSupport,
+    hasLayeredSignal: ["lowWithLightMind", "lowWithSupport", "goodWithStress", "goodWithDepletion", "mediumMixed"].includes(key)
+  };
+}
+
+function getEnergyCauseConsistency(pattern = getEnergyCausePattern()) {
+  if (!pattern.key) return "neutral";
+  return pattern.hasLayeredSignal ? "layered" : "aligned";
+}
+
+function getEnergyCauseInsight(pattern = getEnergyCausePattern()) {
+  return pattern.key ? t(`energyCauseInsight.${pattern.key}`) : "";
+}
+
+function isDepletionEnergyCause(cause) {
+  return ["sleep_low", "heavy_exercise", "deep_work", "stress", "low_water", "low_food", "unknown"].includes(cause);
+}
+
+function isSupportEnergyCause(cause) {
+  return ["enough_sleep", "light_mind"].includes(cause);
 }
 
 function getMindNoteSignal() {
@@ -2173,6 +2300,7 @@ function getReminderFromSignals(signals) {
   if (signals.mindNote.doublePressure) return t("signalReminder.doublePressure");
   if (signals.drinkLoad.sugarHigh) return t("signalReminder.sugarHigh");
   if (signals.mindNote.restFirst) return t("signalReminder.restFirst");
+  if (signals.energySleep.energyCausePattern.hasLayeredSignal) return t("energyCauseReminder.layered");
   if (signals.hydration.steady && signals.recoveryLoad.light) return t("signalReminder.consistency");
   if (signals.energySleep.endorphinBlindSpot) return t("signalReminder.endorphin");
   if (signals.energySleep.energyLow && signals.energySleep.lowResource) return t("signalReminder.resourceLow");
@@ -2213,6 +2341,7 @@ function getReflectionDisplayOverview(signals) {
   const hasActivityLoad = signals.hydration.strongActivityHydration;
   const hasRecoveryOnly = isRecoveryOnlyReflection(signals);
 
+  if (signals.energySleep.energyCausePattern.hasLayeredSignal) return t("reflectionDisplay.overviewEnergyLayered");
   if (hasActivityLoad && hydrationIsBase) return t("reflectionDisplay.overviewActivityHydrated");
   if (hasActivityLoad) return t("reflectionDisplay.overviewActivity");
   if (hasRecoveryOnly && hydrationIsBase && signals.mindNote.restFirst) return t("reflectionDisplay.overviewRecoveryHydratedRest");
@@ -2224,6 +2353,7 @@ function getReflectionDisplayOverview(signals) {
 }
 
 function getReflectionDisplayAdjustment(signals) {
+  if (signals.energySleep.energyCausePattern.hasLayeredSignal) return t("reflectionDisplay.adjustEnergyLayered");
   if (signals.hydration.strongActivityHydration) return t("reflectionDisplay.adjustActivity");
   if (isRecoveryOnlyReflection(signals)) return t("reflectionDisplay.adjustRecovery");
   if (signals.drinkLoad.caffeineHigh) return t("reflectionDisplay.adjustCaffeine");
@@ -2232,6 +2362,7 @@ function getReflectionDisplayAdjustment(signals) {
 }
 
 function getReflectionDisplayTomorrow(signals) {
+  if (signals.energySleep.energyCausePattern.hasLayeredSignal) return t("reflectionDisplay.tomorrowEnergyLayered");
   if (signals.hydration.strongActivityHydration) return t("reflectionDisplay.tomorrowActivity");
   if (isRecoveryOnlyReflection(signals)) return t("reflectionDisplay.tomorrowRecovery");
   if (signals.drinkLoad.caffeineHigh) return t("reflectionDisplay.tomorrowCaffeine");
@@ -2312,9 +2443,7 @@ function buildReflectionFromSignals(signals) {
   });
   if (!adjustments.length) adjustments.push(t("reflection.keepBalance"));
 
-  const energyCauseNote = signals.energySleep.causes.length
-    ? `${t("drinkReflection.energyCauses", { causes: getEnergyCauseSummary() })}\n`
-    : "";
+  const energyCauseNote = getEnergyCauseReflectionNote();
 
   return [
     `${t("reflection.good")} ${goodThings.join(" / ")}`,
@@ -2336,6 +2465,31 @@ function getEnergyCauseSummary() {
   return (appState.energyCauses || [])
     .map((cause) => t(`options.energyCauses.${cause}`))
     .join(" / ");
+}
+
+function getEnergyCauseReflectionNote() {
+  const causes = appState.energyCauses || [];
+  if (!causes.length) return "";
+  const pattern = getEnergyCausePattern();
+  const insight = getEnergyCauseInsight(pattern);
+
+  if (insight) return insight;
+
+  const positiveCauses = causes.filter(isSupportEnergyCause);
+  const otherCauses = causes.filter((cause) => !isSupportEnergyCause(cause));
+  const notes = [];
+
+  if (otherCauses.length) {
+    notes.push(t("drinkReflection.energyCauses", {
+      causes: otherCauses.map((cause) => t(`options.energyCauses.${cause}`)).join(" / ")
+    }));
+  }
+
+  positiveCauses.forEach((cause) => {
+    notes.push(t(`drinkReflection.energyCause.${cause}`));
+  });
+
+  return notes.join("\n");
 }
 
 function getMindNoteSummary() {
@@ -2365,6 +2519,7 @@ function getHydrationNoteFromSignals(signals = buildSignals()) {
 
 function getTomorrowFocus(signals = buildSignals()) {
   if (signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("tomorrowFocus.recovery");
+  if (signals.energySleep.energyCausePattern.hasLayeredSignal) return t("tomorrowFocus.energyLayered");
   if (signals.mindNote.restFirst) return t("tomorrowFocus.restNoGuilt");
   if (signals.hydration.low && signals.drinkLoad.caffeineHigh) return t("tomorrowFocus.water");
   if (signals.hydration.belowAdaptiveRange) return t("tomorrowFocus.hydrationLoad");
