@@ -190,6 +190,9 @@ const translations = {
       overviewRecovery: "วันนี้เหมือนร่างกายขอจังหวะ recovery มากกว่าการเพิ่มอะไรใหม่ ค่อย ๆ วางน้ำ การพัก และใจให้กลับมาเป็นฐานเดียวกันก็พอ",
       overviewActivityHydrated: "วันนี้มีการใช้พลังงานมากกว่าวันพัก น้ำพอเป็นฐานได้แล้ว และ recovery ควรเดินไปด้วยกันกับ load ของวัน",
       overviewActivity: "วันนี้มีการใช้พลังงานมากกว่าวันพัก ถ้ามีเหงื่อหรือกิจกรรมต่อเนื่อง น้ำกับ recovery ค่อย ๆ เดินตามร่างกายให้ทันก็พอ",
+      overviewPositiveMindActivity: "วันนี้มีการใช้พลังงานอยู่ แต่ใจโดยรวมดูเป็นแรงหนุนได้เล็กน้อย ใช้จังหวะนี้แบบพอดีและยังให้ recovery เดินไปด้วยกัน",
+      overviewPositiveMindRecovery: "วันนี้ใจโดยรวมดูเป็นแรงหนุนได้ แต่ร่างกายยังอาจต้องการ recovery อยู่ ทั้งสองสัญญาณอยู่ร่วมกันได้โดยไม่ต้องรีบสรุปว่าวันนี้ดีทั้งหมด",
+      overviewPositiveMindSupport: "วันนี้ใจโดยรวมดูมีโทนที่ดีขึ้น เป็นสัญญาณสนับสนุนให้การดูแลตัวเองไม่ต้องมาจากแรงกดดันมากนัก",
       overviewCaffeine: "วันนี้คาเฟอีนอาจช่วยให้ตื่นหรือพยุงจังหวะของวันได้ แค่ให้น้ำเปล่ากลับมาเป็นฐานโดยไม่ต้องดุกาแฟก็พอ",
       overviewSteadyHydration: "วันนี้น้ำพอเป็นฐานของวันแล้ว ภาพรวมจึงเหมาะกับการรักษาความสม่ำเสมอมากกว่าการเติมอะไรเพราะความกลัว",
       overviewBase: "วันนี้เป็นวันที่เหมาะกับการสังเกต pattern แบบเบา ๆ น้ำ การพัก และใจยังค่อย ๆ กลับมาอยู่ในจังหวะที่พอดีได้",
@@ -203,6 +206,7 @@ const translations = {
       tomorrowActivity: "พรุ่งนี้ให้ recovery กับน้ำเดินไปด้วยกัน แล้วค่อยดูว่าร่างกายพร้อมเพิ่มอะไรไหม",
       tomorrowCaffeine: "พรุ่งนี้ลดคาเฟอีนลงหนึ่งจังหวะ แล้วให้น้ำเปล่ากลับมาเป็นฐาน",
       tomorrowEnergyLayered: "พรุ่งนี้ดูสัญญาณกายกับใจแยกชั้นกัน แล้วค่อยเลือกจังหวะที่พอดี",
+      tomorrowPositiveMind: "พรุ่งนี้รักษาใจที่พออยู่ได้ แล้วกลับมาดู pattern แบบไม่เร่งตัวเอง",
       tomorrowSteady: "พรุ่งนี้รักษาจังหวะที่พอดี แล้วกลับมาดู pattern แบบไม่เร่งตัวเอง",
       mindNote: "Mind Note: {note}"
     },
@@ -248,6 +252,9 @@ const translations = {
       hydrationLoad: "วันนี้มีการใช้พลังงานมากกว่าวันพัก น้ำอาจค่อย ๆ ตามร่างกายให้ทันโดยไม่ต้องเร่งดื่มทีเดียว",
       hydrationRecovery: "วันนี้ไม่ได้มี load หนักชัดเจน แต่มีสัญญาณที่ร่างกายอาจต้องการ recovery มากขึ้น ค่อย ๆ วางน้ำเป็นฐานของวัน",
       caffeineBase: "คาเฟอีนช่วยให้ตื่นได้ แต่วันนี้อย่าลืมให้น้ำเปล่ากลับมาเป็นฐาน",
+      positiveMind: "วันนี้ใจดูเป็นแรงหนุนได้เล็กน้อย ใช้มันเป็นฐานเบา ๆ โดยไม่ต้องผลักตัวเองเพิ่ม",
+      positiveMindWithLoad: "แม้ใจดูดีขึ้น วันนี้ยังมี load ให้ recovery เดินไปด้วยกัน",
+      positiveMindRecovery: "วันนี้ใจดูเป็นแรงหนุนได้ แต่ร่างกายยังอาจต้องการ recovery อยู่ ค่อย ๆ ดูแลทั้งสองชั้นไปด้วยกัน",
       doublePressure: "วันนี้ไม่ต้องเร่งแก้ตัวเลข แค่ลดแรงกดดันลงหนึ่งระดับก็พอ",
       sugarHigh: "เครื่องดื่มหวานเริ่มสะสมแล้ว ลดแก้วถัดไปหนึ่งจุดก็พอ",
       consistency: "วันนี้จังหวะค่อนข้างเบาและน้ำพอเห็นแล้ว รักษาความสม่ำเสมอก็พอ",
@@ -264,6 +271,8 @@ const translations = {
       hydrationCaffeine: "น้ำยังน้อยและคาเฟอีนเริ่มนำจังหวะ ค่อย ๆ กลับมาจิบน้ำกับพักให้สม่ำเสมอ",
       hydrationLoad: "วันนี้มีเหงื่อหรือกิจกรรมต่อเนื่องมากกว่าวันพัก น้ำเป็นส่วนหนึ่งของ recovery ไม่ใช่แค่ตัวเลข",
       hydrationRecovery: "วันนี้เป็นสัญญาณ recovery มากกว่า activity load น้ำยังไม่ต้องเป็นตัวเลขใหญ่ แค่ค่อย ๆ จิบให้เป็นฐานของวัน",
+      positiveMindFeelingGood: "วันนี้ใจโดยรวมดูมีโทนที่ดีขึ้น เป็นสัญญาณสนับสนุนให้ระบบไม่ต้องใช้แรงกับความกดดันมากนัก",
+      positiveMindRelaxed: "วันนี้ใจดูผ่อนคลายขึ้นเล็กน้อย อาจเป็นฐานที่ช่วยให้การดูแลตัวเองไม่ต้องมาจากแรงกดดัน",
       pressure: "ความกดดันถูกเห็นแล้ว ไม่ต้องใช้การเร่งแก้เป็นคำตอบของวันนี้",
       resourceLow: "พลังงานอาจต่ำจากน้ำ อาหาร หรือการนอน ไม่ใช่เรื่องที่ต้องโทษตัวเอง",
       steadyHydration: "วางจุดจิบน้ำให้สม่ำเสมอขึ้น โดยไม่ต้องอัดทีเดียว"
@@ -332,7 +341,7 @@ const translations = {
     },
     options: {
       energy: { low: "ต่ำ", medium: "กลาง", good: "ดี" },
-      mind: { calm: "เฉย ๆ", worried: "กังวล", pressured: "กดดัน", scattered: "ฟุ้ง" },
+      mind: { calm: "เฉย ๆ", worried: "กังวล", pressured: "กดดัน", scattered: "ฟุ้ง", feeling_good: "รู้สึกดี", relaxed: "ผ่อนคลาย" },
       sleep: { low: "น้อย", okay: "พอใช้", good: "ดี" },
       drinks: {
         water: "น้ำเปล่า",
@@ -576,6 +585,9 @@ const translations = {
       overviewRecovery: "Today seems to ask for recovery more than adding anything new. Let hydration, rest, and mind state return to a steady base gradually.",
       overviewActivityHydrated: "Today had more activity load than a rest day. Hydration was enough to serve as a base, and recovery can move together with the day's load.",
       overviewActivity: "Today had more activity load than a rest day. If sweat or sustained effort was part of it, hydration and recovery can gradually catch up with the body.",
+      overviewPositiveMindActivity: "Today includes real energy use, while the overall mind state seems supportive. Use that support gently and still let recovery move with the load.",
+      overviewPositiveMindRecovery: "Today the mind seems supportive, while the body may still be asking for recovery. Both signals can coexist without making the whole day automatically fine.",
+      overviewPositiveMindSupport: "Today's overall mind state seems more positive, which may support self-care without needing to push harder.",
       overviewCaffeine: "Today, caffeine may have supported alertness or rhythm. Plain water can return as the base without making coffee something to feel bad about.",
       overviewSteadyHydration: "Hydration was enough to serve as a base today, so the picture is more about keeping consistency than adding more from fear.",
       overviewBase: "Today is a day for noticing the pattern gently. Hydration, rest, and mind state can keep returning to a workable rhythm.",
@@ -589,6 +601,7 @@ const translations = {
       tomorrowActivity: "Tomorrow, let recovery and hydration move together, then see what the body is ready to add.",
       tomorrowCaffeine: "Tomorrow, lower caffeine by one step and let plain water return as the base.",
       tomorrowEnergyLayered: "Tomorrow, notice body and mind as layered signals, then choose a rhythm that fits.",
+      tomorrowPositiveMind: "Tomorrow, keep the mind state that feels workable, then return to the pattern without rushing yourself.",
       tomorrowSteady: "Tomorrow, keep the workable rhythm and return to the pattern without rushing yourself.",
       mindNote: "Mind Note: {note}"
     },
@@ -634,6 +647,9 @@ const translations = {
       hydrationLoad: "Today's activity load may ask for steadier hydration than a rest day. Sip gradually rather than rushing the number.",
       hydrationRecovery: "There is no clear heavy activity load, but there is a recovery signal. Keep hydration as a gentle base for the day.",
       caffeineBase: "Caffeine may support alertness, but plain water can remain the base.",
+      positiveMind: "The mind seems supportive today. Use it as a gentle base without pushing yourself to do more.",
+      positiveMindWithLoad: "The mind seems better today, and there is still load here. Let recovery move with it.",
+      positiveMindRecovery: "The mind seems supportive today, while the body may still need recovery. Let both layers be cared for gently.",
       doublePressure: "Today does not need more fixing. Lowering pressure by one step is enough.",
       sugarHigh: "Sugary drinks are adding up. Reducing the next one by one step is enough.",
       consistency: "Hydration is visible and load is light today. Consistency is enough.",
@@ -650,6 +666,8 @@ const translations = {
       hydrationCaffeine: "Water is still low while caffeine is rising. Steadier sips and rest are enough to return the rhythm.",
       hydrationLoad: "If exercise, heat, or sustained activity was part of the day, hydration can be part of recovery, not just a target.",
       hydrationRecovery: "This looks more like a recovery signal than an activity-load signal. Hydration can stay gentle and steady rather than becoming a bigger number.",
+      positiveMindFeelingGood: "Today's overall mind state seems more positive, which may support the system without needing to push harder.",
+      positiveMindRelaxed: "Today the mind seems more relaxed, which may help self-care come from less pressure.",
       pressure: "Pressure has been noticed. Rushing to fix does not need to be today's answer.",
       resourceLow: "Energy may be low because water, food, or sleep resources are low; this is information, not blame.",
       steadyHydration: "Place steadier water moments across the day without forcing it all at once."
@@ -718,7 +736,7 @@ const translations = {
     },
     options: {
       energy: { low: "Low", medium: "Medium", good: "Good" },
-      mind: { calm: "Neutral", worried: "Worried", pressured: "Pressured", scattered: "Scattered" },
+      mind: { calm: "Neutral", worried: "Worried", pressured: "Pressured", scattered: "Scattered", feeling_good: "Feeling good", relaxed: "Relaxed" },
       sleep: { low: "Low", okay: "Okay", good: "Good" },
       drinks: {
         water: "Plain water",
@@ -962,6 +980,9 @@ const translations = {
       overviewRecovery: "今天像是在提醒 recovery 比增加更多事情更重要。让补水、休息和心里的状态慢慢回到一个稳定基础就好。",
       overviewActivityHydrated: "今天有比休息日更多的活动消耗。饮水已经可以作为基础，recovery 可以和今天的 load 一起往前走。",
       overviewActivity: "今天有比休息日更多的活动消耗。如果有出汗或持续用力，补水和 recovery 慢慢跟上身体就好。",
+      overviewPositiveMindActivity: "今天有真实的能量消耗，同时整体心境也像是一个支持。温和使用这个支持，也让 recovery 跟着 load 一起走。",
+      overviewPositiveMindRecovery: "今天心境像是有支持感，但身体可能仍然需要 recovery。两个信号可以同时存在，不代表整天都一定没事。",
+      overviewPositiveMindSupport: "今天整体心境较好，可以成为一种支持，不需要额外用力。",
       overviewCaffeine: "今天咖啡因可能帮助清醒或维持节奏。让白水回到基础就好，不需要因此责备咖啡。",
       overviewSteadyHydration: "今天饮水已经可以作为基础，整体更适合维持稳定，而不是因为害怕再增加更多。",
       overviewBase: "今天适合温和地观察 pattern。补水、休息和心里的状态都可以慢慢回到可持续的节奏。",
@@ -975,6 +996,7 @@ const translations = {
       tomorrowActivity: "明天让 recovery 和补水一起走，再看身体准备好增加什么。",
       tomorrowCaffeine: "明天把咖啡因降一个节奏，让白水回到基础。",
       tomorrowEnergyLayered: "明天把身体和心的信号分层看，再选择合适的节奏。",
+      tomorrowPositiveMind: "明天保留这种比较能待住的心境，再不急地回来观察 pattern。",
       tomorrowSteady: "明天维持可持续的节奏，再不急地回来观察 pattern。",
       mindNote: "Mind Note: {note}"
     },
@@ -1020,6 +1042,9 @@ const translations = {
       hydrationLoad: "今天有比休息日更明显的活动消耗，可以慢慢小口补水，不需要一次追数字。",
       hydrationRecovery: "今天没有明显的高活动 load，但有 recovery 信号。把白水温和地放回今天的基础就好。",
       caffeineBase: "咖啡因可以帮助清醒，但白水仍然可以作为基础。",
+      positiveMind: "今天心境像是一个小小的支持。把它当作温和的基础，不需要因此推动自己做更多。",
+      positiveMindWithLoad: "今天心境看起来好一些，但这里仍然有 load。让 recovery 和它一起走。",
+      positiveMindRecovery: "今天心境像是一个支持，但身体可能仍然需要 recovery。温和照顾这两个层次就好。",
       doublePressure: "今天不需要急着修正，先把压力放低一点就够了。",
       sugarHigh: "甜饮开始累积了，下一杯少一点就够了。",
       consistency: "今天补水已经被看见，load 也比较轻，保持稳定就好。",
@@ -1036,6 +1061,8 @@ const translations = {
       hydrationCaffeine: "水还偏少，同时咖啡因正在上升。稳定小口补水和休息就够了。",
       hydrationLoad: "如果今天有运动、炎热或持续活动，补水可以是 recovery 的一部分，不只是目标数字。",
       hydrationRecovery: "这更像 recovery 信号，不一定是活动 load。补水可以保持温和稳定，不需要变成更大的数字。",
+      positiveMindFeelingGood: "今天整体心境较好，可以成为一种支持，不需要额外用力。",
+      positiveMindRelaxed: "今天心情比较放松，可以让照顾自己不那么来自压力。",
       pressure: "压力已经被看见了。今天不需要用急着修正来回答它。",
       resourceLow: "能量低可能来自水、食物或睡眠资源不足，这是信息，不是责备。",
       steadyHydration: "把补水点放得更稳定，不需要一次硬灌。"
@@ -1104,7 +1131,7 @@ const translations = {
     },
     options: {
       energy: { low: "低", medium: "中", good: "好" },
-      mind: { calm: "一般", worried: "担心", pressured: "有压力", scattered: "分散" },
+      mind: { calm: "一般", worried: "担心", pressured: "有压力", scattered: "分散", feeling_good: "感觉不错", relaxed: "放松" },
       sleep: { low: "少", okay: "还可以", good: "好" },
       drinks: {
         water: "白水",
@@ -2273,6 +2300,8 @@ function getMindNoteSignal() {
   const mind = appState.selectedState.mind;
   const feeling = appState.mindNoteFeeling;
   const support = appState.mindNoteSupport;
+  const feelingGood = mind === "รู้สึกดี";
+  const relaxed = mind === "ผ่อนคลาย";
   return {
     mind,
     text: appState.mindNoteText || "",
@@ -2281,6 +2310,9 @@ function getMindNoteSignal() {
     pressured: mind === "กดดัน" || feeling === "pressured",
     doublePressure: mind === "กดดัน" && feeling === "pressured",
     worried: mind === "กังวล" || feeling === "worried",
+    feelingGood,
+    relaxed,
+    positive: feelingGood || relaxed,
     restFirst: support === "rest_first",
     hydrateGently: support === "hydrate_gently"
   };
@@ -2301,6 +2333,9 @@ function getReminderFromSignals(signals) {
   if (signals.drinkLoad.sugarHigh) return t("signalReminder.sugarHigh");
   if (signals.mindNote.restFirst) return t("signalReminder.restFirst");
   if (signals.energySleep.energyCausePattern.hasLayeredSignal) return t("energyCauseReminder.layered");
+  if (signals.mindNote.positive && signals.recoveryLoad.high) return t("signalReminder.positiveMindWithLoad");
+  if (signals.mindNote.positive && (signals.energySleep.sleepLow || signals.energySleep.energyLow)) return t("signalReminder.positiveMindRecovery");
+  if (signals.mindNote.positive) return t("signalReminder.positiveMind");
   if (signals.hydration.steady && signals.recoveryLoad.light) return t("signalReminder.consistency");
   if (signals.energySleep.endorphinBlindSpot) return t("signalReminder.endorphin");
   if (signals.energySleep.energyLow && signals.energySleep.lowResource) return t("signalReminder.resourceLow");
@@ -2342,11 +2377,14 @@ function getReflectionDisplayOverview(signals) {
   const hasRecoveryOnly = isRecoveryOnlyReflection(signals);
 
   if (signals.energySleep.energyCausePattern.hasLayeredSignal) return t("reflectionDisplay.overviewEnergyLayered");
+  if (signals.mindNote.positive && hasActivityLoad) return t("reflectionDisplay.overviewPositiveMindActivity");
   if (hasActivityLoad && hydrationIsBase) return t("reflectionDisplay.overviewActivityHydrated");
   if (hasActivityLoad) return t("reflectionDisplay.overviewActivity");
+  if (signals.mindNote.positive && hasRecoveryOnly) return t("reflectionDisplay.overviewPositiveMindRecovery");
   if (hasRecoveryOnly && hydrationIsBase && signals.mindNote.restFirst) return t("reflectionDisplay.overviewRecoveryHydratedRest");
   if (hasRecoveryOnly && hydrationIsBase) return t("reflectionDisplay.overviewRecoveryHydrated");
   if (hasRecoveryOnly) return t("reflectionDisplay.overviewRecovery");
+  if (signals.mindNote.positive) return t("reflectionDisplay.overviewPositiveMindSupport");
   if (signals.drinkLoad.caffeineHigh) return t("reflectionDisplay.overviewCaffeine");
   if (hydrationIsBase) return t("reflectionDisplay.overviewSteadyHydration");
   return t("reflectionDisplay.overviewBase");
@@ -2366,6 +2404,7 @@ function getReflectionDisplayTomorrow(signals) {
   if (signals.hydration.strongActivityHydration) return t("reflectionDisplay.tomorrowActivity");
   if (isRecoveryOnlyReflection(signals)) return t("reflectionDisplay.tomorrowRecovery");
   if (signals.drinkLoad.caffeineHigh) return t("reflectionDisplay.tomorrowCaffeine");
+  if (signals.mindNote.positive) return t("reflectionDisplay.tomorrowPositiveMind");
   return t("reflectionDisplay.tomorrowSteady");
 }
 
@@ -2413,6 +2452,8 @@ function buildReflectionFromSignals(signals) {
   if (appState.selectedState.energy || appState.selectedState.mind || appState.selectedState.sleep) {
     goodThings.push(t("reflection.checkedState"));
   }
+  const positiveMindNote = getPositiveMindReflectionNote(signals);
+  if (positiveMindNote) goodThings.push(positiveMindNote);
   if (!goodThings.length) goodThings.push(t("reflection.openedPattern"));
 
   if (signals.energySleep.endorphinBlindSpot) {
@@ -2465,6 +2506,12 @@ function getEnergyCauseSummary() {
   return (appState.energyCauses || [])
     .map((cause) => t(`options.energyCauses.${cause}`))
     .join(" / ");
+}
+
+function getPositiveMindReflectionNote(signals = buildSignals()) {
+  if (signals.mindNote.feelingGood) return t("signalReflection.positiveMindFeelingGood");
+  if (signals.mindNote.relaxed) return t("signalReflection.positiveMindRelaxed");
+  return "";
 }
 
 function getEnergyCauseReflectionNote() {
@@ -3040,7 +3087,13 @@ function localizeStateValue(column, value) {
       "有压力": "options.mind.pressured",
       "ฟุ้ง": "options.mind.scattered",
       "Scattered": "options.mind.scattered",
-      "分散": "options.mind.scattered"
+      "分散": "options.mind.scattered",
+      "รู้สึกดี": "options.mind.feeling_good",
+      "Feeling good": "options.mind.feeling_good",
+      "感觉不错": "options.mind.feeling_good",
+      "ผ่อนคลาย": "options.mind.relaxed",
+      "Relaxed": "options.mind.relaxed",
+      "放松": "options.mind.relaxed"
     },
     Sleep: {
       "น้อย": "options.sleep.low",

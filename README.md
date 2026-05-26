@@ -152,6 +152,7 @@ Hydration card เพิ่ม adaptive guidance แบบ display-only เพ�
 ## สิ่งที่แอปทำได้
 
 - เลือก Today State: Energy, Mind, Sleep
+- บันทึก positive mind state เช่น รู้สึกดีหรือผ่อนคลาย เป็น support signal ไม่ใช่คะแนน performance
 - นับปริมาณน้ำเป็น ml พร้อม adaptive guidance ที่เน้นช่วงยืดหยุ่นตาม load ของวัน ไม่ใช่การดื่มให้เยอะที่สุด
 - เลือกเครื่องดื่มของวัน และดู reminder เรื่องเครื่องดื่มหวาน/กาแฟแบบไม่กดดัน
 - เพิ่ม Drink Profile แบบพอดี เพื่อดู sugar/caffeine/milk/hydration support

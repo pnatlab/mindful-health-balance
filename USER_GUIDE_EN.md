@@ -89,12 +89,14 @@ Switching views does not reset current inputs and does not delete saved Daily Lo
 Choose the current state as honestly and simply as possible:
 
 - Energy: Low / Medium / Good
-- Overall Mind Today: Neutral / Worried / Pressured / Scattered
+- Overall Mind Today: Neutral / Worried / Pressured / Scattered / Feeling good / Relaxed
 - Sleep: Low / Okay / Good
 
 This gives the day context. For example, a low-sleep day or a scattered-mind day should not be used to judge the whole picture.
 
 The small blue heart beside `Overall Mind Today` marks the main mind observation for the day. `Feeling of This Note` in Mind Note is the feeling of that specific note, not a judgment of the whole day.
+
+`Feeling good` and `Relaxed` let the dataset capture days where the mind is a support signal, not only days with pressure or worry. The app treats these as supportive context, not a performance score and not proof that the whole day is fine. They should still be read together with hydration, sleep, load, energy, and Mind Note.
 
 On the Today page, this card includes a small sun or moon visual based on the browser's local time. It is only a gentle energy-rhythm cue and does not affect saved data or processing.
 
