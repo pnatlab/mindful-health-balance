@@ -246,6 +246,15 @@ const translations = {
         light_mind: "วันนี้ใจดูเบากว่าปกติ พลังงานจึงอาจไม่ถูกดึงไปกับแรงกดดันมากนัก"
       }
     },
+    drinkSweetnessInsight: {
+      low: "วันนี้เครื่องดื่มไม่เพิ่มภาระหวานมากนัก น้ำเปล่ายังเป็นฐานที่ดีของวัน",
+      moderate: "วันนี้มีความหวานบ้าง แต่ไม่จำเป็นต้องตีความเป็นความผิด แค่ให้แก้วถัดไปกลับมาง่ายขึ้น เช่น น้ำเปล่าหรือพัก",
+      sodaLow: "วันนี้มีน้ำอัดลม แต่ระดับความหวานไม่ได้สูงมาก ระบบจึงอ่านเป็น drink context มากกว่าภาระหวาน",
+      sodaHigh: "วันนี้น้ำอัดลมมีความหวานเป็นส่วนหนึ่งของ drink load แต่ไม่ต้องดุแก้วนั้น แค่ให้แก้วถัดไปกลับมาที่น้ำเปล่าหรือพักก็พอ",
+      sweetCaffeine: "วันนี้เครื่องดื่มให้ทั้งความตื่นและความหวาน ระบบอาจชวนให้น้ำเปล่ากลับมาเป็นฐาน โดยไม่ต้องดุเครื่องดื่มก่อนหน้า",
+      sweetLowRecovery: "ถ้าวันนี้นอนน้อยหรือพลังงานต่ำ ความหวานอาจเป็นตัวช่วยพยุงช่วงสั้น ๆ ได้ แต่ recovery และน้ำยังควรมีพื้นที่ตามมา",
+      sweetHighLoad: "ถ้าวันนี้มี load หรือกิจกรรมมาก ความหวานอาจเป็นส่วนหนึ่งของพลังงานระหว่างวัน แต่หลังจากนั้นน้ำและ recovery ควรเดินตามให้ทัน"
+    },
     signalReminder: {
       sleepLoadRecovery: "วันนี้ recovery ควรมาก่อนการเพิ่ม performance อีกนิดนะพี่",
       hydrationCaffeine: "วันนี้ระบบชวนกลับมาดูน้ำและการพักก่อนให้กาแฟนำจังหวะทั้งวัน",
@@ -352,6 +361,7 @@ const translations = {
         cocoa: "โกโก้",
         coconutWater: "น้ำมะพร้าว",
         juice: "น้ำผลไม้",
+        soda: "น้ำอัดลม",
         sweetDrink: "น้ำชมพู/เครื่องดื่มหวาน",
         lemonWater: "น้ำมะนาว",
         unsweetLime: "น้ำมะนาวไม่หวาน",
@@ -641,6 +651,15 @@ const translations = {
         light_mind: "Today the mind seems lighter, so energy may not be pulled as much by pressure."
       }
     },
+    drinkSweetnessInsight: {
+      low: "Today’s drinks did not add much sweetness load, and plain water remained a good base.",
+      moderate: "There was some sweetness today, but it does not need to become guilt. The next drink can simply return to water or rest.",
+      sodaLow: "There was soda today, but the sweetness level was not high, so the system reads it more as drink context than a sweetness load.",
+      sodaHigh: "Today’s soda added sweetness load, but it does not need to be judged. The next drink can simply return to plain water or rest.",
+      sweetCaffeine: "Today’s drinks offered both alertness and sweetness. The system may invite plain water back as the base without judging the earlier drinks.",
+      sweetLowRecovery: "If sleep or energy was low, sweetness may have helped in the short term, while recovery and water still deserve space afterward.",
+      sweetHighLoad: "If today included higher load or activity, sweetness may be part of the day’s energy, while water and recovery can follow afterward."
+    },
     signalReminder: {
       sleepLoadRecovery: "Recovery may need to come before adding more performance today.",
       hydrationCaffeine: "Today may need steadier hydration and rest before caffeine leads the rhythm.",
@@ -747,6 +766,7 @@ const translations = {
         cocoa: "Cocoa",
         coconutWater: "Coconut water",
         juice: "Juice",
+        soda: "Soda / Soft drink",
         sweetDrink: "Pink milk / sweet drink",
         lemonWater: "Lemon water",
         unsweetLime: "Unsweetened lime water",
@@ -1036,6 +1056,15 @@ const translations = {
         light_mind: "今天心里看起来比较轻，能量也许没有被压力拉走太多。"
       }
     },
+    drinkSweetnessInsight: {
+      low: "今天的饮品没有增加太多甜度负担，白水仍然是很好的基础。",
+      moderate: "今天有一些甜度，但不需要变成内疚。下一杯可以简单回到白水或休息。",
+      sodaLow: "今天有汽水，但甜度不高，所以系统更把它看作饮品背景，而不是甜度负担。",
+      sodaHigh: "今天的汽水带来了一些甜度负担，但不需要责备那一杯。下一杯回到白水或休息就好。",
+      sweetCaffeine: "今天的饮品同时带来清醒感和甜度。系统可以温和提醒让白水回到基础，而不评价前面的饮品。",
+      sweetLowRecovery: "如果今天睡少或能量低，甜度可能短时间帮忙支撑，但之后 recovery 和白水仍然值得有空间。",
+      sweetHighLoad: "如果今天有较高 load 或活动，甜度可能是当天能量的一部分，之后让水和 recovery 跟上就好。"
+    },
     signalReminder: {
       sleepLoadRecovery: "今天 recovery 可以先于继续增加 performance。",
       hydrationCaffeine: "今天可以先让补水和休息稳定一点，不让咖啡带走整天的节奏。",
@@ -1142,6 +1171,7 @@ const translations = {
         cocoa: "可可",
         coconutWater: "椰子水",
         juice: "果汁",
+        soda: "汽水",
         sweetDrink: "粉红奶/甜饮",
         lemonWater: "柠檬水",
         unsweetLime: "无糖柠檬水",
@@ -1225,6 +1255,7 @@ const drinkOptions = [
   { key: "cocoa", type: "cocoa", label: "โกโก้", sweet: true, hydration: false, defaultSweetness: "normal", defaultCaffeine: "low", defaultMilk: "yes" },
   { key: "coconutWater", type: "coconut_water", label: "น้ำมะพร้าว", sweet: false, hydration: true, defaultSweetness: "low", defaultCaffeine: "none", defaultMilk: "no" },
   { key: "juice", type: "juice", label: "น้ำผลไม้", sweet: true, hydration: false, defaultSweetness: "normal", defaultCaffeine: "none", defaultMilk: "no" },
+  { key: "soda", type: "soda", label: "น้ำอัดลม", sweet: false, hydration: false, defaultSweetness: "none", defaultCaffeine: "none", defaultMilk: "no" },
   { key: "sweetDrink", type: "sweet_drink", label: "น้ำชมพู/เครื่องดื่มหวาน", sweet: true, hydration: false, defaultSweetness: "high", defaultCaffeine: "none", defaultMilk: "no" },
   { key: "lemonWater", type: "lemon_water", label: "น้ำมะนาว", sweet: false, hydration: true, defaultSweetness: "none", defaultCaffeine: "none", defaultMilk: "no" },
   { key: "unsweetLime", type: "lemon_water", label: "น้ำมะนาวไม่หวาน", sweet: false, hydration: true, defaultSweetness: "none", defaultCaffeine: "none", defaultMilk: "no" },
@@ -1915,6 +1946,68 @@ function getDrinkScores(profiles = appState.drinkProfiles || []) {
   });
 }
 
+function getDrinkSweetnessInsight({
+  profiles = appState.drinkProfiles || [],
+  scores = getDrinkScores(profiles),
+  waterMl = appState.waterMl || 0,
+  energy = appState.selectedState.energy,
+  sleep = appState.selectedState.sleep,
+  loadScore = calculateLoadScore(),
+  loadTypes = getSelectedLoadTypes(appState.activities || [])
+} = {}) {
+  const normalizedProfiles = profiles.map(normalizeDrinkProfile);
+  const hasDrinks = normalizedProfiles.length > 0;
+  const sodaProfiles = normalizedProfiles.filter((profile) => profile.type === "soda");
+  const hasSoda = sodaProfiles.length > 0;
+  const hasHighSweetness = normalizedProfiles.some((profile) => profile.sweetness === "high") || scores.sugarScore >= 5;
+  const hasModerateSweetness = !hasHighSweetness && (scores.sugarScore >= 2 || scores.sweetDrinksCount > 0);
+  const sodaHighSweetness = sodaProfiles.some((profile) => profile.sweetness === "high");
+  const sodaLowSweetness = hasSoda && sodaProfiles.every((profile) => ["none", "low"].includes(profile.sweetness));
+  const hasCaffeineSignal = scores.caffeineScore >= 2 || normalizedProfiles.some((profile) => ["medium", "high"].includes(profile.caffeine));
+  const hasRecoverySignal = sleep === "น้อย" || energy === "ต่ำ";
+  const highLoadTypes = [
+    "sport_intensity_load",
+    "outdoor_heat_load",
+    "physical_load",
+    "service_standing_load",
+    "clinical_focus"
+  ];
+  const hasHighLoadSignal = loadScore >= 6 || loadTypes.some((type) => highLoadTypes.includes(type));
+  let key = "low";
+
+  if (hasHighSweetness && hasCaffeineSignal) {
+    key = "sweetCaffeine";
+  } else if (hasHighSweetness && hasRecoverySignal) {
+    key = "sweetLowRecovery";
+  } else if (hasHighSweetness && hasHighLoadSignal) {
+    key = "sweetHighLoad";
+  } else if (sodaHighSweetness) {
+    key = "sodaHigh";
+  } else if (sodaLowSweetness) {
+    key = "sodaLow";
+  } else if (hasModerateSweetness) {
+    key = "moderate";
+  }
+
+  const highContextKeys = ["sodaHigh", "sweetCaffeine", "sweetLowRecovery", "sweetHighLoad"];
+
+  return {
+    key,
+    text: t(`drinkSweetnessInsight.${key}`),
+    hasDrinks,
+    hasSoda,
+    hasHighSweetness,
+    hasModerateSweetness,
+    hasCaffeineSignal,
+    hasRecoverySignal,
+    hasHighLoadSignal,
+    waterIsBase: waterMl >= 1500,
+    previewRelevant: highContextKeys.includes(key),
+    reminderRelevant: highContextKeys.includes(key),
+    detailRelevant: hasDrinks && key !== "low"
+  };
+}
+
 function getCaffeineCupCount(profiles = appState.drinkProfiles || []) {
   return profiles
     .filter((profile) => caffeineOptions.includes(profile?.caffeine) && profile.caffeine !== "none")
@@ -2086,6 +2179,10 @@ function countSweetDrinks() {
 function getDrinksFeedback() {
   const scores = getDrinkScores();
   if (!(appState.drinkProfiles || []).length) return t("drinksFeedback.noExtraDrinks");
+  const sweetnessInsight = getDrinkSweetnessInsight({ profiles: appState.drinkProfiles, scores });
+  if (["moderate", "sodaLow", "sodaHigh", "sweetCaffeine", "sweetLowRecovery", "sweetHighLoad"].includes(sweetnessInsight.key)) {
+    return sweetnessInsight.text;
+  }
   if (scores.sugarScore >= 5) return t("drinksFeedback.sugarHigh");
   if (scores.caffeineScore >= 5) return t("drinksFeedback.caffeineHigh");
   if (scores.sugarScore <= 1 && appState.waterMl >= 1500) return t("drinksFeedback.lightAndHydrated");
@@ -2154,6 +2251,7 @@ function getHydrationSignal() {
 
 function getDrinkLoadSignal(scores = getDrinkScores()) {
   const profiles = appState.drinkProfiles || [];
+  const sweetnessInsight = getDrinkSweetnessInsight({ profiles, scores });
   return {
     profiles,
     sugarScore: scores.sugarScore,
@@ -2165,6 +2263,7 @@ function getDrinkLoadSignal(scores = getDrinkScores()) {
     sugarHigh: scores.sugarScore >= 5,
     caffeineHigh: scores.caffeineScore >= 5,
     hasCaffeine: scores.caffeineScore > 0,
+    sweetnessInsight,
     light: profiles.length === 0 || (scores.sugarScore <= 1 && scores.caffeineScore <= 1)
   };
 }
@@ -2325,6 +2424,7 @@ function getMindfulReminder() {
 function getReminderFromSignals(signals) {
   if (signals.energySleep.endorphinBlindSpot && signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("signalReminder.endorphin");
   if (signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("signalReminder.sleepLoadRecovery");
+  if (signals.drinkLoad.sweetnessInsight.reminderRelevant) return signals.drinkLoad.sweetnessInsight.text;
   if (signals.hydration.low && signals.drinkLoad.caffeineHigh) return t("signalReminder.hydrationCaffeine");
   if (signals.hydration.belowAdaptiveRange) return t("signalReminder.hydrationLoad");
   if (signals.hydration.recoveryOnlyHydration && (signals.hydration.low || signals.hydration.rising)) return t("signalReminder.hydrationRecovery");
@@ -2392,6 +2492,7 @@ function getReflectionDisplayOverview(signals) {
 
 function getReflectionDisplayAdjustment(signals) {
   if (signals.energySleep.energyCausePattern.hasLayeredSignal) return t("reflectionDisplay.adjustEnergyLayered");
+  if (signals.drinkLoad.sweetnessInsight.previewRelevant) return signals.drinkLoad.sweetnessInsight.text;
   if (signals.hydration.strongActivityHydration) return t("reflectionDisplay.adjustActivity");
   if (isRecoveryOnlyReflection(signals)) return t("reflectionDisplay.adjustRecovery");
   if (signals.drinkLoad.caffeineHigh) return t("reflectionDisplay.adjustCaffeine");
@@ -2441,6 +2542,7 @@ function buildReflectionFromSignals(signals) {
   const goodThings = [];
   const adjustments = [];
   const loadTypeAdjustments = getLoadTypeReflections(signals, { limit: 2 });
+  const sweetnessInsight = signals.drinkLoad.sweetnessInsight;
 
   if (signals.hydration.steady && signals.recoveryLoad.light) {
     goodThings.push(t("signalReflection.goodConsistency"));
@@ -2454,6 +2556,9 @@ function buildReflectionFromSignals(signals) {
   }
   const positiveMindNote = getPositiveMindReflectionNote(signals);
   if (positiveMindNote) goodThings.push(positiveMindNote);
+  if (sweetnessInsight.hasDrinks && sweetnessInsight.key === "low") {
+    goodThings.push(sweetnessInsight.text);
+  }
   if (!goodThings.length) goodThings.push(t("reflection.openedPattern"));
 
   if (signals.energySleep.endorphinBlindSpot) {
@@ -2470,6 +2575,8 @@ function buildReflectionFromSignals(signals) {
     adjustments.push(t("signalReflection.pressure"));
   } else if (signals.energySleep.energyLow && signals.energySleep.lowResource) {
     adjustments.push(t("signalReflection.resourceLow"));
+  } else if (sweetnessInsight.detailRelevant) {
+    adjustments.push(sweetnessInsight.text);
   } else if (signals.drinkLoad.sugarHigh) {
     adjustments.push(t("drinkReflection.sugar"));
   } else if (signals.drinkLoad.caffeineHigh) {
@@ -2482,6 +2589,9 @@ function buildReflectionFromSignals(signals) {
   loadTypeAdjustments.forEach((note) => {
     if (!adjustments.includes(note)) adjustments.push(note);
   });
+  if (sweetnessInsight.detailRelevant && !adjustments.includes(sweetnessInsight.text)) {
+    adjustments.push(sweetnessInsight.text);
+  }
   if (!adjustments.length) adjustments.push(t("reflection.keepBalance"));
 
   const energyCauseNote = getEnergyCauseReflectionNote();
@@ -2837,6 +2947,9 @@ function buildFieldReview(rows = []) {
     : 0;
   const mindStates = cleanRows.map((row) => row.Mind).filter(Boolean);
   const supportNeeds = cleanRows.map((row) => row.Mind_Note_Support).filter(Boolean);
+  const sweetDrinkDays = cleanRows.filter(rowHasSweetDrinkLoad).length;
+  const highSugarDays = cleanRows.filter(rowHasHighSugarLoad).length;
+  const sodaDays = cleanRows.filter(rowHasSodaDrink).length;
 
   return {
     Review_Period_Start: cleanRows[0]?.Date || "",
@@ -2852,9 +2965,13 @@ function buildFieldReview(rows = []) {
     Days_With_Mind_Note: cleanRows.filter((row) => String(row.Mind_Note_Text || "").trim()).length,
     Days_With_Reflection: cleanRows.filter((row) => String(row.Reflection_Text || "").trim()).length,
     Days_With_Caffeine: cleanRows.filter((row) => Number(row.Caffeine_Score) > 0).length,
+    Days_With_Sweet_Drinks: sweetDrinkDays,
+    High_Sugar_Days: highSugarDays,
+    Soda_Days: sodaDays,
     Days_With_Sport_or_Run: cleanRows.filter((row) => rowHasActivityGroup(row, "sports")).length,
     Days_With_Deep_Work: cleanRows.filter(rowHasDeepWork).length,
     Gentle_Observation: getFieldReviewObservation(cleanRows),
+    Drink_Load_Observation: getDrinkLoadObservation(cleanRows, { sweetDrinkDays, highSugarDays, sodaDays }),
     Non_Diagnostic_Note: "Descriptive self-care summary only. Not medical advice, not diagnosis, and not a replacement for professional care."
   };
 }
@@ -2895,6 +3012,33 @@ function rowHasDeepWork(row) {
     .some((activity) => activity.key === "deepWork");
 }
 
+function rowHasSweetDrinkLoad(row) {
+  return Number(row.Sweet_Drinks_Count) > 0 || Number(row.Sugar_Score) >= 2 || parseDrinkProfilesFromRow(row)
+    .some((profile) => ["normal", "high"].includes(profile.sweetness));
+}
+
+function rowHasHighSugarLoad(row) {
+  return Number(row.Sugar_Score) >= 5 || parseDrinkProfilesFromRow(row)
+    .some((profile) => profile.sweetness === "high");
+}
+
+function rowHasSodaDrink(row) {
+  return parseDrinkProfilesFromRow(row).some((profile) => profile.type === "soda")
+    || splitLogValues(row.Drinks).some((drink) => {
+      const option = getDrinkMetaByLegacyLabel(drink);
+      return option?.type === "soda";
+    });
+}
+
+function parseDrinkProfilesFromRow(row) {
+  try {
+    const parsed = JSON.parse(row.Drink_Profile_JSON || "[]");
+    return Array.isArray(parsed) ? parsed.map(normalizeDrinkProfile) : [];
+  } catch {
+    return [];
+  }
+}
+
 function splitLogValues(value) {
   return String(value || "")
     .split("|")
@@ -2912,6 +3056,26 @@ function getFieldReviewObservation(rows = []) {
   }
 
   return "This is a lightweight descriptive review across available entries. Look for relationships gently, without diagnosis or moral judgment.";
+}
+
+function getDrinkLoadObservation(rows = [], { sweetDrinkDays = 0, highSugarDays = 0, sodaDays = 0 } = {}) {
+  if (!rows.length) {
+    return "No drink-load pattern is available yet.";
+  }
+
+  if (!sweetDrinkDays && !sodaDays) {
+    return "Sweetness load appears light in the available entries. Keep reading drinks as context, not as a moral score.";
+  }
+
+  if (highSugarDays) {
+    return "Some days include higher sweetness load. Review this gently alongside caffeine, hydration, sleep, load, and recovery.";
+  }
+
+  if (sodaDays) {
+    return "Soda appears in the available entries. Read it by its logged sweetness and caffeine, not as a judgment by category.";
+  }
+
+  return "Some drink sweetness appears in the available entries. Use it as a pattern signal, not as guilt or diet advice.";
 }
 
 function buildMasterSummary(rows) {

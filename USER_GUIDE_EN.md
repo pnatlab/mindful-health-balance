@@ -123,7 +123,7 @@ The system separates activity load from recovery-only signals such as low sleep,
 
 ## 10. Drinks / Drink Profile
 
-Drink Profile is for drinks other than plain water, such as coffee, tea, cocoa, sweet drinks, or juice. Plain water should be logged in the Hydration card so it does not need to be entered twice.
+Drink Profile is for drinks other than plain water, such as coffee, tea, cocoa, sweet drinks, juice, or soda / soft drinks. Plain water should be logged in the Hydration card so it does not need to be entered twice.
 
 Add drinks only as needed. Each drink can include:
 
@@ -138,6 +138,8 @@ Click `Add Drink` to add the drink to today’s list, or `Clear Drinks` to start
 The app calculates Sugar Score, Caffeine Score, Milk Drink Count, and Hydration Support Count to help reveal patterns gently. A simple rule of thumb remains: a sweet drink behaves more like a sweet treat than like plain water.
 
 If sugar or caffeine is high on a given day, the point is not guilt. The point is to notice the pattern and adjust the next drink or return to water and rest.
+
+Soda / soft drink is only a Drink Type. It does not mean the drink must be sweet, because zero-sugar or low-sugar options can exist. The app reads the Sweetness field first, so soda with low sweetness is treated as drink context, while soda with high sweetness is treated as a gentle drink-load signal, not diet advice, medical advice, or a judgment.
 
 ## 11. Load & Recovery
 
@@ -259,7 +261,7 @@ Use this file as a master backup or open it in Excel when you want to review a l
 
 Starting in v1.9, `Field_Context` explains that the workbook is a local-first self-care log owned by the user. If the user chooses to share it with an AI/LLM, the AI should read it for pattern reflection only, not for diagnosis or medical advice.
 
-`Field_Review` is a lightweight descriptive summary of available entries, such as review period, average water, high-load days, common mind/support patterns, and days with Mind Note or Reflection. It is for gentle pattern reflection, not disease diagnosis or health-risk prediction.
+`Field_Review` is a lightweight descriptive summary of available entries, such as review period, average water, high-load days, common mind/support patterns, drink-load summary, and days with Mind Note or Reflection. It is for gentle pattern reflection, not disease diagnosis or health-risk prediction.
 
 ### Import Master Excel
 

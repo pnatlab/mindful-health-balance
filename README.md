@@ -70,6 +70,8 @@ Hydration card ใช้บันทึกน้ำเปล่าและป�
 
 เพื่อรักษา backward compatibility แอปยังรู้จักค่า `water` ใน log/import เดิมได้ แต่ UI ใหม่จะไม่แสดง `water` เป็นตัวเลือก Drink Type ใหม่ และ `Hydration_Support_Count` จะนับเฉพาะเครื่องดื่มที่ช่วย hydration แบบอ่อน ๆ เช่น lemon water หรือ coconut water เท่านั้น
 
+v1.9.x เพิ่ม `น้ำอัดลม` เป็น Drink Type และปรับ Drink Sweetness Insight ให้ Sweetness / Sugar Score เป็น drink-load signal สำหรับ reflection แบบนุ่ม ๆ ไม่ใช่ moral score, diet advice หรือ medical advice น้ำอัดลมเป็นเพียงหมวดเครื่องดื่ม ระบบอ่านความหวานจากช่อง Sweetness เป็นหลัก จึงรองรับทั้ง zero/low sugar และหวานมากโดยไม่ตัดสินจาก category เพียงอย่างเดียว
+
 ข้อมูล Daily Log และ Master Excel เพิ่ม columns:
 
 - `Drink_Profile_JSON`
@@ -126,7 +128,7 @@ v1.9 เพิ่ม AI-readable Excel context และ lightweight `Field_Revi
 Excel export ยังรักษา sheet เดิม (`Daily_Log`, `Summary`, `Reflections`) และเพิ่ม:
 
 - `Field_Context` สำหรับอธิบายเจตนาของไฟล์, data ownership, local-first boundary, AI reading boundary และ non-medical note
-- `Field_Review` สำหรับสรุป descriptive pattern เบา ๆ จากข้อมูลที่มี เช่น ช่วงวันที่, ค่าเฉลี่ยน้ำ, high load days, mind/support ที่พบบ่อย และจำนวนวันที่มี note/reflection
+- `Field_Review` สำหรับสรุป descriptive pattern เบา ๆ จากข้อมูลที่มี เช่น ช่วงวันที่, ค่าเฉลี่ยน้ำ, high load days, mind/support ที่พบบ่อย, drink-load summary และจำนวนวันที่มี note/reflection
 
 `Field_Review` เป็น summary เพื่อ pattern reflection เท่านั้น ไม่ใช่ diagnosis, medical advice, therapy interpretation หรือ health-risk prediction ผู้ใช้ยังเป็นเจ้าของไฟล์และเลือกเองว่าจะ export, เก็บ, review หรือ share ให้ AI อ่านเมื่อไหร่
 
@@ -155,7 +157,7 @@ Hydration card เพิ่ม adaptive guidance แบบ display-only เพ�
 - บันทึก positive mind state เช่น รู้สึกดีหรือผ่อนคลาย เป็น support signal ไม่ใช่คะแนน performance
 - นับปริมาณน้ำเป็น ml พร้อม adaptive guidance ที่เน้นช่วงยืดหยุ่นตาม load ของวัน ไม่ใช่การดื่มให้เยอะที่สุด
 - เลือกเครื่องดื่มของวัน และดู reminder เรื่องเครื่องดื่มหวาน/กาแฟแบบไม่กดดัน
-- เพิ่ม Drink Profile แบบพอดี เพื่อดู sugar/caffeine/milk/hydration support
+- เพิ่ม Drink Profile แบบพอดี เพื่อดู sugar/caffeine/milk/hydration support รวมถึงน้ำอัดลมและ sweetness context โดยไม่ตัดสินเครื่องดื่ม
 - เลือก Energy Cause แบบ optional เพื่อช่วยตีความพลังงานของวัน รวมทั้งเหตุที่ทำให้พลังงานลดลงและเหตุที่ช่วยพยุงพลังงาน เช่น นอนพอหรือใจเบา
 - สะท้อน Energy Cause แบบ layered signal เมื่อ Energy level กับเหตุของพลังงานดูสวนกัน โดยไม่ถือว่าเป็นข้อมูลผิด
 - เลือกกิจกรรมเพื่อคำนวณ Load Score และ Load Level
