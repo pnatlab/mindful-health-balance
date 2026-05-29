@@ -104,7 +104,7 @@ v1.7 จัดหน้าแอปใหม่เป็น Minimal Layered UI �
 หลังผ่าน Welcome แล้ว แอปแบ่งเป็น 3 view:
 
 - `Today` สำหรับกรอกข้อมูลวันนี้ เช่น Today State, Hydration, Drink Profile, Load & Recovery, Mind Note และ Reset Current Form
-- `Reflection` สำหรับดู Mindful Reminder, generate/review/edit End-of-Day Reflection และ Save to Daily Log
+- `Reflection` สำหรับดู NuTuenSai reminder strip, generate/review/edit End-of-Day Reflection และ Save to Daily Log
 - `Log` สำหรับดู Daily Log Table, Export Master Excel, Import Master Excel และ Clear Daily Log
 
 การเปลี่ยน view เปลี่ยนเฉพาะ layout การแสดงผล ไม่เปลี่ยน data schema, canonical value, Save / Export / Import logic หรือ NuTuenSai Reflection Processing Layer

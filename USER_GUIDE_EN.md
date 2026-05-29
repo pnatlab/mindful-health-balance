@@ -79,7 +79,7 @@ If you choose Light or Dark manually, that choice stays active until you switch 
 After the Welcome Glass, the app is organized into three views:
 
 - `Today` for current-day input: Energy, Mind, Sleep, Hydration, Drink Profile, Load & Recovery, Mind Note, and Reset Current Form
-- `Reflection/NuTuenSai` for the NuTuenSai note, generated reflection preview/editing, and Save to Daily Log
+- `Reflection/NuTuenSai` for the compact NuTuenSai note strip, generated reflection preview/editing, and Save to Daily Log
 - `Log` for the Daily Log Table, Export Master Excel, Import Master Excel, and Clear Daily Log
 
 Switching views does not reset current inputs and does not delete saved Daily Logs.
@@ -206,7 +206,7 @@ Use it lightly:
 
 ## 15. Reflection Generator
 
-Click `Generate End-of-Day Reflection` to create a NuTuenSai-style reflection for the day.
+Click `Reflect` to create a NuTuenSai-style reflection for the day.
 
 The reflection includes:
 
@@ -215,9 +215,13 @@ The reflection includes:
 - A short Tomorrow Focus
 - A compact Mind Note line when available
 
-The preview intentionally shows a synthesis instead of every detected field. This keeps it distinct from the NuTuenSai note card and avoids a raw data dump. Details such as Recovery Note, Hydration Note, NuTuenSai Reminder, Mind Note, and Tomorrow Focus still remain in Daily Log / Reflections / Excel.
+The preview intentionally shows a synthesis instead of every detected field. This keeps it distinct from the NuTuenSai note strip above it and avoids a raw data dump. Details such as Recovery Note, Hydration Note, NuTuenSai Reminder, Mind Note, and Tomorrow Focus still remain in Daily Log / Reflections / Excel.
 
 If you want to adjust the stored detail, use the small edit action to view and edit the stored reflection before saving.
+
+After a reflection exists, the main button changes to `Reflect Again`, and `Clear Reflection` clears only the current preview. It does not delete Today Input, Daily Log rows, or saved data.
+
+Newly generated reflections end with one blue heart, `🩵`, as a light NuTuenSai signature. It is not a score or assessment.
 
 ## 16. Save To Daily Log
 

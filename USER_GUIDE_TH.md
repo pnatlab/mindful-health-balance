@@ -65,7 +65,7 @@ TH | EN | 中文
 หลังผ่านหน้ากระจกต้อนรับ แอปจะแบ่งเป็น 3 view:
 
 - `วันนี้` สำหรับกรอกข้อมูลวันนี้ เช่น Energy, Mind, Sleep, น้ำ, Drink Profile, Load & Recovery, Mind Note และเคลียร์หน้าปัจจุบัน
-- `Reflection` สำหรับดู NuTuenSai note, generate/review/edit reflection และ Save to Daily Log
+- `Reflection` สำหรับดู NuTuenSai note แบบแถบสั้น ๆ, generate/review/edit reflection และ Save to Daily Log
 - `Log` สำหรับดู Daily Log Table, Export Master Excel, Import Master Excel และ Clear Daily Log
 
 การเปลี่ยน view ไม่ลบข้อมูลที่กรอกอยู่ และไม่ลบ Daily Log เดิม
@@ -182,16 +182,20 @@ Mind Note เป็นช่องบันทึกใจแบบบาง ๆ
 
 ### Reflection Generator
 
-กด `Generate End-of-Day Reflection` เพื่อให้ระบบสรุปวันนั้นในโทน NuTuenSai:
+กด `สรุปวันนี้` เพื่อให้ระบบสรุปวันนั้นในโทน NuTuenSai:
 
 - ภาพรวมของวันที่ระบบเห็น
 - สิ่งที่อาจปรับแบบเบา ๆ
 - Tomorrow Focus สั้น ๆ
 - Mind Note แบบ compact ถ้ามีข้อมูล
 
-หน้า preview ตั้งใจแสดง reflection แบบ synthesis ไม่แสดงทุก field ที่ระบบตรวจเจอ เพื่อไม่ให้ซ้ำกับ NuTuenSai note ด้านซ้ายหรือกลายเป็น raw data dump ส่วนรายละเอียด เช่น Recovery Note, Hydration Note, NuTuenSai Reminder, Mind Note และ Tomorrow Focus ยังถูกเก็บใน Daily Log / Reflections / Excel เหมือนเดิม
+หน้า preview ตั้งใจแสดง reflection แบบ synthesis ไม่แสดงทุก field ที่ระบบตรวจเจอ เพื่อไม่ให้ซ้ำกับ NuTuenSai note ด้านบนหรือกลายเป็น raw data dump ส่วนรายละเอียด เช่น Recovery Note, Hydration Note, NuTuenSai Reminder, Mind Note และ Tomorrow Focus ยังถูกเก็บใน Daily Log / Reflections / Excel เหมือนเดิม
 
 ถ้าต้องการแก้รายละเอียดที่บันทึก สามารถกดแก้ไขเล็กน้อยเพื่อดูและปรับข้อความ stored reflection ก่อนบันทึกได้
+
+เมื่อมี reflection แล้ว ปุ่มหลักจะเปลี่ยนเป็น `สรุปใหม่` และมีลิงก์ `ล้าง Reflection` สำหรับล้างเฉพาะ preview ปัจจุบันโดยไม่ลบ Today Input, Daily Log หรือข้อมูลที่บันทึกไว้
+
+Reflection ที่สร้างใหม่จะมีหัวใจฟ้า `🩵` ท้ายข้อความหนึ่งครั้ง เป็นลายเซ็น NuTuenSai แบบเบา ๆ ไม่ใช่คะแนนหรือการประเมิน
 
 ## 4. การบันทึกข้อมูล
 

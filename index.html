@@ -293,7 +293,7 @@
       </div>
 
       <section class="reflection-grid" aria-label="Reflection and save">
-        <article class="glass-card reminder-card">
+        <article class="glass-card reminder-card reminder-strip">
           <div class="reminder-layout">
             <div class="reminder-copy">
               <p class="section-kicker" data-i18n="mindfulReminder">Mindful Reminder</p>
@@ -325,17 +325,20 @@
         <div class="card-heading">
           <div>
             <p class="section-kicker" data-i18n="reflectionGenerator">Reflection Generator</p>
-            <h2 data-i18n="endReflection">End-of-Day Reflection</h2>
-            <p class="section-helper" data-i18n="reflectionGeneratorHelper">ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม</p>
           </div>
         </div>
-        <button type="button" class="primary-button" id="generateReflection" data-i18n="generateReflection">Generate End-of-Day Reflection</button>
         <div class="reflection-preview" id="reflectionPreview" aria-live="polite">
-          <div class="reflection-empty-state" id="reflectionEmptyState">
-            <strong data-i18n="reflectionEmptyTitle">ยังไม่มี Reflection</strong>
-            <span data-i18n="reflectionEmptyText">กด Generate เพื่อให้ระบบสรุปจากข้อมูลวันนี้</span>
+          <div class="reflection-generation-state is-hidden" id="reflectionGenerationState" aria-hidden="true">
+            <span data-i18n="reflectionGenerating">กำลังฟัง pattern ของวันนี้…</span>
           </div>
+          <div class="reflection-empty-state" id="reflectionEmptyState">
+          </div>
+          <p class="reflection-preview-status is-hidden" id="reflectionPreviewStatus" data-i18n="reflectionStateLabel">Reflection</p>
           <pre class="reflection-preview-text" id="reflectionPreviewText"></pre>
+          <div class="reflection-preview-actions">
+            <button type="button" class="primary-button reflection-zen-button" id="generateReflection" data-i18n="reflectToday">สรุปวันนี้</button>
+            <button type="button" class="subtle-link-button is-hidden" id="clearReflection" data-i18n="clearReflection">ล้าง Reflection</button>
+          </div>
         </div>
         <div class="reflection-edit-actions">
           <button type="button" class="subtle-link-button" id="toggleReflectionEdit" data-i18n="editReflection">แก้ไขเล็กน้อย</button>

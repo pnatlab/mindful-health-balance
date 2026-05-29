@@ -44,7 +44,7 @@ const translations = {
     todayViewTitle: "Today Input",
     reflectionViewTitle: "Reflection",
     reflectionViewHelper: "ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม",
-    reflectionGeneratorHelper: "Generate จะสร้าง reflection จากข้อมูลวันนี้ และยังแก้ไขเล็กน้อยก่อนบันทึกได้",
+    reflectionGeneratorHelper: "กดสรุปวันนี้เพื่อให้ระบบสะท้อน pattern จากข้อมูลวันนี้ และยังแก้ไขเล็กน้อยก่อนบันทึกได้",
     reflectionActionsKicker: "Ready to save",
     logViewTitle: "Log & Export",
     logViewHelper: "ดูบันทึกย้อนหลังและจัดการไฟล์ backup ของระบบ",
@@ -109,10 +109,16 @@ const translations = {
     mindfulReminder: "Mindful Reminder",
     nuTuenSaiNote: "NuTuenSai note",
     nuTuenSaiRole: "NuTuenSai เป็นชั้นสะท้อน pattern อย่างอ่อนโยน ไม่ใช่เครื่องมือวินิจฉัยหรือคำแนะนำแทนแพทย์",
+    nuTuenSaiEmptyReminder: "สวัสดีค่ะพี่ วันนี้ยังไม่มีข้อมูลให้หนูอ่านมากนัก ลองกรอก Today Input สักเล็กน้อยก่อน แล้วค่อยกลับมาทบทวนกันนะคะ",
     reflectionGenerator: "Reflection Generator",
     endReflection: "End-of-Day Reflection",
     reflectionEmptyTitle: "ยังไม่มี Reflection",
-    reflectionEmptyText: "กด Generate เพื่อให้ระบบสรุปจากข้อมูลวันนี้",
+    reflectionEmptyText: "กดสรุปวันนี้ เพื่อให้ระบบฟัง pattern ของวันเบา ๆ",
+    reflectionGenerating: "กำลังฟัง pattern ของวันนี้…",
+    reflectionStateLabel: "Reflection",
+    reflectToday: "สรุปวันนี้",
+    reflectAgain: "สรุปใหม่",
+    clearReflection: "ล้าง Reflection",
     editReflection: "แก้ไขเล็กน้อย",
     doneEditingReflection: "เสร็จสิ้นการแก้ไข",
     mindNoteKicker: "Mind Note — วางใจหนึ่งบรรทัด",
@@ -124,7 +130,7 @@ const translations = {
     mindNoteFeelingLabel: "ความรู้สึกของบันทึกนี้",
     mindNoteSupportLabel: "Support Need",
     generateReflection: "Generate End-of-Day Reflection",
-    reflectionPlaceholder: "กด Generate เพื่อสร้าง reflection จากข้อมูลวันนี้",
+    reflectionPlaceholder: "กดสรุปวันนี้ เพื่อสร้าง reflection จากข้อมูลวันนี้",
     localOnly: "Local only",
     dailyLogControls: "Daily Log Controls",
     controlsHelp: "บันทึกเป็นตารางใน browser/localStorage ของเครื่องนี้ แล้ว export เป็น Master Excel เมื่อพี่ต้องการ",
@@ -449,7 +455,7 @@ const translations = {
     todayViewTitle: "Today Input",
     reflectionViewTitle: "Reflection",
     reflectionViewHelper: "Review today’s reflection, then save it to the Daily Log when ready.",
-    reflectionGeneratorHelper: "Generate creates a reflection from today's signals. You can still edit it lightly before saving.",
+    reflectionGeneratorHelper: "Reflect creates a reflection from today's signals. You can still edit it lightly before saving.",
     reflectionActionsKicker: "Ready to save",
     logViewTitle: "Log & Export",
     logViewHelper: "Review saved logs and manage your backup files.",
@@ -514,10 +520,16 @@ const translations = {
     mindfulReminder: "Mindful Reminder",
     nuTuenSaiNote: "NuTuenSai note",
     nuTuenSaiRole: "NuTuenSai is a gentle reflection layer for noticing patterns, not a diagnosis tool or medical advice.",
+    nuTuenSaiEmptyReminder: "Welcome back. There isn’t much for NuTuenSai to read yet today. Add a little Today Input first, then come back for a gentle reflection.",
     reflectionGenerator: "Reflection Generator",
     endReflection: "End-of-Day Reflection",
     reflectionEmptyTitle: "No reflection yet",
-    reflectionEmptyText: "Click Generate to create a reflection from today’s signals.",
+    reflectionEmptyText: "Reflect today to let the system listen to the day’s pattern softly.",
+    reflectionGenerating: "Listening to today’s pattern…",
+    reflectionStateLabel: "Reflection",
+    reflectToday: "Reflect",
+    reflectAgain: "Reflect Again",
+    clearReflection: "Clear Reflection",
     editReflection: "Light edit",
     doneEditingReflection: "Done Editing",
     mindNoteKicker: "Mind Note — one line to set down",
@@ -529,7 +541,7 @@ const translations = {
     mindNoteFeelingLabel: "Feeling of This Note",
     mindNoteSupportLabel: "Support Need",
     generateReflection: "Generate End-of-Day Reflection",
-    reflectionPlaceholder: "Click Generate to create a reflection from today’s signals.",
+    reflectionPlaceholder: "Click Reflect to create a reflection from today’s signals.",
     localOnly: "Local only",
     dailyLogControls: "Daily Log Controls",
     controlsHelp: "Save today into a local browser table, then export a Master Excel file when you need it.",
@@ -854,7 +866,7 @@ const translations = {
     todayViewTitle: "今日输入",
     reflectionViewTitle: "反思",
     reflectionViewHelper: "查看今天的反思内容，准备好后再保存到每日记录。",
-    reflectionGeneratorHelper: "Generate 会根据今天的信号生成反思，保存前仍可轻微编辑。",
+    reflectionGeneratorHelper: "点击回顾会根据今天的信号生成回顾，保存前仍可轻微编辑。",
     reflectionActionsKicker: "准备保存",
     logViewTitle: "记录与导出",
     logViewHelper: "查看已保存的记录，并管理备份文件。",
@@ -919,10 +931,16 @@ const translations = {
     mindfulReminder: "正念提醒",
     nuTuenSaiNote: "NuTuenSai 提醒",
     nuTuenSaiRole: "NuTuenSai 是一个温和的反思层，用来观察模式，并不是诊断工具或医疗建议。",
+    nuTuenSaiEmptyReminder: "欢迎回来。今天还没有太多资料可以阅读，可以先记录一点今日输入，再回来做轻柔的回顾。",
     reflectionGenerator: "反思生成器",
     endReflection: "每日结束反思",
-    reflectionEmptyTitle: "还没有反思内容",
-    reflectionEmptyText: "点击 Generate 根据今天的信号生成反思。",
+    reflectionEmptyTitle: "还没有回顾",
+    reflectionEmptyText: "点击今日回顾，让系统轻轻倾听今天的模式。",
+    reflectionGenerating: "正在倾听今天的模式…",
+    reflectionStateLabel: "回顾",
+    reflectToday: "今日回顾",
+    reflectAgain: "重新回顾",
+    clearReflection: "清除回顾",
     editReflection: "轻微编辑",
     doneEditingReflection: "完成编辑",
     mindNoteKicker: "Mind Note — 轻轻放下一行",
@@ -934,7 +952,7 @@ const translations = {
     mindNoteFeelingLabel: "这条记录的感受",
     mindNoteSupportLabel: "此刻需要的支持",
     generateReflection: "生成每日结束反思",
-    reflectionPlaceholder: "点击 Generate 根据今天的信号生成反思。",
+    reflectionPlaceholder: "点击今日回顾，根据今天的信号生成回顾。",
     localOnly: "仅本机",
     dailyLogControls: "Daily Log 控制",
     controlsHelp: "把今天保存到本机浏览器表格，需要时再导出 Master Excel。",
@@ -1344,6 +1362,10 @@ let themeIntervalId;
 let stateOrbIntervalId;
 let currentView = "today";
 let isEditingReflection = false;
+let isGeneratingReflection = false;
+let reflectionGenerationTimerId;
+const REFLECTION_GENERATION_DELAY_MS = 850;
+const REFLECTION_SIGNATURE = "🩵";
 
 document.addEventListener("DOMContentLoaded", () => {
   applyThemePreference(currentThemePreference);
@@ -1653,11 +1675,8 @@ function bindEvents() {
     syncUI();
   });
 
-  document.querySelector("#generateReflection").addEventListener("click", () => {
-    appState.generatedReflection = buildReflection();
-    isEditingReflection = false;
-    syncUI();
-  });
+  document.querySelector("#generateReflection").addEventListener("click", generateReflectionWithPulse);
+  document.querySelector("#clearReflection").addEventListener("click", clearGeneratedReflection);
 
   document.querySelector("#reflectionOutput").addEventListener("input", (event) => {
     appState.generatedReflection = event.target.value;
@@ -1778,23 +1797,67 @@ function syncUI() {
 function updateReflectionPreview() {
   const reflectionText = appState.generatedReflection || "";
   const hasReflection = reflectionText.trim().length > 0;
+  const preview = document.querySelector("#reflectionPreview");
   const emptyState = document.querySelector("#reflectionEmptyState");
+  const generationState = document.querySelector("#reflectionGenerationState");
   const previewText = document.querySelector("#reflectionPreviewText");
+  const previewStatus = document.querySelector("#reflectionPreviewStatus");
   const textarea = document.querySelector("#reflectionOutput");
   const toggleButton = document.querySelector("#toggleReflectionEdit");
+  const generateButton = document.querySelector("#generateReflection");
+  const clearButton = document.querySelector("#clearReflection");
 
-  if (emptyState) emptyState.classList.toggle("is-hidden", hasReflection);
+  if (preview) {
+    preview.classList.toggle("is-generating", isGeneratingReflection);
+    preview.classList.toggle("is-reflection-empty", !hasReflection && !isGeneratingReflection);
+    preview.classList.toggle("is-reflection-generating", isGeneratingReflection);
+    preview.classList.toggle("has-reflection", hasReflection && !isGeneratingReflection);
+    preview.setAttribute("aria-busy", String(isGeneratingReflection));
+  }
+  if (generationState) {
+    generationState.classList.toggle("is-hidden", !isGeneratingReflection);
+    generationState.setAttribute("aria-hidden", String(!isGeneratingReflection));
+  }
+  if (emptyState) emptyState.classList.toggle("is-hidden", hasReflection || isGeneratingReflection);
+  if (previewStatus) previewStatus.classList.toggle("is-hidden", !hasReflection || isGeneratingReflection);
   if (previewText) {
-    previewText.textContent = buildReflectionDisplay();
-    previewText.classList.toggle("is-hidden", !hasReflection || isEditingReflection);
+    renderReflectionPreviewText(previewText, ensureReflectionSignature(buildReflectionDisplay()));
+    previewText.classList.toggle("is-hidden", !hasReflection || isEditingReflection || isGeneratingReflection);
+    previewText.classList.toggle("is-revealed", hasReflection && !isEditingReflection && !isGeneratingReflection);
   }
   if (textarea) {
-    textarea.classList.toggle("is-hidden", !hasReflection || !isEditingReflection);
+    textarea.value = reflectionText;
+    textarea.classList.toggle("is-hidden", !hasReflection || !isEditingReflection || isGeneratingReflection);
   }
   if (toggleButton) {
-    toggleButton.classList.toggle("is-hidden", !hasReflection);
+    toggleButton.classList.toggle("is-hidden", !hasReflection || isGeneratingReflection);
     toggleButton.textContent = t(isEditingReflection ? "doneEditingReflection" : "editReflection");
   }
+  if (generateButton) {
+    generateButton.disabled = isGeneratingReflection;
+    generateButton.setAttribute("aria-disabled", String(isGeneratingReflection));
+    generateButton.classList.toggle("is-hidden", hasReflection && !isGeneratingReflection);
+    generateButton.textContent = t("reflectToday");
+  }
+  if (clearButton) {
+    clearButton.classList.toggle("is-hidden", !hasReflection || isGeneratingReflection);
+  }
+}
+
+function renderReflectionPreviewText(element, text) {
+  element.textContent = "";
+  const paragraphs = String(text || "").split(/\n{2,}/).map((part) => part.trim()).filter(Boolean);
+  const fragment = document.createDocumentFragment();
+
+  paragraphs.forEach((paragraph, index) => {
+    const line = document.createElement("span");
+    line.className = "reflection-preview-line";
+    line.textContent = paragraph;
+    line.style.setProperty("--reveal-delay", `${Math.min(index * 120, 540)}ms`);
+    fragment.append(line);
+  });
+
+  element.append(fragment);
 }
 
 function updateHydrationVisual() {
@@ -2418,7 +2481,20 @@ function getMindNoteSignal() {
 }
 
 function getMindfulReminder() {
+  if (!hasMeaningfulTodayInput()) return t("nuTuenSaiEmptyReminder");
   return getReminderFromSignals(buildSignals());
+}
+
+function hasMeaningfulTodayInput() {
+  const state = appState.selectedState || {};
+  return (appState.waterMl || 0) > 0
+    || (appState.drinkProfiles || []).length > 0
+    || (appState.drinks || []).length > 0
+    || (appState.activities || []).length > 0
+    || (appState.energyCauses || []).length > 0
+    || Boolean(state.energy || state.mind || state.sleep)
+    || Boolean((appState.mindNoteText || "").trim())
+    || Boolean(appState.mindNoteFeeling || appState.mindNoteSupport);
 }
 
 function getReminderFromSignals(signals) {
@@ -2452,6 +2528,48 @@ function getMindNoteReminder() {
   if (appState.mindNoteFeeling === "worried") return t("mindNoteReminder.worried");
   if (appState.mindNoteSupport === "hydrate_gently") return t("mindNoteReminder.hydrate_gently");
   return "";
+}
+
+function generateReflectionWithPulse() {
+  if (isGeneratingReflection) return;
+
+  if (reflectionGenerationTimerId) {
+    clearTimeout(reflectionGenerationTimerId);
+  }
+
+  appState.generatedReflection = ensureReflectionSignature(buildReflection());
+  isEditingReflection = false;
+  isGeneratingReflection = true;
+  updateReflectionPreview();
+
+  reflectionGenerationTimerId = setTimeout(() => {
+    isGeneratingReflection = false;
+    reflectionGenerationTimerId = null;
+    updateReflectionPreview();
+  }, getReflectionGenerationDelay());
+}
+
+function clearGeneratedReflection() {
+  if (reflectionGenerationTimerId) {
+    clearTimeout(reflectionGenerationTimerId);
+    reflectionGenerationTimerId = null;
+  }
+
+  isGeneratingReflection = false;
+  isEditingReflection = false;
+  appState.generatedReflection = "";
+  updateReflectionPreview();
+}
+
+function ensureReflectionSignature(text) {
+  const trimmed = String(text || "").trimEnd();
+  if (!trimmed) return "";
+  return trimmed.endsWith(REFLECTION_SIGNATURE) ? trimmed : `${trimmed} ${REFLECTION_SIGNATURE}`;
+}
+
+function getReflectionGenerationDelay() {
+  const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  return prefersReducedMotion ? 120 : REFLECTION_GENERATION_DELAY_MS;
 }
 
 function buildReflection() {
@@ -2691,7 +2809,7 @@ function getTomorrowFocus(signals = buildSignals()) {
 }
 
 function buildDailyLogRow() {
-  const reflection = appState.generatedReflection || buildReflection();
+  const reflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
   const tomorrowFocus = getTomorrowFocus();
   const reminder = getMindfulReminder();
   const drinkScores = getDrinkScores();
@@ -2725,9 +2843,7 @@ function buildDailyLogRow() {
 }
 
 function saveToday() {
-  if (!appState.generatedReflection) {
-    appState.generatedReflection = buildReflection();
-  }
+  appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
   localStorage.setItem(storageKey(), JSON.stringify(appState));
   document.querySelector("#saveStatus").textContent = t("saveTodayDone");
   syncUI();
@@ -2799,9 +2915,7 @@ function normalizeExcelDate(value) {
 }
 
 function saveToDailyLog() {
-  if (!appState.generatedReflection) {
-    appState.generatedReflection = buildReflection();
-  }
+  appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
 
   const row = buildDailyLogRow();
   const rows = getDailyLog();
