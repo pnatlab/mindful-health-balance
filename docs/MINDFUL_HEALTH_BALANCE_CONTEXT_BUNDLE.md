@@ -8,14 +8,15 @@ This bundle combines the key design notes for Mindful Health Balance v1.9 and th
 2. [Source: HYDRATION_ADAPTIVE_GUIDANCE.md](#source-hydration-adaptive-guidancemd)
 3. [Source: DRINK_SWEETNESS_INSIGHT.md](#source-drink-sweetness-insightmd)
 4. [Source: MIND_STATE_WORDING_DECISION.md](#source-mind-state-wording-decisionmd)
-5. [Source: MIND_STATE_POSITIVE_OPTIONS.md](#source-mind-state-positive-optionsmd)
-6. [Source: ENERGY_CAUSE_ALIGNMENT.md](#source-energy-cause-alignmentmd)
-7. [Source: REFLECTION_PRESENTATION_DECISION.md](#source-reflection-presentation-decisionmd)
-8. [Source: REFLECTION_PAGE_LAYOUT_DECISION.md](#source-reflection-page-layout-decisionmd)
-9. [Source: REFLECTION_GENERATION_MOMENT.md](#source-reflection-generation-momentmd)
-10. [Source: V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklistmd)
-11. [Source: FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2md)
-12. [Source: NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2md)
+5. [Source: MIND_NOTE_FEELING_OPTIONS.md](#source-mind-note-feeling-optionsmd)
+6. [Source: MIND_STATE_POSITIVE_OPTIONS.md](#source-mind-state-positive-optionsmd)
+7. [Source: ENERGY_CAUSE_ALIGNMENT.md](#source-energy-cause-alignmentmd)
+8. [Source: REFLECTION_PRESENTATION_DECISION.md](#source-reflection-presentation-decisionmd)
+9. [Source: REFLECTION_PAGE_LAYOUT_DECISION.md](#source-reflection-page-layout-decisionmd)
+10. [Source: REFLECTION_GENERATION_MOMENT.md](#source-reflection-generation-momentmd)
+11. [Source: V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklistmd)
+12. [Source: FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2md)
+13. [Source: NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2md)
 
 ---
 
@@ -359,6 +360,60 @@ This note records a display-wording decision only. It does not change canonical 
 - English display wording uses `Neutral` instead of `Calm`.
 - Chinese display wording uses `一般` instead of `平静`.
 - Older display words such as `นิ่ง`, `Calm`, and `平静` remain accepted as aliases when old saved or imported values are localized.
+
+---
+
+# Source: MIND_NOTE_FEELING_OPTIONS.md
+
+# Mind Note Feeling Options
+
+## Purpose
+
+This note records the addition of `uneasy` as a Mind Note Feeling option.
+
+Mind Note Feeling describes the feeling tone of one specific Mind Note. It is not the same as the overall mind state of the whole day.
+
+## Added Option
+
+- TH: `ไม่สบายใจ`
+- EN: `Uneasy`
+- ZH: `心里不舒服`
+- Canonical value: `uneasy`
+
+`uneasy` means the note carries something stuck, uncomfortable, unsettled, or not fully clear. It does not have to mean anxiety, pressure, fatigue, or any medical/therapy category.
+
+## Data Boundary
+
+This option uses the existing Mind Note Feeling field:
+
+- No new input section
+- No new localStorage key
+- No new Daily_Log column
+- No Excel schema change
+- No import/export behavior change
+
+Saved rows continue to use the existing `Mind_Note_Feeling` column.
+
+## Reflection Wording
+
+When Mind Note Feeling is `uneasy`, NuTuenSai-style wording may gently say that the note carries uneasiness and can be placed down slowly.
+
+Preferred tone:
+
+- notice the feeling without diagnosing it
+- treat it as a note-level feeling tone
+- do not imply the user must fix it immediately
+- do not use medical, therapy-heavy, guilt, or fear wording
+
+Example:
+
+```text
+This note carries some uneasiness. The system can treat it as something to gently place down, not something that must be fixed immediately.
+```
+
+## Guardrail Sentence
+
+`Uneasy` should make Mind Note Feeling easier to record when something feels unsettled, without turning the note into a diagnosis, therapy interpretation, or pressure to fix the feeling right away.
 
 ---
 

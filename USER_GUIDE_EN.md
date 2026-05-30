@@ -199,7 +199,7 @@ Mind Note is a small space for one line of inner context. It is not a therapy to
 Use it lightly:
 
 - Write one short line about what your mind is holding today
-- Choose `Feeling of This Note`, such as neutral, worried, pressured, tired, scattered, or grateful
+- Choose `Feeling of This Note`, such as neutral, worried, uneasy, pressured, tired, scattered, or grateful
 - Choose a support need, such as rest first, see the pattern, reduce pressure, hydrate gently, or leave it for now
 - Keep it short if that feels right
 - Use it to notice patterns between mind state, hydration, load, recovery, and sleep

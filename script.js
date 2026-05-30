@@ -289,6 +289,7 @@ const translations = {
       positiveMindFeelingGood: "วันนี้ใจโดยรวมดูมีโทนที่ดีขึ้น เป็นสัญญาณสนับสนุนให้ระบบไม่ต้องใช้แรงกับความกดดันมากนัก",
       positiveMindRelaxed: "วันนี้ใจดูผ่อนคลายขึ้นเล็กน้อย อาจเป็นฐานที่ช่วยให้การดูแลตัวเองไม่ต้องมาจากแรงกดดัน",
       pressure: "ความกดดันถูกเห็นแล้ว ไม่ต้องใช้การเร่งแก้เป็นคำตอบของวันนี้",
+      uneasy: "บันทึกนี้มีความไม่สบายใจบางอย่างอยู่ หนูจะอ่านเป็นสัญญาณให้ค่อย ๆ วาง ไม่ใช่สิ่งที่ต้องรีบแก้ทันที",
       resourceLow: "พลังงานอาจต่ำจากน้ำ อาหาร หรือการนอน ไม่ใช่เรื่องที่ต้องโทษตัวเอง",
       steadyHydration: "วางจุดจิบน้ำให้สม่ำเสมอขึ้น โดยไม่ต้องอัดทีเดียว"
     },
@@ -322,6 +323,7 @@ const translations = {
     mindNoteReminder: {
       pressured: "เห็นความกดดันแล้วนะพี่ วันนี้ไม่ต้องรีบแก้ทุกอย่าง แค่กลับมาสม่ำเสมอก็พอ",
       worried: "ความกังวลเป็นสัญญาณให้ดูแล ไม่ใช่คำสั่งให้เร่งแก้",
+      uneasy: "บันทึกนี้มีความไม่สบายใจบางอย่างอยู่ หนูจะอ่านเป็นสัญญาณให้ค่อย ๆ วาง ไม่ใช่สิ่งที่ต้องรีบแก้ทันที",
       hydrate_gently: "วันนี้จิบน้ำเบา ๆ ให้ระบบกลับมาพอวางได้ ไม่ต้องอัดน้ำเพื่อเอาชนะตัวเลข"
     },
     recoveryNote: {
@@ -414,6 +416,7 @@ const translations = {
         feeling: {
           calm: "เฉย ๆ",
           worried: "กังวล",
+          uneasy: "ไม่สบายใจ",
           pressured: "กดดัน",
           tired: "ล้า",
           scattered: "ฟุ้ง",
@@ -700,6 +703,7 @@ const translations = {
       positiveMindFeelingGood: "Today's overall mind state seems more positive, which may support the system without needing to push harder.",
       positiveMindRelaxed: "Today the mind seems more relaxed, which may help self-care come from less pressure.",
       pressure: "Pressure has been noticed. Rushing to fix does not need to be today's answer.",
+      uneasy: "This note carries some uneasiness. The system can treat it as something to gently place down, not something that must be fixed immediately.",
       resourceLow: "Energy may be low because water, food, or sleep resources are low; this is information, not blame.",
       steadyHydration: "Place steadier water moments across the day without forcing it all at once."
     },
@@ -733,6 +737,7 @@ const translations = {
     mindNoteReminder: {
       pressured: "The pressure is noticed. Today does not need to fix everything; returning to consistency is enough.",
       worried: "Worry is a signal to care, not an order to rush.",
+      uneasy: "This note carries some uneasiness. The system can treat it as something to gently place down, not something that must be fixed immediately.",
       hydrate_gently: "Hydrate gently today. Let the system settle without forcing the numbers."
     },
     recoveryNote: {
@@ -825,6 +830,7 @@ const translations = {
         feeling: {
           calm: "Neutral",
           worried: "Worried",
+          uneasy: "Uneasy",
           pressured: "Pressured",
           tired: "Tired",
           scattered: "Scattered",
@@ -1111,6 +1117,7 @@ const translations = {
       positiveMindFeelingGood: "今天整体心境较好，可以成为一种支持，不需要额外用力。",
       positiveMindRelaxed: "今天心情比较放松，可以让照顾自己不那么来自压力。",
       pressure: "压力已经被看见了。今天不需要用急着修正来回答它。",
+      uneasy: "这条记录里有一些不舒服的感觉，可以先轻轻放下，不需要马上解决。",
       resourceLow: "能量低可能来自水、食物或睡眠资源不足，这是信息，不是责备。",
       steadyHydration: "把补水点放得更稳定，不需要一次硬灌。"
     },
@@ -1144,6 +1151,7 @@ const translations = {
     mindNoteReminder: {
       pressured: "已经看见压力了。今天不需要修好一切，只要回到稳定就好。",
       worried: "担心是在提醒照顾自己，不是命令你立刻修正。",
+      uneasy: "这条记录里有一些不舒服的感觉，可以先轻轻放下，不需要马上解决。",
       hydrate_gently: "今天温和补水，让系统慢慢稳定，不需要为了数字而勉强自己。"
     },
     recoveryNote: {
@@ -1236,6 +1244,7 @@ const translations = {
         feeling: {
           calm: "一般",
           worried: "担心",
+          uneasy: "心里不舒服",
           pressured: "有压力",
           tired: "疲惫",
           scattered: "分散",
@@ -2472,6 +2481,7 @@ function getMindNoteSignal() {
     pressured: mind === "กดดัน" || feeling === "pressured",
     doublePressure: mind === "กดดัน" && feeling === "pressured",
     worried: mind === "กังวล" || feeling === "worried",
+    uneasy: feeling === "uneasy",
     feelingGood,
     relaxed,
     positive: feelingGood || relaxed,
@@ -2517,6 +2527,7 @@ function getReminderFromSignals(signals) {
   if (signals.energySleep.energyLow && signals.energySleep.lowResource) return t("signalReminder.resourceLow");
   if (signals.mindNote.pressured) return t("mindNoteReminder.pressured");
   if (signals.mindNote.worried) return t("mindNoteReminder.worried");
+  if (signals.mindNote.uneasy) return t("mindNoteReminder.uneasy");
   if (signals.mindNote.hydrateGently) return t("mindNoteReminder.hydrate_gently");
   if (signals.energySleep.sleepLow) return t("reminder.lowSleep");
   if (signals.recoveryLoad.high) return t("reminder.highLoad");
@@ -2526,6 +2537,7 @@ function getReminderFromSignals(signals) {
 function getMindNoteReminder() {
   if (appState.mindNoteFeeling === "pressured") return t("mindNoteReminder.pressured");
   if (appState.mindNoteFeeling === "worried") return t("mindNoteReminder.worried");
+  if (appState.mindNoteFeeling === "uneasy") return t("mindNoteReminder.uneasy");
   if (appState.mindNoteSupport === "hydrate_gently") return t("mindNoteReminder.hydrate_gently");
   return "";
 }
@@ -2691,6 +2703,8 @@ function buildReflectionFromSignals(signals) {
     adjustments.push(t("signalReflection.hydrationRecovery"));
   } else if (signals.mindNote.doublePressure) {
     adjustments.push(t("signalReflection.pressure"));
+  } else if (signals.mindNote.uneasy) {
+    adjustments.push(t("signalReflection.uneasy"));
   } else if (signals.energySleep.energyLow && signals.energySleep.lowResource) {
     adjustments.push(t("signalReflection.resourceLow"));
   } else if (sweetnessInsight.detailRelevant) {
@@ -3322,7 +3336,11 @@ function localizeMindNoteValue(column, value) {
       "Calm": "calm",
       "Neutral": "calm",
       "平静": "calm",
-      "一般": "calm"
+      "一般": "calm",
+      "ไม่สบายใจ": "uneasy",
+      "Uneasy": "uneasy",
+      "不舒服": "uneasy",
+      "心里不舒服": "uneasy"
     },
     support: {}
   };
