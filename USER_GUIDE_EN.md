@@ -19,7 +19,7 @@ You can use the app lightly at three natural moments:
 
 - Morning / start of day: choose Energy, Mind, and Sleep
 - During the day: log water, drinks, and the main activities that used energy
-- End of day: generate an End-of-Day Reflection and save it to the Daily Log
+- End of day: click `Reflect` to create a Reflection and save it to the Daily Log
 
 You do not need to keep the app open all day. It is meant to be a gentle mirror at the beginning, middle, and end of the day.
 
@@ -170,6 +170,20 @@ The app summarizes load into three levels:
 
 Recovery is part of performance. It is not a reward you earn only after pushing hard.
 
+Starting in v1.9.x, the app uses Activity Load Roots to read the root of the day's selected activity and create a short Activity Root Summary for reminders/reflections:
+
+- Clinical work / dentist / doctor: precision, hands, eyes, and sustained focus
+- Photographer / long shoot: standing, moving, carrying gear, and holding space for others
+- Investor / market watch: attention and decision load, not financial advice
+- Office work / deep work: brain, eyes, screen time, and mental loops
+- Outdoor work: heat, sweat, body effort, and hydration context
+- Sport / running / sweat: physical/sweat load with recovery afterward
+- Lots of walking: back, legs, feet, and body use
+- Low sleep: a recovery signal, not high activity load
+- Rest day: a lighter rhythm, not an invitation to add productivity pressure
+
+Activity roots refine reflection wording only. They do not change Load Score, Daily Log, Excel export/import, or schema. The app does not infer identity; it should not say you are a doctor, photographer, investor, or any profession. It only reads the selected activity as context for that day.
+
 ## 12. Mindful Reminder
 
 The Mindful Reminder shows a short NuTuenSai note based on today’s key signals, such as low water, high caffeine, low sleep, high load, or a pressured mind state.
@@ -191,6 +205,8 @@ The main signals are:
 - Mind Note Signal
 
 The app does not use these signals to diagnose or judge health. It uses them to reflect patterns gently. For example, low sleep with high load may point toward recovery first, while low water with high caffeine may invite steadier water and rest.
+
+When the day has very little data, the app should greet gently or invite a little Today Input before deeper reflection. It should not over-analyze low-data states or assume fear unless the user selected or wrote worry/pressure directly.
 
 ## 14. Mind Note
 
@@ -301,8 +317,12 @@ If `Export Master Excel` does not work, check that the browser can load the Shee
 - If you have real symptoms or health concerns, seek professional care.
 - The goal is not to make numbers look good quickly. The goal is to build a system that can last.
 - The app is local-only and does not auto-upload your data.
-- It is not a medical tool, not a diagnosis system, not therapy, and not crisis support.
+- AI reads exported data only when you choose to share the workbook.
+- It is not a medical tool, not a diagnosis system, not therapy, not crisis support, not financial advice, and not a scoring/judgment app.
+- Positive signals are support signals, not performance scores.
+- Sweetness and caffeine are drink-load signals, not moral scores.
+- Activity roots refine reflection wording; they do not infer identity.
 
 ## 22. Core Sentence Of The System
 
-Mindful Health Balance by MSxAI is a gentle mirror for noticing how hydration, coffee, sweet drinks, load, recovery, sleep, and mind state connect, without rushing to fix numbers from fear.
+Mindful Health Balance by MSxAI is a gentle mirror for noticing how hydration, coffee, sweet drinks, load, recovery, sleep, and mind state connect, without rushing to judge yourself from one day of data.

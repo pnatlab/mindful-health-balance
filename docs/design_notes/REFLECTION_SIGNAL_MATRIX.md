@@ -69,6 +69,8 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 
 Activity Load Roots refine the reflection tone behind selected activity chips. They are presentation/reflection context only and do not change Load Score, Load Level, saved activities, or export/import schema.
 
+Activity Root Summary is the short copy layer used when the UI needs a compact sentence. It should describe how today's energy was used, not infer identity or profession.
+
 | Activity Scenario | Root | Expected Reflection Tone | Avoid |
 | --- | --- | --- | --- |
 | `photoshoot` | `service_standing` | Standing, moving, carrying gear, and holding space for others; recovery includes back, legs, shoulders, and eyes. | Treating it as only exercise or only office work. |
@@ -80,6 +82,18 @@ Activity Load Roots refine the reflection tone behind selected activity chips. T
 | `longWalk` | `walking_physical` | Body use through walking/movement; give back, legs, feet, and water rhythm space. | Overstating it as high-intensity sport. |
 | `lowSleep` only | `recovery_low_sleep` | Recovery signal, not high activity load; rest before adding another round. | Calling low sleep a heavy activity day. |
 | `rest` only | `rest_base` | Light rhythm and recovery base. | Pushing productivity because the day is open. |
+
+| Root | Preferred Short Summary | Avoid |
+| --- | --- | --- |
+| `clinical_focus` | "Today used sustained precision." | "You are a doctor/dentist." |
+| `service_standing` | "Today used energy through standing, moving, and holding space for others." | "You are a photographer." |
+| `cognitive_deepwork` | "Today used sustained focus and screen attention." | Productivity praise that pushes more work. |
+| `market_decision` | "Today used attention and decision energy." | Financial advice or market prediction. |
+| `outdoor_heat` | "Today included heat, sweat, or body effort." | Medical dehydration warning. |
+| `sport_sweat` | "Today used real physical effort." | Push harder / train more. |
+| `walking_physical` | "Today used the body through walking or movement." | Treating it as high-intensity sport. |
+| `recovery_low_sleep` | "Today is a low-sleep recovery signal." | Calling it high activity load. |
+| `rest_base` | "Today is a lighter rhythm." | Pushing productivity because there is space. |
 
 ## 3. Combination Matrix
 

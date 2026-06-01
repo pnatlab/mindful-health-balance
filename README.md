@@ -1,13 +1,15 @@
-# Mindful Health Balance by MSxAI v1.9 Portable Field Memory Foundation
+# Mindful Health Balance by MSxAI v1.9.x Portable Field Memory Foundation
 
-Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ static สำหรับ self-care reflection ของ pnat เพื่อช่วยดู pattern และ balance recovery ในชีวิตประจำวัน โดยเน้น 4 แกนหลัก:
+Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ static สำหรับ local-first self-care reflection และ Portable Field Memory Foundation เพื่อช่วยดู pattern และ balance recovery ในชีวิตประจำวัน โดยเน้น 4 แกนหลัก:
 
 - Hydration / น้ำ
 - Caffeine & Sugary Drinks / กาแฟและเครื่องดื่มหวาน
 - Load & Recovery / การออกกำลังและการพัก
 - Mind State / ความเครียดและการกดดันตัวเอง
 
-แนวคิดหลักของแอปคือ “ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง” แอปนี้ตั้งใจช่วยให้เห็นภาพรวมของวันแบบอ่อนโยน ไม่ดุ ไม่ทำให้กลัว และไม่ทำให้รู้สึกผิดกับสุขภาพ
+แนวคิดหลักของแอปคือ “ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง” แอปนี้ตั้งใจช่วยให้เห็นภาพรวมของวันแบบอ่อนโยน ไม่ดุ ไม่ทำให้กลัว ไม่ทำให้รู้สึกผิด และไม่ตัดสินผู้ใช้จากข้อมูลสุขภาพรายวัน
+
+ข้อมูลเป็น local-first และ user-owned: แอปเก็บข้อมูลไว้ใน browser/localStorage ของเครื่องผู้ใช้ ไม่มี auto-upload และ AI จะอ่านข้อมูล exported workbook ได้ก็ต่อเมื่อผู้ใช้เลือก share ไฟล์เอง
 
 ตั้งแต่ v1.3 รองรับ UI 3 ภาษา:
 
@@ -132,11 +134,41 @@ Excel export ยังรักษา sheet เดิม (`Daily_Log`, `Summary`
 
 `Field_Review` เป็น summary เพื่อ pattern reflection เท่านั้น ไม่ใช่ diagnosis, medical advice, therapy interpretation หรือ health-risk prediction ผู้ใช้ยังเป็นเจ้าของไฟล์และเลือกเองว่าจะ export, เก็บ, review หรือ share ให้ AI อ่านเมื่อไหร่
 
+### v1.9.x Latest Summary
+
+v1.9.x ล่าสุดรวมหลาย refinement ที่ทำให้แอปอ่าน pattern ได้ชัดขึ้นโดยไม่เพิ่มภาระผู้ใช้:
+
+- Adaptive Hydration Guidance: เป้าหมายน้ำเป็น flexible self-care cue ตาม activity/load/recovery context ไม่ใช่ตัวเลขตายตัว
+- Drink Sweetness Insight + Soda support: `น้ำอัดลม` เป็น Drink Type และ Sweetness / Sugar Score เป็น drink-load signal ไม่ใช่ moral score
+- Positive Mind State options: `รู้สึกดี` และ `ผ่อนคลาย` เป็น support signal ไม่ใช่ performance score
+- Mind Note Feeling options: `ไม่สบายใจ` และ `รู้สึกดี` ใช้อ่าน feeling tone ของบันทึกนั้น ไม่ใช่ตัดสินทั้งวัน
+- Reflection Generator zen moment: ปุ่มวงกลม `สรุปวันนี้`, listening moment สั้น ๆ, label `Reflection`, signature `🩵` และ `ล้าง Reflection` เป็น reset path เดียวของ preview
+- Reflection Signal Matrix / QA guardrails: ใช้ตรวจว่า reflection อ่านเป็น pattern ไม่ใช่ diagnosis หรือการอ่านใจเกินข้อมูล
+- Activity Load Roots / Activity Root Summary: activity chips ถูก map เป็นรากของ load เพื่อ refine reflection wording ให้สั้นและตรงบริบทขึ้น
+
 ### v1.9.x Adaptive Hydration Guidance
 
 Hydration card เพิ่ม adaptive guidance แบบ display-only เพื่อสะท้อนว่าเป้าหมายน้ำเป็นช่วงยืดหยุ่นตามบริบทของวัน ไม่ใช่ตัวเลขตายตัว ระบบใช้ signals ที่มีอยู่แล้ว เช่น activity/load type, outdoor heat, sport intensity, sleep debt และ caffeine เพื่อแสดง estimated range หรือ recovery cue แบบอ่อนโยน
 
 ฟีเจอร์นี้แยก strong activity load ออกจาก recovery-only signal เช่น นอนน้อย พลังงานต่ำ หรือใจฟุ้ง ถ้ามีแค่สัญญาณ recovery ระบบจะไม่สรุปว่าเป็นวันที่ activity load สูง แต่จะชวนวางน้ำเป็นฐานคู่กับการพัก โดยไม่เพิ่ม input ใหม่ ไม่เปลี่ยน data schema, localStorage, Save / Import / Export compatibility หรือ scoring logic และไม่ใช่ medical advice
+
+### v1.9.x Activity Load Roots / Activity Root Summary
+
+Activity chips ถูก map เป็น Activity Load Roots เพื่อช่วยให้ reflection เข้าใจรากของ load ในวันนั้น เช่น:
+
+- `clinical_focus`: งานที่ใช้ความละเอียด มือ ตา และสมาธิต่อเนื่อง
+- `service_standing`: การยืน เดิน ถืออุปกรณ์ หรือดูแลจังหวะคนตรงหน้า
+- `cognitive_deepwork`: deep work, office work, screen time และ mental loop
+- `market_decision`: attention, uncertainty และ decision load
+- `outdoor_heat`: heat, sweat, outdoor effort และ hydration context
+- `sport_sweat`: กีฬา เหงื่อ และ training load
+- `walking_physical`: การเดิน ขา หลัง เท้า และ body use
+- `recovery_low_sleep`: นอนน้อยเป็น recovery signal ไม่ใช่ activity load สูง
+- `rest_base`: วันเบา / rest day ที่ไม่ควรถูกผลักให้เพิ่ม productivity
+
+Activity Root Summary เป็น short UX copy layer เช่น “วันนี้ใช้ความละเอียดต่อเนื่อง” หรือ “Today used real physical effort.” เพื่อทำให้ reminder และ reflection สั้นลง เนียนขึ้น และเชื่อมกับ input โดยตรง
+
+Activity roots refine reflection wording only. แอปไม่ infer identity ของผู้ใช้ ไม่พูดว่า “คุณเป็นหมอ”, “คุณเป็นช่างภาพ” หรือ “งานของคุณทำให้เครียด” และไม่เปลี่ยน schema, Daily_Log columns, Field_Review columns, localStorage keys หรือ export/import compatibility
 
 ## วิธีเปิดใช้งาน
 
@@ -162,7 +194,9 @@ Hydration card เพิ่ม adaptive guidance แบบ display-only เพ�
 - สะท้อน Energy Cause แบบ layered signal เมื่อ Energy level กับเหตุของพลังงานดูสวนกัน โดยไม่ถือว่าเป็นข้อมูลผิด
 - เลือกกิจกรรมเพื่อคำนวณ Load Score และ Load Level
 - เลือก Activity / Profession-aware Load Presets เพื่อให้ reflection เห็นชนิดของความเหนื่อย เช่น งานใช้สมาธิ งานคลินิก งานกลางแจ้ง กีฬา หรือวันที่นอนน้อย
+- ใช้ Activity Load Roots / Activity Root Summary เพื่อสะท้อนกิจกรรมเป็นประโยคสั้นแบบไม่เดาตัวตนผู้ใช้
 - สร้าง End-of-Day Reflection ในโทน NuTuenSai โดยหน้า preview แสดง synthesis สั้น ๆ ขณะที่รายละเอียดเต็มยังอยู่ใน Daily Log / Reflections / Excel
+- ใช้ Reflection Generator แบบ zen/circular CTA: กด `สรุปวันนี้`, เห็น listening moment, ได้ label `Reflection`, มี `🩵` ท้าย reflection หนึ่งครั้ง และใช้ `ล้าง Reflection` เพื่อ reset preview เท่านั้น
 - Save to Daily Log เพื่อบันทึกข้อมูลวันนี้เป็น 1 row ในตาราง
 - Clear Daily Log เพื่อล้างตารางย้อนหลังใน browser นี้
 - Export Master Excel เป็นไฟล์รวมข้อมูลทั้งหมด
@@ -176,7 +210,24 @@ Mind Note Layer เป็นพื้นที่บันทึกใจแบ�
 
 ใช้ Mind Note เพื่อจดสั้น ๆ ว่าวันนี้ใจถืออะไรอยู่ เลือกความรู้สึก และเลือก support need ที่ต้องการตอนนี้ ข้อมูลนี้ช่วยเชื่อม hydration, recovery, load, sleep และ mind state เข้าด้วยกัน
 
+`ความรู้สึกของบันทึกนี้` รองรับ เฉย ๆ, ไม่สบายใจ, กังวล, กดดัน, ล้า, ฟุ้ง, รู้สึกดี และขอบคุณ โดยเป็น feeling tone ของบันทึกนั้น ไม่ใช่การสรุปใจทั้งวัน
+
 Mind Note ไม่ใช่ therapy tool, diagnosis tool, crisis support หรือ medical advice
+
+## Guardrails
+
+- Local-first และ user-owned data
+- ไม่มี auto-upload
+- AI reads exported data only when user chooses to share
+- Pattern reflection, not diagnosis
+- Self-care cue, not medical advice
+- Not therapy and not crisis support
+- Not financial advice or market prediction
+- Not a scoring/judgment app
+- Positive signals are support signals, not performance scores
+- Sweetness/caffeine are drink-load signals, not moral scores
+- Low data should produce a gentle greeting or light prompt, not deep analysis
+- Do not assume fear, anxiety, pressure, identity, profession, or risk unless the user explicitly selected or wrote the relevant signal
 
 ## ข้อมูลอยู่ที่ไหน
 

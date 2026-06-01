@@ -70,6 +70,36 @@ Rules:
 
 ## Expected Reflection Tone
 
+Activity Root Summary is the short UX copy layer used when the app needs a tighter sentence in the reminder strip, Reflection preview, or compact daily feedback. It is a language modifier, not a profile inference.
+
+The app should not say:
+
+- "You are a doctor."
+- "You are a photographer."
+- "Your job caused stress."
+- "Your profession is risky."
+
+The app should say:
+
+- "Today used sustained precision."
+- "Today used energy through standing and moving."
+- "Today used attention and decision energy."
+- "Today used real physical effort."
+
+| Root | Short Summary Layer | Longer Reflection Layer | Tomorrow / Recovery Focus |
+| --- | --- | --- | --- |
+| `clinical_focus` | "Today used sustained precision." | "Today used sustained precision, hands, eyes, and nervous-system focus." | Quiet recovery for hands, eyes, and nervous-system focus. |
+| `service_standing` | "Today used energy through standing, moving, and holding space for others." | "Today may have used energy through standing, moving, carrying gear, and holding space for others." | Back, legs, shoulders, eyes, and distributed water. |
+| `cognitive_deepwork` | "Today used sustained focus and screen attention." | "Today used sustained focus and screen attention." | Rest eyes, reduce mental loops, return space to the brain. |
+| `market_decision` | "Today used attention and decision energy." | "Today's load may come from attention and decision pressure more than body movement." | Screen breaks and not carrying the market into sleep. |
+| `outdoor_heat` | "Today included heat, sweat, or body effort." | "Today included heat, sweat, or body effort." | Small water rounds and heat/body pauses. |
+| `sport_sweat` | "Today used real physical effort." | "Today used real physical effort." | Recovery is part of training. |
+| `walking_physical` | "Today used the body through walking or movement." | "Today used the body through walking or movement." | Back, legs, feet, and water spread across the day. |
+| `recovery_low_sleep` | "Today is a low-sleep recovery signal." | "This is a recovery signal, not a high activity-load signal." | Rest before adding another round. |
+| `rest_base` | "Today is a lighter rhythm." | "Today can keep a light rhythm." | Do not add productivity pressure. |
+
+## Longer Reflection Tone
+
 | Root | Expected NuTuenSai Reflection | Tomorrow / Recovery Focus |
 | --- | --- | --- |
 | `clinical_focus` | "Today used sustained precision, hands, eyes, and nervous-system focus." | Quiet recovery for hands, eyes, and nervous-system focus. |

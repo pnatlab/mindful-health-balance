@@ -322,6 +322,17 @@ const translations = {
       recovery_low_sleep: "วันนี้เป็นสัญญาณ recovery ไม่ใช่ activity load สูง ให้พักมาก่อนการเพิ่มรอบใหม่",
       rest_base: "วันนี้เหมาะกับการรักษาจังหวะเบา ๆ ไม่ต้องเพิ่มอะไรเพราะรู้สึกว่าว่าง"
     },
+    activityRootSummary: {
+      clinical_focus: "วันนี้ใช้ความละเอียดต่อเนื่อง",
+      service_standing: "วันนี้ใช้พลังผ่านการยืน เดิน และดูแลจังหวะคนตรงหน้า",
+      cognitive_deepwork: "วันนี้ใช้สมองและสายตาต่อเนื่อง",
+      market_decision: "วันนี้ใช้สมองกับแรงตัดสินใจ",
+      outdoor_heat: "วันนี้มีแดด เหงื่อ หรือแรงกายเข้ามาเกี่ยว",
+      sport_sweat: "วันนี้ร่างกายใช้แรงจริง",
+      walking_physical: "วันนี้ใช้ร่างกายผ่านการเดินและเคลื่อนไหว",
+      recovery_low_sleep: "วันนี้เป็นสัญญาณ recovery จากการนอนน้อย",
+      rest_base: "วันนี้เป็นจังหวะเบา ๆ"
+    },
     loadLevel: {
       light: "Load เบา",
       medium: "Load กลาง",
@@ -766,6 +777,17 @@ const translations = {
       recovery_low_sleep: "This is a recovery signal, not a high activity-load signal. Let rest come before adding another round.",
       rest_base: "Today can keep a light rhythm. There is no need to add productivity just because space is available."
     },
+    activityRootSummary: {
+      clinical_focus: "Today used sustained precision.",
+      service_standing: "Today used energy through standing, moving, and holding space for others.",
+      cognitive_deepwork: "Today used sustained focus and screen attention.",
+      market_decision: "Today used attention and decision energy.",
+      outdoor_heat: "Today included heat, sweat, or body effort.",
+      sport_sweat: "Today used real physical effort.",
+      walking_physical: "Today used the body through walking or movement.",
+      recovery_low_sleep: "Today is a low-sleep recovery signal.",
+      rest_base: "Today is a lighter rhythm."
+    },
     loadLevel: {
       light: "Light Load",
       medium: "Moderate Load",
@@ -1209,6 +1231,17 @@ const translations = {
       walking_physical: "今天身体通过走路或活动用了力。把空间还给后背、腿和脚，也把喝水分散到一天里。",
       recovery_low_sleep: "这是 recovery 信号，不是高 activity load。先休息，再增加新的回合。",
       rest_base: "今天可以维持轻一点的节奏，不需要因为有空就增加 productivity。"
+    },
+    activityRootSummary: {
+      clinical_focus: "今天用了持续的精细度。",
+      service_standing: "今天的能量用在站立、走动和照顾眼前节奏上。",
+      cognitive_deepwork: "今天用了持续专注和屏幕注意力。",
+      market_decision: "今天用了注意力和决策能量。",
+      outdoor_heat: "今天有炎热、出汗或身体用力。",
+      sport_sweat: "今天身体确实用了力。",
+      walking_physical: "今天通过走路或活动使用了身体。",
+      recovery_low_sleep: "今天是睡眠不足带来的 recovery 信号。",
+      rest_base: "今天是比较轻的节奏。"
     },
     loadLevel: {
       light: "Load 轻",
@@ -2388,7 +2421,7 @@ function getLoadFeedback() {
   const signals = buildSignals();
   const hasHeavyCombo = signals.recoveryLoad.hasHeavyCombo;
   const highLoadWithLowSleep = signals.recoveryLoad.loadScore >= 6 && signals.recoveryLoad.loadTypes.includes("sleep_debt_load");
-  const rootNote = getActivityRootReflections(signals, { limit: 2 }).join(" ");
+  const rootNote = getActivityRootSummary(signals, { limit: 2 });
   const loadTypeNote = rootNote || getLoadTypeReflections(signals, { limit: 2 }).join(" ");
 
   if (loadTypeNote) {
@@ -2526,6 +2559,25 @@ function getActivityRootReflections(signals = buildSignals(), { includeRecovery 
     .filter((root) => includeRecovery || (root !== "recovery_low_sleep" && root !== "rest_base"))
     .slice(0, limit)
     .map((root) => t(`activityRootReflection.${root}`));
+}
+
+function getActivityRootSummary(signalsOrOptions = buildSignals(), options = {}) {
+  const hasRecoveryLoad = Boolean(signalsOrOptions?.recoveryLoad);
+  const roots = hasRecoveryLoad
+    ? signalsOrOptions.recoveryLoad.activityLoadRoots
+    : signalsOrOptions?.roots;
+  const summaryOptions = hasRecoveryLoad ? options : { ...(signalsOrOptions || {}), ...options };
+  const { includeRecovery = true, limit = 1 } = summaryOptions;
+  const orderedRoots = getOrderedActivityLoadRoots(roots || []);
+  const effectiveRoots = orderedRoots.length > 1 && orderedRoots.includes("rest_base")
+    ? orderedRoots.filter((root) => root !== "rest_base")
+    : orderedRoots;
+
+  return effectiveRoots
+    .filter((root) => includeRecovery || (root !== "recovery_low_sleep" && root !== "rest_base"))
+    .slice(0, limit)
+    .map((root) => t(`activityRootSummary.${root}`))
+    .join(" ");
 }
 
 function getLoadTypeReflection(signals = buildSignals()) {
@@ -2695,6 +2747,8 @@ function getReminderFromSignals(signals) {
   if (signals.mindNote.worried) return t("mindNoteReminder.worried");
   if (signals.mindNote.uneasy) return t("mindNoteReminder.uneasy");
   if (signals.mindNote.hydrateGently) return t("mindNoteReminder.hydrate_gently");
+  const activityRootSummary = getActivityRootSummary(signals);
+  if (activityRootSummary) return activityRootSummary;
   if (signals.energySleep.sleepLow) return t("reminder.lowSleep");
   if (signals.recoveryLoad.high) return t("reminder.highLoad");
   return t("reminder.steady");
@@ -2777,6 +2831,8 @@ function getReflectionDisplayOverview(signals) {
   if (signals.mindNote.noteFeelingGood && hasRecoveryOnly) return t("reflectionDisplay.overviewMindNoteFeelingGoodRecovery");
   if (signals.mindNote.noteFeelingGood) return t("reflectionDisplay.overviewMindNoteFeelingGoodSupport");
   if (signals.mindNote.positive && hasActivityLoad) return t("reflectionDisplay.overviewPositiveMindActivity");
+  const activityRootSummary = getActivityRootSummary(signals);
+  if (activityRootSummary && hasActivityLoad) return activityRootSummary;
   if (hasActivityLoad && hydrationIsBase) return t("reflectionDisplay.overviewActivityHydrated");
   if (hasActivityLoad) return t("reflectionDisplay.overviewActivity");
   if (signals.mindNote.positive && hasRecoveryOnly) return t("reflectionDisplay.overviewPositiveMindRecovery");
@@ -2801,6 +2857,8 @@ function getReflectionDisplayAdjustment(signals) {
 
 function getReflectionDisplayTomorrow(signals) {
   if (signals.energySleep.energyCausePattern.hasLayeredSignal) return t("reflectionDisplay.tomorrowEnergyLayered");
+  const activityRootFocus = getActivityRootTomorrowFocus(signals);
+  if (activityRootFocus && signals.hydration.strongActivityHydration) return activityRootFocus;
   if (signals.hydration.strongActivityHydration) return t("reflectionDisplay.tomorrowActivity");
   if (isRecoveryOnlyReflection(signals)) return t("reflectionDisplay.tomorrowRecovery");
   if (signals.drinkLoad.caffeineHigh) return t("reflectionDisplay.tomorrowCaffeine");
@@ -2840,7 +2898,10 @@ function truncateText(value, limit) {
 function buildReflectionFromSignals(signals) {
   const goodThings = [];
   const adjustments = [];
-  const loadTypeAdjustments = getActivityRootReflections(signals, { limit: 2 });
+  const activityRootSummary = getActivityRootSummary(signals, { limit: 2 });
+  const loadTypeAdjustments = activityRootSummary
+    ? [activityRootSummary]
+    : getActivityRootReflections(signals, { limit: 2 });
   const sweetnessInsight = signals.drinkLoad.sweetnessInsight;
 
   if (signals.hydration.steady && signals.recoveryLoad.light) {

@@ -872,6 +872,8 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 
 Activity Load Roots refine the reflection tone behind selected activity chips. They are presentation/reflection context only and do not change Load Score, Load Level, saved activities, or export/import schema.
 
+Activity Root Summary is the short copy layer used when the UI needs a compact sentence. It should describe how today's energy was used, not infer identity or profession.
+
 | Activity Scenario | Root | Expected Reflection Tone | Avoid |
 | --- | --- | --- | --- |
 | `photoshoot` | `service_standing` | Standing, moving, carrying gear, and holding space for others; recovery includes back, legs, shoulders, and eyes. | Treating it as only exercise or only office work. |
@@ -883,6 +885,18 @@ Activity Load Roots refine the reflection tone behind selected activity chips. T
 | `longWalk` | `walking_physical` | Body use through walking/movement; give back, legs, feet, and water rhythm space. | Overstating it as high-intensity sport. |
 | `lowSleep` only | `recovery_low_sleep` | Recovery signal, not high activity load; rest before adding another round. | Calling low sleep a heavy activity day. |
 | `rest` only | `rest_base` | Light rhythm and recovery base. | Pushing productivity because the day is open. |
+
+| Root | Preferred Short Summary | Avoid |
+| --- | --- | --- |
+| `clinical_focus` | "Today used sustained precision." | "You are a doctor/dentist." |
+| `service_standing` | "Today used energy through standing, moving, and holding space for others." | "You are a photographer." |
+| `cognitive_deepwork` | "Today used sustained focus and screen attention." | Productivity praise that pushes more work. |
+| `market_decision` | "Today used attention and decision energy." | Financial advice or market prediction. |
+| `outdoor_heat` | "Today included heat, sweat, or body effort." | Medical dehydration warning. |
+| `sport_sweat` | "Today used real physical effort." | Push harder / train more. |
+| `walking_physical` | "Today used the body through walking or movement." | Treating it as high-intensity sport. |
+| `recovery_low_sleep` | "Today is a low-sleep recovery signal." | Calling it high activity load. |
+| `rest_base` | "Today is a lighter rhythm." | Pushing productivity because there is space. |
 
 ## 3. Combination Matrix
 
@@ -1022,6 +1036,36 @@ Rules:
 - Roots refine wording only; they do not change scoring or saved data.
 
 ## Expected Reflection Tone
+
+Activity Root Summary is the short UX copy layer used when the app needs a tighter sentence in the reminder strip, Reflection preview, or compact daily feedback. It is a language modifier, not a profile inference.
+
+The app should not say:
+
+- "You are a doctor."
+- "You are a photographer."
+- "Your job caused stress."
+- "Your profession is risky."
+
+The app should say:
+
+- "Today used sustained precision."
+- "Today used energy through standing and moving."
+- "Today used attention and decision energy."
+- "Today used real physical effort."
+
+| Root | Short Summary Layer | Longer Reflection Layer | Tomorrow / Recovery Focus |
+| --- | --- | --- | --- |
+| `clinical_focus` | "Today used sustained precision." | "Today used sustained precision, hands, eyes, and nervous-system focus." | Quiet recovery for hands, eyes, and nervous-system focus. |
+| `service_standing` | "Today used energy through standing, moving, and holding space for others." | "Today may have used energy through standing, moving, carrying gear, and holding space for others." | Back, legs, shoulders, eyes, and distributed water. |
+| `cognitive_deepwork` | "Today used sustained focus and screen attention." | "Today used sustained focus and screen attention." | Rest eyes, reduce mental loops, return space to the brain. |
+| `market_decision` | "Today used attention and decision energy." | "Today's load may come from attention and decision pressure more than body movement." | Screen breaks and not carrying the market into sleep. |
+| `outdoor_heat` | "Today included heat, sweat, or body effort." | "Today included heat, sweat, or body effort." | Small water rounds and heat/body pauses. |
+| `sport_sweat` | "Today used real physical effort." | "Today used real physical effort." | Recovery is part of training. |
+| `walking_physical` | "Today used the body through walking or movement." | "Today used the body through walking or movement." | Back, legs, feet, and water spread across the day. |
+| `recovery_low_sleep` | "Today is a low-sleep recovery signal." | "This is a recovery signal, not a high activity-load signal." | Rest before adding another round. |
+| `rest_base` | "Today is a lighter rhythm." | "Today can keep a light rhythm." | Do not add productivity pressure. |
+
+## Longer Reflection Tone
 
 | Root | Expected NuTuenSai Reflection | Tomorrow / Recovery Focus |
 | --- | --- | --- |
