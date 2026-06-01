@@ -46,7 +46,7 @@ It should not imply that the system has already found a pattern.
 
 Examples:
 
-- TH: `สวัสดีค่ะพี่ วันนี้ยังไม่มีข้อมูลให้หนูอ่านมากนัก ลองกรอก Today Input สักเล็กน้อยก่อน แล้วค่อยกลับมาทบทวนกันนะคะ`
+- TH: `สวัสดีค่ะ วันนี้ยังไม่มีข้อมูลให้ระบบอ่านมากนัก ลองกรอก Today Input สักเล็กน้อยก่อน แล้วค่อยกลับมาทบทวนกันนะคะ`
 - EN: `Welcome back. There isn’t much for NuTuenSai to read yet today. Add a little Today Input first, then come back for a gentle reflection.`
 - ZH: `欢迎回来。今天还没有太多资料可以阅读，可以先记录一点今日输入，再回来做轻柔的回顾。`
 

@@ -100,7 +100,7 @@ The small blue heart beside `Overall Mind Today` marks the main mind observation
 
 On the Today page, this card includes a small sun or moon visual based on the browser's local time. It is only a gentle energy-rhythm cue and does not affect saved data or processing.
 
-You can also choose optional `Energy Cause` chips, such as low sleep, heavy exercise, deep work, stress, low water, low food, enough sleep, light mind, or unknown.
+You can also choose optional `Energy Cause` chips, such as low sleep, enough sleep, low food, low water, heavy exercise, deep work, stress, light mind, or unknown.
 
 Energy Cause is not only for factors that lower energy. It can also record what supports a good-energy day, so the dataset can see both depletion factors and recovery/support factors.
 
@@ -199,7 +199,7 @@ Mind Note is a small space for one line of inner context. It is not a therapy to
 Use it lightly:
 
 - Write one short line about what your mind is holding today
-- Choose `Feeling of This Note`, such as neutral, worried, uneasy, pressured, tired, scattered, or grateful
+- Choose `Feeling of This Note`, such as neutral, uneasy, worried, pressured, tired, scattered, feeling good, or grateful
 - Choose a support need, such as rest first, see the pattern, reduce pressure, hydrate gently, or leave it for now
 - Keep it short if that feels right
 - Use it to notice patterns between mind state, hydration, load, recovery, and sleep
@@ -219,7 +219,7 @@ The preview intentionally shows a synthesis instead of every detected field. Thi
 
 If you want to adjust the stored detail, use the small edit action to view and edit the stored reflection before saving.
 
-After a reflection exists, the main button changes to `Reflect Again`, and `Clear Reflection` clears only the current preview. It does not delete Today Input, Daily Log rows, or saved data.
+During generation, a short zen listening moment appears. After a reflection exists, the preview shows the `Reflection` label and generated text. `Clear Reflection` is the only reset action; it clears only the current preview and does not delete Today Input, Daily Log rows, or saved data.
 
 Newly generated reflections end with one blue heart, `🩵`, as a light NuTuenSai signature. It is not a score or assessment.
 
