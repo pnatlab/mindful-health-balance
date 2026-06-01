@@ -14,9 +14,11 @@ This bundle combines the key design notes for Mindful Health Balance v1.9 and th
 8. [Source: REFLECTION_PRESENTATION_DECISION.md](#source-reflection-presentation-decisionmd)
 9. [Source: REFLECTION_PAGE_LAYOUT_DECISION.md](#source-reflection-page-layout-decisionmd)
 10. [Source: REFLECTION_GENERATION_MOMENT.md](#source-reflection-generation-momentmd)
-11. [Source: V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklistmd)
-12. [Source: FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2md)
-13. [Source: NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2md)
+11. [Source: REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrixmd)
+12. [Source: ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrixmd)
+13. [Source: V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklistmd)
+14. [Source: FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2md)
+15. [Source: NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2md)
 
 ---
 
@@ -794,6 +796,278 @@ The visual style should remain:
 ## Guardrail Sentence
 
 The Reflection Generation Moment should give the user a small pause for daily closure without implying deeper AI processing, medical interpretation, or any change to the user's data.
+
+---
+
+# Source: REFLECTION_SIGNAL_MATRIX.md
+
+# Reflection Signal Matrix
+
+This matrix summarizes how Mindful Health Balance reads user signals and reflects them through NuTuenSai voice. It is a design/testing reference only. It is not a medical rule system, diagnosis model, or therapy framework.
+
+## 1. Core Reflection Principles
+
+- Reflect patterns, not diagnose.
+- Do not assume fear unless the user selected worried/pressured or wrote it in a note.
+- Low data should produce a gentle greeting or neutral reminder, not analysis.
+- Positive signals are support signals, not proof the whole day is good.
+- Recovery signals and activity load must be separated.
+- Sweetness and caffeine are drink-load signals, not moral scores.
+- Mind Note Feeling belongs to the note, not necessarily the whole day.
+
+## 2. Single Signal Matrix
+
+| Signal Layer | User Input / Condition | System Meaning | Preferred Reflection Tone | Avoid |
+| --- | --- | --- | --- | --- |
+| Hydration | water = 0 or very low | Water rhythm is not visible yet or may need a gentle base. | Invite small sips or a simple water cue. | Urgency, risk language, medical dehydration claims. |
+| Hydration | water near base | Water is present enough to support the day. | Notice a usable base and steady rhythm. | Demanding more water by default. |
+| Hydration | water enough | Hydration can be read as a supportive base. | Keep the rhythm; pair with load/recovery if relevant. | Treating water as proof the whole day is fine. |
+| Hydration | water high but no load | Water may be more than enough for a light day. | Neutral observation; no need to chase more. | Warning language or exact medical advice. |
+| Sleep | low sleep | Recovery signal. | Recovery-first, gentle pacing. | Blame, failure, or health judgment. |
+| Sleep | okay sleep | Some recovery base exists. | Balanced, observational tone. | Overstating sleep quality. |
+| Sleep | good sleep | Recovery support signal. | Notice support while still reading other layers. | Assuming energy, mind, or load must be good. |
+| Energy | low | Body/system may have lower resources. | Care and recovery cue. | Blame or productivity pressure. |
+| Energy | medium | Mixed or balanced energy. | Keep observing layers. | Forcing a strong conclusion. |
+| Energy | good | Energy is available today. | Use energy gently; still protect recovery. | Assuming no fatigue or no need for rest. |
+| Overall Mind Today | neutral | Overall mind is not strongly burdened or positive. | Simple steady observation. | Treating neutral as ideal calm. |
+| Overall Mind Today | worried | Worry is a care signal. | "A signal to care, not an order to rush." | Diagnosis, anxiety labeling, fear amplification. |
+| Overall Mind Today | pressured | Pressure is present. | Reduce pressure; no need to fix everything. | Productivity praise that reinforces pressure. |
+| Overall Mind Today | scattered | Attention/mind may be dispersed. | Gentle grounding and small rhythm cues. | Over-analysis or labeling the user. |
+| Overall Mind Today | feeling good | Mind can support the system. | Support signal, not performance score. | Saying the whole day was good. |
+| Overall Mind Today | relaxed | Mind has softened. | Supportive context; still read body/load. | Ignoring sleep, energy, or load. |
+| Mind Note Feeling | neutral | The note tone is light or plain. | Let the note stay simple. | Forcing meaning. |
+| Mind Note Feeling | uneasy | The note carries uneasiness or a stuck feeling. | Gently set down; no need to fix immediately. | Calling it anxiety, diagnosis, or abnormal. |
+| Mind Note Feeling | worried | This note has worry. | Notice worry as care signal. | Treating worry as a command to act. |
+| Mind Note Feeling | pressured | This note has pressure. | Lower pressure by one step. | Reinforcing urgency. |
+| Mind Note Feeling | tired | This note carries tiredness. | Recovery and softness. | Calling it failure or weakness. |
+| Mind Note Feeling | scattered | This note feels dispersed. | Small grounding cue. | Over-interpreting mental state. |
+| Mind Note Feeling | feeling_good | This note has a good feeling tone. | Small support signal. | Claiming the whole day is perfect. |
+| Mind Note Feeling | grateful | Gratitude is present in the note. | Support signal that can coexist with load. | Gratitude cancels fatigue. |
+| Energy Cause | low sleep | Energy may be affected by sleep debt. | Recovery-first. | "You failed to sleep enough." |
+| Energy Cause | enough sleep | Sleep may be supportive. | Support layer; still read energy/load. | "Sleep solved everything." |
+| Energy Cause | low food | Fuel/resource signal. | Gentle resource cue. | Diet judgment. |
+| Energy Cause | low water | Hydration may affect energy. | Water base cue. | Medical warning. |
+| Energy Cause | heavy exercise | Physical load. | Recovery is part of training. | Push harder or drink aggressively. |
+| Energy Cause | deep work | Cognitive load. | Rest eyes, reduce loops, recover focus. | Productivity praise only. |
+| Energy Cause | stress | Pressure/load signal. | Lower pressure and recover. | Diagnosing stress response. |
+| Energy Cause | light mind | Mind may support energy. | Layered support signal. | Ignoring body fatigue. |
+| Energy Cause | unknown | Unclear cause. | Curiosity without forcing explanation. | Making up a cause. |
+| Drink | no extra drink | Drink load is light. | Plain water remains a simple base. | Moral praise or purity framing. |
+| Drink | high caffeine | Alertness support with possible water-base cue. | Coffee/caffeine not judged; return water as base. | "Coffee is wrong." |
+| Drink | sweet drink moderate | Some sweetness load. | No guilt; next drink can be simpler. | Diet advice or sugar fear. |
+| Drink | sweet drink high | Sweetness is part of drink load. | Return to water/recovery base gently. | Medical risk language. |
+| Drink | soda low/no sweetness | Soda is drink context, not sweetness load. | Read sweetness field first. | Assuming all soda is sweet. |
+| Drink | soda high sweetness | Soda adds sweetness load. | No judgment; next drink can return to water/rest. | Guilt or "bad drink" wording. |
+| Drink | caffeine + sweetness | Alertness and sweetness signals both present. | Invite plain water back as base. | Diet/medical tone. |
+| Load | rest day | Low activity load. | Preserve rhythm and recovery. | Push productivity. |
+| Load | light load | The day has space. | Small steady rhythm is enough. | Over-instructing. |
+| Load | medium load | Some energy use. | Balance with recovery. | Treating as high load. |
+| Load | high load | Recovery can be outrun. | Recovery follows load. | Shame or "too much" judgment. |
+| Load | sport / sweat | Strong activity hydration signal. | Hydration and recovery move with activity. | Aggressive water commands. |
+| Load | outdoor heat | Heat/sweat context. | Small sips and pauses. | Risk/fear wording. |
+| Load | deep work / cognitive load | Focus, eyes, and mental loops use energy. | Rest eyes, reduce loops, recover attention. | Treating it as only mental weakness. |
+| Load | low sleep as recovery load | Recovery-only signal, not activity load. | Base hydration plus rest. | Calling it high activity load. |
+
+## 2.1 Activity Load Root Matrix
+
+Activity Load Roots refine the reflection tone behind selected activity chips. They are presentation/reflection context only and do not change Load Score, Load Level, saved activities, or export/import schema.
+
+| Activity Scenario | Root | Expected Reflection Tone | Avoid |
+| --- | --- | --- | --- |
+| `photoshoot` | `service_standing` | Standing, moving, carrying gear, and holding space for others; recovery includes back, legs, shoulders, and eyes. | Treating it as only exercise or only office work. |
+| `marketWatch` | `market_decision` | Attention and decision pressure; short screen breaks and not carrying the market into sleep. | Financial advice, buy/sell suggestions, or market prediction. |
+| `dentalFocus` / `clinicalShift` | `clinical_focus` | Sustained precision, hands, eyes, and nervous-system focus; quiet recovery deserves space. | Diagnosis, medical-risk wording, or saying clinical work is dangerous. |
+| `outdoorWork` | `outdoor_heat` | Heat, sweat, and body effort; small water rounds and heat/body pauses. | Medical dehydration warning. |
+| `badminton` / `heavyPingPong` / `easyRun` / `longRun` | `sport_sweat` | Physical effort and training load; recovery is part of training. | Push harder or aggressive hydration commands. |
+| `deepWork` / `officeWork` | `cognitive_deepwork` | Sustained focus and screen attention; rest eyes and reduce mental loops. | Productivity praise that pushes more work. |
+| `longWalk` | `walking_physical` | Body use through walking/movement; give back, legs, feet, and water rhythm space. | Overstating it as high-intensity sport. |
+| `lowSleep` only | `recovery_low_sleep` | Recovery signal, not high activity load; rest before adding another round. | Calling low sleep a heavy activity day. |
+| `rest` only | `rest_base` | Light rhythm and recovery base. | Pushing productivity because the day is open. |
+
+## 3. Combination Matrix
+
+| Scenario | Input Combination | Expected NuTuenSai Reflection | UX Risk | Guardrail |
+| --- | --- | --- | --- | --- |
+| Low data / almost empty input | No meaningful Today Input | Greeting / gentle prompt to add Today Input. | Assuming fear, diagnosis, or personal story. | Stay neutral; do not analyze what is not there. |
+| Water low + no other signal | Low water only | Gentle sip cue; small water rhythm. | Medical fear or urgent tone. | Use self-care cue, not warning. |
+| Water low + caffeine high | Low water + high caffeine | Plain water can return as base; caffeine not judged. | "Coffee is wrong." | Separate caffeine context from moral judgment. |
+| Low sleep + low energy | Sleep low + energy low | Recovery-first; body resources may be low. | Blame or "you failed." | Care cue, not performance judgment. |
+| Low sleep + feeling good / relaxed | Sleep low + positive mind | Mind may be support signal, while body still needs recovery. | "The whole day is fine." | Let both signals coexist. |
+| Good energy + stress | Energy good + stress cause | Layered signal: energy can carry, recovery still matters. | Contradiction/error wording. | "Both can be true." |
+| Low energy + enough sleep | Energy low + enough sleep cause | Enough sleep may support, but body may still need recovery. | "Sleep did not work" or "data conflict." | Read as layered signal. |
+| Mind Note Feeling = uneasy | Mind Note Feeling `uneasy` | Note carries uneasiness; gently set it down. | Calling it anxiety/diagnosis. | Keep it note-level and non-medical. |
+| Mind Note Feeling = feeling_good | Mind Note Feeling `feeling_good` | Good feeling is a small support signal. | Whole-day-perfect wording. | Support signal, not proof. |
+| Sweet soda + caffeine | Soda + high sweetness + caffeine | Drink gave alertness/sweetness; return to water base. | Guilt, diet, or medical tone. | Drink-load signal, not moral score. |
+| High load + enough water | High load + water enough | Hydration can be base; recovery follows load. | Telling user to drink more aggressively. | Pair water with recovery. |
+| Rest day + positive mind | Rest/light day + feeling good/relaxed | Steady/supportive day; preserve rhythm. | Pushing productivity. | Do not turn support into pressure. |
+| Scattered mind + low water | Scattered mind + low water | Small water rhythm plus gentle grounding. | Over-analysis. | Keep cue small and practical. |
+| Pressured mind + deep work | Pressured + deep work/cognitive load | Reduce pressure, recover focus, no need to fix all at once. | Productivity praise reinforcing pressure. | Recovery and pressure reduction first. |
+| Grateful note + high load | Grateful note + high load | Gratitude as support, still protect recovery. | Gratitude cancels fatigue. | Support and fatigue can coexist. |
+
+## 4. Public Voice Guardrails
+
+Avoid phrases like:
+
+- `พี่ไม่จำเป็นต้องกลับไปกลัว`
+- `go back to fear`
+- `you are anxious`
+- `you need to`
+- `this is risky`
+- `healthy/unhealthy`
+- `good/bad user`
+- any diagnosis or medical inference
+
+Preferred phrases:
+
+- `วันนี้ไม่ต้องสรุปตัวเองเร็ว...`
+- `ค่อย ๆ กลับมาดูจังหวะเล็ก ๆ...`
+- `เป็นสัญญาณให้ดูแล ไม่ใช่คำสั่งให้รีบแก้`
+- `อ่านเป็น pattern ไม่ใช่คำตัดสิน`
+- `support signal, not performance score`
+- `drink-load signal, not moral score`
+
+## 5. Minimal Test Checklist
+
+- [ ] Generate with almost no input.
+- [ ] Generate after water only.
+- [ ] Generate with low sleep + low energy.
+- [ ] Generate with good energy + stress.
+- [ ] Generate with `feeling_good` note.
+- [ ] Generate with `uneasy` note.
+- [ ] Generate with soda + high sweetness.
+- [ ] Generate with high load + water enough.
+- [ ] Switch TH/EN/ZH and verify tone.
+- [ ] Confirm no medical/guilt/fear wording appears in low-data state.
+
+## 6. Notes For Future v2.0
+
+This matrix can later become the basis for Field Review Companion. It may evolve into manual test cases, automated reflection snapshots, or guided review scenarios.
+
+It should remain descriptive, not prescriptive. Even if v2.0 adds multi-day review, the system should still avoid diagnosis, medical inference, hidden scoring, and AI authority over the user's own interpretation.
+
+Human agency must remain central: the app and NuTuenSai can help notice patterns, but the user remains the person who decides what the pattern means in real life.
+
+---
+
+# Source: ACTIVITY_LOAD_ROOT_MATRIX.md
+
+# Activity Load Root Matrix
+
+## Purpose
+
+This note documents how selected activity chips can be read as higher-level Activity Load Roots for NuTuenSai reflection.
+
+Activity Load Roots refine reflection wording only. They do not add inputs, change Load Score / Load Level, change localStorage keys, change Daily_Log columns, or change Excel export/import structure.
+
+## Core Principle
+
+Activities should help the system understand the root of today's load without labeling the user's identity.
+
+The same Load Score can come from different roots:
+
+- clinical precision
+- standing/service work
+- deep cognitive focus
+- market decision loops
+- heat/sweat
+- sport/training
+- walking/body use
+- low sleep as recovery signal
+- rest/light base
+
+Reflection should name the day context gently and avoid profession-specific medical, financial, diagnostic, or productivity advice.
+
+## Activity-To-Root Mapping
+
+| Activity Chip / Key | Activity Load Root | Meaning | Preferred Tone | Avoid |
+| --- | --- | --- | --- | --- |
+| `dentalFocus` | `clinical_focus` | Precision, hands, eyes, nervous-system focus, responsibility toward another person. | Rest hands, eyes, and nervous system quietly. | Diagnosing stress or saying clinical work is dangerous. |
+| `clinicalShift` | `clinical_focus` | Clinical attention, patient-care responsibility, sustained precision. | Give quiet recovery the same space as detailed work. | Medical advice about the work itself. |
+| `photoshoot` | `service_standing` | Standing, walking, carrying gear, posture, holding space for others. | Recovery can include back, legs, shoulders, and eyes. | Treating it as only exercise or only office work. |
+| `officeWork` | `cognitive_deepwork` | Sustained focus, screen time, meetings, mental loops. | Rest eyes, reduce loops, return space to the brain. | Productivity praise that pushes more work. |
+| `deepWork` | `cognitive_deepwork` | Deep focus, coding, screen attention, decision fatigue. | Lower mental loops and recover attention. | Treating focus fatigue as weakness. |
+| `marketWatch` | `market_decision` | Attention, uncertainty, decision pressure, screen/market loop. | Short screen breaks and not carrying the market into sleep. | Financial advice, buy/sell suggestions, market prediction. |
+| `outdoorWork` | `outdoor_heat` | Heat, sweat, physical effort, hydration context. | Sip water in small rounds and pause from heat/body load. | Medical dehydration warning. |
+| `badminton` | `sport_sweat` | Sport, sweat, training load. | Recovery is part of training. | Push harder, train more, aggressive hydration command. |
+| `heavyPingPong` | `sport_sweat` | Higher sport intensity and sweat/training load. | Recovery follows effort. | Overtraining encouragement. |
+| `easyRun` | `sport_sweat` | Exercise load, even when light/moderate. | Let hydration and recovery follow activity. | Treating easy run as no load at all. |
+| `longRun` | `sport_sweat` | Strong endurance load. | Recovery is part of training, not a step backward. | Aggressive water or performance commands. |
+| `longWalk` | `walking_physical` | Legs, feet, back, general body use. | Give back, legs, feet, and water rhythm space. | Overstating as high-intensity sport. |
+| `lowSleep` | `recovery_low_sleep` | Recovery-only signal, not activity load. | Rest before adding another round. | Calling it high activity load. |
+| `rest` | `rest_base` | Light/rest/recovery day. | Keep a light rhythm without adding productivity pressure. | Pushing productivity because the day is open. |
+
+## Priority Rules
+
+One day can have multiple roots.
+
+Priority for primary reflection:
+
+```text
+outdoor_heat
+-> sport_sweat
+-> clinical_focus
+-> market_decision
+-> service_standing
+-> cognitive_deepwork
+-> walking_physical
+-> recovery_low_sleep
+-> rest_base
+```
+
+Rules:
+
+- `recovery_low_sleep` can coexist as a recovery modifier.
+- `rest_base` should not override stronger activity roots.
+- If no activity or no clear root exists, use existing fallback reflection behavior.
+- Roots refine wording only; they do not change scoring or saved data.
+
+## Expected Reflection Tone
+
+| Root | Expected NuTuenSai Reflection | Tomorrow / Recovery Focus |
+| --- | --- | --- |
+| `clinical_focus` | "Today used sustained precision, hands, eyes, and nervous-system focus." | Quiet recovery for hands, eyes, and nervous-system focus. |
+| `service_standing` | "Today may have used energy through standing, moving, carrying gear, and holding space for others." | Back, legs, shoulders, eyes, and distributed water. |
+| `cognitive_deepwork` | "Today used sustained focus and screen attention." | Rest eyes, reduce mental loops, return space to the brain. |
+| `market_decision` | "Today's load may come from attention and decision pressure more than body movement." | Screen breaks and not carrying the market into sleep. |
+| `outdoor_heat` | "Today included heat, sweat, or body effort." | Small water rounds and heat/body pauses. |
+| `sport_sweat` | "Today used real physical effort." | Recovery is part of training. |
+| `walking_physical` | "Today used the body through walking or movement." | Back, legs, feet, and water spread across the day. |
+| `recovery_low_sleep` | "This is a recovery signal, not a high activity-load signal." | Rest before adding another round. |
+| `rest_base` | "Today can keep a light rhythm." | Do not add productivity pressure. |
+
+## Test Scenarios
+
+| Scenario | Expected Result | Guardrail |
+| --- | --- | --- |
+| `photoshoot` selected | `service_standing` wording appears. | Do not call it only exercise. |
+| `marketWatch` selected | `market_decision` wording appears. | No financial advice or prediction. |
+| `dentalFocus` selected | `clinical_focus` wording appears. | No diagnosis or medical risk wording. |
+| `clinicalShift` selected | `clinical_focus` wording appears. | No claim that clinical work is dangerous. |
+| `outdoorWork` selected | `outdoor_heat` wording appears. | No dehydration warning. |
+| `longRun` selected | `sport_sweat` wording appears. | No push-harder language. |
+| `deepWork` selected | `cognitive_deepwork` wording appears. | No productivity praise that pushes more. |
+| `lowSleep` only | `recovery_low_sleep` wording appears. | Do not call it high activity load. |
+| `rest` only | `rest_base` / steady wording appears. | Do not push productivity. |
+| No activity selected | Existing fallback behavior remains. | Do not invent a root. |
+
+## Compatibility Boundary
+
+Activity Load Roots must not change:
+
+- activity chip UI
+- `Activities` saved value
+- `Load_Score`
+- `Load_Level`
+- `Daily_Log` columns
+- `Field_Review` columns
+- localStorage keys
+- Excel export/import structure
+
+They are a reflection wording layer only.
+
+## Guardrail Sentence
+
+Activity Load Roots should make reflection more context-aware without turning work, sport, recovery, or rest into diagnosis, identity labels, financial advice, medical advice, or productivity pressure.
 
 ---
 

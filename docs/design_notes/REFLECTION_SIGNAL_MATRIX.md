@@ -65,6 +65,22 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 | Load | deep work / cognitive load | Focus, eyes, and mental loops use energy. | Rest eyes, reduce loops, recover attention. | Treating it as only mental weakness. |
 | Load | low sleep as recovery load | Recovery-only signal, not activity load. | Base hydration plus rest. | Calling it high activity load. |
 
+## 2.1 Activity Load Root Matrix
+
+Activity Load Roots refine the reflection tone behind selected activity chips. They are presentation/reflection context only and do not change Load Score, Load Level, saved activities, or export/import schema.
+
+| Activity Scenario | Root | Expected Reflection Tone | Avoid |
+| --- | --- | --- | --- |
+| `photoshoot` | `service_standing` | Standing, moving, carrying gear, and holding space for others; recovery includes back, legs, shoulders, and eyes. | Treating it as only exercise or only office work. |
+| `marketWatch` | `market_decision` | Attention and decision pressure; short screen breaks and not carrying the market into sleep. | Financial advice, buy/sell suggestions, or market prediction. |
+| `dentalFocus` / `clinicalShift` | `clinical_focus` | Sustained precision, hands, eyes, and nervous-system focus; quiet recovery deserves space. | Diagnosis, medical-risk wording, or saying clinical work is dangerous. |
+| `outdoorWork` | `outdoor_heat` | Heat, sweat, and body effort; small water rounds and heat/body pauses. | Medical dehydration warning. |
+| `badminton` / `heavyPingPong` / `easyRun` / `longRun` | `sport_sweat` | Physical effort and training load; recovery is part of training. | Push harder or aggressive hydration commands. |
+| `deepWork` / `officeWork` | `cognitive_deepwork` | Sustained focus and screen attention; rest eyes and reduce mental loops. | Productivity praise that pushes more work. |
+| `longWalk` | `walking_physical` | Body use through walking/movement; give back, legs, feet, and water rhythm space. | Overstating it as high-intensity sport. |
+| `lowSleep` only | `recovery_low_sleep` | Recovery signal, not high activity load; rest before adding another round. | Calling low sleep a heavy activity day. |
+| `rest` only | `rest_base` | Light rhythm and recovery base. | Pushing productivity because the day is open. |
+
 ## 3. Combination Matrix
 
 | Scenario | Input Combination | Expected NuTuenSai Reflection | UX Risk | Guardrail |

@@ -311,6 +311,17 @@ const translations = {
       physical_load: "วันนี้ร่างกายได้ใช้พลังพอสมควร ให้ recovery มีพื้นที่แบบไม่ต้องเร่งเพิ่ม",
       recovery: "วันนี้มีพื้นที่ให้ระบบค่อย ๆ ฟื้นตัวและรักษาจังหวะที่อยู่ได้จริง"
     },
+    activityRootReflection: {
+      clinical_focus: "วันนี้ใช้ความละเอียด มือ ตา และสมาธิต่อเนื่อง ให้พักระบบประสาทแบบเงียบ ๆ มีพื้นที่พอ",
+      service_standing: "วันนี้ใช้พลังผ่านการยืน เดิน ถืออุปกรณ์ และดูแลจังหวะคนตรงหน้า ให้ recovery ดูแลหลัง ขา ไหล่ และสายตาด้วย",
+      cognitive_deepwork: "วันนี้ใช้สมองและสายตาต่อเนื่อง พักตา ลด loop ความคิด และคืนพื้นที่ให้สมอง",
+      market_decision: "วันนี้ load อาจมาจากการเฝ้าจังหวะและแรงตัดสินใจมากกว่าร่างกาย ปิดจอเป็นช่วง ๆ และไม่พาตลาดไปนอนก็พอ",
+      outdoor_heat: "วันนี้มีความร้อน เหงื่อ หรือแรงกายเข้ามาเกี่ยว จิบน้ำเป็นช่วง ๆ พักแดด/พักร่างกาย และไม่เร่งตัวเลข",
+      sport_sweat: "วันนี้ร่างกายใช้แรงจริง ให้ recovery เป็นส่วนหนึ่งของการซ้อม ไม่ใช่การถอยหลัง",
+      walking_physical: "วันนี้ร่างกายถูกใช้ผ่านการเดินหรือเคลื่อนไหว คืนพื้นที่ให้หลัง ขา เท้า และดื่มน้ำให้กระจาย",
+      recovery_low_sleep: "วันนี้เป็นสัญญาณ recovery ไม่ใช่ activity load สูง ให้พักมาก่อนการเพิ่มรอบใหม่",
+      rest_base: "วันนี้เหมาะกับการรักษาจังหวะเบา ๆ ไม่ต้องเพิ่มอะไรเพราะรู้สึกว่าว่าง"
+    },
     loadLevel: {
       light: "Load เบา",
       medium: "Load กลาง",
@@ -362,6 +373,17 @@ const translations = {
       physical_load: "คืนพื้นที่ให้ร่างกายด้วยการขยับเบา ๆ และพักให้พอดี",
       sleep_debt_load: "ให้การนอนและ recovery มาก่อนการเพิ่ม load รอบใหม่",
       recovery: "รักษาความสม่ำเสมอ ไม่ต้องเพิ่มอะไรเกินจำเป็น"
+    },
+    tomorrowFocusByActivityRoot: {
+      clinical_focus: "พักมือ ตา และระบบประสาทแบบเบา ๆ",
+      service_standing: "คืนพื้นที่ให้หลัง ขา ไหล่ และสายตา",
+      cognitive_deepwork: "พักตา ลด loop ความคิด และคืนพื้นที่ให้สมอง",
+      market_decision: "พักสายตา ปิดจอเป็นช่วง ๆ และไม่พาตลาดไปนอน",
+      outdoor_heat: "จิบน้ำเป็นช่วง ๆ และพักแดดหรือพักร่างกาย",
+      sport_sweat: "ให้ recovery เป็นส่วนหนึ่งของการซ้อม",
+      walking_physical: "คืนพื้นที่ให้หลัง ขา เท้า และดื่มน้ำให้กระจาย",
+      recovery_low_sleep: "ให้ recovery มาก่อนการเพิ่มรอบใหม่",
+      rest_base: "รักษาจังหวะเบา ๆ โดยไม่ต้องเพิ่ม productivity"
     },
     options: {
       energy: { low: "ต่ำ", medium: "กลาง", good: "ดี" },
@@ -733,6 +755,17 @@ const translations = {
       physical_load: "Today used some body energy. Let recovery have space without adding more too quickly.",
       recovery: "Today has room for the system to recover and keep a rhythm that can last."
     },
+    activityRootReflection: {
+      clinical_focus: "Today used sustained precision, hands, eyes, and nervous-system focus. Quiet recovery deserves space too.",
+      service_standing: "Today may have used energy through standing, moving, carrying gear, and holding space for others. Let recovery include the back, legs, shoulders, and eyes.",
+      cognitive_deepwork: "Today used sustained focus and screen attention. Rest the eyes, lower the mental loop, and return space to the brain.",
+      market_decision: "Today’s load may come from attention and decision pressure more than body movement. Short screen breaks and not carrying the market into sleep may be enough.",
+      outdoor_heat: "Today included heat, sweat, or body effort. Sip water in small rounds, pause from heat/body load, and do not rush the number.",
+      sport_sweat: "Today used real physical effort. Recovery is part of training, not a step backward.",
+      walking_physical: "Today used the body through walking or movement. Give space back to the back, legs, feet, and spread water across the day.",
+      recovery_low_sleep: "This is a recovery signal, not a high activity-load signal. Let rest come before adding another round.",
+      rest_base: "Today can keep a light rhythm. There is no need to add productivity just because space is available."
+    },
     loadLevel: {
       light: "Light Load",
       medium: "Moderate Load",
@@ -784,6 +817,17 @@ const translations = {
       physical_load: "Return space to the body with light movement and enough rest.",
       sleep_debt_load: "Let sleep and recovery come before adding another load round.",
       recovery: "Keep consistency without adding more than the day asks for."
+    },
+    tomorrowFocusByActivityRoot: {
+      clinical_focus: "Give the hands, eyes, and nervous-system focus a quiet recovery window.",
+      service_standing: "Give the back, legs, shoulders, and eyes some recovery space.",
+      cognitive_deepwork: "Rest the eyes, lower the mental loop, and return space to the brain.",
+      market_decision: "Rest the eyes, close screens in small windows, and do not carry the market into sleep.",
+      outdoor_heat: "Sip water in small rounds and take short heat/body pauses.",
+      sport_sweat: "Let recovery be part of training.",
+      walking_physical: "Give the back, legs, and feet space, with water spread across the day.",
+      recovery_low_sleep: "Let recovery come before adding another round.",
+      rest_base: "Keep a light rhythm without adding productivity pressure."
     },
     options: {
       energy: { low: "Low", medium: "Medium", good: "Good" },
@@ -1155,6 +1199,17 @@ const translations = {
       physical_load: "今天身体用了不少能量，给 recovery 一点空间，不需要太快再增加。",
       recovery: "今天有空间让系统慢慢恢复，并维持可持续的节奏。"
     },
+    activityRootReflection: {
+      clinical_focus: "今天用了持续的精细度、手、眼睛和神经系统专注力。安静恢复也需要空间。",
+      service_standing: "今天的能量可能用在站立、走动、拿设备和照顾眼前人的节奏。让后背、腿、肩膀和眼睛也有恢复空间。",
+      cognitive_deepwork: "今天用了持续专注和屏幕注意力。让眼睛休息，降低 mental loop，把空间还给大脑。",
+      market_decision: "今天的负荷可能更多来自注意力和决策压力，而不是身体活动。短暂离开屏幕，也不要把市场带进睡眠里。",
+      outdoor_heat: "今天有炎热、出汗或身体用力。分段小口补水，给身体短暂停顿，不需要急着追数字。",
+      sport_sweat: "今天身体确实用了力。Recovery 是训练的一部分，不是退后。",
+      walking_physical: "今天身体通过走路或活动用了力。把空间还给后背、腿和脚，也把喝水分散到一天里。",
+      recovery_low_sleep: "这是 recovery 信号，不是高 activity load。先休息，再增加新的回合。",
+      rest_base: "今天可以维持轻一点的节奏，不需要因为有空就增加 productivity。"
+    },
     loadLevel: {
       light: "Load 轻",
       medium: "Load 中",
@@ -1206,6 +1261,17 @@ const translations = {
       physical_load: "用轻一点的活动和足够休息，把空间还给身体。",
       sleep_debt_load: "先把睡眠和 recovery 放前面，再增加新的 load。",
       recovery: "维持稳定，不需要增加超过今天所需的东西。"
+    },
+    tomorrowFocusByActivityRoot: {
+      clinical_focus: "给手、眼睛和神经系统专注力一个安静恢复的窗口。",
+      service_standing: "把空间还给后背、腿、肩膀和眼睛。",
+      cognitive_deepwork: "休息眼睛，降低 mental loop，把空间还给大脑。",
+      market_decision: "让眼睛休息，分段关掉屏幕，也不要把市场带进睡眠里。",
+      outdoor_heat: "分段小口补水，也给炎热或身体 load 短暂停顿。",
+      sport_sweat: "让 recovery 成为训练的一部分。",
+      walking_physical: "把空间还给后背、腿和脚，也把喝水分散到一天里。",
+      recovery_low_sleep: "先 recovery，再增加新的回合。",
+      rest_base: "维持轻一点的节奏，不需要增加 productivity 压力。"
     },
     options: {
       energy: { low: "低", medium: "中", good: "好" },
@@ -1363,6 +1429,33 @@ const loadTypePriority = [
   "cognitive_load",
   "physical_load",
   "recovery"
+];
+const activityLoadRootByActivityKey = {
+  dentalFocus: "clinical_focus",
+  clinicalShift: "clinical_focus",
+  photoshoot: "service_standing",
+  officeWork: "cognitive_deepwork",
+  deepWork: "cognitive_deepwork",
+  marketWatch: "market_decision",
+  outdoorWork: "outdoor_heat",
+  badminton: "sport_sweat",
+  heavyPingPong: "sport_sweat",
+  easyRun: "sport_sweat",
+  longRun: "sport_sweat",
+  longWalk: "walking_physical",
+  lowSleep: "recovery_low_sleep",
+  rest: "rest_base"
+};
+const activityLoadRootPriority = [
+  "outdoor_heat",
+  "sport_sweat",
+  "clinical_focus",
+  "market_decision",
+  "service_standing",
+  "cognitive_deepwork",
+  "walking_physical",
+  "recovery_low_sleep",
+  "rest_base"
 ];
 
 const todayIso = new Date().toLocaleDateString("en-CA");
@@ -2295,7 +2388,8 @@ function getLoadFeedback() {
   const signals = buildSignals();
   const hasHeavyCombo = signals.recoveryLoad.hasHeavyCombo;
   const highLoadWithLowSleep = signals.recoveryLoad.loadScore >= 6 && signals.recoveryLoad.loadTypes.includes("sleep_debt_load");
-  const loadTypeNote = getLoadTypeReflections(signals, { limit: 2 }).join(" ");
+  const rootNote = getActivityRootReflections(signals, { limit: 2 }).join(" ");
+  const loadTypeNote = rootNote || getLoadTypeReflections(signals, { limit: 2 }).join(" ");
 
   if (loadTypeNote) {
     return loadTypeNote;
@@ -2367,9 +2461,12 @@ function getDrinkLoadSignal(scores = getDrinkScores()) {
 function getRecoveryLoadSignal(loadScore = calculateLoadScore()) {
   const activities = appState.activities || [];
   const loadTypes = getSelectedLoadTypes(activities);
+  const activityLoadRoots = getActivityLoadRoots(activities);
   return {
     activities,
     loadTypes,
+    activityLoadRoots,
+    primaryActivityLoadRoot: getPrimaryActivityLoadRoot(activityLoadRoots),
     primaryLoadType: getPrimaryLoadType(loadTypes),
     loadScore,
     high: loadScore >= 6,
@@ -2387,6 +2484,28 @@ function getSelectedLoadTypes(activities = appState.activities || []) {
     .map((activity) => activity.type))];
 }
 
+function getActivityLoadRoots(activities = appState.activities || []) {
+  const roots = [...new Set(activities
+    .map(getActivityOptionByValue)
+    .filter(Boolean)
+    .map((activity) => activityLoadRootByActivityKey[activity.key])
+    .filter(Boolean))];
+
+  if (roots.length > 1 && roots.includes("rest_base")) {
+    return roots.filter((root) => root !== "rest_base");
+  }
+
+  return roots;
+}
+
+function getPrimaryActivityLoadRoot(activityLoadRoots = []) {
+  return activityLoadRootPriority.find((root) => activityLoadRoots.includes(root)) || "";
+}
+
+function getOrderedActivityLoadRoots(activityLoadRoots = []) {
+  return activityLoadRootPriority.filter((root) => activityLoadRoots.includes(root));
+}
+
 function getPrimaryLoadType(loadTypes = []) {
   return loadTypePriority.find((type) => loadTypes.includes(type)) || "";
 }
@@ -2402,13 +2521,29 @@ function getLoadTypeReflections(signals = buildSignals(), { includeRecovery = fa
     .map((type) => t(`loadTypeReflection.${type}`));
 }
 
+function getActivityRootReflections(signals = buildSignals(), { includeRecovery = true, limit = 1 } = {}) {
+  return getOrderedActivityLoadRoots(signals.recoveryLoad.activityLoadRoots)
+    .filter((root) => includeRecovery || (root !== "recovery_low_sleep" && root !== "rest_base"))
+    .slice(0, limit)
+    .map((root) => t(`activityRootReflection.${root}`));
+}
+
 function getLoadTypeReflection(signals = buildSignals()) {
   return getLoadTypeReflections(signals, { limit: 1 })[0] || "";
+}
+
+function getActivityRootReflection(signals = buildSignals()) {
+  return getActivityRootReflections(signals, { limit: 1 })[0] || "";
 }
 
 function getLoadTypeTomorrowFocus(signals = buildSignals()) {
   const type = getOrderedLoadTypes(signals.recoveryLoad.loadTypes)[0];
   return type ? t(`tomorrowFocusByLoadType.${type}`) : "";
+}
+
+function getActivityRootTomorrowFocus(signals = buildSignals()) {
+  const root = getOrderedActivityLoadRoots(signals.recoveryLoad.activityLoadRoots)[0];
+  return root ? t(`tomorrowFocusByActivityRoot.${root}`) : "";
 }
 
 function getEnergySleepSignal(loadScore = calculateLoadScore()) {
@@ -2705,7 +2840,7 @@ function truncateText(value, limit) {
 function buildReflectionFromSignals(signals) {
   const goodThings = [];
   const adjustments = [];
-  const loadTypeAdjustments = getLoadTypeReflections(signals, { limit: 2 });
+  const loadTypeAdjustments = getActivityRootReflections(signals, { limit: 2 });
   const sweetnessInsight = signals.drinkLoad.sweetnessInsight;
 
   if (signals.hydration.steady && signals.recoveryLoad.light) {
@@ -2826,6 +2961,8 @@ function getMindNoteSummary() {
 function getRecoveryNote(signals = buildSignals()) {
   if (signals.energySleep.endorphinBlindSpot) return t("recoveryNote.endorphin");
   if (signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("recoveryNote.sleepLoadHigh");
+  const activityRootNote = getActivityRootReflection(signals);
+  if (activityRootNote) return activityRootNote;
   const loadTypeNote = getLoadTypeReflection(signals);
   if (loadTypeNote) return loadTypeNote;
   if (signals.recoveryLoad.high) return t("recoveryNote.high");
@@ -2848,6 +2985,8 @@ function getTomorrowFocus(signals = buildSignals()) {
   if (signals.hydration.low && signals.drinkLoad.caffeineHigh) return t("tomorrowFocus.water");
   if (signals.hydration.belowAdaptiveRange) return t("tomorrowFocus.hydrationLoad");
   if (signals.hydration.recoveryOnlyHydration && (signals.hydration.low || signals.hydration.rising)) return t("tomorrowFocus.hydrationRecovery");
+  const activityRootFocus = getActivityRootTomorrowFocus(signals);
+  if (activityRootFocus) return activityRootFocus;
   const loadTypeFocus = getLoadTypeTomorrowFocus(signals);
   if (loadTypeFocus) return loadTypeFocus;
   if (signals.drinkLoad.caffeineHigh) return t("tomorrowFocus.caffeine");
