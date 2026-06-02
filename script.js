@@ -3247,14 +3247,35 @@ function exportMasterExcel() {
     header: ["Section", "Value"]
   });
   const fieldReviewSheet = XLSX.utils.json_to_sheet([buildFieldReview(rows)]);
+  const columnGuideSheet = XLSX.utils.json_to_sheet(buildColumnGuideRows(), {
+    header: ["Sheet", "Column", "Thai_Label", "English_Label", "Meaning", "AI_Reading_Note", "Example_Value", "Is_Canonical"]
+  });
+
+  applySheetReadability(dailySheet, [14, 12, 16, 12, 14, 28, 18, 34, 14, 16, 18, 22, 28, 28, 12, 14, 28, 28, 30, 24, 24, 24]);
+  applySheetReadability(summarySheet, [14, 14, 18, 16, 16, 18, 20, 72]);
+  applySheetReadability(reflectionSheet, [14, 30, 22, 22, 72]);
+  applySheetReadability(fieldContextSheet, [28, 90]);
+  applySheetReadability(fieldReviewSheet, [20, 20, 14, 18, 18, 18, 16, 22, 22, 22, 22, 22, 18, 18, 18, 24, 36, 92, 92, 92]);
+  applySheetReadability(columnGuideSheet, [18, 26, 28, 28, 58, 78, 28, 14]);
 
   XLSX.utils.book_append_sheet(workbook, dailySheet, "Daily_Log");
   XLSX.utils.book_append_sheet(workbook, summarySheet, "Summary");
   XLSX.utils.book_append_sheet(workbook, reflectionSheet, "Reflections");
   XLSX.utils.book_append_sheet(workbook, fieldContextSheet, "Field_Context");
   XLSX.utils.book_append_sheet(workbook, fieldReviewSheet, "Field_Review");
+  XLSX.utils.book_append_sheet(workbook, columnGuideSheet, "Column_Guide");
   XLSX.writeFile(workbook, "Mindful_Health_Balance_Master.xlsx");
   document.querySelector("#saveStatus").textContent = t("exportedMaster");
+}
+
+function applySheetReadability(sheet, widths = []) {
+  if (!sheet) return;
+  if (widths.length) {
+    sheet["!cols"] = widths.map((wch) => ({ wch }));
+  }
+  if (sheet["!ref"]) {
+    sheet["!autofilter"] = { ref: sheet["!ref"] };
+  }
 }
 
 function buildFieldContextRows() {
@@ -3295,6 +3316,466 @@ function buildFieldContextRows() {
       Section: "App_Concept",
       Value: "Portable Field Memory / LLI Field Dataset / Personal Rhythm Dataset."
     }
+  ];
+}
+
+function buildColumnGuideRows() {
+  const row = ({
+    sheet,
+    column,
+    thai,
+    english,
+    meaning,
+    aiNote,
+    example = "",
+    canonical = true
+  }) => ({
+    Sheet: sheet,
+    Column: column,
+    Thai_Label: thai,
+    English_Label: english,
+    Meaning: meaning,
+    AI_Reading_Note: aiNote,
+    Example_Value: example,
+    Is_Canonical: canonical ? "yes" : "no"
+  });
+
+  return [
+    row({
+      sheet: "Daily_Log",
+      column: "Date",
+      thai: "วันที่",
+      english: "Date",
+      meaning: "วันที่ของบันทึกหนึ่ง row",
+      aiNote: "Use as the primary daily timeline key. Do not infer frequency beyond available rows.",
+      example: "2026-06-03"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Energy",
+      thai: "พลังงานวันนี้",
+      english: "Energy",
+      meaning: "ระดับพลังงานที่ผู้ใช้เลือกในวันนั้น",
+      aiNote: "Read as a self-reported pattern signal, not a performance score.",
+      example: "ต่ำ / Medium / ดี"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Mind",
+      thai: "ใจโดยรวมวันนี้",
+      english: "Overall mind today",
+      meaning: "สภาพใจโดยรวมของวัน เช่น เฉย ๆ กังวล ผ่อนคลาย",
+      aiNote: "Read as context for pattern reflection. Do not diagnose emotion or assume identity.",
+      example: "ผ่อนคลาย"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Sleep",
+      thai: "การนอน",
+      english: "Sleep",
+      meaning: "คุณภาพ/ปริมาณการนอนที่ผู้ใช้เลือก",
+      aiNote: "Low sleep is a recovery signal, not a diagnosis or health risk prediction.",
+      example: "น้อย / Low / 低"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Water_ml",
+      thai: "ปริมาณน้ำดื่ม (มล.)",
+      english: "Water in milliliters",
+      meaning: "ปริมาณน้ำเปล่าที่บันทึกโดยประมาณ",
+      aiNote: "Use as hydration context and self-care cue. Do not turn into medical advice.",
+      example: "2268"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Drinks",
+      thai: "เครื่องดื่มอื่น",
+      english: "Other drinks",
+      meaning: "สรุปเครื่องดื่มอื่นที่ไม่ใช่น้ำเปล่าในวันนั้น",
+      aiNote: "Read alongside sweetness, caffeine, and Drink_Profile_JSON.",
+      example: "กาแฟนม | น้ำอัดลม"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Sweet_Drinks_Count",
+      thai: "จำนวนเครื่องดื่มที่มีความหวาน",
+      english: "Sweet drink count",
+      meaning: "จำนวนรายการเครื่องดื่มที่มี sweetness score ระดับนับเป็น sweet load",
+      aiNote: "Drink-load signal, not a moral score. One row can contain multiple drinks.",
+      example: "1"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Drink_Profile_JSON",
+      thai: "รายละเอียดเครื่องดื่มแบบ JSON",
+      english: "Structured drink profile JSON",
+      meaning: "ข้อมูล structured ของ drink type, sweetness, caffeine, milk และ amount",
+      aiNote: "Use this for robust drink interpretation. Soda is not automatically sweet; read sweetness field.",
+      example: "[{\"type\":\"soda\",\"sweetness\":\"low\"}]"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Sugar_Score",
+      thai: "คะแนนความหวานรวม",
+      english: "Sugar score",
+      meaning: "คะแนนรวมจากระดับ Sweetness ของเครื่องดื่ม",
+      aiNote: "Use as a drink-load signal only, not diet advice or medical interpretation.",
+      example: "2"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Caffeine_Score",
+      thai: "คะแนนคาเฟอีนรวม",
+      english: "Caffeine score",
+      meaning: "คะแนนรวมจากระดับคาเฟอีนของเครื่องดื่ม",
+      aiNote: "Read with sleep, energy, hydration, and recovery. Do not judge coffee as wrong.",
+      example: "2"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Milk_Drink_Count",
+      thai: "จำนวนเครื่องดื่มใส่นม",
+      english: "Milk drink count",
+      meaning: "จำนวนเครื่องดื่มที่เลือก Milk = yes",
+      aiNote: "Descriptive drink context only.",
+      example: "1"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Hydration_Support_Count",
+      thai: "จำนวนเครื่องดื่มที่ช่วยเป็น hydration context",
+      english: "Hydration support count",
+      meaning: "จำนวนเครื่องดื่มที่อาจช่วยเป็น hydration support แบบอ่อน ๆ",
+      aiNote: "Use gently with water base. Do not replace plain water interpretation automatically.",
+      example: "1"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Activities",
+      thai: "กิจกรรม / load วันนี้",
+      english: "Activities",
+      meaning: "กิจกรรมที่ผู้ใช้เลือกใน Load & Recovery",
+      aiNote: "Use for activity load roots. Do not infer profession or identity.",
+      example: "Deep work / coding นาน | นอนน้อย"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Energy_Causes",
+      thai: "เหตุที่เกี่ยวกับพลังงาน",
+      english: "Energy causes",
+      meaning: "เหตุที่อาจทำให้พลังงานลดลงหรือช่วยพยุงพลังงาน",
+      aiNote: "Layered signal. Support factors are not performance scores.",
+      example: "sleep_low | light_mind"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Load_Score",
+      thai: "คะแนน load",
+      english: "Load score",
+      meaning: "คะแนนรวมจาก activity/load ที่เลือก",
+      aiNote: "Use as rough load context, not a judgment of user effort.",
+      example: "6"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Load_Level",
+      thai: "ระดับ load",
+      english: "Load level",
+      meaning: "ระดับ load แบบอ่านง่าย เช่น เบา กลาง สูง",
+      aiNote: "High load should invite recovery, not pressure or blame.",
+      example: "Load สูง"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Hydration_Status",
+      thai: "สถานะน้ำ / hydration cue",
+      english: "Hydration status",
+      meaning: "ข้อความสะท้อน hydration ของวัน",
+      aiNote: "Self-care cue only. Not medical hydration advice.",
+      example: "น้ำเปล่ายังเป็นฐานที่ดี"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Tomorrow_Focus",
+      thai: "โฟกัสพรุ่งนี้",
+      english: "Tomorrow focus",
+      meaning: "คำชวนดูแลต่อวันถัดไปแบบสั้น",
+      aiNote: "Read as gentle next self-care cue, not instruction.",
+      example: "ให้ recovery มาก่อนการเพิ่มรอบใหม่"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "NuTuenSai_Reminder",
+      thai: "ข้อความเตือนใจ NuTuenSai",
+      english: "NuTuenSai reminder",
+      meaning: "ข้อความสะท้อน pattern ของวันแบบอ่อนโยน",
+      aiNote: "Pattern reflection only. Do not treat as diagnosis or therapy.",
+      example: "วันนี้ใช้สมองและสายตาต่อเนื่อง"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Mind_Note_Text",
+      thai: "ข้อความ Mind Note",
+      english: "Mind note text",
+      meaning: "บันทึกใจหนึ่งบรรทัดของวันนั้น",
+      aiNote: "User-owned inner context. Read gently and do not over-interpret.",
+      example: "วันนี้ใจถือเรื่องงานไว้เยอะ"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Mind_Note_Feeling",
+      thai: "ความรู้สึกของบันทึกนี้",
+      english: "Mind note feeling",
+      meaning: "feeling tone ของ Mind Note เฉพาะบันทึกนั้น",
+      aiNote: "Note-level feeling, not whole-day diagnosis.",
+      example: "uneasy"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Mind_Note_Support",
+      thai: "สิ่งที่อยากได้รับการพยุง",
+      english: "Mind note support need",
+      meaning: "support need ที่ผู้ใช้เลือกสำหรับบันทึกนั้น",
+      aiNote: "Use as user agency signal, not a command.",
+      example: "rest_first"
+    }),
+    row({
+      sheet: "Summary",
+      column: "Total_Logs",
+      thai: "จำนวน log ทั้งหมด",
+      english: "Total logs",
+      meaning: "จำนวน row จาก Daily_Log ใน export",
+      aiNote: "Row count, not necessarily unique days.",
+      example: "14"
+    }),
+    row({
+      sheet: "Summary",
+      column: "Unique_Days",
+      thai: "จำนวนวันที่ไม่ซ้ำ",
+      english: "Unique days",
+      meaning: "จำนวน Date ที่ไม่ซ้ำและไม่ว่าง",
+      aiNote: "Use when reasoning about day count.",
+      example: "14"
+    }),
+    row({
+      sheet: "Summary",
+      column: "Average_Water_ml",
+      thai: "ค่าเฉลี่ยน้ำ (มล.)",
+      english: "Average water",
+      meaning: "ค่าเฉลี่ย Water_ml แบบ rounded",
+      aiNote: "Descriptive summary only.",
+      example: "2268"
+    }),
+    row({
+      sheet: "Summary",
+      column: "High_Load_Days",
+      thai: "จำนวนวันที่ load สูง",
+      english: "High-load days",
+      meaning: "จำนวน row ที่เข้าเงื่อนไข high load",
+      aiNote: "Invite recovery reflection, not blame.",
+      example: "3"
+    }),
+    row({
+      sheet: "Summary",
+      column: "Low_Sleep_Days",
+      thai: "จำนวนวันที่มีสัญญาณนอนน้อย",
+      english: "Low-sleep days",
+      meaning: "จำนวน row ที่มี low sleep signal จาก Sleep, Energy_Causes หรือ Activities",
+      aiNote: "Recovery signal, not diagnosis.",
+      example: "3"
+    }),
+    row({
+      sheet: "Summary",
+      column: "Sweet_Drink_Days",
+      thai: "จำนวนวันที่มี drink-load จากความหวาน",
+      english: "Sweet-drink days",
+      meaning: "จำนวน row ที่มี sweet drink load ตาม helper เดียวกับ Field_Review",
+      aiNote: "Drink-load signal, not moral score.",
+      example: "1"
+    }),
+    row({
+      sheet: "Summary",
+      column: "Most_Common_Mind",
+      thai: "ใจโดยรวมที่พบบ่อยที่สุด",
+      english: "Most common mind state",
+      meaning: "ค่า Mind ที่พบบ่อยที่สุดจาก log ที่ไม่ว่าง",
+      aiNote: "Descriptive mode only. Mixed languages may count separately.",
+      example: "ผ่อนคลาย"
+    }),
+    row({
+      sheet: "Summary",
+      column: "Summary_Note",
+      thai: "ข้อความกำกับ Summary",
+      english: "Summary note",
+      meaning: "ข้อความคงที่ที่อธิบาย boundary ของ Summary",
+      aiNote: "Static guardrail note, not data-derived AI analysis.",
+      example: "Pattern reflection, not judgment"
+    }),
+    row({
+      sheet: "Reflections",
+      column: "Date",
+      thai: "วันที่",
+      english: "Date",
+      meaning: "วันที่ของ reflection row",
+      aiNote: "Join with Daily_Log by Date when needed.",
+      example: "2026-06-03"
+    }),
+    row({
+      sheet: "Reflections",
+      column: "Mind_Note_Text",
+      thai: "ข้อความ Mind Note",
+      english: "Mind note text",
+      meaning: "Mind Note text copied for reflection review",
+      aiNote: "Read as user-owned context.",
+      example: "วันนี้ใจถือเรื่องงานไว้เยอะ"
+    }),
+    row({
+      sheet: "Reflections",
+      column: "Mind_Note_Feeling",
+      thai: "ความรู้สึกของบันทึกนี้",
+      english: "Mind note feeling",
+      meaning: "Feeling tone of that Mind Note",
+      aiNote: "Note-level signal only.",
+      example: "uneasy"
+    }),
+    row({
+      sheet: "Reflections",
+      column: "Mind_Note_Support",
+      thai: "สิ่งที่อยากได้รับการพยุง",
+      english: "Mind note support need",
+      meaning: "Support need selected with Mind Note",
+      aiNote: "Preserve user agency.",
+      example: "set_down"
+    }),
+    row({
+      sheet: "Reflections",
+      column: "Reflection_Text",
+      thai: "ข้อความ Reflection",
+      english: "Reflection text",
+      meaning: "Generated or edited reflection saved by the user",
+      aiNote: "Use as user-approved reflection text, not clinical conclusion.",
+      example: "วันนี้ใช้สมองและสายตาต่อเนื่อง 🩵"
+    }),
+    row({
+      sheet: "Field_Context",
+      column: "Section",
+      thai: "หัวข้อบริบท",
+      english: "Context section",
+      meaning: "หัวข้อของ workbook boundary/context",
+      aiNote: "Read before interpreting data.",
+      example: "AI_Reading_Boundary",
+      canonical: false
+    }),
+    row({
+      sheet: "Field_Context",
+      column: "Value",
+      thai: "รายละเอียดบริบท",
+      english: "Context value",
+      meaning: "คำอธิบายขอบเขตการอ่าน workbook",
+      aiNote: "Follow these boundaries when using the workbook.",
+      example: "Do not use it for diagnosis.",
+      canonical: false
+    }),
+    row({
+      sheet: "Field_Review",
+      column: "Review_Period_Start",
+      thai: "วันเริ่มต้นช่วง review",
+      english: "Review period start",
+      meaning: "วันที่แรกใน log ที่ใช้สร้าง Field_Review",
+      aiNote: "Use as descriptive period boundary.",
+      example: "2026-06-01",
+      canonical: false
+    }),
+    row({
+      sheet: "Field_Review",
+      column: "Review_Period_End",
+      thai: "วันสิ้นสุดช่วง review",
+      english: "Review period end",
+      meaning: "วันที่สุดท้ายใน log ที่ใช้สร้าง Field_Review",
+      aiNote: "Use as descriptive period boundary.",
+      example: "2026-06-14",
+      canonical: false
+    }),
+    row({
+      sheet: "Field_Review",
+      column: "Total_Days",
+      thai: "จำนวน row ในช่วง review",
+      english: "Total days/log rows",
+      meaning: "จำนวน clean rows ที่ Field_Review ใช้",
+      aiNote: "Descriptive review count; do not overstate as complete behavior history.",
+      example: "14",
+      canonical: false
+    }),
+    row({
+      sheet: "Field_Review",
+      column: "Average_Water_ml",
+      thai: "ค่าเฉลี่ยน้ำในช่วง review",
+      english: "Average water in review",
+      meaning: "ค่าเฉลี่ย Water_ml จาก rows ใน Field_Review",
+      aiNote: "Descriptive summary only.",
+      example: "2268",
+      canonical: false
+    }),
+    row({
+      sheet: "Field_Review",
+      column: "High_Load_Days",
+      thai: "จำนวนวันที่ load สูง",
+      english: "High-load days",
+      meaning: "จำนวน rows ที่เข้าเงื่อนไข high load",
+      aiNote: "Use to ask gentle recovery questions, not to judge.",
+      example: "3",
+      canonical: false
+    }),
+    row({
+      sheet: "Field_Review",
+      column: "Low_Energy_Days",
+      thai: "จำนวนวันที่พลังงานต่ำ",
+      english: "Low-energy days",
+      meaning: "จำนวน rows ที่ Energy เป็น low",
+      aiNote: "Pattern signal, not diagnosis.",
+      example: "2",
+      canonical: false
+    }),
+    row({
+      sheet: "Field_Review",
+      column: "Common_Mind_States",
+      thai: "ใจโดยรวมที่พบบ่อย",
+      english: "Common mind states",
+      meaning: "Mind states ที่พบบ่อยพร้อมจำนวน",
+      aiNote: "Use as descriptive starting point, not personality inference.",
+      example: "ผ่อนคลาย (5) | กังวล (2)",
+      canonical: false
+    }),
+    row({
+      sheet: "Field_Review",
+      column: "Drink_Load_Observation",
+      thai: "ข้อสังเกต drink-load",
+      english: "Drink-load observation",
+      meaning: "ข้อความ descriptive summary เรื่อง sweetness/soda/caffeine context",
+      aiNote: "Drink-load signal only. Avoid guilt, diet advice, or medical advice.",
+      example: "Some drink sweetness appears...",
+      canonical: false
+    }),
+    row({
+      sheet: "Field_Review",
+      column: "Gentle_Observation",
+      thai: "ข้อสังเกตแบบอ่อนโยน",
+      english: "Gentle observation",
+      meaning: "ข้อความกำกับการอ่าน Field_Review แบบไม่ตัดสิน",
+      aiNote: "Use as review boundary and tone cue.",
+      example: "Look for relationships gently...",
+      canonical: false
+    }),
+    row({
+      sheet: "Field_Review",
+      column: "Non_Diagnostic_Note",
+      thai: "หมายเหตุไม่ใช่การวินิจฉัย",
+      english: "Non-diagnostic note",
+      meaning: "ข้อความย้ำว่า Field_Review เป็น descriptive summary",
+      aiNote: "Must be respected by AI and future v2.0 review flows.",
+      example: "Not medical advice, not diagnosis.",
+      canonical: false
+    })
   ];
 }
 

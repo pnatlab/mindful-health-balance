@@ -6,20 +6,21 @@ This bundle combines the key design notes for Mindful Health Balance v1.9 and th
 
 1. [Source: PORTABLE_FIELD_MEMORY_DESIGN.md](#source-portable-field-memory-designmd)
 2. [Source: EXCEL_SUMMARY_REFINEMENT.md](#source-excel-summary-refinementmd)
-3. [Source: HYDRATION_ADAPTIVE_GUIDANCE.md](#source-hydration-adaptive-guidancemd)
-4. [Source: DRINK_SWEETNESS_INSIGHT.md](#source-drink-sweetness-insightmd)
-5. [Source: MIND_STATE_WORDING_DECISION.md](#source-mind-state-wording-decisionmd)
-6. [Source: MIND_NOTE_FEELING_OPTIONS.md](#source-mind-note-feeling-optionsmd)
-7. [Source: MIND_STATE_POSITIVE_OPTIONS.md](#source-mind-state-positive-optionsmd)
-8. [Source: ENERGY_CAUSE_ALIGNMENT.md](#source-energy-cause-alignmentmd)
-9. [Source: REFLECTION_PRESENTATION_DECISION.md](#source-reflection-presentation-decisionmd)
-10. [Source: REFLECTION_PAGE_LAYOUT_DECISION.md](#source-reflection-page-layout-decisionmd)
-11. [Source: REFLECTION_GENERATION_MOMENT.md](#source-reflection-generation-momentmd)
-12. [Source: REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrixmd)
-13. [Source: ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrixmd)
-14. [Source: V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklistmd)
-15. [Source: FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2md)
-16. [Source: NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2md)
+3. [Source: EXCEL_COLUMN_GUIDE_DESIGN.md](#source-excel-column-guide-designmd)
+4. [Source: HYDRATION_ADAPTIVE_GUIDANCE.md](#source-hydration-adaptive-guidancemd)
+5. [Source: DRINK_SWEETNESS_INSIGHT.md](#source-drink-sweetness-insightmd)
+6. [Source: MIND_STATE_WORDING_DECISION.md](#source-mind-state-wording-decisionmd)
+7. [Source: MIND_NOTE_FEELING_OPTIONS.md](#source-mind-note-feeling-optionsmd)
+8. [Source: MIND_STATE_POSITIVE_OPTIONS.md](#source-mind-state-positive-optionsmd)
+9. [Source: ENERGY_CAUSE_ALIGNMENT.md](#source-energy-cause-alignmentmd)
+10. [Source: REFLECTION_PRESENTATION_DECISION.md](#source-reflection-presentation-decisionmd)
+11. [Source: REFLECTION_PAGE_LAYOUT_DECISION.md](#source-reflection-page-layout-decisionmd)
+12. [Source: REFLECTION_GENERATION_MOMENT.md](#source-reflection-generation-momentmd)
+13. [Source: REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrixmd)
+14. [Source: ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrixmd)
+15. [Source: V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklistmd)
+16. [Source: FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2md)
+17. [Source: NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2md)
 
 ---
 
@@ -263,6 +264,134 @@ It does not change:
 ## Guardrail Sentence
 
 The Summary sheet should be useful and honest: calculated where it claims to summarize data, and clearly labeled when it contains a static guardrail note.
+
+---
+
+# Source: EXCEL_COLUMN_GUIDE_DESIGN.md
+
+# Excel Column Guide Design
+
+## Purpose
+
+`Column_Guide` is a new workbook sheet for Mindful Health Balance v1.9.x.
+
+It makes the Excel export easier for Thai users to read while keeping the workbook machine-readable for AI, future v2.0 parsers, and Field Review Companion.
+
+## Core Decision
+
+Keep canonical sheet headers unchanged.
+
+Do not rename `Daily_Log` headers such as:
+
+- `Water_ml`
+- `Sleep`
+- `Mind`
+- `Load_Score`
+- `Drink_Profile_JSON`
+- `Mind_Note_Feeling`
+
+Do not add a Thai label row below the headers in `Daily_Log`.
+
+Instead, add a separate `Column_Guide` sheet.
+
+## Column Guide Schema
+
+`Column_Guide` uses these columns:
+
+| Column | Meaning |
+| --- | --- |
+| `Sheet` | Workbook sheet name where the column appears. |
+| `Column` | Canonical column name. |
+| `Thai_Label` | Human-readable Thai label. |
+| `English_Label` | Human-readable English label. |
+| `Meaning` | Plain description of what the column stores. |
+| `AI_Reading_Note` | Safe reading guidance for AI/dev agents. |
+| `Example_Value` | Example value for orientation. |
+| `Is_Canonical` | Whether the column is part of the canonical machine-readable surface. |
+
+## Included Sheets
+
+The guide includes key columns from:
+
+- `Daily_Log`
+- `Summary`
+- `Reflections`
+- `Field_Context`
+- `Field_Review`
+
+`Daily_Log` remains the primary canonical data table for import and future parser stability.
+
+## Reading Principles
+
+Column notes should use language such as:
+
+- pattern signal
+- self-care cue
+- descriptive summary
+- not judgment
+- user-owned context
+- not diagnosis
+
+Avoid:
+
+- medical advice
+- diagnosis
+- therapy claims
+- financial advice
+- risk prediction
+- good/bad user framing
+
+## Excel Readability
+
+The export may add safe SheetJS worksheet metadata:
+
+- `!cols` for column widths
+- `!autofilter` for simple filtering
+
+This does not add a dependency and does not change cell values or schema.
+
+Avoid fragile styling in v1.9.x:
+
+- font styling
+- colors/fills
+- freeze panes
+- custom themes
+
+Those are not reliable enough with the current browser-side SheetJS usage and are not needed for schema clarity.
+
+## Compatibility Boundary
+
+This change does not alter:
+
+- `Daily_Log` headers
+- saved log structure
+- localStorage keys
+- import behavior
+- `Summary` column semantics
+- `Reflections`
+- `Field_Context`
+- `Field_Review`
+- app UI
+- user inputs
+
+Old exported workbooks remain importable because import reads `Daily_Log`.
+
+New exported workbooks remain importable because `Column_Guide` is an additional sheet and import still reads `Daily_Log`.
+
+## Future v2.0 Use
+
+Field Review Companion can use `Column_Guide` as schema context while still reading canonical column names.
+
+This lets v2.0 combine:
+
+- stable parser keys
+- Thai user readability
+- AI-readable meaning
+- non-medical / non-diagnostic guardrails
+
+## Guardrail Sentence
+
+`Column_Guide` should explain the workbook without changing the workbook's canonical data surface.
 
 ---
 

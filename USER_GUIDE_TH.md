@@ -245,19 +245,22 @@ Daily Log Table คือตารางดูย้อนหลังในห�
 Mindful_Health_Balance_Master.xlsx
 ```
 
-ไฟล์นี้มี 5 sheets:
+ไฟล์นี้มี 6 sheets:
 
 - Daily_Log
 - Summary
 - Reflections
 - Field_Context
 - Field_Review
+- Column_Guide
 
 ใช้ไฟล์นี้เป็น master backup หรือเปิดดูใน Excel ได้เมื่ออยากเห็นภาพรวมหลายวัน
 
 `Summary` เป็น sheet สรุปค่าแบบ JavaScript-calculated static export values ไม่ใช่ Excel formulas และไม่ใช่ AI analysis โดยมี `Total_Logs` สำหรับจำนวน row, `Unique_Days` สำหรับจำนวนวันที่ไม่ซ้ำ, ค่าเฉลี่ยน้ำ, จำนวนวันที่ load สูง, low sleep, sweet drink, mind state ที่พบบ่อย และ `Summary_Note`
 
 `Summary_Note` เป็นข้อความกำกับคงที่ว่าไฟล์นี้ช่วยดู pattern และ balance recovery ไม่ใช่การตัดสินสุขภาพจากวันใดวันหนึ่ง
+
+`Column_Guide` เป็น sheet คู่มือคอลัมน์ที่อธิบายชื่อ column เดิมด้วยภาษาไทย/อังกฤษ เช่น `Thai_Label`, `English_Label`, `Meaning`, `AI_Reading_Note`, `Example_Value` และ `Is_Canonical` โดยไม่เปลี่ยน header เดิมของ `Daily_Log` จึงยังปลอดภัยต่อ import และ future v2.0 parser
 
 ตั้งแต่ v1.9 เป็นต้นไป `Field_Context` จะอธิบายว่าไฟล์นี้เป็น local-first self-care log ที่ผู้ใช้เป็นเจ้าของเอง และถ้าผู้ใช้เลือกนำไปให้ AI/LLM อ่าน ควรอ่านเพื่อ pattern reflection เท่านั้น ไม่ใช่ diagnosis หรือ medical advice
 

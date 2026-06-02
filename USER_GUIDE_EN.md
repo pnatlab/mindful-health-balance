@@ -269,19 +269,22 @@ Click `Export Master Excel` to download:
 Mindful_Health_Balance_Master.xlsx
 ```
 
-The file includes five sheets:
+The file includes six sheets:
 
 - Daily_Log
 - Summary
 - Reflections
 - Field_Context
 - Field_Review
+- Column_Guide
 
 Use this file as a master backup or open it in Excel when you want to review a longer period.
 
 `Summary` is a JavaScript-calculated static export sheet, not Excel formulas and not AI analysis. It includes `Total_Logs` for row count, `Unique_Days` for unique logged dates, average water, high-load days, low-sleep days, sweet-drink days, most common mind state, and `Summary_Note`.
 
 `Summary_Note` is a static guardrail message. It reminds readers that the workbook supports pattern review and recovery balance, not judgment of health from any single day.
+
+`Column_Guide` is a column dictionary sheet. It explains canonical column names with `Thai_Label`, `English_Label`, `Meaning`, `AI_Reading_Note`, `Example_Value`, and `Is_Canonical` without changing the original `Daily_Log` headers, so import and future v2.0 parsers can keep using stable keys.
 
 Starting in v1.9, `Field_Context` explains that the workbook is a local-first self-care log owned by the user. If the user chooses to share it with an AI/LLM, the AI should read it for pattern reflection only, not for diagnosis or medical advice.
 

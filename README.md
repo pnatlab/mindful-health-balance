@@ -131,8 +131,11 @@ Excel export ยังรักษา sheet เดิม (`Daily_Log`, `Summary`
 
 - `Field_Context` สำหรับอธิบายเจตนาของไฟล์, data ownership, local-first boundary, AI reading boundary และ non-medical note
 - `Field_Review` สำหรับสรุป descriptive pattern เบา ๆ จากข้อมูลที่มี เช่น ช่วงวันที่, ค่าเฉลี่ยน้ำ, high load days, mind/support ที่พบบ่อย, drink-load summary และจำนวนวันที่มี note/reflection
+- `Column_Guide` สำหรับอธิบายความหมายของ columns เป็นภาษาไทย/อังกฤษ โดยยังคง canonical headers เดิมไว้เพื่อให้ import, AI และ future v2.0 parser อ่านได้เสถียร
 
 `Summary` เป็น sheet สรุปค่าแบบ JavaScript-calculated static export values ไม่ใช่ Excel formulas และไม่ใช่ AI analysis โดย v1.9.x แยก `Total_Logs` ออกจาก `Unique_Days`, ใช้ low sleep signal จากหลายแหล่ง, ใช้ sweet drink logic เดียวกับ `Field_Review`, และใช้ `Summary_Note` เป็นข้อความกำกับคงที่ว่าไฟล์นี้มีไว้ดู pattern ไม่ใช่ตัดสินสุขภาพ
+
+`Column_Guide` ไม่เปลี่ยน `Daily_Log` schema และไม่เพิ่มแถวภาษาไทยใต้ header หลัก แต่เป็น data dictionary แยกต่างหากที่ช่วยให้คนไทยอ่านคอลัมน์ง่ายขึ้นและช่วย AI อ่าน workbook อย่างปลอดภัย เช่น pattern signal, self-care cue, descriptive summary, not judgment
 
 `Field_Review` เป็น summary เพื่อ pattern reflection เท่านั้น ไม่ใช่ diagnosis, medical advice, therapy interpretation หรือ health-risk prediction ผู้ใช้ยังเป็นเจ้าของไฟล์และเลือกเองว่าจะ export, เก็บ, review หรือ share ให้ AI อ่านเมื่อไหร่
 
@@ -257,15 +260,18 @@ Daily Log Table คือบันทึกย้อนหลังในหน�
 Mindful_Health_Balance_Master.xlsx
 ```
 
-ไฟล์ Excel มี 5 sheets:
+ไฟล์ Excel มี 6 sheets:
 
 - `Daily_Log`
 - `Summary`
 - `Reflections`
 - `Field_Context`
 - `Field_Review`
+- `Column_Guide`
 
 `Summary` มีค่า export summary เช่น `Total_Logs`, `Unique_Days`, `Average_Water_ml`, `High_Load_Days`, `Low_Sleep_Days`, `Sweet_Drink_Days`, `Most_Common_Mind` และ `Summary_Note` โดย `Summary_Note` เป็นข้อความกำกับคงที่ ไม่ใช่ผลวิเคราะห์จาก AI
+
+`Column_Guide` อธิบายแต่ละ column ด้วย `Thai_Label`, `English_Label`, `Meaning`, `AI_Reading_Note`, `Example_Value` และ `Is_Canonical` โดยไม่เปลี่ยนชื่อ column เดิมใน sheet หลัก
 
 ไฟล์ Excel จะถูกดาวน์โหลดลงเครื่องผู้ใช้โดยตรงผ่าน browser
 
