@@ -279,6 +279,10 @@ The file includes five sheets:
 
 Use this file as a master backup or open it in Excel when you want to review a longer period.
 
+`Summary` is a JavaScript-calculated static export sheet, not Excel formulas and not AI analysis. It includes `Total_Logs` for row count, `Unique_Days` for unique logged dates, average water, high-load days, low-sleep days, sweet-drink days, most common mind state, and `Summary_Note`.
+
+`Summary_Note` is a static guardrail message. It reminds readers that the workbook supports pattern review and recovery balance, not judgment of health from any single day.
+
 Starting in v1.9, `Field_Context` explains that the workbook is a local-first self-care log owned by the user. If the user chooses to share it with an AI/LLM, the AI should read it for pattern reflection only, not for diagnosis or medical advice.
 
 `Field_Review` is a lightweight descriptive summary of available entries, such as review period, average water, high-load days, common mind/support patterns, drink-load summary, and days with Mind Note or Reflection. It is for gentle pattern reflection, not disease diagnosis or health-risk prediction.

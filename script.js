@@ -3442,20 +3442,46 @@ function getDrinkLoadObservation(rows = [], { sweetDrinkDays = 0, highSugarDays 
 }
 
 function buildMasterSummary(rows) {
-  const totalDays = rows.length;
-  const averageWater = totalDays
-    ? Math.round(rows.reduce((sum, row) => sum + (Number(row.Water_ml) || 0), 0) / totalDays)
+  const totalLogs = rows.length;
+  const uniqueDays = getUniqueLogDateCount(rows);
+  const averageWater = totalLogs
+    ? Math.round(rows.reduce((sum, row) => sum + (Number(row.Water_ml) || 0), 0) / totalLogs)
     : 0;
 
   return {
-    Total_Days: totalDays,
+    Total_Logs: totalLogs,
+    Unique_Days: uniqueDays || totalLogs,
     Average_Water_ml: averageWater,
-    High_Load_Days: rows.filter((row) => row.Load_Level === "Load สูง" || Number(row.Load_Score) >= 6).length,
-    Low_Sleep_Days: rows.filter((row) => row.Sleep === "น้อย").length,
-    Sweet_Drink_Days: rows.filter((row) => Number(row.Sweet_Drinks_Count) > 0).length,
+    High_Load_Days: rows.filter(isHighLoadRow).length,
+    Low_Sleep_Days: rows.filter(rowHasLowSleepSignal).length,
+    Sweet_Drink_Days: rows.filter(rowHasSweetDrinkLoad).length,
     Most_Common_Mind: getMostCommon(rows.map((row) => row.Mind).filter(Boolean)),
-    Overall_Message: t("overallMessage")
+    Summary_Note: t("overallMessage")
   };
+}
+
+function getUniqueLogDateCount(rows = []) {
+  const dates = rows
+    .map((row) => String(row?.Date || "").trim())
+    .filter(Boolean);
+  return new Set(dates).size;
+}
+
+function rowHasLowSleepSignal(row) {
+  const sleepValue = String(row?.Sleep || "").trim();
+  if (["น้อย", "Low", "低", "少"].includes(sleepValue)) return true;
+
+  const energyCauses = splitLogValues(row?.Energy_Causes);
+  if (energyCauses.some((cause) => ["sleep_low", "นอนน้อย", "Low sleep", "睡得少"].includes(cause))) {
+    return true;
+  }
+
+  return splitLogValues(row?.Activities)
+    .map((activity) => activity === "lowSleep" ? "นอนน้อย" : activity)
+    .some((activity) => {
+      const option = getActivityOptionByValue(activity);
+      return option?.key === "lowSleep" || ["lowSleep", "นอนน้อย", "Low sleep", "睡得少"].includes(activity);
+    });
 }
 
 function getMostCommon(values) {

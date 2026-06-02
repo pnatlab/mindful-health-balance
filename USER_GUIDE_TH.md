@@ -255,6 +255,10 @@ Mindful_Health_Balance_Master.xlsx
 
 ใช้ไฟล์นี้เป็น master backup หรือเปิดดูใน Excel ได้เมื่ออยากเห็นภาพรวมหลายวัน
 
+`Summary` เป็น sheet สรุปค่าแบบ JavaScript-calculated static export values ไม่ใช่ Excel formulas และไม่ใช่ AI analysis โดยมี `Total_Logs` สำหรับจำนวน row, `Unique_Days` สำหรับจำนวนวันที่ไม่ซ้ำ, ค่าเฉลี่ยน้ำ, จำนวนวันที่ load สูง, low sleep, sweet drink, mind state ที่พบบ่อย และ `Summary_Note`
+
+`Summary_Note` เป็นข้อความกำกับคงที่ว่าไฟล์นี้ช่วยดู pattern และ balance recovery ไม่ใช่การตัดสินสุขภาพจากวันใดวันหนึ่ง
+
 ตั้งแต่ v1.9 เป็นต้นไป `Field_Context` จะอธิบายว่าไฟล์นี้เป็น local-first self-care log ที่ผู้ใช้เป็นเจ้าของเอง และถ้าผู้ใช้เลือกนำไปให้ AI/LLM อ่าน ควรอ่านเพื่อ pattern reflection เท่านั้น ไม่ใช่ diagnosis หรือ medical advice
 
 `Field_Review` เป็น summary เบา ๆ ของข้อมูลที่มีอยู่ เช่น ช่วงวันที่ ค่าเฉลี่ยน้ำ วันที่ load สูง mind/support ที่พบบ่อย drink-load summary และจำนวนวันที่มี Mind Note หรือ Reflection ข้อมูลนี้ใช้เพื่อช่วยเห็น pattern อย่างอ่อนโยน ไม่ใช่การวินิจฉัยโรคหรือการประเมินความเสี่ยงสุขภาพ
