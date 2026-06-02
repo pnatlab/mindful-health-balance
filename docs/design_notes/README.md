@@ -1,0 +1,62 @@
+# Mindful Health Balance Design Notes
+
+This folder contains design notes for Mindful Health Balance v1.9.x and the future v2.0 direction.
+
+Source files are currently kept flat in this folder for path stability. This README groups them by topic for easier reading, but it is organizational only. Do not treat this grouping as a physical folder migration yet.
+
+Future folder migration may happen later as a dedicated docs patch.
+
+## 00 Foundation
+
+Core identity, public definition, portable field memory, local-first behavior, and AI-ready reflection boundaries.
+
+- [AI_READY_REFLECTION_SYSTEM_DEFINITION.md](AI_READY_REFLECTION_SYSTEM_DEFINITION.md) - Public-facing definition of the app as an AI-ready, local-first self-care reflection system.
+- [PORTABLE_FIELD_MEMORY_DESIGN.md](PORTABLE_FIELD_MEMORY_DESIGN.md) - Foundation for the exported workbook as portable, user-owned field memory.
+
+## 01 Excel Export / Portable Workbook
+
+Excel export structure, Summary sheet behavior, Column_Guide, and human/AI-readable workbook design.
+
+- [EXCEL_SUMMARY_REFINEMENT.md](EXCEL_SUMMARY_REFINEMENT.md) - Clarifies Summary sheet fields such as Total_Logs, Unique_Days, and Summary_Note.
+- [EXCEL_COLUMN_GUIDE_DESIGN.md](EXCEL_COLUMN_GUIDE_DESIGN.md) - Defines Column_Guide as a Thai/English schema guide that preserves canonical headers.
+
+## 02 Reflection UX
+
+Reflection page hierarchy, preview synthesis, NuTuenSai note strip, zen generation moment, and display-only UX decisions.
+
+- [REFLECTION_PRESENTATION_DECISION.md](REFLECTION_PRESENTATION_DECISION.md) - Explains why the preview is a concise synthesis instead of a raw field dump.
+- [REFLECTION_PAGE_LAYOUT_DECISION.md](REFLECTION_PAGE_LAYOUT_DECISION.md) - Records the Reflection page layout decision with the reminder strip and focused generator.
+- [REFLECTION_GENERATION_MOMENT.md](REFLECTION_GENERATION_MOMENT.md) - Documents the zen/circular Reflection Generator moment and Clear Reflection behavior.
+
+## 03 Signal Logic
+
+Signal interpretation rules, hydration/drink/energy/mind/activity mapping, and reflection guardrails.
+
+- [HYDRATION_ADAPTIVE_GUIDANCE.md](HYDRATION_ADAPTIVE_GUIDANCE.md) - Defines adaptive hydration guidance and the separation of activity load from recovery-only signals.
+- [DRINK_SWEETNESS_INSIGHT.md](DRINK_SWEETNESS_INSIGHT.md) - Defines sweetness and soda as drink-load context, not moral or medical judgment.
+- [ENERGY_CAUSE_ALIGNMENT.md](ENERGY_CAUSE_ALIGNMENT.md) - Explains layered interpretation for energy causes and seemingly mixed signals.
+- [MIND_STATE_WORDING_DECISION.md](MIND_STATE_WORDING_DECISION.md) - Records wording choices for public-safe mind state language.
+- [MIND_NOTE_FEELING_OPTIONS.md](MIND_NOTE_FEELING_OPTIONS.md) - Defines Mind Note Feeling options such as uneasy and feeling_good.
+- [MIND_STATE_POSITIVE_OPTIONS.md](MIND_STATE_POSITIVE_OPTIONS.md) - Defines positive mind states as support signals, not performance scores.
+- [REFLECTION_SIGNAL_MATRIX.md](REFLECTION_SIGNAL_MATRIX.md) - Matrix of reflection behavior across signal layers and combinations.
+- [ACTIVITY_LOAD_ROOT_MATRIX.md](ACTIVITY_LOAD_ROOT_MATRIX.md) - Defines Activity Load Roots and short Activity Root Summary wording.
+
+## 04 v2 Roadmap
+
+Future Field Review Companion, timeframe-aware review, v2 navigation, and guided review direction.
+
+- [FIELD_REVIEW_COMPANION_V2.md](FIELD_REVIEW_COMPANION_V2.md) - Roadmap for a guided Field Review Companion rather than an open-ended chatbot.
+- [FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](FIELD_REVIEW_TIMEFRAME_LAYER_V2.md) - Roadmap for choosing day/week/month/long-term review frames honestly.
+- [NAVIGATION_ARCHITECTURE_V2.md](NAVIGATION_ARCHITECTURE_V2.md) - Proposed v2 navigation structure including Field Review.
+
+## 99 Stabilization
+
+Pre-v2 stability checklist for v1.9.x.
+
+- [V1_9_STABILIZATION_CHECKLIST.md](V1_9_STABILIZATION_CHECKLIST.md) - Checklist for validating v1.9.x before implementing v2.0 features.
+
+## Future Folder Migration Note
+
+Physical folder grouping is intentionally postponed to avoid breaking existing links and context bundle references.
+
+If the repo later migrates these files into subfolders, update README links, context bundle source references, and any checklist references in a dedicated migration patch.
