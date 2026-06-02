@@ -187,6 +187,7 @@ Activity roots refine reflection wording only. แอปไม่ infer identity
 
 - Thai: `USER_GUIDE_TH.md`
 - English: `USER_GUIDE_EN.md`
+- Public definition: `docs/design_notes/AI_READY_REFLECTION_SYSTEM_DEFINITION.md`
 
 ## สิ่งที่แอปทำได้
 

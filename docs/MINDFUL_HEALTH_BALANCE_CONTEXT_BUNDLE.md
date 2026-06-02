@@ -4,24 +4,136 @@ This bundle combines the key design notes for Mindful Health Balance v1.9 and th
 
 ## Table of Contents
 
-1. [Source: PORTABLE_FIELD_MEMORY_DESIGN.md](#source-portable-field-memory-designmd)
-2. [Source: EXCEL_SUMMARY_REFINEMENT.md](#source-excel-summary-refinementmd)
-3. [Source: EXCEL_COLUMN_GUIDE_DESIGN.md](#source-excel-column-guide-designmd)
-4. [Source: HYDRATION_ADAPTIVE_GUIDANCE.md](#source-hydration-adaptive-guidancemd)
-5. [Source: DRINK_SWEETNESS_INSIGHT.md](#source-drink-sweetness-insightmd)
-6. [Source: MIND_STATE_WORDING_DECISION.md](#source-mind-state-wording-decisionmd)
-7. [Source: MIND_NOTE_FEELING_OPTIONS.md](#source-mind-note-feeling-optionsmd)
-8. [Source: MIND_STATE_POSITIVE_OPTIONS.md](#source-mind-state-positive-optionsmd)
-9. [Source: ENERGY_CAUSE_ALIGNMENT.md](#source-energy-cause-alignmentmd)
-10. [Source: REFLECTION_PRESENTATION_DECISION.md](#source-reflection-presentation-decisionmd)
-11. [Source: REFLECTION_PAGE_LAYOUT_DECISION.md](#source-reflection-page-layout-decisionmd)
-12. [Source: REFLECTION_GENERATION_MOMENT.md](#source-reflection-generation-momentmd)
-13. [Source: REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrixmd)
-14. [Source: ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrixmd)
-15. [Source: V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklistmd)
-16. [Source: FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2md)
-17. [Source: FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](#source-field-review-timeframe-layer-v2md)
-18. [Source: NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2md)
+1. [Source: AI_READY_REFLECTION_SYSTEM_DEFINITION.md](#source-ai-ready-reflection-system-definitionmd)
+2. [Source: PORTABLE_FIELD_MEMORY_DESIGN.md](#source-portable-field-memory-designmd)
+3. [Source: EXCEL_SUMMARY_REFINEMENT.md](#source-excel-summary-refinementmd)
+4. [Source: EXCEL_COLUMN_GUIDE_DESIGN.md](#source-excel-column-guide-designmd)
+5. [Source: HYDRATION_ADAPTIVE_GUIDANCE.md](#source-hydration-adaptive-guidancemd)
+6. [Source: DRINK_SWEETNESS_INSIGHT.md](#source-drink-sweetness-insightmd)
+7. [Source: MIND_STATE_WORDING_DECISION.md](#source-mind-state-wording-decisionmd)
+8. [Source: MIND_NOTE_FEELING_OPTIONS.md](#source-mind-note-feeling-optionsmd)
+9. [Source: MIND_STATE_POSITIVE_OPTIONS.md](#source-mind-state-positive-optionsmd)
+10. [Source: ENERGY_CAUSE_ALIGNMENT.md](#source-energy-cause-alignmentmd)
+11. [Source: REFLECTION_PRESENTATION_DECISION.md](#source-reflection-presentation-decisionmd)
+12. [Source: REFLECTION_PAGE_LAYOUT_DECISION.md](#source-reflection-page-layout-decisionmd)
+13. [Source: REFLECTION_GENERATION_MOMENT.md](#source-reflection-generation-momentmd)
+14. [Source: REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrixmd)
+15. [Source: ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrixmd)
+16. [Source: V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklistmd)
+17. [Source: FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2md)
+18. [Source: FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](#source-field-review-timeframe-layer-v2md)
+19. [Source: NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2md)
+
+---
+
+# Source: AI_READY_REFLECTION_SYSTEM_DEFINITION.md
+
+# AI-Ready Reflection System Definition
+
+## 1. Short Definition
+
+Mindful Health Balance is a local-first self-care logging app that turns daily signals into a structured, user-owned workbook for personal reflection and optional AI-assisted review.
+
+It is not a machine learning model, medical AI, diagnosis tool, or therapy chatbot. Its current role is to help the user organize daily context so that both the user and an AI assistant can review patterns more clearly and safely.
+
+## 2. What It Is
+
+Mindful Health Balance is:
+
+- a local-first self-care logging app
+- an AI-readable personal rhythm workbook
+- a rule-based reflection layer
+- a portable field memory / personal context export
+- a user-controlled data handoff layer
+- a preparation layer for future guided review
+
+The app records daily signals such as hydration, drinks, sleep, energy, activity load, recovery, mind state, and reflection text. It then exports those signals into a structured workbook that can be read by the user, reviewed in spreadsheet form, or intentionally shared with an AI assistant.
+
+The app is designed to make daily context clearer, not to make conclusions for the user.
+
+## 3. What It Is Not
+
+Mindful Health Balance is not:
+
+- a medical tool
+- a diagnosis system
+- a therapy service
+- a machine learning model
+- AGI
+- an autonomous agent
+- a hidden profiling system
+- an automatic data upload system
+- a tool that tells the user what their life means
+
+It does not train a model, learn weights, predict health outcomes, or replace professional care.
+
+## 4. Why It Matters For AI
+
+AI assistants often answer from short, incomplete chat context. This can make reflection feel generic, overconfident, or disconnected from the user's real daily rhythm.
+
+Mindful Health Balance helps create structured daily context. The exported workbook gives an AI assistant clearer evidence if the user intentionally chooses to share it.
+
+Better context can support better reflection, but the user remains the final interpreter.
+
+The app does not make the AI model smarter. It gives the AI cleaner, more structured, user-approved context to read from.
+
+## 5. Current Technical Category
+
+The current app is best described as:
+
+- a rule-based AI-ready reflection system
+- a human-in-the-loop self-care logging tool
+- an AI-readable personal rhythm dataset
+- a local-first portable context layer
+
+Current reflection behavior is deterministic and rule-based. It uses the app's logged signals and helper logic to produce self-care cues, reminder wording, workbook summaries, and reflection text.
+
+It does not train a model, learn from the user automatically, predict health outcomes, or infer a private profile.
+
+## 6. Future Direction
+
+Future versions may explore a guided review layer, such as:
+
+- Field Review Companion
+- NuTuenSai Log Reader
+- guided multi-day review
+- personal rhythm baseline support
+- statistical or baseline layers before any machine learning
+- Timeframe Layer for day / week / month / long-term review
+
+This future direction should remain cautious.
+
+Any deeper AI review should be:
+
+- user-initiated
+- non-diagnostic
+- local-first where possible
+- based on user-owned data
+- guided rather than open-ended medical or therapy chatbot behavior
+- clear about the difference between pattern signals and conclusions
+
+Future versions may explore more personal rhythm context only if enough user-owned data and guardrails exist.
+
+## 7. Public Boundary
+
+Mindful Health Balance follows these boundaries:
+
+- local-first
+- user-owned data
+- no auto-upload
+- AI reads data only when the user chooses to share, export, or import it into an AI workflow
+- pattern reflection, not judgment
+- support signal, not performance score
+- drink-load signal, not moral score
+- descriptive context, not diagnosis
+- guided reflection, not medical advice
+- user agency remains central
+
+The workbook is meant to support clearer review, not to become an authority over the user's life.
+
+## 8. One-Sentence Public Summary
+
+Mindful Health Balance helps people record daily self-care signals in a structured, local-first format so they can review their own patterns-and optionally let an AI assistant reflect on the data with clearer context and safer boundaries.
 
 ---
 
