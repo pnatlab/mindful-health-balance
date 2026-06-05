@@ -63,7 +63,8 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 | Load | sport / sweat | Strong activity hydration signal. | Hydration and recovery move with activity. | Aggressive water commands. |
 | Load | outdoor heat | Heat/sweat context. | Small sips and pauses. | Risk/fear wording. |
 | Load | deep work / cognitive load | Focus, eyes, and mental loops use energy. | Rest eyes, reduce loops, recover attention. | Treating it as only mental weakness. |
-| Load | low sleep as recovery load | Recovery-only signal, not activity load. | Base hydration plus rest. | Calling it high activity load. |
+| Load | low sleep as recovery signal | Low sleep belongs in Today State > Energy Cause in the current UI; legacy imported `lowSleep` activity values remain readable. | Base hydration plus rest. | Showing low sleep as a new activity chip or calling it high activity load. |
+| Load | light recovery day | Recovery mode / support signal. | Light, descriptive, not diagnostic. | Letting it override a stronger activity selected with it. |
 
 ## 2.1 Activity Load Root Matrix
 
@@ -80,8 +81,9 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 | `badminton` / `heavyPingPong` / `easyRun` / `shortQualityRun` / `longRun` | `sport_sweat` | Physical effort and training load; recovery is part of training. `shortQualityRun` should read as intensity-based short running load, not easy run or long run. | Push harder, aggressive hydration commands, or prescriptive training advice. |
 | `deepWork` / `officeWork` | `cognitive_deepwork` | Sustained focus and screen attention; rest eyes and reduce mental loops. | Productivity praise that pushes more work. |
 | `longWalk` | `walking_physical` | Body use through walking/movement; give back, legs, feet, and water rhythm space. | Overstating it as high-intensity sport. |
-| `lowSleep` only | `recovery_low_sleep` | Recovery signal, not high activity load; rest before adding another round. | Calling low sleep a heavy activity day. |
-| `rest` only | `rest_base` | Light rhythm and recovery base. | Pushing productivity because the day is open. |
+| old workbook value `lowSleep` only | `recovery_low_sleep` | Recovery signal, not high activity load; rest before adding another round. | Showing low sleep as a new Load & Recovery chip or calling it a heavy activity day. |
+| `rest` only | `rest_base` | Rest rhythm and recovery base. | Pushing productivity because the day is open. |
+| `lightRecoveryDay` only | `rest_base` | Light recovery mode and support signal. | Diagnosis wording or letting it erase stronger activity load. |
 
 | Root | Preferred Short Summary | Avoid |
 | --- | --- | --- |
@@ -93,7 +95,7 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 | `sport_sweat` | "Today used real physical effort." | Push harder / train more. |
 | `walking_physical` | "Today used the body through walking or movement." | Treating it as high-intensity sport. |
 | `recovery_low_sleep` | "Today is a low-sleep recovery signal." | Calling it high activity load. |
-| `rest_base` | "Today is a lighter rhythm." | Pushing productivity because there is space. |
+| `rest_base` | "Today is a rest/light recovery rhythm." | Pushing productivity because there is space or overriding stronger activity. |
 
 ## 3. Combination Matrix
 

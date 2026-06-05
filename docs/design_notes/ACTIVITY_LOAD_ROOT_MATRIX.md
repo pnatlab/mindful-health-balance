@@ -19,8 +19,8 @@ The same Load Score can come from different roots:
 - heat/sweat
 - sport/training
 - walking/body use
-- low sleep as recovery signal
-- rest/light base
+- low sleep as legacy/import recovery signal and Today State > Energy Cause signal
+- rest/light recovery base
 
 Reflection should name the day context gently and avoid profession-specific medical, financial, diagnostic, or productivity advice.
 
@@ -41,8 +41,9 @@ Reflection should name the day context gently and avoid profession-specific medi
 | `shortQualityRun` | `sport_sweat` | Short quality / progression / fast-ish run where intensity matters more than distance. | Recovery follows intensity, not only distance. | Calling it a long run, pushing speed, or turning it into a training command. |
 | `longRun` | `sport_sweat` | Strong endurance load. | Recovery is part of training, not a step backward. | Aggressive water or performance commands. |
 | `longWalk` | `walking_physical` | Legs, feet, back, general body use. | Give back, legs, feet, and water rhythm space. | Overstating as high-intensity sport. |
-| `lowSleep` | `recovery_low_sleep` | Recovery-only signal, not activity load. | Rest before adding another round. | Calling it high activity load. |
-| `rest` | `rest_base` | Light/rest/recovery day. | Keep a light rhythm without adding productivity pressure. | Pushing productivity because the day is open. |
+| `lowSleep` | `recovery_low_sleep` | Legacy/import recovery signal. In the current UI, low sleep belongs in Today State > Energy Cause, not Load & Recovery. | Rest before adding another round if old workbooks contain this value. | Showing it as a new activity chip or calling it high activity load. |
+| `rest` | `rest_base` | Rest day / วันพัก. | Keep a rest rhythm without adding productivity pressure. | Pushing productivity because the day is open. |
+| `lightRecoveryDay` | `rest_base` | Light recovery day / วันเบา / ฟื้นตัว. | Read as a light recovery mode and support signal. | Treating it as diagnosis or letting it override stronger activity. |
 
 ## Priority Rules
 
@@ -64,8 +65,8 @@ outdoor_heat
 
 Rules:
 
-- `recovery_low_sleep` can coexist as a recovery modifier.
-- `rest_base` should not override stronger activity roots.
+- `recovery_low_sleep` can coexist as a recovery modifier for legacy/imported activity values, while new UI should use Energy Cause for low sleep.
+- `rest_base` should not override stronger activity roots. `rest` and `lightRecoveryDay` are recovery modes, not identity or diagnosis.
 - If no activity or no clear root exists, use existing fallback reflection behavior.
 - Roots refine wording only; they do not change scoring or saved data.
 
@@ -97,7 +98,7 @@ The app should say:
 | `sport_sweat` | "Today used real physical effort." | "Today used real physical effort." | Recovery is part of training. |
 | `walking_physical` | "Today used the body through walking or movement." | "Today used the body through walking or movement." | Back, legs, feet, and water spread across the day. |
 | `recovery_low_sleep` | "Today is a low-sleep recovery signal." | "This is a recovery signal, not a high activity-load signal." | Rest before adding another round. |
-| `rest_base` | "Today is a lighter rhythm." | "Today can keep a light rhythm." | Do not add productivity pressure. |
+| `rest_base` | "Today is a rest/light recovery rhythm." | "Today can keep a light rhythm without adding main load." | Do not add productivity pressure or override stronger activity. |
 
 ## Longer Reflection Tone
 
@@ -111,7 +112,7 @@ The app should say:
 | `sport_sweat` | "Today used real physical effort." | Recovery is part of training. |
 | `walking_physical` | "Today used the body through walking or movement." | Back, legs, feet, and water spread across the day. |
 | `recovery_low_sleep` | "This is a recovery signal, not a high activity-load signal." | Rest before adding another round. |
-| `rest_base` | "Today can keep a light rhythm." | Do not add productivity pressure. |
+| `rest_base` | "Today can keep a rest/light recovery rhythm." | Do not add productivity pressure or override stronger activity. |
 
 ## Test Scenarios
 
@@ -125,8 +126,10 @@ The app should say:
 | `longRun` selected | `sport_sweat` wording appears. | No push-harder language. |
 | `shortQualityRun` selected | Short quality run wording appears before generic `sport_sweat`. | Do not call it easy run or long run. |
 | `deepWork` selected | `cognitive_deepwork` wording appears. | No productivity praise that pushes more. |
-| `lowSleep` only | `recovery_low_sleep` wording appears. | Do not call it high activity load. |
-| `rest` only | `rest_base` / steady wording appears. | Do not push productivity. |
+| old workbook value `lowSleep` only | `recovery_low_sleep` wording appears for compatibility. | Do not show low sleep as a new UI activity chip or call it high activity load. |
+| `rest` only | Rest-day wording appears. | Do not push productivity. |
+| `lightRecoveryDay` only | Light recovery wording appears. | Do not diagnose or over-explain. |
+| `shortQualityRun` + `lightRecoveryDay` | Short quality run remains the main load; recovery mode acts as a modifier. | Do not let recovery mode erase intensity-based load. |
 | No activity selected | Existing fallback behavior remains. | Do not invent a root. |
 
 ## Compatibility Boundary

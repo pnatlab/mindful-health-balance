@@ -143,7 +143,9 @@ Soda / soft drink is only a Drink Type. It does not mean the drink must be sweet
 
 ## 11. Load & Recovery
 
-Load & Recovery is not only about exercise. It also includes work that uses focus, posture, standing, decision energy, outdoor effort, and body energy.
+Load & Recovery is not only about exercise. It also includes work that uses focus, posture, standing, decision energy, outdoor effort, body energy, and the day's recovery mode.
+
+`Low sleep` belongs in Today State > Energy Cause because it is an energy/recovery signal, not a main activity chip. If the day is intentionally lighter, choose `Rest day` or `Light recovery day` instead.
 
 Activity / profession-aware presets include:
 
@@ -160,8 +162,8 @@ Activity / profession-aware presets include:
 - Short quality run
 - Long run
 - Lots of walking
-- Low sleep
 - Rest day
+- Light recovery day
 
 The app summarizes load into three levels:
 
@@ -181,8 +183,9 @@ Starting in v1.9.x, the app uses Activity Load Roots to read the root of the day
 - Sport / running / sweat: physical/sweat load with recovery afterward
 - Short quality run: an intensity-based short run, not an easy run and not a long run
 - Lots of walking: back, legs, feet, and body use
-- Low sleep: a recovery signal, not high activity load
-- Rest day: a lighter rhythm, not an invitation to add productivity pressure
+- Low sleep: belongs in Energy Cause and is read as a recovery signal, not high activity load
+- Rest day: a rest rhythm, not an invitation to add productivity pressure
+- Light recovery day: a light recovery mode, not diagnosis, and it should not override a stronger activity selected with it
 
 Activity roots refine reflection wording only. They do not change Load Score, Daily Log, Excel export/import, or schema. The app does not infer identity; it should not say you are a doctor, photographer, investor, or any profession. It only reads the selected activity as context for that day.
 

@@ -168,8 +168,8 @@ Activity chips ถูก map เป็น Activity Load Roots เพื่อช
 - `outdoor_heat`: heat, sweat, outdoor effort และ hydration context
 - `sport_sweat`: กีฬา เหงื่อ และ training load รวมถึง short quality / progression / fast-ish short run ที่ไม่ใช่ easy run และไม่ใช่ long run
 - `walking_physical`: การเดิน ขา หลัง เท้า และ body use
-- `recovery_low_sleep`: นอนน้อยเป็น recovery signal ไม่ใช่ activity load สูง
-- `rest_base`: วันเบา / rest day ที่ไม่ควรถูกผลักให้เพิ่ม productivity
+- `recovery_low_sleep`: นอนน้อยเป็น legacy/import recovery signal และควรกรอกผ่าน Today State > Energy Cause ใน UI ใหม่
+- `rest_base`: วันพักหรือวันเบา / ฟื้นตัว ที่ไม่ควรถูกผลักให้เพิ่ม productivity และไม่ควร override activity ที่ใช้แรงกว่า
 
 Activity Root Summary เป็น short UX copy layer เช่น “วันนี้ใช้ความละเอียดต่อเนื่อง” หรือ “Today used real physical effort.” เพื่อทำให้ reminder และ reflection สั้นลง เนียนขึ้น และเชื่อมกับ input โดยตรง
 
@@ -199,7 +199,7 @@ Activity roots refine reflection wording only. แอปไม่ infer identity
 - เลือก Energy Cause แบบ optional เพื่อช่วยตีความพลังงานของวัน รวมทั้งเหตุที่ทำให้พลังงานลดลงและเหตุที่ช่วยพยุงพลังงาน เช่น นอนพอหรือใจเบา
 - สะท้อน Energy Cause แบบ layered signal เมื่อ Energy level กับเหตุของพลังงานดูสวนกัน โดยไม่ถือว่าเป็นข้อมูลผิด
 - เลือกกิจกรรมเพื่อคำนวณ Load Score และ Load Level
-- เลือก Activity / Profession-aware Load Presets เพื่อให้ reflection เห็นชนิดของความเหนื่อย เช่น งานใช้สมาธิ งานคลินิก งานกลางแจ้ง กีฬา หรือวันที่นอนน้อย
+- เลือก Activity / Profession-aware Load Presets เพื่อให้ reflection เห็นชนิดของความเหนื่อย เช่น งานใช้สมาธิ งานคลินิก งานกลางแจ้ง กีฬา วันพัก หรือวันเบา / ฟื้นตัว
 - ใช้ Activity Load Roots / Activity Root Summary เพื่อสะท้อนกิจกรรมเป็นประโยคสั้นแบบไม่เดาตัวตนผู้ใช้
 - สร้าง End-of-Day Reflection ในโทน NuTuenSai โดยหน้า preview แสดง synthesis สั้น ๆ ขณะที่รายละเอียดเต็มยังอยู่ใน Daily Log / Reflections / Excel
 - ใช้ Reflection Generator แบบ zen/circular CTA: กด `สรุปวันนี้`, เห็น listening moment, ได้ label `Reflection`, มี `🩵` ท้าย reflection หนึ่งครั้ง และใช้ `ล้าง Reflection` เพื่อ reset preview เท่านั้น

@@ -334,10 +334,18 @@ const translations = {
       rest_base: "วันนี้เป็นจังหวะเบา ๆ"
     },
     activitySpecificReflection: {
-      shortQualityRun: "วันนี้เป็นการวิ่งคุณภาพระยะสั้นมากกว่าวิ่งยาว ร่างกายใช้แรงจาก intensity มากกว่าระยะทาง ให้ recovery เดินตาม effort แบบไม่ต้องเพิ่มแรงกดดัน"
+      shortQualityRun: "วันนี้เป็นการวิ่งคุณภาพระยะสั้นมากกว่าวิ่งยาว ร่างกายใช้แรงจาก intensity มากกว่าระยะทาง ให้ recovery เดินตาม effort แบบไม่ต้องเพิ่มแรงกดดัน",
+      rest: "วันนี้เป็นจังหวะพัก ไม่ได้เพิ่ม load หลักให้ร่างกายมากนัก",
+      lightRecoveryDay: "วันนี้เป็นจังหวะเบา ๆ ให้ระบบค่อย ๆ กลับมาฟื้นตัว",
+      lowSleepRest: "วันนี้พลังงานอาจได้รับผลจากการนอนน้อย และการเลือกวันพักช่วยให้ระบบไม่ต้องเพิ่ม load ซ้ำ",
+      lowSleepLightRecovery: "วันนี้มีสัญญาณจากการนอนน้อย และจังหวะเบา ๆ อาจช่วยให้ recovery ตามร่างกายทันขึ้น"
     },
     activitySpecificSummary: {
-      shortQualityRun: "วันนี้ร่างกายใช้แรงจากการวิ่งที่มีจังหวะเร็ว แม้ระยะไม่ยาวมาก"
+      shortQualityRun: "วันนี้ร่างกายใช้แรงจากการวิ่งที่มีจังหวะเร็ว แม้ระยะไม่ยาวมาก",
+      rest: "วันนี้เป็นจังหวะพัก",
+      lightRecoveryDay: "วันนี้เป็นจังหวะเบา ๆ ให้ระบบฟื้นตัว",
+      lowSleepRest: "วันนี้นอนน้อยและเลือกวันพักเพื่อไม่เพิ่ม load ซ้ำ",
+      lowSleepLightRecovery: "วันนี้นอนน้อยและมีจังหวะเบา ๆ ช่วยให้ recovery ตามทัน"
     },
     loadLevel: {
       light: "Load เบา",
@@ -441,7 +449,8 @@ const translations = {
         yes: "ใส่นม"
       },
       activities: {
-        rest: "Rest day",
+        rest: "วันพัก",
+        lightRecoveryDay: "วันเบา / ฟื้นตัว",
         officeWork: "งานออฟฟิศ / ประชุมและเอกสาร",
         outdoorWork: "ทำงานกลางแจ้ง / ใช้แรงและเสียเหงื่อ",
         dentalFocus: "หมอฟัน / เคสคลินิกละเอียด",
@@ -460,7 +469,7 @@ const translations = {
       activityGroups: {
         work: "งาน",
         sports: "กีฬา",
-        recovery: "พักฟื้น"
+        recovery: "วันเบา / ฟื้นตัว"
       },
       mindNote: {
         feeling: {
@@ -799,10 +808,18 @@ const translations = {
       rest_base: "Today is a lighter rhythm."
     },
     activitySpecificReflection: {
-      shortQualityRun: "Today reads more like a short quality run than a long run. The body used intensity even if the distance was not long, so recovery can follow the effort without adding pressure."
+      shortQualityRun: "Today reads more like a short quality run than a long run. The body used intensity even if the distance was not long, so recovery can follow the effort without adding pressure.",
+      rest: "Today is a rest rhythm and does not add much main load to the body.",
+      lightRecoveryDay: "Today is a light rhythm that lets the system recover gradually.",
+      lowSleepRest: "Low sleep may have affected today's energy, and choosing a rest day helps avoid adding another load layer.",
+      lowSleepLightRecovery: "There is a low-sleep signal today, and a lighter rhythm may help recovery catch up with the body."
     },
     activitySpecificSummary: {
-      shortQualityRun: "Today used running intensity even if the distance was not long."
+      shortQualityRun: "Today used running intensity even if the distance was not long.",
+      rest: "Today is a rest rhythm.",
+      lightRecoveryDay: "Today is a light recovery rhythm.",
+      lowSleepRest: "Today has low sleep and a rest rhythm, without adding another load layer.",
+      lowSleepLightRecovery: "Today has low sleep and a lighter recovery rhythm."
     },
     loadLevel: {
       light: "Light Load",
@@ -907,6 +924,7 @@ const translations = {
       },
       activities: {
         rest: "Rest day",
+        lightRecoveryDay: "Light recovery day",
         officeWork: "Office work / meetings & documents",
         outdoorWork: "Outdoor work / heat & physical effort",
         dentalFocus: "Dentist / detailed clinical cases",
@@ -925,7 +943,7 @@ const translations = {
       activityGroups: {
         work: "Work",
         sports: "Sports",
-        recovery: "Recovery"
+        recovery: "Light / Recovery"
       },
       mindNote: {
         feeling: {
@@ -1264,10 +1282,18 @@ const translations = {
       rest_base: "今天是比较轻的节奏。"
     },
     activitySpecificReflection: {
-      shortQualityRun: "今天更像短距离质量跑，不是长距离跑。身体用到的是强度，即使距离不长，recovery 也可以跟上这份 effort。"
+      shortQualityRun: "今天更像短距离质量跑，不是长距离跑。身体用到的是强度，即使距离不长，recovery 也可以跟上这份 effort。",
+      rest: "今天是休息节奏，没有给身体增加太多主要 load。",
+      lightRecoveryDay: "今天是轻一点的节奏，让系统慢慢恢复。",
+      lowSleepRest: "今天能量可能受到睡少影响，选择休息日可以避免再增加一层 load。",
+      lowSleepLightRecovery: "今天有睡少的信号，轻一点的节奏也许能帮助 recovery 跟上身体。"
     },
     activitySpecificSummary: {
-      shortQualityRun: "今天身体用了较快节奏的跑步强度，即使距离不长。"
+      shortQualityRun: "今天身体用了较快节奏的跑步强度，即使距离不长。",
+      rest: "今天是休息节奏。",
+      lightRecoveryDay: "今天是轻恢复节奏。",
+      lowSleepRest: "今天有睡少信号，也选择了休息节奏。",
+      lowSleepLightRecovery: "今天有睡少信号，也有轻一点的恢复节奏。"
     },
     loadLevel: {
       light: "Load 轻",
@@ -1372,6 +1398,7 @@ const translations = {
       },
       activities: {
         rest: "休息日",
+        lightRecoveryDay: "轻恢复日",
         officeWork: "办公室工作 / 会议与文件",
         outdoorWork: "户外工作 / 体力与出汗",
         dentalFocus: "牙科 / 精细临床病例",
@@ -1390,7 +1417,7 @@ const translations = {
       activityGroups: {
         work: "工作",
         sports: "运动",
-        recovery: "恢复"
+        recovery: "轻恢复"
       },
       mindNote: {
         feeling: {
@@ -1478,8 +1505,9 @@ const activityOptions = [
   { key: "shortQualityRun", label: "วิ่งคุณภาพระยะสั้น", score: 3, type: "sport_intensity_load", group: "sports", legacyLabels: ["Short quality run", "短距离质量跑"] },
   { key: "longRun", label: "Long run", score: 4, type: "sport_intensity_load", group: "sports" },
   { key: "longWalk", label: "เดินเยอะ", score: 2, type: "physical_load", group: "sports" },
-  { key: "lowSleep", label: "นอนน้อย", score: 2, type: "sleep_debt_load", group: "recovery", legacyLabels: ["睡得少"] },
-  { key: "rest", label: "Rest day", score: 0, type: "recovery", group: "recovery" }
+  { key: "lowSleep", label: "นอนน้อย", score: 2, type: "sleep_debt_load", group: "recovery", legacyLabels: ["Low sleep", "睡得少"], hiddenInUi: true },
+  { key: "rest", label: "วันพัก", score: 0, type: "recovery", group: "recovery", legacyLabels: ["Rest day"] },
+  { key: "lightRecoveryDay", label: "วันเบา / ฟื้นตัว", score: 1, type: "recovery", group: "recovery", legacyLabels: ["Light recovery day", "轻恢复日"] }
 ];
 
 const activityGroups = ["work", "sports", "recovery"];
@@ -1509,7 +1537,8 @@ const activityLoadRootByActivityKey = {
   longRun: "sport_sweat",
   longWalk: "walking_physical",
   lowSleep: "recovery_low_sleep",
-  rest: "rest_base"
+  rest: "rest_base",
+  lightRecoveryDay: "rest_base"
 };
 const activityLoadRootPriority = [
   "outdoor_heat",
@@ -1523,6 +1552,7 @@ const activityLoadRootPriority = [
   "rest_base"
 ];
 const activitySpecificReflectionKeys = ["shortQualityRun"];
+const recoveryModeActivityKeys = ["rest", "lightRecoveryDay"];
 
 const todayIso = new Date().toLocaleDateString("en-CA");
 
@@ -1743,7 +1773,7 @@ function renderSelectOptions(selector, options, labelGetter, valueKey = "") {
 function renderActivityOptions() {
   const list = document.querySelector("#activitiesList");
   list.innerHTML = activityGroups.map((group) => {
-    const activities = activityOptions.filter((activity) => activity.group === group);
+    const activities = activityOptions.filter((activity) => activity.group === group && !activity.hiddenInUi);
     return `
       <div class="activity-group">
         <p class="activity-group-label">${t(`options.activityGroups.${group}`)}</p>
@@ -1841,18 +1871,9 @@ function bindEvents() {
     const activity = button.dataset.activity;
     const isSelected = appState.activities.includes(activity);
 
-    if (activity === "Rest day") {
-      appState.activities = isSelected ? [] : ["Rest day"];
-    } else {
-      appState.activities = appState.activities.filter((item) => item !== "Rest day");
-      appState.activities = isSelected
-        ? appState.activities.filter((item) => item !== activity)
-        : [...appState.activities, activity];
-    }
-
-    if (activity === "นอนน้อย") {
-      appState.selectedState.sleep = isSelected ? "" : "น้อย";
-    }
+    appState.activities = isSelected
+      ? appState.activities.filter((item) => item !== activity)
+      : [...appState.activities, activity];
 
     syncUI();
   });
@@ -2338,7 +2359,9 @@ function getHydrationAdjustmentFromLoad({
   loadScore = calculateLoadScore(),
   energy = appState.selectedState.energy,
   mind = appState.selectedState.mind,
-  sleepLow = appState.selectedState.sleep === "น้อย" || (appState.energyCauses || []).includes("sleep_low")
+  sleepLow = appState.selectedState.sleep === "น้อย"
+    || (appState.energyCauses || []).includes("sleep_low")
+    || getSelectedActivityKeys(activities).includes("lowSleep")
 } = {}) {
   const loadTypes = getSelectedLoadTypes(activities);
   const hasType = (type) => loadTypes.includes(type);
@@ -2596,10 +2619,13 @@ function getActivityRootReflections(signals = buildSignals(), { includeRecovery 
 }
 
 function getActivitySpecificReflections(signals = buildSignals(), { limit = 1 } = {}) {
+  const key = getRecoveryModeReflectionKey(signals);
+  if (key) return [t(`activitySpecificReflection.${key}`)];
+
   return getSelectedActivityKeys(signals.recoveryLoad.activities)
-    .filter((key) => activitySpecificReflectionKeys.includes(key))
+    .filter((activityKey) => activitySpecificReflectionKeys.includes(activityKey))
     .slice(0, limit)
-    .map((key) => t(`activitySpecificReflection.${key}`));
+    .map((activityKey) => t(`activitySpecificReflection.${activityKey}`));
 }
 
 function getActivityRootSummary(signalsOrOptions = buildSignals(), options = {}) {
@@ -2622,10 +2648,13 @@ function getActivityRootSummary(signalsOrOptions = buildSignals(), options = {})
 }
 
 function getActivitySpecificSummary(signals = buildSignals(), { limit = 1 } = {}) {
+  const key = getRecoveryModeReflectionKey(signals);
+  if (key) return t(`activitySpecificSummary.${key}`);
+
   return getSelectedActivityKeys(signals.recoveryLoad.activities)
-    .filter((key) => activitySpecificReflectionKeys.includes(key))
+    .filter((activityKey) => activitySpecificReflectionKeys.includes(activityKey))
     .slice(0, limit)
-    .map((key) => t(`activitySpecificSummary.${key}`))
+    .map((activityKey) => t(`activitySpecificSummary.${activityKey}`))
     .join(" ");
 }
 
@@ -2634,6 +2663,26 @@ function getSelectedActivityKeys(activities = appState.activities || []) {
     .map(getActivityOptionByValue)
     .filter(Boolean)
     .map((activity) => activity.key);
+}
+
+function getRecoveryModeReflectionKey(signals = buildSignals()) {
+  const keys = getSelectedActivityKeys(signals.recoveryLoad.activities);
+  if (keys.some((key) => activitySpecificReflectionKeys.includes(key))) return "";
+
+  const hasMainLoad = keys.some((key) => {
+    if (recoveryModeActivityKeys.includes(key) || key === "lowSleep") return false;
+    const root = activityLoadRootByActivityKey[key];
+    return root && root !== "rest_base" && root !== "recovery_low_sleep";
+  });
+  if (hasMainLoad) return "";
+
+  const hasRest = keys.includes("rest");
+  const hasLightRecovery = keys.includes("lightRecoveryDay");
+  if (signals.energySleep.sleepLow && hasRest) return "lowSleepRest";
+  if (signals.energySleep.sleepLow && hasLightRecovery) return "lowSleepLightRecovery";
+  if (hasRest) return "rest";
+  if (hasLightRecovery) return "lightRecoveryDay";
+  return "";
 }
 
 function getLoadTypeReflection(signals = buildSignals()) {
@@ -2664,7 +2713,8 @@ function getEnergySleepSignal(loadScore = calculateLoadScore()) {
   const sleep = appState.selectedState.sleep;
   const causes = appState.energyCauses || [];
   const energyCausePattern = getEnergyCausePattern(energy, causes);
-  const sleepLow = sleep === "น้อย" || causes.includes("sleep_low");
+  const activityLowSleep = getSelectedActivityKeys(appState.activities).includes("lowSleep");
+  const sleepLow = sleep === "น้อย" || causes.includes("sleep_low") || activityLowSleep;
   const energyGood = energy === "ดี";
   const energyLow = energy === "ต่ำ";
   const lowResource = causes.some((cause) => ["low_water", "low_food", "sleep_low"].includes(cause));
@@ -3518,7 +3568,7 @@ function buildColumnGuideRows() {
       english: "Activities",
       meaning: "กิจกรรมที่ผู้ใช้เลือกใน Load & Recovery",
       aiNote: "Use for activity load roots. Do not infer profession or identity.",
-      example: "Deep work / coding นาน | นอนน้อย"
+      example: "Deep work / coding นาน | วันเบา / ฟื้นตัว"
     }),
     row({
       sheet: "Daily_Log",

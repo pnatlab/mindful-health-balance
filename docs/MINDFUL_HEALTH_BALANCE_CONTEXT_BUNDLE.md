@@ -4,25 +4,25 @@ This bundle combines the key design notes for Mindful Health Balance v1.9 and th
 
 ## Table of Contents
 
-1. [Source: AI_READY_REFLECTION_SYSTEM_DEFINITION.md](#source-ai-ready-reflection-system-definitionmd)
-2. [Source: PORTABLE_FIELD_MEMORY_DESIGN.md](#source-portable-field-memory-designmd)
-3. [Source: EXCEL_SUMMARY_REFINEMENT.md](#source-excel-summary-refinementmd)
-4. [Source: EXCEL_COLUMN_GUIDE_DESIGN.md](#source-excel-column-guide-designmd)
-5. [Source: HYDRATION_ADAPTIVE_GUIDANCE.md](#source-hydration-adaptive-guidancemd)
-6. [Source: DRINK_SWEETNESS_INSIGHT.md](#source-drink-sweetness-insightmd)
-7. [Source: MIND_STATE_WORDING_DECISION.md](#source-mind-state-wording-decisionmd)
-8. [Source: MIND_NOTE_FEELING_OPTIONS.md](#source-mind-note-feeling-optionsmd)
-9. [Source: MIND_STATE_POSITIVE_OPTIONS.md](#source-mind-state-positive-optionsmd)
-10. [Source: ENERGY_CAUSE_ALIGNMENT.md](#source-energy-cause-alignmentmd)
-11. [Source: REFLECTION_PRESENTATION_DECISION.md](#source-reflection-presentation-decisionmd)
-12. [Source: REFLECTION_PAGE_LAYOUT_DECISION.md](#source-reflection-page-layout-decisionmd)
-13. [Source: REFLECTION_GENERATION_MOMENT.md](#source-reflection-generation-momentmd)
-14. [Source: REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrixmd)
-15. [Source: ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrixmd)
-16. [Source: V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklistmd)
-17. [Source: FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2md)
-18. [Source: FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](#source-field-review-timeframe-layer-v2md)
-19. [Source: NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2md)
+1. [Source: AI_READY_REFLECTION_SYSTEM_DEFINITION.md](#source-ai-ready-reflection-system-definition-md)
+2. [Source: PORTABLE_FIELD_MEMORY_DESIGN.md](#source-portable-field-memory-design-md)
+3. [Source: EXCEL_SUMMARY_REFINEMENT.md](#source-excel-summary-refinement-md)
+4. [Source: EXCEL_COLUMN_GUIDE_DESIGN.md](#source-excel-column-guide-design-md)
+5. [Source: HYDRATION_ADAPTIVE_GUIDANCE.md](#source-hydration-adaptive-guidance-md)
+6. [Source: DRINK_SWEETNESS_INSIGHT.md](#source-drink-sweetness-insight-md)
+7. [Source: MIND_STATE_WORDING_DECISION.md](#source-mind-state-wording-decision-md)
+8. [Source: MIND_NOTE_FEELING_OPTIONS.md](#source-mind-note-feeling-options-md)
+9. [Source: MIND_STATE_POSITIVE_OPTIONS.md](#source-mind-state-positive-options-md)
+10. [Source: ENERGY_CAUSE_ALIGNMENT.md](#source-energy-cause-alignment-md)
+11. [Source: REFLECTION_PRESENTATION_DECISION.md](#source-reflection-presentation-decision-md)
+12. [Source: REFLECTION_PAGE_LAYOUT_DECISION.md](#source-reflection-page-layout-decision-md)
+13. [Source: REFLECTION_GENERATION_MOMENT.md](#source-reflection-generation-moment-md)
+14. [Source: REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrix-md)
+15. [Source: ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrix-md)
+16. [Source: V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklist-md)
+17. [Source: FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2-md)
+18. [Source: FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](#source-field-review-timeframe-layer-v2-md)
+19. [Source: NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2-md)
 
 ---
 
@@ -1194,7 +1194,8 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 | Load | sport / sweat | Strong activity hydration signal. | Hydration and recovery move with activity. | Aggressive water commands. |
 | Load | outdoor heat | Heat/sweat context. | Small sips and pauses. | Risk/fear wording. |
 | Load | deep work / cognitive load | Focus, eyes, and mental loops use energy. | Rest eyes, reduce loops, recover attention. | Treating it as only mental weakness. |
-| Load | low sleep as recovery load | Recovery-only signal, not activity load. | Base hydration plus rest. | Calling it high activity load. |
+| Load | low sleep as recovery signal | Low sleep belongs in Today State > Energy Cause in the current UI; legacy imported `lowSleep` activity values remain readable. | Base hydration plus rest. | Showing low sleep as a new activity chip or calling it high activity load. |
+| Load | light recovery day | Recovery mode / support signal. | Light, descriptive, not diagnostic. | Letting it override a stronger activity selected with it. |
 
 ## 2.1 Activity Load Root Matrix
 
@@ -1211,8 +1212,9 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 | `badminton` / `heavyPingPong` / `easyRun` / `shortQualityRun` / `longRun` | `sport_sweat` | Physical effort and training load; recovery is part of training. `shortQualityRun` should read as intensity-based short running load, not easy run or long run. | Push harder, aggressive hydration commands, or prescriptive training advice. |
 | `deepWork` / `officeWork` | `cognitive_deepwork` | Sustained focus and screen attention; rest eyes and reduce mental loops. | Productivity praise that pushes more work. |
 | `longWalk` | `walking_physical` | Body use through walking/movement; give back, legs, feet, and water rhythm space. | Overstating it as high-intensity sport. |
-| `lowSleep` only | `recovery_low_sleep` | Recovery signal, not high activity load; rest before adding another round. | Calling low sleep a heavy activity day. |
-| `rest` only | `rest_base` | Light rhythm and recovery base. | Pushing productivity because the day is open. |
+| old workbook value `lowSleep` only | `recovery_low_sleep` | Recovery signal, not high activity load; rest before adding another round. | Showing low sleep as a new Load & Recovery chip or calling it a heavy activity day. |
+| `rest` only | `rest_base` | Rest rhythm and recovery base. | Pushing productivity because the day is open. |
+| `lightRecoveryDay` only | `rest_base` | Light recovery mode and support signal. | Diagnosis wording or letting it erase stronger activity load. |
 
 | Root | Preferred Short Summary | Avoid |
 | --- | --- | --- |
@@ -1224,7 +1226,7 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 | `sport_sweat` | "Today used real physical effort." | Push harder / train more. |
 | `walking_physical` | "Today used the body through walking or movement." | Treating it as high-intensity sport. |
 | `recovery_low_sleep` | "Today is a low-sleep recovery signal." | Calling it high activity load. |
-| `rest_base` | "Today is a lighter rhythm." | Pushing productivity because there is space. |
+| `rest_base` | "Today is a rest/light recovery rhythm." | Pushing productivity because there is space or overriding stronger activity. |
 
 ## 3. Combination Matrix
 
@@ -1314,8 +1316,8 @@ The same Load Score can come from different roots:
 - heat/sweat
 - sport/training
 - walking/body use
-- low sleep as recovery signal
-- rest/light base
+- low sleep as legacy/import recovery signal and Today State > Energy Cause signal
+- rest/light recovery base
 
 Reflection should name the day context gently and avoid profession-specific medical, financial, diagnostic, or productivity advice.
 
@@ -1336,8 +1338,9 @@ Reflection should name the day context gently and avoid profession-specific medi
 | `shortQualityRun` | `sport_sweat` | Short quality / progression / fast-ish run where intensity matters more than distance. | Recovery follows intensity, not only distance. | Calling it a long run, pushing speed, or turning it into a training command. |
 | `longRun` | `sport_sweat` | Strong endurance load. | Recovery is part of training, not a step backward. | Aggressive water or performance commands. |
 | `longWalk` | `walking_physical` | Legs, feet, back, general body use. | Give back, legs, feet, and water rhythm space. | Overstating as high-intensity sport. |
-| `lowSleep` | `recovery_low_sleep` | Recovery-only signal, not activity load. | Rest before adding another round. | Calling it high activity load. |
-| `rest` | `rest_base` | Light/rest/recovery day. | Keep a light rhythm without adding productivity pressure. | Pushing productivity because the day is open. |
+| `lowSleep` | `recovery_low_sleep` | Legacy/import recovery signal. In the current UI, low sleep belongs in Today State > Energy Cause, not Load & Recovery. | Rest before adding another round if old workbooks contain this value. | Showing it as a new activity chip or calling it high activity load. |
+| `rest` | `rest_base` | Rest day / วันพัก. | Keep a rest rhythm without adding productivity pressure. | Pushing productivity because the day is open. |
+| `lightRecoveryDay` | `rest_base` | Light recovery day / วันเบา / ฟื้นตัว. | Read as a light recovery mode and support signal. | Treating it as diagnosis or letting it override stronger activity. |
 
 ## Priority Rules
 
@@ -1359,8 +1362,8 @@ outdoor_heat
 
 Rules:
 
-- `recovery_low_sleep` can coexist as a recovery modifier.
-- `rest_base` should not override stronger activity roots.
+- `recovery_low_sleep` can coexist as a recovery modifier for legacy/imported activity values, while new UI should use Energy Cause for low sleep.
+- `rest_base` should not override stronger activity roots. `rest` and `lightRecoveryDay` are recovery modes, not identity or diagnosis.
 - If no activity or no clear root exists, use existing fallback reflection behavior.
 - Roots refine wording only; they do not change scoring or saved data.
 
@@ -1392,7 +1395,7 @@ The app should say:
 | `sport_sweat` | "Today used real physical effort." | "Today used real physical effort." | Recovery is part of training. |
 | `walking_physical` | "Today used the body through walking or movement." | "Today used the body through walking or movement." | Back, legs, feet, and water spread across the day. |
 | `recovery_low_sleep` | "Today is a low-sleep recovery signal." | "This is a recovery signal, not a high activity-load signal." | Rest before adding another round. |
-| `rest_base` | "Today is a lighter rhythm." | "Today can keep a light rhythm." | Do not add productivity pressure. |
+| `rest_base` | "Today is a rest/light recovery rhythm." | "Today can keep a light rhythm without adding main load." | Do not add productivity pressure or override stronger activity. |
 
 ## Longer Reflection Tone
 
@@ -1406,7 +1409,7 @@ The app should say:
 | `sport_sweat` | "Today used real physical effort." | Recovery is part of training. |
 | `walking_physical` | "Today used the body through walking or movement." | Back, legs, feet, and water spread across the day. |
 | `recovery_low_sleep` | "This is a recovery signal, not a high activity-load signal." | Rest before adding another round. |
-| `rest_base` | "Today can keep a light rhythm." | Do not add productivity pressure. |
+| `rest_base` | "Today can keep a rest/light recovery rhythm." | Do not add productivity pressure or override stronger activity. |
 
 ## Test Scenarios
 
@@ -1420,8 +1423,10 @@ The app should say:
 | `longRun` selected | `sport_sweat` wording appears. | No push-harder language. |
 | `shortQualityRun` selected | Short quality run wording appears before generic `sport_sweat`. | Do not call it easy run or long run. |
 | `deepWork` selected | `cognitive_deepwork` wording appears. | No productivity praise that pushes more. |
-| `lowSleep` only | `recovery_low_sleep` wording appears. | Do not call it high activity load. |
-| `rest` only | `rest_base` / steady wording appears. | Do not push productivity. |
+| old workbook value `lowSleep` only | `recovery_low_sleep` wording appears for compatibility. | Do not show low sleep as a new UI activity chip or call it high activity load. |
+| `rest` only | Rest-day wording appears. | Do not push productivity. |
+| `lightRecoveryDay` only | Light recovery wording appears. | Do not diagnose or over-explain. |
+| `shortQualityRun` + `lightRecoveryDay` | Short quality run remains the main load; recovery mode acts as a modifier. | Do not let recovery mode erase intensity-based load. |
 | No activity selected | Existing fallback behavior remains. | Do not invent a root. |
 
 ## Compatibility Boundary
