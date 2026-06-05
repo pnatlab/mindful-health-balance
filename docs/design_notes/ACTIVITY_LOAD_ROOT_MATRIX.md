@@ -38,6 +38,7 @@ Reflection should name the day context gently and avoid profession-specific medi
 | `badminton` | `sport_sweat` | Sport, sweat, training load. | Recovery is part of training. | Push harder, train more, aggressive hydration command. |
 | `heavyPingPong` | `sport_sweat` | Higher sport intensity and sweat/training load. | Recovery follows effort. | Overtraining encouragement. |
 | `easyRun` | `sport_sweat` | Exercise load, even when light/moderate. | Let hydration and recovery follow activity. | Treating easy run as no load at all. |
+| `shortQualityRun` | `sport_sweat` | Short quality / progression / fast-ish run where intensity matters more than distance. | Recovery follows intensity, not only distance. | Calling it a long run, pushing speed, or turning it into a training command. |
 | `longRun` | `sport_sweat` | Strong endurance load. | Recovery is part of training, not a step backward. | Aggressive water or performance commands. |
 | `longWalk` | `walking_physical` | Legs, feet, back, general body use. | Give back, legs, feet, and water rhythm space. | Overstating as high-intensity sport. |
 | `lowSleep` | `recovery_low_sleep` | Recovery-only signal, not activity load. | Rest before adding another round. | Calling it high activity load. |
@@ -122,6 +123,7 @@ The app should say:
 | `clinicalShift` selected | `clinical_focus` wording appears. | No claim that clinical work is dangerous. |
 | `outdoorWork` selected | `outdoor_heat` wording appears. | No dehydration warning. |
 | `longRun` selected | `sport_sweat` wording appears. | No push-harder language. |
+| `shortQualityRun` selected | Short quality run wording appears before generic `sport_sweat`. | Do not call it easy run or long run. |
 | `deepWork` selected | `cognitive_deepwork` wording appears. | No productivity praise that pushes more. |
 | `lowSleep` only | `recovery_low_sleep` wording appears. | Do not call it high activity load. |
 | `rest` only | `rest_base` / steady wording appears. | Do not push productivity. |

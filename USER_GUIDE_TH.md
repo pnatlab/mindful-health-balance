@@ -143,6 +143,7 @@ Energy Cause ไม่ได้มีไว้เก็บเฉพาะเห�
 - แบดมินตัน
 - ปิงปองหนัก
 - Easy run
+- วิ่งคุณภาพระยะสั้น
 - Long run
 - เดินเยอะ
 - นอนน้อย
@@ -164,6 +165,7 @@ Recovery คือส่วนหนึ่งของ performance ไม่ใ�
 - งานออฟฟิศ / deep work: อ่านเป็นสมอง สายตา และ mental loop
 - งานกลางแจ้ง: อ่านเป็นแดด เหงื่อ แรงกาย และ hydration context
 - กีฬา / วิ่ง / เหงื่อ: อ่านเป็น physical/sweat load ที่ต้องมี recovery ตามมา
+- วิ่งคุณภาพระยะสั้น: อ่านเป็น intensity-based short run ไม่ใช่ easy run และไม่ใช่ long run
 - เดินเยอะ: อ่านเป็นหลัง ขา เท้า และ body use
 - นอนน้อย: อ่านเป็น recovery signal ไม่ใช่ activity load สูง
 - Rest day: อ่านเป็นจังหวะเบา ๆ ไม่ใช่ช่องว่างที่ต้องเพิ่ม productivity

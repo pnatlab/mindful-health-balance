@@ -157,6 +157,7 @@ Activity / profession-aware presets include:
 - Badminton
 - Heavy pingpong
 - Easy run
+- Short quality run
 - Long run
 - Lots of walking
 - Low sleep
@@ -178,6 +179,7 @@ Starting in v1.9.x, the app uses Activity Load Roots to read the root of the day
 - Office work / deep work: brain, eyes, screen time, and mental loops
 - Outdoor work: heat, sweat, body effort, and hydration context
 - Sport / running / sweat: physical/sweat load with recovery afterward
+- Short quality run: an intensity-based short run, not an easy run and not a long run
 - Lots of walking: back, legs, feet, and body use
 - Low sleep: a recovery signal, not high activity load
 - Rest day: a lighter rhythm, not an invitation to add productivity pressure

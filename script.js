@@ -333,6 +333,12 @@ const translations = {
       recovery_low_sleep: "วันนี้เป็นสัญญาณ recovery จากการนอนน้อย",
       rest_base: "วันนี้เป็นจังหวะเบา ๆ"
     },
+    activitySpecificReflection: {
+      shortQualityRun: "วันนี้เป็นการวิ่งคุณภาพระยะสั้นมากกว่าวิ่งยาว ร่างกายใช้แรงจาก intensity มากกว่าระยะทาง ให้ recovery เดินตาม effort แบบไม่ต้องเพิ่มแรงกดดัน"
+    },
+    activitySpecificSummary: {
+      shortQualityRun: "วันนี้ร่างกายใช้แรงจากการวิ่งที่มีจังหวะเร็ว แม้ระยะไม่ยาวมาก"
+    },
     loadLevel: {
       light: "Load เบา",
       medium: "Load กลาง",
@@ -396,6 +402,9 @@ const translations = {
       recovery_low_sleep: "ให้ recovery มาก่อนการเพิ่มรอบใหม่",
       rest_base: "รักษาจังหวะเบา ๆ โดยไม่ต้องเพิ่ม productivity"
     },
+    tomorrowFocusByActivity: {
+      shortQualityRun: "รอบถัดไปอาจกลับไป easy หรือ steady เพื่อบาลานซ์จังหวะที่เร็วขึ้นวันนี้"
+    },
     options: {
       energy: { low: "ต่ำ", medium: "กลาง", good: "ดี" },
       mind: { calm: "เฉย ๆ", worried: "กังวล", pressured: "กดดัน", scattered: "ฟุ้ง", feeling_good: "รู้สึกดี", relaxed: "ผ่อนคลาย" },
@@ -441,6 +450,7 @@ const translations = {
         marketWatch: "นักลงทุน / เฝ้าตลาดหรือวิเคราะห์",
         badminton: "แบดมินตัน",
         easyRun: "Easy run",
+        shortQualityRun: "วิ่งคุณภาพระยะสั้น",
         longRun: "Long run",
         heavyPingPong: "ปิงปองหนัก",
         longWalk: "เดินเยอะ",
@@ -788,6 +798,12 @@ const translations = {
       recovery_low_sleep: "Today is a low-sleep recovery signal.",
       rest_base: "Today is a lighter rhythm."
     },
+    activitySpecificReflection: {
+      shortQualityRun: "Today reads more like a short quality run than a long run. The body used intensity even if the distance was not long, so recovery can follow the effort without adding pressure."
+    },
+    activitySpecificSummary: {
+      shortQualityRun: "Today used running intensity even if the distance was not long."
+    },
     loadLevel: {
       light: "Light Load",
       medium: "Moderate Load",
@@ -851,6 +867,9 @@ const translations = {
       recovery_low_sleep: "Let recovery come before adding another round.",
       rest_base: "Keep a light rhythm without adding productivity pressure."
     },
+    tomorrowFocusByActivity: {
+      shortQualityRun: "A next easy or steady run can balance today's faster rhythm."
+    },
     options: {
       energy: { low: "Low", medium: "Medium", good: "Good" },
       mind: { calm: "Neutral", worried: "Worried", pressured: "Pressured", scattered: "Scattered", feeling_good: "Feeling good", relaxed: "Relaxed" },
@@ -896,6 +915,7 @@ const translations = {
         marketWatch: "Investor / market watch & analysis",
         badminton: "Badminton",
         easyRun: "Easy run",
+        shortQualityRun: "Short quality run",
         longRun: "Long run",
         heavyPingPong: "Heavy pingpong",
         longWalk: "Lots of walking",
@@ -1243,6 +1263,12 @@ const translations = {
       recovery_low_sleep: "今天是睡眠不足带来的 recovery 信号。",
       rest_base: "今天是比较轻的节奏。"
     },
+    activitySpecificReflection: {
+      shortQualityRun: "今天更像短距离质量跑，不是长距离跑。身体用到的是强度，即使距离不长，recovery 也可以跟上这份 effort。"
+    },
+    activitySpecificSummary: {
+      shortQualityRun: "今天身体用了较快节奏的跑步强度，即使距离不长。"
+    },
     loadLevel: {
       light: "Load 轻",
       medium: "Load 中",
@@ -1306,6 +1332,9 @@ const translations = {
       recovery_low_sleep: "先 recovery，再增加新的回合。",
       rest_base: "维持轻一点的节奏，不需要增加 productivity 压力。"
     },
+    tomorrowFocusByActivity: {
+      shortQualityRun: "下一次可以回到 easy 或 steady 节奏，平衡今天较快的跑步节奏。"
+    },
     options: {
       energy: { low: "低", medium: "中", good: "好" },
       mind: { calm: "一般", worried: "担心", pressured: "有压力", scattered: "分散", feeling_good: "感觉不错", relaxed: "放松" },
@@ -1351,6 +1380,7 @@ const translations = {
         marketWatch: "投资者 / 盯盘与分析",
         badminton: "羽毛球",
         easyRun: "轻松跑",
+        shortQualityRun: "短距离质量跑",
         longRun: "长距离跑",
         heavyPingPong: "高强度乒乓球",
         longWalk: "走很多路",
@@ -1445,6 +1475,7 @@ const activityOptions = [
   { key: "badminton", label: "แบดมินตัน", score: 3, type: "sport_intensity_load", group: "sports" },
   { key: "heavyPingPong", label: "ปิงปองหนัก", score: 3, type: "sport_intensity_load", group: "sports", legacyLabels: ["Heavy ping-pong"] },
   { key: "easyRun", label: "Easy run", score: 2, type: "physical_load", group: "sports" },
+  { key: "shortQualityRun", label: "วิ่งคุณภาพระยะสั้น", score: 3, type: "sport_intensity_load", group: "sports", legacyLabels: ["Short quality run", "短距离质量跑"] },
   { key: "longRun", label: "Long run", score: 4, type: "sport_intensity_load", group: "sports" },
   { key: "longWalk", label: "เดินเยอะ", score: 2, type: "physical_load", group: "sports" },
   { key: "lowSleep", label: "นอนน้อย", score: 2, type: "sleep_debt_load", group: "recovery", legacyLabels: ["睡得少"] },
@@ -1474,6 +1505,7 @@ const activityLoadRootByActivityKey = {
   badminton: "sport_sweat",
   heavyPingPong: "sport_sweat",
   easyRun: "sport_sweat",
+  shortQualityRun: "sport_sweat",
   longRun: "sport_sweat",
   longWalk: "walking_physical",
   lowSleep: "recovery_low_sleep",
@@ -1490,6 +1522,7 @@ const activityLoadRootPriority = [
   "recovery_low_sleep",
   "rest_base"
 ];
+const activitySpecificReflectionKeys = ["shortQualityRun"];
 
 const todayIso = new Date().toLocaleDateString("en-CA");
 
@@ -2079,6 +2112,7 @@ function getActivityOptionByValue(value) {
   const normalized = String(value || "").trim();
   if (!normalized) return null;
   return activityOptions.find((activity) => {
+    if (activity.key === normalized) return true;
     if (activity.label === normalized) return true;
     if (activity.legacyLabels?.includes(normalized)) return true;
     return Object.keys(translations).some((lang) => translations[lang].options.activities[activity.key] === normalized);
@@ -2421,7 +2455,7 @@ function getLoadFeedback() {
   const signals = buildSignals();
   const hasHeavyCombo = signals.recoveryLoad.hasHeavyCombo;
   const highLoadWithLowSleep = signals.recoveryLoad.loadScore >= 6 && signals.recoveryLoad.loadTypes.includes("sleep_debt_load");
-  const rootNote = getActivityRootSummary(signals, { limit: 2 });
+  const rootNote = getActivitySpecificSummary(signals, { limit: 1 }) || getActivityRootSummary(signals, { limit: 2 });
   const loadTypeNote = rootNote || getLoadTypeReflections(signals, { limit: 2 }).join(" ");
 
   if (loadTypeNote) {
@@ -2561,6 +2595,13 @@ function getActivityRootReflections(signals = buildSignals(), { includeRecovery 
     .map((root) => t(`activityRootReflection.${root}`));
 }
 
+function getActivitySpecificReflections(signals = buildSignals(), { limit = 1 } = {}) {
+  return getSelectedActivityKeys(signals.recoveryLoad.activities)
+    .filter((key) => activitySpecificReflectionKeys.includes(key))
+    .slice(0, limit)
+    .map((key) => t(`activitySpecificReflection.${key}`));
+}
+
 function getActivityRootSummary(signalsOrOptions = buildSignals(), options = {}) {
   const hasRecoveryLoad = Boolean(signalsOrOptions?.recoveryLoad);
   const roots = hasRecoveryLoad
@@ -2580,12 +2621,29 @@ function getActivityRootSummary(signalsOrOptions = buildSignals(), options = {})
     .join(" ");
 }
 
+function getActivitySpecificSummary(signals = buildSignals(), { limit = 1 } = {}) {
+  return getSelectedActivityKeys(signals.recoveryLoad.activities)
+    .filter((key) => activitySpecificReflectionKeys.includes(key))
+    .slice(0, limit)
+    .map((key) => t(`activitySpecificSummary.${key}`))
+    .join(" ");
+}
+
+function getSelectedActivityKeys(activities = appState.activities || []) {
+  return activities
+    .map(getActivityOptionByValue)
+    .filter(Boolean)
+    .map((activity) => activity.key);
+}
+
 function getLoadTypeReflection(signals = buildSignals()) {
   return getLoadTypeReflections(signals, { limit: 1 })[0] || "";
 }
 
 function getActivityRootReflection(signals = buildSignals()) {
-  return getActivityRootReflections(signals, { limit: 1 })[0] || "";
+  return getActivitySpecificReflections(signals, { limit: 1 })[0]
+    || getActivityRootReflections(signals, { limit: 1 })[0]
+    || "";
 }
 
 function getLoadTypeTomorrowFocus(signals = buildSignals()) {
@@ -2594,6 +2652,9 @@ function getLoadTypeTomorrowFocus(signals = buildSignals()) {
 }
 
 function getActivityRootTomorrowFocus(signals = buildSignals()) {
+  const activityKey = getSelectedActivityKeys(signals.recoveryLoad.activities)
+    .find((key) => activitySpecificReflectionKeys.includes(key));
+  if (activityKey) return t(`tomorrowFocusByActivity.${activityKey}`);
   const root = getOrderedActivityLoadRoots(signals.recoveryLoad.activityLoadRoots)[0];
   return root ? t(`tomorrowFocusByActivityRoot.${root}`) : "";
 }
@@ -2747,7 +2808,7 @@ function getReminderFromSignals(signals) {
   if (signals.mindNote.worried) return t("mindNoteReminder.worried");
   if (signals.mindNote.uneasy) return t("mindNoteReminder.uneasy");
   if (signals.mindNote.hydrateGently) return t("mindNoteReminder.hydrate_gently");
-  const activityRootSummary = getActivityRootSummary(signals);
+  const activityRootSummary = getActivitySpecificSummary(signals) || getActivityRootSummary(signals);
   if (activityRootSummary) return activityRootSummary;
   if (signals.energySleep.sleepLow) return t("reminder.lowSleep");
   if (signals.recoveryLoad.high) return t("reminder.highLoad");
@@ -2831,7 +2892,7 @@ function getReflectionDisplayOverview(signals) {
   if (signals.mindNote.noteFeelingGood && hasRecoveryOnly) return t("reflectionDisplay.overviewMindNoteFeelingGoodRecovery");
   if (signals.mindNote.noteFeelingGood) return t("reflectionDisplay.overviewMindNoteFeelingGoodSupport");
   if (signals.mindNote.positive && hasActivityLoad) return t("reflectionDisplay.overviewPositiveMindActivity");
-  const activityRootSummary = getActivityRootSummary(signals);
+  const activityRootSummary = getActivitySpecificSummary(signals) || getActivityRootSummary(signals);
   if (activityRootSummary && hasActivityLoad) return activityRootSummary;
   if (hasActivityLoad && hydrationIsBase) return t("reflectionDisplay.overviewActivityHydrated");
   if (hasActivityLoad) return t("reflectionDisplay.overviewActivity");
@@ -2898,7 +2959,8 @@ function truncateText(value, limit) {
 function buildReflectionFromSignals(signals) {
   const goodThings = [];
   const adjustments = [];
-  const activityRootSummary = getActivityRootSummary(signals, { limit: 2 });
+  const activityRootSummary = getActivitySpecificReflections(signals, { limit: 1 }).join(" ")
+    || getActivityRootSummary(signals, { limit: 2 });
   const loadTypeAdjustments = activityRootSummary
     ? [activityRootSummary]
     : getActivityRootReflections(signals, { limit: 2 });

@@ -166,7 +166,7 @@ Activity chips ถูก map เป็น Activity Load Roots เพื่อช
 - `cognitive_deepwork`: deep work, office work, screen time และ mental loop
 - `market_decision`: attention, uncertainty และ decision load
 - `outdoor_heat`: heat, sweat, outdoor effort และ hydration context
-- `sport_sweat`: กีฬา เหงื่อ และ training load
+- `sport_sweat`: กีฬา เหงื่อ และ training load รวมถึง short quality / progression / fast-ish short run ที่ไม่ใช่ easy run และไม่ใช่ long run
 - `walking_physical`: การเดิน ขา หลัง เท้า และ body use
 - `recovery_low_sleep`: นอนน้อยเป็น recovery signal ไม่ใช่ activity load สูง
 - `rest_base`: วันเบา / rest day ที่ไม่ควรถูกผลักให้เพิ่ม productivity
