@@ -33,7 +33,7 @@
       <div>
         <p class="eyebrow" data-i18n="eyebrow">Personal mindful dashboard</p>
         <h1 data-i18n="title">Mindful Health Balance by MSxAI</h1>
-        <p class="version" data-i18n="version">v1.9 Portable Field Memory Foundation</p>
+        <p class="version" data-i18n="version">v1.9.2 — Today Input Step Flow</p>
         <p class="subtitle" data-i18n="subtitle">ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง</p>
       </div>
       <div class="hero-side">
@@ -69,10 +69,14 @@
       <div class="view-heading">
         <p class="section-kicker" data-i18n="tabToday">วันนี้</p>
         <h2 id="todayViewTitle" data-i18n="todayViewTitle">Today Input</h2>
+        <div class="today-step-status" aria-live="polite">
+          <span class="soft-badge" id="todayStepIndicator" data-i18n="todayStepOneLabel">Today Input 1/2</span>
+          <p class="section-helper" id="todayStepHelper" data-i18n="todayStepOneHelper">กรอกจังหวะกาย น้ำ เครื่องดื่ม และ load ของวันนี้ก่อน</p>
+        </div>
       </div>
 
       <section class="dashboard-grid today-grid" aria-label="Mindful Health Balance dashboard">
-      <article class="glass-card hydration-card today-hydration-hero">
+      <article class="glass-card hydration-card today-hydration-hero" data-today-step="1">
         <div class="card-heading">
           <div>
             <p class="section-kicker" data-i18n="hydration">Hydration</p>
@@ -107,7 +111,7 @@
         </div>
       </article>
 
-      <article class="glass-card today-state-card">
+      <article class="glass-card today-state-card" data-today-step="1">
         <div class="state-orb state-orb--sun" aria-hidden="true">
           <span class="state-orb-core"></span>
           <span class="state-orb-ring"></span>
@@ -159,7 +163,7 @@
         </div>
       </article>
 
-      <article class="glass-card drink-profile-card">
+      <article class="glass-card drink-profile-card" data-today-step="1">
         <div class="card-heading">
           <div>
             <p class="section-kicker" data-i18n="drinks">Drinks</p>
@@ -214,7 +218,7 @@
         <p class="feedback" id="drinksFeedback">เลือกเครื่องดื่มวันนี้เพื่อดู reminder แบบเบา ๆ</p>
       </article>
 
-      <article class="glass-card load-recovery-card">
+      <article class="glass-card load-recovery-card" data-today-step="1">
         <div class="card-heading">
           <div>
             <p class="section-kicker" data-i18n="loadRecovery">Load & Recovery</p>
@@ -233,7 +237,7 @@
         </div>
       </article>
 
-      <article class="glass-card mind-note-card">
+      <article class="glass-card mind-note-card" data-today-step="2" hidden>
         <div class="card-heading">
           <div>
             <p class="section-kicker" data-i18n="mindNoteKicker">Mind Note — วางใจหนึ่งบรรทัด</p>
@@ -275,7 +279,7 @@
       </article>
       </section>
 
-      <section class="control-panel today-actions">
+      <section class="control-panel today-actions" data-today-step="1">
         <div>
           <p class="section-kicker" data-i18n="tabToday">วันนี้</p>
           <h2 data-i18n="todayResetTitle">Current Form</h2>
@@ -283,6 +287,19 @@
         </div>
         <div class="control-buttons">
           <button type="button" class="ghost-button" id="resetCurrentForm" data-i18n="resetCurrentForm">เคลียร์หน้าปัจจุบัน</button>
+          <button type="button" class="primary-button" id="goTodayStepTwo" data-i18n="todayStepNext">ถัดไป: บันทึกภาวะใจ</button>
+        </div>
+      </section>
+
+      <section class="control-panel today-actions today-step-two-summary" data-today-step="2" hidden>
+        <div>
+          <p class="section-kicker" data-i18n="todayStepTwoLabel">Today Input 2/2</p>
+          <h2 data-i18n="todayCurrentFormSummaryTitle">Current Form</h2>
+          <p data-i18n="todayCurrentFormSummaryText">ข้อมูลที่กรอกไว้ยังอยู่ในฟอร์มปัจจุบัน ไป Reflection/NuTuenSai เพื่อทบทวนและบันทึกเมื่อพร้อม</p>
+        </div>
+        <div class="control-buttons">
+          <button type="button" class="ghost-button" id="goTodayStepOne" data-i18n="todayStepBack">กลับไปหน้า 1/2</button>
+          <button type="button" class="primary-button" id="goReflectionFromToday" data-i18n="todayStepReflection">ไป Reflection/NuTuenSai</button>
         </div>
       </section>
     </section>

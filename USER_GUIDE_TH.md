@@ -64,11 +64,13 @@ TH | EN | 中文
 
 หลังผ่านหน้ากระจกต้อนรับ แอปจะแบ่งเป็น 3 view:
 
-- `วันนี้` สำหรับกรอกข้อมูลวันนี้ เช่น Energy, Mind, Sleep, น้ำ, Drink Profile, Load & Recovery, Mind Note และเคลียร์หน้าปัจจุบัน
+- `วันนี้` สำหรับกรอกข้อมูลวันนี้แบบ 2 จังหวะ: 1/2 คือ Energy, Mind, Sleep, น้ำ, Drink Profile และ Load & Recovery; 2/2 คือ Mind Note และทางลัดไป Reflection/NuTuenSai
 - `Reflection` สำหรับดู NuTuenSai note แบบแถบสั้น ๆ, generate/review/edit reflection และ Save to Daily Log
 - `Log` สำหรับดู Daily Log Table, Export Master Excel, Import Master Excel และ Clear Daily Log
 
 การเปลี่ยน view ไม่ลบข้อมูลที่กรอกอยู่ และไม่ลบ Daily Log เดิม
+
+ตั้งแต่ v1.9.2 — Today Input Step Flow ปุ่ม `เคลียร์หน้าปัจจุบัน` อยู่เฉพาะ Today Input 1/2 ส่วน Today Input 2/2 มีเพียง `กลับไปหน้า 1/2` และ `ไป Reflection/NuTuenSai` การไป Reflection/NuTuenSai เป็นการนำทางเท่านั้น ไม่ใช่การบันทึกข้อมูล
 
 ## 3. วิธีใช้งานแต่ละส่วน
 

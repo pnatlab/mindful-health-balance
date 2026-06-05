@@ -35,13 +35,22 @@ const translations = {
     htmlLang: "th",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9 Portable Field Memory Foundation",
+    version: "v1.9.2 — Today Input Step Flow",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
     tabReflection: "Reflection/NuTuenSai",
     tabLog: "Log",
     todayViewTitle: "Today Input",
+    todayStepOneLabel: "Today Input 1/2",
+    todayStepTwoLabel: "Today Input 2/2",
+    todayStepOneHelper: "กรอกจังหวะกาย น้ำ เครื่องดื่ม และ load ของวันนี้ก่อน",
+    todayStepTwoHelper: "วางภาวะใจสั้น ๆ ก่อนพาไป Reflection/NuTuenSai",
+    todayStepNext: "ถัดไป: บันทึกภาวะใจ",
+    todayStepBack: "กลับไปหน้า 1/2",
+    todayStepReflection: "ไป Reflection/NuTuenSai",
+    todayCurrentFormSummaryTitle: "Current Form",
+    todayCurrentFormSummaryText: "ข้อมูลที่กรอกไว้ยังอยู่ในฟอร์มปัจจุบัน ไป Reflection/NuTuenSai เพื่อทบทวนและบันทึกเมื่อพร้อม",
     reflectionViewTitle: "Reflection",
     reflectionViewHelper: "ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม",
     reflectionGeneratorHelper: "กดสรุปวันนี้เพื่อให้ระบบสะท้อน pattern จากข้อมูลวันนี้ และยังแก้ไขเล็กน้อยก่อนบันทึกได้",
@@ -509,13 +518,22 @@ const translations = {
     htmlLang: "en",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9 Portable Field Memory Foundation",
+    version: "v1.9.2 — Today Input Step Flow",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
     tabReflection: "Reflection/NuTuenSai",
     tabLog: "Log",
     todayViewTitle: "Today Input",
+    todayStepOneLabel: "Today Input 1/2",
+    todayStepTwoLabel: "Today Input 2/2",
+    todayStepOneHelper: "Start with body rhythm, water, drinks, and today's load.",
+    todayStepTwoHelper: "Place a short mind note before moving to Reflection/NuTuenSai.",
+    todayStepNext: "Next: Mind Note",
+    todayStepBack: "Back to 1/2",
+    todayStepReflection: "Go to Reflection/NuTuenSai",
+    todayCurrentFormSummaryTitle: "Current Form",
+    todayCurrentFormSummaryText: "Your current input is still preserved. Go to Reflection/NuTuenSai to review and save when ready.",
     reflectionViewTitle: "Reflection",
     reflectionViewHelper: "Review today’s reflection, then save it to the Daily Log when ready.",
     reflectionGeneratorHelper: "Reflect creates a reflection from today's signals. You can still edit it lightly before saving.",
@@ -983,13 +1001,22 @@ const translations = {
     htmlLang: "zh-CN",
     eyebrow: "个人正念健康仪表板",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9 Portable Field Memory Foundation",
+    version: "v1.9.2 — Today Input Step Flow",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
     tabReflection: "反思/NuTuenSai",
     tabLog: "记录",
     todayViewTitle: "今日输入",
+    todayStepOneLabel: "今日输入 1/2",
+    todayStepTwoLabel: "今日输入 2/2",
+    todayStepOneHelper: "先记录身体节奏、饮水、饮品和今天的 load。",
+    todayStepTwoHelper: "轻轻写下心里的状态，再前往 Reflection/NuTuenSai。",
+    todayStepNext: "下一步：心情记录",
+    todayStepBack: "返回 1/2",
+    todayStepReflection: "前往 Reflection/NuTuenSai",
+    todayCurrentFormSummaryTitle: "当前表单",
+    todayCurrentFormSummaryText: "当前输入仍会保留。前往 Reflection/NuTuenSai 后，可以回顾并在准备好时保存。",
     reflectionViewTitle: "反思",
     reflectionViewHelper: "查看今天的反思内容，准备好后再保存到每日记录。",
     reflectionGeneratorHelper: "点击回顾会根据今天的信号生成回顾，保存前仍可轻微编辑。",
@@ -1583,6 +1610,8 @@ let appState = loadState();
 let themeIntervalId;
 let stateOrbIntervalId;
 let currentView = "today";
+let todayInputStep = 1;
+let todayInputStepResetAfterSave = false;
 let isEditingReflection = false;
 let isGeneratingReflection = false;
 let reflectionGenerationTimerId;
@@ -1661,6 +1690,7 @@ function applyTranslations() {
   });
   updateThemeButtons();
   updateViewPanels();
+  updateTodayInputStepUI();
 }
 
 function applyThemePreference(preference = currentThemePreference) {
@@ -1904,16 +1934,21 @@ function bindEvents() {
 
   document.querySelector("#mindNoteText").addEventListener("input", (event) => {
     appState.mindNoteText = event.target.value;
+    markTodayMindNoteFlowActive();
   });
 
   document.querySelectorAll("[data-mind-note-field]").forEach((button) => {
     button.addEventListener("click", () => {
       const field = button.dataset.mindNoteField;
       appState[field] = appState[field] === button.dataset.value ? "" : button.dataset.value;
+      markTodayMindNoteFlowActive();
       syncUI();
     });
   });
 
+  document.querySelector("#goTodayStepTwo").addEventListener("click", () => setTodayInputStep(2));
+  document.querySelector("#goTodayStepOne").addEventListener("click", () => setTodayInputStep(1));
+  document.querySelector("#goReflectionFromToday").addEventListener("click", goToReflectionFromToday);
   document.querySelector("#saveDailyLog").addEventListener("click", saveToDailyLog);
   document.querySelector("#resetCurrentForm").addEventListener("click", resetCurrentForm);
   document.querySelector("#clearDailyLog").addEventListener("click", clearDailyLog);
@@ -1965,6 +2000,9 @@ function hideWelcome({ remember = true, instant = false } = {}) {
 
 function setActiveView(view) {
   if (!["today", "reflection", "log"].includes(view)) return;
+  if (view === "today") {
+    prepareTodayStepForOpen();
+  }
   currentView = view;
   updateViewPanels();
 }
@@ -1984,6 +2022,7 @@ function updateViewPanels() {
 }
 
 function syncUI() {
+  resetTodayStepIfDateChanged();
   appState.loadScore = calculateLoadScore();
   appState.loadLevel = getLoadLevel(appState.loadScore);
   appState.hydrationStatus = getHydrationStatus(appState.waterMl);
@@ -2005,6 +2044,76 @@ function syncUI() {
   updateDrinkUI();
   updateActivityUI();
   updateEnergyCauseUI();
+  updateTodayInputStepUI();
+}
+
+function setTodayInputStep(step) {
+  todayInputStep = Number(step) === 2 ? 2 : 1;
+  if (todayInputStep === 2) {
+    todayInputStepResetAfterSave = false;
+  }
+  updateTodayInputStepUI();
+}
+
+function resetTodayInputStep() {
+  todayInputStep = 1;
+  todayInputStepResetAfterSave = true;
+  updateTodayInputStepUI();
+}
+
+function markTodayMindNoteFlowActive() {
+  todayInputStepResetAfterSave = false;
+}
+
+function hasMindNoteInput(state = appState) {
+  return Boolean(
+    String(state.mindNoteText || "").trim()
+    || state.mindNoteFeeling
+    || state.mindNoteSupport
+  );
+}
+
+function shouldOpenTodayStepTwo() {
+  if (todayInputStep === 2) return true;
+  return hasMindNoteInput() && !todayInputStepResetAfterSave;
+}
+
+function prepareTodayStepForOpen() {
+  todayInputStep = shouldOpenTodayStepTwo() ? 2 : 1;
+}
+
+function resetTodayStepIfDateChanged() {
+  const currentIso = new Date().toLocaleDateString("en-CA");
+  if (currentIso !== todayIso) {
+    todayInputStep = 1;
+    todayInputStepResetAfterSave = true;
+  }
+}
+
+function updateTodayInputStepUI() {
+  const todayPanel = document.querySelector('[data-view-panel="today"]');
+  if (todayPanel) {
+    todayPanel.dataset.todayInputStep = String(todayInputStep);
+  }
+
+  document.querySelectorAll("[data-today-step]").forEach((element) => {
+    const isActive = element.dataset.todayStep === String(todayInputStep);
+    element.hidden = !isActive;
+    element.setAttribute("aria-hidden", String(!isActive));
+  });
+
+  const indicator = document.querySelector("#todayStepIndicator");
+  const helper = document.querySelector("#todayStepHelper");
+  if (indicator) {
+    indicator.textContent = t(todayInputStep === 2 ? "todayStepTwoLabel" : "todayStepOneLabel");
+  }
+  if (helper) {
+    helper.textContent = t(todayInputStep === 2 ? "todayStepTwoHelper" : "todayStepOneHelper");
+  }
+}
+
+function goToReflectionFromToday() {
+  setActiveView("reflection");
 }
 
 function updateReflectionPreview() {
@@ -3216,6 +3325,7 @@ function resetCurrentForm() {
   isEditingReflection = false;
   appState = structuredClone(defaultState);
   localStorage.removeItem(storageKey());
+  resetTodayInputStep();
   resetDrinkProfileForm();
   syncUI();
   document.querySelector("#saveStatus").textContent = t("resetCurrentFormDone");
@@ -3295,6 +3405,7 @@ function saveToDailyLog() {
 
   saveToday();
   setDailyLog(rows);
+  resetTodayInputStep();
   document.querySelector("#saveStatus").textContent = t("savedDailyLog");
   syncUI();
 }

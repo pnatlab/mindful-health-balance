@@ -22,11 +22,12 @@ Excel export structure, Summary sheet behavior, Column_Guide, and human/AI-reada
 
 ## 02 Reflection UX
 
-Reflection page hierarchy, preview synthesis, NuTuenSai note strip, zen generation moment, and display-only UX decisions.
+Today and Reflection page hierarchy, preview synthesis, NuTuenSai note strip, zen generation moment, and display-only UX decisions.
 
 - [REFLECTION_PRESENTATION_DECISION.md](REFLECTION_PRESENTATION_DECISION.md) - Explains why the preview is a concise synthesis instead of a raw field dump.
 - [REFLECTION_PAGE_LAYOUT_DECISION.md](REFLECTION_PAGE_LAYOUT_DECISION.md) - Records the Reflection page layout decision with the reminder strip and focused generator.
 - [REFLECTION_GENERATION_MOMENT.md](REFLECTION_GENERATION_MOMENT.md) - Documents the zen/circular Reflection Generator moment and Clear Reflection behavior.
+- [TODAY_INPUT_STEP_FLOW_DECISION.md](TODAY_INPUT_STEP_FLOW_DECISION.md) - Documents the v1.9.2 two-step Today Input flow and Clear Current Form placement.
 
 ## 03 Signal Logic
 

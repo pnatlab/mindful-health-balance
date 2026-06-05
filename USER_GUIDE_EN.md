@@ -78,11 +78,13 @@ If you choose Light or Dark manually, that choice stays active until you switch 
 
 After the Welcome Glass, the app is organized into three views:
 
-- `Today` for current-day input: Energy, Mind, Sleep, Hydration, Drink Profile, Load & Recovery, Mind Note, and Reset Current Form
+- `Today` for current-day input in two steps: 1/2 is Energy, Mind, Sleep, Hydration, Drink Profile, and Load & Recovery; 2/2 is Mind Note and the shortcut to Reflection/NuTuenSai
 - `Reflection/NuTuenSai` for the compact NuTuenSai note strip, generated reflection preview/editing, and Save to Daily Log
 - `Log` for the Daily Log Table, Export Master Excel, Import Master Excel, and Clear Daily Log
 
 Switching views does not reset current inputs and does not delete saved Daily Logs.
+
+Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only on Today Input 1/2. Today Input 2/2 only shows `Back to 1/2` and `Go to Reflection/NuTuenSai`. Going to Reflection/NuTuenSai is navigation only; it does not save data.
 
 ## 8. Today State
 

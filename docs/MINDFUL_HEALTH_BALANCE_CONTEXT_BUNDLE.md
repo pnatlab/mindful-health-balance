@@ -1132,6 +1132,9 @@ The Reflection Generation Moment should give the user a small pause for daily cl
 
 # Today Input Step Flow Decision
 
+Implementation status:
+Implemented in v1.9.2 — Today Input Step Flow as a v1.9.x stabilization / usability patch. This is not v2.0 and does not add Field Review Companion, AI log reading, baseline modeling, schema changes, or export/import changes.
+
 ## 1. Intent
 
 Today Input should be split into 2 steps to reduce page length and help users enter the day in a lighter rhythm.

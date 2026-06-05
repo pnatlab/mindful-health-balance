@@ -502,6 +502,20 @@ h2 {
   font-size: 1.38rem;
 }
 
+.today-step-status {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.today-step-status .soft-badge {
+  width: fit-content;
+}
+
+[data-today-step][hidden] {
+  display: none !important;
+}
+
 .today-actions {
   margin-top: 18px;
 }

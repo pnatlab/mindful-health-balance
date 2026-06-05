@@ -1,4 +1,4 @@
-# Mindful Health Balance by MSxAI v1.9.x Portable Field Memory Foundation
+# Mindful Health Balance by MSxAI v1.9.2 — Today Input Step Flow
 
 Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ static สำหรับ local-first self-care reflection และ Portable Field Memory Foundation เพื่อช่วยดู pattern และ balance recovery ในชีวิตประจำวัน โดยเน้น 4 แกนหลัก:
 
@@ -139,10 +139,20 @@ Excel export ยังรักษา sheet เดิม (`Daily_Log`, `Summary`
 
 `Field_Review` เป็น summary เพื่อ pattern reflection เท่านั้น ไม่ใช่ diagnosis, medical advice, therapy interpretation หรือ health-risk prediction ผู้ใช้ยังเป็นเจ้าของไฟล์และเลือกเองว่าจะ export, เก็บ, review หรือ share ให้ AI อ่านเมื่อไหร่
 
+### v1.9.2 — Today Input Step Flow
+
+v1.9.2 เพิ่ม Today Input Step Flow เพื่อทำให้หน้า Today เบาลงและใช้งานจริงง่ายขึ้น โดยแบ่ง Today เป็น 2 จังหวะ:
+
+- Today Input 1/2: Today State, Hydration, Drinks และ Load & Recovery พร้อมปุ่ม `เคลียร์หน้าปัจจุบัน` และ `ถัดไป: บันทึกภาวะใจ`
+- Today Input 2/2: Mind Note และ Current Form summary พร้อมปุ่ม `กลับไปหน้า 1/2` และ `ไป Reflection/NuTuenSai`
+
+Save Daily Log ยังอยู่ใน Reflection/NuTuenSai เท่านั้น และ patch นี้ไม่เปลี่ยน Daily_Log schema, Excel export/import, workbook sheets หรือ localStorage data schema
+
 ### v1.9.x Latest Summary
 
 v1.9.x ล่าสุดรวมหลาย refinement ที่ทำให้แอปอ่าน pattern ได้ชัดขึ้นโดยไม่เพิ่มภาระผู้ใช้:
 
+- Today Input Step Flow: แบ่งหน้า Today เป็น 1/2 และ 2/2 เพื่อลดความยาวของ daily input โดยยังให้ Save Daily Log อยู่ใน Reflection/NuTuenSai
 - Adaptive Hydration Guidance: เป้าหมายน้ำเป็น flexible self-care cue ตาม activity/load/recovery context ไม่ใช่ตัวเลขตายตัว
 - Drink Sweetness Insight + Soda support: `น้ำอัดลม` เป็น Drink Type และ Sweetness / Sugar Score เป็น drink-load signal ไม่ใช่ moral score
 - Positive Mind State options: `รู้สึกดี` และ `ผ่อนคลาย` เป็น support signal ไม่ใช่ performance score
