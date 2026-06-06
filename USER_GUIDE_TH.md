@@ -72,6 +72,8 @@ TH | EN | 中文
 
 ตั้งแต่ v1.9.2 — Today Input Step Flow ปุ่ม `เคลียร์หน้าปัจจุบัน` อยู่เฉพาะ Today Input 1/2 ส่วน Today Input 2/2 มีเพียง `กลับไปหน้า 1/2` และ `ไป Reflection/NuTuenSai` การไป Reflection/NuTuenSai เป็นการนำทางเท่านั้น ไม่ใช่การบันทึกข้อมูล
 
+ในหน้า Reflection/NuTuenSai จะมีปุ่มรองเล็ก ๆ คือ `กลับ Today 1/2` และ `กลับ Mind Note 2/2` เพื่อย้อนกลับไปเติมข้อมูลก่อน Save Daily Log ปุ่มเหล่านี้เป็นการนำทางเท่านั้น ไม่บันทึก ไม่ล้างข้อมูล และไม่ generate reflection ใหม่
+
 ## 3. วิธีใช้งานแต่ละส่วน
 
 ### Today State

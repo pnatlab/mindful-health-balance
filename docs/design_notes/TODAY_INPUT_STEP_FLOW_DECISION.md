@@ -112,6 +112,13 @@ Step 2 must always allow going back to 1/2.
 - preserve current form state
 - let user generate/check reflection and then Save Daily Log from the Reflection page
 
+Reflection/NuTuenSai should also provide small secondary shortcuts in Daily Log Controls:
+
+- กลับ Today 1/2 / Back to Today 1/2 / 返回 Today 1/2
+- กลับ Mind Note 2/2 / Back to Mind Note 2/2 / 返回 Mind Note 2/2
+
+These shortcuts are navigation only. They should switch back to the requested Today step, preserve the current form and any generated reflection preview, and must not save, clear, or generate reflection automatically. Save Daily Log remains the only primary action in Reflection/NuTuenSai.
+
 ## 6. Clear Current Form Placement
 
 Decision:

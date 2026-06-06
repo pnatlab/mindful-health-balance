@@ -86,6 +86,8 @@ Switching views does not reset current inputs and does not delete saved Daily Lo
 
 Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only on Today Input 1/2. Today Input 2/2 only shows `Back to 1/2` and `Go to Reflection/NuTuenSai`. Going to Reflection/NuTuenSai is navigation only; it does not save data.
 
+The Reflection/NuTuenSai page also includes small secondary shortcuts, `Back to Today 1/2` and `Back to Mind Note 2/2`, so you can add or adjust current input before saving. These shortcuts only navigate; they do not save, clear, or generate a new reflection.
+
 ## 8. Today State
 
 Choose the current state as honestly and simply as possible:

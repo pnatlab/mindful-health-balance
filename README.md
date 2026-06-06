@@ -146,7 +146,9 @@ v1.9.2 เพิ่ม Today Input Step Flow เพื่อทำให้ห�
 - Today Input 1/2: Today State, Hydration, Drinks และ Load & Recovery พร้อมปุ่ม `เคลียร์หน้าปัจจุบัน` และ `ถัดไป: บันทึกภาวะใจ`
 - Today Input 2/2: Mind Note และ Current Form summary พร้อมปุ่ม `กลับไปหน้า 1/2` และ `ไป Reflection/NuTuenSai`
 
-Save Daily Log ยังอยู่ใน Reflection/NuTuenSai เท่านั้น และ patch นี้ไม่เปลี่ยน Daily_Log schema, Excel export/import, workbook sheets หรือ localStorage data schema
+หน้า Reflection/NuTuenSai มีปุ่มรองเล็ก ๆ สำหรับกลับไป Today 1/2 หรือ Mind Note 2/2 ก่อนบันทึก โดยเป็น navigation shortcut เท่านั้น ไม่ save, ไม่ clear และไม่ generate reflection ใหม่
+
+Save Daily Log ยังอยู่ใน Reflection/NuTuenSai เท่านั้นและเป็น primary action ของ Daily Log Controls ส่วน patch นี้ไม่เปลี่ยน Daily_Log schema, Excel export/import, workbook sheets หรือ localStorage data schema
 
 ### v1.9.x Latest Summary
 

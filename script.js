@@ -55,6 +55,9 @@ const translations = {
     reflectionViewHelper: "ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม",
     reflectionGeneratorHelper: "กดสรุปวันนี้เพื่อให้ระบบสะท้อน pattern จากข้อมูลวันนี้ และยังแก้ไขเล็กน้อยก่อนบันทึกได้",
     reflectionActionsKicker: "Ready to save",
+    todayInputShortcutsAria: "Today input shortcuts",
+    backToTodayStepOne: "กลับ Today 1/2",
+    backToTodayStepTwo: "กลับ Mind Note 2/2",
     logViewTitle: "Log & Export",
     logViewHelper: "ดูบันทึกย้อนหลังและจัดการไฟล์ backup ของระบบ",
     logControlsTitle: "Backup Controls",
@@ -538,6 +541,9 @@ const translations = {
     reflectionViewHelper: "Review today’s reflection, then save it to the Daily Log when ready.",
     reflectionGeneratorHelper: "Reflect creates a reflection from today's signals. You can still edit it lightly before saving.",
     reflectionActionsKicker: "Ready to save",
+    todayInputShortcutsAria: "Today input shortcuts",
+    backToTodayStepOne: "Back to Today 1/2",
+    backToTodayStepTwo: "Back to Mind Note 2/2",
     logViewTitle: "Log & Export",
     logViewHelper: "Review saved logs and manage your backup files.",
     logControlsTitle: "Backup Controls",
@@ -1021,6 +1027,9 @@ const translations = {
     reflectionViewHelper: "查看今天的反思内容，准备好后再保存到每日记录。",
     reflectionGeneratorHelper: "点击回顾会根据今天的信号生成回顾，保存前仍可轻微编辑。",
     reflectionActionsKicker: "准备保存",
+    todayInputShortcutsAria: "Today 输入快捷键",
+    backToTodayStepOne: "返回 Today 1/2",
+    backToTodayStepTwo: "返回 Mind Note 2/2",
     logViewTitle: "记录与导出",
     logViewHelper: "查看已保存的记录，并管理备份文件。",
     logControlsTitle: "备份控制",
@@ -1949,6 +1958,8 @@ function bindEvents() {
   document.querySelector("#goTodayStepTwo").addEventListener("click", () => setTodayInputStep(2));
   document.querySelector("#goTodayStepOne").addEventListener("click", () => setTodayInputStep(1));
   document.querySelector("#goReflectionFromToday").addEventListener("click", goToReflectionFromToday);
+  document.querySelector("#backToTodayStepOne").addEventListener("click", () => goToTodayStep(1));
+  document.querySelector("#backToTodayStepTwo").addEventListener("click", () => goToTodayStep(2));
   document.querySelector("#saveDailyLog").addEventListener("click", saveToDailyLog);
   document.querySelector("#resetCurrentForm").addEventListener("click", resetCurrentForm);
   document.querySelector("#clearDailyLog").addEventListener("click", clearDailyLog);
@@ -2114,6 +2125,11 @@ function updateTodayInputStepUI() {
 
 function goToReflectionFromToday() {
   setActiveView("reflection");
+}
+
+function goToTodayStep(step) {
+  setActiveView("today");
+  setTodayInputStep(step);
 }
 
 function updateReflectionPreview() {
