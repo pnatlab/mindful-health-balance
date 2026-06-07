@@ -18,12 +18,13 @@ This bundle combines the key design notes for Mindful Health Balance v1.9 and th
 12. [REFLECTION_PAGE_LAYOUT_DECISION.md](#source-reflection-page-layout-decision-md)
 13. [REFLECTION_GENERATION_MOMENT.md](#source-reflection-generation-moment-md)
 14. [TODAY_INPUT_STEP_FLOW_DECISION.md](#source-today-input-step-flow-decision-md)
-15. [REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrix-md)
-16. [ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrix-md)
-17. [V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklist-md)
-18. [FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2-md)
-19. [FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](#source-field-review-timeframe-layer-v2-md)
-20. [NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2-md)
+15. [INPUT_AWARE_CARD_STATE.md](#source-input-aware-card-state-md)
+16. [REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrix-md)
+17. [ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrix-md)
+18. [V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklist-md)
+19. [FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2-md)
+20. [FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](#source-field-review-timeframe-layer-v2-md)
+21. [NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2-md)
 
 ---
 
@@ -1234,6 +1235,13 @@ After new date / date rollover:
 
 Step 2 must always allow going back to 1/2.
 
+Input-aware visual feedback:
+
+- Main Today cards may show a soft blue active layer when they have current-form input.
+- This active layer is visual feedback only.
+- It is not a score, completion state, success state, diagnosis, or judgment.
+- It must not be stored in Daily_Log, localStorage data schema, or Excel export.
+
 ## 5. Reflection/NuTuenSai Navigation
 
 ไป Reflection/NuTuenSai should:
@@ -1329,6 +1337,70 @@ Future implementation should test:
 This note is design-only.
 Do not implement in this patch.
 No code, UI, export, or import changes.
+
+---
+
+# Source: INPUT_AWARE_CARD_STATE.md
+
+# Input-Aware Card State
+
+## Intent
+
+The Blue Active Card Layer is a v1.9.2 Today Input UX refinement. It gives the main Today Input cards a soft visual response when the user has entered meaningful current-form data in that card.
+
+This layer helps the interface feel aware of the user's input without adding new fields, changing the daily flow, or turning the app into a completion/checklist system.
+
+## Scope
+
+Input-aware state applies to:
+
+- Today State
+- Hydration
+- Drinks
+- Load & Recovery
+- Mind Note
+
+Current Form summary does not need active state because it is a status/summary surface, not a primary input card.
+
+## Active Logic
+
+A card becomes active only when it has meaningful user input:
+
+- Today State: energy, overall mind, sleep, or energy cause selected
+- Hydration: water amount is greater than 0
+- Drinks: at least one drink has been added
+- Load & Recovery: at least one activity or recovery chip is selected
+- Mind Note: note text, note feeling, or support need exists
+
+Default dropdown values, placeholder text, and unsubmitted drink form values should not activate a card.
+
+## Visual Direction
+
+The base app remains purple/lavender/glass. The active layer uses a soft blue awareness cue:
+
+- subtle blue border
+- gentle blue shadow/glow
+- light blue tint or glint
+- restrained dark-mode opacity
+
+The blue layer means "this card has current input." It does not mean success, completion, correctness, diagnosis, risk, or judgment.
+
+## Guardrails
+
+- Visual-only state
+- Do not store active state
+- Do not export active state
+- Do not change Daily_Log columns
+- Do not change Excel import/export
+- Do not change scoring or reflection logic
+- Do not use green success, red/orange warning, strong pulse, badges, or completion text
+- Keep light and dark mode calm and readable
+
+## Implementation Notes
+
+The implementation may use a class such as `.is-input-active` and a helper such as `updateInputActiveCards()`. This helper should read existing app state and run during normal UI sync.
+
+The state should clear naturally when the current form is reset.
 
 ---
 

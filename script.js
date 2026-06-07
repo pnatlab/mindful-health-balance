@@ -2070,6 +2070,7 @@ function syncUI() {
   updateActivityUI();
   updateEnergyCauseUI();
   updateTodayInputStepUI();
+  updateInputActiveCards();
 }
 
 function setTodayInputStep(step) {
@@ -2135,6 +2136,47 @@ function updateTodayInputStepUI() {
   if (helper) {
     helper.textContent = t(todayInputStep === 2 ? "todayStepTwoHelper" : "todayStepOneHelper");
   }
+}
+
+function updateInputActiveCards() {
+  const activeStateMap = [
+    [".today-state-card", hasTodayStateInput()],
+    [".today-hydration-hero", hasHydrationInput()],
+    [".drink-profile-card", hasDrinkInput()],
+    [".load-recovery-card", hasLoadInput()],
+    [".mind-note-card", hasMindNoteInput()]
+  ];
+
+  activeStateMap.forEach(([selector, isActive]) => {
+    const card = document.querySelector(selector);
+    if (!card) return;
+    card.classList.toggle("is-input-active", Boolean(isActive));
+  });
+}
+
+function hasTodayStateInput(state = appState) {
+  const selected = state.selectedState || {};
+  return Boolean(
+    selected.energy
+    || selected.mind
+    || selected.sleep
+    || (state.energyCauses || []).length
+  );
+}
+
+function hasHydrationInput(state = appState) {
+  return Number(state.waterMl || 0) > 0;
+}
+
+function hasDrinkInput(state = appState) {
+  return Boolean(
+    (state.drinkProfiles || []).length
+    || (state.drinks || []).length
+  );
+}
+
+function hasLoadInput(state = appState) {
+  return Boolean((state.activities || []).length);
 }
 
 function goToReflectionFromToday() {

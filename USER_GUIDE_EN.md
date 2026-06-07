@@ -88,6 +88,8 @@ Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only 
 
 The Reflection/NuTuenSai page also includes small secondary shortcuts, `Back to Today 1/2` and `Back to Mind Note 2/2`, so you can add or adjust current input before saving. These shortcuts only navigate; they do not save, clear, or generate a new reflection.
 
+Main Today cards also show a soft blue active layer when that card has current input. This is visual feedback only; it is not a score, completion state, diagnosis, or judgment.
+
 ## 8. Today State
 
 Choose the current state as honestly and simply as possible:

@@ -102,6 +102,13 @@ After new date / date rollover:
 
 Step 2 must always allow going back to 1/2.
 
+Input-aware visual feedback:
+
+- Main Today cards may show a soft blue active layer when they have current-form input.
+- This active layer is visual feedback only.
+- It is not a score, completion state, success state, diagnosis, or judgment.
+- It must not be stored in Daily_Log, localStorage data schema, or Excel export.
+
 ## 5. Reflection/NuTuenSai Navigation
 
 ไป Reflection/NuTuenSai should:

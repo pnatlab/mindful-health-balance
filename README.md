@@ -148,6 +148,8 @@ v1.9.2 เพิ่ม Today Input Step Flow เพื่อทำให้ห�
 
 หน้า Reflection/NuTuenSai มีปุ่มรองเล็ก ๆ สำหรับกลับไป Today 1/2 หรือ Mind Note 2/2 ก่อนบันทึก โดยเป็น navigation shortcut เท่านั้น ไม่ save, ไม่ clear และไม่ generate reflection ใหม่
 
+หน้า Today มี Blue Active Card Layer แบบ visual-only เพื่อให้การ์ดหลักมีเส้น/เงาฟ้าอ่อนเมื่อมี current input แล้ว สัญญาณนี้หมายถึง “มีข้อมูลในฟอร์มนี้” ไม่ใช่คะแนน ความสำเร็จ diagnosis หรือ judgment
+
 Save Daily Log ยังอยู่ใน Reflection/NuTuenSai เท่านั้นและเป็น primary action ของ Daily Log Controls ส่วน patch นี้ไม่เปลี่ยน Daily_Log schema, Excel export/import, workbook sheets หรือ localStorage data schema
 
 ### v1.9.x Latest Summary
