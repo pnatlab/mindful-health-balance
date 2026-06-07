@@ -31,21 +31,26 @@ It does not add new input fields, localStorage keys, data schema, Excel columns,
 
 ## Target Logic
 
-The base estimated target is 2,000 ml.
+The guidance uses a "base water + activity/sweat load + body cue" model.
 
-The guidance separates strong activity/load signals from recovery-only signals.
+Approximate ranges:
 
-When strong activity load is present, the UI may show a soft estimated range:
+- Base / rest / light recovery: 2.0-2.4 L.
+- Cognitive or decision load: 2.4-2.8 L.
+- Easy run, walking, light sport, or moderate sweat: 2.6-3.0 L.
+- Short quality run or sport sweat intensity: 2.8-3.3 L.
+- Long run / heavy sport sweat / similar endurance load: 3.2-4.0 L.
 
-- Sport intensity load: raises the range gently.
-- Outdoor heat load: raises the range gently.
-- Physical or standing/service load: raises the range moderately.
-- Cognitive or market-decision load: raises the range lightly.
-- High caffeine: keeps plain water as the base without turning caffeine into fear.
+Outdoor heat or clear heat/sweat context can gently raise the sport range, while keeping the language non-forceful and capped around 4.0 L.
 
-When recovery-only signals are present, such as low sleep, low energy, scattered mind, or pressure without a clear activity load, the UI should keep the base target and use recovery wording. Low sleep alone does not mean activity load is high.
+High-water safety wording:
 
-When strong activity and recovery signals both appear, the UI can keep the activity range while using a hydration-and-recovery cue.
+- If water is already around 3.0 L on a long-run day, treat it as a good zone and invite small extra sips only if sweat remains high or urine color is dark.
+- If water is already around 4.0 L or more, do not push more. Invite spreading intake through the day and observing thirst, urine color, and sweat cues.
+
+When recovery-only signals are present, such as low sleep, low energy, scattered mind, or pressure without a clear activity load, the UI should keep the base range and use recovery wording. Low sleep alone does not mean activity load is high.
+
+When strong activity and recovery signals both appear, the UI can keep the activity/sweat range while using a hydration-and-recovery cue.
 
 The target is display-only. It is not saved as a new canonical value and should not be treated as a medical recommendation.
 

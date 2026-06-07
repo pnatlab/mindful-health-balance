@@ -40,7 +40,7 @@ Reflection should name the day context gently and avoid profession-specific medi
 | `heavyPingPong` | `sport_sweat` | Higher sport intensity and sweat/training load. | Recovery follows effort. | Overtraining encouragement. |
 | `easyRun` | `sport_sweat` | Exercise load, even when light/moderate. | Let hydration and recovery follow activity. | Treating easy run as no load at all. |
 | `shortQualityRun` | `sport_sweat` | Short quality / progression / fast-ish run where intensity matters more than distance. | Recovery follows intensity, not only distance. | Calling it a long run, pushing speed, or turning it into a training command. |
-| `longRun` | `sport_sweat` | Strong endurance load. | Recovery is part of training, not a step backward. | Aggressive water or performance commands. |
+| `longRun` | `sport_sweat` | Strong endurance load and likely higher sweat context. | Recovery is part of training; hydration may sit in a higher cue-based range without forcing 4.0 L. | Aggressive water or performance commands. |
 | `longWalk` | `walking_physical` | Legs, feet, back, general body use. | Give back, legs, feet, and water rhythm space. | Overstating as high-intensity sport. |
 | `lowSleep` | `recovery_low_sleep` | Legacy/import recovery signal. In the current UI, low sleep belongs in Today State > Energy Cause, not Load & Recovery. | Rest before adding another round if old workbooks contain this value. | Showing it as a new activity chip or calling it high activity load. |
 | `rest` | `rest_base` | Rest day / วันพัก. | Keep a rest rhythm without adding productivity pressure. | Pushing productivity because the day is open. |
@@ -124,7 +124,7 @@ The app should say:
 | `dentalFocus` selected | `clinical_focus` wording appears. | No diagnosis or medical risk wording. |
 | `clinicalShift` selected | `clinical_focus` wording appears. | No claim that clinical work is dangerous. |
 | `outdoorWork` selected | `outdoor_heat` wording appears. | No dehydration warning. |
-| `longRun` selected | `sport_sweat` wording appears. | No push-harder language. |
+| `longRun` selected | `sport_sweat` wording appears; hydration may guide toward a higher range while treating around 3.0 L as a good zone. | No push-harder or force-more-water language. |
 | `shortQualityRun` selected | Short quality run wording appears before generic `sport_sweat`. | Do not call it easy run or long run. |
 | `lightCodingAiAssist` selected | Light coding / AI-assisted work wording appears before generic `cognitive_deepwork`. | Do not call it empty time or full deep work by default. |
 | `deepWork` selected | `cognitive_deepwork` wording appears. | No productivity praise that pushes more. |

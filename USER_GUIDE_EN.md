@@ -123,7 +123,9 @@ Use Hydration to roughly log plain water:
 
 Hydration is about steadiness, not forcing a large amount at once. Small sips across the day are enough.
 
-Starting in v1.9.x, the Hydration card shows a flexible estimated target based on the day's context. A rest day can stay near the base target, while running, sport, outdoor heat, sweating, deep work, or sustained focused work may show a slightly higher estimated range with a cue to sip gradually.
+Starting in v1.9.x, the Hydration card shows a flexible estimated range based on the day's context: base water + activity/sweat load + body cues. A rest day may stay around 2.0-2.4 L, cognitive work around 2.4-2.8 L, easy run or lots of walking around 2.6-3.0 L, short quality run around 2.8-3.3 L, and long run / heavy sweat around 3.2-4.0 L, spread through the day.
+
+On a long-run day, around 3.0 L is treated as a good zone, with gentle cues to notice sweat, thirst, or urine color. If intake reaches 4.0 L or more, the app does not push more; it reminds the user to spread intake and avoid forcing a large amount at once.
 
 The system separates activity load from recovery-only signals such as low sleep, low energy, or scattered mind. If only a recovery signal is present, it should not describe the day as heavy activity load; it should keep hydration as a gentle base alongside rest. This guidance uses existing signals, adds no new inputs, and is not medical advice, diagnosis, or an exact requirement.
 

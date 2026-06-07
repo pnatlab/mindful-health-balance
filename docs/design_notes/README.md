@@ -28,6 +28,7 @@ Today and Reflection page hierarchy, preview synthesis, NuTuenSai note strip, ze
 - [REFLECTION_PAGE_LAYOUT_DECISION.md](REFLECTION_PAGE_LAYOUT_DECISION.md) - Records the Reflection page layout decision with the reminder strip and focused generator.
 - [REFLECTION_GENERATION_MOMENT.md](REFLECTION_GENERATION_MOMENT.md) - Documents the zen/circular Reflection Generator moment and Clear Reflection behavior.
 - [TODAY_INPUT_STEP_FLOW_DECISION.md](TODAY_INPUT_STEP_FLOW_DECISION.md) - Documents the v1.9.2 two-step Today Input flow and Clear Current Form placement.
+- [INPUT_AWARE_CARD_STATE.md](INPUT_AWARE_CARD_STATE.md) - Defines the Blue Active Card Layer for visual-only input-aware Today cards.
 
 ## 03 Signal Logic
 

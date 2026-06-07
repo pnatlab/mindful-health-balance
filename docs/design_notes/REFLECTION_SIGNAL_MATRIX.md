@@ -20,6 +20,8 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 | Hydration | water near base | Water is present enough to support the day. | Notice a usable base and steady rhythm. | Demanding more water by default. |
 | Hydration | water enough | Hydration can be read as a supportive base. | Keep the rhythm; pair with load/recovery if relevant. | Treating water as proof the whole day is fine. |
 | Hydration | water high but no load | Water may be more than enough for a light day. | Neutral observation; no need to chase more. | Warning language or exact medical advice. |
+| Hydration | long run / heavy sweat + around 3.0 L | Water is already in a good zone for a high-sweat day, but body cues may still matter. | Good zone; add small sips only if sweat remains high, thirst persists, or urine color is dark. | Treating 3.0 L as failure or forcing 4.0 L. |
+| Hydration | water >= 4.0 L | Intake is already high. | Spread through the day and observe body cues; do not force more. | Encouraging more water or medical warning language. |
 | Sleep | low sleep | Recovery signal. | Recovery-first, gentle pacing. | Blame, failure, or health judgment. |
 | Sleep | okay sleep | Some recovery base exists. | Balanced, observational tone. | Overstating sleep quality. |
 | Sleep | good sleep | Recovery support signal. | Notice support while still reading other layers. | Assuming energy, mind, or load must be good. |
@@ -111,7 +113,7 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 | Mind Note Feeling = uneasy | Mind Note Feeling `uneasy` | Note carries uneasiness; gently set it down. | Calling it anxiety/diagnosis. | Keep it note-level and non-medical. |
 | Mind Note Feeling = feeling_good | Mind Note Feeling `feeling_good` | Good feeling is a small support signal. | Whole-day-perfect wording. | Support signal, not proof. |
 | Sweet soda + caffeine | Soda + high sweetness + caffeine | Drink gave alertness/sweetness; return to water base. | Guilt, diet, or medical tone. | Drink-load signal, not moral score. |
-| High load + enough water | High load + water enough | Hydration can be base; recovery follows load. | Telling user to drink more aggressively. | Pair water with recovery. |
+| High load + enough water | High load + water enough | Hydration can be base; recovery follows load. Long run/heavy sweat may use a higher range, but 3.0 L can already be a good zone. | Telling user to drink more aggressively. | Pair water with recovery and body cues. |
 | Rest day + positive mind | Rest/light day + feeling good/relaxed | Steady/supportive day; preserve rhythm. | Pushing productivity. | Do not turn support into pressure. |
 | Scattered mind + low water | Scattered mind + low water | Small water rhythm plus gentle grounding. | Over-analysis. | Keep cue small and practical. |
 | Pressured mind + deep work | Pressured + deep work/cognitive load | Reduce pressure, recover focus, no need to fix all at once. | Productivity praise reinforcing pressure. | Recovery and pressure reduction first. |

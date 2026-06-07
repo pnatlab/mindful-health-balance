@@ -545,21 +545,26 @@ It does not add new input fields, localStorage keys, data schema, Excel columns,
 
 ## Target Logic
 
-The base estimated target is 2,000 ml.
+The guidance uses a "base water + activity/sweat load + body cue" model.
 
-The guidance separates strong activity/load signals from recovery-only signals.
+Approximate ranges:
 
-When strong activity load is present, the UI may show a soft estimated range:
+- Base / rest / light recovery: 2.0-2.4 L.
+- Cognitive or decision load: 2.4-2.8 L.
+- Easy run, walking, light sport, or moderate sweat: 2.6-3.0 L.
+- Short quality run or sport sweat intensity: 2.8-3.3 L.
+- Long run / heavy sport sweat / similar endurance load: 3.2-4.0 L.
 
-- Sport intensity load: raises the range gently.
-- Outdoor heat load: raises the range gently.
-- Physical or standing/service load: raises the range moderately.
-- Cognitive or market-decision load: raises the range lightly.
-- High caffeine: keeps plain water as the base without turning caffeine into fear.
+Outdoor heat or clear heat/sweat context can gently raise the sport range, while keeping the language non-forceful and capped around 4.0 L.
 
-When recovery-only signals are present, such as low sleep, low energy, scattered mind, or pressure without a clear activity load, the UI should keep the base target and use recovery wording. Low sleep alone does not mean activity load is high.
+High-water safety wording:
 
-When strong activity and recovery signals both appear, the UI can keep the activity range while using a hydration-and-recovery cue.
+- If water is already around 3.0 L on a long-run day, treat it as a good zone and invite small extra sips only if sweat remains high or urine color is dark.
+- If water is already around 4.0 L or more, do not push more. Invite spreading intake through the day and observing thirst, urine color, and sweat cues.
+
+When recovery-only signals are present, such as low sleep, low energy, scattered mind, or pressure without a clear activity load, the UI should keep the base range and use recovery wording. Low sleep alone does not mean activity load is high.
+
+When strong activity and recovery signals both appear, the UI can keep the activity/sweat range while using a hydration-and-recovery cue.
 
 The target is display-only. It is not saved as a new canonical value and should not be treated as a medical recommendation.
 
@@ -1428,6 +1433,8 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 | Hydration | water near base | Water is present enough to support the day. | Notice a usable base and steady rhythm. | Demanding more water by default. |
 | Hydration | water enough | Hydration can be read as a supportive base. | Keep the rhythm; pair with load/recovery if relevant. | Treating water as proof the whole day is fine. |
 | Hydration | water high but no load | Water may be more than enough for a light day. | Neutral observation; no need to chase more. | Warning language or exact medical advice. |
+| Hydration | long run / heavy sweat + around 3.0 L | Water is already in a good zone for a high-sweat day, but body cues may still matter. | Good zone; add small sips only if sweat remains high, thirst persists, or urine color is dark. | Treating 3.0 L as failure or forcing 4.0 L. |
+| Hydration | water >= 4.0 L | Intake is already high. | Spread through the day and observe body cues; do not force more. | Encouraging more water or medical warning language. |
 | Sleep | low sleep | Recovery signal. | Recovery-first, gentle pacing. | Blame, failure, or health judgment. |
 | Sleep | okay sleep | Some recovery base exists. | Balanced, observational tone. | Overstating sleep quality. |
 | Sleep | good sleep | Recovery support signal. | Notice support while still reading other layers. | Assuming energy, mind, or load must be good. |
@@ -1519,7 +1526,7 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 | Mind Note Feeling = uneasy | Mind Note Feeling `uneasy` | Note carries uneasiness; gently set it down. | Calling it anxiety/diagnosis. | Keep it note-level and non-medical. |
 | Mind Note Feeling = feeling_good | Mind Note Feeling `feeling_good` | Good feeling is a small support signal. | Whole-day-perfect wording. | Support signal, not proof. |
 | Sweet soda + caffeine | Soda + high sweetness + caffeine | Drink gave alertness/sweetness; return to water base. | Guilt, diet, or medical tone. | Drink-load signal, not moral score. |
-| High load + enough water | High load + water enough | Hydration can be base; recovery follows load. | Telling user to drink more aggressively. | Pair water with recovery. |
+| High load + enough water | High load + water enough | Hydration can be base; recovery follows load. Long run/heavy sweat may use a higher range, but 3.0 L can already be a good zone. | Telling user to drink more aggressively. | Pair water with recovery and body cues. |
 | Rest day + positive mind | Rest/light day + feeling good/relaxed | Steady/supportive day; preserve rhythm. | Pushing productivity. | Do not turn support into pressure. |
 | Scattered mind + low water | Scattered mind + low water | Small water rhythm plus gentle grounding. | Over-analysis. | Keep cue small and practical. |
 | Pressured mind + deep work | Pressured + deep work/cognitive load | Reduce pressure, recover focus, no need to fix all at once. | Productivity praise reinforcing pressure. | Recovery and pressure reduction first. |
@@ -1614,7 +1621,7 @@ Reflection should name the day context gently and avoid profession-specific medi
 | `heavyPingPong` | `sport_sweat` | Higher sport intensity and sweat/training load. | Recovery follows effort. | Overtraining encouragement. |
 | `easyRun` | `sport_sweat` | Exercise load, even when light/moderate. | Let hydration and recovery follow activity. | Treating easy run as no load at all. |
 | `shortQualityRun` | `sport_sweat` | Short quality / progression / fast-ish run where intensity matters more than distance. | Recovery follows intensity, not only distance. | Calling it a long run, pushing speed, or turning it into a training command. |
-| `longRun` | `sport_sweat` | Strong endurance load. | Recovery is part of training, not a step backward. | Aggressive water or performance commands. |
+| `longRun` | `sport_sweat` | Strong endurance load and likely higher sweat context. | Recovery is part of training; hydration may sit in a higher cue-based range without forcing 4.0 L. | Aggressive water or performance commands. |
 | `longWalk` | `walking_physical` | Legs, feet, back, general body use. | Give back, legs, feet, and water rhythm space. | Overstating as high-intensity sport. |
 | `lowSleep` | `recovery_low_sleep` | Legacy/import recovery signal. In the current UI, low sleep belongs in Today State > Energy Cause, not Load & Recovery. | Rest before adding another round if old workbooks contain this value. | Showing it as a new activity chip or calling it high activity load. |
 | `rest` | `rest_base` | Rest day / วันพัก. | Keep a rest rhythm without adding productivity pressure. | Pushing productivity because the day is open. |
@@ -1698,7 +1705,7 @@ The app should say:
 | `dentalFocus` selected | `clinical_focus` wording appears. | No diagnosis or medical risk wording. |
 | `clinicalShift` selected | `clinical_focus` wording appears. | No claim that clinical work is dangerous. |
 | `outdoorWork` selected | `outdoor_heat` wording appears. | No dehydration warning. |
-| `longRun` selected | `sport_sweat` wording appears. | No push-harder language. |
+| `longRun` selected | `sport_sweat` wording appears; hydration may guide toward a higher range while treating around 3.0 L as a good zone. | No push-harder or force-more-water language. |
 | `shortQualityRun` selected | Short quality run wording appears before generic `sport_sweat`. | Do not call it easy run or long run. |
 | `lightCodingAiAssist` selected | Light coding / AI-assisted work wording appears before generic `cognitive_deepwork`. | Do not call it empty time or full deep work by default. |
 | `deepWork` selected | `cognitive_deepwork` wording appears. | No productivity praise that pushes more. |

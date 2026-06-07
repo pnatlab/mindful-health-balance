@@ -532,6 +532,14 @@ h2 {
   align-items: start;
 }
 
+@media (min-width: 821px) {
+  .today-state-card,
+  .today-hydration-hero {
+    align-self: stretch;
+    height: 100%;
+  }
+}
+
 .today-grid .glass-card {
   box-shadow: 0 14px 42px rgba(92, 126, 158, 0.07);
 }

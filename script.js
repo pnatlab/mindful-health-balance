@@ -82,15 +82,20 @@ const translations = {
     sleepLabel: "Sleep",
     hydration: "Hydration",
     hydrationHeading: "น้ำวันนี้",
-    hydrationGuidanceBase: "เป้าหมายวันนี้โดยประมาณ: {target} ml",
-    hydrationGuidanceRange: "วันนี้มี load มากขึ้น: ลองตั้งช่วงน้ำประมาณ {min}-{max} ml",
+    hydrationGuidanceBase: "ช่วงน้ำวันนี้โดยประมาณ: {min}-{max} ml",
+    hydrationGuidanceRange: "ช่วงน้ำวันนี้โดยประมาณ: {min}-{max} ml",
     hydrationGuidanceCueBase: "ค่อย ๆ จิบน้ำเป็นช่วง ๆ โดยไม่ต้องเร่งตัวเลข",
-    hydrationGuidanceCueLoad: "วันนี้ใช้พลังมากกว่าวันพัก ให้จิบน้ำกระจายระหว่างวัน",
-    hydrationGuidanceCueSport: "ถ้ามีวิ่งหรือเหงื่อมากขึ้น ให้น้ำเป็นส่วนหนึ่งของ recovery",
-    hydrationGuidanceCueOutdoor: "ถ้ามีแดดหรือความร้อน ให้คืนทั้งน้ำและการพักเป็นช่วง ๆ",
+    hydrationGuidanceCueCognitive: "วันนี้มี load จากสมองหรือการตัดสินใจ น้ำช่วยเป็นฐานให้ recovery ได้",
+    hydrationGuidanceCueLightSport: "วันนี้มีการใช้แรงหรือเหงื่อบ้าง ค่อย ๆ เติมน้ำมากกว่าวันปกติเล็กน้อย",
+    hydrationGuidanceCueShortQualitySport: "วันนี้มี intensity แม้ระยะไม่ยาว น้ำควรช่วยตาม effort ไม่ใช่ดูแค่ระยะ",
+    hydrationGuidanceCueLongRunHeavySweat: "วันนี้เป็น long run / sport sweat load ถ้าแตะราว 3.0 L จะอยู่ในโซนดี และถ้าเหงื่อเยอะหรือปัสสาวะเข้มค่อย ๆ จิบเพิ่มได้อีกเล็กน้อย",
+    hydrationGuidanceCueLongRunGoodZone: "น้ำ 3.0 L ขึ้นไปอยู่ในโซนดีแล้ว ถ้ายังเหงื่อเยอะหรือปัสสาวะเข้ม ค่อย ๆ จิบเพิ่มได้อีกเล็กน้อยแบบกระจาย",
+    hydrationGuidanceCueHighWater: "วันนี้น้ำค่อนข้างสูงแล้ว ไม่ต้องเร่งเพิ่ม ให้กระจายและดูสัญญาณร่างกายร่วม",
+    hydrationGuidanceCueOutdoor: "วันนี้มีแดด เหงื่อ หรือความร้อน ให้เพิ่มแบบค่อย ๆ และพักร่างกายเป็นช่วง ๆ",
     hydrationGuidanceCueCaffeine: "คาเฟอีนช่วยให้ตื่นได้ แต่อย่าลืมให้น้ำเปล่ากลับมาเป็นฐาน",
     hydrationGuidanceCueRecovery: "วันนี้มีสัญญาณ recovery ให้ค่อย ๆ วางน้ำเป็นฐานคู่กับการพัก",
     hydrationGuidanceCueActivityRecovery: "วันนี้มีทั้ง activity load และสัญญาณ recovery ให้จิบน้ำค่อย ๆ คู่กับการพัก",
+    hydrationGuidanceCueUpperBound: "ถ้าเข้าใกล้ 3.5–4.0 L ให้กระจายทั้งวัน ไม่ต้องอัดรวดเดียว และดูสีปัสสาวะ/อาการกระหายร่วมด้วย",
     halfBottle: "+ครึ่งขวด",
     resetButton: "Reset",
     drinks: "Drinks",
@@ -572,15 +577,20 @@ const translations = {
     sleepLabel: "Sleep",
     hydration: "Hydration",
     hydrationHeading: "Water today",
-    hydrationGuidanceBase: "Estimated target today: {target} ml",
-    hydrationGuidanceRange: "Today's load is higher: try an estimated range around {min}-{max} ml",
+    hydrationGuidanceBase: "Estimated hydration range today: {min}-{max} ml",
+    hydrationGuidanceRange: "Estimated hydration range today: {min}-{max} ml",
     hydrationGuidanceCueBase: "Sip gradually without rushing the number.",
-    hydrationGuidanceCueLoad: "Today's load may ask for steadier hydration than a rest day.",
-    hydrationGuidanceCueSport: "If exercise or sweat was part of the day, treat hydration as part of recovery.",
-    hydrationGuidanceCueOutdoor: "If heat or outdoor work was part of the day, return water and rest in small rounds.",
+    hydrationGuidanceCueCognitive: "Today has cognitive or decision load. Water can stay as a recovery base.",
+    hydrationGuidanceCueLightSport: "Today has some body effort or sweat. Add a little more water than a normal day, gradually.",
+    hydrationGuidanceCueShortQualitySport: "Today has intensity even if the distance was not long. Hydration can follow effort, not only distance.",
+    hydrationGuidanceCueLongRunHeavySweat: "Today is a long-run / sport-sweat load. Around 3.0 L can be a good zone; if sweat is high or urine is dark, add small sips gradually.",
+    hydrationGuidanceCueLongRunGoodZone: "Above 3.0 L is already a good zone. If sweat is still high or urine is dark, add small sips gradually through the day.",
+    hydrationGuidanceCueHighWater: "Water is already quite high today. Do not force more; spread intake and observe body cues.",
+    hydrationGuidanceCueOutdoor: "Heat, sweat, or outdoor conditions are part of today. Increase gently and give the body short pauses.",
     hydrationGuidanceCueCaffeine: "Caffeine may support alertness, but plain water can remain the base.",
     hydrationGuidanceCueRecovery: "Today has a recovery signal. Keep plain water as a gentle base alongside rest.",
     hydrationGuidanceCueActivityRecovery: "Today has both activity load and a recovery signal. Pair gradual sips with recovery.",
+    hydrationGuidanceCueUpperBound: "If intake goes near 3.5–4.0 L, spread it through the day and use thirst/urine color as gentle cues rather than forcing more at once.",
     halfBottle: "+half bottle",
     resetButton: "Reset",
     drinks: "Drinks",
@@ -1062,15 +1072,20 @@ const translations = {
     sleepLabel: "Sleep",
     hydration: "Hydration",
     hydrationHeading: "今天的饮水",
-    hydrationGuidanceBase: "今天的大致目标：{target} ml",
-    hydrationGuidanceRange: "今天的 load 较高：可以把饮水区间温和放在 {min}-{max} ml 左右",
+    hydrationGuidanceBase: "今天的大致饮水区间：{min}-{max} ml",
+    hydrationGuidanceRange: "今天的大致饮水区间：{min}-{max} ml",
     hydrationGuidanceCueBase: "慢慢小口喝，不需要急着追数字。",
-    hydrationGuidanceCueLoad: "今天比休息日更消耗，可以把喝水分散到一天里。",
-    hydrationGuidanceCueSport: "如果今天有运动或出汗，把补水也看作 recovery 的一部分。",
-    hydrationGuidanceCueOutdoor: "如果今天有户外或炎热环境，分段补水，也给身体短暂停顿。",
+    hydrationGuidanceCueCognitive: "今天有认知或决策 load，白水可以作为 recovery 的基础。",
+    hydrationGuidanceCueLightSport: "今天有一些身体用力或出汗，可以比平常多一点点，慢慢补。",
+    hydrationGuidanceCueShortQualitySport: "今天有强度，即使距离不长，补水也可以跟着 effort 走，而不只看距离。",
+    hydrationGuidanceCueLongRunHeavySweat: "今天是 long run / sport sweat load。如果达到 3.0 L 左右，会是不错的区间；如果出汗多或尿色偏深，可以再小口、分散补一点。",
+    hydrationGuidanceCueLongRunGoodZone: "3.0 L 以上已经在不错的区间。如果仍然出汗多或尿色偏深，可以分散小口再补一点。",
+    hydrationGuidanceCueHighWater: "今天饮水已经偏高，不需要再急着增加，分散到一天里，并一起观察身体信号。",
+    hydrationGuidanceCueOutdoor: "今天有炎热、出汗或户外环境，可以温和增加，也给身体短暂停顿。",
     hydrationGuidanceCueCaffeine: "咖啡因可以帮助清醒，但白水仍然可以作为基础。",
     hydrationGuidanceCueRecovery: "今天有 recovery 信号，可以把白水作为温和的基础，和休息一起走。",
     hydrationGuidanceCueActivityRecovery: "今天同时有活动 load 和 recovery 信号，可以把小口补水和休息放在一起。",
+    hydrationGuidanceCueUpperBound: "如果接近 3.5–4.0 L，请分散到一天里，不需要一次硬喝，并温和参考口渴和尿色。",
     halfBottle: "+半瓶",
     resetButton: "重置",
     drinks: "饮品",
@@ -2535,7 +2550,7 @@ function getHydrationBaseTarget() {
   return 2000;
 }
 
-function getHydrationAdjustmentFromLoad({
+function getHydrationTierFromActivity({
   activities = appState.activities || [],
   loadScore = calculateLoadScore(),
   energy = appState.selectedState.energy,
@@ -2545,49 +2560,96 @@ function getHydrationAdjustmentFromLoad({
     || getSelectedActivityKeys(activities).includes("lowSleep")
 } = {}) {
   const loadTypes = getSelectedLoadTypes(activities);
+  const activityKeys = getSelectedActivityKeys(activities);
   const hasType = (type) => loadTypes.includes(type);
-  const strongActivityTypes = [
-    "sport_intensity_load",
-    "outdoor_heat_load",
-    "physical_load",
-    "service_standing_load",
-    "cognitive_load",
-    "market_decision_load",
-    "clinical_focus"
-  ];
-  const hasStrongActivity = loadTypes.some((type) => strongActivityTypes.includes(type));
+  const hasKey = (key) => activityKeys.includes(key);
+  const hasOutdoorHeat = hasType("outdoor_heat_load");
+  const hasLongRun = hasKey("longRun");
+  const hasShortQualitySport = hasKey("shortQualityRun")
+    || hasKey("badminton")
+    || hasKey("heavyPingPong");
+  const hasLightSport = hasKey("easyRun")
+    || hasKey("longWalk")
+    || hasType("physical_load")
+    || hasType("service_standing_load");
+  const hasCognitive = hasKey("deepWork")
+    || hasKey("lightCodingAiAssist")
+    || hasKey("officeWork")
+    || hasKey("marketWatch")
+    || hasType("cognitive_load")
+    || hasType("market_decision_load")
+    || hasType("clinical_focus");
+  const hasSportSweat = hasLongRun || hasShortQualitySport || hasLightSport || hasType("sport_intensity_load");
+  const hasStrongActivity = hasSportSweat || hasOutdoorHeat || hasCognitive;
   const hasRecoverySignal = sleepLow || energy === "ต่ำ" || mind === "ฟุ้ง" || mind === "กดดัน";
-  let adjustment = 0;
-  let cueKey = "Base";
+  let tier = "base";
+  let rangeMin = 2000;
+  let rangeMax = 2400;
   let category = hasRecoverySignal ? "recovery" : "base";
+  let cueKey = "Base";
 
-  if (hasType("sport_intensity_load")) {
-    adjustment = 500;
-    cueKey = "Sport";
-  } else if (hasType("outdoor_heat_load")) {
-    adjustment = 500;
+  if (hasLongRun) {
+    tier = "long_run_heavy_sweat";
+    rangeMin = 3200;
+    rangeMax = 4000;
+    cueKey = "LongRunHeavySweat";
+  } else if (hasShortQualitySport) {
+    tier = "short_quality_sport";
+    rangeMin = 2800;
+    rangeMax = 3300;
+    cueKey = "ShortQualitySport";
+  } else if (hasLightSport) {
+    tier = "light_sport";
+    rangeMin = 2600;
+    rangeMax = 3000;
+    cueKey = "LightSport";
+  } else if (hasOutdoorHeat) {
+    tier = "outdoor_heat";
+    rangeMin = 2600;
+    rangeMax = 3200;
     cueKey = "Outdoor";
-  } else if (sleepLow && loadScore >= 6) {
-    adjustment = 300;
-    cueKey = "SleepLoad";
-  } else if (hasType("physical_load") || hasType("service_standing_load")) {
-    adjustment = 300;
-    cueKey = "Load";
-  } else if (hasType("cognitive_load") || hasType("market_decision_load") || loadScore >= 3) {
-    adjustment = 200;
-    cueKey = "Load";
+  } else if (hasCognitive || loadScore >= 3) {
+    tier = "cognitive";
+    rangeMin = 2400;
+    rangeMax = 2800;
+    cueKey = "Cognitive";
   }
 
-  if (hasStrongActivity) {
+  if (hasOutdoorHeat && hasSportSweat) {
+    rangeMin = Math.min(rangeMin + 300, 3600);
+    rangeMax = Math.min(rangeMax + 500, 4000);
+    if (!hasLongRun) cueKey = "Outdoor";
+  }
+
+  if (hasStrongActivity && tier !== "base") {
     category = hasRecoverySignal ? "activityRecovery" : "strongActivity";
-    if (hasRecoverySignal) cueKey = "ActivityRecovery";
   } else if (hasRecoverySignal) {
-    adjustment = 0;
     cueKey = "Recovery";
     category = "recovery";
   }
 
-  return { adjustment, cueKey, loadTypes, category, hasStrongActivity, hasRecoverySignal };
+  const midpoint = Math.round((rangeMin + rangeMax) / 2);
+  const adjustment = tier === "base" ? 0 : Math.max(midpoint - getHydrationBaseTarget(), 0);
+
+  return {
+    adjustment,
+    cueKey,
+    loadTypes,
+    activityKeys,
+    tier,
+    rangeMin,
+    rangeMax,
+    category,
+    hasStrongActivity: hasStrongActivity && tier !== "base",
+    hasRecoverySignal,
+    hasOutdoorHeat,
+    hasSportSweat,
+    hasLongRun
+  };
+}
+
+function getHydrationAdjustmentFromLoad(options = {}) {
+  return getHydrationTierFromActivity(options);
 }
 
 function getAdaptiveHydrationTarget({
@@ -2596,40 +2658,56 @@ function getAdaptiveHydrationTarget({
   drinkScores = getDrinkScores(),
   energy = appState.selectedState.energy,
   mind = appState.selectedState.mind,
-  sleepLow = appState.selectedState.sleep === "น้อย" || (appState.energyCauses || []).includes("sleep_low")
+  sleepLow = appState.selectedState.sleep === "น้อย" || (appState.energyCauses || []).includes("sleep_low"),
+  waterMl = appState.waterMl || 0
 } = {}) {
   const baseTarget = getHydrationBaseTarget();
   const loadAdjustment = getHydrationAdjustmentFromLoad({ activities, loadScore, energy, mind, sleepLow });
   const hasHighCaffeine = drinkScores.caffeineScore >= 5;
-  const cueKey = hasHighCaffeine && loadAdjustment.adjustment === 0 ? "Caffeine" : loadAdjustment.cueKey;
-  const rangeMin = baseTarget + Math.max(loadAdjustment.adjustment - 100, 0);
-  const rangeMax = baseTarget + loadAdjustment.adjustment + (loadAdjustment.adjustment > 0 ? 200 : 0);
+  let cueKey = hasHighCaffeine && loadAdjustment.adjustment === 0 ? "Caffeine" : loadAdjustment.cueKey;
+  if (waterMl >= 4000) {
+    cueKey = "HighWater";
+  } else if (loadAdjustment.hasLongRun && waterMl >= 3000) {
+    cueKey = "LongRunGoodZone";
+  } else if (loadAdjustment.category === "activityRecovery" && !loadAdjustment.hasLongRun) {
+    cueKey = "ActivityRecovery";
+  }
 
   return {
     baseTarget,
     adjustment: loadAdjustment.adjustment,
-    rangeMin,
-    rangeMax,
-    midpoint: Math.round((rangeMin + rangeMax) / 2),
+    rangeMin: loadAdjustment.rangeMin,
+    rangeMax: loadAdjustment.rangeMax,
+    midpoint: Math.round((loadAdjustment.rangeMin + loadAdjustment.rangeMax) / 2),
     cueKey,
     category: loadAdjustment.category,
     loadTypes: loadAdjustment.loadTypes,
+    activityKeys: loadAdjustment.activityKeys,
+    hydrationTier: loadAdjustment.tier,
     hasStrongActivity: loadAdjustment.hasStrongActivity,
     hasRecoverySignal: loadAdjustment.hasRecoverySignal,
-    hasHighCaffeine
+    hasHighCaffeine,
+    hasOutdoorHeat: loadAdjustment.hasOutdoorHeat,
+    hasSportSweat: loadAdjustment.hasSportSweat,
+    currentWaterMl: waterMl
   };
 }
 
 function getHydrationGuidanceText(target = getAdaptiveHydrationTarget()) {
-  const targetText = target.adjustment > 0
+  const targetText = target.rangeMin && target.rangeMax
     ? t("hydrationGuidanceRange", {
       min: target.rangeMin.toLocaleString(translations[currentLanguage].locale),
       max: target.rangeMax.toLocaleString(translations[currentLanguage].locale)
     })
     : t("hydrationGuidanceBase", {
-      target: target.baseTarget.toLocaleString(translations[currentLanguage].locale)
+      min: target.baseTarget.toLocaleString(translations[currentLanguage].locale),
+      max: (target.baseTarget + 400).toLocaleString(translations[currentLanguage].locale)
     });
-  return `${targetText} · ${t(`hydrationGuidanceCue${target.cueKey}`)}`;
+  const notes = [targetText, t(`hydrationGuidanceCue${target.cueKey}`)];
+  if (target.rangeMax >= 3500 && target.cueKey !== "HighWater") {
+    notes.push(t("hydrationGuidanceCueUpperBound"));
+  }
+  return notes.join(" · ");
 }
 
 function countSweetDrinks() {
@@ -2694,6 +2772,10 @@ function buildSignals() {
 function getHydrationSignal() {
   const waterMl = appState.waterMl || 0;
   const adaptiveTarget = getAdaptiveHydrationTarget();
+  const belowAdaptiveRange = adaptiveTarget.hasStrongActivity
+    && adaptiveTarget.adjustment > 0
+    && waterMl < adaptiveTarget.rangeMin
+    && !(adaptiveTarget.hydrationTier === "long_run_heavy_sweat" && waterMl >= 3000);
   return {
     waterMl,
     status: getHydrationStatus(waterMl),
@@ -2706,7 +2788,7 @@ function getHydrationSignal() {
     rising: waterMl > 750 && waterMl <= 1500,
     steady: waterMl > 1500 && waterMl <= 2200,
     enough: waterMl > 2200,
-    belowAdaptiveRange: adaptiveTarget.hasStrongActivity && adaptiveTarget.adjustment > 0 && waterMl < adaptiveTarget.rangeMin
+    belowAdaptiveRange
   };
 }
 
