@@ -32,6 +32,7 @@ Reflection should name the day context gently and avoid profession-specific medi
 | `clinicalShift` | `clinical_focus` | Clinical attention, patient-care responsibility, sustained precision. | Give quiet recovery the same space as detailed work. | Medical advice about the work itself. |
 | `photoshoot` | `service_standing` | Standing, walking, carrying gear, posture, holding space for others. | Recovery can include back, legs, shoulders, and eyes. | Treating it as only exercise or only office work. |
 | `officeWork` | `cognitive_deepwork` | Sustained focus, screen time, meetings, mental loops. | Rest eyes, reduce loops, return space to the brain. | Productivity praise that pushes more work. |
+| `lightCodingAiAssist` | `cognitive_deepwork` | Light coding / AI-assisted work; context guidance, output review, and small ongoing decisions. Score 1, lighter than `deepWork`. | Read as light cognitive/context-guiding load, not full deep work every time. | Calling it empty time, full deep work by default, or productivity pressure. |
 | `deepWork` | `cognitive_deepwork` | Deep focus, coding, screen attention, decision fatigue. | Lower mental loops and recover attention. | Treating focus fatigue as weakness. |
 | `marketWatch` | `market_decision` | Attention, uncertainty, decision pressure, screen/market loop. | Short screen breaks and not carrying the market into sleep. | Financial advice, buy/sell suggestions, market prediction. |
 | `outdoorWork` | `outdoor_heat` | Heat, sweat, physical effort, hydration context. | Sip water in small rounds and pause from heat/body load. | Medical dehydration warning. |
@@ -125,6 +126,7 @@ The app should say:
 | `outdoorWork` selected | `outdoor_heat` wording appears. | No dehydration warning. |
 | `longRun` selected | `sport_sweat` wording appears. | No push-harder language. |
 | `shortQualityRun` selected | Short quality run wording appears before generic `sport_sweat`. | Do not call it easy run or long run. |
+| `lightCodingAiAssist` selected | Light coding / AI-assisted work wording appears before generic `cognitive_deepwork`. | Do not call it empty time or full deep work by default. |
 | `deepWork` selected | `cognitive_deepwork` wording appears. | No productivity praise that pushes more. |
 | old workbook value `lowSleep` only | `recovery_low_sleep` wording appears for compatibility. | Do not show low sleep as a new UI activity chip or call it high activity load. |
 | `rest` only | Rest-day wording appears. | Do not push productivity. |

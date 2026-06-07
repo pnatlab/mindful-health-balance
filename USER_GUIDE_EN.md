@@ -154,6 +154,7 @@ Load & Recovery is not only about exercise. It also includes work that uses focu
 Activity / profession-aware presets include:
 
 - Office work / meetings & documents
+- Light coding / AI-assisted work
 - Outdoor work / heat & physical effort
 - Deep work / coding
 - Dentist / detailed clinical cases
@@ -182,7 +183,7 @@ Starting in v1.9.x, the app uses Activity Load Roots to read the root of the day
 - Clinical work / dentist / doctor: precision, hands, eyes, and sustained focus
 - Photographer / long shoot: standing, moving, carrying gear, and holding space for others
 - Investor / market watch: attention and decision load, not financial advice
-- Office work / deep work: brain, eyes, screen time, and mental loops
+- Office work / light coding / AI-assisted work / deep work: brain, eyes, screen time, and mental loops. `Light coding / AI-assisted work` emphasizes context guidance, output review, and small ongoing decisions, so it is lighter than full deep work.
 - Outdoor work: heat, sweat, body effort, and hydration context
 - Sport / running / sweat: physical/sweat load with recovery afterward
 - Short quality run: an intensity-based short run, not an easy run and not a long run

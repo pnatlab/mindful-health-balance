@@ -346,6 +346,7 @@ const translations = {
       rest_base: "วันนี้เป็นจังหวะเบา ๆ"
     },
     activitySpecificReflection: {
+      lightCodingAiAssist: "วันนี้เป็นโค้ดดิ้งเบา ๆ หรือใช้ AI ช่วยงานมากกว่า deep work เต็มแรง พลังหลักอยู่ที่การคุมบริบท ตรวจงาน และตัดสินใจเบา ๆ ต่อเนื่อง ให้พักตาและลด loop ความคิดแบบพอดี",
       shortQualityRun: "วันนี้เป็นการวิ่งคุณภาพระยะสั้นมากกว่าวิ่งยาว ร่างกายใช้แรงจาก intensity มากกว่าระยะทาง ให้ recovery เดินตาม effort แบบไม่ต้องเพิ่มแรงกดดัน",
       rest: "วันนี้เป็นจังหวะพัก ไม่ได้เพิ่ม load หลักให้ร่างกายมากนัก",
       lightRecoveryDay: "วันนี้เป็นจังหวะเบา ๆ ให้ระบบค่อย ๆ กลับมาฟื้นตัว",
@@ -353,6 +354,7 @@ const translations = {
       lowSleepLightRecovery: "วันนี้มีสัญญาณจากการนอนน้อย และจังหวะเบา ๆ อาจช่วยให้ recovery ตามร่างกายทันขึ้น"
     },
     activitySpecificSummary: {
+      lightCodingAiAssist: "วันนี้ใช้สมองแบบเบา ๆ ผ่านการคุมบริบทและให้ AI ช่วยงาน",
       shortQualityRun: "วันนี้ร่างกายใช้แรงจากการวิ่งที่มีจังหวะเร็ว แม้ระยะไม่ยาวมาก",
       rest: "วันนี้เป็นจังหวะพัก",
       lightRecoveryDay: "วันนี้เป็นจังหวะเบา ๆ ให้ระบบฟื้นตัว",
@@ -423,6 +425,7 @@ const translations = {
       rest_base: "รักษาจังหวะเบา ๆ โดยไม่ต้องเพิ่ม productivity"
     },
     tomorrowFocusByActivity: {
+      lightCodingAiAssist: "พักตา ลดการคุม context ต่อเนื่อง และปิด loop งานทีละจุด",
       shortQualityRun: "รอบถัดไปอาจกลับไป easy หรือ steady เพื่อบาลานซ์จังหวะที่เร็วขึ้นวันนี้"
     },
     options: {
@@ -464,6 +467,7 @@ const translations = {
         rest: "วันพัก",
         lightRecoveryDay: "วันเบา / ฟื้นตัว",
         officeWork: "งานออฟฟิศ / ประชุมและเอกสาร",
+        lightCodingAiAssist: "โค้ดดิ้งเบา ๆ / AI ช่วยงาน",
         outdoorWork: "ทำงานกลางแจ้ง / ใช้แรงและเสียเหงื่อ",
         dentalFocus: "หมอฟัน / เคสคลินิกละเอียด",
         clinicalShift: "แพทย์ / เวรตรวจหรือดูแลคนไข้",
@@ -832,6 +836,7 @@ const translations = {
       rest_base: "Today is a lighter rhythm."
     },
     activitySpecificReflection: {
+      lightCodingAiAssist: "Today reads as light coding or AI-assisted work rather than full deep work. The main load is guiding context, reviewing output, and making small decisions over time, so eye rest and closing mental loops still matter.",
       shortQualityRun: "Today reads more like a short quality run than a long run. The body used intensity even if the distance was not long, so recovery can follow the effort without adding pressure.",
       rest: "Today is a rest rhythm and does not add much main load to the body.",
       lightRecoveryDay: "Today is a light rhythm that lets the system recover gradually.",
@@ -839,6 +844,7 @@ const translations = {
       lowSleepLightRecovery: "There is a low-sleep signal today, and a lighter rhythm may help recovery catch up with the body."
     },
     activitySpecificSummary: {
+      lightCodingAiAssist: "Today used light cognitive effort through context guidance and AI-assisted work.",
       shortQualityRun: "Today used running intensity even if the distance was not long.",
       rest: "Today is a rest rhythm.",
       lightRecoveryDay: "Today is a light recovery rhythm.",
@@ -909,6 +915,7 @@ const translations = {
       rest_base: "Keep a light rhythm without adding productivity pressure."
     },
     tomorrowFocusByActivity: {
+      lightCodingAiAssist: "Rest the eyes, reduce continuous context-guiding, and close work loops one at a time.",
       shortQualityRun: "A next easy or steady run can balance today's faster rhythm."
     },
     options: {
@@ -950,6 +957,7 @@ const translations = {
         rest: "Rest day",
         lightRecoveryDay: "Light recovery day",
         officeWork: "Office work / meetings & documents",
+        lightCodingAiAssist: "Light coding / AI-assisted work",
         outdoorWork: "Outdoor work / heat & physical effort",
         dentalFocus: "Dentist / detailed clinical cases",
         clinicalShift: "Doctor / clinical shift or patient care",
@@ -1318,6 +1326,7 @@ const translations = {
       rest_base: "今天是比较轻的节奏。"
     },
     activitySpecificReflection: {
+      lightCodingAiAssist: "今天更像轻量编码或 AI 协助工作，不是完整 deep work。主要负荷在于管理 context、检查输出和持续做小决定，所以眼睛休息和关闭 mental loop 仍然重要。",
       shortQualityRun: "今天更像短距离质量跑，不是长距离跑。身体用到的是强度，即使距离不长，recovery 也可以跟上这份 effort。",
       rest: "今天是休息节奏，没有给身体增加太多主要 load。",
       lightRecoveryDay: "今天是轻一点的节奏，让系统慢慢恢复。",
@@ -1325,6 +1334,7 @@ const translations = {
       lowSleepLightRecovery: "今天有睡少的信号，轻一点的节奏也许能帮助 recovery 跟上身体。"
     },
     activitySpecificSummary: {
+      lightCodingAiAssist: "今天通过管理 context 和 AI 协助工作使用了轻量认知负荷。",
       shortQualityRun: "今天身体用了较快节奏的跑步强度，即使距离不长。",
       rest: "今天是休息节奏。",
       lightRecoveryDay: "今天是轻恢复节奏。",
@@ -1395,6 +1405,7 @@ const translations = {
       rest_base: "维持轻一点的节奏，不需要增加 productivity 压力。"
     },
     tomorrowFocusByActivity: {
+      lightCodingAiAssist: "休息眼睛，减少连续管理 context，把工作 loop 一个一个收好。",
       shortQualityRun: "下一次可以回到 easy 或 steady 节奏，平衡今天较快的跑步节奏。"
     },
     options: {
@@ -1436,6 +1447,7 @@ const translations = {
         rest: "休息日",
         lightRecoveryDay: "轻恢复日",
         officeWork: "办公室工作 / 会议与文件",
+        lightCodingAiAssist: "轻量编码 / AI 协助",
         outdoorWork: "户外工作 / 体力与出汗",
         dentalFocus: "牙科 / 精细临床病例",
         clinicalShift: "医生 / 门诊或病患照护",
@@ -1529,6 +1541,7 @@ const energyCauseOptions = [
 
 const activityOptions = [
   { key: "officeWork", label: "งานออฟฟิศ", score: 1, type: "cognitive_load", group: "work" },
+  { key: "lightCodingAiAssist", label: "โค้ดดิ้งเบา ๆ / AI ช่วยงาน", score: 1, type: "cognitive_load", group: "work", legacyLabels: ["Light coding / AI-assisted work", "轻量编码 / AI 协助"] },
   { key: "outdoorWork", label: "ทำงานกลางแจ้ง", score: 3, type: "outdoor_heat_load", group: "work" },
   { key: "deepWork", label: "Deep work / coding นาน", score: 2, type: "cognitive_load", group: "work", legacyLabels: ["Long deep work / coding", "长时间 deep work / coding"] },
   { key: "dentalFocus", label: "หมอฟัน", score: 3, type: "clinical_focus", group: "work" },
@@ -1563,6 +1576,7 @@ const activityLoadRootByActivityKey = {
   clinicalShift: "clinical_focus",
   photoshoot: "service_standing",
   officeWork: "cognitive_deepwork",
+  lightCodingAiAssist: "cognitive_deepwork",
   deepWork: "cognitive_deepwork",
   marketWatch: "market_decision",
   outdoorWork: "outdoor_heat",
@@ -1587,7 +1601,7 @@ const activityLoadRootPriority = [
   "recovery_low_sleep",
   "rest_base"
 ];
-const activitySpecificReflectionKeys = ["shortQualityRun"];
+const activitySpecificReflectionKeys = ["lightCodingAiAssist", "shortQualityRun"];
 const recoveryModeActivityKeys = ["rest", "lightRecoveryDay"];
 
 const todayIso = new Date().toLocaleDateString("en-CA");

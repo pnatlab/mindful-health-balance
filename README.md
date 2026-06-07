@@ -175,7 +175,7 @@ Activity chips ถูก map เป็น Activity Load Roots เพื่อช
 
 - `clinical_focus`: งานที่ใช้ความละเอียด มือ ตา และสมาธิต่อเนื่อง
 - `service_standing`: การยืน เดิน ถืออุปกรณ์ หรือดูแลจังหวะคนตรงหน้า
-- `cognitive_deepwork`: deep work, office work, screen time และ mental loop
+- `cognitive_deepwork`: deep work, office work, light coding / AI-assisted work, screen time และ mental loop โดย AI-assisted work อ่านเป็นการคุมบริบท ตรวจงาน และตัดสินใจเบา ๆ ต่อเนื่อง มี load เบากว่า deep work เต็มแรง
 - `market_decision`: attention, uncertainty และ decision load
 - `outdoor_heat`: heat, sweat, outdoor effort และ hydration context
 - `sport_sweat`: กีฬา เหงื่อ และ training load รวมถึง short quality / progression / fast-ish short run ที่ไม่ใช่ easy run และไม่ใช่ long run
