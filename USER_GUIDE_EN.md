@@ -17,7 +17,7 @@ This app is not a medical tool, not a diagnosis system, and not a replacement fo
 
 You can use the app lightly at three natural moments:
 
-- Morning / start of day: choose Energy, Mind, and Sleep
+- Morning / start of day: choose Energy and Mind, then add Sleep Hours or a rough Sleep category
 - During the day: log water, drinks, and the main activities that used energy
 - End of day: click `Reflect` to create a Reflection and save it to the Daily Log
 
@@ -78,13 +78,15 @@ If you choose Light or Dark manually, that choice stays active until you switch 
 
 After the Welcome Glass, the app is organized into three views:
 
-- `Today` for current-day input in two steps: 1/2 is Energy, Mind, Sleep, Hydration, Drink Profile, and Load & Recovery; 2/2 is Mind Note and the shortcut to Reflection/NuTuenSai
+- `Today` for current-day input in two steps: 1/2 is Energy, Mind, Sleep Hours/Sleep, Hydration, Drink Profile, and Load & Recovery; 2/2 is Mind Note and the shortcut to Reflection/NuTuenSai
 - `Reflection/NuTuenSai` for the compact NuTuenSai note strip, generated reflection preview/editing, and Save to Daily Log
 - `Log` for the Daily Log Table, Export Master Excel, Import Master Excel, and Clear Daily Log
 
 Switching views does not reset current inputs and does not delete saved Daily Logs.
 
 Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only on Today Input 1/2. Today Input 2/2 only shows `Back to 1/2` and `Go to Reflection/NuTuenSai`. Going to Reflection/NuTuenSai is navigation only; it does not save data.
+
+Starting in v1.9.3 — Structured Sleep & Run Detail, the app adds optional `Sleep_Hours` and `Run_Detail_JSON` while keeping the existing `Sleep` and `Activities` fields for Daily Log and old Excel compatibility.
 
 The Reflection/NuTuenSai page also includes small secondary shortcuts, `Back to Today 1/2` and `Back to Mind Note 2/2`, so you can add or adjust current input before saving. These shortcuts only navigate; they do not save, clear, or generate a new reflection.
 
@@ -96,9 +98,12 @@ Choose the current state as honestly and simply as possible:
 
 - Energy: Low / Medium / Good
 - Overall Mind Today: Neutral / Worried / Pressured / Scattered / Feeling good / Relaxed
-- Sleep: Low / Okay / Good
+- Sleep Hours: optional decimal hours, such as 6.5
+- Sleep: derived as Low / Okay / Good from Sleep Hours, or chosen roughly if hours are not entered
 
 This gives the day context. For example, a low-sleep day or a scattered-mind day should not be used to judge the whole picture.
+
+Sleep Hours derives the existing Sleep category with this rule: `< 5` hours = `Low`, `5 to < 7` hours = `Okay`, and `>= 7` hours = `Good`. This is self-reported recovery context, not diagnosis or health judgment.
 
 The small blue heart beside `Overall Mind Today` marks the main mind observation for the day. `Feeling of This Note` in Mind Note is the feeling of that specific note, not a judgment of the whole day.
 
@@ -173,6 +178,10 @@ Activity / profession-aware presets include:
 - Lots of walking
 - Rest day
 - Light recovery day
+
+When a running activity is selected, such as Easy run, Short quality run, or Long run, the app shows an optional mini panel inside Load & Recovery. You can add distance, duration as hours + minutes, and sweat level. The export still stores total minutes as `durationMin` inside `Run_Detail_JSON`, and avg pace may be derived from distance and duration.
+
+Run Detail is only load / hydration / recovery context. It is not training advice, pace judgment, or performance coaching.
 
 The app summarizes load into three levels:
 
@@ -257,7 +266,7 @@ Newly generated reflections end with one blue heart, `🩵`, as a light NuTuenSa
 
 Click `Save to Daily Log` to save the current day into the Daily Log table.
 
-The saved row comes from the current app state, including Energy, Mind, Sleep, water, drinks, activities, load, Tomorrow Focus, NuTuenSai Reminder, Mind Note, and generated reflection.
+The saved row comes from the current app state, including Energy, Mind, Sleep, Sleep Hours, water, drinks, activities, Run Detail, load, Tomorrow Focus, NuTuenSai Reminder, Mind Note, and generated reflection.
 
 If the same date already exists, the app asks before replacing that row.
 
@@ -299,6 +308,8 @@ Use this file as a master backup or open it in Excel when you want to review a l
 `Summary_Note` is a static guardrail message. It reminds readers that the workbook supports pattern review and recovery balance, not judgment of health from any single day.
 
 `Column_Guide` is a column dictionary sheet. It explains canonical column names with `Thai_Label`, `English_Label`, `Meaning`, `AI_Reading_Note`, `Example_Value`, and `Is_Canonical` without changing the original `Daily_Log` headers, so import and future v2.0 parsers can keep using stable keys.
+
+Starting in v1.9.3, `Daily_Log` includes two optional columns: `Sleep_Hours` and `Run_Detail_JSON`. The existing `Sleep` and `Activities` fields remain, and older workbooks without these two columns still import normally.
 
 Starting in v1.9, `Field_Context` explains that the workbook is a local-first self-care log owned by the user. If the user chooses to share it with an AI/LLM, the AI should read it for pattern reflection only, not for diagnosis or medical advice.
 

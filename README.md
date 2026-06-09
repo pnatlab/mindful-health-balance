@@ -1,4 +1,4 @@
-# Mindful Health Balance by MSxAI v1.9.2 — Today Input Step Flow
+# Mindful Health Balance by MSxAI v1.9.3 — Structured Sleep & Run Detail
 
 Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ static สำหรับ local-first self-care reflection และ Portable Field Memory Foundation เพื่อช่วยดู pattern และ balance recovery ในชีวิตประจำวัน โดยเน้น 4 แกนหลัก:
 
@@ -152,11 +152,23 @@ v1.9.2 เพิ่ม Today Input Step Flow เพื่อทำให้ห�
 
 Save Daily Log ยังอยู่ใน Reflection/NuTuenSai เท่านั้นและเป็น primary action ของ Daily Log Controls ส่วน patch นี้ไม่เปลี่ยน Daily_Log schema, Excel export/import, workbook sheets หรือ localStorage data schema
 
+### v1.9.3 — Structured Sleep & Run Detail
+
+v1.9.3 เพิ่ม structured input แบบ conservative เฉพาะจุดที่ช่วยอ่าน recovery ได้มากขึ้น โดยยังคง Today Input 1/2 เป็น 4 cards เดิมเท่านั้น:
+
+- `Sleep_Hours` เป็น optional field ใน Today State สำหรับกรอกจำนวนชั่วโมงนอน เช่น `6.5` แล้ว derive ค่า `Sleep` เดิมกลับเป็น `น้อย / พอใช้ / ดี`
+- `Run_Detail_JSON` เป็น optional field ใน Load & Recovery สำหรับรายละเอียดการวิ่งเมื่อเลือก `Easy run`, `วิ่งคุณภาพระยะสั้น`, หรือ `Long run`
+
+แอปยังเก็บ `Sleep` และ `Activities` เดิมไว้ครบเพื่อให้ Summary, Field_Review, import/export และ workbook เก่าอ่านได้ต่อเนื่อง Workbooks เก่าที่ไม่มี `Sleep_Hours` หรือ `Run_Detail_JSON` ยัง import ได้ตามปกติ โดย field ใหม่จะ normalize เป็นค่าว่าง
+
+Run detail ใช้เพื่อบริบท load / hydration / recovery เท่านั้น ไม่ใช่ running app, training advice, pace judgment หรือ performance coaching
+
 ### v1.9.x Latest Summary
 
 v1.9.x ล่าสุดรวมหลาย refinement ที่ทำให้แอปอ่าน pattern ได้ชัดขึ้นโดยไม่เพิ่มภาระผู้ใช้:
 
 - Today Input Step Flow: แบ่งหน้า Today เป็น 1/2 และ 2/2 เพื่อลดความยาวของ daily input โดยยังให้ Save Daily Log อยู่ใน Reflection/NuTuenSai
+- Structured Sleep & Run Detail: เพิ่ม `Sleep_Hours` และ `Run_Detail_JSON` แบบ optional โดยยัง derive `Sleep` เดิมและไม่เพิ่ม card ที่ 5
 - Adaptive Hydration Guidance: เป้าหมายน้ำเป็น flexible self-care cue ตาม activity/load/recovery context ไม่ใช่ตัวเลขตายตัว
 - Drink Sweetness Insight + Soda support: `น้ำอัดลม` เป็น Drink Type และ Sweetness / Sugar Score เป็น drink-load signal ไม่ใช่ moral score
 - Positive Mind State options: `รู้สึกดี` และ `ผ่อนคลาย` เป็น support signal ไม่ใช่ performance score
@@ -205,7 +217,7 @@ Activity roots refine reflection wording only. แอปไม่ infer identity
 
 ## สิ่งที่แอปทำได้
 
-- เลือก Today State: Energy, Mind, Sleep
+- เลือก Today State: Energy, Mind, Sleep และกรอก Sleep Hours แบบ optional เพื่อให้ระบบ derive หมวด Sleep เดิม
 - บันทึก positive mind state เช่น รู้สึกดีหรือผ่อนคลาย เป็น support signal ไม่ใช่คะแนน performance
 - นับปริมาณน้ำเป็น ml พร้อม adaptive guidance ที่เน้นช่วงยืดหยุ่นตาม load ของวัน ไม่ใช่การดื่มให้เยอะที่สุด
 - เลือกเครื่องดื่มของวัน และดู reminder เรื่องเครื่องดื่มหวาน/กาแฟแบบไม่กดดัน
@@ -214,6 +226,7 @@ Activity roots refine reflection wording only. แอปไม่ infer identity
 - สะท้อน Energy Cause แบบ layered signal เมื่อ Energy level กับเหตุของพลังงานดูสวนกัน โดยไม่ถือว่าเป็นข้อมูลผิด
 - เลือกกิจกรรมเพื่อคำนวณ Load Score และ Load Level
 - เลือก Activity / Profession-aware Load Presets เพื่อให้ reflection เห็นชนิดของความเหนื่อย เช่น งานใช้สมาธิ งานคลินิก งานกลางแจ้ง กีฬา วันพัก หรือวันเบา / ฟื้นตัว
+- เติม Run Detail แบบ optional เมื่อเลือกกิจกรรมวิ่ง เพื่อเก็บระยะทาง เวลา เหงื่อ และ pace ที่ derive ได้ใน `Run_Detail_JSON`
 - ใช้ Activity Load Roots / Activity Root Summary เพื่อสะท้อนกิจกรรมเป็นประโยคสั้นแบบไม่เดาตัวตนผู้ใช้
 - สร้าง End-of-Day Reflection ในโทน NuTuenSai โดยหน้า preview แสดง synthesis สั้น ๆ ขณะที่รายละเอียดเต็มยังอยู่ใน Daily Log / Reflections / Excel
 - ใช้ Reflection Generator แบบ zen/circular CTA: กด `สรุปวันนี้`, เห็น listening moment, ได้ label `Reflection`, มี `🩵` ท้าย reflection หนึ่งครั้ง และใช้ `ล้าง Reflection` เพื่อ reset preview เท่านั้น
@@ -287,6 +300,8 @@ Mindful_Health_Balance_Master.xlsx
 `Summary` มีค่า export summary เช่น `Total_Logs`, `Unique_Days`, `Average_Water_ml`, `High_Load_Days`, `Low_Sleep_Days`, `Sweet_Drink_Days`, `Most_Common_Mind` และ `Summary_Note` โดย `Summary_Note` เป็นข้อความกำกับคงที่ ไม่ใช่ผลวิเคราะห์จาก AI
 
 `Column_Guide` อธิบายแต่ละ column ด้วย `Thai_Label`, `English_Label`, `Meaning`, `AI_Reading_Note`, `Example_Value` และ `Is_Canonical` โดยไม่เปลี่ยนชื่อ column เดิมใน sheet หลัก
+
+ตั้งแต่ v1.9.3 `Daily_Log` เพิ่ม optional columns `Sleep_Hours` และ `Run_Detail_JSON` เพื่อเก็บบริบทการนอนและการวิ่งแบบ structured โดยยังคง `Sleep` และ `Activities` เดิมไว้เพื่อ backward compatibility
 
 ไฟล์ Excel จะถูกดาวน์โหลดลงเครื่องผู้ใช้โดยตรงผ่าน browser
 

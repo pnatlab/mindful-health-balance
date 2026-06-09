@@ -401,9 +401,11 @@ Do not rename `Daily_Log` headers such as:
 
 - `Water_ml`
 - `Sleep`
+- `Sleep_Hours`
 - `Mind`
 - `Load_Score`
 - `Drink_Profile_JSON`
+- `Run_Detail_JSON`
 - `Mind_Note_Feeling`
 
 Do not add a Thai label row below the headers in `Daily_Log`.
@@ -436,6 +438,11 @@ The guide includes key columns from:
 - `Field_Review`
 
 `Daily_Log` remains the primary canonical data table for import and future parser stability.
+
+Since v1.9.3, `Column_Guide` also documents optional structured fields:
+
+- `Sleep_Hours`: self-reported sleep duration used to derive the existing `Sleep` category gently.
+- `Run_Detail_JSON`: optional running context for load, hydration, and recovery. It is not training advice, pace judgment, or performance coaching.
 
 ## Reading Principles
 
@@ -1414,6 +1421,8 @@ The state should clear naturally when the current form is reset.
 
 # v1.9.3 — Structured Sleep & Run Detail
 
+Implementation status: implemented in v1.9.3 as a conservative schema and UI patch.
+
 ## 1. Intent
 
 v1.9.3 aims to add more precise input only where it has high value for reflection and recovery:
@@ -1461,6 +1470,9 @@ New optional field:
 
 - `Sleep_Hours`
 
+Implementation note:
+`Sleep_Hours` is exported as an optional `Daily_Log` column. When valid, it derives the existing categorical `Sleep` field; when empty, the older categorical fallback still works.
+
 Derived rule:
 
 - `< 5` hours -> `Sleep = น้อย`
@@ -1495,6 +1507,7 @@ Current running chips:
 Decision:
 Add an optional mini run detail panel inside the Load & Recovery card.
 Show this panel only when one of the running chips is selected.
+Place the panel directly under the sports/running activity chips, before the light/recovery group, so it reads as running detail rather than recovery detail.
 
 The panel should be compact and optional.
 
@@ -1502,13 +1515,16 @@ Suggested UI:
 
 - Title TH: รายละเอียดการวิ่งวันนี้ (เติมถ้ามี)
 - Distance: ระยะทาง (km)
-- Duration: เวลา (นาที)
+- Duration: เวลา as two compact inputs: ชั่วโมง + นาที
 - Sweat: เหงื่อ with low / medium / high options
 - Avg pace may be derived/displayed if distance + duration are available
 
 New optional field:
 
 - `Run_Detail_JSON`
+
+Implementation note:
+`Run_Detail_JSON` is exported as an optional `Daily_Log` column only when a running chip is selected. The current UI preserves typed run detail in the current form if the panel is temporarily hidden, but saved/exported rows leave `Run_Detail_JSON` empty when no running activity is selected.
 
 Suggested JSON shape:
 
@@ -1524,6 +1540,8 @@ Suggested JSON shape:
 
 Notes:
 
+- UI accepts duration as hours + minutes so users do not need to convert a run like 1:50 into 110 minutes manually.
+- Storage remains `durationMin` inside `Run_Detail_JSON`; no extra duration columns are added.
 - `avgPace` can be derived from distance + duration if possible.
 - If not enough data exists, leave it empty.
 - Keep JSON compact and stable.
@@ -1654,6 +1672,8 @@ Not in first implementation:
 - no v2.0 companion logic
 - no baseline/ML
 
+Current v1.9.3 implementation stores the structured fields first and keeps reflection/hydration behavior conservative. `Sleep_Hours < 5` may support low-sleep counting through the derived `Sleep` value and Summary helper, but `Run_Detail_JSON` is mainly preserved for future hydration/reflection refinement.
+
 ## 8. Version Decision
 
 This belongs to:
@@ -1729,6 +1749,9 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 | Hydration | long run / heavy sweat + around 3.0 L | Water is already in a good zone for a high-sweat day, but body cues may still matter. | Good zone; add small sips only if sweat remains high, thirst persists, or urine color is dark. | Treating 3.0 L as failure or forcing 4.0 L. |
 | Hydration | water >= 4.0 L | Intake is already high. | Spread through the day and observe body cues; do not force more. | Encouraging more water or medical warning language. |
 | Sleep | low sleep | Recovery signal. | Recovery-first, gentle pacing. | Blame, failure, or health judgment. |
+| Sleep | `Sleep_Hours < 5` | Structured sleep duration derives the existing low sleep category. | Recovery-first, still gentle and non-diagnostic. | Treating hours as medical diagnosis or failure. |
+| Sleep | `Sleep_Hours 5 to < 7` | Structured sleep duration derives the existing okay sleep category. | Balanced observation; enough to orient recovery. | Overstating precision from a self-reported number. |
+| Sleep | `Sleep_Hours >= 7` | Structured sleep duration derives the existing good sleep category. | Support signal; still read energy/load/mind layers. | Saying the whole day is fine because sleep hours are good. |
 | Sleep | okay sleep | Some recovery base exists. | Balanced, observational tone. | Overstating sleep quality. |
 | Sleep | good sleep | Recovery support signal. | Notice support while still reading other layers. | Assuming energy, mind, or load must be good. |
 | Energy | low | Body/system may have lower resources. | Care and recovery cue. | Blame or productivity pressure. |
@@ -1787,6 +1810,7 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 | `dentalFocus` / `clinicalShift` | `clinical_focus` | Sustained precision, hands, eyes, and nervous-system focus; quiet recovery deserves space. | Diagnosis, medical-risk wording, or saying clinical work is dangerous. |
 | `outdoorWork` | `outdoor_heat` | Heat, sweat, and body effort; small water rounds and heat/body pauses. | Medical dehydration warning. |
 | `badminton` / `heavyPingPong` / `easyRun` / `shortQualityRun` / `longRun` | `sport_sweat` | Physical effort and training load; recovery is part of training. `shortQualityRun` should read as intensity-based short running load, not easy run or long run. | Push harder, aggressive hydration commands, or prescriptive training advice. |
+| running chip + `Run_Detail_JSON` | `sport_sweat` with optional structured context | Distance, duration, derived pace, and sweat can support future load/hydration/recovery reading. | Training plan, pace judgment, race prediction, or performance coaching. |
 | `deepWork` / `officeWork` / `lightCodingAiAssist` | `cognitive_deepwork` | Sustained or light cognitive focus and screen attention; `lightCodingAiAssist` is score 1 and reads as context guidance, output review, and small ongoing decisions rather than full deep work by default. | Productivity praise that pushes more work, or treating AI-assisted work as empty time. |
 | `longWalk` | `walking_physical` | Body use through walking/movement; give back, legs, feet, and water rhythm space. | Overstating it as high-intensity sport. |
 | old workbook value `lowSleep` only | `recovery_low_sleep` | Recovery signal, not high activity load; rest before adding another round. | Showing low sleep as a new Load & Recovery chip or calling it a heavy activity day. |

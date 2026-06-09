@@ -8,6 +8,7 @@ const DAILY_LOG_COLUMNS = [
   "Energy",
   "Mind",
   "Sleep",
+  "Sleep_Hours",
   "Water_ml",
   "Drinks",
   "Sweet_Drinks_Count",
@@ -17,6 +18,7 @@ const DAILY_LOG_COLUMNS = [
   "Milk_Drink_Count",
   "Hydration_Support_Count",
   "Activities",
+  "Run_Detail_JSON",
   "Energy_Causes",
   "Load_Score",
   "Load_Level",
@@ -35,7 +37,7 @@ const translations = {
     htmlLang: "th",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.2 — Today Input Step Flow",
+    version: "v1.9.3 — Structured Sleep & Run Detail",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
@@ -80,6 +82,12 @@ const translations = {
     energyLabel: "Energy",
     mindLabel: "ใจโดยรวมวันนี้",
     sleepLabel: "Sleep",
+    sleepHoursLabel: "นอนกี่ชั่วโมง",
+    sleepHoursUnit: "ชั่วโมง",
+    sleepHoursPlaceholder: "6.5",
+    sleepDerivedEmpty: "เติมชั่วโมงนอนถ้ามี",
+    sleepDerivedBadge: "ระบบอ่านเป็น: {sleep}",
+    sleepFallbackHelper: "ถ้าไม่แน่ใจชั่วโมง เลือกหมวดคร่าว ๆ ด้านล่างได้",
     hydration: "Hydration",
     hydrationHeading: "น้ำวันนี้",
     hydrationGuidanceBase: "ช่วงน้ำวันนี้โดยประมาณ: {min}-{max} ml",
@@ -123,6 +131,19 @@ const translations = {
     loadRecovery: "Load & Recovery",
     loadHeading: "วันนี้ใช้พลังไปกับอะไร",
     loadHelper: "เลือกสิ่งที่ใช้พลังวันนี้ ระบบจะดูทั้งร่างกาย สมอง และการฟื้นตัว",
+    runDetailTitle: "รายละเอียดการวิ่งวันนี้ (เติมถ้ามี)",
+    runDetailHelper: "ใช้เพื่ออ่าน load / hydration / recovery เบา ๆ ไม่ใช่ coaching",
+    runDistanceLabel: "ระยะทาง (km)",
+    runDurationLabel: "เวลา",
+    runDurationHoursLabel: "ชั่วโมง",
+    runDurationMinutesLabel: "นาที",
+    runSweatLabel: "เหงื่อ",
+    runSweatEmpty: "ไม่ระบุ",
+    runSweatLow: "น้อย",
+    runSweatMedium: "กลาง",
+    runSweatHigh: "เยอะ",
+    runPaceEmpty: "Pace ยังว่าง",
+    runPaceBadge: "Pace เฉลี่ย {pace}",
     mindfulReminder: "Mindful Reminder",
     nuTuenSaiNote: "NuTuenSai note",
     nuTuenSaiRole: "NuTuenSai เป็นชั้นสะท้อน pattern อย่างอ่อนโยน ไม่ใช่เครื่องมือวินิจฉัยหรือคำแนะนำแทนแพทย์",
@@ -530,7 +551,7 @@ const translations = {
     htmlLang: "en",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.2 — Today Input Step Flow",
+    version: "v1.9.3 — Structured Sleep & Run Detail",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
@@ -575,6 +596,12 @@ const translations = {
     energyLabel: "Energy",
     mindLabel: "Overall Mind Today",
     sleepLabel: "Sleep",
+    sleepHoursLabel: "Sleep hours",
+    sleepHoursUnit: "hours",
+    sleepHoursPlaceholder: "6.5",
+    sleepDerivedEmpty: "Add hours if available",
+    sleepDerivedBadge: "Read as: {sleep}",
+    sleepFallbackHelper: "If hours are unclear, choose a rough category below.",
     hydration: "Hydration",
     hydrationHeading: "Water today",
     hydrationGuidanceBase: "Estimated hydration range today: {min}-{max} ml",
@@ -618,6 +645,19 @@ const translations = {
     loadRecovery: "Load & Recovery",
     loadHeading: "What used your energy today?",
     loadHelper: "Choose what used energy today. The system considers body, focus, and recovery.",
+    runDetailTitle: "Run detail today (optional)",
+    runDetailHelper: "Used only for load / hydration / recovery context, not coaching.",
+    runDistanceLabel: "Distance (km)",
+    runDurationLabel: "Duration",
+    runDurationHoursLabel: "Hours",
+    runDurationMinutesLabel: "Minutes",
+    runSweatLabel: "Sweat",
+    runSweatEmpty: "Not set",
+    runSweatLow: "Low",
+    runSweatMedium: "Medium",
+    runSweatHigh: "High",
+    runPaceEmpty: "Pace not set",
+    runPaceBadge: "Avg pace {pace}",
     mindfulReminder: "Mindful Reminder",
     nuTuenSaiNote: "NuTuenSai note",
     nuTuenSaiRole: "NuTuenSai is a gentle reflection layer for noticing patterns, not a diagnosis tool or medical advice.",
@@ -1025,7 +1065,7 @@ const translations = {
     htmlLang: "zh-CN",
     eyebrow: "个人正念健康仪表板",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.2 — Today Input Step Flow",
+    version: "v1.9.3 — Structured Sleep & Run Detail",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
@@ -1070,6 +1110,12 @@ const translations = {
     energyLabel: "Energy",
     mindLabel: "今天整体心境",
     sleepLabel: "Sleep",
+    sleepHoursLabel: "睡了几小时",
+    sleepHoursUnit: "小时",
+    sleepHoursPlaceholder: "6.5",
+    sleepDerivedEmpty: "有的话可以填写睡眠小时",
+    sleepDerivedBadge: "系统读取为：{sleep}",
+    sleepFallbackHelper: "如果不确定小时，可以在下方选一个大概分类。",
     hydration: "Hydration",
     hydrationHeading: "今天的饮水",
     hydrationGuidanceBase: "今天的大致饮水区间：{min}-{max} ml",
@@ -1113,6 +1159,19 @@ const translations = {
     loadRecovery: "Load & Recovery",
     loadHeading: "今天把能量用在哪里？",
     loadHelper: "选择今天消耗能量的事项。系统会同时参考身体、专注力与恢复。",
+    runDetailTitle: "今天跑步详情（可选）",
+    runDetailHelper: "只用于理解 load / hydration / recovery，不是训练建议。",
+    runDistanceLabel: "距离 (km)",
+    runDurationLabel: "时间",
+    runDurationHoursLabel: "小时",
+    runDurationMinutesLabel: "分钟",
+    runSweatLabel: "出汗",
+    runSweatEmpty: "不填写",
+    runSweatLow: "少",
+    runSweatMedium: "中",
+    runSweatHigh: "多",
+    runPaceEmpty: "配速未填写",
+    runPaceBadge: "平均配速 {pace}",
     mindfulReminder: "正念提醒",
     nuTuenSaiNote: "NuTuenSai 提醒",
     nuTuenSaiRole: "NuTuenSai 是一个温和的反思层，用来观察模式，并不是诊断工具或医疗建议。",
@@ -1618,6 +1677,9 @@ const activityLoadRootPriority = [
 ];
 const activitySpecificReflectionKeys = ["lightCodingAiAssist", "shortQualityRun"];
 const recoveryModeActivityKeys = ["rest", "lightRecoveryDay"];
+const runningActivityKeys = ["easyRun", "shortQualityRun", "longRun"];
+const runningActivityPriority = ["longRun", "shortQualityRun", "easyRun"];
+const runSweatOptions = ["", "low", "medium", "high"];
 
 const todayIso = new Date().toLocaleDateString("en-CA");
 
@@ -1633,9 +1695,16 @@ const defaultState = {
     mind: "",
     sleep: ""
   },
+  sleepHours: "",
   loadScore: 0,
   loadLevel: "Load เบา",
   hydrationStatus: "วันนี้น้ำยังน้อยไปนิด ค่อย ๆ จิบเพิ่มนะ",
+  runDetail: {
+    type: "",
+    distanceKm: "",
+    durationMin: "",
+    sweat: ""
+  },
   generatedReflection: "",
   mindNoteText: "",
   mindNoteFeeling: "",
@@ -1805,6 +1874,9 @@ function loadState() {
       ? parsed.drinkProfiles.map(normalizeDrinkProfile)
       : legacyDrinksToProfiles(parsed.drinks || []);
     parsed.energyCauses = Array.isArray(parsed.energyCauses) ? parsed.energyCauses : [];
+    parsed.sleepHours = normalizeSleepHours(parsed.sleepHours);
+    parsed.runDetail = normalizeRunDetail(parsed.runDetail);
+    applyDerivedSleepFromHours(parsed);
     return parsed;
   } catch {
     return structuredClone(defaultState);
@@ -1840,10 +1912,11 @@ function renderSelectOptions(selector, options, labelGetter, valueKey = "") {
 
 function renderActivityOptions() {
   const list = document.querySelector("#activitiesList");
+  const runDetailPanel = document.querySelector("#runDetailPanel");
   list.innerHTML = activityGroups.map((group) => {
     const activities = activityOptions.filter((activity) => activity.group === group && !activity.hiddenInUi);
     return `
-      <div class="activity-group">
+      <div class="activity-group" data-activity-group="${escapeHtml(group)}">
         <p class="activity-group-label">${t(`options.activityGroups.${group}`)}</p>
         <div class="activity-group-grid">
           ${activities.map((activity) => `
@@ -1855,6 +1928,11 @@ function renderActivityOptions() {
       </div>
     `;
   }).join("");
+
+  const sportsGroup = list.querySelector('[data-activity-group="sports"]');
+  if (runDetailPanel && sportsGroup) {
+    sportsGroup.after(runDetailPanel);
+  }
 }
 
 function renderEnergyCauseOptions() {
@@ -1901,13 +1979,22 @@ function bindEvents() {
   document.querySelectorAll(".choice-group").forEach((group) => {
     group.addEventListener("click", (event) => {
       const button = event.target.closest("button[data-value]");
-      if (!button) return;
+      if (!button || !group.dataset.field) return;
+      if (group.dataset.field === "sleep") {
+        appState.sleepHours = "";
+      }
       appState.selectedState[group.dataset.field] = button.dataset.value;
       if (group.dataset.field === "sleep" && button.dataset.value !== "น้อย") {
         appState.activities = appState.activities.filter((item) => item !== "นอนน้อย");
       }
       syncUI();
     });
+  });
+
+  document.querySelector("#sleepHoursInput").addEventListener("input", (event) => {
+    appState.sleepHours = normalizeSleepHours(event.target.value);
+    applyDerivedSleepFromHours(appState);
+    syncUI();
   });
 
   document.querySelectorAll("[data-water]").forEach((button) => {
@@ -1933,7 +2020,7 @@ function bindEvents() {
     syncUI();
   });
 
-  document.querySelector("#activitiesList").addEventListener("click", (event) => {
+	  document.querySelector("#activitiesList").addEventListener("click", (event) => {
     const button = event.target.closest("[data-activity]");
     if (!button) return;
     const activity = button.dataset.activity;
@@ -1943,7 +2030,12 @@ function bindEvents() {
       ? appState.activities.filter((item) => item !== activity)
       : [...appState.activities, activity];
 
-    syncUI();
+	    syncUI();
+	  });
+
+  ["#runDistanceInput", "#runDurationHoursInput", "#runDurationMinutesInput", "#runSweatSelect"].forEach((selector) => {
+    document.querySelector(selector)?.addEventListener("input", updateRunDetailFromForm);
+    document.querySelector(selector)?.addEventListener("change", updateRunDetailFromForm);
   });
 
   document.querySelector("#energyCausesList").addEventListener("click", (event) => {
@@ -2063,6 +2155,9 @@ function updateViewPanels() {
 
 function syncUI() {
   resetTodayStepIfDateChanged();
+  appState.sleepHours = normalizeSleepHours(appState.sleepHours);
+  appState.runDetail = normalizeRunDetail(appState.runDetail);
+  applyDerivedSleepFromHours(appState);
   appState.loadScore = calculateLoadScore();
   appState.loadLevel = getLoadLevel(appState.loadScore);
   appState.hydrationStatus = getHydrationStatus(appState.waterMl);
@@ -2080,9 +2175,11 @@ function syncUI() {
 
   updateReflectionPreview();
   updateStateButtons();
+  updateSleepHoursUI();
   updateMindNoteButtons();
   updateDrinkUI();
   updateActivityUI();
+  updateRunDetailUI();
   updateEnergyCauseUI();
   updateTodayInputStepUI();
   updateInputActiveCards();
@@ -2172,11 +2269,12 @@ function updateInputActiveCards() {
 function hasTodayStateInput(state = appState) {
   const selected = state.selectedState || {};
   return Boolean(
-    selected.energy
-    || selected.mind
-    || selected.sleep
-    || (state.energyCauses || []).length
-  );
+	    selected.energy
+	    || selected.mind
+	    || selected.sleep
+	    || hasValidSleepHours(state.sleepHours)
+	    || (state.energyCauses || []).length
+	  );
 }
 
 function hasHydrationInput(state = appState) {
@@ -2191,7 +2289,7 @@ function hasDrinkInput(state = appState) {
 }
 
 function hasLoadInput(state = appState) {
-  return Boolean((state.activities || []).length);
+  return Boolean((state.activities || []).length || hasMeaningfulRunDetail(state.runDetail));
 }
 
 function goToReflectionFromToday() {
@@ -2316,6 +2414,194 @@ function updateMindNoteButtons() {
     const field = button.dataset.mindNoteField;
     button.classList.toggle("is-active", appState[field] === button.dataset.value);
   });
+}
+
+function normalizeSleepHours(value) {
+  if (value === "" || value === null || value === undefined) return "";
+  const number = Number(value);
+  if (!Number.isFinite(number) || number < 0 || number > 16) return "";
+  return Math.round(number * 100) / 100;
+}
+
+function hasValidSleepHours(value = appState.sleepHours) {
+  return normalizeSleepHours(value) !== "";
+}
+
+function deriveSleepCategory(hours) {
+  const normalizedHours = normalizeSleepHours(hours);
+  if (normalizedHours === "") return "";
+  if (normalizedHours < 5) return "น้อย";
+  if (normalizedHours < 7) return "พอใช้";
+  return "ดี";
+}
+
+function applyDerivedSleepFromHours(state = appState) {
+  const derivedSleep = deriveSleepCategory(state.sleepHours);
+  if (!derivedSleep) return "";
+  state.selectedState = state.selectedState || {};
+  state.selectedState.sleep = derivedSleep;
+  return derivedSleep;
+}
+
+function getSleepDisplayFromHoursOrCategory({
+  hours = appState.sleepHours,
+  category = appState.selectedState.sleep
+} = {}) {
+  const derivedSleep = deriveSleepCategory(hours);
+  return derivedSleep || category || "";
+}
+
+function updateSleepHoursUI() {
+  const input = document.querySelector("#sleepHoursInput");
+  const badge = document.querySelector("#sleepDerivedBadge");
+  if (!input || !badge) return;
+
+  input.value = appState.sleepHours === "" ? "" : String(appState.sleepHours);
+  const sleepCategory = getSleepDisplayFromHoursOrCategory();
+  badge.textContent = sleepCategory
+    ? t("sleepDerivedBadge", { sleep: localizeStateValue("Sleep", sleepCategory) })
+    : t("sleepDerivedEmpty");
+}
+
+function isRunningActivitySelected(activities = appState.activities || []) {
+  return getSelectedActivityKeys(activities).some((key) => runningActivityKeys.includes(key));
+}
+
+function getPrimaryRunningActivityKey(activities = appState.activities || []) {
+  const keys = getSelectedActivityKeys(activities);
+  return runningActivityPriority.find((key) => keys.includes(key)) || "";
+}
+
+function normalizeRunNumber(value, { max, decimals = 1 } = {}) {
+  if (value === "" || value === null || value === undefined) return "";
+  const number = Number(value);
+  if (!Number.isFinite(number) || number < 0 || (max && number > max)) return "";
+  const factor = 10 ** decimals;
+  return Math.round(number * factor) / factor;
+}
+
+function normalizeRunDetail(detail = {}) {
+  const parsed = typeof detail === "string" ? parseRunDetailJson(detail) : detail;
+  const normalized = {
+    type: runningActivityKeys.includes(parsed?.type) ? parsed.type : "",
+    distanceKm: normalizeRunNumber(parsed?.distanceKm, { max: 100, decimals: 2 }),
+    durationMin: normalizeRunNumber(parsed?.durationMin, { max: 600, decimals: 0 }),
+    sweat: runSweatOptions.includes(parsed?.sweat) ? parsed.sweat : ""
+  };
+  const avgPace = deriveAvgPace(normalized.distanceKm, normalized.durationMin);
+  if (avgPace) normalized.avgPace = avgPace;
+  return normalized;
+}
+
+function parseRunDetailJson(value) {
+  try {
+    const parsed = JSON.parse(value || "{}");
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function hasMeaningfulRunDetail(detail = appState.runDetail) {
+  const normalized = normalizeRunDetail(detail);
+  return Boolean(normalized.distanceKm !== "" || normalized.durationMin !== "" || normalized.sweat);
+}
+
+function deriveAvgPace(distanceKm, durationMin) {
+  const distance = Number(distanceKm);
+  const duration = Number(durationMin);
+  if (!Number.isFinite(distance) || !Number.isFinite(duration) || distance <= 0 || duration <= 0) return "";
+  const paceTotalSeconds = Math.round((duration * 60) / distance);
+  const minutes = Math.floor(paceTotalSeconds / 60);
+  const seconds = String(paceTotalSeconds % 60).padStart(2, "0");
+  return `${minutes}:${seconds}/km`;
+}
+
+function splitRunDuration(durationMin) {
+  const duration = normalizeRunNumber(durationMin, { max: 600, decimals: 0 });
+  if (duration === "") {
+    return { hours: "", minutes: "" };
+  }
+  const hours = Math.floor(duration / 60);
+  const minutes = duration % 60;
+  return {
+    hours: hours > 0 ? String(hours) : "",
+    minutes: String(minutes)
+  };
+}
+
+function buildRunDurationMinFromInputs(hoursValue, minutesValue) {
+  const hoursBlank = hoursValue === "" || hoursValue === null || hoursValue === undefined;
+  const minutesBlank = minutesValue === "" || minutesValue === null || minutesValue === undefined;
+  if (hoursBlank && minutesBlank) return "";
+
+  const hours = hoursBlank ? 0 : Number(hoursValue);
+  const minutes = minutesBlank ? 0 : Number(minutesValue);
+  if (!Number.isInteger(hours) || !Number.isInteger(minutes)) return "";
+  if (hours < 0 || hours > 10 || minutes < 0 || minutes > 59) return "";
+
+  const total = (hours * 60) + minutes;
+  return total > 600 ? "" : total;
+}
+
+function buildRunDetailJson() {
+  if (!isRunningActivitySelected()) return "";
+  const detail = normalizeRunDetail({
+    ...appState.runDetail,
+    type: getPrimaryRunningActivityKey()
+  });
+  if (!detail.type && !hasMeaningfulRunDetail(detail)) return "";
+
+  const compactDetail = {
+    type: detail.type
+  };
+  if (detail.distanceKm !== "") compactDetail.distanceKm = detail.distanceKm;
+  if (detail.durationMin !== "") compactDetail.durationMin = detail.durationMin;
+  if (detail.avgPace) compactDetail.avgPace = detail.avgPace;
+  if (detail.sweat) compactDetail.sweat = detail.sweat;
+  return JSON.stringify(compactDetail);
+}
+
+function updateRunDetailFromForm() {
+  appState.runDetail = normalizeRunDetail({
+    type: getPrimaryRunningActivityKey(),
+    distanceKm: document.querySelector("#runDistanceInput")?.value || "",
+    durationMin: buildRunDurationMinFromInputs(
+      document.querySelector("#runDurationHoursInput")?.value || "",
+      document.querySelector("#runDurationMinutesInput")?.value || ""
+    ),
+    sweat: document.querySelector("#runSweatSelect")?.value || ""
+  });
+  syncUI();
+}
+
+function updateRunDetailUI() {
+  const panel = document.querySelector("#runDetailPanel");
+  if (!panel) return;
+  const hasRunning = isRunningActivitySelected();
+  const detail = normalizeRunDetail({
+    ...appState.runDetail,
+    type: getPrimaryRunningActivityKey() || appState.runDetail?.type || ""
+  });
+  appState.runDetail = detail;
+
+  panel.hidden = !hasRunning;
+  panel.setAttribute("aria-hidden", String(!hasRunning));
+
+  const distanceInput = document.querySelector("#runDistanceInput");
+  const durationHoursInput = document.querySelector("#runDurationHoursInput");
+  const durationMinutesInput = document.querySelector("#runDurationMinutesInput");
+  const sweatSelect = document.querySelector("#runSweatSelect");
+  const paceBadge = document.querySelector("#runPaceBadge");
+  const durationParts = splitRunDuration(detail.durationMin);
+
+  if (distanceInput) distanceInput.value = detail.distanceKm === "" ? "" : String(detail.distanceKm);
+  if (durationHoursInput) durationHoursInput.value = durationParts.hours;
+  if (durationMinutesInput) durationMinutesInput.value = durationParts.minutes;
+  if (sweatSelect) sweatSelect.value = detail.sweat || "";
+  if (paceBadge) {
+    paceBadge.textContent = detail.avgPace ? t("runPaceBadge", { pace: detail.avgPace }) : t("runPaceEmpty");
+  }
 }
 
 function calculateLoadScore() {
@@ -3087,10 +3373,12 @@ function getMindfulReminder() {
 function hasMeaningfulTodayInput() {
   const state = appState.selectedState || {};
   return (appState.waterMl || 0) > 0
-    || (appState.drinkProfiles || []).length > 0
-    || (appState.drinks || []).length > 0
-    || (appState.activities || []).length > 0
-    || (appState.energyCauses || []).length > 0
+	    || (appState.drinkProfiles || []).length > 0
+	    || (appState.drinks || []).length > 0
+	    || (appState.activities || []).length > 0
+	    || hasValidSleepHours(appState.sleepHours)
+	    || hasMeaningfulRunDetail(appState.runDetail)
+	    || (appState.energyCauses || []).length > 0
     || Boolean(state.energy || state.mind || state.sleep)
     || Boolean((appState.mindNoteText || "").trim())
     || Boolean(appState.mindNoteFeeling || appState.mindNoteSupport);
@@ -3438,12 +3726,16 @@ function buildDailyLogRow() {
   const reminder = getMindfulReminder();
   const drinkScores = getDrinkScores();
   const drinkProfiles = (appState.drinkProfiles || []).map(normalizeDrinkProfile);
+  const sleepHours = normalizeSleepHours(appState.sleepHours);
+  const sleepCategory = deriveSleepCategory(sleepHours) || appState.selectedState.sleep;
+  const runDetailJson = buildRunDetailJson();
 
   return {
     Date: appState.date,
     Energy: appState.selectedState.energy,
     Mind: appState.selectedState.mind,
-    Sleep: appState.selectedState.sleep,
+    Sleep: sleepCategory,
+    Sleep_Hours: sleepHours,
     Water_ml: appState.waterMl,
     Drinks: getDrinkSummaryLabels(drinkProfiles).join(" | "),
     Sweet_Drinks_Count: drinkScores.sweetDrinksCount,
@@ -3453,6 +3745,7 @@ function buildDailyLogRow() {
     Milk_Drink_Count: drinkScores.milkDrinkCount,
     Hydration_Support_Count: drinkScores.hydrationSupportCount,
     Activities: appState.activities.join(" | "),
+    Run_Detail_JSON: runDetailJson,
     Energy_Causes: (appState.energyCauses || []).join(" | "),
     Load_Score: appState.loadScore,
     Load_Level: appState.loadLevel,
@@ -3513,6 +3806,10 @@ function normalizeLogRow(row) {
   });
 
   normalized.Date = normalizeExcelDate(normalized.Date);
+  normalized.Sleep_Hours = normalizeSleepHours(normalized.Sleep_Hours);
+  if (normalized.Sleep_Hours !== "") {
+    normalized.Sleep = deriveSleepCategory(normalized.Sleep_Hours) || normalized.Sleep;
+  }
   normalized.Water_ml = Number(normalized.Water_ml) || 0;
   normalized.Sweet_Drinks_Count = Number(normalized.Sweet_Drinks_Count) || 0;
   normalized.Drink_Profile_JSON = normalized.Drink_Profile_JSON || "";
@@ -3520,10 +3817,25 @@ function normalizeLogRow(row) {
   normalized.Caffeine_Score = Number(normalized.Caffeine_Score) || 0;
   normalized.Milk_Drink_Count = Number(normalized.Milk_Drink_Count) || 0;
   normalized.Hydration_Support_Count = Number(normalized.Hydration_Support_Count) || 0;
+  normalized.Run_Detail_JSON = normalizeRunDetailJsonForRow(normalized.Run_Detail_JSON);
   normalized.Load_Score = Number(normalized.Load_Score) || 0;
   normalized.Energy_Causes = normalized.Energy_Causes || "";
   normalized.Reflection_Text = row.Reflection_Text ?? row.Reflection ?? "";
   return normalized;
+}
+
+function normalizeRunDetailJsonForRow(value) {
+  const detail = normalizeRunDetail(value);
+  const hasDetail = detail.type || hasMeaningfulRunDetail(detail);
+  if (!hasDetail) return "";
+
+  const compactDetail = {};
+  if (detail.type) compactDetail.type = detail.type;
+  if (detail.distanceKm !== "") compactDetail.distanceKm = detail.distanceKm;
+  if (detail.durationMin !== "") compactDetail.durationMin = detail.durationMin;
+  if (detail.avgPace) compactDetail.avgPace = detail.avgPace;
+  if (detail.sweat) compactDetail.sweat = detail.sweat;
+  return JSON.stringify(compactDetail);
 }
 
 function normalizeExcelDate(value) {
@@ -3628,7 +3940,7 @@ function exportMasterExcel() {
     header: ["Sheet", "Column", "Thai_Label", "English_Label", "Meaning", "AI_Reading_Note", "Example_Value", "Is_Canonical"]
   });
 
-  applySheetReadability(dailySheet, [14, 12, 16, 12, 14, 28, 18, 34, 14, 16, 18, 22, 28, 28, 12, 14, 28, 28, 30, 24, 24, 24]);
+  applySheetReadability(dailySheet, [14, 12, 16, 12, 14, 14, 28, 18, 34, 14, 16, 18, 22, 28, 34, 28, 12, 14, 28, 28, 30, 24, 24, 24]);
   applySheetReadability(summarySheet, [14, 14, 18, 16, 16, 18, 20, 72]);
   applySheetReadability(reflectionSheet, [14, 30, 22, 22, 72]);
   applySheetReadability(fieldContextSheet, [28, 90]);
@@ -3756,6 +4068,15 @@ function buildColumnGuideRows() {
     }),
     row({
       sheet: "Daily_Log",
+      column: "Sleep_Hours",
+      thai: "จำนวนชั่วโมงนอน",
+      english: "Sleep hours",
+      meaning: "จำนวนชั่วโมงนอนที่ผู้ใช้กรอกเองแบบ optional",
+      aiNote: "Self-reported sleep duration. Derive category gently and do not use as diagnosis.",
+      example: "6.5"
+    }),
+    row({
+      sheet: "Daily_Log",
       column: "Water_ml",
       thai: "ปริมาณน้ำดื่ม (มล.)",
       english: "Water in milliliters",
@@ -3834,6 +4155,15 @@ function buildColumnGuideRows() {
       meaning: "กิจกรรมที่ผู้ใช้เลือกใน Load & Recovery",
       aiNote: "Use for activity load roots. Do not infer profession or identity.",
       example: "Deep work / coding นาน | วันเบา / ฟื้นตัว"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Run_Detail_JSON",
+      thai: "รายละเอียดการวิ่งแบบ JSON",
+      english: "Run detail JSON",
+      meaning: "รายละเอียดการวิ่ง optional เช่น type, distanceKm, durationMin, avgPace และ sweat",
+      aiNote: "Optional running context for load, hydration, and recovery. Not training advice, pace judgment, or performance coaching.",
+      example: "{\"type\":\"longRun\",\"distanceKm\":13,\"durationMin\":95,\"avgPace\":\"7:18/km\",\"sweat\":\"high\"}"
     }),
     row({
       sheet: "Daily_Log",
@@ -4326,6 +4656,9 @@ function getUniqueLogDateCount(rows = []) {
 }
 
 function rowHasLowSleepSignal(row) {
+  const sleepHours = normalizeSleepHours(row?.Sleep_Hours);
+  if (sleepHours !== "" && sleepHours < 5) return true;
+
   const sleepValue = String(row?.Sleep || "").trim();
   if (["น้อย", "Low", "低", "少"].includes(sleepValue)) return true;
 
@@ -4403,6 +4736,7 @@ function localizeLogCell(column, value) {
   if (["Energy", "Mind", "Sleep"].includes(column)) return localizeStateValue(column, value);
   if (column === "Drinks") return localizeJoinedValues(value, drinkOptions, "drinks");
   if (column === "Drink_Profile_JSON") return localizeDrinkProfileJson(value);
+  if (column === "Run_Detail_JSON") return localizeRunDetailJson(value);
   if (column === "Activities") return localizeJoinedValues(value, activityOptions, "activities");
   if (column === "Energy_Causes") return localizeEnergyCauses(value);
   if (column === "Load_Level") return localizeLoadLevel(value);
@@ -4431,6 +4765,18 @@ function localizeDrinkProfileJson(value) {
   } catch {
     return value;
   }
+}
+
+function localizeRunDetailJson(value) {
+  const detail = normalizeRunDetail(value);
+  if (!detail.type && !hasMeaningfulRunDetail(detail)) return "";
+  return [
+    detail.type ? t(`options.activities.${detail.type}`) : "",
+    detail.distanceKm !== "" ? `${detail.distanceKm} km` : "",
+    detail.durationMin !== "" ? `${detail.durationMin} min` : "",
+    detail.avgPace || "",
+    detail.sweat ? t(`runSweat${detail.sweat[0].toUpperCase()}${detail.sweat.slice(1)}`) : ""
+  ].filter(Boolean).join(" / ");
 }
 
 function localizeEnergyCauses(value) {

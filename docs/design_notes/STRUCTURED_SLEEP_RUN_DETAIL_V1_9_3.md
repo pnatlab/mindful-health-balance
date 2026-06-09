@@ -1,5 +1,7 @@
 # v1.9.3 — Structured Sleep & Run Detail
 
+Implementation status: implemented in v1.9.3 as a conservative schema and UI patch.
+
 ## 1. Intent
 
 v1.9.3 aims to add more precise input only where it has high value for reflection and recovery:
@@ -47,6 +49,9 @@ New optional field:
 
 - `Sleep_Hours`
 
+Implementation note:
+`Sleep_Hours` is exported as an optional `Daily_Log` column. When valid, it derives the existing categorical `Sleep` field; when empty, the older categorical fallback still works.
+
 Derived rule:
 
 - `< 5` hours -> `Sleep = น้อย`
@@ -81,6 +86,7 @@ Current running chips:
 Decision:
 Add an optional mini run detail panel inside the Load & Recovery card.
 Show this panel only when one of the running chips is selected.
+Place the panel directly under the sports/running activity chips, before the light/recovery group, so it reads as running detail rather than recovery detail.
 
 The panel should be compact and optional.
 
@@ -88,13 +94,16 @@ Suggested UI:
 
 - Title TH: รายละเอียดการวิ่งวันนี้ (เติมถ้ามี)
 - Distance: ระยะทาง (km)
-- Duration: เวลา (นาที)
+- Duration: เวลา as two compact inputs: ชั่วโมง + นาที
 - Sweat: เหงื่อ with low / medium / high options
 - Avg pace may be derived/displayed if distance + duration are available
 
 New optional field:
 
 - `Run_Detail_JSON`
+
+Implementation note:
+`Run_Detail_JSON` is exported as an optional `Daily_Log` column only when a running chip is selected. The current UI preserves typed run detail in the current form if the panel is temporarily hidden, but saved/exported rows leave `Run_Detail_JSON` empty when no running activity is selected.
 
 Suggested JSON shape:
 
@@ -110,6 +119,8 @@ Suggested JSON shape:
 
 Notes:
 
+- UI accepts duration as hours + minutes so users do not need to convert a run like 1:50 into 110 minutes manually.
+- Storage remains `durationMin` inside `Run_Detail_JSON`; no extra duration columns are added.
 - `avgPace` can be derived from distance + duration if possible.
 - If not enough data exists, leave it empty.
 - Keep JSON compact and stable.
@@ -239,6 +250,8 @@ Not in first implementation:
 - no medical interpretation
 - no v2.0 companion logic
 - no baseline/ML
+
+Current v1.9.3 implementation stores the structured fields first and keeps reflection/hydration behavior conservative. `Sleep_Hours < 5` may support low-sleep counting through the derived `Sleep` value and Summary helper, but `Run_Detail_JSON` is mainly preserved for future hydration/reflection refinement.
 
 ## 8. Version Decision
 

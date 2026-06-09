@@ -14,9 +14,11 @@ Do not rename `Daily_Log` headers such as:
 
 - `Water_ml`
 - `Sleep`
+- `Sleep_Hours`
 - `Mind`
 - `Load_Score`
 - `Drink_Profile_JSON`
+- `Run_Detail_JSON`
 - `Mind_Note_Feeling`
 
 Do not add a Thai label row below the headers in `Daily_Log`.
@@ -49,6 +51,11 @@ The guide includes key columns from:
 - `Field_Review`
 
 `Daily_Log` remains the primary canonical data table for import and future parser stability.
+
+Since v1.9.3, `Column_Guide` also documents optional structured fields:
+
+- `Sleep_Hours`: self-reported sleep duration used to derive the existing `Sleep` category gently.
+- `Run_Detail_JSON`: optional running context for load, hydration, and recovery. It is not training advice, pace judgment, or performance coaching.
 
 ## Reading Principles
 

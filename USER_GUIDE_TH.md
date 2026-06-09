@@ -17,7 +17,7 @@ Mindful Health Balance by MSxAI เป็น self-care reflection tool สำห
 
 ใช้แบบเบา ๆ ได้ 3 จังหวะ:
 
-- เช้า / เริ่มวัน: เลือก Energy, Mind, Sleep
+- เช้า / เริ่มวัน: เลือก Energy, Mind และกรอก Sleep Hours หรือเลือก Sleep แบบคร่าว ๆ
 - ระหว่างวัน: กดน้ำ เลือกเครื่องดื่ม และกิจกรรมหลักเท่าที่จำเป็น
 - สิ้นวัน: กด `สรุปวันนี้` เพื่อสร้าง Reflection แล้ว Save to Daily Log
 
@@ -64,13 +64,15 @@ TH | EN | 中文
 
 หลังผ่านหน้ากระจกต้อนรับ แอปจะแบ่งเป็น 3 view:
 
-- `วันนี้` สำหรับกรอกข้อมูลวันนี้แบบ 2 จังหวะ: 1/2 คือ Energy, Mind, Sleep, น้ำ, Drink Profile และ Load & Recovery; 2/2 คือ Mind Note และทางลัดไป Reflection/NuTuenSai
+- `วันนี้` สำหรับกรอกข้อมูลวันนี้แบบ 2 จังหวะ: 1/2 คือ Energy, Mind, Sleep Hours/Sleep, น้ำ, Drink Profile และ Load & Recovery; 2/2 คือ Mind Note และทางลัดไป Reflection/NuTuenSai
 - `Reflection` สำหรับดู NuTuenSai note แบบแถบสั้น ๆ, generate/review/edit reflection และ Save to Daily Log
 - `Log` สำหรับดู Daily Log Table, Export Master Excel, Import Master Excel และ Clear Daily Log
 
 การเปลี่ยน view ไม่ลบข้อมูลที่กรอกอยู่ และไม่ลบ Daily Log เดิม
 
 ตั้งแต่ v1.9.2 — Today Input Step Flow ปุ่ม `เคลียร์หน้าปัจจุบัน` อยู่เฉพาะ Today Input 1/2 ส่วน Today Input 2/2 มีเพียง `กลับไปหน้า 1/2` และ `ไป Reflection/NuTuenSai` การไป Reflection/NuTuenSai เป็นการนำทางเท่านั้น ไม่ใช่การบันทึกข้อมูล
+
+ตั้งแต่ v1.9.3 — Structured Sleep & Run Detail แอปเพิ่ม `Sleep_Hours` และ `Run_Detail_JSON` แบบ optional โดยยังเก็บ `Sleep` และ `Activities` เดิมไว้เพื่อ compatibility กับ Daily Log และ Excel เก่า
 
 ในหน้า Reflection/NuTuenSai จะมีปุ่มรองเล็ก ๆ คือ `กลับ Today 1/2` และ `กลับ Mind Note 2/2` เพื่อย้อนกลับไปเติมข้อมูลก่อน Save Daily Log ปุ่มเหล่านี้เป็นการนำทางเท่านั้น ไม่บันทึก ไม่ล้างข้อมูล และไม่ generate reflection ใหม่
 
@@ -84,9 +86,12 @@ TH | EN | 中文
 
 - Energy: ต่ำ / กลาง / ดี
 - ใจโดยรวมวันนี้: เฉย ๆ / กังวล / กดดัน / ฟุ้ง / รู้สึกดี / ผ่อนคลาย
-- Sleep: น้อย / พอใช้ / ดี
+- Sleep Hours: กรอกจำนวนชั่วโมงนอนแบบ decimal ได้ เช่น 6.5
+- Sleep: ระบบ derive เป็น น้อย / พอใช้ / ดี จาก Sleep Hours หรือเลือกหมวดคร่าว ๆ ได้ถ้าไม่ใส่ชั่วโมง
 
 ส่วนนี้ช่วยให้วันนั้นมีบริบท เช่น วันที่นอนน้อยหรือใจฟุ้ง อาจไม่ควรถูกใช้ตัดสินภาพรวมทั้งหมด
+
+กติกา derive ของ Sleep Hours คือ `< 5` ชั่วโมง = `น้อย`, `5 ถึง < 7` ชั่วโมง = `พอใช้`, และ `>= 7` ชั่วโมง = `ดี` ค่านี้เป็น self-reported recovery context ไม่ใช่ diagnosis หรือคำตัดสินสุขภาพ
 
 หัวใจสีฟ้าเล็ก ๆ ข้าง `ใจโดยรวมวันนี้` ใช้ช่วยเตือนว่าเป็นช่องสังเกตใจหลักของวัน ส่วน `ความรู้สึกของบันทึกนี้` ใน Mind Note คือความรู้สึกของโน้ตนั้น ไม่ใช่การประเมินใจทั้งวัน
 
@@ -159,6 +164,10 @@ Energy Cause ไม่ได้มีไว้เก็บเฉพาะเห�
 - เดินเยอะ
 - วันพัก
 - วันเบา / ฟื้นตัว
+
+ถ้าเลือกกิจกรรมวิ่ง เช่น Easy run, วิ่งคุณภาพระยะสั้น หรือ Long run แอปจะแสดง mini panel `รายละเอียดการวิ่งวันนี้ (เติมถ้ามี)` ภายใน Load & Recovery เพื่อกรอกระยะทาง เวลาแบบชั่วโมง+นาที และเหงื่อแบบ optional ระบบจะรวมเวลาเป็น `durationMin` ใน `Run_Detail_JSON` และอาจ derive pace จากระยะทางกับเวลา
+
+Run Detail มีไว้เป็นบริบท load / hydration / recovery เท่านั้น ไม่ใช่ training advice ไม่ใช่ pace judgment และไม่ทำให้แอปกลายเป็น running app
 
 แอปจะสรุป Load เป็น 3 ระดับ:
 
@@ -233,7 +242,7 @@ Reflection ที่สร้างใหม่จะมีหัวใจฟ้
 
 กด `Save to Daily Log` เพื่อบันทึกข้อมูลวันนี้ลงตาราง Daily Log
 
-ข้อมูลที่บันทึกจะมาจาก state ปัจจุบันของหน้าเว็บ เช่น Energy, Mind, Sleep, น้ำ, เครื่องดื่ม, activities, load และ reminder
+ข้อมูลที่บันทึกจะมาจาก state ปัจจุบันของหน้าเว็บ เช่น Energy, Mind, Sleep, Sleep Hours, น้ำ, เครื่องดื่ม, activities, Run Detail, load และ reminder
 
 ถ้าวันเดิมมีข้อมูลอยู่แล้ว แอปจะถามก่อน replace/update row เดิม เพื่อไม่ให้บันทึกทับโดยไม่รู้ตัว
 
@@ -275,6 +284,8 @@ Mindful_Health_Balance_Master.xlsx
 `Summary_Note` เป็นข้อความกำกับคงที่ว่าไฟล์นี้ช่วยดู pattern และ balance recovery ไม่ใช่การตัดสินสุขภาพจากวันใดวันหนึ่ง
 
 `Column_Guide` เป็น sheet คู่มือคอลัมน์ที่อธิบายชื่อ column เดิมด้วยภาษาไทย/อังกฤษ เช่น `Thai_Label`, `English_Label`, `Meaning`, `AI_Reading_Note`, `Example_Value` และ `Is_Canonical` โดยไม่เปลี่ยน header เดิมของ `Daily_Log` จึงยังปลอดภัยต่อ import และ future v2.0 parser
+
+ตั้งแต่ v1.9.3 `Daily_Log` มี optional columns ใหม่คือ `Sleep_Hours` และ `Run_Detail_JSON` โดยยังเก็บ `Sleep` และ `Activities` เดิมไว้ครบ ไฟล์เก่าที่ไม่มีสองคอลัมน์นี้ยัง import ได้ตามปกติ
 
 ตั้งแต่ v1.9 เป็นต้นไป `Field_Context` จะอธิบายว่าไฟล์นี้เป็น local-first self-care log ที่ผู้ใช้เป็นเจ้าของเอง และถ้าผู้ใช้เลือกนำไปให้ AI/LLM อ่าน ควรอ่านเพื่อ pattern reflection เท่านั้น ไม่ใช่ diagnosis หรือ medical advice
 

@@ -33,7 +33,7 @@
       <div>
         <p class="eyebrow" data-i18n="eyebrow">Personal mindful dashboard</p>
         <h1 data-i18n="title">Mindful Health Balance by MSxAI</h1>
-        <p class="version" data-i18n="version">v1.9.2 — Today Input Step Flow</p>
+        <p class="version" data-i18n="version">v1.9.3 — Structured Sleep & Run Detail</p>
         <p class="subtitle" data-i18n="subtitle">ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง</p>
       </div>
       <div class="hero-side">
@@ -155,6 +155,17 @@
 
         <div class="choice-group" data-field="sleep">
           <span class="choice-label" data-i18n="sleepLabel">Sleep</span>
+          <div class="sleep-hours-control">
+            <label for="sleepHoursInput">
+              <span class="choice-label" data-i18n="sleepHoursLabel">นอนกี่ชั่วโมง</span>
+              <span class="sleep-hours-input-row">
+                <input type="number" id="sleepHoursInput" min="0" max="16" step="0.25" inputmode="decimal" data-i18n-placeholder="sleepHoursPlaceholder" placeholder="6.5">
+                <span class="field-unit" data-i18n="sleepHoursUnit">ชั่วโมง</span>
+              </span>
+            </label>
+            <span class="soft-badge sleep-derived-badge" id="sleepDerivedBadge" data-i18n="sleepDerivedEmpty">เติมชั่วโมงนอนถ้ามี</span>
+            <span class="field-helper" data-i18n="sleepFallbackHelper">ถ้าไม่แน่ใจชั่วโมง เลือกหมวดคร่าว ๆ ด้านล่างได้</span>
+          </div>
           <div class="segmented" role="group" aria-label="Sleep">
             <button type="button" data-value="น้อย" data-option-group="sleep" data-option-key="low">น้อย</button>
             <button type="button" data-value="พอใช้" data-option-group="sleep" data-option-key="okay">พอใช้</button>
@@ -231,6 +242,43 @@
           </div>
         </div>
         <div class="activity-grid" id="activitiesList" aria-label="Activities"></div>
+        <div class="run-detail-panel" id="runDetailPanel" hidden>
+          <div class="run-detail-heading">
+            <div>
+              <p class="activity-group-label" data-i18n="runDetailTitle">รายละเอียดการวิ่งวันนี้ (เติมถ้ามี)</p>
+              <p class="field-helper" data-i18n="runDetailHelper">ใช้เพื่ออ่าน load / hydration / recovery เบา ๆ ไม่ใช่ coaching</p>
+            </div>
+            <span class="soft-badge" id="runPaceBadge" data-i18n="runPaceEmpty">Pace ยังว่าง</span>
+          </div>
+          <div class="run-detail-grid">
+            <label>
+              <span class="choice-label" data-i18n="runDistanceLabel">ระยะทาง (km)</span>
+              <input type="number" id="runDistanceInput" min="0" max="100" step="0.1" inputmode="decimal" placeholder="5.0">
+            </label>
+            <div class="run-duration-field">
+              <span class="choice-label" data-i18n="runDurationLabel">เวลา</span>
+              <div class="run-duration-inputs">
+                <label>
+                  <span class="field-helper" data-i18n="runDurationHoursLabel">ชั่วโมง</span>
+                  <input type="number" id="runDurationHoursInput" min="0" max="10" step="1" inputmode="numeric" placeholder="1">
+                </label>
+                <label>
+                  <span class="field-helper" data-i18n="runDurationMinutesLabel">นาที</span>
+                  <input type="number" id="runDurationMinutesInput" min="0" max="59" step="1" inputmode="numeric" placeholder="50">
+                </label>
+              </div>
+            </div>
+            <label>
+              <span class="choice-label" data-i18n="runSweatLabel">เหงื่อ</span>
+              <select id="runSweatSelect">
+                <option value="" data-i18n="runSweatEmpty">ไม่ระบุ</option>
+                <option value="low" data-i18n="runSweatLow">น้อย</option>
+                <option value="medium" data-i18n="runSweatMedium">กลาง</option>
+                <option value="high" data-i18n="runSweatHigh">เยอะ</option>
+              </select>
+            </label>
+          </div>
+        </div>
         <div class="load-summary">
           <span id="loadLevel">Load เบา</span>
           <p id="loadFeedback">วันนี้ยังมีพื้นที่ให้ recovery แบบสบาย ๆ</p>
@@ -420,6 +468,7 @@
               <th>Energy</th>
               <th>Mind</th>
               <th>Sleep</th>
+              <th>Sleep_Hours</th>
               <th>Water_ml</th>
               <th>Drinks</th>
               <th>Sweet_Drinks_Count</th>
@@ -429,6 +478,7 @@
               <th>Milk_Drink_Count</th>
               <th>Hydration_Support_Count</th>
               <th>Activities</th>
+              <th>Run_Detail_JSON</th>
               <th>Energy_Causes</th>
               <th>Load_Score</th>
               <th>Load_Level</th>

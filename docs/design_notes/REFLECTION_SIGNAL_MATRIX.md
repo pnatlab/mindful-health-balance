@@ -23,6 +23,9 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 | Hydration | long run / heavy sweat + around 3.0 L | Water is already in a good zone for a high-sweat day, but body cues may still matter. | Good zone; add small sips only if sweat remains high, thirst persists, or urine color is dark. | Treating 3.0 L as failure or forcing 4.0 L. |
 | Hydration | water >= 4.0 L | Intake is already high. | Spread through the day and observe body cues; do not force more. | Encouraging more water or medical warning language. |
 | Sleep | low sleep | Recovery signal. | Recovery-first, gentle pacing. | Blame, failure, or health judgment. |
+| Sleep | `Sleep_Hours < 5` | Structured sleep duration derives the existing low sleep category. | Recovery-first, still gentle and non-diagnostic. | Treating hours as medical diagnosis or failure. |
+| Sleep | `Sleep_Hours 5 to < 7` | Structured sleep duration derives the existing okay sleep category. | Balanced observation; enough to orient recovery. | Overstating precision from a self-reported number. |
+| Sleep | `Sleep_Hours >= 7` | Structured sleep duration derives the existing good sleep category. | Support signal; still read energy/load/mind layers. | Saying the whole day is fine because sleep hours are good. |
 | Sleep | okay sleep | Some recovery base exists. | Balanced, observational tone. | Overstating sleep quality. |
 | Sleep | good sleep | Recovery support signal. | Notice support while still reading other layers. | Assuming energy, mind, or load must be good. |
 | Energy | low | Body/system may have lower resources. | Care and recovery cue. | Blame or productivity pressure. |
@@ -81,6 +84,7 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 | `dentalFocus` / `clinicalShift` | `clinical_focus` | Sustained precision, hands, eyes, and nervous-system focus; quiet recovery deserves space. | Diagnosis, medical-risk wording, or saying clinical work is dangerous. |
 | `outdoorWork` | `outdoor_heat` | Heat, sweat, and body effort; small water rounds and heat/body pauses. | Medical dehydration warning. |
 | `badminton` / `heavyPingPong` / `easyRun` / `shortQualityRun` / `longRun` | `sport_sweat` | Physical effort and training load; recovery is part of training. `shortQualityRun` should read as intensity-based short running load, not easy run or long run. | Push harder, aggressive hydration commands, or prescriptive training advice. |
+| running chip + `Run_Detail_JSON` | `sport_sweat` with optional structured context | Distance, duration, derived pace, and sweat can support future load/hydration/recovery reading. | Training plan, pace judgment, race prediction, or performance coaching. |
 | `deepWork` / `officeWork` / `lightCodingAiAssist` | `cognitive_deepwork` | Sustained or light cognitive focus and screen attention; `lightCodingAiAssist` is score 1 and reads as context guidance, output review, and small ongoing decisions rather than full deep work by default. | Productivity praise that pushes more work, or treating AI-assisted work as empty time. |
 | `longWalk` | `walking_physical` | Body use through walking/movement; give back, legs, feet, and water rhythm space. | Overstating it as high-intensity sport. |
 | old workbook value `lowSleep` only | `recovery_low_sleep` | Recovery signal, not high activity load; rest before adding another round. | Showing low sleep as a new Load & Recovery chip or calling it a heavy activity day. |
