@@ -54,6 +54,8 @@ The app records daily signals such as hydration, drinks, sleep, energy, activity
 
 The app is designed to make daily context clearer, not to make conclusions for the user.
 
+Mindful Health Balance is not primarily designed to judge health behavior. It uses hydration, sleep, activity, energy, and reflection as gentle entry points for building a user-owned personal rhythm dataset. The purpose is to make lived patterns easier to review while preserving user agency, not to let the app or AI decide what the user's life means.
+
 ## 3. What It Is Not
 
 Mindful Health Balance is not:
