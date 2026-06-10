@@ -1,4 +1,4 @@
-# Mindful Health Balance by MSxAI v1.9.3 — Structured Sleep & Run Detail
+# Mindful Health Balance by MSxAI v1.9.4 — Reflection Input Integration Pass
 
 Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ static สำหรับ local-first self-care reflection และ Portable Field Memory Foundation เพื่อช่วยดู pattern และ balance recovery ในชีวิตประจำวัน โดยเน้น 4 แกนหลัก:
 
@@ -163,10 +163,23 @@ v1.9.3 เพิ่ม structured input แบบ conservative เฉพาะ�
 
 Run detail ใช้เพื่อบริบท load / hydration / recovery เท่านั้น ไม่ใช่ running app, training advice, pace judgment หรือ performance coaching
 
+### v1.9.4 — Reflection Input Integration Pass
+
+v1.9.4 ปรับ Reflection / NuTuenSai ให้ใช้ input วันนี้จาก v1.9.3 ได้ครบขึ้น โดยยังเป็น rule-based และอ่านเฉพาะข้อมูลวันนี้ ไม่อ่าน Daily Log แถวก่อนหน้า:
+
+- `Sleep_Hours` ถูกใช้ใน reflection แบบนุ่ม ๆ เพื่ออ่าน sleep/recovery context
+- `Run_Detail_JSON` ถูกใช้เป็น running load context เช่น distance, duration, sweat และ derived pace โดยไม่กลายเป็น training advice
+- running subtype เช่น Easy run, วิ่งคุณภาพระยะสั้น และ Long run ถูกสะท้อนต่างกันเล็กน้อย
+- `lightCodingAiAssist` ถูกอ่านเป็น light cognitive load ไม่ใช่วันพักว่าง
+- hydration note อ่านน้ำสูงร่วมกับ activity/sweat context เพื่อไม่สรุปว่า “น้ำเยอะ” แบบลอย ๆ
+
+รอบนี้ไม่เพิ่ม Previous Log Context, ไม่ทำ longitudinal comparison, ไม่เพิ่ม schema และไม่เปลี่ยน export/import
+
 ### v1.9.x Latest Summary
 
 v1.9.x ล่าสุดรวมหลาย refinement ที่ทำให้แอปอ่าน pattern ได้ชัดขึ้นโดยไม่เพิ่มภาระผู้ใช้:
 
+- Reflection Input Integration Pass: Reflection อ่าน `Sleep_Hours`, running detail, running subtype, light AI-assisted work และ hydration context ของวันนี้ได้ชัดขึ้น โดยไม่อ่าน log แถวก่อนหน้า
 - Today Input Step Flow: แบ่งหน้า Today เป็น 1/2 และ 2/2 เพื่อลดความยาวของ daily input โดยยังให้ Save Daily Log อยู่ใน Reflection/NuTuenSai
 - Structured Sleep & Run Detail: เพิ่ม `Sleep_Hours` และ `Run_Detail_JSON` แบบ optional โดยยัง derive `Sleep` เดิมและไม่เพิ่ม card ที่ 5
 - Adaptive Hydration Guidance: เป้าหมายน้ำเป็น flexible self-care cue ตาม activity/load/recovery context ไม่ใช่ตัวเลขตายตัว

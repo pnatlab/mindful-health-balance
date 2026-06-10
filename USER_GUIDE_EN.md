@@ -88,6 +88,8 @@ Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only 
 
 Starting in v1.9.3 — Structured Sleep & Run Detail, the app adds optional `Sleep_Hours` and `Run_Detail_JSON` while keeping the existing `Sleep` and `Activities` fields for Daily Log and old Excel compatibility.
 
+Starting in v1.9.4 — Reflection Input Integration Pass, Reflection/NuTuenSai reads today's `Sleep_Hours`, running detail, running subtype, light coding / AI-assisted work, and hydration context more clearly. It still uses only today's current input, does not read previous Daily Log rows, and does not provide training or medical advice.
+
 The Reflection/NuTuenSai page also includes small secondary shortcuts, `Back to Today 1/2` and `Back to Mind Note 2/2`, so you can add or adjust current input before saving. These shortcuts only navigate; they do not save, clear, or generate a new reflection.
 
 Main Today cards also show a soft blue active layer when that card has current input. This is visual feedback only; it is not a score, completion state, diagnosis, or judgment.

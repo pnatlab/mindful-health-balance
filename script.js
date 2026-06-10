@@ -37,7 +37,7 @@ const translations = {
     htmlLang: "th",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.3 — Structured Sleep & Run Detail",
+    version: "v1.9.4 — Reflection Input Integration Pass",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
@@ -256,6 +256,19 @@ const translations = {
       tomorrowPositiveMind: "พรุ่งนี้รักษาใจที่พออยู่ได้ แล้วกลับมาดู pattern แบบไม่เร่งตัวเอง",
       tomorrowSteady: "พรุ่งนี้รักษาจังหวะที่พอดี แล้วกลับมาดู pattern แบบไม่เร่งตัวเอง",
       mindNote: "Mind Note: {note}"
+    },
+    reflectionInputIntegration: {
+      sleepLowHours: "วันนี้นอนประมาณ {hours} ชั่วโมง สัญญาณพลังงานจึงควรถูกอ่านอย่างอ่อนโยนขึ้น และควรเผื่อพื้นที่ให้ recovery",
+      sleepOkayHours: "วันนี้นอนประมาณ {hours} ชั่วโมง ระบบอ่านเป็นโซนพอใช้ แต่ยังควรเผื่อแรงฟื้นตัวไว้",
+      sleepGoodHours: "วันนี้นอนประมาณ {hours} ชั่วโมง เป็นฐานการพักที่พอช่วยให้ดูแลจังหวะวันได้",
+      easyRun: "วันนี้มี easy run เป็นจังหวะเคลื่อนไหวเบา ๆ ให้ recovery เดินตามร่างกายแบบไม่ต้องเร่ง",
+      shortQualityRun: "วันนี้เป็นวิ่งคุณภาพระยะสั้น ระยะอาจไม่ยาว แต่ intensity ยังนับเป็น load ที่ควรให้ recovery ตาม",
+      longRun: "วันนี้มีการวิ่ง {distance} {duration} จึงควรอ่านวันนี้ผ่าน load, hydration และ recovery มากกว่าการเร่งเพิ่ม",
+      runGeneric: "วันนี้มีการวิ่งเป็นส่วนหนึ่งของ load ให้ recovery ตาม effort แบบไม่ต้องเปลี่ยนเป็นคำแนะนำการซ้อม",
+      runSweat: "มีสัญญาณเหงื่อระดับ {sweat} จึงควรให้น้ำและ recovery เดินตามแบบค่อย ๆ",
+      hydrationRunGoodZone: "น้ำวันนี้สอดคล้องกับวันที่มีวิ่งหรือเหงื่อมากขึ้น ไม่ใช่น้ำเยอะลอย ๆ แค่กระจายและดูสัญญาณร่างกายร่วม",
+      hydrationHighRest: "วันนี้น้ำค่อนข้างสูงเมื่อเทียบกับวันที่ไม่มี load/เหงื่อชัดเจน ไม่ต้องฝืนเพิ่ม แค่กระจายและฟังร่างกาย",
+      lightCodingAiAssist: "วันนี้มีโค้ดดิ้งเบา ๆ / AI ช่วยงาน จึงเป็น cognitive load แบบประคอง ไม่ใช่วันพักว่างจริง"
     },
     energyCauseInsight: {
       alignedLow: "พลังงานต่ำวันนี้สัมพันธ์กับปัจจัยที่ใช้พลังงานหรือฟื้นตัวยังไม่พอได้ โดยไม่ต้องมองว่าเป็นความผิดพลาด",
@@ -551,7 +564,7 @@ const translations = {
     htmlLang: "en",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.3 — Structured Sleep & Run Detail",
+    version: "v1.9.4 — Reflection Input Integration Pass",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
@@ -770,6 +783,19 @@ const translations = {
       tomorrowPositiveMind: "Tomorrow, keep the mind state that feels workable, then return to the pattern without rushing yourself.",
       tomorrowSteady: "Tomorrow, keep the workable rhythm and return to the pattern without rushing yourself.",
       mindNote: "Mind Note: {note}"
+    },
+    reflectionInputIntegration: {
+      sleepLowHours: "Today had about {hours} hours of sleep, so energy signals deserve to be read more gently with recovery space.",
+      sleepOkayHours: "Today had about {hours} hours of sleep. The system reads this as okay-ish, while still leaving room for recovery.",
+      sleepGoodHours: "Today had about {hours} hours of sleep, which can support the day's rhythm.",
+      easyRun: "Today included an easy run as gentle movement. Let recovery follow the body without rushing.",
+      shortQualityRun: "Today reads as a short quality run. The distance may not be long, but intensity still counts as load that deserves recovery.",
+      longRun: "Today included a run {distance} {duration}, so the day can be read through load, hydration, and recovery rather than adding more.",
+      runGeneric: "Today included running as part of the load. Let recovery follow the effort without turning this into training advice.",
+      runSweat: "Sweat was logged as {sweat}, so hydration and recovery can follow gradually.",
+      hydrationRunGoodZone: "Today's water fits a day with running or more sweat. It is not simply high water; spread it out and observe body cues.",
+      hydrationHighRest: "Water is quite high for a day without clear load or sweat. No need to force more; spread it out and listen to the body.",
+      lightCodingAiAssist: "Today included light coding / AI-assisted work, so this is light cognitive load rather than a true empty rest day."
     },
     energyCauseInsight: {
       alignedLow: "Low energy today may relate to factors that used energy or left recovery incomplete. This is information, not a mistake.",
@@ -1065,7 +1091,7 @@ const translations = {
     htmlLang: "zh-CN",
     eyebrow: "个人正念健康仪表板",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.3 — Structured Sleep & Run Detail",
+    version: "v1.9.4 — Reflection Input Integration Pass",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
@@ -1284,6 +1310,19 @@ const translations = {
       tomorrowPositiveMind: "明天保留这种比较能待住的心境，再不急地回来观察 pattern。",
       tomorrowSteady: "明天维持可持续的节奏，再不急地回来观察 pattern。",
       mindNote: "Mind Note: {note}"
+    },
+    reflectionInputIntegration: {
+      sleepLowHours: "今天大约睡了 {hours} 小时，所以能量信号可以更温和地阅读，并给 recovery 留空间。",
+      sleepOkayHours: "今天大约睡了 {hours} 小时，系统会读作还可以，但仍然可以给恢复留一点余地。",
+      sleepGoodHours: "今天大约睡了 {hours} 小时，可以成为今天节奏的一点支持。",
+      easyRun: "今天有 easy run，像是温和的身体移动，让 recovery 慢慢跟上就好。",
+      shortQualityRun: "今天更像短距离质量跑，距离不一定长，但强度仍然算作需要 recovery 跟上的 load。",
+      longRun: "今天有跑步 {distance} {duration}，可以从 load、补水和 recovery 来阅读，而不是继续增加。",
+      runGeneric: "今天有跑步作为 load 的一部分，让 recovery 跟上 effort 就好，不需要变成训练建议。",
+      runSweat: "今天记录的出汗程度是 {sweat}，补水和 recovery 可以慢慢跟上。",
+      hydrationRunGoodZone: "今天的饮水和有跑步或出汗的日子相符，不只是单纯偏高；分散喝，并一起观察身体信号。",
+      hydrationHighRest: "如果今天没有明显 load 或出汗，饮水已经偏高，不需要再勉强增加，分散并听身体信号就好。",
+      lightCodingAiAssist: "今天有轻量编码 / AI 协助工作，所以是轻量认知 load，不是真正完全休息的一天。"
     },
     energyCauseInsight: {
       alignedLow: "今天能量低，可能和消耗能量或 recovery 还不够完整有关。这是信息，不是错误。",
@@ -2530,6 +2569,34 @@ function splitRunDuration(durationMin) {
   };
 }
 
+function formatNumberForLocale(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return "";
+  return number.toLocaleString(translations[currentLanguage].locale, {
+    maximumFractionDigits: 2
+  });
+}
+
+function formatRunDuration(durationMin) {
+  const duration = normalizeRunNumber(durationMin, { max: 600, decimals: 0 });
+  if (duration === "") return "";
+  const hours = Math.floor(duration / 60);
+  const minutes = duration % 60;
+  if (currentLanguage === "en") {
+    if (hours && minutes) return `about ${hours} hr ${minutes} min`;
+    if (hours) return `about ${hours} hr`;
+    return `about ${minutes} min`;
+  }
+  if (currentLanguage === "zh") {
+    if (hours && minutes) return `约 ${hours} 小时 ${minutes} 分钟`;
+    if (hours) return `约 ${hours} 小时`;
+    return `约 ${minutes} 分钟`;
+  }
+  if (hours && minutes) return `ประมาณ ${hours} ชม. ${minutes} นาที`;
+  if (hours) return `ประมาณ ${hours} ชม.`;
+  return `ประมาณ ${minutes} นาที`;
+}
+
 function buildRunDurationMinFromInputs(hoursValue, minutesValue) {
   const hoursBlank = hoursValue === "" || hoursValue === null || hoursValue === undefined;
   const minutesBlank = minutesValue === "" || minutesValue === null || minutesValue === undefined;
@@ -3045,14 +3112,86 @@ function getLoadFeedback() {
 function buildSignals() {
   const loadScore = calculateLoadScore();
   const drinkScores = getDrinkScores();
+  const sleepDetail = getSleepDetailSignal();
+  const runDetail = getRunDetailSignal();
 
   return {
+    sleepDetail,
+    runDetail,
     hydration: getHydrationSignal(),
     drinkLoad: getDrinkLoadSignal(drinkScores),
     recoveryLoad: getRecoveryLoadSignal(loadScore),
-    energySleep: getEnergySleepSignal(loadScore),
+    energySleep: getEnergySleepSignal(loadScore, sleepDetail),
     mindNote: getMindNoteSignal()
   };
+}
+
+function getSleepDetailSignal() {
+  const hours = normalizeSleepHours(appState.sleepHours);
+  const hasHours = hours !== "";
+  const category = hasHours ? deriveSleepCategory(hours) : (appState.selectedState.sleep || "");
+  return {
+    hours,
+    hasHours,
+    category,
+    low: hasHours ? hours < 5 : category === "น้อย",
+    okay: hasHours ? hours >= 5 && hours < 7 : category === "พอใช้",
+    good: hasHours ? hours >= 7 : category === "ดี",
+    note: getSleepDetailReflectionNote(hours)
+  };
+}
+
+function getSleepDetailReflectionNote(hours) {
+  if (hours === "") return "";
+  const label = formatNumberForLocale(hours);
+  if (hours < 5) return t("reflectionInputIntegration.sleepLowHours", { hours: label });
+  if (hours < 7) return t("reflectionInputIntegration.sleepOkayHours", { hours: label });
+  return t("reflectionInputIntegration.sleepGoodHours", { hours: label });
+}
+
+function getRunDetailSignal() {
+  const detail = normalizeRunDetail(appState.runDetail);
+  const activityKeys = getSelectedActivityKeys(appState.activities || []);
+  const selectedRunType = runningActivityPriority.find((key) => activityKeys.includes(key)) || "";
+  const type = selectedRunType || (runningActivityKeys.includes(detail.type) ? detail.type : "");
+  const hasRunActivity = Boolean(selectedRunType);
+  const hasDetail = hasMeaningfulRunDetail(detail);
+  const sweatHigh = ["medium", "high"].includes(detail.sweat);
+  return {
+    ...detail,
+    type,
+    hasRunActivity,
+    hasDetail,
+    sweatHigh,
+    isEasyRun: type === "easyRun",
+    isShortQualityRun: type === "shortQualityRun",
+    isLongRun: type === "longRun",
+    note: getRunDetailReflectionNote({ ...detail, type, hasRunActivity }),
+    sweatNote: getRunSweatReflectionNote(detail)
+  };
+}
+
+function getRunDetailReflectionNote(detail = {}) {
+  if (!detail.hasRunActivity && !detail.type) return "";
+  const distance = detail.distanceKm !== "" ? `${formatNumberForLocale(detail.distanceKm)} km` : "";
+  const duration = detail.durationMin !== "" ? formatRunDuration(detail.durationMin) : "";
+  if (detail.type === "longRun" && (distance || duration)) {
+    return t("reflectionInputIntegration.longRun", {
+      distance,
+      duration
+    }).replace(/\s+/g, " ").trim();
+  }
+  if (detail.type === "longRun") return t("activityRootReflection.sport_sweat");
+  if (detail.type === "shortQualityRun") return t("reflectionInputIntegration.shortQualityRun");
+  if (detail.type === "easyRun") return t("reflectionInputIntegration.easyRun");
+  return t("reflectionInputIntegration.runGeneric");
+}
+
+function getRunSweatReflectionNote(detail = {}) {
+  if (!detail.sweat) return "";
+  return t("reflectionInputIntegration.runSweat", {
+    sweat: t(`runSweat${detail.sweat[0].toUpperCase()}${detail.sweat.slice(1)}`)
+  });
 }
 
 function getHydrationSignal() {
@@ -3257,13 +3396,13 @@ function getActivityRootTomorrowFocus(signals = buildSignals()) {
   return root ? t(`tomorrowFocusByActivityRoot.${root}`) : "";
 }
 
-function getEnergySleepSignal(loadScore = calculateLoadScore()) {
+function getEnergySleepSignal(loadScore = calculateLoadScore(), sleepDetail = getSleepDetailSignal()) {
   const energy = appState.selectedState.energy;
-  const sleep = appState.selectedState.sleep;
+  const sleep = sleepDetail.category || appState.selectedState.sleep;
   const causes = appState.energyCauses || [];
   const energyCausePattern = getEnergyCausePattern(energy, causes);
   const activityLowSleep = getSelectedActivityKeys(appState.activities).includes("lowSleep");
-  const sleepLow = sleep === "น้อย" || causes.includes("sleep_low") || activityLowSleep;
+  const sleepLow = sleepDetail.low || sleep === "น้อย" || causes.includes("sleep_low") || activityLowSleep;
   const energyGood = energy === "ดี";
   const energyLow = energy === "ต่ำ";
   const lowResource = causes.some((cause) => ["low_water", "low_food", "sleep_low"].includes(cause));
@@ -3509,7 +3648,9 @@ function getReflectionDisplayOverview(signals) {
 
 function getReflectionDisplayAdjustment(signals) {
   if (signals.energySleep.energyCausePattern.hasLayeredSignal) return t("reflectionDisplay.adjustEnergyLayered");
+  if (signals.sleepDetail.hasHours && signals.sleepDetail.low) return signals.sleepDetail.note;
   if (signals.drinkLoad.sweetnessInsight.previewRelevant) return signals.drinkLoad.sweetnessInsight.text;
+  if (signals.runDetail.note && (signals.runDetail.isLongRun || signals.runDetail.isShortQualityRun)) return signals.runDetail.note;
   if (signals.hydration.strongActivityHydration) return t("reflectionDisplay.adjustActivity");
   if (isRecoveryOnlyReflection(signals)) return t("reflectionDisplay.adjustRecovery");
   if (signals.drinkLoad.caffeineHigh) return t("reflectionDisplay.adjustCaffeine");
@@ -3577,6 +3718,9 @@ function buildReflectionFromSignals(signals) {
   if (appState.selectedState.energy || appState.selectedState.mind || appState.selectedState.sleep) {
     goodThings.push(t("reflection.checkedState"));
   }
+  if (signals.sleepDetail.hasHours && !signals.sleepDetail.low) {
+    goodThings.push(signals.sleepDetail.note);
+  }
   const positiveMindNote = getPositiveMindReflectionNote(signals);
   if (positiveMindNote) goodThings.push(positiveMindNote);
   if (sweetnessInsight.hasDrinks && sweetnessInsight.key === "low") {
@@ -3586,6 +3730,8 @@ function buildReflectionFromSignals(signals) {
 
   if (signals.energySleep.endorphinBlindSpot) {
     adjustments.push(t("signalReflection.endorphin"));
+  } else if (signals.sleepDetail.hasHours && signals.sleepDetail.low) {
+    adjustments.push(signals.sleepDetail.note);
   } else if (signals.energySleep.sleepLow && signals.recoveryLoad.high) {
     adjustments.push(t("signalReflection.sleepLoadRecovery"));
   } else if (signals.hydration.low && signals.drinkLoad.caffeineHigh) {
@@ -3611,6 +3757,9 @@ function buildReflectionFromSignals(signals) {
   } else if (signals.recoveryLoad.high) {
     adjustments.push(t("reflection.stopPush"));
   }
+  [signals.runDetail.note, signals.runDetail.sweatNote].filter(Boolean).forEach((note) => {
+    if (!adjustments.includes(note)) adjustments.push(note);
+  });
   loadTypeAdjustments.forEach((note) => {
     if (!adjustments.includes(note)) adjustments.push(note);
   });
@@ -3685,6 +3834,7 @@ function getMindNoteSummary() {
 function getRecoveryNote(signals = buildSignals()) {
   if (signals.energySleep.endorphinBlindSpot) return t("recoveryNote.endorphin");
   if (signals.energySleep.sleepLow && signals.recoveryLoad.high) return t("recoveryNote.sleepLoadHigh");
+  if (signals.runDetail.note && (signals.runDetail.isLongRun || signals.runDetail.isShortQualityRun)) return signals.runDetail.note;
   const activityRootNote = getActivityRootReflection(signals);
   if (activityRootNote) return activityRootNote;
   const loadTypeNote = getLoadTypeReflection(signals);
@@ -3697,6 +3847,12 @@ function getRecoveryNote(signals = buildSignals()) {
 
 function getHydrationNoteFromSignals(signals = buildSignals()) {
   if (signals.hydration.low && signals.drinkLoad.caffeineHigh) return t("signalReflection.hydrationCaffeine");
+  if (signals.runDetail.hasRunActivity && signals.hydration.waterMl >= 3000 && (signals.runDetail.sweatHigh || signals.runDetail.isLongRun)) {
+    return t("reflectionInputIntegration.hydrationRunGoodZone");
+  }
+  if (!signals.hydration.strongActivityHydration && signals.hydration.waterMl >= 3000) {
+    return t("reflectionInputIntegration.hydrationHighRest");
+  }
   if (signals.hydration.adaptiveRaised) return signals.hydration.adaptiveGuidance;
   if (signals.hydration.recoveryOnlyHydration) return signals.hydration.adaptiveGuidance;
   return signals.hydration.status;

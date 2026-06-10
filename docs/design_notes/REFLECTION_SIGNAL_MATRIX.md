@@ -11,6 +11,7 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 - Recovery signals and activity load must be separated.
 - Sweetness and caffeine are drink-load signals, not moral scores.
 - Mind Note Feeling belongs to the note, not necessarily the whole day.
+- v1.9.4 Reflection Input Integration uses current-day input only; it does not read previous Daily Log rows or perform longitudinal comparison.
 
 ## 2. Single Signal Matrix
 
@@ -84,7 +85,7 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 | `dentalFocus` / `clinicalShift` | `clinical_focus` | Sustained precision, hands, eyes, and nervous-system focus; quiet recovery deserves space. | Diagnosis, medical-risk wording, or saying clinical work is dangerous. |
 | `outdoorWork` | `outdoor_heat` | Heat, sweat, and body effort; small water rounds and heat/body pauses. | Medical dehydration warning. |
 | `badminton` / `heavyPingPong` / `easyRun` / `shortQualityRun` / `longRun` | `sport_sweat` | Physical effort and training load; recovery is part of training. `shortQualityRun` should read as intensity-based short running load, not easy run or long run. | Push harder, aggressive hydration commands, or prescriptive training advice. |
-| running chip + `Run_Detail_JSON` | `sport_sweat` with optional structured context | Distance, duration, derived pace, and sweat can support future load/hydration/recovery reading. | Training plan, pace judgment, race prediction, or performance coaching. |
+| running chip + `Run_Detail_JSON` | `sport_sweat` with optional structured context | Distance, duration, derived pace, and sweat can refine current-day load/hydration/recovery wording. | Training plan, pace judgment, race prediction, or performance coaching. |
 | `deepWork` / `officeWork` / `lightCodingAiAssist` | `cognitive_deepwork` | Sustained or light cognitive focus and screen attention; `lightCodingAiAssist` is score 1 and reads as context guidance, output review, and small ongoing decisions rather than full deep work by default. | Productivity praise that pushes more work, or treating AI-assisted work as empty time. |
 | `longWalk` | `walking_physical` | Body use through walking/movement; give back, legs, feet, and water rhythm space. | Overstating it as high-intensity sport. |
 | old workbook value `lowSleep` only | `recovery_low_sleep` | Recovery signal, not high activity load; rest before adding another round. | Showing low sleep as a new Load & Recovery chip or calling it a heavy activity day. |
