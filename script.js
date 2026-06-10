@@ -3955,6 +3955,47 @@ function setDailyLog(rows) {
   renderDailyLogTable();
 }
 
+const legacyTextLikeFields = new Set([
+  "Energy",
+  "Mind",
+  "Sleep",
+  "Drinks",
+  "Drink_Profile_JSON",
+  "Activities",
+  "Run_Detail_JSON",
+  "Energy_Causes",
+  "Hydration_Status",
+  "Tomorrow_Focus",
+  "NuTuenSai_Reminder",
+  "Mind_Note_Text",
+  "Mind_Note_Feeling",
+  "Mind_Note_Support",
+  "Support_Need",
+  "Reflection_Text",
+  "Reflection"
+]);
+
+const legacyArtifactTextValues = new Set([
+  "28",
+  "undefined",
+  "null",
+  "nan",
+  "[object object]"
+]);
+
+function isLegacyArtifactValue(value, fieldName) {
+  if (!legacyTextLikeFields.has(fieldName)) return false;
+  if (value === "" || value === null || value === undefined) return true;
+  const text = String(value).trim();
+  if (!text) return true;
+  return legacyArtifactTextValues.has(text.toLowerCase());
+}
+
+function cleanLegacyTextValue(value, fieldName) {
+  if (isLegacyArtifactValue(value, fieldName)) return "";
+  return String(value).trim();
+}
+
 function normalizeLogRow(row) {
   const normalized = {};
   DAILY_LOG_COLUMNS.forEach((column) => {
@@ -3962,6 +4003,14 @@ function normalizeLogRow(row) {
   });
 
   normalized.Date = normalizeExcelDate(normalized.Date);
+  legacyTextLikeFields.forEach((fieldName) => {
+    if (fieldName in normalized) {
+      normalized[fieldName] = cleanLegacyTextValue(normalized[fieldName], fieldName);
+    }
+  });
+  const legacySupportNeed = cleanLegacyTextValue(row.Support_Need ?? "", "Support_Need");
+  normalized.Mind_Note_Support = cleanLegacyTextValue(row.Mind_Note_Support ?? normalized.Mind_Note_Support, "Mind_Note_Support")
+    || legacySupportNeed;
   normalized.Sleep_Hours = normalizeSleepHours(normalized.Sleep_Hours);
   if (normalized.Sleep_Hours !== "") {
     normalized.Sleep = deriveSleepCategory(normalized.Sleep_Hours) || normalized.Sleep;
@@ -3976,7 +4025,7 @@ function normalizeLogRow(row) {
   normalized.Run_Detail_JSON = normalizeRunDetailJsonForRow(normalized.Run_Detail_JSON);
   normalized.Load_Score = Number(normalized.Load_Score) || 0;
   normalized.Energy_Causes = normalized.Energy_Causes || "";
-  normalized.Reflection_Text = row.Reflection_Text ?? row.Reflection ?? "";
+  normalized.Reflection_Text = cleanLegacyTextValue(row.Reflection_Text ?? row.Reflection ?? "", "Reflection_Text");
   return normalized;
 }
 
@@ -4864,7 +4913,7 @@ function importMasterExcel(event) {
       const reflectionMap = readReflectionMap(workbook);
       const rowsWithReflections = importedRows.map((row) => ({
         ...row,
-        Reflection_Text: reflectionMap[row.Date] || row.Reflection_Text || ""
+        Reflection_Text: cleanLegacyTextValue(reflectionMap[row.Date] || row.Reflection_Text || "", "Reflection_Text")
       }));
 
       setDailyLog(rowsWithReflections);
@@ -4882,7 +4931,7 @@ function readReflectionMap(workbook) {
 
   return XLSX.utils.sheet_to_json(sheet, { defval: "" }).reduce((acc, row) => {
     const date = normalizeExcelDate(row.Date);
-    if (date) acc[date] = row.Reflection_Text || "";
+    if (date) acc[date] = cleanLegacyTextValue(row.Reflection_Text || "", "Reflection_Text");
     return acc;
   }, {});
 }

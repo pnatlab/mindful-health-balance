@@ -19,6 +19,7 @@ Excel export structure, Summary sheet behavior, Column_Guide, and human/AI-reada
 
 - [EXCEL_SUMMARY_REFINEMENT.md](EXCEL_SUMMARY_REFINEMENT.md) - Clarifies Summary sheet fields such as Total_Logs, Unique_Days, and Summary_Note.
 - [EXCEL_COLUMN_GUIDE_DESIGN.md](EXCEL_COLUMN_GUIDE_DESIGN.md) - Defines Column_Guide as a Thai/English schema guide that preserves canonical headers.
+- [LEGACY_WORKBOOK_NORMALIZATION.md](LEGACY_WORKBOOK_NORMALIZATION.md) - Defines import normalization for old workbook placeholder artifacts without modifying source files.
 
 ## 02 Reflection UX
 

@@ -8,24 +8,25 @@ This bundle combines the key design notes for Mindful Health Balance v1.9 and th
 2. [PORTABLE_FIELD_MEMORY_DESIGN.md](#source-portable-field-memory-design-md)
 3. [EXCEL_SUMMARY_REFINEMENT.md](#source-excel-summary-refinement-md)
 4. [EXCEL_COLUMN_GUIDE_DESIGN.md](#source-excel-column-guide-design-md)
-5. [HYDRATION_ADAPTIVE_GUIDANCE.md](#source-hydration-adaptive-guidance-md)
-6. [DRINK_SWEETNESS_INSIGHT.md](#source-drink-sweetness-insight-md)
-7. [MIND_STATE_WORDING_DECISION.md](#source-mind-state-wording-decision-md)
-8. [MIND_NOTE_FEELING_OPTIONS.md](#source-mind-note-feeling-options-md)
-9. [MIND_STATE_POSITIVE_OPTIONS.md](#source-mind-state-positive-options-md)
-10. [ENERGY_CAUSE_ALIGNMENT.md](#source-energy-cause-alignment-md)
-11. [REFLECTION_PRESENTATION_DECISION.md](#source-reflection-presentation-decision-md)
-12. [REFLECTION_PAGE_LAYOUT_DECISION.md](#source-reflection-page-layout-decision-md)
-13. [REFLECTION_GENERATION_MOMENT.md](#source-reflection-generation-moment-md)
-14. [TODAY_INPUT_STEP_FLOW_DECISION.md](#source-today-input-step-flow-decision-md)
-15. [INPUT_AWARE_CARD_STATE.md](#source-input-aware-card-state-md)
-16. [STRUCTURED_SLEEP_RUN_DETAIL_V1_9_3.md](#source-structured-sleep-run-detail-v1-9-3-md)
-17. [REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrix-md)
-18. [ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrix-md)
-19. [V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklist-md)
-20. [FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2-md)
-21. [FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](#source-field-review-timeframe-layer-v2-md)
-22. [NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2-md)
+5. [LEGACY_WORKBOOK_NORMALIZATION.md](#source-legacy-workbook-normalization-md)
+6. [HYDRATION_ADAPTIVE_GUIDANCE.md](#source-hydration-adaptive-guidance-md)
+7. [DRINK_SWEETNESS_INSIGHT.md](#source-drink-sweetness-insight-md)
+8. [MIND_STATE_WORDING_DECISION.md](#source-mind-state-wording-decision-md)
+9. [MIND_NOTE_FEELING_OPTIONS.md](#source-mind-note-feeling-options-md)
+10. [MIND_STATE_POSITIVE_OPTIONS.md](#source-mind-state-positive-options-md)
+11. [ENERGY_CAUSE_ALIGNMENT.md](#source-energy-cause-alignment-md)
+12. [REFLECTION_PRESENTATION_DECISION.md](#source-reflection-presentation-decision-md)
+13. [REFLECTION_PAGE_LAYOUT_DECISION.md](#source-reflection-page-layout-decision-md)
+14. [REFLECTION_GENERATION_MOMENT.md](#source-reflection-generation-moment-md)
+15. [TODAY_INPUT_STEP_FLOW_DECISION.md](#source-today-input-step-flow-decision-md)
+16. [INPUT_AWARE_CARD_STATE.md](#source-input-aware-card-state-md)
+17. [STRUCTURED_SLEEP_RUN_DETAIL_V1_9_3.md](#source-structured-sleep-run-detail-v1-9-3-md)
+18. [REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrix-md)
+19. [ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrix-md)
+20. [V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklist-md)
+21. [FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2-md)
+22. [FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](#source-field-review-timeframe-layer-v2-md)
+23. [NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2-md)
 
 ---
 
@@ -517,6 +518,55 @@ This lets v2.0 combine:
 ## Guardrail Sentence
 
 `Column_Guide` should explain the workbook without changing the workbook's canonical data surface.
+
+---
+
+# Source: LEGACY_WORKBOOK_NORMALIZATION.md
+
+# Legacy Workbook Normalization
+
+## Purpose
+
+Older Mindful Health Balance workbooks may contain placeholder or legacy artifact values in fields that should be text, list, JSON, note, or reflection content. One observed example is `28` appearing in fields such as activity, note, or reflection columns.
+
+The app should not delete or modify the source workbook. Instead, import creates a normalized in-app row that preserves the current schema and ignores obvious artifacts where they would otherwise be mistaken for meaningful self-care signals.
+
+## Normalization Approach
+
+During import, the app reads workbook data by header name and maps each row into the current `DAILY_LOG_COLUMNS` shape. Missing optional fields such as `Sleep_Hours` and `Run_Detail_JSON` normalize to empty values.
+
+For text-like fields only, obvious artifact values are treated as missing:
+
+- `28`
+- empty values
+- placeholder-like values such as `undefined`, `null`, `NaN`, or `[object Object]`
+
+This applies to fields such as:
+
+- `Activities`
+- `Drink_Profile_JSON`
+- `Run_Detail_JSON`
+- `Energy_Causes`
+- `Mind_Note_Text`
+- `Mind_Note_Feeling`
+- `Mind_Note_Support`
+- legacy `Support_Need`
+- `Reflection_Text`
+- reminder / tomorrow / hydration text fields
+
+Numeric fields are not cleaned this way. Values such as `Water_ml`, `Load_Score`, drink scores, and other numeric columns still use their existing numeric normalization.
+
+## Export Behavior
+
+If a legacy workbook is imported and then exported again, the new workbook uses the current schema. Obvious artifacts ignored during import are not carried forward as meaningful text. The original workbook file remains unchanged.
+
+## Guardrails
+
+- Do not treat legacy artifacts as lifestyle, mind, activity, or reflection signals.
+- Do not delete the source workbook.
+- Do not add new columns for this pass.
+- Do not use this as Previous Log Context or longitudinal analysis.
+- Keep normalization descriptive and compatibility-focused.
 
 ---
 
