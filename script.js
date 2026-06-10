@@ -37,7 +37,7 @@ const translations = {
     htmlLang: "th",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.4 — Reflection Input Integration Pass",
+    version: "v1.9.5 — LLI Continuity Reflection Layer",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
@@ -269,6 +269,17 @@ const translations = {
       hydrationRunGoodZone: "น้ำวันนี้สอดคล้องกับวันที่มีวิ่งหรือเหงื่อมากขึ้น ไม่ใช่น้ำเยอะลอย ๆ แค่กระจายและดูสัญญาณร่างกายร่วม",
       hydrationHighRest: "วันนี้น้ำค่อนข้างสูงเมื่อเทียบกับวันที่ไม่มี load/เหงื่อชัดเจน ไม่ต้องฝืนเพิ่ม แค่กระจายและฟังร่างกาย",
       lightCodingAiAssist: "วันนี้มีโค้ดดิ้งเบา ๆ / AI ช่วยงาน จึงเป็น cognitive load แบบประคอง ไม่ใช่วันพักว่างจริง"
+    },
+    continuity: {
+      sleepDebtHint: "ต่อจาก log ก่อนหน้า วันนี้อาจควรถูกอ่านผ่าน recovery มากกว่าการเร่งเพิ่ม เพราะมีสัญญาณนอนน้อยสะสมอยู่เล็กน้อย",
+      sleepRecoverySupport: "วันนี้นอนดีขึ้นเมื่อเทียบกับ log ก่อนหน้า จึงเป็น support signal เล็ก ๆ ให้ระบบค่อย ๆ กลับมามีฐาน",
+      loadStreak: "เมื่ออ่านต่อจากวันที่มี load ต่อเนื่อง วันนี้สัญญาณหลักอาจเป็นการประคอง recovery มากกว่าการเพิ่ม output",
+      runRecoveryCarryover: "ถ้าวันก่อนหน้ามี run/load อยู่ วันนี้ไม่จำเป็นต้องเร่งเพิ่ม แค่ให้ร่างกายตาม recovery ทันก็พอ",
+      hydrationHigher: "น้ำวันนี้ขยับสูงขึ้นจาก log ก่อนหน้าเล็กน้อย ให้อ่านเป็นจังหวะปรับฐาน ไม่ใช่คะแนนที่ต้องชนะ",
+      hydrationLower: "น้ำวันนี้ต่ำกว่า log ก่อนหน้าเล็กน้อย แค่กลับมาวางจุดจิบน้ำแบบกระจายก็พอ",
+      mindCarryover: "ต่อจาก log ก่อนหน้า ใจวันนี้เหมือนยังมีแรงกดหรือความฟุ้งบางส่วน ให้ค่อย ๆ วาง ไม่ต้องรีบสรุป",
+      mindSoftening: "เมื่ออ่านต่อจาก log ก่อนหน้า ใจวันนี้ดูเหมือนเริ่มนุ่มลงเล็กน้อย เป็นสัญญาณสนับสนุน ไม่ใช่ข้อสรุปใหญ่",
+      cognitiveLoadContinuity: "หลังจากหลายวันที่ใช้สมองหรือคุมบริบทต่อเนื่อง วันนี้ควรถูกอ่านผ่าน recovery ของระบบประสาทมากกว่าการเพิ่ม output"
     },
     energyCauseInsight: {
       alignedLow: "พลังงานต่ำวันนี้สัมพันธ์กับปัจจัยที่ใช้พลังงานหรือฟื้นตัวยังไม่พอได้ โดยไม่ต้องมองว่าเป็นความผิดพลาด",
@@ -564,7 +575,7 @@ const translations = {
     htmlLang: "en",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.4 — Reflection Input Integration Pass",
+    version: "v1.9.5 — LLI Continuity Reflection Layer",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
@@ -796,6 +807,17 @@ const translations = {
       hydrationRunGoodZone: "Today's water fits a day with running or more sweat. It is not simply high water; spread it out and observe body cues.",
       hydrationHighRest: "Water is quite high for a day without clear load or sweat. No need to force more; spread it out and listen to the body.",
       lightCodingAiAssist: "Today included light coding / AI-assisted work, so this is light cognitive load rather than a true empty rest day."
+    },
+    continuity: {
+      sleepDebtHint: "Continuing from recent logs, today may be better read through recovery than adding more, because low-sleep signals are still present.",
+      sleepRecoverySupport: "Sleep looks better today compared with recent logs, which can be a small support signal for rebuilding a base.",
+      loadStreak: "Read alongside recent higher-load logs, today may be more about carrying recovery than increasing output.",
+      runRecoveryCarryover: "If the previous log included running or load, today does not need more push; letting the body catch up may be enough.",
+      hydrationHigher: "Water is a little higher than recent logs. Read it as a base adjustment, not a number to beat.",
+      hydrationLower: "Water is lower than recent logs. A few steady sip points may be enough.",
+      mindCarryover: "Continuing from recent logs, some pressure or scatteredness may still be present. Let it be placed down gently.",
+      mindSoftening: "Compared with recent logs, the mind seems to be softening a little. Treat it as support, not a big conclusion.",
+      cognitiveLoadContinuity: "After several logs with cognitive or context-guiding load, today may need nervous-system recovery more than more output."
     },
     energyCauseInsight: {
       alignedLow: "Low energy today may relate to factors that used energy or left recovery incomplete. This is information, not a mistake.",
@@ -1091,7 +1113,7 @@ const translations = {
     htmlLang: "zh-CN",
     eyebrow: "个人正念健康仪表板",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.4 — Reflection Input Integration Pass",
+    version: "v1.9.5 — LLI Continuity Reflection Layer",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
@@ -1323,6 +1345,17 @@ const translations = {
       hydrationRunGoodZone: "今天的饮水和有跑步或出汗的日子相符，不只是单纯偏高；分散喝，并一起观察身体信号。",
       hydrationHighRest: "如果今天没有明显 load 或出汗，饮水已经偏高，不需要再勉强增加，分散并听身体信号就好。",
       lightCodingAiAssist: "今天有轻量编码 / AI 协助工作，所以是轻量认知 load，不是真正完全休息的一天。"
+    },
+    continuity: {
+      sleepDebtHint: "接着前几条 log 来看，今天也许更适合从 recovery 来读，而不是继续增加，因为睡少的信号还在。",
+      sleepRecoverySupport: "今天的睡眠比前面的 log 好一些，可以作为系统慢慢回到基础的小小支持。",
+      loadStreak: "和前面几天的 load 连在一起看，今天也许更像是在承接 recovery，而不是增加 output。",
+      runRecoveryCarryover: "如果前一条 log 有跑步或 load，今天不需要急着再增加，让身体跟上 recovery 就够了。",
+      hydrationHigher: "今天饮水比前面的 log 高一点，可以读作基础正在调整，不是要赢过数字。",
+      hydrationLower: "今天饮水比前面的 log 低一点，放几个稳定的小口喝水点就够了。",
+      mindCarryover: "接着前面的 log 来看，今天可能还有一些压力或分散感，可以先轻轻放下。",
+      mindSoftening: "和前面的 log 比起来，今天的心像是软下来一点点。这是支持信号，不是大结论。",
+      cognitiveLoadContinuity: "如果前几条 log 都有认知或管理 context 的 load，今天更适合读作神经系统 recovery，而不是继续增加 output。"
     },
     energyCauseInsight: {
       alignedLow: "今天能量低，可能和消耗能量或 recovery 还不够完整有关。这是信息，不是错误。",
@@ -3114,8 +3147,7 @@ function buildSignals() {
   const drinkScores = getDrinkScores();
   const sleepDetail = getSleepDetailSignal();
   const runDetail = getRunDetailSignal();
-
-  return {
+  const signals = {
     sleepDetail,
     runDetail,
     hydration: getHydrationSignal(),
@@ -3124,6 +3156,132 @@ function buildSignals() {
     energySleep: getEnergySleepSignal(loadScore, sleepDetail),
     mindNote: getMindNoteSignal()
   };
+  signals.continuity = buildContinuitySignals(signals, getPreviousLogContext(todayIso));
+  return signals;
+}
+
+function getPreviousLogContext(currentDate = todayIso, dailyLogs = getDailyLog(), limit = 3) {
+  const current = normalizeExcelDate(currentDate);
+  return (dailyLogs || [])
+    .map(normalizeLogRow)
+    .filter((row) => row.Date && (!current || row.Date < current))
+    .sort((a, b) => String(b.Date).localeCompare(String(a.Date)))
+    .slice(0, limit);
+}
+
+function buildContinuitySignals(currentSignals, previousRows = []) {
+  const rows = (previousRows || []).map(normalizeLogRow).filter((row) => row.Date);
+  if (!rows.length) {
+    return {
+      rows,
+      hasPrevious: false,
+      note: "",
+      sleepDebtHint: false,
+      sleepRecoverySupport: false,
+      loadStreak: false,
+      runRecoveryCarryover: false,
+      hydrationShift: "",
+      mindCarryover: false,
+      mindSoftening: false,
+      cognitiveLoadContinuity: false
+    };
+  }
+
+  const lowishSleepCount = rows.filter(rowHasLowishSleepSignal).length;
+  const highLoadCount = rows.filter(isHighLoadRow).length;
+  const cognitiveLoadCount = rows.filter(rowHasCognitiveContinuityLoad).length;
+  const pressuredMindCount = rows.filter(rowHasPressureMindSignal).length;
+  const previousWaterAverage = getAverageNumber(rows.map((row) => Number(row.Water_ml) || 0));
+  const currentWater = currentSignals.hydration.waterMl || 0;
+  const hydrationShift = previousWaterAverage && currentWater
+    ? currentWater - previousWaterAverage
+    : 0;
+
+  const sleepDebtHint = lowishSleepCount >= 2 || (lowishSleepCount >= 1 && currentSignals.sleepDetail.low);
+  const sleepRecoverySupport = currentSignals.sleepDetail.good && lowishSleepCount >= 1;
+  const loadStreak = highLoadCount >= 2;
+  const runRecoveryCarryover = rows.slice(0, 1).some(rowHasRunOrSportCarryover)
+    && (currentSignals.recoveryLoad.medium
+      || currentSignals.recoveryLoad.high
+      || currentSignals.recoveryLoad.loadTypes.includes("recovery")
+      || currentSignals.recoveryLoad.activityLoadRoots.includes("rest_base")
+      || currentSignals.energySleep.sleepLow
+      || currentSignals.runDetail.hasRunActivity
+      || isRecoveryOnlyReflection(currentSignals));
+  const cognitiveLoadContinuity = cognitiveLoadCount >= 2
+    || (cognitiveLoadCount >= 1 && getSelectedActivityKeys(currentSignals.recoveryLoad.activities).includes("lightCodingAiAssist"));
+  const mindCarryover = pressuredMindCount >= 1
+    && (currentSignals.mindNote.pressured || currentSignals.mindNote.worried || currentSignals.mindNote.mind === "ฟุ้ง");
+  const mindSoftening = pressuredMindCount >= 1 && currentSignals.mindNote.positive;
+  const hydrationShiftKey = hydrationShift >= 700 ? "higher" : hydrationShift <= -700 ? "lower" : "";
+
+  const continuity = {
+    rows,
+    hasPrevious: true,
+    sleepDebtHint,
+    sleepRecoverySupport,
+    loadStreak,
+    runRecoveryCarryover,
+    hydrationShift: hydrationShiftKey,
+    mindCarryover,
+    mindSoftening,
+    cognitiveLoadContinuity,
+    note: ""
+  };
+  continuity.note = getContinuityReflectionNote(continuity);
+  return continuity;
+}
+
+function getContinuityReflectionNote(continuity) {
+  if (!continuity?.hasPrevious) return "";
+  if (continuity.sleepRecoverySupport) return t("continuity.sleepRecoverySupport");
+  if (continuity.runRecoveryCarryover) return t("continuity.runRecoveryCarryover");
+  if (continuity.cognitiveLoadContinuity) return t("continuity.cognitiveLoadContinuity");
+  if (continuity.sleepDebtHint) return t("continuity.sleepDebtHint");
+  if (continuity.mindSoftening) return t("continuity.mindSoftening");
+  if (continuity.mindCarryover) return t("continuity.mindCarryover");
+  if (continuity.loadStreak) return t("continuity.loadStreak");
+  if (continuity.hydrationShift === "higher") return t("continuity.hydrationHigher");
+  if (continuity.hydrationShift === "lower") return t("continuity.hydrationLower");
+  return "";
+}
+
+function getAverageNumber(values = []) {
+  const cleanValues = values.filter((value) => Number.isFinite(value) && value > 0);
+  if (!cleanValues.length) return 0;
+  return cleanValues.reduce((sum, value) => sum + value, 0) / cleanValues.length;
+}
+
+function rowHasLowishSleepSignal(row) {
+  const sleepHours = normalizeSleepHours(row?.Sleep_Hours);
+  if (sleepHours !== "") return sleepHours < 6;
+  return rowHasLowSleepSignal(row);
+}
+
+function rowHasCognitiveContinuityLoad(row) {
+  return getRowActivityKeys(row).some((key) => ["deepWork", "lightCodingAiAssist", "marketWatch"].includes(key));
+}
+
+function rowHasRunOrSportCarryover(row) {
+  const runDetail = normalizeRunDetail(row?.Run_Detail_JSON);
+  return Boolean(runDetail.type || hasMeaningfulRunDetail(runDetail))
+    || getRowActivityKeys(row).some((key) => ["easyRun", "shortQualityRun", "longRun", "badminton", "heavyPingPong"].includes(key));
+}
+
+function rowHasPressureMindSignal(row) {
+  const values = [
+    row?.Mind,
+    row?.Mind_Note_Feeling,
+    row?.Mind_Note_Text
+  ].map((value) => String(value || "").toLowerCase());
+  return values.some((value) => ["กังวล", "กดดัน", "ฟุ้ง", "worried", "pressured", "scattered", "uneasy", "担心", "有压力", "分散"].some((token) => value.includes(token.toLowerCase())));
+}
+
+function getRowActivityKeys(row) {
+  return splitLogValues(row?.Activities)
+    .map(getActivityOptionByValue)
+    .filter(Boolean)
+    .map((activity) => activity.key);
 }
 
 function getSleepDetailSignal() {
@@ -3548,6 +3706,7 @@ function getReminderFromSignals(signals) {
   if (signals.mindNote.worried) return t("mindNoteReminder.worried");
   if (signals.mindNote.uneasy) return t("mindNoteReminder.uneasy");
   if (signals.mindNote.hydrateGently) return t("mindNoteReminder.hydrate_gently");
+  if (signals.continuity.note) return signals.continuity.note;
   const activityRootSummary = getActivitySpecificSummary(signals) || getActivityRootSummary(signals);
   if (activityRootSummary) return activityRootSummary;
   if (signals.energySleep.sleepLow) return t("reminder.lowSleep");
@@ -3616,10 +3775,15 @@ function buildReflectionDisplay() {
 function buildReflectionDisplayFromSignals(signals) {
   return [
     getReflectionDisplayOverview(signals),
+    getReflectionDisplayContinuity(signals),
     getReflectionDisplayAdjustment(signals),
     getReflectionDisplayTomorrow(signals),
     getReflectionDisplayMindNote()
   ].filter(Boolean).join("\n\n");
+}
+
+function getReflectionDisplayContinuity(signals) {
+  return signals.continuity?.note || "";
 }
 
 function getReflectionDisplayOverview(signals) {
@@ -3756,6 +3920,9 @@ function buildReflectionFromSignals(signals) {
     adjustments.push(t("signalReflection.steadyHydration"));
   } else if (signals.recoveryLoad.high) {
     adjustments.push(t("reflection.stopPush"));
+  }
+  if (signals.continuity.note && !adjustments.includes(signals.continuity.note)) {
+    adjustments.push(signals.continuity.note);
   }
   [signals.runDetail.note, signals.runDetail.sweatNote].filter(Boolean).forEach((note) => {
     if (!adjustments.includes(note)) adjustments.push(note);

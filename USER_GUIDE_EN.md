@@ -90,6 +90,8 @@ Starting in v1.9.3 — Structured Sleep & Run Detail, the app adds optional `Sle
 
 Starting in v1.9.4 — Reflection Input Integration Pass, Reflection/NuTuenSai reads today's `Sleep_Hours`, running detail, running subtype, light coding / AI-assisted work, and hydration context more clearly. It still uses only today's current input, does not read previous Daily Log rows, and does not provide training or medical advice.
 
+Starting in v1.9.5 — LLI Continuity Reflection Layer, Reflection/NuTuenSai reads the latest 1-3 previous Daily Log rows as gentle supporting context. It may notice sleep debt, load continuity, run recovery carryover, hydration shifts, or cognitive-load continuity. Today's input remains primary, and the app does not create chatbot memory, weekly/monthly analytics, diagnosis, or coaching.
+
 The Reflection/NuTuenSai page also includes small secondary shortcuts, `Back to Today 1/2` and `Back to Mind Note 2/2`, so you can add or adjust current input before saving. These shortcuts only navigate; they do not save, clear, or generate a new reflection.
 
 Main Today cards also show a soft blue active layer when that card has current input. This is visual feedback only; it is not a score, completion state, diagnosis, or judgment.

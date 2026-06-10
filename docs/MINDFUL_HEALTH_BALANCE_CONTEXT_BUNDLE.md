@@ -21,12 +21,13 @@ This bundle combines the key design notes for Mindful Health Balance v1.9 and th
 15. [TODAY_INPUT_STEP_FLOW_DECISION.md](#source-today-input-step-flow-decision-md)
 16. [INPUT_AWARE_CARD_STATE.md](#source-input-aware-card-state-md)
 17. [STRUCTURED_SLEEP_RUN_DETAIL_V1_9_3.md](#source-structured-sleep-run-detail-v1-9-3-md)
-18. [REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrix-md)
-19. [ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrix-md)
-20. [V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklist-md)
-21. [FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2-md)
-22. [FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](#source-field-review-timeframe-layer-v2-md)
-23. [NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2-md)
+18. [LLI_CONTINUITY_REFLECTION_LAYER_V1_9_5.md](#source-lli-continuity-reflection-layer-v1-9-5-md)
+19. [REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrix-md)
+20. [ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrix-md)
+21. [V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklist-md)
+22. [FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2-md)
+23. [FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](#source-field-review-timeframe-layer-v2-md)
+24. [NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2-md)
 
 ---
 
@@ -1774,6 +1775,78 @@ If approved later:
 
 ---
 
+# Source: LLI_CONTINUITY_REFLECTION_LAYER_V1_9_5.md
+
+# LLI Continuity Reflection Layer (v1.9.5)
+
+## Purpose
+
+v1.9.5 adds a lightweight continuity layer to Reflection/NuTuenSai so the current-day reflection can read gently against the most recent saved rhythm.
+
+The layer reads only the previous 1-3 `Daily_Log` rows before the current date. It is deterministic, rule-based, and supportive. It is not chatbot memory, medical analysis, training advice, or long-term analytics.
+
+## Weighting Principle
+
+- Current Today Input remains primary.
+- Previous 1-3 logs are context only.
+- NuTuenSai / LLI tone shaping should keep the reflection soft, compact, and agency-preserving.
+
+Approximate design weight:
+
+- Current day input: 70%
+- Previous 1-3 logs: 20%
+- Tone shaping: 10%
+
+## Signals
+
+The continuity layer may notice:
+
+- `sleepDebtHint`: recent rows show repeated low or low-ish sleep signals.
+- `sleepRecoverySupport`: today has better sleep after recent low-sleep rows.
+- `loadStreak`: recent rows show repeated high-load days.
+- `runRecoveryCarryover`: the previous row has running/sport load and today still has load or recovery signals.
+- `hydrationShift`: today's water is meaningfully higher or lower than recent rows.
+- `mindCarryover`: pressure, worry, or scatteredness appears across recent logs and today.
+- `mindSoftening`: recent pressure exists, while today's mind signal is softer.
+- `cognitiveLoadContinuity`: recent rows include deep work, market watch, or light coding / AI-assisted work.
+
+## Output Style
+
+Continuity appears as one short note at most. It can appear in the Reflection preview and detailed Reflection, but it should not become a new report section unless the UI later needs one.
+
+Preferred tone:
+
+- "ต่อจาก log ก่อนหน้า..."
+- "เมื่ออ่านต่อจาก..."
+- "วันนี้ดูเหมือน..."
+- "สัญญาณหลักอาจ..."
+
+Avoid:
+
+- "ระบบวิเคราะห์ว่า..."
+- "คุณมีแนวโน้ม..."
+- "สาเหตุคือ..."
+- "ควรต้อง..."
+- diagnosis
+- training advice
+- productivity pressure
+
+## Boundaries
+
+- Do not read more than the latest 1-3 previous logs in v1.9.5.
+- Do not perform weekly/monthly analytics.
+- Do not create a chatbot memory layer.
+- Do not add schema columns.
+- Do not change export/import structure.
+- Do not change localStorage keys.
+- Keep user agency central.
+
+## Relationship To Current Input
+
+Continuity should never override today's input. If today clearly says recovery, load, hydration, or mind pressure, that current-day signal remains primary. Previous logs only help the reflection sound more field-aware and less isolated.
+
+---
+
 # Source: REFLECTION_SIGNAL_MATRIX.md
 
 # Reflection Signal Matrix
@@ -1790,6 +1863,7 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 - Sweetness and caffeine are drink-load signals, not moral scores.
 - Mind Note Feeling belongs to the note, not necessarily the whole day.
 - v1.9.4 Reflection Input Integration uses current-day input only; it does not read previous Daily Log rows or perform longitudinal comparison.
+- v1.9.5 LLI Continuity Reflection may read only the latest 1-3 previous Daily Log rows as supportive context; current-day input remains primary.
 
 ## 2. Single Signal Matrix
 
@@ -1849,6 +1923,21 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 | Load | deep work / cognitive load | Focus, eyes, and mental loops use energy. | Rest eyes, reduce loops, recover attention. | Treating it as only mental weakness. |
 | Load | low sleep as recovery signal | Low sleep belongs in Today State > Energy Cause in the current UI; legacy imported `lowSleep` activity values remain readable. | Base hydration plus rest. | Showing low sleep as a new activity chip or calling it high activity load. |
 | Load | light recovery day | Recovery mode / support signal. | Light, descriptive, not diagnostic. | Letting it override a stronger activity selected with it. |
+
+## 2.2 Continuity Signal Matrix
+
+Continuity signals are supportive context only. They should not become diagnosis, coaching, or a claim about the user's identity.
+
+| Continuity Signal | Previous Log Condition | Current-Day Use | Preferred Reflection Tone | Avoid |
+| --- | --- | --- | --- | --- |
+| `sleepDebtHint` | 1-3 previous rows include repeated low or low-ish sleep. | Read today's energy/recovery more gently. | "ต่อจาก log ก่อนหน้า..." / recovery support. | Blame or medical sleep claims. |
+| `sleepRecoverySupport` | Previous low sleep, today sleep is better. | Treat better sleep as a small support signal. | "นอนดีขึ้นเมื่อเทียบกับ log ก่อนหน้า..." | Saying recovery is complete. |
+| `loadStreak` | Previous rows include repeated high load. | Current day may need recovery context. | "เมื่ออ่านต่อจากวันที่มี load ต่อเนื่อง..." | Productivity pressure. |
+| `runRecoveryCarryover` | Previous row has running/sport load and today still has load/recovery signal. | Let recovery follow previous effort. | "ถ้าวันก่อนหน้ามี run/load..." | Training plan or pace judgment. |
+| `hydrationShift` | Today's water differs meaningfully from recent rows. | Notice water rhythm gently. | "จังหวะปรับฐาน" / small steady sip cue. | Treating water as a score to beat. |
+| `mindCarryover` | Previous pressure/worry/scatteredness and today still has pressure. | Gently set down pressure. | Carryover as a signal, not identity. | "You are anxious." |
+| `mindSoftening` | Previous pressure, today mind is softer/positive. | Read as support signal. | Softening, not a big conclusion. | Saying everything is fixed. |
+| `cognitiveLoadContinuity` | Previous rows include deep work, market watch, or light coding / AI-assisted work. | Nervous-system recovery may matter. | Context-load continuity. | Calling AI-assisted work a rest day or pushing output. |
 
 ## 2.1 Activity Load Root Matrix
 

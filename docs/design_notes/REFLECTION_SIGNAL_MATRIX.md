@@ -12,6 +12,7 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 - Sweetness and caffeine are drink-load signals, not moral scores.
 - Mind Note Feeling belongs to the note, not necessarily the whole day.
 - v1.9.4 Reflection Input Integration uses current-day input only; it does not read previous Daily Log rows or perform longitudinal comparison.
+- v1.9.5 LLI Continuity Reflection may read only the latest 1-3 previous Daily Log rows as supportive context; current-day input remains primary.
 
 ## 2. Single Signal Matrix
 
@@ -71,6 +72,21 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 | Load | deep work / cognitive load | Focus, eyes, and mental loops use energy. | Rest eyes, reduce loops, recover attention. | Treating it as only mental weakness. |
 | Load | low sleep as recovery signal | Low sleep belongs in Today State > Energy Cause in the current UI; legacy imported `lowSleep` activity values remain readable. | Base hydration plus rest. | Showing low sleep as a new activity chip or calling it high activity load. |
 | Load | light recovery day | Recovery mode / support signal. | Light, descriptive, not diagnostic. | Letting it override a stronger activity selected with it. |
+
+## 2.2 Continuity Signal Matrix
+
+Continuity signals are supportive context only. They should not become diagnosis, coaching, or a claim about the user's identity.
+
+| Continuity Signal | Previous Log Condition | Current-Day Use | Preferred Reflection Tone | Avoid |
+| --- | --- | --- | --- | --- |
+| `sleepDebtHint` | 1-3 previous rows include repeated low or low-ish sleep. | Read today's energy/recovery more gently. | "ต่อจาก log ก่อนหน้า..." / recovery support. | Blame or medical sleep claims. |
+| `sleepRecoverySupport` | Previous low sleep, today sleep is better. | Treat better sleep as a small support signal. | "นอนดีขึ้นเมื่อเทียบกับ log ก่อนหน้า..." | Saying recovery is complete. |
+| `loadStreak` | Previous rows include repeated high load. | Current day may need recovery context. | "เมื่ออ่านต่อจากวันที่มี load ต่อเนื่อง..." | Productivity pressure. |
+| `runRecoveryCarryover` | Previous row has running/sport load and today still has load/recovery signal. | Let recovery follow previous effort. | "ถ้าวันก่อนหน้ามี run/load..." | Training plan or pace judgment. |
+| `hydrationShift` | Today's water differs meaningfully from recent rows. | Notice water rhythm gently. | "จังหวะปรับฐาน" / small steady sip cue. | Treating water as a score to beat. |
+| `mindCarryover` | Previous pressure/worry/scatteredness and today still has pressure. | Gently set down pressure. | Carryover as a signal, not identity. | "You are anxious." |
+| `mindSoftening` | Previous pressure, today mind is softer/positive. | Read as support signal. | Softening, not a big conclusion. | Saying everything is fixed. |
+| `cognitiveLoadContinuity` | Previous rows include deep work, market watch, or light coding / AI-assisted work. | Nervous-system recovery may matter. | Context-load continuity. | Calling AI-assisted work a rest day or pushing output. |
 
 ## 2.1 Activity Load Root Matrix
 

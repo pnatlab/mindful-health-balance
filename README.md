@@ -1,4 +1,4 @@
-# Mindful Health Balance by MSxAI v1.9.4 — Reflection Input Integration Pass
+# Mindful Health Balance by MSxAI v1.9.5 — LLI Continuity Reflection Layer
 
 Mindful Health Balance by MSxAI เป็นเว็บแอปแบบ static สำหรับ local-first self-care reflection และ Portable Field Memory Foundation เพื่อช่วยดู pattern และ balance recovery ในชีวิตประจำวัน โดยเน้น 4 แกนหลัก:
 
@@ -173,12 +173,24 @@ v1.9.4 ปรับ Reflection / NuTuenSai ให้ใช้ input วันน
 - `lightCodingAiAssist` ถูกอ่านเป็น light cognitive load ไม่ใช่วันพักว่าง
 - hydration note อ่านน้ำสูงร่วมกับ activity/sweat context เพื่อไม่สรุปว่า “น้ำเยอะ” แบบลอย ๆ
 
-รอบนี้ไม่เพิ่ม Previous Log Context, ไม่ทำ longitudinal comparison, ไม่เพิ่ม schema และไม่เปลี่ยน export/import
+v1.9.4 ยังไม่เพิ่ม Previous Log Context, ไม่ทำ longitudinal comparison, ไม่เพิ่ม schema และไม่เปลี่ยน export/import
+
+### v1.9.5 — LLI Continuity Reflection Layer
+
+v1.9.5 เพิ่ม Previous Log Context Layer แบบเบา ๆ ให้ Reflection/NuTuenSai อ่าน Daily_Log ก่อนหน้าล่าสุด 1-3 rows เป็นบริบทเสริม:
+
+- Current Today Input ยังเป็นแกนหลักของ reflection
+- previous logs ใช้เฉพาะเป็น continuity context เช่น sleep debt, load streak, run recovery carryover, hydration shift, mind carryover และ cognitive load continuity
+- อ่านผ่าน normalized rows จึงกัน legacy artifact เช่น `28` ใน text-like fields ก่อนตีความ
+- ไม่ทำ 7-day/monthly analytics, ไม่ทำ chatbot memory, ไม่เพิ่ม schema และไม่เปลี่ยน export/import
+
+เป้าหมายคือให้ reflection ไม่ตอบจากข้อมูลวันนี้แบบโดด ๆ แต่ยังไม่ให้ข้อมูลเก่าตัดสินแทนผู้ใช้
 
 ### v1.9.x Latest Summary
 
 v1.9.x ล่าสุดรวมหลาย refinement ที่ทำให้แอปอ่าน pattern ได้ชัดขึ้นโดยไม่เพิ่มภาระผู้ใช้:
 
+- LLI Continuity Reflection Layer: Reflection อ่าน previous Daily_Log 1-3 rows เป็นบริบทเสริมเท่านั้น เพื่อช่วยเห็นความต่อเนื่องแบบเบา ๆ
 - Reflection Input Integration Pass: Reflection อ่าน `Sleep_Hours`, running detail, running subtype, light AI-assisted work และ hydration context ของวันนี้ได้ชัดขึ้น โดยไม่อ่าน log แถวก่อนหน้า
 - Today Input Step Flow: แบ่งหน้า Today เป็น 1/2 และ 2/2 เพื่อลดความยาวของ daily input โดยยังให้ Save Daily Log อยู่ใน Reflection/NuTuenSai
 - Structured Sleep & Run Detail: เพิ่ม `Sleep_Hours` และ `Run_Detail_JSON` แบบ optional โดยยัง derive `Sleep` เดิมและไม่เพิ่ม card ที่ 5
