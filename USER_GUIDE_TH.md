@@ -78,6 +78,12 @@ TH | EN | 中文
 
 ตั้งแต่ v1.9.5 — LLI Continuity Reflection Layer หน้า Reflection/NuTuenSai จะอ่าน Daily Log ก่อนหน้าล่าสุด 1-3 rows เป็นบริบทเสริมแบบเบา ๆ เช่น sleep debt, load ต่อเนื่อง, run recovery carryover, hydration shift หรือ cognitive load continuity ข้อมูลวันนี้ยังเป็นหลักเสมอ และระบบไม่ทำ chatbot memory, analytics รายสัปดาห์/รายเดือน, diagnosis หรือ coaching
 
+ตั้งแต่ v1.9.6 — Compact Signal Cockpit Layout หน้า Today Input 1/2 จะแสดงเป็น 2 card หลัก: `Daily Signal Cockpit` สำหรับเห็นสถานะของ 4 สัญญาณทั้งหมด และ `Active Signal Detail` สำหรับกรอกหมวดที่เลือกอยู่ทีละอัน สัญญาณใน cockpit คือ `ภาวะใจวันนี้`, `น้ำ`, `เครื่องดื่ม`, และ `งาน / กิจกรรม`
+
+สถานะใน cockpit เช่น `ยังว่าง`, `เริ่มมีข้อมูล`, `พออ่านได้แล้ว` เป็น visual feedback เท่านั้น ไม่ใช่คะแนน ไม่ใช่การตัดสิน และไม่เปลี่ยนข้อมูลที่บันทึก
+
+ตั้งแต่ v1.9.7 — Symbolic Signal Cockpit Polish cockpit จะดูเป็น signal constellation มากขึ้น โดยมี node 4 จุดรอบ `Daily Balance Orb` กลางวง Orb และ signal dots ช่วยบอกว่าวันนี้ระบบเริ่มอ่านสัญญาณได้มากน้อยแค่ไหนแบบนุ่ม ๆ ไม่ใช่ KPI คะแนน หรือการตัดสิน
+
 ในหน้า Reflection/NuTuenSai จะมีปุ่มรองเล็ก ๆ คือ `กลับ Today 1/2` และ `กลับ Mind Note 2/2` เพื่อย้อนกลับไปเติมข้อมูลก่อน Save Daily Log ปุ่มเหล่านี้เป็นการนำทางเท่านั้น ไม่บันทึก ไม่ล้างข้อมูล และไม่ generate reflection ใหม่
 
 การ์ดหลักในหน้า Today จะมีชั้นสีฟ้าอ่อนเมื่อการ์ดนั้นมีข้อมูลในฟอร์มปัจจุบันแล้ว ชั้นนี้เป็น visual feedback เท่านั้น ไม่ใช่คะแนน ไม่ใช่สถานะสำเร็จ ไม่ใช่ diagnosis และไม่ใช่การตัดสินผู้ใช้

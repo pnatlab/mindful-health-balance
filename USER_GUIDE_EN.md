@@ -92,6 +92,12 @@ Starting in v1.9.4 — Reflection Input Integration Pass, Reflection/NuTuenSai r
 
 Starting in v1.9.5 — LLI Continuity Reflection Layer, Reflection/NuTuenSai reads the latest 1-3 previous Daily Log rows as gentle supporting context. It may notice sleep debt, load continuity, run recovery carryover, hydration shifts, or cognitive-load continuity. Today's input remains primary, and the app does not create chatbot memory, weekly/monthly analytics, diagnosis, or coaching.
 
+Starting in v1.9.6 — Compact Signal Cockpit Layout, Today Input 1/2 uses two main cards: `Daily Signal Cockpit` for the status of all four signals, and `Active Signal Detail` for the selected signal. The cockpit signals are `Inner State`, `Water`, `Drinks`, and `Work / Activity`.
+
+Cockpit statuses such as `Empty`, `Started`, and `Readable` are visual feedback only. They are not scores, judgments, or saved data changes.
+
+Starting in v1.9.7 — Symbolic Signal Cockpit Polish, the cockpit becomes more like a signal constellation, with four nodes around a central `Daily Balance Orb`. The orb and signal dots show how much of today is readable in a gentle way, not as a KPI, score, or judgment.
+
 The Reflection/NuTuenSai page also includes small secondary shortcuts, `Back to Today 1/2` and `Back to Mind Note 2/2`, so you can add or adjust current input before saving. These shortcuts only navigate; they do not save, clear, or generate a new reflection.
 
 Main Today cards also show a soft blue active layer when that card has current input. This is visual feedback only; it is not a score, completion state, diagnosis, or judgment.

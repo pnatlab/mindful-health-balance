@@ -32,6 +32,8 @@ Today and Reflection page hierarchy, preview synthesis, NuTuenSai note strip, ze
 - [INPUT_AWARE_CARD_STATE.md](INPUT_AWARE_CARD_STATE.md) - Defines the Blue Active Card Layer for visual-only input-aware Today cards.
 - [STRUCTURED_SLEEP_RUN_DETAIL_V1_9_3.md](STRUCTURED_SLEEP_RUN_DETAIL_V1_9_3.md) - Records the v1.9.3 decision for optional Sleep_Hours and Run_Detail_JSON inside existing Today cards.
 - [LLI_CONTINUITY_REFLECTION_LAYER_V1_9_5.md](LLI_CONTINUITY_REFLECTION_LAYER_V1_9_5.md) - Defines the v1.9.5 Previous Log Context / LLI continuity layer for reading the latest 1-3 prior logs as supportive context.
+- [COMPACT_SIGNAL_COCKPIT_LAYOUT_V1_9_6.md](COMPACT_SIGNAL_COCKPIT_LAYOUT_V1_9_6.md) - Defines the v1.9.6 two-card Today Input 1/2 cockpit layout experiment.
+- [SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md](SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md) - Defines the v1.9.7 symbolic constellation polish for the Today cockpit.
 
 ## 03 Signal Logic
 

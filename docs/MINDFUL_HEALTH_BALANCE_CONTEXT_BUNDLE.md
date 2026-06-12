@@ -22,12 +22,14 @@ This bundle combines the key design notes for Mindful Health Balance v1.9 and th
 16. [INPUT_AWARE_CARD_STATE.md](#source-input-aware-card-state-md)
 17. [STRUCTURED_SLEEP_RUN_DETAIL_V1_9_3.md](#source-structured-sleep-run-detail-v1-9-3-md)
 18. [LLI_CONTINUITY_REFLECTION_LAYER_V1_9_5.md](#source-lli-continuity-reflection-layer-v1-9-5-md)
-19. [REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrix-md)
-20. [ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrix-md)
-21. [V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklist-md)
-22. [FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2-md)
-23. [FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](#source-field-review-timeframe-layer-v2-md)
-24. [NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2-md)
+19. [COMPACT_SIGNAL_COCKPIT_LAYOUT_V1_9_6.md](#source-compact-signal-cockpit-layout-v1-9-6-md)
+20. [SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md](#source-symbolic-signal-cockpit-polish-v1-9-7-md)
+21. [REFLECTION_SIGNAL_MATRIX.md](#source-reflection-signal-matrix-md)
+22. [ACTIVITY_LOAD_ROOT_MATRIX.md](#source-activity-load-root-matrix-md)
+23. [V1_9_STABILIZATION_CHECKLIST.md](#source-v1-9-stabilization-checklist-md)
+24. [FIELD_REVIEW_COMPANION_V2.md](#source-field-review-companion-v2-md)
+25. [FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](#source-field-review-timeframe-layer-v2-md)
+26. [NAVIGATION_ARCHITECTURE_V2.md](#source-navigation-architecture-v2-md)
 
 ---
 
@@ -1844,6 +1846,172 @@ Avoid:
 ## Relationship To Current Input
 
 Continuity should never override today's input. If today clearly says recovery, load, hydration, or mind pressure, that current-day signal remains primary. Previous logs only help the reflection sound more field-aware and less isolated.
+
+---
+
+# Source: COMPACT_SIGNAL_COCKPIT_LAYOUT_V1_9_6.md
+
+# v1.9.6 — Compact Signal Cockpit Layout
+
+## Intent
+
+v1.9.6 reduces the visual weight of Today Input 1/2 by changing the first step from four large cards shown at once into a compact two-card layout:
+
+1. Daily Signal Cockpit
+2. Active Signal Detail
+
+This is a layout and usability experiment for v1.9.x. It does not change the data model, reflection logic, Excel export/import, localStorage schema, or Save to Daily Log behavior.
+
+## Layout Decision
+
+Today Input 1/2 still contains the same four daily signals:
+
+- Today State
+- Water
+- Drinks
+- Work / Activity
+
+The cockpit card stays visible so the user can always see all four signals and notice which ones are empty, started, or readable. The active detail card shows only one signal at a time.
+
+This keeps the page lighter without hiding the existence of any input area.
+
+## Cockpit Labels
+
+The cockpit uses gentler, user-facing labels:
+
+- TH: ภาวะใจวันนี้, น้ำ, เครื่องดื่ม, งาน / กิจกรรม
+- EN: Inner State, Water, Drinks, Work / Activity
+- ZH: 内在状态, 饮水, 饮品, 工作 / 活动
+
+The cockpit intentionally uses `งาน / กิจกรรม` instead of `Load` because it is softer and easier to understand. Internally, the app still uses `Activities`, `Load_Score`, `Load_Level`, and the existing load helpers.
+
+## Status Levels
+
+Each cockpit item may show:
+
+- Empty / ยังว่าง / 未填写
+- Started / เริ่มมีข้อมูล / 已开始
+- Readable / พออ่านได้แล้ว / 可阅读
+
+These statuses are visual input-awareness cues only. They are not scores, completion badges, diagnosis, judgment, or performance measurement.
+
+## Active Detail Behavior
+
+The active detail area reuses the existing input sections:
+
+- Today State detail
+- Hydration detail
+- Drinks detail
+- Load & Recovery detail
+
+Only one is visible at a time on Today Input 1/2. Today Input 2/2 remains unchanged.
+
+## Boundaries
+
+This patch must not:
+
+- add Daily_Log columns
+- change export/import behavior
+- change localStorage data schema
+- change reflection logic
+- change Today Input 2/2
+- move Save to Daily Log
+- add medical, training, or diagnostic meaning
+
+## v2 Direction
+
+This layout may inform a future v2 signal cockpit or guided review flow, but v1.9.6 remains a UI-only experiment inside the existing local-first app.
+
+---
+
+# Source: SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md
+
+# v1.9.7 — Symbolic Signal Cockpit Polish
+
+## Intent
+
+v1.9.7 polishes the v1.9.6 Compact Signal Cockpit into a calmer symbolic cockpit. The goal is to make Today Input 1/2 feel more like an MSxAI field interface than a standard menu list, while keeping the same data and behavior.
+
+This patch is visual and interaction-focused only.
+
+## Design Direction
+
+The cockpit becomes a small signal constellation:
+
+- Inner State at the top
+- Drinks and Water on the left/right
+- Work / Activity at the bottom
+- Daily Balance Orb in the center
+
+The layout suggests that the four daily signals are connected without turning the app into a game, KPI dashboard, or scorecard.
+
+## Daily Balance Orb
+
+The center orb reflects how many of the four signals currently have input:
+
+- 0/4: still listening for signals
+- 1/4: today is starting to appear
+- 2-3/4: today is readable enough
+- 4/4: ready for Reflection
+
+This is not a completion score or judgment. It is a soft input-awareness cue that helps prevent forgotten input.
+
+## Default Active Signal
+
+Hydration / Water is the default active detail panel on Today Input 1/2.
+
+Reason:
+
+- the water glass is the strongest visual identity of the app
+- the first self-care cue is to return to today's water base
+- opening Today should immediately answer "where is water today?"
+- the other signals remain visible in the cockpit and can be selected normally
+
+Resetting the current form, saving the day, or rolling over to a new date should return the active detail panel to Hydration.
+
+## Signal Nodes
+
+Each node keeps:
+
+- icon
+- label
+- short summary
+- status
+- signal dots
+
+Signal dots are a gentle completeness cue, not a performance score.
+
+Node states:
+
+- empty: lower opacity and quiet border
+- partial: soft blue awareness layer
+- readable: subtle ring
+- active: slight scale and slow breathing halo
+
+## Motion
+
+Motion is intentionally slow and subtle:
+
+- active node breathing glow
+- short fade/slide for detail panel changes
+- no fast bouncing
+- no gamified reward animation
+
+`prefers-reduced-motion` must be respected.
+
+## Scope Boundary
+
+This patch does not change:
+
+- Daily_Log columns
+- Excel export/import
+- localStorage data schema
+- reflection logic
+- Today Input 2/2
+- Save to Daily Log
+- scoring logic
+
+It is a UI polish layer over the existing v1.9.6 cockpit state.
 
 ---
 

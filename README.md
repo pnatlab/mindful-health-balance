@@ -186,11 +186,34 @@ v1.9.5 เพิ่ม Previous Log Context Layer แบบเบา ๆ ให�
 
 เป้าหมายคือให้ reflection ไม่ตอบจากข้อมูลวันนี้แบบโดด ๆ แต่ยังไม่ให้ข้อมูลเก่าตัดสินแทนผู้ใช้
 
+### v1.9.6 — Compact Signal Cockpit Layout
+
+v1.9.6 ปรับ Today Input 1/2 เป็น compact 2-card layout แบบ UI-only:
+
+- `Daily Signal Cockpit` แสดง 4 สัญญาณหลักตลอดเวลา: ภาวะใจวันนี้, น้ำ, เครื่องดื่ม และ `งาน / กิจกรรม`
+- `Active Signal Detail` แสดงรายละเอียดของสัญญาณที่เลือกอยู่ทีละหมวด
+- cockpit status แสดงว่าแต่ละสัญญาณยังว่าง เริ่มมีข้อมูล หรือพออ่านได้แล้ว เพื่อช่วยกันลืม input
+
+คำว่า `งาน / กิจกรรม` ใช้เฉพาะใน cockpit เพื่อให้อ่านนุ่มกว่า `Load` ส่วนหลังบ้านยังใช้ `Activities`, `Load_Score`, `Load_Level` และ logic เดิมทั้งหมด Patch นี้ไม่เปลี่ยน Daily_Log schema, Excel export/import, localStorage หรือ reflection logic
+
+### v1.9.7 — Symbolic Signal Cockpit Polish
+
+v1.9.7 polish cockpit ให้เป็น symbolic signal constellation มากขึ้น โดยยังเป็น UI-only:
+
+- signal nodes 4 จุดล้อมรอบ Daily Balance Orb
+- orb กลางแสดง 0/4 ถึง 4/4 ว่าวันนี้ระบบเริ่มอ่านสัญญาณได้แค่ไหน
+- signal dots และ status ring ช่วยกันลืม input โดยไม่ทำเป็นคะแนนหรือ KPI
+- active node มี soft halo / breathing glow แบบช้ามาก และ detail panel เปลี่ยนด้วย fade/slide สั้น ๆ
+
+Patch นี้ยังไม่เปลี่ยน Daily_Log schema, Excel export/import, localStorage, scoring หรือ reflection logic
+
 ### v1.9.x Latest Summary
 
 v1.9.x ล่าสุดรวมหลาย refinement ที่ทำให้แอปอ่าน pattern ได้ชัดขึ้นโดยไม่เพิ่มภาระผู้ใช้:
 
+- Symbolic Signal Cockpit Polish: cockpit เป็น signal constellation พร้อม Daily Balance Orb, signal dots และ micro-interaction แบบนุ่ม ๆ
 - LLI Continuity Reflection Layer: Reflection อ่าน previous Daily_Log 1-3 rows เป็นบริบทเสริมเท่านั้น เพื่อช่วยเห็นความต่อเนื่องแบบเบา ๆ
+- Compact Signal Cockpit Layout: Today Input 1/2 แสดง `Daily Signal Cockpit` + active detail ทีละหมวด เพื่อให้เห็น 4 signals ตลอดเวลาโดยหน้าไม่หนัก
 - Reflection Input Integration Pass: Reflection อ่าน `Sleep_Hours`, running detail, running subtype, light AI-assisted work และ hydration context ของวันนี้ได้ชัดขึ้น โดยไม่อ่าน log แถวก่อนหน้า
 - Today Input Step Flow: แบ่งหน้า Today เป็น 1/2 และ 2/2 เพื่อลดความยาวของ daily input โดยยังให้ Save Daily Log อยู่ใน Reflection/NuTuenSai
 - Structured Sleep & Run Detail: เพิ่ม `Sleep_Hours` และ `Run_Detail_JSON` แบบ optional โดยยัง derive `Sleep` เดิมและไม่เพิ่ม card ที่ 5

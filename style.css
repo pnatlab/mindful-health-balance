@@ -527,9 +527,408 @@ h2 {
 }
 
 .today-grid {
-  grid-template-columns: minmax(320px, 0.94fr) minmax(360px, 1.06fr);
+  grid-template-columns: minmax(280px, 0.62fr) minmax(420px, 1.38fr);
   gap: 20px;
-  align-items: start;
+  align-items: stretch;
+}
+
+.daily-signal-cockpit {
+  grid-column: 1;
+  align-self: start;
+  display: grid;
+  gap: 16px;
+  border-color: rgba(129, 177, 221, 0.2);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(180, 223, 255, 0.2), transparent 30%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(245, 245, 255, 0.56));
+}
+
+body[data-theme="dark"] .daily-signal-cockpit {
+  border-color: rgba(169, 196, 255, 0.16);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(105, 163, 242, 0.12), transparent 32%),
+    linear-gradient(145deg, rgba(24, 20, 42, 0.76), rgba(22, 30, 54, 0.52));
+}
+
+.today-signal-detail-card {
+  grid-column: 2;
+  min-width: 0;
+}
+
+.today-signal-detail-card.is-active-detail {
+  animation: signalDetailReveal 220ms ease both;
+}
+
+.signal-cockpit-list {
+  display: grid;
+  gap: 12px 8px;
+}
+
+.signal-constellation {
+  position: relative;
+  grid-template-columns: minmax(112px, 1fr) 56px minmax(112px, 1fr);
+  width: min(100%, 318px);
+  justify-self: center;
+  align-items: center;
+  min-height: 0;
+  margin-top: 4px;
+}
+
+.signal-cockpit-item {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 94px;
+  padding: 11px;
+  border: 1px solid rgba(108, 129, 180, 0.18);
+  border-radius: 18px;
+  color: var(--button-text);
+  text-align: left;
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(10px);
+  animation: signalOrbitBreath 52s ease-in-out infinite;
+  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease, opacity 200ms ease;
+}
+
+.signal-cockpit-item::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border: 1px solid rgba(91, 171, 237, 0);
+  border-radius: 22px;
+  pointer-events: none;
+  transition: border-color 200ms ease, box-shadow 200ms ease, opacity 200ms ease;
+  opacity: 0;
+}
+
+.signal-cockpit-item[data-today-signal="state"] {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  justify-self: center;
+  width: min(58%, 190px);
+  animation-delay: -8s;
+}
+
+.signal-cockpit-item[data-today-signal="drinks"] {
+  grid-column: 1;
+  grid-row: 2;
+  animation-delay: -22s;
+}
+
+.signal-cockpit-item[data-today-signal="hydration"] {
+  grid-column: 3;
+  grid-row: 2;
+  animation-delay: -34s;
+}
+
+.signal-cockpit-item[data-today-signal="load"] {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  justify-self: center;
+  width: min(58%, 190px);
+  animation-delay: -46s;
+}
+
+.signal-cockpit-item:hover {
+  border-color: rgba(91, 171, 237, 0.42);
+}
+
+.signal-cockpit-item.is-active {
+  border-color: rgba(91, 171, 237, 0.54);
+  background:
+    radial-gradient(circle at 8% 12%, rgba(157, 215, 255, 0.3), transparent 34%),
+    rgba(255, 255, 255, 0.58);
+  box-shadow:
+    0 14px 34px rgba(91, 171, 237, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.48);
+  animation-name: signalOrbitBreath, signalNodeBreath;
+  animation-duration: 52s, 7s;
+  animation-timing-function: ease-in-out, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+
+.signal-cockpit-item.is-active::before {
+  border-color: rgba(91, 171, 237, 0.28);
+  box-shadow: 0 0 26px rgba(91, 171, 237, 0.14);
+  opacity: 1;
+}
+
+.signal-cockpit-item[data-signal-status="empty"] {
+  opacity: 0.72;
+}
+
+.signal-cockpit-item[data-signal-status="partial"] {
+  border-color: rgba(91, 171, 237, 0.3);
+  box-shadow: 0 12px 28px rgba(91, 171, 237, 0.08);
+}
+
+.signal-cockpit-item[data-signal-status="complete"] {
+  border-color: rgba(91, 171, 237, 0.42);
+}
+
+.signal-cockpit-item[data-signal-status="complete"]::before {
+  border-color: rgba(91, 171, 237, 0.2);
+  opacity: 1;
+}
+
+body[data-theme="dark"] .signal-cockpit-item {
+  border-color: rgba(197, 214, 255, 0.14);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+body[data-theme="dark"] .signal-cockpit-item.is-active {
+  border-color: rgba(135, 196, 255, 0.34);
+  background:
+    radial-gradient(circle at 8% 12%, rgba(90, 153, 230, 0.16), transparent 34%),
+    rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 14px 34px rgba(87, 145, 214, 0.1),
+    inset 0 1px 0 rgba(216, 232, 255, 0.08);
+}
+
+body[data-theme="dark"] .signal-cockpit-item.is-active::before,
+body[data-theme="dark"] .signal-cockpit-item[data-signal-status="complete"]::before {
+  border-color: rgba(135, 196, 255, 0.18);
+  box-shadow: 0 0 24px rgba(87, 145, 214, 0.1);
+}
+
+.signal-cockpit-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.48);
+  font-size: 1.08rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+body[data-theme="dark"] .signal-cockpit-icon {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.signal-cockpit-copy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.signal-cockpit-label {
+  color: var(--text);
+  font-size: 0.94rem;
+  font-weight: 800;
+}
+
+.signal-cockpit-summary {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.signal-cockpit-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.signal-cockpit-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(108, 129, 180, 0.22);
+}
+
+.signal-cockpit-dots[data-signal-progress="1"] span:nth-child(1),
+.signal-cockpit-dots[data-signal-progress="2"] span:nth-child(-n + 2),
+.signal-cockpit-dots[data-signal-progress="3"] span {
+  background: rgba(91, 171, 237, 0.76);
+  box-shadow: 0 0 10px rgba(91, 171, 237, 0.24);
+}
+
+.signal-cockpit-status {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 5px 8px;
+  border: 1px solid rgba(108, 129, 180, 0.16);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.daily-balance-orb {
+  position: relative;
+  z-index: 1;
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  min-height: 46px;
+  padding: 6px 7px;
+  border: 1px solid rgba(91, 171, 237, 0.16);
+  border-radius: 18px;
+  color: var(--text);
+  text-align: center;
+  transform: none;
+  background:
+    radial-gradient(circle at 38% 28%, rgba(255, 255, 255, 0.76), rgba(202, 230, 255, 0.24) 54%, transparent 86%),
+    rgba(255, 255, 255, 0.34);
+  box-shadow:
+    0 10px 24px rgba(91, 171, 237, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.46);
+}
+
+.balance-orb-light {
+  position: absolute;
+  inset: 6px;
+  border-radius: inherit;
+  background:
+    linear-gradient(135deg, rgba(91, 171, 237, 0.08), rgba(91, 171, 237, 0.24), rgba(173, 148, 232, 0.12));
+  opacity: calc(0.12 + (var(--balance-ratio, 0) * 0.42));
+}
+
+.daily-balance-orb[data-balance-count="0"] {
+  --balance-ratio: 0;
+  opacity: 0.74;
+}
+
+.daily-balance-orb[data-balance-count="1"] {
+  --balance-ratio: 0.25;
+}
+
+.daily-balance-orb[data-balance-count="2"] {
+  --balance-ratio: 0.5;
+}
+
+.daily-balance-orb[data-balance-count="3"] {
+  --balance-ratio: 0.75;
+}
+
+.daily-balance-orb[data-balance-count="4"] {
+  --balance-ratio: 1;
+  border-color: rgba(91, 171, 237, 0.26);
+  box-shadow:
+    0 12px 26px rgba(91, 171, 237, 0.12),
+    0 0 0 1px rgba(91, 171, 237, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.48);
+}
+
+.balance-orb-count {
+  position: relative;
+  z-index: 1;
+  font-size: 0.88rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.balance-orb-text {
+  position: relative;
+  z-index: 1;
+  max-width: 48px;
+  color: var(--muted);
+  font-size: 0.45rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+body[data-theme="dark"] .daily-balance-orb {
+  border-color: rgba(135, 196, 255, 0.14);
+  background:
+    radial-gradient(circle at 38% 28%, rgba(255, 255, 255, 0.14), rgba(98, 146, 220, 0.14) 54%, transparent 86%),
+    rgba(255, 255, 255, 0.052);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(216, 232, 255, 0.08);
+}
+
+body[data-theme="dark"] .signal-cockpit-dots span {
+  background: rgba(197, 214, 255, 0.16);
+}
+
+body[data-theme="dark"] .signal-cockpit-dots[data-signal-progress="1"] span:nth-child(1),
+body[data-theme="dark"] .signal-cockpit-dots[data-signal-progress="2"] span:nth-child(-n + 2),
+body[data-theme="dark"] .signal-cockpit-dots[data-signal-progress="3"] span {
+  background: rgba(135, 196, 255, 0.7);
+  box-shadow: 0 0 10px rgba(87, 145, 214, 0.2);
+}
+
+@keyframes signalNodeBreath {
+  0%,
+  100% {
+    box-shadow:
+      0 14px 34px rgba(91, 171, 237, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.44);
+  }
+
+  50% {
+    box-shadow:
+      0 18px 42px rgba(91, 171, 237, 0.18),
+      0 0 0 1px rgba(91, 171, 237, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+}
+
+@keyframes signalOrbitBreath {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(2px, -2px);
+  }
+
+  50% {
+    transform: translate(0, 2px);
+  }
+
+  75% {
+    transform: translate(-2px, 0);
+  }
+}
+
+@keyframes signalDetailReveal {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.signal-cockpit-item[data-signal-status="partial"] .signal-cockpit-status,
+.signal-cockpit-item[data-signal-status="complete"] .signal-cockpit-status {
+  color: var(--accent);
+  border-color: rgba(91, 171, 237, 0.28);
+  background: rgba(185, 225, 255, 0.24);
+}
+
+body[data-theme="dark"] .signal-cockpit-status {
+  border-color: rgba(197, 214, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+body[data-theme="dark"] .signal-cockpit-item[data-signal-status="partial"] .signal-cockpit-status,
+body[data-theme="dark"] .signal-cockpit-item[data-signal-status="complete"] .signal-cockpit-status {
+  color: rgba(176, 218, 255, 0.92);
+  border-color: rgba(135, 196, 255, 0.24);
+  background: rgba(86, 154, 230, 0.1);
 }
 
 @media (min-width: 821px) {
@@ -1041,7 +1440,10 @@ body[data-theme="dark"] .load-recovery-card {
 
 @media (prefers-reduced-motion: reduce) {
   .state-orb::before,
-  .water-wave {
+  .water-wave,
+  .signal-cockpit-item,
+  .signal-cockpit-item.is-active,
+  .today-signal-detail-card.is-active-detail {
     animation: none;
   }
 }
@@ -2402,6 +2804,55 @@ td:nth-child(10) {
     grid-template-columns: 1fr;
   }
 
+  .daily-signal-cockpit,
+  .today-signal-detail-card {
+    grid-column: 1;
+  }
+
+  .daily-signal-cockpit {
+    order: 1;
+  }
+
+  .today-signal-detail-card {
+    order: 2;
+  }
+
+  .signal-cockpit-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .signal-constellation {
+    min-height: auto;
+  }
+
+  .signal-cockpit-item {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    min-height: 112px;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-content: start;
+    transform: none !important;
+    animation: none;
+  }
+
+  .daily-balance-orb {
+    position: relative;
+    top: auto;
+    left: auto;
+    grid-column: 1 / -1;
+    justify-self: center;
+    transform: none;
+    order: -1;
+  }
+
+  .signal-cockpit-status {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
   .reflection-save-controls {
     align-items: stretch;
     justify-content: flex-start;
@@ -2418,12 +2869,7 @@ td:nth-child(10) {
   }
 
   .today-hydration-hero {
-    order: 1;
     min-height: auto;
-  }
-
-  .today-state-card {
-    order: 2;
   }
 
   .state-orb {
@@ -2432,14 +2878,6 @@ td:nth-child(10) {
     top: 16px;
     right: 16px;
     opacity: 0.72;
-  }
-
-  .drink-profile-card {
-    order: 3;
-  }
-
-  .load-recovery-card {
-    order: 4;
   }
 
   .mind-note-card {
@@ -2526,6 +2964,10 @@ td:nth-child(10) {
 
   .today-state-card .card-heading {
     padding-right: 64px;
+  }
+
+  .signal-cockpit-list {
+    grid-template-columns: 1fr;
   }
 
   .reminder-layout {

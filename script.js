@@ -37,7 +37,7 @@ const translations = {
     htmlLang: "th",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.5 — LLI Continuity Reflection Layer",
+    version: "v1.9.7 — Symbolic Signal Cockpit Polish",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
@@ -53,6 +53,36 @@ const translations = {
     todayStepReflection: "ไป Reflection/NuTuenSai",
     todayCurrentFormSummaryTitle: "Current Form",
     todayCurrentFormSummaryText: "ข้อมูลที่กรอกไว้ยังอยู่ในฟอร์มปัจจุบัน ไป Reflection/NuTuenSai เพื่อทบทวนและบันทึกเมื่อพร้อม",
+    dailySignalCockpitKicker: "Daily Signal Cockpit",
+    dailySignalCockpitTitle: "แผงสัญญาณวันนี้",
+    dailySignalCockpitHelper: "เลือกหมวดเพื่อเติมรายละเอียดทีละสัญญาณ",
+    cockpitStateLabel: "ภาวะใจวันนี้",
+    cockpitWaterLabel: "น้ำ",
+    cockpitDrinksLabel: "เครื่องดื่ม",
+    cockpitWorkActivityLabel: "งาน / กิจกรรม",
+    cockpitStatusEmpty: "ยังว่าง",
+    cockpitStatusPartial: "เริ่มมีข้อมูล",
+    cockpitStatusComplete: "พออ่านได้แล้ว",
+    cockpitStateEmpty: "ยังไม่มีภาวะใจวันนี้",
+    cockpitStateSummary: "{items}",
+    cockpitWaterEmpty: "0 ml",
+    cockpitWaterSummary: "{water} ml",
+    cockpitDrinksEmpty: "ยังไม่มีเครื่องดื่ม",
+    cockpitDrinksSummary: "{count} รายการ",
+    cockpitDrinksLoadSummary: "{count} รายการ · Sugar {sugar} / Caffeine {caffeine}",
+    cockpitLoadEmpty: "ยังไม่เลือกกิจกรรม",
+    cockpitLoadSummary: "{level} · {activity}",
+    cockpitLoadLight: "จังหวะเบา",
+    cockpitLoadMedium: "ใช้แรงพอดี",
+    cockpitLoadHeavy: "ใช้แรงต่อเนื่อง",
+    cockpitHydrationReturningBase: "กำลังกลับฐาน",
+    cockpitHydrationBaseVisible: "ฐานน้ำเริ่มนิ่ง",
+    cockpitCaffeineHigh: "caffeine สูง",
+    cockpitSweetVisible: "ความหวานมีสัญญาณ",
+    cockpitBalanceEmpty: "ยังฟังสัญญาณไม่ครบ",
+    cockpitBalanceOne: "เริ่มเห็นวันนี้แล้ว",
+    cockpitBalanceReadable: "วันนี้พออ่าน pattern ได้",
+    cockpitBalanceReady: "พร้อมพาไป Reflection",
     reflectionViewTitle: "Reflection",
     reflectionViewHelper: "ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม",
     reflectionGeneratorHelper: "กดสรุปวันนี้เพื่อให้ระบบสะท้อน pattern จากข้อมูลวันนี้ และยังแก้ไขเล็กน้อยก่อนบันทึกได้",
@@ -575,7 +605,7 @@ const translations = {
     htmlLang: "en",
     eyebrow: "Personal mindful dashboard",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.5 — LLI Continuity Reflection Layer",
+    version: "v1.9.7 — Symbolic Signal Cockpit Polish",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
@@ -591,6 +621,36 @@ const translations = {
     todayStepReflection: "Go to Reflection/NuTuenSai",
     todayCurrentFormSummaryTitle: "Current Form",
     todayCurrentFormSummaryText: "Your current input is still preserved. Go to Reflection/NuTuenSai to review and save when ready.",
+    dailySignalCockpitKicker: "Daily Signal Cockpit",
+    dailySignalCockpitTitle: "Daily Signal Cockpit",
+    dailySignalCockpitHelper: "Choose one signal to fill in at a time.",
+    cockpitStateLabel: "Inner State",
+    cockpitWaterLabel: "Water",
+    cockpitDrinksLabel: "Drinks",
+    cockpitWorkActivityLabel: "Work / Activity",
+    cockpitStatusEmpty: "Empty",
+    cockpitStatusPartial: "Started",
+    cockpitStatusComplete: "Readable",
+    cockpitStateEmpty: "No inner state yet",
+    cockpitStateSummary: "{items}",
+    cockpitWaterEmpty: "0 ml",
+    cockpitWaterSummary: "{water} ml",
+    cockpitDrinksEmpty: "No drinks yet",
+    cockpitDrinksSummary: "{count} item(s)",
+    cockpitDrinksLoadSummary: "{count} item(s) · Sugar {sugar} / Caffeine {caffeine}",
+    cockpitLoadEmpty: "No activity yet",
+    cockpitLoadSummary: "{level} · {activity}",
+    cockpitLoadLight: "Light rhythm",
+    cockpitLoadMedium: "Steady effort",
+    cockpitLoadHeavy: "Sustained load",
+    cockpitHydrationReturningBase: "returning to base",
+    cockpitHydrationBaseVisible: "water base visible",
+    cockpitCaffeineHigh: "caffeine high",
+    cockpitSweetVisible: "sweetness visible",
+    cockpitBalanceEmpty: "Still listening for signals",
+    cockpitBalanceOne: "Today is starting to appear",
+    cockpitBalanceReadable: "Today is readable enough",
+    cockpitBalanceReady: "Ready for Reflection",
     reflectionViewTitle: "Reflection",
     reflectionViewHelper: "Review today’s reflection, then save it to the Daily Log when ready.",
     reflectionGeneratorHelper: "Reflect creates a reflection from today's signals. You can still edit it lightly before saving.",
@@ -1113,7 +1173,7 @@ const translations = {
     htmlLang: "zh-CN",
     eyebrow: "个人正念健康仪表板",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.5 — LLI Continuity Reflection Layer",
+    version: "v1.9.7 — Symbolic Signal Cockpit Polish",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
@@ -1129,6 +1189,36 @@ const translations = {
     todayStepReflection: "前往 Reflection/NuTuenSai",
     todayCurrentFormSummaryTitle: "当前表单",
     todayCurrentFormSummaryText: "当前输入仍会保留。前往 Reflection/NuTuenSai 后，可以回顾并在准备好时保存。",
+    dailySignalCockpitKicker: "Daily Signal Cockpit",
+    dailySignalCockpitTitle: "今日信号面板",
+    dailySignalCockpitHelper: "一次选择一个信号来补充细节。",
+    cockpitStateLabel: "内在状态",
+    cockpitWaterLabel: "饮水",
+    cockpitDrinksLabel: "饮品",
+    cockpitWorkActivityLabel: "工作 / 活动",
+    cockpitStatusEmpty: "未填写",
+    cockpitStatusPartial: "已开始",
+    cockpitStatusComplete: "可阅读",
+    cockpitStateEmpty: "还没有内在状态",
+    cockpitStateSummary: "{items}",
+    cockpitWaterEmpty: "0 ml",
+    cockpitWaterSummary: "{water} ml",
+    cockpitDrinksEmpty: "还没有饮品",
+    cockpitDrinksSummary: "{count} 项",
+    cockpitDrinksLoadSummary: "{count} 项 · 糖分 {sugar} / 咖啡因 {caffeine}",
+    cockpitLoadEmpty: "还没有活动",
+    cockpitLoadSummary: "{level} · {activity}",
+    cockpitLoadLight: "轻节奏",
+    cockpitLoadMedium: "稳定用力",
+    cockpitLoadHeavy: "持续负荷",
+    cockpitHydrationReturningBase: "正在回到基础",
+    cockpitHydrationBaseVisible: "饮水基础已出现",
+    cockpitCaffeineHigh: "咖啡因偏高",
+    cockpitSweetVisible: "甜度有信号",
+    cockpitBalanceEmpty: "还在倾听信号",
+    cockpitBalanceOne: "今天开始显现",
+    cockpitBalanceReadable: "今天已经可以阅读",
+    cockpitBalanceReady: "可以前往 Reflection",
     reflectionViewTitle: "反思",
     reflectionViewHelper: "查看今天的反思内容，准备好后再保存到每日记录。",
     reflectionGeneratorHelper: "点击回顾会根据今天的信号生成回顾，保存前仍可轻微编辑。",
@@ -1791,6 +1881,7 @@ let stateOrbIntervalId;
 let currentView = "today";
 let todayInputStep = 1;
 let todayInputStepResetAfterSave = false;
+let activeTodaySignal = "hydration";
 let isEditingReflection = false;
 let isGeneratingReflection = false;
 let reflectionGenerationTimerId;
@@ -1870,6 +1961,7 @@ function applyTranslations() {
   updateThemeButtons();
   updateViewPanels();
   updateTodayInputStepUI();
+  updateTodaySignalCockpitUI();
 }
 
 function applyThemePreference(preference = currentThemePreference) {
@@ -2025,6 +2117,12 @@ function bindEvents() {
     const button = event.target.closest("[data-view]");
     if (!button) return;
     setActiveView(button.dataset.view);
+  });
+
+  document.querySelector(".signal-cockpit-list")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-today-signal]");
+    if (!button) return;
+    setActiveTodaySignal(button.dataset.todaySignal);
   });
 
   document.querySelector(".theme-toggle").addEventListener("click", (event) => {
@@ -2254,7 +2352,17 @@ function syncUI() {
   updateRunDetailUI();
   updateEnergyCauseUI();
   updateTodayInputStepUI();
+  updateTodaySignalCockpitUI();
   updateInputActiveCards();
+}
+
+function setActiveTodaySignal(signalKey) {
+  const safeSignal = ["state", "hydration", "drinks", "load"].includes(signalKey) ? signalKey : "hydration";
+  activeTodaySignal = safeSignal;
+  todayInputStep = 1;
+  todayInputStepResetAfterSave = false;
+  updateTodayInputStepUI();
+  updateTodaySignalCockpitUI();
 }
 
 function setTodayInputStep(step) {
@@ -2263,12 +2371,15 @@ function setTodayInputStep(step) {
     todayInputStepResetAfterSave = false;
   }
   updateTodayInputStepUI();
+  updateTodaySignalCockpitUI();
 }
 
 function resetTodayInputStep() {
   todayInputStep = 1;
   todayInputStepResetAfterSave = true;
+  activeTodaySignal = "hydration";
   updateTodayInputStepUI();
+  updateTodaySignalCockpitUI();
 }
 
 function markTodayMindNoteFlowActive() {
@@ -2297,6 +2408,7 @@ function resetTodayStepIfDateChanged() {
   if (currentIso !== todayIso) {
     todayInputStep = 1;
     todayInputStepResetAfterSave = true;
+    activeTodaySignal = "hydration";
   }
 }
 
@@ -2320,6 +2432,195 @@ function updateTodayInputStepUI() {
   if (helper) {
     helper.textContent = t(todayInputStep === 2 ? "todayStepTwoHelper" : "todayStepOneHelper");
   }
+}
+
+function updateTodaySignalCockpitUI() {
+  const isStepOne = todayInputStep === 1;
+  document.querySelectorAll("[data-today-signal-detail]").forEach((panel) => {
+    const isActive = isStepOne && panel.dataset.todaySignalDetail === activeTodaySignal;
+    panel.hidden = !isActive;
+    panel.setAttribute("aria-hidden", String(!isActive));
+    panel.classList.toggle("is-active-detail", isActive);
+  });
+
+  document.querySelectorAll("[data-today-signal]").forEach((button) => {
+    const isSelected = button.dataset.todaySignal === activeTodaySignal;
+    button.classList.toggle("is-active", isSelected);
+    button.setAttribute("aria-selected", String(isSelected));
+    button.setAttribute("tabindex", isSelected ? "0" : "-1");
+  });
+
+  const cockpitState = getTodaySignalCockpitState();
+  const readableSignalCount = Object.values(cockpitState).filter((entry) => entry.status !== "empty").length;
+  const completeSignalCount = Object.values(cockpitState).filter((entry) => entry.status === "complete").length;
+  Object.entries(cockpitState).forEach(([signalKey, entry]) => {
+    const summary = document.querySelector(`#cockpit${entry.domKey}Summary`);
+    const status = document.querySelector(`#cockpit${entry.domKey}Status`);
+    const dots = document.querySelector(`#cockpit${entry.domKey}Dots`);
+    const item = document.querySelector(`[data-today-signal="${signalKey}"]`);
+    if (summary) summary.textContent = entry.summary;
+    if (status) status.textContent = t(`cockpitStatus${entry.statusLabel}`);
+    if (dots) dots.dataset.signalProgress = String(entry.progress);
+    if (item) {
+      item.dataset.signalStatus = entry.status;
+      item.dataset.signalProgress = String(entry.progress);
+    }
+  });
+  updateDailyBalanceOrb(readableSignalCount, completeSignalCount);
+}
+
+function getTodaySignalCockpitState(state = appState) {
+  return {
+    state: {
+      domKey: "State",
+      status: getTodaySignalStatus("state", state),
+      statusLabel: getTodaySignalStatusLabel("state", state),
+      progress: getTodaySignalProgress("state", state),
+      summary: getTodaySignalSummary("state", state)
+    },
+    hydration: {
+      domKey: "Hydration",
+      status: getTodaySignalStatus("hydration", state),
+      statusLabel: getTodaySignalStatusLabel("hydration", state),
+      progress: getTodaySignalProgress("hydration", state),
+      summary: getTodaySignalSummary("hydration", state)
+    },
+    drinks: {
+      domKey: "Drinks",
+      status: getTodaySignalStatus("drinks", state),
+      statusLabel: getTodaySignalStatusLabel("drinks", state),
+      progress: getTodaySignalProgress("drinks", state),
+      summary: getTodaySignalSummary("drinks", state)
+    },
+    load: {
+      domKey: "Load",
+      status: getTodaySignalStatus("load", state),
+      statusLabel: getTodaySignalStatusLabel("load", state),
+      progress: getTodaySignalProgress("load", state),
+      summary: getTodaySignalSummary("load", state)
+    }
+  };
+}
+
+function getTodaySignalStatus(signalKey, state = appState) {
+  if (signalKey === "state") {
+    const count = getTodayStateInputCount(state);
+    if (count === 0) return "empty";
+    return count >= 2 ? "complete" : "partial";
+  }
+  if (signalKey === "hydration") {
+    const waterMl = Number(state.waterMl || 0);
+    if (waterMl <= 0) return "empty";
+    return waterMl >= 1000 ? "complete" : "partial";
+  }
+  if (signalKey === "drinks") return hasDrinkInput(state) ? "complete" : "empty";
+  if (signalKey === "load") return hasLoadInput(state) ? "complete" : "empty";
+  return "empty";
+}
+
+function getTodaySignalStatusLabel(signalKey, state = appState) {
+  const status = getTodaySignalStatus(signalKey, state);
+  if (status === "complete") return "Complete";
+  if (status === "partial") return "Partial";
+  return "Empty";
+}
+
+function getTodaySignalProgress(signalKey, state = appState) {
+  const status = getTodaySignalStatus(signalKey, state);
+  if (status === "complete") return 3;
+  if (status === "partial") return 1;
+  return 0;
+}
+
+function updateDailyBalanceOrb(readableCount = 0, completeCount = 0) {
+  const orb = document.querySelector("#dailyBalanceOrb");
+  const count = document.querySelector("#dailyBalanceCount");
+  const text = document.querySelector("#dailyBalanceText");
+  if (!orb || !count || !text) return;
+  const safeCount = Math.max(0, Math.min(4, Number(readableCount) || 0));
+  orb.dataset.balanceCount = String(safeCount);
+  orb.dataset.completeCount = String(Math.max(0, Math.min(4, Number(completeCount) || 0)));
+  count.textContent = `${safeCount}/4`;
+  if (safeCount >= 4) {
+    text.textContent = t("cockpitBalanceReady");
+  } else if (safeCount >= 2) {
+    text.textContent = t("cockpitBalanceReadable");
+  } else if (safeCount === 1) {
+    text.textContent = t("cockpitBalanceOne");
+  } else {
+    text.textContent = t("cockpitBalanceEmpty");
+  }
+}
+
+function getTodayStateInputCount(state = appState) {
+  const selected = state.selectedState || {};
+  return [
+    selected.energy,
+    selected.mind,
+    selected.sleep,
+    hasValidSleepHours(state.sleepHours),
+    (state.energyCauses || []).length
+  ].filter(Boolean).length;
+}
+
+function getTodaySignalSummary(signalKey, state = appState) {
+  if (signalKey === "state") return getTodayStateCockpitSummary(state);
+  if (signalKey === "hydration") return getHydrationCockpitSummary(state);
+  if (signalKey === "drinks") return getDrinksCockpitSummary(state);
+  if (signalKey === "load") return getLoadCockpitSummary(state);
+  return "";
+}
+
+function getTodayStateCockpitSummary(state = appState) {
+  const selected = state.selectedState || {};
+  const parts = [];
+  if (hasValidSleepHours(state.sleepHours)) {
+    parts.push(`${formatNumberForLocale(state.sleepHours)} ${t("sleepHoursUnit")}`);
+  } else if (selected.sleep) {
+    parts.push(localizeStateValue("Sleep", selected.sleep));
+  }
+  if (selected.energy) parts.push(localizeStateValue("Energy", selected.energy));
+  if (selected.mind) parts.push(localizeStateValue("Mind", selected.mind));
+  if ((state.energyCauses || []).length) parts.push(t("energyCauseLabel"));
+  return parts.length ? t("cockpitStateSummary", { items: parts.slice(0, 3).join(" · ") }) : t("cockpitStateEmpty");
+}
+
+function getHydrationCockpitSummary(state = appState) {
+  const waterMl = Number(state.waterMl || 0);
+  if (waterMl <= 0) return t("cockpitWaterEmpty");
+  const cue = waterMl >= 1000 ? t("cockpitHydrationBaseVisible") : t("cockpitHydrationReturningBase");
+  const waterSummary = t("cockpitWaterSummary", { water: waterMl.toLocaleString(translations[currentLanguage].locale) });
+  return `${waterSummary} · ${cue}`;
+}
+
+function getDrinksCockpitSummary(state = appState) {
+  const profiles = state.drinkProfiles || [];
+  if (!profiles.length) return t("cockpitDrinksEmpty");
+  const scores = getDrinkScores(profiles);
+  if (scores.caffeineScore >= 3) return `${t("cockpitDrinksSummary", { count: profiles.length })} · ${t("cockpitCaffeineHigh")}`;
+  if (scores.sugarScore > 0) return `${t("cockpitDrinksSummary", { count: profiles.length })} · ${t("cockpitSweetVisible")}`;
+  return t("cockpitDrinksSummary", { count: profiles.length });
+}
+
+function getLoadCockpitSummary(state = appState) {
+  const selectedActivity = (state.activities || [])
+    .map((activity) => getActivityOptionByValue(activity))
+    .find(Boolean);
+  if (!selectedActivity && !hasMeaningfulRunDetail(state.runDetail)) return t("cockpitLoadEmpty");
+  const activityLabel = selectedActivity
+    ? t(`options.activities.${selectedActivity.key}`)
+    : t("runDetailTitle");
+  return t("cockpitLoadSummary", {
+    level: getCockpitLoadRhythm(state),
+    activity: activityLabel
+  });
+}
+
+function getCockpitLoadRhythm(state = appState) {
+  const score = Number(state.loadScore || 0);
+  if (score >= 4) return t("cockpitLoadHeavy");
+  if (score >= 2) return t("cockpitLoadMedium");
+  return t("cockpitLoadLight");
 }
 
 function updateInputActiveCards() {

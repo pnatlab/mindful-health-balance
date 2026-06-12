@@ -33,7 +33,7 @@
       <div>
         <p class="eyebrow" data-i18n="eyebrow">Personal mindful dashboard</p>
         <h1 data-i18n="title">Mindful Health Balance by MSxAI</h1>
-        <p class="version" data-i18n="version">v1.9.5 — LLI Continuity Reflection Layer</p>
+        <p class="version" data-i18n="version">v1.9.7 — Symbolic Signal Cockpit Polish</p>
         <p class="subtitle" data-i18n="subtitle">ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง</p>
       </div>
       <div class="hero-side">
@@ -75,8 +75,61 @@
         </div>
       </div>
 
-      <section class="dashboard-grid today-grid" aria-label="Mindful Health Balance dashboard">
-      <article class="glass-card hydration-card today-hydration-hero" data-today-step="1">
+      <section class="dashboard-grid today-grid today-cockpit-layout" aria-label="Mindful Health Balance dashboard">
+      <article class="glass-card daily-signal-cockpit" data-today-step="1" aria-labelledby="dailySignalCockpitTitle">
+        <div class="card-heading">
+          <div>
+            <p class="section-kicker" data-i18n="dailySignalCockpitKicker">Daily Signal Cockpit</p>
+            <h2 id="dailySignalCockpitTitle" data-i18n="dailySignalCockpitTitle">แผงสัญญาณวันนี้</h2>
+            <p class="section-helper" data-i18n="dailySignalCockpitHelper">เลือกหมวดเพื่อเติมรายละเอียดทีละสัญญาณ</p>
+          </div>
+        </div>
+        <div class="signal-cockpit-list signal-constellation" role="tablist" aria-label="Daily Signal Cockpit">
+          <button type="button" class="signal-cockpit-item" data-today-signal="state" role="tab" aria-controls="todaySignalStateDetail">
+            <span class="signal-cockpit-icon" aria-hidden="true">🩵</span>
+            <span class="signal-cockpit-copy">
+              <span class="signal-cockpit-label" data-i18n="cockpitStateLabel">ภาวะใจวันนี้</span>
+              <span class="signal-cockpit-summary" id="cockpitStateSummary">ยังว่าง</span>
+            </span>
+            <span class="signal-cockpit-dots" id="cockpitStateDots" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="signal-cockpit-status" id="cockpitStateStatus">ยังว่าง</span>
+          </button>
+          <div class="daily-balance-orb" id="dailyBalanceOrb" aria-live="polite">
+            <span class="balance-orb-light" aria-hidden="true"></span>
+            <span class="balance-orb-count" id="dailyBalanceCount">0/4</span>
+            <span class="balance-orb-text" id="dailyBalanceText">ยังฟังสัญญาณไม่ครบ</span>
+          </div>
+          <button type="button" class="signal-cockpit-item" data-today-signal="hydration" role="tab" aria-controls="todaySignalHydrationDetail">
+            <span class="signal-cockpit-icon" aria-hidden="true">💧</span>
+            <span class="signal-cockpit-copy">
+              <span class="signal-cockpit-label" data-i18n="cockpitWaterLabel">น้ำ</span>
+              <span class="signal-cockpit-summary" id="cockpitHydrationSummary">0 ml</span>
+            </span>
+            <span class="signal-cockpit-dots" id="cockpitHydrationDots" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="signal-cockpit-status" id="cockpitHydrationStatus">ยังว่าง</span>
+          </button>
+          <button type="button" class="signal-cockpit-item" data-today-signal="drinks" role="tab" aria-controls="todaySignalDrinksDetail">
+            <span class="signal-cockpit-icon" aria-hidden="true">☕</span>
+            <span class="signal-cockpit-copy">
+              <span class="signal-cockpit-label" data-i18n="cockpitDrinksLabel">เครื่องดื่ม</span>
+              <span class="signal-cockpit-summary" id="cockpitDrinksSummary">ยังไม่มีเครื่องดื่ม</span>
+            </span>
+            <span class="signal-cockpit-dots" id="cockpitDrinksDots" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="signal-cockpit-status" id="cockpitDrinksStatus">ยังว่าง</span>
+          </button>
+          <button type="button" class="signal-cockpit-item" data-today-signal="load" role="tab" aria-controls="todaySignalLoadDetail">
+            <span class="signal-cockpit-icon" aria-hidden="true">🏃</span>
+            <span class="signal-cockpit-copy">
+              <span class="signal-cockpit-label" data-i18n="cockpitWorkActivityLabel">งาน / กิจกรรม</span>
+              <span class="signal-cockpit-summary" id="cockpitLoadSummary">ยังไม่เลือกกิจกรรม</span>
+            </span>
+            <span class="signal-cockpit-dots" id="cockpitLoadDots" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="signal-cockpit-status" id="cockpitLoadStatus">ยังว่าง</span>
+          </button>
+        </div>
+      </article>
+
+      <article class="glass-card hydration-card today-hydration-hero today-signal-detail-card" id="todaySignalHydrationDetail" data-today-step="1" data-today-signal-detail="hydration" role="tabpanel">
         <div class="card-heading">
           <div>
             <p class="section-kicker" data-i18n="hydration">Hydration</p>
@@ -111,7 +164,7 @@
         </div>
       </article>
 
-      <article class="glass-card today-state-card" data-today-step="1">
+      <article class="glass-card today-state-card today-signal-detail-card" id="todaySignalStateDetail" data-today-step="1" data-today-signal-detail="state" role="tabpanel">
         <div class="state-orb state-orb--sun" aria-hidden="true">
           <span class="state-orb-core"></span>
           <span class="state-orb-ring"></span>
@@ -174,7 +227,7 @@
         </div>
       </article>
 
-      <article class="glass-card drink-profile-card" data-today-step="1">
+      <article class="glass-card drink-profile-card today-signal-detail-card" id="todaySignalDrinksDetail" data-today-step="1" data-today-signal-detail="drinks" role="tabpanel">
         <div class="card-heading">
           <div>
             <p class="section-kicker" data-i18n="drinks">Drinks</p>
@@ -229,7 +282,7 @@
         <p class="feedback" id="drinksFeedback">เลือกเครื่องดื่มวันนี้เพื่อดู reminder แบบเบา ๆ</p>
       </article>
 
-      <article class="glass-card load-recovery-card" data-today-step="1">
+      <article class="glass-card load-recovery-card today-signal-detail-card" id="todaySignalLoadDetail" data-today-step="1" data-today-signal-detail="load" role="tabpanel">
         <div class="card-heading">
           <div>
             <p class="section-kicker" data-i18n="loadRecovery">Load & Recovery</p>
