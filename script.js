@@ -88,6 +88,7 @@ const translations = {
     reflectionGeneratorHelper: "กดสรุปวันนี้เพื่อให้ระบบสะท้อน pattern จากข้อมูลวันนี้ และยังแก้ไขเล็กน้อยก่อนบันทึกได้",
     reflectionActionsKicker: "Ready to save",
     todayInputShortcutsAria: "Today input shortcuts",
+    backToSignalCockpit: "กลับไปแผงสัญญาณ",
     backToTodayStepOne: "กลับ Today 1/2",
     backToTodayStepTwo: "กลับ Mind Note 2/2",
     logViewTitle: "Log & Export",
@@ -657,6 +658,7 @@ const translations = {
     reflectionGeneratorHelper: "Reflect creates a reflection from today's signals. You can still edit it lightly before saving.",
     reflectionActionsKicker: "Ready to save",
     todayInputShortcutsAria: "Today input shortcuts",
+    backToSignalCockpit: "Back to cockpit",
     backToTodayStepOne: "Back to Today 1/2",
     backToTodayStepTwo: "Back to Mind Note 2/2",
     logViewTitle: "Log & Export",
@@ -1226,6 +1228,7 @@ const translations = {
     reflectionGeneratorHelper: "点击回顾会根据今天的信号生成回顾，保存前仍可轻微编辑。",
     reflectionActionsKicker: "准备保存",
     todayInputShortcutsAria: "Today 输入快捷键",
+    backToSignalCockpit: "返回信号面板",
     backToTodayStepOne: "返回 Today 1/2",
     backToTodayStepTwo: "返回 Mind Note 2/2",
     logViewTitle: "记录与导出",
@@ -2125,7 +2128,13 @@ function bindEvents() {
   document.querySelector(".signal-cockpit-list")?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-today-signal]");
     if (!button) return;
-    setActiveTodaySignal(button.dataset.todaySignal);
+    setActiveTodaySignal(button.dataset.todaySignal, { userInitiated: true });
+  });
+
+  document.querySelector('[data-view-panel="today"]')?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-scroll-cockpit]");
+    if (!button) return;
+    scrollToSignalCockpit({ userInitiated: true });
   });
 
   document.querySelector(".theme-toggle").addEventListener("click", (event) => {
@@ -2361,13 +2370,38 @@ function syncUI() {
   updateInputActiveCards();
 }
 
-function setActiveTodaySignal(signalKey) {
+function setActiveTodaySignal(signalKey, { userInitiated = false } = {}) {
   const safeSignal = ["state", "hydration", "drinks", "load"].includes(signalKey) ? signalKey : "hydration";
   activeTodaySignal = safeSignal;
   todayInputStep = 1;
   todayInputStepResetAfterSave = false;
   updateTodayInputStepUI();
   updateTodaySignalCockpitUI();
+  scrollToActiveSignalDetail({ userInitiated });
+}
+
+function isMobileTodayLayout() {
+  return window.matchMedia?.("(max-width: 820px)")?.matches ?? window.innerWidth <= 820;
+}
+
+function getTodayScrollBehavior() {
+  const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  return prefersReducedMotion ? "auto" : "smooth";
+}
+
+function scrollToActiveSignalDetail({ userInitiated = false } = {}) {
+  if (!userInitiated || !isMobileTodayLayout()) return;
+  window.requestAnimationFrame(() => {
+    const activePanel = document.querySelector(`[data-today-signal-detail="${activeTodaySignal}"]`);
+    if (!activePanel || activePanel.hidden) return;
+    activePanel.scrollIntoView({ behavior: getTodayScrollBehavior(), block: "start" });
+  });
+}
+
+function scrollToSignalCockpit({ userInitiated = false } = {}) {
+  if (!userInitiated || !isMobileTodayLayout()) return;
+  const cockpit = document.querySelector(".daily-signal-cockpit");
+  cockpit?.scrollIntoView({ behavior: getTodayScrollBehavior(), block: "start" });
 }
 
 function setTodayInputStep(step) {

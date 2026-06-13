@@ -1984,6 +1984,12 @@ Reason:
 
 Resetting the current form, saving the day, or rolling over to a new date should return the active detail panel to Hydration.
 
+## Mobile Flow
+
+On mobile, the cockpit stacks above the active detail panel. When a user taps a signal node, the app may scroll to the active detail panel so the change is visible immediately. Each detail panel can show a small `Back to cockpit` control that scrolls back to the Daily Signal Cockpit without saving, clearing, or changing the active signal.
+
+Initial load should not auto-scroll away from the cockpit. Reduced-motion preferences should use instant/auto scrolling instead of smooth motion.
+
 ## Signal Nodes
 
 Each node keeps:

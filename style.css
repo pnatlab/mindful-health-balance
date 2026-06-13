@@ -559,6 +559,10 @@ body[data-theme="dark"] .daily-signal-cockpit {
   animation: signalDetailReveal 220ms ease both;
 }
 
+.mobile-cockpit-back-control {
+  display: none;
+}
+
 .signal-cockpit-list {
   display: grid;
   gap: 12px 8px;
@@ -2832,6 +2836,25 @@ td:nth-child(10) {
 
   .today-signal-detail-card {
     order: 2;
+  }
+
+  .mobile-cockpit-back-control {
+    display: inline-flex;
+    justify-content: center;
+    width: fit-content;
+    min-height: 36px;
+    margin: -4px 0 16px;
+    padding: 7px 11px;
+    color: var(--muted);
+    font-size: 0.86rem;
+    font-weight: 700;
+    border-color: rgba(108, 129, 180, 0.22);
+    background: rgba(255, 255, 255, 0.36);
+  }
+
+  body[data-theme="dark"] .mobile-cockpit-back-control {
+    border-color: rgba(197, 214, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
   }
 
   .signal-cockpit-list {
