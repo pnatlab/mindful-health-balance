@@ -2800,12 +2800,22 @@ td:nth-child(10) {
   }
 
   .welcome-overlay {
-    align-items: start;
+    min-height: 100vh;
+    min-height: 100svh;
+    align-items: center;
+    justify-items: center;
     overflow: auto;
+    padding: max(20px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
   }
 
   .welcome-glow {
-    width: 88vw;
+    width: min(88vw, 420px);
+  }
+
+  .welcome-card {
+    width: min(100%, 560px);
+    max-height: calc(100svh - 40px);
+    overflow: auto;
   }
 
   .hero,
@@ -2864,6 +2874,7 @@ td:nth-child(10) {
   }
 
   .signal-constellation {
+    width: 100%;
     min-height: auto;
   }
 
@@ -2871,11 +2882,35 @@ td:nth-child(10) {
     position: relative;
     inset: auto;
     width: 100%;
-    min-height: 112px;
+    min-height: 108px;
     grid-template-columns: auto minmax(0, 1fr);
     align-content: start;
     transform: none !important;
     animation: none;
+  }
+
+  .signal-cockpit-item[data-today-signal] {
+    grid-column: auto;
+    grid-row: auto;
+    justify-self: stretch;
+  }
+
+  .signal-cockpit-item[data-today-signal="state"] {
+    order: 1;
+    width: 100%;
+  }
+
+  .signal-cockpit-item[data-today-signal="hydration"] {
+    order: 2;
+  }
+
+  .signal-cockpit-item[data-today-signal="drinks"] {
+    order: 3;
+  }
+
+  .signal-cockpit-item[data-today-signal="load"] {
+    order: 4;
+    width: 100%;
   }
 
   .daily-balance-orb {
@@ -2886,6 +2921,17 @@ td:nth-child(10) {
     justify-self: center;
     transform: none;
     order: -1;
+    width: auto;
+    min-width: 74px;
+    min-height: 34px;
+    padding: 5px 9px;
+    border-radius: 999px;
+  }
+
+  .balance-orb-text {
+    max-width: 120px;
+    font-size: 0.55rem;
+    white-space: nowrap;
   }
 
   .signal-cockpit-status {
@@ -2974,11 +3020,12 @@ td:nth-child(10) {
 
 @media (max-width: 520px) {
   .welcome-overlay {
-    padding: 14px;
+    padding: max(18px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   }
 
   .welcome-card {
-    padding: 24px;
+    width: min(100%, 390px);
+    padding: 24px 20px;
   }
 
   .welcome-card::after {
@@ -3007,7 +3054,48 @@ td:nth-child(10) {
   }
 
   .signal-cockpit-list {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .signal-cockpit-item {
+    min-height: 106px;
+    gap: 7px;
+    padding: 10px;
+  }
+
+  .signal-cockpit-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+  }
+
+  .signal-cockpit-label {
+    font-size: 0.86rem;
+    line-height: 1.2;
+  }
+
+  .signal-cockpit-summary {
+    font-size: 0.74rem;
+  }
+
+  .signal-cockpit-status {
+    padding: 4px 7px;
+    font-size: 0.66rem;
+  }
+
+  .daily-balance-orb {
+    min-height: 32px;
+    padding: 4px 8px;
+  }
+
+  .balance-orb-count {
+    font-size: 0.8rem;
+  }
+
+  .balance-orb-text {
+    max-width: 104px;
+    font-size: 0.5rem;
   }
 
   .reminder-layout {
