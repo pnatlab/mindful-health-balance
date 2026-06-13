@@ -143,14 +143,14 @@ Excel export ยังรักษา sheet เดิม (`Daily_Log`, `Summary`
 
 v1.9.2 เพิ่ม Today Input Step Flow เพื่อทำให้หน้า Today เบาลงและใช้งานจริงง่ายขึ้น โดยแบ่ง Today เป็น 2 จังหวะ:
 
-- Today Input 1/2: Today State, Hydration, Drinks และ Load & Recovery พร้อมปุ่ม `เคลียร์หน้าปัจจุบัน` และ `ถัดไป: บันทึกภาวะใจ`
-- Today Input 2/2: Mind Note และ Current Form summary พร้อมปุ่ม `กลับไปหน้า 1/2` และ `ไป Reflection/NuTuenSai`
+- Today Input 1/2: Today State, Hydration, Drinks และ Load & Recovery พร้อมปุ่ม `เคลียร์หน้าปัจจุบัน`, `บันทึกวันนี้` และ `ถัดไป: บันทึกภาวะใจ`
+- Today Input 2/2: Mind Note และ Current Form summary พร้อมปุ่ม `กลับไปหน้า 1/2`, `บันทึกวันนี้` และ `ไป Reflection/NuTuenSai`
 
 หน้า Reflection/NuTuenSai มีปุ่มรองเล็ก ๆ สำหรับกลับไป Today 1/2 หรือ Mind Note 2/2 ก่อนบันทึก โดยเป็น navigation shortcut เท่านั้น ไม่ save, ไม่ clear และไม่ generate reflection ใหม่
 
 หน้า Today มี Blue Active Card Layer แบบ visual-only เพื่อให้การ์ดหลักมีเส้น/เงาฟ้าอ่อนเมื่อมี current input แล้ว สัญญาณนี้หมายถึง “มีข้อมูลในฟอร์มนี้” ไม่ใช่คะแนน ความสำเร็จ diagnosis หรือ judgment
 
-Save Daily Log ยังอยู่ใน Reflection/NuTuenSai เท่านั้นและเป็น primary action ของ Daily Log Controls ส่วน patch นี้ไม่เปลี่ยน Daily_Log schema, Excel export/import, workbook sheets หรือ localStorage data schema
+ตั้งแต่ flow refinement นี้ ผู้ใช้สามารถ `บันทึกวันนี้` จาก Today Input 1/2 หรือ 2/2 ได้ทันทีโดยไม่ต้องเข้า Reflection ก่อน ส่วน Reflection/NuTuenSai ยังมี `Save to Daily Log` สำหรับวันที่ต้องการบันทึกพร้อม generated reflection Patch นี้ไม่เปลี่ยน Daily_Log schema, Excel export/import, workbook sheets หรือ localStorage data schema
 
 ### v1.9.3 — Structured Sleep & Run Detail
 
@@ -278,7 +278,7 @@ Activity roots refine reflection wording only. แอปไม่ infer identity
 - ใช้ Activity Load Roots / Activity Root Summary เพื่อสะท้อนกิจกรรมเป็นประโยคสั้นแบบไม่เดาตัวตนผู้ใช้
 - สร้าง End-of-Day Reflection ในโทน NuTuenSai โดยหน้า preview แสดง synthesis สั้น ๆ ขณะที่รายละเอียดเต็มยังอยู่ใน Daily Log / Reflections / Excel
 - ใช้ Reflection Generator แบบ zen/circular CTA: กด `สรุปวันนี้`, เห็น listening moment, ได้ label `Reflection`, มี `🩵` ท้าย reflection หนึ่งครั้ง และใช้ `ล้าง Reflection` เพื่อ reset preview เท่านั้น
-- Save to Daily Log เพื่อบันทึกข้อมูลวันนี้เป็น 1 row ในตาราง
+- Save Today Log / Save to Daily Log เพื่อบันทึกข้อมูลวันนี้เป็น 1 row ในตาราง โดย Reflection เป็น optional layer
 - Clear Daily Log เพื่อล้างตารางย้อนหลังใน browser นี้
 - Export Master Excel เป็นไฟล์รวมข้อมูลทั้งหมด
 - Import Master Excel เพื่อนำข้อมูลจากไฟล์ `.xlsx` กลับเข้าตาราง
@@ -326,7 +326,7 @@ mindfulHealthDailyLog
 
 Daily Log Table คือบันทึกย้อนหลังในหน้าเว็บ ใช้ดู pattern และ balance recovery แบบค่อย ๆ สะสม ไม่จำเป็นต้องกรอกละเอียดเกินไป
 
-ปุ่ม `Save to Daily Log` จะบันทึก state ปัจจุบันเป็น 1 row ถ้ามี date เดิมอยู่แล้ว browser จะถามก่อน replace/update row เดิม
+ปุ่ม `บันทึกวันนี้` ในหน้า Today และ `Save to Daily Log` ในหน้า Reflection จะบันทึก state ปัจจุบันเป็น 1 row ถ้ามี date เดิมอยู่แล้ว browser จะถามก่อน replace/update row เดิม การบันทึกจาก Today ไม่ auto-generate Reflection text ส่วนการบันทึกจาก Reflection จะบันทึกพร้อม Reflection text เมื่อมีหรือสร้างไว้แล้ว
 
 ## Master Excel Export
 

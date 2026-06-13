@@ -1211,11 +1211,12 @@ Today Input should be split into 2 steps to reduce page length and help users en
 Core flow:
 
 - Today = input / current form
-- Reflection/NuTuenSai = review + reflection + save
+- Today Input 1/2 and 2/2 = can save the current daily row when needed
+- Reflection/NuTuenSai = optional review + reflection + save with Reflection text
 - Log = saved records
 
 Important:
-Today page should not contain Save Daily Log. Save Daily Log remains in Reflection/NuTuenSai.
+Reflection/NuTuenSai is no longer required before saving. Users can save a practical Daily Log row from Today Input 1/2 or 2/2, while Reflection/NuTuenSai remains the place to generate/review Reflection before saving when they want that layer.
 
 ## 2. Step Structure
 
@@ -1234,10 +1235,12 @@ Collect body, energy, hydration, drink, activity, and recovery context.
 Buttons:
 
 - Secondary: เคลียร์หน้าปัจจุบัน / Clear Current Form / 清除当前表单
+- Practical save: บันทึกวันนี้ / Save Today Log / 保存今日记录
 - Primary: ถัดไป: บันทึกภาวะใจ / Next: Mind Note / 下一步：心情记录
 
 Reason:
 Clear Current Form resets the current unsaved form, so it should live on step 1/2 where the main input starts. This lets users clear early without needing to enter the Mind Note step.
+Save Today Log lets users record body, water, drink, and activity signals without being forced into Mind Note or Reflection first.
 
 ### Today Input 2/2
 
@@ -1252,6 +1255,7 @@ Let the user place the current mind note before reviewing or saving.
 Buttons:
 
 - Secondary: กลับไปหน้า 1/2 / Back to 1/2 / 返回 1/2
+- Practical save: บันทึกวันนี้ / Save Today Log / 保存今日记录
 - Primary: ไป Reflection/NuTuenSai / Go to Reflection/NuTuenSai / 前往 Reflection/NuTuenSai
 
 Important:
@@ -1259,6 +1263,7 @@ Important:
 - Do not show เคลียร์หน้าปัจจุบัน on Today 2/2.
 - Keep step 2/2 calm and focused.
 - ไป Reflection/NuTuenSai is a navigation shortcut only, not a save action.
+- บันทึกวันนี้ saves the current daily row with Mind Note if present, while Reflection text may remain empty.
 
 ## 3. State Model
 
@@ -1318,14 +1323,24 @@ Input-aware visual feedback:
 - not save data
 - not generate reflection automatically unless existing behavior already does so
 - preserve current form state
-- let user generate/check reflection and then Save Daily Log from the Reflection page
+- let user generate/check reflection and then Save Daily Log from the Reflection page if they want Reflection text included
 
 Reflection/NuTuenSai should also provide small secondary shortcuts in Daily Log Controls:
 
 - กลับ Today 1/2 / Back to Today 1/2 / 返回 Today 1/2
 - กลับ Mind Note 2/2 / Back to Mind Note 2/2 / 返回 Mind Note 2/2
 
-These shortcuts are navigation only. They should switch back to the requested Today step, preserve the current form and any generated reflection preview, and must not save, clear, or generate reflection automatically. Save Daily Log remains the only primary action in Reflection/NuTuenSai.
+## Save Flow Refinement
+
+Daily logging should not require Reflection first:
+
+- Today Input 1/2 can save body, water, drink, activity, sleep, and load signals.
+- Today Input 2/2 can save the same current state plus Mind Note fields.
+- Reflection/NuTuenSai can save current state plus generated/edited Reflection text.
+- Same-date saves should update/replace the existing row through the existing confirmation flow instead of silently creating duplicate rows.
+- Saving from Today should not auto-generate Reflection text.
+
+These shortcuts are navigation only. They should switch back to the requested Today step, preserve the current form and any generated reflection preview, and must not save, clear, or generate reflection automatically. Save to Daily Log remains the primary save action on the Reflection/NuTuenSai page.
 
 ## 6. Clear Current Form Placement
 
@@ -1860,7 +1875,7 @@ v1.9.6 reduces the visual weight of Today Input 1/2 by changing the first step f
 1. Daily Signal Cockpit
 2. Active Signal Detail
 
-This is a layout and usability experiment for v1.9.x. It does not change the data model, reflection logic, Excel export/import, localStorage schema, or Save to Daily Log behavior.
+This is a layout and usability experiment for v1.9.x. It does not change the data model, reflection logic, Excel export/import, localStorage schema, or saved row structure.
 
 ## Layout Decision
 
@@ -1915,7 +1930,7 @@ This patch must not:
 - change localStorage data schema
 - change reflection logic
 - change Today Input 2/2
-- move Save to Daily Log
+- make Reflection mandatory before saving
 - add medical, training, or diagnostic meaning
 
 ## v2 Direction
@@ -1987,6 +2002,8 @@ Node states:
 - partial: soft blue awareness layer
 - readable: subtle ring
 - active: slight scale and slow breathing halo
+
+The `Next: Mind Note` action becomes visually primary only when all four cockpit signals are readable. Before 4/4 it remains clickable, but uses secondary/outline weight to gently reduce the urge to skip ahead without forcing completion.
 
 ## Motion
 

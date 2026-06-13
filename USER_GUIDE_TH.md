@@ -70,7 +70,7 @@ TH | EN | 中文
 
 การเปลี่ยน view ไม่ลบข้อมูลที่กรอกอยู่ และไม่ลบ Daily Log เดิม
 
-ตั้งแต่ v1.9.2 — Today Input Step Flow ปุ่ม `เคลียร์หน้าปัจจุบัน` อยู่เฉพาะ Today Input 1/2 ส่วน Today Input 2/2 มีเพียง `กลับไปหน้า 1/2` และ `ไป Reflection/NuTuenSai` การไป Reflection/NuTuenSai เป็นการนำทางเท่านั้น ไม่ใช่การบันทึกข้อมูล
+ตั้งแต่ v1.9.2 — Today Input Step Flow ปุ่ม `เคลียร์หน้าปัจจุบัน` อยู่เฉพาะ Today Input 1/2 ส่วน Today Input 1/2 และ 2/2 มีปุ่ม `บันทึกวันนี้` เพื่อบันทึก Daily Log ได้ทันที การไป Reflection/NuTuenSai เป็นการนำทางเท่านั้น ไม่ใช่การบันทึกข้อมูล
 
 ตั้งแต่ v1.9.3 — Structured Sleep & Run Detail แอปเพิ่ม `Sleep_Hours` และ `Run_Detail_JSON` แบบ optional โดยยังเก็บ `Sleep` และ `Activities` เดิมไว้เพื่อ compatibility กับ Daily Log และ Excel เก่า
 
@@ -250,9 +250,13 @@ Reflection ที่สร้างใหม่จะมีหัวใจฟ้
 
 ### Save to Daily Log
 
-กด `Save to Daily Log` เพื่อบันทึกข้อมูลวันนี้ลงตาราง Daily Log
+กด `บันทึกวันนี้` จาก Today Input 1/2 เมื่อต้องการบันทึกน้ำ เครื่องดื่ม การนอน กิจกรรม และ load ของวันนี้โดยยังไม่ต้องไป Reflection
 
-ข้อมูลที่บันทึกจะมาจาก state ปัจจุบันของหน้าเว็บ เช่น Energy, Mind, Sleep, Sleep Hours, น้ำ, เครื่องดื่ม, activities, Run Detail, load และ reminder
+กด `บันทึกวันนี้` จาก Today Input 2/2 เมื่อต้องการบันทึกข้อมูลวันนี้พร้อม Mind Note โดย Reflection ยังว่างได้
+
+กด `Save to Daily Log` จากหน้า Reflection/NuTuenSai เมื่อต้องการบันทึกข้อมูลวันนี้พร้อม generated/edited Reflection
+
+ข้อมูลที่บันทึกจะมาจาก state ปัจจุบันของหน้าเว็บ เช่น Energy, Mind, Sleep, Sleep Hours, น้ำ, เครื่องดื่ม, activities, Run Detail, load, reminder, Mind Note และ Reflection ถ้ามี
 
 ถ้าวันเดิมมีข้อมูลอยู่แล้ว แอปจะถามก่อน replace/update row เดิม เพื่อไม่ให้บันทึกทับโดยไม่รู้ตัว
 

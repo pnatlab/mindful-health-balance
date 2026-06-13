@@ -84,7 +84,7 @@ After the Welcome Glass, the app is organized into three views:
 
 Switching views does not reset current inputs and does not delete saved Daily Logs.
 
-Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only on Today Input 1/2. Today Input 2/2 only shows `Back to 1/2` and `Go to Reflection/NuTuenSai`. Going to Reflection/NuTuenSai is navigation only; it does not save data.
+Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only on Today Input 1/2. Today Input 1/2 and 2/2 now include `Save Today Log`, so you can save the Daily Log without visiting Reflection first. Going to Reflection/NuTuenSai is navigation only; it does not save data.
 
 Starting in v1.9.3 — Structured Sleep & Run Detail, the app adds optional `Sleep_Hours` and `Run_Detail_JSON` while keeping the existing `Sleep` and `Activities` fields for Daily Log and old Excel compatibility.
 
@@ -274,9 +274,13 @@ Newly generated reflections end with one blue heart, `🩵`, as a light NuTuenSa
 
 ## 16. Save To Daily Log
 
-Click `Save to Daily Log` to save the current day into the Daily Log table.
+Click `Save Today Log` from Today Input 1/2 when you only want to record water, drinks, sleep, activity, and load signals without going to Reflection.
 
-The saved row comes from the current app state, including Energy, Mind, Sleep, Sleep Hours, water, drinks, activities, Run Detail, load, Tomorrow Focus, NuTuenSai Reminder, Mind Note, and generated reflection.
+Click `Save Today Log` from Today Input 2/2 when you want to save the current day with Mind Note fields while leaving Reflection empty.
+
+Click `Save to Daily Log` from Reflection/NuTuenSai when you want to save the current day with generated or edited Reflection text.
+
+The saved row comes from the current app state, including Energy, Mind, Sleep, Sleep Hours, water, drinks, activities, Run Detail, load, Tomorrow Focus, NuTuenSai Reminder, Mind Note, and Reflection when present.
 
 If the same date already exists, the app asks before replacing that row.
 

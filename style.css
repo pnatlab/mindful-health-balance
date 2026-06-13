@@ -1670,6 +1670,23 @@ body[data-theme="dark"] .reflection-shortcuts .compact-button {
   border-color: transparent;
 }
 
+.next-mind-note-btn:not(.is-cockpit-complete) {
+  color: var(--button-text);
+  border-color: var(--border-soft);
+  background: var(--button-ghost-bg);
+  box-shadow: none;
+}
+
+.next-mind-note-btn:not(.is-cockpit-complete):hover {
+  border-color: var(--accent);
+}
+
+.next-mind-note-btn.is-cockpit-complete {
+  color: var(--white);
+  background: var(--primary-gradient);
+  border-color: transparent;
+}
+
 .primary-button:disabled,
 .primary-button[aria-disabled="true"] {
   cursor: wait;

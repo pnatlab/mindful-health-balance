@@ -60,6 +60,8 @@ Node states:
 - readable: subtle ring
 - active: slight scale and slow breathing halo
 
+The `Next: Mind Note` action becomes visually primary only when all four cockpit signals are readable. Before 4/4 it remains clickable, but uses secondary/outline weight to gently reduce the urge to skip ahead without forcing completion.
+
 ## Motion
 
 Motion is intentionally slow and subtle:

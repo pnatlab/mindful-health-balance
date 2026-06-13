@@ -203,6 +203,7 @@ const translations = {
     dailyLogControls: "Daily Log Controls",
     controlsHelp: "บันทึกเป็นตารางใน browser/localStorage ของเครื่องนี้ แล้ว export เป็น Master Excel เมื่อคุณต้องการ",
     saveDailyLog: "Save to Daily Log",
+    saveTodayLog: "บันทึกวันนี้",
     todayResetTitle: "Current Form",
     resetCurrentForm: "เคลียร์หน้าปัจจุบัน",
     clearDailyLog: "Clear Daily Log",
@@ -771,6 +772,7 @@ const translations = {
     dailyLogControls: "Daily Log Controls",
     controlsHelp: "Save today into a local browser table, then export a Master Excel file when you need it.",
     saveDailyLog: "Save to Daily Log",
+    saveTodayLog: "Save Today Log",
     todayResetTitle: "Current Form",
     resetCurrentForm: "Reset Current Form",
     clearDailyLog: "Clear Daily Log",
@@ -1339,6 +1341,7 @@ const translations = {
     dailyLogControls: "Daily Log 控制",
     controlsHelp: "把今天保存到本机浏览器表格，需要时再导出 Master Excel。",
     saveDailyLog: "保存到 Daily Log",
+    saveTodayLog: "保存今日记录",
     todayResetTitle: "当前表单",
     resetCurrentForm: "重置当前表单",
     clearDailyLog: "清空 Daily Log",
@@ -2251,6 +2254,8 @@ function bindEvents() {
   document.querySelector("#goReflectionFromToday").addEventListener("click", goToReflectionFromToday);
   document.querySelector("#backToTodayStepOne").addEventListener("click", () => goToTodayStep(1));
   document.querySelector("#backToTodayStepTwo").addEventListener("click", () => goToTodayStep(2));
+  document.querySelector("#saveTodayFromStepOne").addEventListener("click", () => saveTodayLog({ source: "today_1" }));
+  document.querySelector("#saveTodayFromStepTwo").addEventListener("click", () => saveTodayLog({ source: "today_2" }));
   document.querySelector("#saveDailyLog").addEventListener("click", saveToDailyLog);
   document.querySelector("#resetCurrentForm").addEventListener("click", resetCurrentForm);
   document.querySelector("#clearDailyLog").addEventListener("click", clearDailyLog);
@@ -2467,6 +2472,14 @@ function updateTodaySignalCockpitUI() {
     }
   });
   updateDailyBalanceOrb(readableSignalCount, completeSignalCount);
+  updateTodayStepNextPriority(readableSignalCount >= 4);
+}
+
+function updateTodayStepNextPriority(isCockpitComplete) {
+  const nextButton = document.querySelector("#goTodayStepTwo");
+  if (!nextButton) return;
+  nextButton.classList.toggle("is-cockpit-complete", Boolean(isCockpitComplete));
+  nextButton.dataset.cockpitComplete = String(Boolean(isCockpitComplete));
 }
 
 function getTodaySignalCockpitState(state = appState) {
@@ -4344,8 +4357,10 @@ function getTomorrowFocus(signals = buildSignals()) {
   return t("tomorrowFocus.steady");
 }
 
-function buildDailyLogRow() {
-  const reflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
+function buildDailyLogRow({ generateReflection = true } = {}) {
+  const reflection = generateReflection
+    ? ensureReflectionSignature(appState.generatedReflection || buildReflection())
+    : ensureReflectionSignature(appState.generatedReflection || "");
   const tomorrowFocus = getTomorrowFocus();
   const reminder = getMindfulReminder();
   const drinkScores = getDrinkScores();
@@ -4383,11 +4398,11 @@ function buildDailyLogRow() {
   };
 }
 
-function saveToday() {
-  appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
+function saveCurrentForm({ generateReflection = false } = {}) {
+  if (generateReflection) {
+    appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
+  }
   localStorage.setItem(storageKey(), JSON.stringify(appState));
-  document.querySelector("#saveStatus").textContent = t("saveTodayDone");
-  syncUI();
 }
 
 function resetCurrentForm() {
@@ -4524,10 +4539,12 @@ function normalizeExcelDate(value) {
   return String(value || "").trim();
 }
 
-function saveToDailyLog() {
-  appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
+function saveCurrentDailyLog({ generateReflection = true } = {}) {
+  if (generateReflection) {
+    appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
+  }
 
-  const row = buildDailyLogRow();
+  const row = buildDailyLogRow({ generateReflection });
   const rows = getDailyLog();
   const existingIndex = rows.findIndex((item) => item.Date === row.Date);
 
@@ -4542,11 +4559,19 @@ function saveToDailyLog() {
     rows.push(row);
   }
 
-  saveToday();
+  saveCurrentForm({ generateReflection: false });
   setDailyLog(rows);
   resetTodayInputStep();
   document.querySelector("#saveStatus").textContent = t("savedDailyLog");
   syncUI();
+}
+
+function saveToDailyLog() {
+  saveCurrentDailyLog({ generateReflection: true });
+}
+
+function saveTodayLog() {
+  saveCurrentDailyLog({ generateReflection: false });
 }
 
 function clearDailyLog() {

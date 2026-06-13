@@ -7,7 +7,7 @@ v1.9.6 reduces the visual weight of Today Input 1/2 by changing the first step f
 1. Daily Signal Cockpit
 2. Active Signal Detail
 
-This is a layout and usability experiment for v1.9.x. It does not change the data model, reflection logic, Excel export/import, localStorage schema, or Save to Daily Log behavior.
+This is a layout and usability experiment for v1.9.x. It does not change the data model, reflection logic, Excel export/import, localStorage schema, or saved row structure.
 
 ## Layout Decision
 
@@ -62,7 +62,7 @@ This patch must not:
 - change localStorage data schema
 - change reflection logic
 - change Today Input 2/2
-- move Save to Daily Log
+- make Reflection mandatory before saving
 - add medical, training, or diagnostic meaning
 
 ## v2 Direction
