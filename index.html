@@ -29,34 +29,12 @@
   </section>
 
   <main class="app-shell">
-    <header class="hero">
-      <div>
-        <p class="eyebrow" data-i18n="eyebrow">Personal mindful dashboard</p>
-        <h1 data-i18n="title">Mindful Health Balance by MSxAI</h1>
-        <p class="version" data-i18n="version">v1.9.7 — Symbolic Signal Cockpit Polish</p>
-        <p class="subtitle" data-i18n="subtitle">ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง</p>
+    <header class="app-topbar">
+      <div class="app-title-lockup">
+        <h1 data-i18n="appShortTitle">Mindful Health Balance</h1>
       </div>
-      <div class="hero-side">
-        <div class="language-toggle" aria-label="Language">
-          <button type="button" data-lang="th">TH</button>
-          <button type="button" data-lang="en">EN</button>
-          <button type="button" data-lang="zh">中文</button>
-        </div>
-        <div class="theme-toggle" aria-label="Theme">
-          <button type="button" data-theme-value="auto" data-i18n="themeAuto">อัตโนมัติ</button>
-          <button type="button" data-theme-value="light" data-i18n="themeLight">สว่าง</button>
-          <button type="button" data-theme-value="dark" data-i18n="themeDark">มืด</button>
-        </div>
-        <p class="theme-status" id="themeStatus" aria-live="polite"></p>
-        <button type="button" class="open-welcome-button" id="openWelcome" data-i18n="openWelcome">Open Welcome</button>
-        <div class="date-pill" id="currentDate" aria-live="polite"></div>
-      </div>
+      <div class="date-pill" id="currentDate" aria-live="polite"></div>
     </header>
-
-    <section class="notice-card">
-      <strong data-i18n="noticeTitle">Self-care reflection tool</strong>
-      <span data-i18n="noticeText">แอปนี้ช่วยดู pattern และ balance recovery เท่านั้น ไม่ใช่เครื่องมือวินิจฉัย และไม่ใช้แทนแพทย์หรือการติดตามตามนัด</span>
-    </section>
 
     <nav class="view-tabs" data-i18n-aria-label="viewTabsAria" aria-label="Mindful Health Balance views">
       <button type="button" data-view="today" data-i18n="tabToday">วันนี้</button>
@@ -554,6 +532,33 @@
       </div>
       <p class="empty-state" id="emptyLogState" data-i18n="emptyLog">ยังไม่มี log วันนี้ เริ่มจาก Save to Daily Log ได้เลย</p>
       </section>
+    </section>
+
+    <section class="app-info-settings" aria-labelledby="appInfoTitle">
+      <div class="app-info-copy">
+        <p class="eyebrow" data-i18n="eyebrow">Personal mindful dashboard</p>
+        <h2 id="appInfoTitle" data-i18n="title">Mindful Health Balance by MSxAI</h2>
+        <p class="version" data-i18n="version">v1.9.7 — Symbolic Signal Cockpit Polish</p>
+        <p class="subtitle" data-i18n="subtitle">ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง</p>
+        <p class="app-info-note">
+          <strong data-i18n="noticeTitle">Self-care reflection tool</strong>
+          <span data-i18n="noticeText">แอปนี้ช่วยดู pattern และ balance recovery เท่านั้น ไม่ใช่เครื่องมือวินิจฉัย และไม่ใช้แทนแพทย์หรือการติดตามตามนัด</span>
+        </p>
+      </div>
+      <div class="app-settings-controls">
+        <div class="language-toggle" aria-label="Language">
+          <button type="button" data-lang="th">TH</button>
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="zh">中文</button>
+        </div>
+        <div class="theme-toggle" aria-label="Theme">
+          <button type="button" data-theme-value="auto" data-i18n="themeAuto">อัตโนมัติ</button>
+          <button type="button" data-theme-value="light" data-i18n="themeLight">สว่าง</button>
+          <button type="button" data-theme-value="dark" data-i18n="themeDark">มืด</button>
+        </div>
+        <p class="theme-status" id="themeStatus" aria-live="polite"></p>
+        <button type="button" class="open-welcome-button" id="openWelcome" data-i18n="openWelcome">Open Welcome</button>
+      </div>
     </section>
   </main>
 </body>
