@@ -1235,12 +1235,12 @@ Collect body, energy, hydration, drink, activity, and recovery context.
 Buttons:
 
 - Secondary: เคลียร์หน้าปัจจุบัน / Clear Current Form / 清除当前表单
-- Practical save: บันทึกวันนี้ / Save Today Log / 保存今日记录
+- Daily Log save: บันทึกเข้า Daily Log / Save to Daily Log / 保存到 Daily Log
 - Primary: ถัดไป: บันทึกภาวะใจ / Next: Mind Note / 下一步：心情记录
 
 Reason:
 Clear Current Form resets the current unsaved form, so it should live on step 1/2 where the main input starts. This lets users clear early without needing to enter the Mind Note step.
-Save Today Log lets users record body, water, drink, and activity signals without being forced into Mind Note or Reflection first.
+Save to Daily Log lets users record body, water, drink, and activity signals without being forced into Mind Note or Reflection first.
 
 ### Today Input 2/2
 
@@ -1255,7 +1255,7 @@ Let the user place the current mind note before reviewing or saving.
 Buttons:
 
 - Secondary: กลับไปหน้า 1/2 / Back to 1/2 / 返回 1/2
-- Practical save: บันทึกวันนี้ / Save Today Log / 保存今日记录
+- Daily Log save: บันทึกเข้า Daily Log / Save to Daily Log / 保存到 Daily Log
 - Primary: ไป Reflection/NuTuenSai / Go to Reflection/NuTuenSai / 前往 Reflection/NuTuenSai
 
 Important:
@@ -1263,7 +1263,7 @@ Important:
 - Do not show เคลียร์หน้าปัจจุบัน on Today 2/2.
 - Keep step 2/2 calm and focused.
 - ไป Reflection/NuTuenSai is a navigation shortcut only, not a save action.
-- บันทึกวันนี้ saves the current daily row with Mind Note if present, while Reflection text may remain empty.
+- บันทึกเข้า Daily Log saves the current daily row with Mind Note if present, while Reflection text may remain empty.
 
 ## 3. State Model
 

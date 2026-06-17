@@ -1758,6 +1758,36 @@ body[data-theme="dark"] .reflection-shortcuts .compact-button {
   border-color: transparent;
 }
 
+.btn-save-log {
+  color: #17345f;
+  border-color: rgba(54, 126, 219, 0.38);
+  background: linear-gradient(135deg, rgba(211, 236, 255, 0.98), rgba(167, 216, 248, 0.94));
+  box-shadow: 0 12px 24px rgba(63, 142, 232, 0.16);
+}
+
+.btn-save-log:hover {
+  color: #10294f;
+  border-color: rgba(44, 105, 196, 0.58);
+  background: linear-gradient(135deg, rgba(189, 226, 255, 1), rgba(141, 202, 242, 0.98));
+}
+
+.btn-save-log:focus-visible {
+  outline: 3px solid rgba(95, 184, 245, 0.38);
+  outline-offset: 3px;
+}
+
+body[data-theme="dark"] .btn-save-log {
+  color: #f7fbff;
+  border-color: rgba(130, 196, 255, 0.36);
+  background: linear-gradient(135deg, rgba(54, 114, 210, 0.86), rgba(87, 151, 225, 0.78));
+  box-shadow: 0 12px 28px rgba(37, 100, 196, 0.22);
+}
+
+body[data-theme="dark"] .btn-save-log:hover {
+  border-color: rgba(151, 211, 255, 0.54);
+  background: linear-gradient(135deg, rgba(63, 130, 222, 0.92), rgba(103, 168, 235, 0.84));
+}
+
 .primary-button:disabled,
 .primary-button[aria-disabled="true"] {
   cursor: wait;
