@@ -50,7 +50,7 @@ This is still a v1.9.x stabilization and usability line. It is not v2.0, not an 
 - Local-first daily log stored in the browser
 - Daily Signal Cockpit with readable status for four core signals
 - Hydration tracking with gentle adaptive guidance
-- Drink profile for caffeine, sweetness, milk drinks, hydration support, and soda context
+- Drink profile with a visible drink insight callout for caffeine, sweetness, hydration support, and soda context
 - Activity and recovery load presets, including work, sport, light recovery, and AI-assisted coding context
 - Optional sleep hours that derive the existing sleep category
 - Optional run detail JSON for distance, duration, pace, and sweat context

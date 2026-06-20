@@ -39,6 +39,7 @@ NuTuenSai reminder and reflection may mention sweetness when it is relevant, esp
 - low energy
 - higher load or exercise
 - soda with high sweetness
+- low water or a day where water needs to return as the base
 
 The wording should stay soft:
 
@@ -46,6 +47,8 @@ The wording should stay soft:
 - the next drink can be simpler
 - recovery and water can follow afterward
 - the previous drink does not need to be judged
+
+In the UI, Drink Profile may present this as a small `Drink insight` callout rather than a plain paragraph, so the user can see the cue without treating it as a warning or score.
 
 The wording should avoid:
 

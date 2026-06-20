@@ -63,6 +63,7 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 | Drink | soda low/no sweetness | Soda is drink context, not sweetness load. | Read sweetness field first. | Assuming all soda is sweet. |
 | Drink | soda high sweetness | Soda adds sweetness load. | No judgment; next drink can return to water/rest. | Guilt or "bad drink" wording. |
 | Drink | caffeine + sweetness | Alertness and sweetness signals both present. | Invite plain water back as base. | Diet/medical tone. |
+| Drink Insight UI | caffeine/sweetness cue | Visible mini callout, not a warning. | Pattern awareness and gentle return. | Treating the callout as a score. |
 | Load | rest day | Low activity load. | Preserve rhythm and recovery. | Push productivity. |
 | Load | light load | The day has space. | Small steady rhythm is enough. | Over-instructing. |
 | Load | medium load | Some energy use. | Balance with recovery. | Treating as high load. |
@@ -127,6 +128,7 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 | Low data / almost empty input | No meaningful Today Input | Greeting / gentle prompt to add Today Input. | Assuming fear, diagnosis, or personal story. | Stay neutral; do not analyze what is not there. |
 | Water low + no other signal | Low water only | Gentle sip cue; small water rhythm. | Medical fear or urgent tone. | Use self-care cue, not warning. |
 | Water low + caffeine high | Low water + high caffeine | Plain water can return as base; caffeine not judged. | "Coffee is wrong." | Separate caffeine context from moral judgment. |
+| Water low + drink context | Low/rising water + caffeine or sweetness | Return-to-baseline day; water/rest can come back gently. | Forcing compensation. | No commands, no guilt, no medical framing. |
 | Low sleep + low energy | Sleep low + energy low | Recovery-first; body resources may be low. | Blame or "you failed." | Care cue, not performance judgment. |
 | Low sleep + feeling good / relaxed | Sleep low + positive mind | Mind may be support signal, while body still needs recovery. | "The whole day is fine." | Let both signals coexist. |
 | Good energy + stress | Energy good + stress cause | Layered signal: energy can carry, recovery still matters. | Contradiction/error wording. | "Both can be true." |

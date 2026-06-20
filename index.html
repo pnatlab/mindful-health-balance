@@ -260,7 +260,13 @@
           <p class="caffeine-cup-caption" id="caffeineCupCaption">ยังไม่มีแก้วคาเฟอีนวันนี้</p>
         </div>
         <ul class="drink-list" id="drinkProfileList" aria-label="Drink list"></ul>
-        <p class="feedback" id="drinksFeedback">เลือกเครื่องดื่มวันนี้เพื่อดู reminder แบบเบา ๆ</p>
+        <aside class="drink-insight-card" aria-live="polite">
+          <div class="drink-insight-heading">
+            <span class="drink-insight-icon" aria-hidden="true">☕</span>
+            <span data-i18n="drinkInsightTitle">ข้อสังเกตเครื่องดื่มวันนี้</span>
+          </div>
+          <p class="feedback" id="drinksFeedback">เลือกเครื่องดื่มวันนี้เพื่อดู reminder แบบเบา ๆ</p>
+        </aside>
       </article>
 
       <article class="glass-card load-recovery-card today-signal-detail-card" id="todaySignalLoadDetail" data-today-step="1" data-today-signal-detail="load" role="tabpanel">

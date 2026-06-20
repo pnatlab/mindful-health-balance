@@ -2095,6 +2095,59 @@ body[data-theme="dark"] .coffee-cup-icon.active::after {
   line-height: 1.55;
 }
 
+.drink-insight-card {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid rgba(111, 167, 232, 0.24);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(111, 167, 232, 0.16), transparent 32%),
+    linear-gradient(135deg, rgba(244, 250, 255, 0.86), rgba(245, 241, 255, 0.62));
+  box-shadow: 0 12px 24px rgba(111, 167, 232, 0.08);
+}
+
+.drink-insight-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #234a78;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.drink-insight-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(111, 167, 232, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.drink-insight-card .feedback {
+  margin: 0;
+}
+
+body[data-theme="dark"] .drink-insight-card {
+  border-color: rgba(142, 167, 255, 0.2);
+  background:
+    radial-gradient(circle at 12% 12%, rgba(142, 167, 255, 0.14), transparent 34%),
+    linear-gradient(135deg, rgba(26, 31, 58, 0.72), rgba(36, 29, 58, 0.62));
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+}
+
+body[data-theme="dark"] .drink-insight-heading {
+  color: #cfe6ff;
+}
+
+body[data-theme="dark"] .drink-insight-icon {
+  border-color: rgba(197, 214, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+}
+
 .toggle-card,
 .activity-button {
   display: flex;

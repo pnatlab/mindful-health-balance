@@ -141,6 +141,7 @@ const translations = {
     drinks: "Drinks",
     drinksHeading: "Drink Profile วันนี้",
     drinksHelper: "บันทึกเครื่องดื่มอื่นนอกจากน้ำเปล่า เช่น กาแฟ ชา โกโก้ น้ำหวาน หรือน้ำผลไม้",
+    drinkInsightTitle: "ข้อสังเกตเครื่องดื่มวันนี้",
     drinkTypeLabel: "Drink Type",
     sweetnessLabel: "Sweetness",
     caffeineLabel: "คาเฟอีนโดยประมาณ",
@@ -344,6 +345,10 @@ const translations = {
     drinkReflection: {
       sugar: "เครื่องดื่มหวานวันนี้เริ่มสะสม แต่ไม่ต้องแก้ด้วยการหักดิบ แค่ลดแก้วถัดไป",
       caffeine: "คาเฟอีนวันนี้เริ่มสูง ให้มันเป็นข้อมูล ไม่ใช่สิ่งที่มาแทนการพัก",
+      context: "เครื่องดื่มวันนี้มีคาเฟอีนหรือความหวานเป็นส่วนหนึ่งของบริบท พอเห็นแล้วไม่ต้องโทษตัวเอง แค่ค่อย ๆ เติมน้ำหรือพักให้ร่างกายกลับฐาน",
+      hydrationCaffeine: "ถ้าน้ำยังไม่มากและมีคาเฟอีนร่วมด้วย วันนี้ควรอ่านผ่านการกลับมาดูแลจังหวะพื้นฐาน มากกว่าการเร่งชดเชย",
+      sweetSignal: "เครื่องดื่มหวานวันนี้เป็นเพียงสัญญาณหนึ่ง ไม่ใช่ความผิด แค่ช่วยให้เห็น pattern ของพลังงานและการพัก",
+      balanced: "วันนี้มีเครื่องดื่มอยู่ในบริบท แต่ฐานน้ำเริ่มพอช่วยประคองได้แล้ว แค่เห็น pattern โดยไม่ต้องดุแก้วไหนก็พอ",
       energyCauses: "วันนี้พลังงานอาจถูกกระทบจาก {causes} มากกว่าความผิดพลาดของตัวเอง",
       energyCause: {
         enough_sleep: "วันนี้พลังงานดูเหมือนมีฐานจากการพักที่พอขึ้น รักษาจังหวะนี้ไว้แบบไม่ต้องเร่งเพิ่มอะไรเกินจำเป็น",
@@ -712,6 +717,7 @@ const translations = {
     drinks: "Drinks",
     drinksHeading: "Drink Profile today",
     drinksHelper: "Log drinks other than plain water, such as coffee, tea, cocoa, sweet drinks, or juice.",
+    drinkInsightTitle: "Drink insight",
     drinkTypeLabel: "Drink Type",
     sweetnessLabel: "Sweetness",
     caffeineLabel: "Approx. caffeine",
@@ -915,6 +921,10 @@ const translations = {
     drinkReflection: {
       sugar: "Sugary drinks are adding up today, but no need to go extreme. Reducing the next one is enough.",
       caffeine: "Caffeine is getting high today. Let it be information, not a replacement for rest.",
+      context: "Drinks were part of today’s context, especially caffeine or sweetness. This is not a mistake to fix, just a pattern to notice and gently balance with water or rest.",
+      hydrationCaffeine: "When water is still low and caffeine is present, today may be better read as a return-to-baseline day rather than a day for forcing correction.",
+      sweetSignal: "Sweet drinks today are one signal, not a mistake. They simply help show the pattern of energy and rest.",
+      balanced: "Drinks were part of today’s context, while water is already a useful base. Notice the pattern without judging any drink.",
       energyCauses: "Today's energy may be affected by {causes} more than by any personal mistake.",
       energyCause: {
         enough_sleep: "Today's energy seems supported by enough rest. Keeping this rhythm may be enough without adding too much.",
@@ -1283,6 +1293,7 @@ const translations = {
     drinks: "饮品",
     drinksHeading: "今日饮品记录",
     drinksHelper: "记录白水以外的饮品，例如咖啡、茶、可可、甜饮或果汁。",
+    drinkInsightTitle: "今日饮品观察",
     drinkTypeLabel: "饮品类型",
     sweetnessLabel: "甜度",
     caffeineLabel: "大约咖啡因",
@@ -1486,6 +1497,10 @@ const translations = {
     drinkReflection: {
       sugar: "今天甜饮开始累积，但不需要极端调整，下一杯少一点就够了。",
       caffeine: "今天咖啡因偏高，把它当作信息，不要让它取代休息。",
+      context: "今天的饮品也是一个 context，尤其是咖啡因或甜度。这不是错误，只是一个可以被看见的 pattern，再慢慢回到喝水或休息。",
+      hydrationCaffeine: "如果水还不多，同时有咖啡因，今天更适合慢慢回到基础节奏，而不是急着补偿。",
+      sweetSignal: "今天的甜饮只是一个信号，不是错误。它可以帮助看见能量和休息的 pattern。",
+      balanced: "今天有饮品作为 context，同时白水已经能作为基础。看见 pattern 就好，不需要评价哪一杯。",
       energyCauses: "今天的能量可能更多受到 {causes} 影响，而不是自己的错误。",
       energyCause: {
         enough_sleep: "今天的能量看起来有一部分来自比较足够的休息。保持这个节奏就好，不需要再额外加很多。",
@@ -3745,6 +3760,25 @@ function getDrinkLoadSignal(scores = getDrinkScores()) {
   };
 }
 
+function getDrinkReflectionNote(signals) {
+  const drinkLoad = signals?.drinkLoad;
+  if (!drinkLoad || drinkLoad.noExtraDrinks) return "";
+
+  const hasSweetnessContext = drinkLoad.sugarHigh
+    || drinkLoad.sweetDrinksCount >= 1
+    || drinkLoad.sweetnessInsight?.detailRelevant;
+  const hasCaffeineContext = drinkLoad.caffeineHigh || drinkLoad.hasCaffeine;
+  const waterNeedsBase = signals.hydration?.low || signals.hydration?.rising;
+  const waterIsBase = signals.hydration?.steady || signals.hydration?.enough;
+
+  if (waterNeedsBase && hasCaffeineContext) return t("drinkReflection.hydrationCaffeine");
+  if (drinkLoad.caffeineHigh && hasSweetnessContext) return t("drinkReflection.context");
+  if (hasSweetnessContext && waterIsBase) return t("drinkReflection.balanced");
+  if (hasSweetnessContext) return t("drinkReflection.sweetSignal");
+  if (drinkLoad.caffeineHigh) return t("drinkReflection.caffeine");
+  return "";
+}
+
 function getRecoveryLoadSignal(loadScore = calculateLoadScore()) {
   const activities = appState.activities || [];
   const loadTypes = getSelectedLoadTypes(activities);
@@ -4162,8 +4196,10 @@ function getReflectionDisplayOverview(signals) {
 }
 
 function getReflectionDisplayAdjustment(signals) {
+  const drinkReflectionNote = getDrinkReflectionNote(signals);
   if (signals.energySleep.energyCausePattern.hasLayeredSignal) return t("reflectionDisplay.adjustEnergyLayered");
   if (signals.sleepDetail.hasHours && signals.sleepDetail.low) return signals.sleepDetail.note;
+  if (drinkReflectionNote) return drinkReflectionNote;
   if (signals.drinkLoad.sweetnessInsight.previewRelevant) return signals.drinkLoad.sweetnessInsight.text;
   if (signals.runDetail.note && (signals.runDetail.isLongRun || signals.runDetail.isShortQualityRun)) return signals.runDetail.note;
   if (signals.hydration.strongActivityHydration) return t("reflectionDisplay.adjustActivity");
@@ -4222,6 +4258,7 @@ function buildReflectionFromSignals(signals) {
     ? [activityRootSummary]
     : getActivityRootReflections(signals, { limit: 2 });
   const sweetnessInsight = signals.drinkLoad.sweetnessInsight;
+  const drinkReflectionNote = getDrinkReflectionNote(signals);
 
   if (signals.hydration.steady && signals.recoveryLoad.light) {
     goodThings.push(t("signalReflection.goodConsistency"));
@@ -4274,6 +4311,9 @@ function buildReflectionFromSignals(signals) {
   }
   if (signals.continuity.note && !adjustments.includes(signals.continuity.note)) {
     adjustments.push(signals.continuity.note);
+  }
+  if (drinkReflectionNote && !adjustments.includes(drinkReflectionNote)) {
+    adjustments.push(drinkReflectionNote);
   }
   [signals.runDetail.note, signals.runDetail.sweatNote].filter(Boolean).forEach((note) => {
     if (!adjustments.includes(note)) adjustments.push(note);

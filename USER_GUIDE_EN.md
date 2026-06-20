@@ -160,7 +160,11 @@ Click `Add Drink` to add the drink to today’s list, or `Clear Drinks` to start
 
 The app calculates Sugar Score, Caffeine Score, Milk Drink Count, and Hydration Support Count to help reveal patterns gently. A simple rule of thumb remains: a sweet drink behaves more like a sweet treat than like plain water.
 
+`Drink insight` appears as a small callout in the Drink Profile card so caffeine/sweetness guidance is easier to notice. It is a descriptive cue, not judgment, diet advice, or medical advice.
+
 If sugar or caffeine is high on a given day, the point is not guilt. The point is to notice the pattern and adjust the next drink or return to water and rest.
+
+Reflection/NuTuenSai may mention drink context when relevant, such as low water with caffeine or sweetness/caffeine as part of today’s energy context. The tone remains non-judgmental and does not force compensation.
 
 Soda / soft drink is only a Drink Type. It does not mean the drink must be sweet, because zero-sugar or low-sugar options can exist. The app reads the Sweetness field first, so soda with low sweetness is treated as drink context, while soda with high sweetness is treated as a gentle drink-load signal, not diet advice, medical advice, or a judgment.
 
