@@ -98,6 +98,8 @@ Cockpit statuses such as `Empty`, `Started`, and `Readable` are visual feedback 
 
 Starting in v1.9.7 — Symbolic Signal Cockpit Polish, the cockpit becomes more like a signal constellation, with four nodes around a central `Daily Balance Orb`. The orb and signal dots show how much of today is readable in a gentle way, not as a KPI, score, or judgment.
 
+Starting in v1.9.8 — Input-grounded Natural Reflection Composer, Reflection/NuTuenSai selects 2-4 meaningful anchors from today's input, such as water, sleep hours, drink context, activity/load, run detail, Mind Note, or light continuity context. It uses those anchors to write one more natural overview sentence while staying rule-based, local-first, non-medical, and non-chatbot.
+
 The Reflection/NuTuenSai page also includes small secondary shortcuts, `Back to Today 1/2` and `Back to Mind Note 2/2`, so you can add or adjust current input before saving. These shortcuts only navigate; they do not save, clear, or generate a new reflection.
 
 Main Today cards also show a soft blue active layer when that card has current input. This is visual feedback only; it is not a score, completion state, diagnosis, or judgment.
@@ -232,6 +234,8 @@ The goal is to help you return to consistency, not to scare you or make you fix 
 ## 13. Signal-Based Reflection
 
 From v1.6 onward, Mindful Reminder and End-of-Day Reflection are generated from relationships between signals rather than single numbers alone.
+
+From v1.9.8 onward, the Reflection preview and detailed Reflection include an input-grounded overview. This overview names a few relevant anchors from the current day so the user can see the relationship between what was entered and what NuTuenSai reflects.
 
 The main signals are:
 

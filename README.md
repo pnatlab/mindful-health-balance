@@ -31,10 +31,11 @@ It is designed as a user-owned personal rhythm dataset, not as a medical tool. T
 
 ## Current Version
 
-**v1.9.7 — Symbolic Signal Cockpit Polish**
+**v1.9.8 — Input-grounded Natural Reflection Composer**
 
 Latest refinements include:
 
+- Input-grounded Reflection/NuTuenSai overview that selects 2-4 meaningful anchors from today's input
 - Symbolic Daily Signal Cockpit for four daily signals: inner state, water, drinks, and work/activity
 - Save from Today Input 1/2 or 2/2, with Reflection/NuTuenSai as an optional layer
 - Mobile cockpit navigation with active-detail scrolling and a back-to-cockpit control
@@ -114,12 +115,14 @@ The workbook currently includes:
 - [Design Notes Index](docs/design_notes/README.md)
 - [AI-Ready Reflection System Definition](docs/design_notes/AI_READY_REFLECTION_SYSTEM_DEFINITION.md)
 - [Portable Field Memory Design](docs/design_notes/PORTABLE_FIELD_MEMORY_DESIGN.md)
+- [Input-grounded Reflection Composer v1.9.8](docs/design_notes/INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md)
 - [Symbolic Signal Cockpit Polish v1.9.7](docs/design_notes/SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md)
 
 Thai documentation, field notes, and original design context remain available in `USER_GUIDE_TH.md`, the app UI, and the design notes.
 
 ## Version History / Design Trace
 
+- **v1.9.8 — Input-grounded Natural Reflection Composer**: Reflection selects 2-4 meaningful input anchors and embeds them in a natural NuTuenSai overview.
 - **v1.9.7 — Symbolic Signal Cockpit Polish**: symbolic node cockpit, compact center token, mobile visual hierarchy, and gentle cockpit interaction polish.
 - **v1.9.6 — Compact Signal Cockpit Layout**: Today Input 1/2 became a two-card layout with Daily Signal Cockpit and Active Signal Detail.
 - **v1.9.5 — LLI Continuity Reflection Layer**: Reflection reads the previous 1-3 logs as supportive context while keeping today's input primary.

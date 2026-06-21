@@ -84,6 +84,8 @@ TH | EN | 中文
 
 ตั้งแต่ v1.9.7 — Symbolic Signal Cockpit Polish cockpit จะดูเป็น signal constellation มากขึ้น โดยมี node 4 จุดรอบ `Daily Balance Orb` กลางวง Orb และ signal dots ช่วยบอกว่าวันนี้ระบบเริ่มอ่านสัญญาณได้มากน้อยแค่ไหนแบบนุ่ม ๆ ไม่ใช่ KPI คะแนน หรือการตัดสิน
 
+ตั้งแต่ v1.9.8 — Input-grounded Natural Reflection Composer หน้า Reflection/NuTuenSai จะเลือก anchor ที่สำคัญ 2-4 จุดจาก input วันนี้ เช่น น้ำ ชั่วโมงนอน บริบทเครื่องดื่ม activity/load run detail Mind Note หรือ continuity เบา ๆ แล้วนำมาเขียนเป็น overview ที่เป็นธรรมชาติมากขึ้น โดยยังเป็น rule-based, local-first, non-medical และไม่ใช่ chatbot
+
 ในหน้า Reflection/NuTuenSai จะมีปุ่มรองเล็ก ๆ คือ `กลับ Today 1/2` และ `กลับ Mind Note 2/2` เพื่อย้อนกลับไปเติมข้อมูลก่อน Save Daily Log ปุ่มเหล่านี้เป็นการนำทางเท่านั้น ไม่บันทึก ไม่ล้างข้อมูล และไม่ generate reflection ใหม่
 
 การ์ดหลักในหน้า Today จะมีชั้นสีฟ้าอ่อนเมื่อการ์ดนั้นมีข้อมูลในฟอร์มปัจจุบันแล้ว ชั้นนี้เป็น visual feedback เท่านั้น ไม่ใช่คะแนน ไม่ใช่สถานะสำเร็จ ไม่ใช่ diagnosis และไม่ใช่การตัดสินผู้ใช้
@@ -216,6 +218,8 @@ Activity roots refine reflection wording เท่านั้น ไม่ไ�
 ### ระบบสะท้อนผลจาก signal
 
 ตั้งแต่ v1.6 เป็นต้นไป Reminder และ Reflection จะพิจารณาความสัมพันธ์ของ signal ที่มีอยู่แล้วในแอป ได้แก่ น้ำ เครื่องดื่ม การพัก พลังงาน การนอน และ Mind Note
+
+ตั้งแต่ v1.9.8 เป็นต้นไป Reflection preview และ detailed Reflection จะมี input-grounded overview ที่หยิบ anchor สำคัญบางจุดจากวันนี้มาเขียนให้เห็นชัดขึ้นว่า NuTuenSai สะท้อนจากข้อมูลที่ผู้ใช้กรอกไว้ ไม่ใช่การสรุปจากความรู้สึกลอย ๆ
 
 ระบบไม่ได้ใช้ signal เหล่านี้เพื่อวินิจฉัยหรือตัดสินสุขภาพ แต่ใช้เพื่อสะท้อน pattern แบบเบา ๆ เช่น วันที่นอนน้อยพร้อม load สูง ระบบจะให้ recovery มาก่อน หรือวันที่น้ำน้อยพร้อมคาเฟอีนสูง ระบบจะชวนกลับมาจิบน้ำและพักให้สม่ำเสมอขึ้น
 

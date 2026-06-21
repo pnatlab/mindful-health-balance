@@ -38,7 +38,7 @@ const translations = {
     eyebrow: "Personal mindful dashboard",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.7 — Symbolic Signal Cockpit Polish",
+    version: "v1.9.8 — Input-grounded Natural Reflection Composer",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
@@ -290,6 +290,27 @@ const translations = {
       tomorrowPositiveMind: "พรุ่งนี้รักษาใจที่พออยู่ได้ แล้วกลับมาดู pattern แบบไม่เร่งตัวเอง",
       tomorrowSteady: "พรุ่งนี้รักษาจังหวะที่พอดี แล้วกลับมาดู pattern แบบไม่เร่งตัวเอง",
       mindNote: "Mind Note: {note}"
+    },
+    inputGroundedComposer: {
+      waterLow: "น้ำวันนี้ประมาณ {water} ml และยังค่อย ๆ กลับฐานอยู่",
+      waterBase: "น้ำวันนี้ประมาณ {water} ml และเริ่มเป็นฐานของวันได้",
+      sleepHours: "นอนประมาณ {hours} ชั่วโมง",
+      drinkCaffeine: "มีคาเฟอีนเป็นส่วนหนึ่งของบริบท",
+      drinkSweetness: "มีความหวานในเครื่องดื่มเป็นสัญญาณหนึ่งของวัน",
+      drinkContext: "มีคาเฟอีนหรือความหวานเป็นส่วนหนึ่งของบริบท",
+      activity: "มี {activity} เป็น load ของวัน",
+      run: "มี {run} เป็นบริบทของ load และ recovery",
+      mindFeeling: "Mind Note มีโทน {feeling}",
+      mindSupport: "support need คือ {support}",
+      mindText: "มี Mind Note ว่า “{note}”",
+      continuity: "ต่อจาก log ก่อนหน้า มีสัญญาณความต่อเนื่องอยู่เล็กน้อย",
+      restore_baseline: "จาก {anchors} วันนี้อาจอ่านได้ว่าเป็นวันที่ค่อย ๆ กลับมาดูแลจังหวะพื้นฐาน มากกว่าการเร่งชดเชยอะไรทันที",
+      reduce_guilt: "จาก {anchors} วันนี้อาจอ่านได้ว่าไม่ใช่วันที่ต้องโทษตัวเอง แต่เป็นวันที่เห็น pattern แล้วค่อย ๆ กลับมาดูแลฐานเดิม",
+      notice_pattern: "จาก {anchors} วันนี้อาจอ่านได้ว่าเป็น pattern เล็ก ๆ ให้สังเกต ไม่ใช่ข้อสรุปใหญ่เกี่ยวกับตัวเอง",
+      protect_agency: "จาก {anchors} วันนี้อาจอ่านได้ว่าเป็นข้อมูลให้เลือกจังหวะที่พอดี โดยผู้ใช้ยังเป็นคนตัดสินความหมายของวัน",
+      pause_not_push: "จาก {anchors} วันนี้อาจอ่านได้ว่า recovery และการไม่เร่งเพิ่มคือจังหวะที่เหมาะกว่า push ต่อ",
+      soft_continue: "จาก {anchors} วันนี้อาจอ่านได้ว่าเป็นจังหวะที่ค่อย ๆ ต่อเนื่องได้ โดยไม่ต้องทำให้ทุกอย่างสมบูรณ์แบบ",
+      fallback: "จากสัญญาณที่กรอกวันนี้ ระบบอ่านเป็นจุดเริ่มต้นเบา ๆ สำหรับดู pattern โดยไม่ต้องรีบสรุป"
     },
     reflectionInputIntegration: {
       sleepLowHours: "วันนี้นอนประมาณ {hours} ชั่วโมง สัญญาณพลังงานจึงควรถูกอ่านอย่างอ่อนโยนขึ้น และควรเผื่อพื้นที่ให้ recovery",
@@ -614,7 +635,7 @@ const translations = {
     eyebrow: "Personal mindful dashboard",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.7 — Symbolic Signal Cockpit Polish",
+    version: "v1.9.8 — Input-grounded Natural Reflection Composer",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
@@ -866,6 +887,27 @@ const translations = {
       tomorrowPositiveMind: "Tomorrow, keep the mind state that feels workable, then return to the pattern without rushing yourself.",
       tomorrowSteady: "Tomorrow, keep the workable rhythm and return to the pattern without rushing yourself.",
       mindNote: "Mind Note: {note}"
+    },
+    inputGroundedComposer: {
+      waterLow: "water is around {water} ml and still returning toward baseline",
+      waterBase: "water is around {water} ml and can already serve as a base",
+      sleepHours: "sleep was about {hours} hours",
+      drinkCaffeine: "caffeine was part of the context",
+      drinkSweetness: "sweetness in drinks was one signal today",
+      drinkContext: "caffeine or sweetness was part of the drink context",
+      activity: "{activity} was part of today's load",
+      run: "{run} was part of the load and recovery context",
+      mindFeeling: "the Mind Note carried a {feeling} tone",
+      mindSupport: "the support need was {support}",
+      mindText: "there was a Mind Note: “{note}”",
+      continuity: "recent logs add a little continuity context",
+      restore_baseline: "With {anchors}, today may be better read as a gentle return-to-baseline day rather than something to quickly correct.",
+      reduce_guilt: "With {anchors}, today does not need to become self-blame. It can simply be a pattern to notice and return from gently.",
+      notice_pattern: "With {anchors}, today may be read as a small pattern signal, not a large conclusion about yourself.",
+      protect_agency: "With {anchors}, the data can support a clearer choice of rhythm while the meaning of the day stays with you.",
+      pause_not_push: "With {anchors}, recovery and not pushing more may fit the day better than adding output.",
+      soft_continue: "With {anchors}, today can continue gently without needing every signal to be perfect.",
+      fallback: "From the signals entered today, the system reads a gentle starting point for noticing patterns without rushing to conclude."
     },
     reflectionInputIntegration: {
       sleepLowHours: "Today had about {hours} hours of sleep, so energy signals deserve to be read more gently with recovery space.",
@@ -1190,7 +1232,7 @@ const translations = {
     eyebrow: "个人正念健康仪表板",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.7 — Symbolic Signal Cockpit Polish",
+    version: "v1.9.8 — Input-grounded Natural Reflection Composer",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
@@ -1442,6 +1484,27 @@ const translations = {
       tomorrowPositiveMind: "明天保留这种比较能待住的心境，再不急地回来观察 pattern。",
       tomorrowSteady: "明天维持可持续的节奏，再不急地回来观察 pattern。",
       mindNote: "Mind Note: {note}"
+    },
+    inputGroundedComposer: {
+      waterLow: "今天饮水约 {water} ml，还在慢慢回到基础",
+      waterBase: "今天饮水约 {water} ml，已经可以作为基础",
+      sleepHours: "今天大约睡了 {hours} 小时",
+      drinkCaffeine: "咖啡因是今天 context 的一部分",
+      drinkSweetness: "饮品甜度是今天的一个信号",
+      drinkContext: "咖啡因或甜度是今天饮品 context 的一部分",
+      activity: "今天有 {activity} 作为 load 的一部分",
+      run: "今天有 {run} 作为 load 和 recovery 的 context",
+      mindFeeling: "Mind Note 带着 {feeling} 的语气",
+      mindSupport: "support need 是 {support}",
+      mindText: "今天有 Mind Note：“{note}”",
+      continuity: "前几条 log 也提供了一点连续性的 context",
+      restore_baseline: "从 {anchors} 来看，今天更适合慢慢回到基础节奏，而不是急着修正。",
+      reduce_guilt: "从 {anchors} 来看，今天不需要变成自责，只是一个可以看见并温和回来的 pattern。",
+      notice_pattern: "从 {anchors} 来看，今天更像一个小小的 pattern 信号，不是关于自己的大结论。",
+      protect_agency: "从 {anchors} 来看，这些资料可以帮助选择合适节奏，但今天的意义仍然由你来决定。",
+      pause_not_push: "从 {anchors} 来看，recovery 和不继续 push 可能比增加 output 更适合今天。",
+      soft_continue: "从 {anchors} 来看，今天可以温和地继续，不需要每个信号都完美。",
+      fallback: "从今天填写的信号来看，系统会先把它当作温和观察 pattern 的起点，不急着下结论。"
     },
     reflectionInputIntegration: {
       sleepLowHours: "今天大约睡了 {hours} 小时，所以能量信号可以更温和地阅读，并给 recovery 留空间。",
@@ -3779,6 +3842,235 @@ function getDrinkReflectionNote(signals) {
   return "";
 }
 
+function collectReflectionInputAnchors(signals) {
+  const anchors = [];
+  const water = Number(signals.hydration?.waterMl || 0);
+
+  if (water > 0) {
+    const waterText = water.toLocaleString(translations[currentLanguage].locale);
+    const waterIsLow = signals.hydration.low || signals.hydration.rising;
+    anchors.push({
+      key: "water",
+      type: "hydration",
+      priority: waterIsLow ? 72 : 48,
+      text: t(waterIsLow ? "inputGroundedComposer.waterLow" : "inputGroundedComposer.waterBase", { water: waterText }),
+      intents: waterIsLow ? ["restore_baseline"] : ["soft_continue"]
+    });
+  }
+
+  if (signals.sleepDetail?.hasHours) {
+    anchors.push({
+      key: "sleep",
+      type: "sleep",
+      priority: signals.sleepDetail.low ? 96 : signals.sleepDetail.okay ? 78 : 54,
+      text: t("inputGroundedComposer.sleepHours", { hours: formatNumberForLocale(signals.sleepDetail.hours) }),
+      intents: signals.sleepDetail.low ? ["pause_not_push", "restore_baseline"] : ["soft_continue"]
+    });
+  }
+
+  const drinkAnchor = getDrinkInputAnchor(signals);
+  if (drinkAnchor) anchors.push(drinkAnchor);
+
+  const runAnchor = getRunInputAnchor(signals);
+  if (runAnchor) anchors.push(runAnchor);
+
+  const activityAnchor = getActivityInputAnchor(signals);
+  if (activityAnchor) anchors.push(activityAnchor);
+
+  const mindAnchors = getMindInputAnchors(signals);
+  anchors.push(...mindAnchors);
+
+  if (signals.continuity?.note) {
+    anchors.push({
+      key: "continuity",
+      type: "continuity",
+      priority: 44,
+      text: t("inputGroundedComposer.continuity"),
+      intents: ["notice_pattern"]
+    });
+  }
+
+  return anchors;
+}
+
+function getDrinkInputAnchor(signals) {
+  const drinkLoad = signals.drinkLoad;
+  if (!drinkLoad || drinkLoad.noExtraDrinks) return null;
+  const hasSweetnessContext = drinkLoad.sugarHigh
+    || drinkLoad.sweetDrinksCount >= 1
+    || drinkLoad.sweetnessInsight?.detailRelevant;
+  const hasCaffeineContext = drinkLoad.caffeineHigh || drinkLoad.hasCaffeine;
+  const waterNeedsBase = signals.hydration?.low || signals.hydration?.rising;
+  const waterIsBase = signals.hydration?.steady || signals.hydration?.enough;
+
+  let textKey = "inputGroundedComposer.drinkContext";
+  if (hasSweetnessContext && !hasCaffeineContext) textKey = "inputGroundedComposer.drinkSweetness";
+  if (hasCaffeineContext && !hasSweetnessContext) textKey = "inputGroundedComposer.drinkCaffeine";
+
+  return {
+    key: "drink",
+    type: "drink",
+    priority: waterNeedsBase && hasCaffeineContext ? 88 : hasSweetnessContext && waterIsBase ? 68 : 74,
+    text: t(textKey),
+    intents: [
+      waterNeedsBase ? "restore_baseline" : "",
+      hasSweetnessContext ? "reduce_guilt" : "",
+      hasCaffeineContext ? "notice_pattern" : ""
+    ].filter(Boolean)
+  };
+}
+
+function getRunInputAnchor(signals) {
+  if (!signals.runDetail?.hasRunActivity) return null;
+  const parts = [];
+  const typeLabel = signals.runDetail.type
+    ? t(`options.activities.${signals.runDetail.type}`)
+    : t("runDetailTitle");
+  parts.push(typeLabel);
+  if (signals.runDetail.distanceKm !== "") parts.push(`${formatNumberForLocale(signals.runDetail.distanceKm)} km`);
+  if (signals.runDetail.durationMin !== "") parts.push(formatRunDuration(signals.runDetail.durationMin));
+  if (signals.runDetail.sweat) parts.push(t(`runSweat${signals.runDetail.sweat[0].toUpperCase()}${signals.runDetail.sweat.slice(1)}`));
+
+  return {
+    key: "run",
+    type: "run",
+    priority: signals.runDetail.isLongRun ? 92 : signals.runDetail.isShortQualityRun ? 84 : 68,
+    text: t("inputGroundedComposer.run", { run: parts.filter(Boolean).join(" / ") }),
+    intents: ["pause_not_push", "restore_baseline"]
+  };
+}
+
+function getActivityInputAnchor(signals) {
+  if (signals.runDetail?.hasRunActivity) return null;
+  const selectedActivityKey = getSelectedActivityKeys(signals.recoveryLoad.activities)[0];
+  if (!selectedActivityKey) return null;
+  const option = activityOptions.find((activity) => activity.key === selectedActivityKey);
+  if (!option) return null;
+  const isRecovery = signals.recoveryLoad.activityLoadRoots.includes("rest_base");
+  const isHighLoad = signals.recoveryLoad.high || ["deepWork", "marketWatch", "lightCodingAiAssist"].includes(selectedActivityKey);
+
+  return {
+    key: `activity:${selectedActivityKey}`,
+    type: "activity",
+    priority: isHighLoad ? 76 : isRecovery ? 62 : 58,
+    text: t("inputGroundedComposer.activity", { activity: t(`options.activities.${option.key}`) }),
+    intents: isHighLoad ? ["pause_not_push"] : isRecovery ? ["restore_baseline"] : ["notice_pattern"]
+  };
+}
+
+function getMindInputAnchors(signals) {
+  const anchors = [];
+  if (signals.mindNote.feeling) {
+    anchors.push({
+      key: "mindFeeling",
+      type: "mind",
+      priority: signals.mindNote.pressured || signals.mindNote.worried || signals.mindNote.uneasy ? 82 : 52,
+      text: t("inputGroundedComposer.mindFeeling", {
+        feeling: localizeMindNoteValue("Mind_Note_Feeling", signals.mindNote.feeling)
+      }),
+      intents: signals.mindNote.pressured || signals.mindNote.worried || signals.mindNote.uneasy
+        ? ["reduce_guilt", "protect_agency"]
+        : ["soft_continue"]
+    });
+  }
+  if (signals.mindNote.support) {
+    anchors.push({
+      key: "mindSupport",
+      type: "mind",
+      priority: signals.mindNote.restFirst ? 86 : 66,
+      text: t("inputGroundedComposer.mindSupport", {
+        support: localizeMindNoteValue("Mind_Note_Support", signals.mindNote.support)
+      }),
+      intents: signals.mindNote.restFirst ? ["pause_not_push", "protect_agency"] : ["restore_baseline"]
+    });
+  }
+  if (signals.mindNote.text?.trim()) {
+    anchors.push({
+      key: "mindText",
+      type: "mind",
+      priority: 64,
+      text: t("inputGroundedComposer.mindText", {
+        note: truncateText(signals.mindNote.text, 48)
+      }),
+      intents: ["protect_agency", "notice_pattern"]
+    });
+  }
+  return anchors;
+}
+
+function rankReflectionAnchors(anchors, signals) {
+  const uniqueAnchors = [];
+  const seenTypes = new Set();
+  const sortedAnchors = [...(anchors || [])].sort((a, b) => b.priority - a.priority);
+
+  sortedAnchors.forEach((anchor) => {
+    const uniquenessKey = anchor.type === "mind" ? anchor.key : anchor.type;
+    if (seenTypes.has(uniquenessKey)) return;
+    seenTypes.add(uniquenessKey);
+    uniqueAnchors.push(anchor);
+  });
+
+  const limit = hasMeaningfulTodayInput() && (signals.hydration?.waterMl || signals.drinkLoad?.profiles?.length || signals.recoveryLoad?.activities?.length)
+    ? 4
+    : 3;
+  return uniqueAnchors.slice(0, limit);
+}
+
+function deriveReflectionIntent(anchors, signals) {
+  const intentScores = {
+    restore_baseline: 0,
+    reduce_guilt: 0,
+    notice_pattern: 0,
+    protect_agency: 0,
+    pause_not_push: 0,
+    soft_continue: 0
+  };
+
+  (anchors || []).forEach((anchor) => {
+    (anchor.intents || []).forEach((intent) => {
+      intentScores[intent] += 1;
+    });
+  });
+
+  if (signals.energySleep?.endorphinBlindSpot || signals.recoveryLoad?.high || signals.sleepDetail?.low) intentScores.pause_not_push += 2;
+  if (signals.drinkLoad?.sweetDrinksCount >= 1 || signals.mindNote?.pressured) intentScores.reduce_guilt += 1;
+  if (signals.hydration?.low || signals.hydration?.rising || signals.drinkLoad?.hasCaffeine) intentScores.restore_baseline += 1;
+  if (signals.continuity?.note) intentScores.notice_pattern += 1;
+  if (signals.mindNote?.positive || signals.sleepDetail?.good) intentScores.soft_continue += 1;
+
+  const priority = ["pause_not_push", "reduce_guilt", "restore_baseline", "protect_agency", "notice_pattern", "soft_continue"];
+  const primary = priority.sort((a, b) => intentScores[b] - intentScores[a])[0] || "notice_pattern";
+  const secondary = priority.find((intent) => intent !== primary && intentScores[intent] > 0) || "";
+  return { primary, secondary, scores: intentScores };
+}
+
+function composeInputGroundedReflection({ anchors = [], intent, signals } = {}) {
+  if (!hasMeaningfulTodayInput()) return t("inputGroundedComposer.fallback");
+  const rankedAnchors = rankReflectionAnchors(anchors.length ? anchors : collectReflectionInputAnchors(signals), signals);
+  if (!rankedAnchors.length) return t("inputGroundedComposer.fallback");
+  const derivedIntent = intent || deriveReflectionIntent(rankedAnchors, signals);
+  const anchorText = joinLocalizedList(rankedAnchors.map((anchor) => anchor.text));
+  return t(`inputGroundedComposer.${derivedIntent.primary}`, { anchors: anchorText });
+}
+
+function getInputGroundedReflectionBlock(signals) {
+  const anchors = collectReflectionInputAnchors(signals);
+  const rankedAnchors = rankReflectionAnchors(anchors, signals);
+  const intent = deriveReflectionIntent(rankedAnchors, signals);
+  return composeInputGroundedReflection({ anchors: rankedAnchors, intent, signals });
+}
+
+function joinLocalizedList(items = []) {
+  const cleanItems = items.filter(Boolean);
+  if (cleanItems.length <= 1) return cleanItems.join("");
+  if (currentLanguage === "en") {
+    if (cleanItems.length === 2) return `${cleanItems[0]} and ${cleanItems[1]}`;
+    return `${cleanItems.slice(0, -1).join(", ")}, and ${cleanItems[cleanItems.length - 1]}`;
+  }
+  if (currentLanguage === "zh") return cleanItems.join("、");
+  return cleanItems.join(" ร่วมกับ ");
+}
+
 function getRecoveryLoadSignal(loadScore = calculateLoadScore()) {
   const activities = appState.activities || [];
   const loadTypes = getSelectedLoadTypes(activities);
@@ -4160,6 +4452,7 @@ function buildReflectionDisplay() {
 function buildReflectionDisplayFromSignals(signals) {
   return [
     getReflectionDisplayOverview(signals),
+    getInputGroundedReflectionBlock(signals),
     getReflectionDisplayContinuity(signals),
     getReflectionDisplayAdjustment(signals),
     getReflectionDisplayTomorrow(signals),
@@ -4259,6 +4552,7 @@ function buildReflectionFromSignals(signals) {
     : getActivityRootReflections(signals, { limit: 2 });
   const sweetnessInsight = signals.drinkLoad.sweetnessInsight;
   const drinkReflectionNote = getDrinkReflectionNote(signals);
+  const inputGroundedOverview = getInputGroundedReflectionBlock(signals);
 
   if (signals.hydration.steady && signals.recoveryLoad.light) {
     goodThings.push(t("signalReflection.goodConsistency"));
@@ -4329,6 +4623,7 @@ function buildReflectionFromSignals(signals) {
   const energyCauseNote = getEnergyCauseReflectionNote();
 
   return [
+    inputGroundedOverview,
     `${t("reflection.good")} ${goodThings.join(" / ")}`,
     `${t("reflection.adjust")} ${adjustments.join(" / ")}`,
     energyCauseNote.trim(),

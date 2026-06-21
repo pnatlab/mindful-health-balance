@@ -3270,3 +3270,39 @@ Navigation v2.0 ควรรักษา guardrails เหล่านี้:
 ## Guardrail Sentence
 
 Mindful Health Balance v2.0 should separate current-day input, daily closure, data ownership, and multi-day guided review into distinct navigation roles so Field Review Companion can grow without making Today heavy, Reflection confusing, or Log less user-owned.
+
+# v1.9.8 - Input-grounded Natural Reflection Composer
+
+v1.9.8 adds a conservative composer layer around the existing Reflection/NuTuenSai flow. The purpose is to make reflection feel more natural while still visibly grounding the sentence in the user's own inputs.
+
+The composer remains deterministic and rule-based. It does not add a chatbot, external API, machine learning behavior, medical inference, new schema fields, export/import changes, or localStorage data changes.
+
+## Composer Flow
+
+The v1.9.8 layer:
+
+- collects input anchors from existing signals
+- ranks the strongest anchors
+- keeps only 2-4 anchors for the overview
+- derives a wording intent such as `restore_baseline`, `reduce_guilt`, `notice_pattern`, `protect_agency`, `pause_not_push`, or `soft_continue`
+- composes one natural input-grounded overview before detailed reflection notes
+
+## Anchor Sources
+
+Input anchors can come from:
+
+- water amount and hydration status
+- `Sleep_Hours` and derived sleep category
+- drink context such as caffeine, sweetness, and water interaction
+- activity/load/recovery chips
+- run detail such as distance, duration, and sweat when meaningful
+- Mind Note feeling, support need, or short note text
+- previous-log continuity as light supportive context only
+
+## Guardrails
+
+- Current-day input remains primary.
+- Previous logs remain context, not identity or conclusion.
+- The overview should not dump every field.
+- Intent is a wording guide, not diagnosis, score, or hidden profile.
+- Reflection should stay NuTuenSai-like: gentle, compact, non-medical, non-judgmental, and agency-preserving.
