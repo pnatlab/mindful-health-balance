@@ -33,6 +33,8 @@ Today and Reflection page hierarchy, preview synthesis, NuTuenSai note strip, ze
 - [STRUCTURED_SLEEP_RUN_DETAIL_V1_9_3.md](STRUCTURED_SLEEP_RUN_DETAIL_V1_9_3.md) - Records the v1.9.3 decision for optional Sleep_Hours and Run_Detail_JSON inside existing Today cards.
 - [LLI_CONTINUITY_REFLECTION_LAYER_V1_9_5.md](LLI_CONTINUITY_REFLECTION_LAYER_V1_9_5.md) - Defines the v1.9.5 Previous Log Context / LLI continuity layer for reading the latest 1-3 prior logs as supportive context.
 - [INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md](INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md) - Defines the v1.9.8 rule-based composer that selects 2-4 input anchors for a natural NuTuenSai overview.
+- [REFLECTION_BREATHING_MARKERS_V1_9_8B.md](REFLECTION_BREATHING_MARKERS_V1_9_8B.md) - Defines the v1.9.8b soft emoji breathing markers for reflection readability without section headings.
+- [REFLECTION_SENTENCE_SMOOTHING_V1_9_8C.md](REFLECTION_SENTENCE_SMOOTHING_V1_9_8C.md) - Defines the v1.9.8c connector hygiene layer that splits rich anchor context into more natural sentences.
 - [COMPACT_SIGNAL_COCKPIT_LAYOUT_V1_9_6.md](COMPACT_SIGNAL_COCKPIT_LAYOUT_V1_9_6.md) - Defines the v1.9.6 two-card Today Input 1/2 cockpit layout experiment.
 - [SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md](SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md) - Defines the v1.9.7 symbolic constellation polish for the Today cockpit.
 

@@ -14,6 +14,8 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 - v1.9.4 Reflection Input Integration uses current-day input only; it does not read previous Daily Log rows or perform longitudinal comparison.
 - v1.9.5 LLI Continuity Reflection may read only the latest 1-3 previous Daily Log rows as supportive context; current-day input remains primary.
 - v1.9.8 Input-grounded Natural Reflection Composer selects 2-4 visible input anchors and composes one natural overview before detailed notes. It remains deterministic, rule-based, local-first, and non-medical.
+- v1.9.8b Reflection Breathing Markers may add 0-2 small emoji pause markers in detailed Reflection, or at most one in preview, for readability. They are presentation aids only, not headings, scores, labels, or new signal categories.
+- v1.9.8c Reflection Sentence Smoothing reduces repeated connector words and can split rich anchor context into short paragraphs before the gentle reading sentence.
 
 ## 1.1 Input-Grounded Composer Layer
 
@@ -25,6 +27,8 @@ The v1.9.8 composer adds an overview layer before detailed reflection notes.
 | Rank anchors | Keeps only 2-4 strongest anchors so reflection feels grounded without becoming a raw data dump. | Do not mention every field just because it exists. |
 | Derive intent | Chooses a wording intent such as `restore_baseline`, `reduce_guilt`, `notice_pattern`, `protect_agency`, `pause_not_push`, or `soft_continue`. | Intent is a wording guide, not diagnosis, score, or personality label. |
 | Compose overview | Writes one natural sentence that embeds user input traces in NuTuenSai tone. | Avoid chatbot language, medical advice, diet judgment, training advice, or productivity pressure. |
+| Smooth connectors | Uses short sentences, light line breaks, and varied connector shapes instead of repeating one connector across all anchors. | Do not remove input grounding or make reflection generic. |
+| Add breathing markers | Appends at most one marker in preview or two breathing markers in detailed Reflection at natural pause points. | Do not create emoji section headings or mark every line. |
 
 ## 2. Single Signal Matrix
 

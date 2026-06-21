@@ -100,6 +100,10 @@ Starting in v1.9.7 — Symbolic Signal Cockpit Polish, the cockpit becomes more 
 
 Starting in v1.9.8 — Input-grounded Natural Reflection Composer, Reflection/NuTuenSai selects 2-4 meaningful anchors from today's input, such as water, sleep hours, drink context, activity/load, run detail, Mind Note, or light continuity context. It uses those anchors to write one more natural overview sentence while staying rule-based, local-first, non-medical, and non-chatbot.
 
+Starting in v1.9.8b — Reflection Breathing Markers, Reflection/NuTuenSai may add a very small number of emoji pause markers, such as 🩵 or 💧, to make longer sentences easier to read. These markers are not headings, scores, diagnoses, or hidden categories.
+
+Starting in v1.9.8c — Reflection Sentence Smoothing, the input-grounded overview avoids repeating connector words such as `with` across every anchor. Rich input may be split into short breathing paragraphs before the gentle reading sentence, while the same anchors and rule-based intent remain intact.
+
 The Reflection/NuTuenSai page also includes small secondary shortcuts, `Back to Today 1/2` and `Back to Mind Note 2/2`, so you can add or adjust current input before saving. These shortcuts only navigate; they do not save, clear, or generate a new reflection.
 
 Main Today cards also show a soft blue active layer when that card has current input. This is visual feedback only; it is not a score, completion state, diagnosis, or judgment.

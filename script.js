@@ -38,7 +38,7 @@ const translations = {
     eyebrow: "Personal mindful dashboard",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.8 — Input-grounded Natural Reflection Composer",
+    version: "v1.9.8c — Reflection Sentence Smoothing",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
@@ -635,7 +635,7 @@ const translations = {
     eyebrow: "Personal mindful dashboard",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.8 — Input-grounded Natural Reflection Composer",
+    version: "v1.9.8c — Reflection Sentence Smoothing",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
@@ -1232,7 +1232,7 @@ const translations = {
     eyebrow: "个人正念健康仪表板",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.8 — Input-grounded Natural Reflection Composer",
+    version: "v1.9.8c — Reflection Sentence Smoothing",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
@@ -4049,26 +4049,259 @@ function composeInputGroundedReflection({ anchors = [], intent, signals } = {}) 
   const rankedAnchors = rankReflectionAnchors(anchors.length ? anchors : collectReflectionInputAnchors(signals), signals);
   if (!rankedAnchors.length) return t("inputGroundedComposer.fallback");
   const derivedIntent = intent || deriveReflectionIntent(rankedAnchors, signals);
-  const anchorText = joinLocalizedList(rankedAnchors.map((anchor) => anchor.text));
-  return t(`inputGroundedComposer.${derivedIntent.primary}`, { anchors: anchorText });
+  const anchorText = joinReflectionAnchorsNaturally(rankedAnchors, currentLanguage);
+  const readingText = getInputGroundedReadingSentence(derivedIntent.primary);
+  return smoothReflectionConnectors(`${anchorText}\n\n${readingText}`);
 }
 
-function getInputGroundedReflectionBlock(signals) {
+function getInputGroundedReflectionContext(signals) {
   const anchors = collectReflectionInputAnchors(signals);
   const rankedAnchors = rankReflectionAnchors(anchors, signals);
   const intent = deriveReflectionIntent(rankedAnchors, signals);
-  return composeInputGroundedReflection({ anchors: rankedAnchors, intent, signals });
+  const text = composeInputGroundedReflection({ anchors: rankedAnchors, intent, signals });
+  return { anchors: rankedAnchors, intent, signals, text };
 }
 
-function joinLocalizedList(items = []) {
-  const cleanItems = items.filter(Boolean);
-  if (cleanItems.length <= 1) return cleanItems.join("");
-  if (currentLanguage === "en") {
-    if (cleanItems.length === 2) return `${cleanItems[0]} and ${cleanItems[1]}`;
-    return `${cleanItems.slice(0, -1).join(", ")}, and ${cleanItems[cleanItems.length - 1]}`;
+function getInputGroundedReflectionBlock(signals, options = {}) {
+  const context = getInputGroundedReflectionContext(signals);
+  if (!options.withMarkers) return context.text;
+  const markers = selectReflectionBreathingMarkers({
+    anchors: context.anchors,
+    intent: context.intent,
+    signals,
+    compact: Boolean(options.compact)
+  });
+  return applyReflectionBreathingMarkers(context.text, markers, { compact: Boolean(options.compact) });
+}
+
+function selectReflectionBreathingMarkers({ anchors = [], intent = {}, signals, compact = false } = {}) {
+  const markers = [];
+  const hasAnchorType = (type) => anchors.some((anchor) => anchor.type === type);
+  const hasAnchorKey = (key) => anchors.some((anchor) => anchor.key === key || anchor.key?.startsWith(`${key}:`));
+  const addMarker = (emoji, reason) => {
+    if (!emoji || markers.some((marker) => marker.emoji === emoji)) return;
+    markers.push({ emoji, reason });
+  };
+
+  if (["reduce_guilt", "protect_agency"].includes(intent.primary) || hasAnchorType("mind")) {
+    addMarker("🩵", "agency");
   }
-  if (currentLanguage === "zh") return cleanItems.join("、");
-  return cleanItems.join(" ร่วมกับ ");
+
+  const drinkIsCentral = hasAnchorType("drink");
+  const hydrationIsCentral = hasAnchorType("hydration");
+  if (hydrationIsCentral || (drinkIsCentral && (signals.hydration?.low || signals.hydration?.rising))) {
+    addMarker("💧", "hydration");
+  } else if (drinkIsCentral && signals.drinkLoad?.hasCaffeine) {
+    addMarker("☕", "drink");
+  }
+
+  if (hasAnchorType("sleep") || signals.sleepDetail?.low || signals.mindNote?.restFirst) {
+    addMarker("🌙", "recovery");
+  }
+
+  if ((hasAnchorType("run") || hasAnchorKey("activity")) && markers.length < 2) {
+    addMarker("👣", "activity");
+  }
+
+  if (!compact && markers.length < 3 && ["restore_baseline", "soft_continue", "notice_pattern"].includes(intent.primary)) {
+    addMarker("🌱", "return");
+  }
+
+  const maxMarkers = compact ? 1 : 2;
+  return markers.slice(0, maxMarkers);
+}
+
+function applyReflectionBreathingMarkers(textOrBlocks, markers = [], context = {}) {
+  if (!markers.length) return textOrBlocks;
+  if (typeof textOrBlocks === "string") {
+    return appendSoftMarker(textOrBlocks, markers[0]?.emoji);
+  }
+
+  const blocks = (textOrBlocks || []).map((block) => (
+    typeof block === "string" ? { key: "", text: block } : { ...block }
+  ));
+  const used = new Set();
+  const preferredTargets = {
+    agency: ["overview", "mindNote", "mindHolding"],
+    hydration: ["hydration", "adjustment", "overview"],
+    drink: ["adjustment", "hydration", "overview"],
+    recovery: ["recovery", "overview", "adjustment"],
+    activity: ["recovery", "adjustment", "overview"],
+    return: ["tomorrow", "closing2", "overview"]
+  };
+
+  markers.forEach((marker) => {
+    const targets = preferredTargets[marker.reason] || ["overview"];
+    const target = blocks.find((block) => targets.includes(block.key) && block.text && !used.has(block.key));
+    if (!target) return;
+    target.text = appendSoftMarker(target.text, marker.emoji);
+    used.add(target.key);
+  });
+
+  return blocks.map((block) => block.text);
+}
+
+function appendSoftMarker(text, marker) {
+  if (!text || !marker) return text;
+  if (/[🩵💧☕🌙🌱👣]\s*$/.test(text)) return text;
+  return `${text} ${marker}`;
+}
+
+function joinReflectionAnchorsNaturally(anchors = [], lang = currentLanguage) {
+  const phrases = anchors.map((anchor) => anchor.text).filter(Boolean);
+  if (!phrases.length) return "";
+  if (phrases.length === 1) return smoothReflectionConnectors(phrases[0]);
+
+  if (lang === "en") return joinEnglishReflectionAnchors(phrases);
+  if (lang === "zh") return joinChineseReflectionAnchors(phrases);
+  return joinThaiReflectionAnchors(phrases);
+}
+
+function joinThaiReflectionAnchors(phrases) {
+  const leadPhrases = phrases.map(formatThaiLeadAnchor);
+  const secondaryPhrases = phrases.map(formatThaiSecondaryAnchor);
+  if (phrases.length === 2) {
+    return `จากวันนี้${leadPhrases[0]} และ${leadPhrases[1]}`;
+  }
+  if (phrases.length === 3) {
+    return [
+      `จากวันนี้${leadPhrases[0]} และ${leadPhrases[1]}`,
+      `ส่วน${secondaryPhrases[2]}`
+    ].join("\n\n");
+  }
+  return [
+    `จากวันนี้${leadPhrases[0]} และ${leadPhrases[1]}`,
+    `อีกบริบทหนึ่งคือ${secondaryPhrases[2]} ส่วน${secondaryPhrases[3]}`
+  ].join("\n\n");
+}
+
+function joinEnglishReflectionAnchors(phrases) {
+  const cleanPhrases = phrases.map(formatEnglishAnchorPhrase);
+  if (phrases.length === 2) return `Today includes ${cleanPhrases[0]} and ${cleanPhrases[1]}.`;
+  if (phrases.length === 3) {
+    return [
+      `Today includes ${cleanPhrases[0]} and ${cleanPhrases[1]}.`,
+      `${capitalizeFirstLetter(cleanPhrases[2])} is another part of the context.`
+    ].join("\n\n");
+  }
+  return [
+    `Today includes ${cleanPhrases[0]} and ${cleanPhrases[1]}.`,
+    `${capitalizeFirstLetter(cleanPhrases[2])} is another part of the context, while ${cleanPhrases[3]}.`
+  ].join("\n\n");
+}
+
+function joinChineseReflectionAnchors(phrases) {
+  const cleanPhrases = phrases.map(formatChineseAnchorPhrase);
+  if (phrases.length === 2) return `今天可以先看见：${cleanPhrases[0]}，也有${cleanPhrases[1]}。`;
+  if (phrases.length === 3) {
+    return [
+      `今天可以先看见：${cleanPhrases[0]}，也有${cleanPhrases[1]}。`,
+      `${cleanPhrases[2]}也是今天的一个 context。`
+    ].join("\n\n");
+  }
+  return [
+    `今天可以先看见：${cleanPhrases[0]}，也有${cleanPhrases[1]}。`,
+    `${cleanPhrases[2]}也是一个 context；同时${cleanPhrases[3]}。`
+  ].join("\n\n");
+}
+
+function getInputGroundedReadingSentence(intentKey) {
+  const readingSentences = {
+    th: {
+      restore_baseline: "วันนี้จึงอาจอ่านได้ว่าเป็นวันที่ค่อย ๆ กลับมาดูแลจังหวะพื้นฐาน มากกว่าต้องเร่งชดเชยอะไรทันที",
+      reduce_guilt: "วันนี้จึงอาจอ่านได้ว่าไม่ใช่วันที่ต้องโทษตัวเอง แต่เป็นวันที่เห็น pattern แล้วค่อย ๆ กลับมาดูแลฐานเดิม",
+      notice_pattern: "วันนี้จึงอาจอ่านได้ว่าเป็น pattern เล็ก ๆ ให้สังเกต ไม่ใช่ข้อสรุปใหญ่เกี่ยวกับตัวเอง",
+      protect_agency: "วันนี้จึงอาจอ่านได้ว่าเป็นข้อมูลให้เลือกจังหวะที่พอดี โดยผู้ใช้ยังเป็นคนตัดสินความหมายของวัน",
+      pause_not_push: "วันนี้จึงอาจอ่านได้ว่า recovery และการไม่เร่งเพิ่มคือจังหวะที่เหมาะกว่า push ต่อ",
+      soft_continue: "วันนี้จึงอาจอ่านได้ว่าเป็นจังหวะที่ค่อย ๆ ต่อเนื่องได้ โดยไม่ต้องทำให้ทุกอย่างสมบูรณ์แบบ"
+    },
+    en: {
+      restore_baseline: "Today may be better read as a gentle return-to-baseline day rather than something to quickly correct.",
+      reduce_guilt: "Today does not need to become self-blame; it can simply be a pattern to notice and return from gently.",
+      notice_pattern: "Today may be read as a small pattern signal, not a large conclusion about yourself.",
+      protect_agency: "The data can support a clearer choice of rhythm while the meaning of the day stays with you.",
+      pause_not_push: "Recovery and not pushing more may fit the day better than adding output.",
+      soft_continue: "Today can continue gently without needing every signal to be perfect."
+    },
+    zh: {
+      restore_baseline: "今天更适合慢慢回到基础节奏，而不是急着修正。",
+      reduce_guilt: "今天不需要变成自责，只是一个可以看见并温和回来的 pattern。",
+      notice_pattern: "今天更像一个小小的 pattern 信号，不是关于自己的大结论。",
+      protect_agency: "这些资料可以帮助选择合适节奏，但今天的意义仍然由你来决定。",
+      pause_not_push: "recovery 和不继续 push 可能比增加 output 更适合今天。",
+      soft_continue: "今天可以温和地继续，不需要每个信号都完美。"
+    }
+  };
+  return readingSentences[currentLanguage]?.[intentKey] || readingSentences[currentLanguage]?.notice_pattern || "";
+}
+
+function stripTodayPrefix(value) {
+  return String(value || "")
+    .trim()
+    .replace(/^จากวันนี้\s*/, "")
+    .replace(/^วันนี้\s*/, "");
+}
+
+function formatThaiLeadAnchor(value) {
+  const text = stripTodayPrefix(value);
+  if (!text) return "";
+  if (text.startsWith("มี") || text.startsWith("นอน") || text.startsWith("น้ำ")) return text;
+  return `มี${text}`;
+}
+
+function formatThaiSecondaryAnchor(value) {
+  return stripTodayPrefix(value).replace(/^มี\s*/, "");
+}
+
+function formatEnglishAnchorPhrase(value) {
+  return String(value || "")
+    .trim()
+    .replace(/^water is around /i, "water around ")
+    .replace(/^sleep was about ([\d.]+) hours/i, "about $1 hours of sleep")
+    .replace(/^caffeine was part of the context/i, "caffeine in the context")
+    .replace(/^caffeine or sweetness was part of the drink context/i, "caffeine or sweetness in the drink context")
+    .replace(/^sweetness in drinks was one signal today/i, "sweetness in drinks");
+}
+
+function formatChineseAnchorPhrase(value) {
+  return String(value || "")
+    .trim()
+    .replace(/^今天/, "");
+}
+
+function capitalizeFirstLetter(value) {
+  const text = String(value || "").trim();
+  return text ? `${text.charAt(0).toUpperCase()}${text.slice(1)}` : "";
+}
+
+function smoothReflectionConnectors(text) {
+  if (!text) return text;
+  return limitRepeatedReflectionTerms(text, currentLanguage)
+    .replace(/\s+\n/g, "\n")
+    .replace(/\n\s+/g, "\n")
+    .replace(/[ \t]{2,}/g, " ")
+    .trim();
+}
+
+function limitRepeatedReflectionTerms(text, lang = currentLanguage) {
+  let output = String(text || "");
+  if (lang === "th") {
+    output = output
+      .replace(/(?:\s*ร่วมกับ\s*){2,}/g, " และ")
+      .replace(/จาก\s+มี/g, "จากวันนี้มี")
+      .replace(/วันนี้\s+วันนี้/g, "วันนี้")
+      .replace(/บริบท\s+บริบท/g, "บริบท");
+  } else if (lang === "en") {
+    output = output
+      .replace(/\bwith with\b/gi, "with")
+      .replace(/\btoday today\b/gi, "today")
+      .replace(/\bcontext context\b/gi, "context");
+  } else if (lang === "zh") {
+    output = output
+      .replace(/今天今天/g, "今天")
+      .replace(/context context/g, "context");
+  }
+  return output;
 }
 
 function getRecoveryLoadSignal(loadScore = calculateLoadScore()) {
@@ -4452,7 +4685,7 @@ function buildReflectionDisplay() {
 function buildReflectionDisplayFromSignals(signals) {
   return [
     getReflectionDisplayOverview(signals),
-    getInputGroundedReflectionBlock(signals),
+    getInputGroundedReflectionBlock(signals, { withMarkers: true, compact: true }),
     getReflectionDisplayContinuity(signals),
     getReflectionDisplayAdjustment(signals),
     getReflectionDisplayTomorrow(signals),
@@ -4552,7 +4785,8 @@ function buildReflectionFromSignals(signals) {
     : getActivityRootReflections(signals, { limit: 2 });
   const sweetnessInsight = signals.drinkLoad.sweetnessInsight;
   const drinkReflectionNote = getDrinkReflectionNote(signals);
-  const inputGroundedOverview = getInputGroundedReflectionBlock(signals);
+  const inputGroundedContext = getInputGroundedReflectionContext(signals);
+  const inputGroundedOverview = inputGroundedContext.text;
 
   if (signals.hydration.steady && signals.recoveryLoad.light) {
     goodThings.push(t("signalReflection.goodConsistency"));
@@ -4622,21 +4856,30 @@ function buildReflectionFromSignals(signals) {
 
   const energyCauseNote = getEnergyCauseReflectionNote();
 
-  return [
-    inputGroundedOverview,
-    `${t("reflection.good")} ${goodThings.join(" / ")}`,
-    `${t("reflection.adjust")} ${adjustments.join(" / ")}`,
-    energyCauseNote.trim(),
-    `${t("reflection.recovery")} ${getRecoveryNote(signals)}`,
-    `${t("reflection.hydration")} ${getHydrationNoteFromSignals(signals)}`,
-    `${t("reflection.tomorrow")} ${getTomorrowFocus(signals)}`,
-    `${t("reflection.mindNote")} ${getMindNoteSummary()}`,
-    `${t("reflection.mindHolding")} ${appState.mindNoteText?.trim() || t("reflection.noMindNote")}`,
-    `${t("reflection.reminder")} ${getReminderFromSignals(signals)}`,
-    "",
-    t("reflection.closing1"),
-    t("reflection.closing2")
-  ].filter((line) => line !== "").join("\n");
+  const breathingMarkers = selectReflectionBreathingMarkers({
+    anchors: inputGroundedContext.anchors,
+    intent: inputGroundedContext.intent,
+    signals
+  });
+  const reflectionBlocks = [
+    { key: "overview", text: inputGroundedOverview },
+    { key: "good", text: `${t("reflection.good")} ${goodThings.join(" / ")}` },
+    { key: "adjustment", text: `${t("reflection.adjust")} ${adjustments.join(" / ")}` },
+    { key: "energyCause", text: energyCauseNote.trim() },
+    { key: "recovery", text: `${t("reflection.recovery")} ${getRecoveryNote(signals)}` },
+    { key: "hydration", text: `${t("reflection.hydration")} ${getHydrationNoteFromSignals(signals)}` },
+    { key: "tomorrow", text: `${t("reflection.tomorrow")} ${getTomorrowFocus(signals)}` },
+    { key: "mindNote", text: `${t("reflection.mindNote")} ${getMindNoteSummary()}` },
+    { key: "mindHolding", text: `${t("reflection.mindHolding")} ${appState.mindNoteText?.trim() || t("reflection.noMindNote")}` },
+    { key: "reminder", text: `${t("reflection.reminder")} ${getReminderFromSignals(signals)}` },
+    { key: "spacer", text: "" },
+    { key: "closing1", text: t("reflection.closing1") },
+    { key: "closing2", text: t("reflection.closing2") }
+  ];
+
+  return applyReflectionBreathingMarkers(reflectionBlocks, breathingMarkers)
+    .filter((line) => line !== "")
+    .join("\n");
 }
 
 function getEnergyCauseSummary() {

@@ -31,10 +31,12 @@ It is designed as a user-owned personal rhythm dataset, not as a medical tool. T
 
 ## Current Version
 
-**v1.9.8 — Input-grounded Natural Reflection Composer**
+**v1.9.8c — Reflection Sentence Smoothing**
 
 Latest refinements include:
 
+- Reflection sentence smoothing to reduce repeated connectors and split rich anchor context into calmer sentences
+- Reflection breathing markers: very small emoji pause markers for readability without section headings
 - Input-grounded Reflection/NuTuenSai overview that selects 2-4 meaningful anchors from today's input
 - Symbolic Daily Signal Cockpit for four daily signals: inner state, water, drinks, and work/activity
 - Save from Today Input 1/2 or 2/2, with Reflection/NuTuenSai as an optional layer
@@ -116,12 +118,16 @@ The workbook currently includes:
 - [AI-Ready Reflection System Definition](docs/design_notes/AI_READY_REFLECTION_SYSTEM_DEFINITION.md)
 - [Portable Field Memory Design](docs/design_notes/PORTABLE_FIELD_MEMORY_DESIGN.md)
 - [Input-grounded Reflection Composer v1.9.8](docs/design_notes/INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md)
+- [Reflection Breathing Markers v1.9.8b](docs/design_notes/REFLECTION_BREATHING_MARKERS_V1_9_8B.md)
+- [Reflection Sentence Smoothing v1.9.8c](docs/design_notes/REFLECTION_SENTENCE_SMOOTHING_V1_9_8C.md)
 - [Symbolic Signal Cockpit Polish v1.9.7](docs/design_notes/SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md)
 
 Thai documentation, field notes, and original design context remain available in `USER_GUIDE_TH.md`, the app UI, and the design notes.
 
 ## Version History / Design Trace
 
+- **v1.9.8c — Reflection Sentence Smoothing**: reduces repeated connectors and uses short paragraphs so input-grounded reflection reads more naturally.
+- **v1.9.8b — Reflection Breathing Markers**: adds minimal emoji pause markers to improve reflection readability without creating emoji headings or new signal categories.
 - **v1.9.8 — Input-grounded Natural Reflection Composer**: Reflection selects 2-4 meaningful input anchors and embeds them in a natural NuTuenSai overview.
 - **v1.9.7 — Symbolic Signal Cockpit Polish**: symbolic node cockpit, compact center token, mobile visual hierarchy, and gentle cockpit interaction polish.
 - **v1.9.6 — Compact Signal Cockpit Layout**: Today Input 1/2 became a two-card layout with Daily Signal Cockpit and Active Signal Detail.

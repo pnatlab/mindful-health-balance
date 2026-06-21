@@ -3306,3 +3306,48 @@ Input anchors can come from:
 - The overview should not dump every field.
 - Intent is a wording guide, not diagnosis, score, or hidden profile.
 - Reflection should stay NuTuenSai-like: gentle, compact, non-medical, non-judgmental, and agency-preserving.
+
+# v1.9.8b - Reflection Breathing Markers
+
+v1.9.8b adds a small presentation-only marker layer to Reflection/NuTuenSai. The purpose is to help long input-grounded reflection sentences breathe a little more.
+
+Breathing markers are deterministic and limited. They are not emoji section headings, scores, diagnoses, sentiment labels, hidden categories, or chatbot decoration.
+
+## Marker Vocabulary
+
+- `🩵` for NuTuenSai warmth, agency, and guilt reduction
+- `💧` for hydration or water/drink return-to-base
+- `☕` for caffeine or drink context when central
+- `🌙` for sleep, recovery, or rest
+- `🌱` for gentle return or small next step
+- `👣` for activity/load/recovery from physical effort when fitting
+
+## Placement Rules
+
+- Compact preview may use at most one marker.
+- Detailed Reflection may use at most two breathing markers, leaving visual room for the existing NuTuenSai signature heart.
+- Markers are appended to existing sentences or paragraphs.
+- Markers must not create headings, bullets, sections, or emoji spam.
+- Low-data reflection may have zero markers.
+
+## Data Boundary
+
+This layer changes only reflection presentation. It does not change `Daily_Log`, export/import, localStorage, save behavior, reflection meaning, previous-log continuity, or schema.
+
+# v1.9.8c - Reflection Sentence Smoothing
+
+v1.9.8c adds connector hygiene to the input-grounded reflection composer. It keeps the same anchors and intent logic, but improves how rich input is written so Reflection/NuTuenSai does not sound like a system joining phrases together.
+
+## Smoothing Behavior
+
+The smoothing layer:
+
+- avoids repeating one connector such as `ร่วมกับ` or `with` across every anchor
+- splits 3-4 anchor overviews into short breathing paragraphs
+- keeps one gentle reading sentence after the anchor context
+- limits repeated terms such as `วันนี้`, `today`, `context`, and `บริบท`
+- preserves breathing markers from v1.9.8b without using emoji as headings
+
+## Boundary
+
+This is a naturalness polish only. It does not change anchor ranking, reflection intent meaning, `Daily_Log`, export/import, localStorage, save behavior, schema, previous-log continuity, or reflection safety guardrails.

@@ -86,6 +86,10 @@ TH | EN | 中文
 
 ตั้งแต่ v1.9.8 — Input-grounded Natural Reflection Composer หน้า Reflection/NuTuenSai จะเลือก anchor ที่สำคัญ 2-4 จุดจาก input วันนี้ เช่น น้ำ ชั่วโมงนอน บริบทเครื่องดื่ม activity/load run detail Mind Note หรือ continuity เบา ๆ แล้วนำมาเขียนเป็น overview ที่เป็นธรรมชาติมากขึ้น โดยยังเป็น rule-based, local-first, non-medical และไม่ใช่ chatbot
 
+ตั้งแต่ v1.9.8b — Reflection Breathing Markers หน้า Reflection/NuTuenSai อาจเติม emoji pause marker แบบน้อยมาก เช่น 🩵 หรือ 💧 เพื่อช่วยให้ประโยคยาวอ่านง่ายขึ้น marker เหล่านี้ไม่ใช่หัวข้อ ไม่ใช่คะแนน ไม่ใช่ diagnosis และไม่ใช่หมวดลับของระบบ
+
+ตั้งแต่ v1.9.8c — Reflection Sentence Smoothing input-grounded overview จะลดการใช้คำเชื่อมซ้ำ เช่น `ร่วมกับ` และอาจแยก rich input เป็นย่อหน้าสั้น ๆ ก่อนประโยคอ่านวันแบบนุ่ม ๆ โดยยังใช้ anchor และ intent เดิม ไม่ได้เพิ่มความหมายใหม่
+
 ในหน้า Reflection/NuTuenSai จะมีปุ่มรองเล็ก ๆ คือ `กลับ Today 1/2` และ `กลับ Mind Note 2/2` เพื่อย้อนกลับไปเติมข้อมูลก่อน Save Daily Log ปุ่มเหล่านี้เป็นการนำทางเท่านั้น ไม่บันทึก ไม่ล้างข้อมูล และไม่ generate reflection ใหม่
 
 การ์ดหลักในหน้า Today จะมีชั้นสีฟ้าอ่อนเมื่อการ์ดนั้นมีข้อมูลในฟอร์มปัจจุบันแล้ว ชั้นนี้เป็น visual feedback เท่านั้น ไม่ใช่คะแนน ไม่ใช่สถานะสำเร็จ ไม่ใช่ diagnosis และไม่ใช่การตัดสินผู้ใช้

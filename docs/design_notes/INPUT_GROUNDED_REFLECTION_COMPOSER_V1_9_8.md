@@ -57,6 +57,18 @@ The input-grounded overview appears near the top of the Reflection/NuTuenSai out
 
 The compact preview can also use the same layer lightly, so preview and detailed reflection feel related without becoming long or repetitive.
 
+## v1.9.8b Breathing Markers
+
+v1.9.8b adds a presentation-only breathing marker layer on top of the composer. It may append a very small number of emoji markers at natural pause points so longer input-grounded sentences are easier to read.
+
+Breathing markers are not section headings, scores, hidden categories, diagnoses, sentiment labels, or chatbot decoration. Compact preview may use at most one marker; detailed Reflection may use at most two breathing markers, leaving room for the existing NuTuenSai signature heart.
+
+## v1.9.8c Sentence Smoothing
+
+v1.9.8c adds connector hygiene on top of the composer. It keeps anchor ranking and intent meaning unchanged, but avoids joining every anchor with repeated connector words.
+
+Rich input can now be written as short anchor-context paragraphs followed by one gentle reading sentence. This preserves input grounding while reducing repeated terms such as `ร่วมกับ`, `with`, `today`, or `context`.
+
 ## Guardrails
 
 - Current-day input remains primary.
