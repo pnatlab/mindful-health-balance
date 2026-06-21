@@ -2,7 +2,7 @@
 
 ## Intent
 
-v1.9.6 reduces the visual weight of Today Input 1/2 by changing the first step from four large cards shown at once into a compact two-card layout:
+v1.9.6 reduces the visual weight of Today’s Signals 1/2 by changing the first step from four large cards shown at once into a compact two-card layout:
 
 1. Daily Signal Cockpit
 2. Active Signal Detail
@@ -11,7 +11,7 @@ This is a layout and usability experiment for v1.9.x. It does not change the dat
 
 ## Layout Decision
 
-Today Input 1/2 still contains the same four daily signals:
+Today’s Signals 1/2 still contains the same four daily signals:
 
 - Inner State
 - Water
@@ -51,7 +51,7 @@ The active detail area reuses the existing input sections:
 - Drinks detail
 - Load & Recovery detail
 
-Only one is visible at a time on Today Input 1/2. Today Input 2/2 remains unchanged.
+Only one is visible at a time on Today’s Signals 1/2. Mind Note 2/2 remains unchanged.
 
 ## Boundaries
 
@@ -61,7 +61,7 @@ This patch must not:
 - change export/import behavior
 - change localStorage data schema
 - change reflection logic
-- change Today Input 2/2
+- change Mind Note 2/2
 - make Reflection mandatory before saving
 - add medical, training, or diagnostic meaning
 

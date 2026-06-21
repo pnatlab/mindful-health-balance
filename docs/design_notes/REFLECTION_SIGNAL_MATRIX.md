@@ -141,7 +141,7 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 
 | Scenario | Input Combination | Expected NuTuenSai Reflection | UX Risk | Guardrail |
 | --- | --- | --- | --- | --- |
-| Low data / almost empty input | No meaningful Today Input | Greeting / gentle prompt to add Today Input. | Assuming fear, diagnosis, or personal story. | Stay neutral; do not analyze what is not there. |
+| Low data / almost empty input | No meaningful Today’s Signals | Greeting / gentle prompt to add Today’s Signals. | Assuming fear, diagnosis, or personal story. | Stay neutral; do not analyze what is not there. |
 | Water low + no other signal | Low water only | Gentle sip cue; small water rhythm. | Medical fear or urgent tone. | Use self-care cue, not warning. |
 | Water low + caffeine high | Low water + high caffeine | Plain water can return as base; caffeine not judged. | "Coffee is wrong." | Separate caffeine context from moral judgment. |
 | Water low + drink context | Low/rising water + caffeine or sweetness | Return-to-baseline day; water/rest can come back gently. | Forcing compensation. | No commands, no guilt, no medical framing. |

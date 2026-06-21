@@ -2,7 +2,7 @@
 
 ## Intent
 
-v1.9.7 polishes the v1.9.6 Compact Signal Cockpit into a calmer symbolic cockpit. The goal is to make Today Input 1/2 feel more like an MSxAI field interface than a standard menu list, while keeping the same data and behavior.
+v1.9.7 polishes the v1.9.6 Compact Signal Cockpit into a calmer symbolic cockpit. The goal is to make Today’s Signals 1/2 feel more like an MSxAI field interface than a standard menu list, while keeping the same data and behavior.
 
 This patch is visual and interaction-focused only.
 
@@ -30,7 +30,7 @@ This is not a completion score or judgment. It is a soft input-awareness cue tha
 
 ## Default Active Signal
 
-Hydration / Water is the default active detail panel on Today Input 1/2.
+Hydration / Water is the default active detail panel on Today’s Signals 1/2.
 
 Reason:
 
@@ -87,7 +87,7 @@ This patch does not change:
 - Excel export/import
 - localStorage data schema
 - reflection logic
-- Today Input 2/2
+- Mind Note 2/2
 - Save to Daily Log
 - scoring logic
 

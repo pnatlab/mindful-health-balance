@@ -64,13 +64,13 @@ TH | EN | 中文
 
 หลังผ่านหน้ากระจกต้อนรับ แอปจะแบ่งเป็น 3 view:
 
-- `วันนี้` สำหรับกรอกข้อมูลวันนี้แบบ 2 จังหวะ: 1/2 คือ Energy, Mind, Sleep Hours/Sleep, น้ำ, Drink Profile และ Load & Recovery; 2/2 คือ Mind Note และทางลัดไป Reflection/NuTuenSai
+- `วันนี้` สำหรับเติมสัญญาณวันนี้แบบ 2 จังหวะ: `สัญญาณวันนี้ 1/2` คือ Energy, Mind, Sleep Hours/Sleep, น้ำ, Drink Profile และ Load & Recovery; `ภาวะใจวันนี้ 2/2` คือ Mind Note และทางลัดไป Reflection/NuTuenSai
 - `Reflection` สำหรับดู NuTuenSai note แบบแถบสั้น ๆ, generate/review/edit reflection และ Save to Daily Log
 - `Log` สำหรับดู Daily Log Table, Export Master Excel, Import Master Excel และ Clear Daily Log
 
 การเปลี่ยน view ไม่ลบข้อมูลที่กรอกอยู่ และไม่ลบ Daily Log เดิม
 
-ตั้งแต่ v1.9.2 — Today Input Step Flow ปุ่ม `เคลียร์หน้าปัจจุบัน` อยู่เฉพาะ Today Input 1/2 ส่วน Today Input 1/2 และ 2/2 มีปุ่ม `บันทึกเข้า Daily Log` เพื่อบันทึก Daily Log ได้ทันที การไป Reflection/NuTuenSai เป็นการนำทางเท่านั้น ไม่ใช่การบันทึกข้อมูล
+ตั้งแต่ v1.9.2 — Today Input Step Flow ปุ่ม `เคลียร์หน้าปัจจุบัน` อยู่เฉพาะ `สัญญาณวันนี้ 1/2` ส่วน `สัญญาณวันนี้ 1/2` และ `ภาวะใจวันนี้ 2/2` มีปุ่ม `บันทึกเข้า Daily Log` เพื่อบันทึก Daily Log ได้ทันที การไป Reflection/NuTuenSai เป็นการนำทางเท่านั้น ไม่ใช่การบันทึกข้อมูล
 
 ตั้งแต่ v1.9.3 — Structured Sleep & Run Detail แอปเพิ่ม `Sleep_Hours` และ `Run_Detail_JSON` แบบ optional โดยยังเก็บ `Sleep` และ `Activities` เดิมไว้เพื่อ compatibility กับ Daily Log และ Excel เก่า
 
@@ -78,7 +78,7 @@ TH | EN | 中文
 
 ตั้งแต่ v1.9.5 — LLI Continuity Reflection Layer หน้า Reflection/NuTuenSai จะอ่าน Daily Log ก่อนหน้าล่าสุด 1-3 rows เป็นบริบทเสริมแบบเบา ๆ เช่น sleep debt, load ต่อเนื่อง, run recovery carryover, hydration shift หรือ cognitive load continuity ข้อมูลวันนี้ยังเป็นหลักเสมอ และระบบไม่ทำ chatbot memory, analytics รายสัปดาห์/รายเดือน, diagnosis หรือ coaching
 
-ตั้งแต่ v1.9.6 — Compact Signal Cockpit Layout หน้า Today Input 1/2 จะแสดงเป็น 2 card หลัก: `Daily Signal Cockpit` สำหรับเห็นสถานะของ 4 สัญญาณทั้งหมด และ `Active Signal Detail` สำหรับกรอกหมวดที่เลือกอยู่ทีละอัน สัญญาณใน cockpit คือ `ภาวะใจวันนี้`, `น้ำ`, `เครื่องดื่ม`, และ `งาน / กิจกรรม`
+ตั้งแต่ v1.9.6 — Compact Signal Cockpit Layout หน้า `สัญญาณวันนี้ 1/2` จะแสดงเป็น 2 card หลัก: `Daily Signal Cockpit` สำหรับเห็นสถานะของ 4 สัญญาณทั้งหมด และ `Active Signal Detail` สำหรับกรอกหมวดที่เลือกอยู่ทีละอัน สัญญาณใน cockpit คือ `ภาวะใจวันนี้`, `น้ำ`, `เครื่องดื่ม`, และ `งาน / กิจกรรม`
 
 สถานะใน cockpit เช่น `ยังว่าง`, `เริ่มมีข้อมูล`, `พออ่านได้แล้ว` เป็น visual feedback เท่านั้น ไม่ใช่คะแนน ไม่ใช่การตัดสิน และไม่เปลี่ยนข้อมูลที่บันทึก
 
@@ -227,7 +227,7 @@ Activity roots refine reflection wording เท่านั้น ไม่ไ�
 
 ระบบไม่ได้ใช้ signal เหล่านี้เพื่อวินิจฉัยหรือตัดสินสุขภาพ แต่ใช้เพื่อสะท้อน pattern แบบเบา ๆ เช่น วันที่นอนน้อยพร้อม load สูง ระบบจะให้ recovery มาก่อน หรือวันที่น้ำน้อยพร้อมคาเฟอีนสูง ระบบจะชวนกลับมาจิบน้ำและพักให้สม่ำเสมอขึ้น
 
-ถ้าข้อมูลวันนี้ยังน้อย ระบบควรทักทายหรือชวนกรอก Today Input เพิ่มแบบเบา ๆ ไม่ควรวิเคราะห์ลึกหรืออ่านใจผู้ใช้ล่วงหน้า และจะไม่ assume fear ถ้าผู้ใช้ไม่ได้เลือก/เขียนสัญญาณความกังวลหรือความกดดันเอง
+ถ้าข้อมูลวันนี้ยังน้อย ระบบควรทักทายหรือชวนเติมสัญญาณวันนี้เพิ่มแบบเบา ๆ ไม่ควรวิเคราะห์ลึกหรืออ่านใจผู้ใช้ล่วงหน้า และจะไม่ assume fear ถ้าผู้ใช้ไม่ได้เลือก/เขียนสัญญาณความกังวลหรือความกดดันเอง
 
 ### Mind Note — วางใจหนึ่งบรรทัด
 
@@ -254,7 +254,7 @@ Mind Note เป็นช่องบันทึกใจแบบบาง ๆ
 
 ถ้าต้องการแก้รายละเอียดที่บันทึก สามารถกดแก้ไขเล็กน้อยเพื่อดูและปรับข้อความ stored reflection ก่อนบันทึกได้
 
-ระหว่าง generate จะมีจังหวะ zen listening สั้น ๆ เมื่อมี reflection แล้ว preview จะแสดง label `Reflection` พร้อมข้อความที่สร้างขึ้น และ `ล้าง Reflection` จะเป็น reset action เดียว โดยล้างเฉพาะ preview ปัจจุบัน ไม่ลบ Today Input, Daily Log หรือข้อมูลที่บันทึกไว้
+ระหว่าง generate จะมีจังหวะ zen listening สั้น ๆ เมื่อมี reflection แล้ว preview จะแสดง label `Reflection` พร้อมข้อความที่สร้างขึ้น และ `ล้าง Reflection` จะเป็น reset action เดียว โดยล้างเฉพาะ preview ปัจจุบัน ไม่ลบสัญญาณวันนี้, Daily Log หรือข้อมูลที่บันทึกไว้
 
 Reflection ที่สร้างใหม่จะมีหัวใจฟ้า `🩵` ท้ายข้อความหนึ่งครั้ง เป็นลายเซ็น NuTuenSai แบบเบา ๆ ไม่ใช่คะแนนหรือการประเมิน
 
@@ -262,9 +262,9 @@ Reflection ที่สร้างใหม่จะมีหัวใจฟ้
 
 ### Save to Daily Log
 
-กด `บันทึกเข้า Daily Log` จาก Today Input 1/2 เมื่อต้องการบันทึกน้ำ เครื่องดื่ม การนอน กิจกรรม และ load ของวันนี้โดยยังไม่ต้องไป Reflection
+กด `บันทึกเข้า Daily Log` จาก `สัญญาณวันนี้ 1/2` เมื่อต้องการบันทึกน้ำ เครื่องดื่ม การนอน กิจกรรม และ load ของวันนี้โดยยังไม่ต้องไป Reflection
 
-กด `บันทึกเข้า Daily Log` จาก Today Input 2/2 เมื่อต้องการบันทึกข้อมูลวันนี้พร้อม Mind Note โดย Reflection ยังว่างได้
+กด `บันทึกเข้า Daily Log` จาก `ภาวะใจวันนี้ 2/2` เมื่อต้องการบันทึกข้อมูลวันนี้พร้อม Mind Note โดย Reflection ยังว่างได้
 
 กด `Save to Daily Log` จากหน้า Reflection/NuTuenSai เมื่อต้องการบันทึกข้อมูลวันนี้พร้อม generated/edited Reflection
 

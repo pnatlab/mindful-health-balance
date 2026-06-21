@@ -78,13 +78,13 @@ If you choose Light or Dark manually, that choice stays active until you switch 
 
 After the Welcome Glass, the app is organized into three views:
 
-- `Today` for current-day input in two steps: 1/2 is Energy, Mind, Sleep Hours/Sleep, Hydration, Drink Profile, and Load & Recovery; 2/2 is Mind Note and the shortcut to Reflection/NuTuenSai
+- `Today` for current-day signals in two steps: `Today’s Signals 1/2` is Energy, Mind, Sleep Hours/Sleep, Hydration, Drink Profile, and Load & Recovery; `Mind Note 2/2` is Mind Note and the shortcut to Reflection/NuTuenSai
 - `Reflection/NuTuenSai` for the compact NuTuenSai note strip, generated reflection preview/editing, and Save to Daily Log
 - `Log` for the Daily Log Table, Export Master Excel, Import Master Excel, and Clear Daily Log
 
 Switching views does not reset current inputs and does not delete saved Daily Logs.
 
-Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only on Today Input 1/2. Today Input 1/2 and 2/2 now include `Save to Daily Log`, so you can save the Daily Log without visiting Reflection first. Going to Reflection/NuTuenSai is navigation only; it does not save data.
+Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only on Today’s Signals 1/2. Today’s Signals 1/2 and Mind Note 2/2 now include `Save to Daily Log`, so you can save the Daily Log without visiting Reflection first. Going to Reflection/NuTuenSai is navigation only; it does not save data.
 
 Starting in v1.9.3 — Structured Sleep & Run Detail, the app adds optional `Sleep_Hours` and `Run_Detail_JSON` while keeping the existing `Sleep` and `Activities` fields for Daily Log and old Excel compatibility.
 
@@ -92,7 +92,7 @@ Starting in v1.9.4 — Reflection Input Integration Pass, Reflection/NuTuenSai r
 
 Starting in v1.9.5 — LLI Continuity Reflection Layer, Reflection/NuTuenSai reads the latest 1-3 previous Daily Log rows as gentle supporting context. It may notice sleep debt, load continuity, run recovery carryover, hydration shifts, or cognitive-load continuity. Today's input remains primary, and the app does not create chatbot memory, weekly/monthly analytics, diagnosis, or coaching.
 
-Starting in v1.9.6 — Compact Signal Cockpit Layout, Today Input 1/2 uses two main cards: `Daily Signal Cockpit` for the status of all four signals, and `Active Signal Detail` for the selected signal. The cockpit signals are `Inner State`, `Water`, `Drinks`, and `Work / Activity`.
+Starting in v1.9.6 — Compact Signal Cockpit Layout, Today’s Signals 1/2 uses two main cards: `Daily Signal Cockpit` for the status of all four signals, and `Active Signal Detail` for the selected signal. The cockpit signals are `Inner State`, `Water`, `Drinks`, and `Work / Activity`.
 
 Cockpit statuses such as `Empty`, `Started`, and `Readable` are visual feedback only. They are not scores, judgments, or saved data changes.
 
@@ -251,7 +251,7 @@ The main signals are:
 
 The app does not use these signals to diagnose or judge health. It uses them to reflect patterns gently. For example, low sleep with high load may point toward recovery first, while low water with high caffeine may invite steadier water and rest.
 
-When the day has very little data, the app should greet gently or invite a little Today Input before deeper reflection. It should not over-analyze low-data states or assume fear unless the user selected or wrote worry/pressure directly.
+When the day has very little data, the app should greet gently or invite a little Today’s Signals before deeper reflection. It should not over-analyze low-data states or assume fear unless the user selected or wrote worry/pressure directly.
 
 ## 14. Mind Note
 
@@ -280,15 +280,15 @@ The preview intentionally shows a synthesis instead of every detected field. Thi
 
 If you want to adjust the stored detail, use the small edit action to view and edit the stored reflection before saving.
 
-During generation, a short zen listening moment appears. After a reflection exists, the preview shows the `Reflection` label and generated text. `Clear Reflection` is the only reset action; it clears only the current preview and does not delete Today Input, Daily Log rows, or saved data.
+During generation, a short zen listening moment appears. After a reflection exists, the preview shows the `Reflection` label and generated text. `Clear Reflection` is the only reset action; it clears only the current preview and does not delete Today’s Signals, Daily Log rows, or saved data.
 
 Newly generated reflections end with one blue heart, `🩵`, as a light NuTuenSai signature. It is not a score or assessment.
 
 ## 16. Save To Daily Log
 
-Click `Save to Daily Log` from Today Input 1/2 when you only want to record water, drinks, sleep, activity, and load signals without going to Reflection.
+Click `Save to Daily Log` from Today’s Signals 1/2 when you only want to record water, drinks, sleep, activity, and load signals without going to Reflection.
 
-Click `Save to Daily Log` from Today Input 2/2 when you want to save the current day with Mind Note fields while leaving Reflection empty.
+Click `Save to Daily Log` from Mind Note 2/2 when you want to save the current day with Mind Note fields while leaving Reflection empty.
 
 Click `Save to Daily Log` from Reflection/NuTuenSai when you want to save the current day with generated or edited Reflection text.
 

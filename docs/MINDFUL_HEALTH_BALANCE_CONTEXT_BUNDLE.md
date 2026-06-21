@@ -1066,9 +1066,9 @@ It should not imply that the system has already found a pattern.
 
 Examples:
 
-- TH: `สวัสดีค่ะ วันนี้ยังไม่มีข้อมูลให้ระบบอ่านมากนัก ลองกรอก Today Input สักเล็กน้อยก่อน แล้วค่อยกลับมาทบทวนกันนะคะ`
-- EN: `Welcome back. There isn’t much for NuTuenSai to read yet today. Add a little Today Input first, then come back for a gentle reflection.`
-- ZH: `欢迎回来。今天还没有太多资料可以阅读，可以先记录一点今日输入，再回来做轻柔的回顾。`
+- TH: `สวัสดีค่ะ วันนี้ยังไม่มีข้อมูลให้ระบบอ่านมากนัก ลองเติมสัญญาณวันนี้สักเล็กน้อยก่อน แล้วค่อยกลับมาทบทวนกันนะคะ`
+- EN: `Welcome back. There isn’t much for NuTuenSai to read yet today. Add a little Today’s Signals first, then come back for a gentle reflection.`
+- ZH: `欢迎回来。今天还没有太多资料可以阅读，可以先补充一点今日信号，再回来做轻柔的回顾。`
 
 When some current-day input exists, the page may show the normal NuTuenSai reminder from the existing signal layer.
 
@@ -1138,7 +1138,7 @@ During generation:
 
 The delay should stay short enough that the app still feels responsive.
 
-`Clear Reflection` resets only the current preview/edit state and returns the card to the empty state. It must not clear Today Input, saved Daily Log rows, or exported/imported data.
+`Clear Reflection` resets only the current preview/edit state and returns the card to the empty state. It must not clear Today’s Signals, saved Daily Log rows, or exported/imported data.
 
 The generated state intentionally removes `Reflect Again` / `สรุปใหม่` / `重新回顾` to reduce action clutter. A new reflection starts by clearing the preview first, then returning to the empty circular CTA.
 
@@ -1873,7 +1873,7 @@ Continuity should never override today's input. If today clearly says recovery, 
 
 ## Intent
 
-v1.9.6 reduces the visual weight of Today Input 1/2 by changing the first step from four large cards shown at once into a compact two-card layout:
+v1.9.6 reduces the visual weight of Today’s Signals 1/2 by changing the first step from four large cards shown at once into a compact two-card layout:
 
 1. Daily Signal Cockpit
 2. Active Signal Detail
@@ -1882,7 +1882,7 @@ This is a layout and usability experiment for v1.9.x. It does not change the dat
 
 ## Layout Decision
 
-Today Input 1/2 still contains the same four daily signals:
+Today’s Signals 1/2 still contains the same four daily signals:
 
 - Today State
 - Water
@@ -1922,7 +1922,7 @@ The active detail area reuses the existing input sections:
 - Drinks detail
 - Load & Recovery detail
 
-Only one is visible at a time on Today Input 1/2. Today Input 2/2 remains unchanged.
+Only one is visible at a time on Today’s Signals 1/2. Mind Note 2/2 remains unchanged.
 
 ## Boundaries
 
@@ -1932,7 +1932,7 @@ This patch must not:
 - change export/import behavior
 - change localStorage data schema
 - change reflection logic
-- change Today Input 2/2
+- change Mind Note 2/2
 - make Reflection mandatory before saving
 - add medical, training, or diagnostic meaning
 
@@ -1948,7 +1948,7 @@ This layout may inform a future v2 signal cockpit or guided review flow, but v1.
 
 ## Intent
 
-v1.9.7 polishes the v1.9.6 Compact Signal Cockpit into a calmer symbolic cockpit. The goal is to make Today Input 1/2 feel more like an MSxAI field interface than a standard menu list, while keeping the same data and behavior.
+v1.9.7 polishes the v1.9.6 Compact Signal Cockpit into a calmer symbolic cockpit. The goal is to make Today’s Signals 1/2 feel more like an MSxAI field interface than a standard menu list, while keeping the same data and behavior.
 
 This patch is visual and interaction-focused only.
 
@@ -1976,7 +1976,7 @@ This is not a completion score or judgment. It is a soft input-awareness cue tha
 
 ## Default Active Signal
 
-Hydration / Water is the default active detail panel on Today Input 1/2.
+Hydration / Water is the default active detail panel on Today’s Signals 1/2.
 
 Reason:
 
@@ -2033,7 +2033,7 @@ This patch does not change:
 - Excel export/import
 - localStorage data schema
 - reflection logic
-- Today Input 2/2
+- Mind Note 2/2
 - Save to Daily Log
 - scoring logic
 
@@ -2170,7 +2170,7 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 
 | Scenario | Input Combination | Expected NuTuenSai Reflection | UX Risk | Guardrail |
 | --- | --- | --- | --- | --- |
-| Low data / almost empty input | No meaningful Today Input | Greeting / gentle prompt to add Today Input. | Assuming fear, diagnosis, or personal story. | Stay neutral; do not analyze what is not there. |
+| Low data / almost empty input | No meaningful Today’s Signals | Greeting / gentle prompt to add Today’s Signals. | Assuming fear, diagnosis, or personal story. | Stay neutral; do not analyze what is not there. |
 | Water low + no other signal | Low water only | Gentle sip cue; small water rhythm. | Medical fear or urgent tone. | Use self-care cue, not warning. |
 | Water low + caffeine high | Low water + high caffeine | Plain water can return as base; caffeine not judged. | "Coffee is wrong." | Separate caffeine context from moral judgment. |
 | Water low + drink context | Low/rising water + caffeine or sweetness | Return-to-baseline day; water/rest can come back gently. | Forcing compensation. | No commands, no guilt, no medical framing. |

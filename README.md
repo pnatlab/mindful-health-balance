@@ -39,7 +39,7 @@ Latest refinements include:
 - Reflection breathing markers: very small emoji pause markers for readability without section headings
 - Input-grounded Reflection/NuTuenSai overview that selects 2-4 meaningful anchors from today's input
 - Symbolic Daily Signal Cockpit for four daily signals: inner state, water, drinks, and work/activity
-- Save from Today Input 1/2 or 2/2, with Reflection/NuTuenSai as an optional layer
+- Save from Today’s Signals 1/2 or Mind Note 2/2, with Reflection/NuTuenSai as an optional layer
 - Mobile cockpit navigation with active-detail scrolling and a back-to-cockpit control
 - Mobile-first header/settings hierarchy so daily input appears earlier
 - LLI Continuity Reflection Layer using the previous 1-3 saved logs as light context only
@@ -130,11 +130,11 @@ Thai documentation, field notes, and original design context remain available in
 - **v1.9.8b — Reflection Breathing Markers**: adds minimal emoji pause markers to improve reflection readability without creating emoji headings or new signal categories.
 - **v1.9.8 — Input-grounded Natural Reflection Composer**: Reflection selects 2-4 meaningful input anchors and embeds them in a natural NuTuenSai overview.
 - **v1.9.7 — Symbolic Signal Cockpit Polish**: symbolic node cockpit, compact center token, mobile visual hierarchy, and gentle cockpit interaction polish.
-- **v1.9.6 — Compact Signal Cockpit Layout**: Today Input 1/2 became a two-card layout with Daily Signal Cockpit and Active Signal Detail.
+- **v1.9.6 — Compact Signal Cockpit Layout**: Today’s Signals 1/2 became a two-card layout with Daily Signal Cockpit and Active Signal Detail.
 - **v1.9.5 — LLI Continuity Reflection Layer**: Reflection reads the previous 1-3 logs as supportive context while keeping today's input primary.
 - **v1.9.4 — Reflection Input Integration Pass**: Reflection uses today's `Sleep_Hours`, `Run_Detail_JSON`, running subtype, AI-assisted work, hydration, and drink context more clearly.
 - **v1.9.3 — Structured Sleep & Run Detail**: Added optional `Sleep_Hours` and `Run_Detail_JSON` while preserving `Sleep`, `Activities`, and old workbook compatibility.
-- **v1.9.2 — Today Input Step Flow**: Split Today Input into 1/2 and 2/2, while allowing Save to Daily Log from Today or Reflection.
+- **v1.9.2 — Today Input Step Flow**: Split the Today view into Today’s Signals 1/2 and Mind Note 2/2, while allowing Save to Daily Log from Today or Reflection.
 - **v1.9 — Portable Field Memory Foundation**: Added AI-readable Excel context sheets, `Field_Review`, `Column_Guide`, and clearer export summary semantics.
 - **v1.8 — Activity / Profession-aware Load Presets**: Added activity roots for physical, cognitive, clinical, market, outdoor, sport, and recovery contexts.
 - **v1.7 — Minimal Layered UI**: Organized the app into Today, Reflection/NuTuenSai, and Log views.
