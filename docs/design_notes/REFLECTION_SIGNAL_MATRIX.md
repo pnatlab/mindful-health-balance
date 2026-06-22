@@ -16,6 +16,7 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 - v1.9.8 Input-grounded Natural Reflection Composer selects 2-4 visible input anchors and composes one natural overview before detailed notes. It remains deterministic, rule-based, local-first, and non-medical.
 - v1.9.8b Reflection Breathing Markers may add 0-2 small emoji pause markers in detailed Reflection, or at most one in preview, for readability. They are presentation aids only, not headings, scores, labels, or new signal categories.
 - v1.9.8c Reflection Sentence Smoothing reduces repeated connector words and can split rich anchor context into short paragraphs before the gentle reading sentence.
+- v1.9.9 Mindful Practice Context stores optional practice root/type/duration fields for future Field Review, but daily Reflection/NuTuenSai intentionally excludes them and must not judge or interpret practice quality.
 
 ## 1.1 Input-Grounded Composer Layer
 
@@ -29,6 +30,7 @@ The v1.9.8 composer adds an overview layer before detailed reflection notes.
 | Compose overview | Writes one natural sentence that embeds user input traces in NuTuenSai tone. | Avoid chatbot language, medical advice, diet judgment, training advice, or productivity pressure. |
 | Smooth connectors | Uses short sentences, light line breaks, and varied connector shapes instead of repeating one connector across all anchors. | Do not remove input grounding or make reflection generic. |
 | Add breathing markers | Appends at most one marker in preview or two breathing markers in detailed Reflection at natural pause points. | Do not create emoji section headings or mark every line. |
+| Exclude practice context | `Practice_Root`, `Practice_Type`, `Practice_Minutes`, and `Practice_Context_JSON` stay available for future Field Review. | Do not say "today you practiced..." in daily Reflection/NuTuenSai in v1.9.9. |
 
 ## 2. Single Signal Matrix
 

@@ -326,6 +326,54 @@
         </div>
       </article>
 
+      <article class="glass-card practice-context-card" data-today-step="2" hidden>
+        <div class="card-heading">
+          <div>
+            <p class="section-kicker" data-i18n="practiceKicker">Practice context — ถ้ามี</p>
+            <h2 data-i18n="practiceTitle">ภาวนาก่อนวางใจ</h2>
+          </div>
+        </div>
+        <p class="mind-note-subtitle" data-i18n="practiceSubtitle">เลือกฐานสั้น ๆ แล้วค่อยวางใจหนึ่งบรรทัด</p>
+
+        <div class="practice-visual-anchor" aria-live="polite">
+          <div class="practice-visual-orb" aria-hidden="true">
+            <span class="practice-orb-ring practice-orb-ring-one"></span>
+            <span class="practice-orb-ring practice-orb-ring-two"></span>
+            <span class="practice-orb-core"></span>
+          </div>
+          <div class="practice-visual-copy">
+            <span class="practice-summary-pill" id="practiceSummaryPill" data-i18n="practiceSummaryEmpty">ยังไม่เลือกฐาน</span>
+            <span class="practice-duration-summary" id="practiceDurationSummary" data-i18n="practiceSummaryBase">วางใจเท่าที่พอดี</span>
+          </div>
+        </div>
+
+        <div class="choice-group practice-choice-group">
+          <span class="choice-label" data-i18n="practiceRootLabel">ฐานภาวนา</span>
+          <div class="segmented wrap practice-chip-list" role="group" aria-label="Practice base" id="practiceRootList"></div>
+        </div>
+
+        <div class="choice-group practice-choice-group">
+          <span class="choice-label" data-i18n="practiceTypeLabel">เลือกแบบที่ใช้วันนี้</span>
+          <div class="segmented wrap practice-chip-list practice-type-list" role="group" aria-label="Practice type" id="practiceTypeList"></div>
+          <p class="field-helper practice-helper" id="practiceTypeHelper" data-i18n="practiceHelperDefault">เลือกเท่าที่พอดี วันนี้ไม่ต้องทำให้ครบหรือดีเป็นพิเศษ</p>
+        </div>
+
+        <div class="practice-duration-block">
+          <span class="choice-label" data-i18n="practiceDurationLabel">ระยะเวลา</span>
+          <div class="practice-duration-grid">
+            <label>
+              <span data-i18n="practiceHoursLabel">ชั่วโมง</span>
+              <input type="number" id="practiceDurationHoursInput" min="0" max="24" step="1" inputmode="numeric" data-i18n-placeholder="practiceHoursPlaceholder" placeholder="0">
+            </label>
+            <label>
+              <span data-i18n="practiceMinutesLabel">นาที</span>
+              <input type="number" id="practiceDurationMinutesInput" min="0" max="59" step="1" inputmode="numeric" data-i18n-placeholder="practiceMinutesPlaceholder" placeholder="15">
+            </label>
+          </div>
+          <p class="field-helper practice-duration-badge" id="practiceDurationBadge" data-i18n="practiceDurationHint">เว้นว่างได้ ไม่มีคะแนนหรือ streak</p>
+        </div>
+      </article>
+
       <article class="glass-card mind-note-card" data-today-step="2" hidden>
         <div class="card-heading">
           <div>
@@ -544,7 +592,7 @@
       <div class="app-info-copy">
         <p class="eyebrow" data-i18n="eyebrow">Personal mindful dashboard</p>
         <h2 id="appInfoTitle" data-i18n="title">Mindful Health Balance by MSxAI</h2>
-        <p class="version" data-i18n="version">v1.9.8c — Reflection Sentence Smoothing</p>
+        <p class="version" data-i18n="version">v1.9.9 — Mindful Practice Context</p>
         <p class="subtitle" data-i18n="subtitle">ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง</p>
         <p class="app-info-note">
           <strong data-i18n="noticeTitle">Self-care reflection tool</strong>

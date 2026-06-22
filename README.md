@@ -31,10 +31,11 @@ It is designed as a user-owned personal rhythm dataset, not as a medical tool. T
 
 ## Current Version
 
-**v1.9.8c — Reflection Sentence Smoothing**
+**v1.9.9 — Mindful Practice Context**
 
 Latest refinements include:
 
+- Mindful Practice Context card before Mind Note, with optional practice root/type and duration fields
 - Reflection sentence smoothing to reduce repeated connectors and split rich anchor context into calmer sentences
 - Reflection breathing markers: very small emoji pause markers for readability without section headings
 - Input-grounded Reflection/NuTuenSai overview that selects 2-4 meaningful anchors from today's input
@@ -57,6 +58,7 @@ This is still a v1.9.x stabilization and usability line. It is not v2.0, not an 
 - Activity and recovery load presets, including work, sport, light recovery, and AI-assisted coding context
 - Optional sleep hours that derive the existing sleep category
 - Optional run detail JSON for distance, duration, pace, and sweat context
+- Optional mindful practice context stored for future Field Review, not daily Reflection interpretation
 - Optional Mind Note layer
 - NuTuenSai reflection layer
 - Previous-log continuity note that remains supportive and non-diagnostic
@@ -82,7 +84,7 @@ If the app folder or browser origin changes, existing browser storage may not fo
 1. Open `index.html` in a browser.
 2. Fill today's signals in the Daily Signal Cockpit.
 3. Save today's log when ready.
-4. Optionally add a Mind Note.
+4. Optionally add practice context and a Mind Note.
 5. Optionally open Reflection/NuTuenSai before saving or reviewing.
 6. Export or import the Excel workbook when needed.
 
@@ -120,12 +122,14 @@ The workbook currently includes:
 - [Input-grounded Reflection Composer v1.9.8](docs/design_notes/INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md)
 - [Reflection Breathing Markers v1.9.8b](docs/design_notes/REFLECTION_BREATHING_MARKERS_V1_9_8B.md)
 - [Reflection Sentence Smoothing v1.9.8c](docs/design_notes/REFLECTION_SENTENCE_SMOOTHING_V1_9_8C.md)
+- [Mindful Practice Context v1.9.9](docs/design_notes/MINDFUL_PRACTICE_CONTEXT_V1_9_9.md)
 - [Symbolic Signal Cockpit Polish v1.9.7](docs/design_notes/SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md)
 
 Thai documentation, field notes, and original design context remain available in `USER_GUIDE_TH.md`, the app UI, and the design notes.
 
 ## Version History / Design Trace
 
+- **v1.9.9 — Mindful Practice Context**: adds optional practice root/type/duration before Mind Note, stored for future Field Review while excluded from daily Reflection.
 - **v1.9.8c — Reflection Sentence Smoothing**: reduces repeated connectors and uses short paragraphs so input-grounded reflection reads more naturally.
 - **v1.9.8b — Reflection Breathing Markers**: adds minimal emoji pause markers to improve reflection readability without creating emoji headings or new signal categories.
 - **v1.9.8 — Input-grounded Natural Reflection Composer**: Reflection selects 2-4 meaningful input anchors and embeds them in a natural NuTuenSai overview.

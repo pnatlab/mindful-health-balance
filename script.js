@@ -25,6 +25,10 @@ const DAILY_LOG_COLUMNS = [
   "Hydration_Status",
   "Tomorrow_Focus",
   "NuTuenSai_Reminder",
+  "Practice_Root",
+  "Practice_Type",
+  "Practice_Minutes",
+  "Practice_Context_JSON",
   "Mind_Note_Text",
   "Mind_Note_Feeling",
   "Mind_Note_Support"
@@ -38,7 +42,7 @@ const translations = {
     eyebrow: "Personal mindful dashboard",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.8c — Reflection Sentence Smoothing",
+    version: "v1.9.9 — Mindful Practice Context",
     subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
@@ -196,6 +200,23 @@ const translations = {
     mindNoteTitle: "Mind Note",
     mindNoteSubtitle: "วางสิ่งที่ใจถืออยู่เบา ๆ โดยไม่ต้องรีบแก้",
     mindNoteCue: "โน้ตสะท้อนเฉพาะบันทึกนี้",
+    practiceKicker: "Practice context — ถ้ามี",
+    practiceTitle: "ภาวนาก่อนวางใจ",
+    practiceSubtitle: "เลือกฐานสั้น ๆ แล้วค่อยวางใจหนึ่งบรรทัด",
+    practiceRootLabel: "ฐานภาวนา",
+    practiceTypeLabel: "เลือกแบบที่ใช้วันนี้",
+    practiceDurationLabel: "ระยะเวลา",
+    practiceHoursLabel: "ชั่วโมง",
+    practiceMinutesLabel: "นาที",
+    practiceHoursPlaceholder: "0",
+    practiceMinutesPlaceholder: "15",
+    practiceDurationHint: "เว้นว่างได้ ไม่มีคะแนนหรือ streak",
+    practiceDurationBadge: "รวมประมาณ {minutes} นาที",
+    practiceTypeEmpty: "เลือกฐานก่อน หรือเว้นว่างไว้ได้",
+    practiceHelperDefault: "เลือกเท่าที่พอดี วันนี้ไม่ต้องทำให้ครบหรือดีเป็นพิเศษ",
+    practiceSummaryEmpty: "ยังไม่เลือกฐาน",
+    practiceSummaryBase: "วางใจเท่าที่พอดี",
+    practiceSummaryWithMinutes: "{type} · {minutes} นาที",
     mindNoteTextLabel: "วันนี้ใจถืออะไรอยู่",
     mindNotePlaceholder: "เช่น อยากให้เลขดีขึ้นเร็ว แต่ก็ไม่อยากกดดันตัวเอง",
     mindNoteFeelingLabel: "ความรู้สึกของบันทึกนี้",
@@ -596,6 +617,67 @@ const translations = {
         sports: "กีฬา",
         recovery: "วันเบา / ฟื้นตัว"
       },
+      practiceRoots: {
+        breath_body_base: "ลมหายใจ / กาย",
+        heart_quality: "คุณภาพใจ",
+        recollection_trust: "ระลึก / วางใจ",
+        letting_go: "วาง / เห็นตามจริง",
+        elements_simplicity: "กาย / ธาตุ / อาหาร",
+        visual_steadiness: "ภาพ / แสง / พื้นที่",
+        other_or_none: "ไม่ได้ภาวนา / อื่น ๆ"
+      },
+      practiceTypes: {
+        breath_awareness: "รู้ลมหายใจ",
+        body_awareness: "รู้กาย",
+        walking_awareness: "เดินรู้ตัว",
+        metta: "เมตตา",
+        karuna: "กรุณา",
+        mudita: "มุทิตา",
+        upekkha: "อุเบกขา",
+        buddha_recollection: "ระลึกถึงพระพุทธ",
+        dhamma_recollection: "ระลึกถึงธรรม",
+        sangha_recollection: "ระลึกถึงสงฆ์",
+        virtue_recollection: "ระลึกถึงศีล",
+        generosity_recollection: "ระลึกถึงการให้",
+        peace_recollection: "ระลึกถึงความสงบ",
+        impermanence: "เห็นความไม่เที่ยง",
+        let_it_be_lighter: "วางเบา ๆ",
+        see_without_following: "เห็นแล้วไม่ตาม",
+        body_elements: "ดูกายเป็นธาตุ",
+        food_as_it_is: "เห็นอาหารตามจริง",
+        simple_body_awareness: "กลับมาง่าย ๆ กับกาย",
+        light: "แสง",
+        color: "สี",
+        open_space: "พื้นที่ว่าง",
+        none: "ไม่ได้ภาวนา",
+        other: "อื่น ๆ"
+      },
+      practiceTypeHelpers: {
+        breath_awareness: "รู้ลมหายใจเป็นฐาน ไม่ต้องบังคับให้สงบ",
+        body_awareness: "รู้กายเท่าที่รู้ได้ ไม่ต้องทำให้ดีเป็นพิเศษ",
+        walking_awareness: "เดินรู้ตัวแบบนุ่ม ๆ ไม่ต้องทำให้เป็น performance",
+        metta: "วางใจให้อ่อนลง โดยไม่ต้องบังคับให้รู้สึกดี",
+        karuna: "ให้ใจรับรู้ความลำบากโดยไม่ต้องรีบแก้ทั้งหมด",
+        mudita: "รับรู้สิ่งดีเล็ก ๆ โดยไม่ต้องขยายให้ใหญ่เกินจริง",
+        upekkha: "เห็นสิ่งที่เกิดขึ้น แล้ววางไว้เท่าที่วางได้",
+        buddha_recollection: "ระลึกเป็นฐานวางใจ ไม่ใช่การพิสูจน์อะไร",
+        dhamma_recollection: "กลับมาหาความจริงง่าย ๆ ที่พอเห็นได้วันนี้",
+        sangha_recollection: "ระลึกถึงการไม่ต้องเดินคนเดียวในทางนี้",
+        virtue_recollection: "เห็นความตั้งใจดีที่ยังพยุงใจอยู่",
+        generosity_recollection: "นึกถึงการให้แบบไม่ต้องกดดันตัวเอง",
+        peace_recollection: "ระลึกถึงความสงบเท่าที่แตะได้ ไม่ต้องบังคับ",
+        impermanence: "เห็นการเปลี่ยนไป โดยไม่ต้องรีบสรุปตัวเอง",
+        let_it_be_lighter: "วางให้เบาลงเท่าที่วางได้ ไม่ต้องวางหมดทันที",
+        see_without_following: "เห็นแล้วไม่ต้องตามทุกความคิดไป",
+        body_elements: "ดูกายเป็นธรรมชาติของธาตุ ไม่ใช่ตัวตัดสินเรา",
+        food_as_it_is: "เห็นอาหารตามจริงแบบเบา ๆ ไม่ใช่ความผิด",
+        simple_body_awareness: "กลับมาง่าย ๆ กับกายเท่าที่รู้ได้",
+        light: "ใช้แสงเป็นฐานนิ่ง ๆ แบบไม่ต้องเพ่งแรง",
+        color: "ใช้สีเป็นจุดวางใจเล็ก ๆ ไม่ต้องทำให้พิเศษ",
+        open_space: "ให้พื้นที่ว่างช่วยพาใจคลายลงเล็กน้อย",
+        none: "วันนี้ไม่ได้ภาวนาก็เป็นข้อมูลได้ ไม่ใช่ความผิด",
+        other: "ใช้คำว่าอื่น ๆ ได้ ถ้าวันนี้มีฐานเฉพาะของตัวเอง"
+      },
       mindNote: {
         feeling: {
           calm: "เฉย ๆ",
@@ -635,7 +717,7 @@ const translations = {
     eyebrow: "Personal mindful dashboard",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.8c — Reflection Sentence Smoothing",
+    version: "v1.9.9 — Mindful Practice Context",
     subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
@@ -793,6 +875,23 @@ const translations = {
     mindNoteTitle: "Mind Note",
     mindNoteSubtitle: "Set down what the mind is holding, without rushing to fix it.",
     mindNoteCue: "Reflection note for this entry",
+    practiceKicker: "Practice context — optional",
+    practiceTitle: "Practice before Mind Note",
+    practiceSubtitle: "Choose a simple base, then write one line.",
+    practiceRootLabel: "Practice base",
+    practiceTypeLabel: "Practice used today",
+    practiceDurationLabel: "Duration",
+    practiceHoursLabel: "Hours",
+    practiceMinutesLabel: "Minutes",
+    practiceHoursPlaceholder: "0",
+    practiceMinutesPlaceholder: "15",
+    practiceDurationHint: "Leave blank if needed. No score or streak.",
+    practiceDurationBadge: "About {minutes} min total",
+    practiceTypeEmpty: "Choose a base first, or leave this blank.",
+    practiceHelperDefault: "Choose only what fits today. Nothing has to be complete or special.",
+    practiceSummaryEmpty: "No practice selected yet",
+    practiceSummaryBase: "A simple base for today",
+    practiceSummaryWithMinutes: "{type} · {minutes} min",
     mindNoteTextLabel: "What is the mind holding today?",
     mindNotePlaceholder: "For example: I want the numbers to improve quickly, but I do not want to pressure myself.",
     mindNoteFeelingLabel: "Feeling of This Note",
@@ -1193,6 +1292,67 @@ const translations = {
         sports: "Sports",
         recovery: "Light / Recovery"
       },
+      practiceRoots: {
+        breath_body_base: "Breath / body",
+        heart_quality: "Heart qualities",
+        recollection_trust: "Recollection / trust",
+        letting_go: "Letting go",
+        elements_simplicity: "Elements / simplicity",
+        visual_steadiness: "Visual steadiness",
+        other_or_none: "No practice / other"
+      },
+      practiceTypes: {
+        breath_awareness: "Breath awareness",
+        body_awareness: "Body awareness",
+        walking_awareness: "Walking awareness",
+        metta: "Loving-kindness",
+        karuna: "Compassion",
+        mudita: "Appreciative joy",
+        upekkha: "Equanimity",
+        buddha_recollection: "Recollect the Buddha",
+        dhamma_recollection: "Recollect the Dhamma",
+        sangha_recollection: "Recollect the Sangha",
+        virtue_recollection: "Recollect virtue",
+        generosity_recollection: "Recollect generosity",
+        peace_recollection: "Recollect peace",
+        impermanence: "Notice impermanence",
+        let_it_be_lighter: "Let it be lighter",
+        see_without_following: "See without following",
+        body_elements: "Elements of the body",
+        food_as_it_is: "Food as it is",
+        simple_body_awareness: "Simple body awareness",
+        light: "Light",
+        color: "Color",
+        open_space: "Open space",
+        none: "No practice",
+        other: "Other"
+      },
+      practiceTypeHelpers: {
+        breath_awareness: "Use the breath as a base without forcing calm.",
+        body_awareness: "Notice the body as it is, without needing to make it special.",
+        walking_awareness: "Walk with awareness without turning it into performance.",
+        metta: "Let the heart soften without forcing a good feeling.",
+        karuna: "Let the heart notice difficulty without rushing to fix everything.",
+        mudita: "Notice a small good thing without making it too large.",
+        upekkha: "See what is here and set it down as much as you can.",
+        buddha_recollection: "Use recollection as a base for trust, not proof.",
+        dhamma_recollection: "Return to a simple truth that can be seen today.",
+        sangha_recollection: "Remember that this path does not have to be walked alone.",
+        virtue_recollection: "Notice the good intention that still supports the heart.",
+        generosity_recollection: "Recall generosity without pressuring yourself.",
+        peace_recollection: "Touch peace as much as it is available, without forcing it.",
+        impermanence: "Notice change without rushing to define yourself.",
+        let_it_be_lighter: "Let it be lighter as much as possible, without forcing release.",
+        see_without_following: "See it without following every thought.",
+        body_elements: "See the body as natural elements, not a judgment of you.",
+        food_as_it_is: "See food as it is, gently and without guilt.",
+        simple_body_awareness: "Return simply to the body as it can be known.",
+        light: "Use light as a steady base without straining.",
+        color: "Use color as a small place to rest attention.",
+        open_space: "Let open space soften the mind a little.",
+        none: "No practice today is still information, not a mistake.",
+        other: "Use Other if today had your own practice base."
+      },
       mindNote: {
         feeling: {
           calm: "Neutral",
@@ -1232,7 +1392,7 @@ const translations = {
     eyebrow: "个人正念健康仪表板",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.8c — Reflection Sentence Smoothing",
+    version: "v1.9.9 — Mindful Practice Context",
     subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
@@ -1390,6 +1550,23 @@ const translations = {
     mindNoteTitle: "Mind Note",
     mindNoteSubtitle: "把心里拿着的东西轻轻放下，不需要急着修正。",
     mindNoteCue: "这条记录的反思小记",
+    practiceKicker: "Practice context — 可选",
+    practiceTitle: "记录前的练习",
+    practiceSubtitle: "先选择一个简单基础，再写下一句话。",
+    practiceRootLabel: "练习基础",
+    practiceTypeLabel: "今天使用的练习",
+    practiceDurationLabel: "时长",
+    practiceHoursLabel: "小时",
+    practiceMinutesLabel: "分钟",
+    practiceHoursPlaceholder: "0",
+    practiceMinutesPlaceholder: "15",
+    practiceDurationHint: "可以留空。没有分数，也没有 streak。",
+    practiceDurationBadge: "约 {minutes} 分钟",
+    practiceTypeEmpty: "可以先选择基础，也可以留空。",
+    practiceHelperDefault: "选择今天刚刚好的部分，不需要完整或特别好。",
+    practiceSummaryEmpty: "尚未选择练习",
+    practiceSummaryBase: "今天的简单基础",
+    practiceSummaryWithMinutes: "{type} · {minutes} 分钟",
     mindNoteTextLabel: "今天心里轻轻承载着什么？",
     mindNotePlaceholder: "例如：我希望数字快点变好，但也不想给自己太大压力。",
     mindNoteFeelingLabel: "这条记录的感受",
@@ -1790,6 +1967,67 @@ const translations = {
         sports: "运动",
         recovery: "轻恢复"
       },
+      practiceRoots: {
+        breath_body_base: "呼吸 / 身体",
+        heart_quality: "心的品质",
+        recollection_trust: "忆念 / 信任",
+        letting_go: "放下",
+        elements_simplicity: "元素 / 简单",
+        visual_steadiness: "视觉稳定",
+        other_or_none: "未练习 / 其他"
+      },
+      practiceTypes: {
+        breath_awareness: "觉知呼吸",
+        body_awareness: "觉知身体",
+        walking_awareness: "行走觉知",
+        metta: "慈心",
+        karuna: "悲心",
+        mudita: "随喜",
+        upekkha: "舍心",
+        buddha_recollection: "忆念佛",
+        dhamma_recollection: "忆念法",
+        sangha_recollection: "忆念僧",
+        virtue_recollection: "忆念戒",
+        generosity_recollection: "忆念布施",
+        peace_recollection: "忆念寂静",
+        impermanence: "看见无常",
+        let_it_be_lighter: "轻轻放下",
+        see_without_following: "看见但不跟随",
+        body_elements: "观身为元素",
+        food_as_it_is: "如实看待食物",
+        simple_body_awareness: "回到简单的身体觉知",
+        light: "光",
+        color: "颜色",
+        open_space: "空间",
+        none: "未练习",
+        other: "其他"
+      },
+      practiceTypeHelpers: {
+        breath_awareness: "以呼吸为基础，不需要强迫自己平静。",
+        body_awareness: "如实觉知身体，不需要做得特别好。",
+        walking_awareness: "轻轻行走觉知，不把它变成 performance。",
+        metta: "让心稍微软下来，不需要强迫自己感觉好。",
+        karuna: "让心看见困难，不需要急着修正全部。",
+        mudita: "看见一点好的东西，不需要把它放大太多。",
+        upekkha: "看见正在发生的事，能放多少就放多少。",
+        buddha_recollection: "把忆念作为安住的基础，不是为了证明什么。",
+        dhamma_recollection: "回到今天可以看见的简单真实。",
+        sangha_recollection: "记得这条路不需要一个人走完。",
+        virtue_recollection: "看见仍然支持内心的善意。",
+        generosity_recollection: "忆念布施，不需要给自己压力。",
+        peace_recollection: "能触碰多少寂静就多少，不需要强迫。",
+        impermanence: "看见变化，不急着给自己下结论。",
+        let_it_be_lighter: "能放轻多少就多少，不需要一次全放下。",
+        see_without_following: "看见它，不需要跟随每一个念头。",
+        body_elements: "把身体看作自然元素，不作为对自己的评价。",
+        food_as_it_is: "如实看待食物，轻轻地，不带责备。",
+        simple_body_awareness: "简单回到可以觉知的身体。",
+        light: "以光作为稳定基础，不需要用力盯。",
+        color: "用颜色作为一个小小的安住点。",
+        open_space: "让空间帮助心稍微松一点。",
+        none: "今天没有练习也是信息，不是错误。",
+        other: "如果今天有自己的练习基础，可以选择其他。"
+      },
       mindNote: {
         feeling: {
           calm: "一般",
@@ -1929,6 +2167,50 @@ const recoveryModeActivityKeys = ["rest", "lightRecoveryDay"];
 const runningActivityKeys = ["easyRun", "shortQualityRun", "longRun"];
 const runningActivityPriority = ["longRun", "shortQualityRun", "easyRun"];
 const runSweatOptions = ["", "low", "medium", "high"];
+const practiceSourceKey = "40_kammatthana_modern_group";
+const practiceGroups = [
+  {
+    key: "breath_body_base",
+    types: ["breath_awareness", "body_awareness", "walking_awareness"]
+  },
+  {
+    key: "heart_quality",
+    types: ["metta", "karuna", "mudita", "upekkha"]
+  },
+  {
+    key: "recollection_trust",
+    types: [
+      "buddha_recollection",
+      "dhamma_recollection",
+      "sangha_recollection",
+      "virtue_recollection",
+      "generosity_recollection",
+      "peace_recollection"
+    ]
+  },
+  {
+    key: "letting_go",
+    types: ["impermanence", "let_it_be_lighter", "see_without_following"]
+  },
+  {
+    key: "elements_simplicity",
+    types: ["body_elements", "food_as_it_is", "simple_body_awareness"]
+  },
+  {
+    key: "visual_steadiness",
+    types: ["light", "color", "open_space"]
+  },
+  {
+    key: "other_or_none",
+    types: ["none", "other"]
+  }
+];
+const practiceTypeToRoot = practiceGroups.reduce((acc, group) => {
+  group.types.forEach((type) => {
+    acc[type] = group.key;
+  });
+  return acc;
+}, {});
 
 const todayIso = new Date().toLocaleDateString("en-CA");
 
@@ -1955,6 +2237,9 @@ const defaultState = {
     sweat: ""
   },
   generatedReflection: "",
+  practiceRoot: "",
+  practiceType: "",
+  practiceMinutes: "",
   mindNoteText: "",
   mindNoteFeeling: "",
   mindNoteSupport: ""
@@ -1982,6 +2267,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderDrinkOptions();
   renderActivityOptions();
   renderEnergyCauseOptions();
+  renderPracticeOptions();
   bindEvents();
   initWelcome();
   startThemeAutoRefresh();
@@ -2127,6 +2413,9 @@ function loadState() {
     parsed.energyCauses = Array.isArray(parsed.energyCauses) ? parsed.energyCauses : [];
     parsed.sleepHours = normalizeSleepHours(parsed.sleepHours);
     parsed.runDetail = normalizeRunDetail(parsed.runDetail);
+    parsed.practiceRoot = normalizePracticeRoot(parsed.practiceRoot || practiceTypeToRoot[parsed.practiceType]);
+    parsed.practiceType = normalizePracticeType(parsed.practiceType, parsed.practiceRoot);
+    parsed.practiceMinutes = normalizePracticeMinutes(parsed.practiceMinutes);
     applyDerivedSleepFromHours(parsed);
     return parsed;
   } catch {
@@ -2196,6 +2485,33 @@ function renderEnergyCauseOptions() {
   `).join("");
 }
 
+function renderPracticeOptions() {
+  const rootList = document.querySelector("#practiceRootList");
+  if (rootList) {
+    rootList.innerHTML = practiceGroups.map((group) => `
+      <button type="button" class="practice-chip" data-practice-root="${escapeHtml(group.key)}">
+        ${escapeHtml(t(`options.practiceRoots.${group.key}`))}
+      </button>
+    `).join("");
+  }
+  renderPracticeTypeOptions();
+}
+
+function renderPracticeTypeOptions() {
+  const typeList = document.querySelector("#practiceTypeList");
+  if (!typeList) return;
+  const group = practiceGroups.find((entry) => entry.key === appState.practiceRoot);
+  if (!group) {
+    typeList.innerHTML = `<p class="field-helper practice-empty-helper">${escapeHtml(t("practiceTypeEmpty"))}</p>`;
+    return;
+  }
+  typeList.innerHTML = group.types.map((type) => `
+    <button type="button" class="practice-chip" data-practice-type="${escapeHtml(type)}">
+      ${escapeHtml(t(`options.practiceTypes.${type}`))}
+    </button>
+  `).join("");
+}
+
 function bindEvents() {
   document.querySelector("#beginWelcome").addEventListener("click", hideWelcome);
   document.querySelector("#openWelcome").addEventListener("click", () => showWelcome({ remember: false }));
@@ -2234,6 +2550,7 @@ function bindEvents() {
     renderDrinkOptions();
     renderActivityOptions();
     renderEnergyCauseOptions();
+    renderPracticeOptions();
     applyThemePreference();
     syncUI();
     renderDailyLogTable();
@@ -2330,6 +2647,36 @@ function bindEvents() {
     markTodayMindNoteFlowActive();
   });
 
+  document.querySelector("#practiceRootList")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-practice-root]");
+    if (!button) return;
+    const nextRoot = button.dataset.practiceRoot;
+    appState.practiceRoot = appState.practiceRoot === nextRoot ? "" : nextRoot;
+    if (appState.practiceType && practiceTypeToRoot[appState.practiceType] !== appState.practiceRoot) {
+      appState.practiceType = "";
+    }
+    renderPracticeTypeOptions();
+    markTodayMindNoteFlowActive();
+    syncUI();
+  });
+
+  document.querySelector("#practiceTypeList")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-practice-type]");
+    if (!button) return;
+    const nextType = button.dataset.practiceType;
+    appState.practiceType = appState.practiceType === nextType ? "" : nextType;
+    if (appState.practiceType && !appState.practiceRoot) {
+      appState.practiceRoot = practiceTypeToRoot[appState.practiceType] || "";
+    }
+    markTodayMindNoteFlowActive();
+    syncUI();
+  });
+
+  ["#practiceDurationHoursInput", "#practiceDurationMinutesInput"].forEach((selector) => {
+    document.querySelector(selector)?.addEventListener("input", updatePracticeDurationFromForm);
+    document.querySelector(selector)?.addEventListener("change", updatePracticeDurationFromForm);
+  });
+
   document.querySelectorAll("[data-mind-note-field]").forEach((button) => {
     button.addEventListener("click", () => {
       const field = button.dataset.mindNoteField;
@@ -2422,6 +2769,9 @@ function syncUI() {
   resetTodayStepIfDateChanged();
   appState.sleepHours = normalizeSleepHours(appState.sleepHours);
   appState.runDetail = normalizeRunDetail(appState.runDetail);
+  appState.practiceRoot = normalizePracticeRoot(appState.practiceRoot);
+  appState.practiceType = normalizePracticeType(appState.practiceType, appState.practiceRoot);
+  appState.practiceMinutes = normalizePracticeMinutes(appState.practiceMinutes);
   applyDerivedSleepFromHours(appState);
   appState.loadScore = calculateLoadScore();
   appState.loadLevel = getLoadLevel(appState.loadScore);
@@ -2442,6 +2792,7 @@ function syncUI() {
   updateStateButtons();
   updateSleepHoursUI();
   updateMindNoteButtons();
+  updatePracticeUI();
   updateDrinkUI();
   updateActivityUI();
   updateRunDetailUI();
@@ -2511,6 +2862,7 @@ function hasMindNoteInput(state = appState) {
     String(state.mindNoteText || "").trim()
     || state.mindNoteFeeling
     || state.mindNoteSupport
+    || hasPracticeContextInput(state)
   );
 }
 
@@ -3130,6 +3482,159 @@ function updateRunDetailUI() {
   if (sweatSelect) sweatSelect.value = detail.sweat || "";
   if (paceBadge) {
     paceBadge.textContent = detail.avgPace ? t("runPaceBadge", { pace: detail.avgPace }) : t("runPaceEmpty");
+  }
+}
+
+function normalizePracticeRoot(value) {
+  const root = String(value || "").trim();
+  return practiceGroups.some((group) => group.key === root) ? root : "";
+}
+
+function normalizePracticeType(value, root = "") {
+  const type = String(value || "").trim();
+  if (!practiceTypeToRoot[type]) return "";
+  const safeRoot = normalizePracticeRoot(root);
+  if (safeRoot && practiceTypeToRoot[type] !== safeRoot) return "";
+  return type;
+}
+
+function normalizePracticeMinutes(value) {
+  if (value === "" || value === null || value === undefined) return "";
+  const number = Number(value);
+  if (!Number.isFinite(number) || number < 0 || number > 1440) return "";
+  return Math.round(number);
+}
+
+function splitPracticeDuration(minutesValue) {
+  const total = normalizePracticeMinutes(minutesValue);
+  if (total === "") return { hours: "", minutes: "" };
+  const hours = Math.floor(total / 60);
+  const minutes = total % 60;
+  return {
+    hours: hours > 0 ? String(hours) : "",
+    minutes: String(minutes)
+  };
+}
+
+function buildPracticeMinutesFromInputs(hoursValue, minutesValue) {
+  const hoursBlank = hoursValue === "" || hoursValue === null || hoursValue === undefined;
+  const minutesBlank = minutesValue === "" || minutesValue === null || minutesValue === undefined;
+  if (hoursBlank && minutesBlank) return "";
+
+  const hours = hoursBlank ? 0 : Number(hoursValue);
+  const minutes = minutesBlank ? 0 : Number(minutesValue);
+  if (!Number.isInteger(hours) || !Number.isInteger(minutes)) return "";
+  if (hours < 0 || hours > 24 || minutes < 0 || minutes > 59) return "";
+
+  const total = (hours * 60) + minutes;
+  return total > 1440 ? "" : total;
+}
+
+function hasPracticeContextInput(state = appState) {
+  return Boolean(
+    normalizePracticeRoot(state.practiceRoot)
+    || normalizePracticeType(state.practiceType, state.practiceRoot)
+    || normalizePracticeMinutes(state.practiceMinutes) !== ""
+  );
+}
+
+function buildPracticeContextObject(state = appState) {
+  const root = normalizePracticeRoot(state.practiceRoot);
+  const type = normalizePracticeType(state.practiceType, root);
+  const minutes = type === "none" ? 0 : normalizePracticeMinutes(state.practiceMinutes);
+
+  if (!root && !type && minutes === "") return null;
+
+  return {
+    root,
+    type,
+    minutes,
+    source: practiceSourceKey,
+    reflectDaily: false
+  };
+}
+
+function buildPracticeContextJson(state = appState) {
+  const context = buildPracticeContextObject(state);
+  return context ? JSON.stringify(context) : "";
+}
+
+function parsePracticeContextJson(value) {
+  try {
+    const parsed = JSON.parse(value || "{}");
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function normalizePracticeContextJsonForRow(value, row = {}) {
+  const parsed = typeof value === "string" ? parsePracticeContextJson(value) : (value || {});
+  const root = normalizePracticeRoot(parsed.root || row.Practice_Root);
+  const type = normalizePracticeType(parsed.type || row.Practice_Type, root);
+  const minutes = type === "none" ? 0 : normalizePracticeMinutes(parsed.minutes ?? row.Practice_Minutes);
+  if (!root && !type && minutes === "") return "";
+  return JSON.stringify({
+    root,
+    type,
+    minutes,
+    source: parsed.source || practiceSourceKey,
+    reflectDaily: false
+  });
+}
+
+function updatePracticeDurationFromForm() {
+  appState.practiceMinutes = normalizePracticeMinutes(buildPracticeMinutesFromInputs(
+    document.querySelector("#practiceDurationHoursInput")?.value || "",
+    document.querySelector("#practiceDurationMinutesInput")?.value || ""
+  ));
+  markTodayMindNoteFlowActive();
+  syncUI();
+}
+
+function updatePracticeUI() {
+  const inferredRoot = appState.practiceRoot || practiceTypeToRoot[appState.practiceType];
+  const safeRoot = normalizePracticeRoot(inferredRoot);
+  const safeType = normalizePracticeType(appState.practiceType, safeRoot);
+  appState.practiceRoot = safeRoot;
+  appState.practiceType = safeType;
+
+  renderPracticeTypeOptions();
+
+  document.querySelectorAll("[data-practice-root]").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.practiceRoot === safeRoot);
+  });
+  document.querySelectorAll("[data-practice-type]").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.practiceType === safeType);
+  });
+
+  const durationParts = splitPracticeDuration(appState.practiceMinutes);
+  const hoursInput = document.querySelector("#practiceDurationHoursInput");
+  const minutesInput = document.querySelector("#practiceDurationMinutesInput");
+  const helper = document.querySelector("#practiceTypeHelper");
+  const durationBadge = document.querySelector("#practiceDurationBadge");
+  const summaryPill = document.querySelector("#practiceSummaryPill");
+  const durationSummary = document.querySelector("#practiceDurationSummary");
+
+  if (hoursInput) hoursInput.value = durationParts.hours;
+  if (minutesInput) minutesInput.value = durationParts.minutes;
+  if (helper) {
+    helper.textContent = safeType ? t(`options.practiceTypeHelpers.${safeType}`) : t("practiceHelperDefault");
+  }
+  if (durationBadge) {
+    const minutes = normalizePracticeMinutes(appState.practiceMinutes);
+    durationBadge.textContent = minutes === "" ? t("practiceDurationHint") : t("practiceDurationBadge", { minutes });
+  }
+  if (summaryPill) {
+    summaryPill.textContent = safeType
+      ? t(`options.practiceTypes.${safeType}`)
+      : t("practiceSummaryEmpty");
+  }
+  if (durationSummary) {
+    const minutes = normalizePracticeMinutes(appState.practiceMinutes);
+    durationSummary.textContent = safeType && minutes !== ""
+      ? t("practiceSummaryWithMinutes", { type: t(`options.practiceTypes.${safeType}`), minutes })
+      : t("practiceSummaryBase");
   }
 }
 
@@ -4983,6 +5488,7 @@ function buildDailyLogRow({ generateReflection = true } = {}) {
   const sleepHours = normalizeSleepHours(appState.sleepHours);
   const sleepCategory = deriveSleepCategory(sleepHours) || appState.selectedState.sleep;
   const runDetailJson = buildRunDetailJson();
+  const practiceContext = buildPracticeContextObject();
 
   return {
     Date: appState.date,
@@ -5006,6 +5512,10 @@ function buildDailyLogRow({ generateReflection = true } = {}) {
     Hydration_Status: appState.hydrationStatus,
     Tomorrow_Focus: tomorrowFocus,
     NuTuenSai_Reminder: reminder,
+    Practice_Root: practiceContext?.root || "",
+    Practice_Type: practiceContext?.type || "",
+    Practice_Minutes: practiceContext?.minutes ?? "",
+    Practice_Context_JSON: practiceContext ? JSON.stringify(practiceContext) : "",
     Mind_Note_Text: appState.mindNoteText || "",
     Mind_Note_Feeling: appState.mindNoteFeeling || "",
     Mind_Note_Support: appState.mindNoteSupport || "",
@@ -5065,6 +5575,9 @@ const legacyTextLikeFields = new Set([
   "Hydration_Status",
   "Tomorrow_Focus",
   "NuTuenSai_Reminder",
+  "Practice_Root",
+  "Practice_Type",
+  "Practice_Context_JSON",
   "Mind_Note_Text",
   "Mind_Note_Feeling",
   "Mind_Note_Support",
@@ -5123,6 +5636,18 @@ function normalizeLogRow(row) {
   normalized.Run_Detail_JSON = normalizeRunDetailJsonForRow(normalized.Run_Detail_JSON);
   normalized.Load_Score = Number(normalized.Load_Score) || 0;
   normalized.Energy_Causes = normalized.Energy_Causes || "";
+  normalized.Practice_Root = normalizePracticeRoot(normalized.Practice_Root);
+  normalized.Practice_Type = normalizePracticeType(normalized.Practice_Type, normalized.Practice_Root);
+  normalized.Practice_Minutes = normalizePracticeMinutes(normalized.Practice_Minutes);
+  normalized.Practice_Context_JSON = normalizePracticeContextJsonForRow(normalized.Practice_Context_JSON, normalized);
+  if (normalized.Practice_Context_JSON) {
+    const practiceContext = parsePracticeContextJson(normalized.Practice_Context_JSON);
+    normalized.Practice_Root = normalized.Practice_Root || normalizePracticeRoot(practiceContext.root);
+    normalized.Practice_Type = normalized.Practice_Type || normalizePracticeType(practiceContext.type, normalized.Practice_Root);
+    normalized.Practice_Minutes = normalized.Practice_Minutes === ""
+      ? normalizePracticeMinutes(practiceContext.minutes)
+      : normalized.Practice_Minutes;
+  }
   normalized.Reflection_Text = cleanLegacyTextValue(row.Reflection_Text ?? row.Reflection ?? "", "Reflection_Text");
   return normalized;
 }
@@ -5531,6 +6056,42 @@ function buildColumnGuideRows() {
       meaning: "ข้อความสะท้อน pattern ของวันแบบอ่อนโยน",
       aiNote: "Pattern reflection only. Do not treat as diagnosis or therapy.",
       example: "วันนี้ใช้สมองและสายตาต่อเนื่อง"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Practice_Root",
+      thai: "รากฐานภาวนา",
+      english: "Practice root",
+      meaning: "หมวด practice context แบบ modern group ที่ map กลับไปยังรากกรรมฐานกว้าง ๆ",
+      aiNote: "Stored for future Field Review context. Excluded from daily Reflection/NuTuenSai in v1.9.9; do not score or judge practice quality.",
+      example: "heart_quality"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Practice_Type",
+      thai: "รูปแบบภาวนา",
+      english: "Practice type",
+      meaning: "ตัวเลือก practice ที่ผู้ใช้เลือก เช่น breath_awareness, metta, impermanence, none หรือ other",
+      aiNote: "Optional user-owned practice context. Do not infer spiritual progress, attainment, or personality.",
+      example: "metta"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Practice_Minutes",
+      thai: "จำนวนนาทีภาวนา",
+      english: "Practice minutes",
+      meaning: "ระยะเวลาภาวนาโดยประมาณที่แปลงจากชั่วโมงและนาทีเป็น total minutes",
+      aiNote: "Descriptive duration only. Not a streak, score, achievement, or quality measure.",
+      example: "15"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Practice_Context_JSON",
+      thai: "บริบทการภาวนาแบบ JSON",
+      english: "Practice context JSON",
+      meaning: "JSON compact สำหรับ root, type, minutes, source และ reflectDaily=false",
+      aiNote: "Future field-review context only. reflectDaily=false means daily Reflection should intentionally ignore this field in v1.9.9.",
+      example: "{\"root\":\"heart_quality\",\"type\":\"metta\",\"minutes\":15,\"source\":\"40_kammatthana_modern_group\",\"reflectDaily\":false}"
     }),
     row({
       sheet: "Daily_Log",
@@ -6050,6 +6611,9 @@ function localizeLogCell(column, value) {
   if (column === "Drinks") return localizeJoinedValues(value, drinkOptions, "drinks");
   if (column === "Drink_Profile_JSON") return localizeDrinkProfileJson(value);
   if (column === "Run_Detail_JSON") return localizeRunDetailJson(value);
+  if (column === "Practice_Root") return t(`options.practiceRoots.${value}`);
+  if (column === "Practice_Type") return t(`options.practiceTypes.${value}`);
+  if (column === "Practice_Context_JSON") return localizePracticeContextJson(value);
   if (column === "Activities") return localizeJoinedValues(value, activityOptions, "activities");
   if (column === "Energy_Causes") return localizeEnergyCauses(value);
   if (column === "Load_Level") return localizeLoadLevel(value);
@@ -6089,6 +6653,17 @@ function localizeRunDetailJson(value) {
     detail.durationMin !== "" ? `${detail.durationMin} min` : "",
     detail.avgPace || "",
     detail.sweat ? t(`runSweat${detail.sweat[0].toUpperCase()}${detail.sweat.slice(1)}`) : ""
+  ].filter(Boolean).join(" / ");
+}
+
+function localizePracticeContextJson(value) {
+  const normalizedJson = normalizePracticeContextJsonForRow(value);
+  if (!normalizedJson) return "";
+  const detail = parsePracticeContextJson(normalizedJson);
+  return [
+    detail.root ? t(`options.practiceRoots.${detail.root}`) : "",
+    detail.type ? t(`options.practiceTypes.${detail.type}`) : "",
+    detail.minutes !== "" && detail.minutes !== undefined ? `${detail.minutes} min` : ""
   ].filter(Boolean).join(" / ");
 }
 

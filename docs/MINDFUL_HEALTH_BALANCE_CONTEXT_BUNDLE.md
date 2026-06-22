@@ -3351,3 +3351,38 @@ The smoothing layer:
 ## Boundary
 
 This is a naturalness polish only. It does not change anchor ranking, reflection intent meaning, `Daily_Log`, export/import, localStorage, save behavior, schema, previous-log continuity, or reflection safety guardrails.
+
+# v1.9.9 - Mindful Practice Context
+
+v1.9.9 adds an optional practice context card before Mind Note 2/2. The card lets the user record a light practice base, practice type, and approximate duration before writing one line of inner context. It is inspired by the traditional Theravada 40 kammaṭṭhāna framework, but the UI groups the practices into modern daily contexts rather than showing a raw list of forty objects.
+
+On desktop, Mind Note 2/2 uses a balanced two-column layout: Practice Context on the left and Mind Note on the right. On mobile, Practice Context stacks above Mind Note. The practice card includes a small breathing-orb visual summary for selected type and minutes; the orb is presentation only, not a score, streak, achievement, or practice-quality marker.
+
+## Practice Groups
+
+- `breath_body_base`: breath awareness, body awareness, walking awareness
+- `heart_quality`: loving-kindness, compassion, appreciative joy, equanimity
+- `recollection_trust`: recollection of Buddha, Dhamma, Sangha, virtue, generosity, peace
+- `letting_go`: impermanence, letting it be lighter, seeing without following
+- `elements_simplicity`: elements of the body, food as it is, simple body awareness
+- `visual_steadiness`: light, color, open space
+- `other_or_none`: no practice, other
+
+## Daily_Log Fields
+
+The patch adds optional backward-compatible columns:
+
+- `Practice_Root`
+- `Practice_Type`
+- `Practice_Minutes`
+- `Practice_Context_JSON`
+
+`Practice_Minutes` stores total minutes derived from the UI hours + minutes inputs. `Practice_Context_JSON` stores `root`, `type`, `minutes`, `source: "40_kammatthana_modern_group"`, and `reflectDaily: false`.
+
+## Reflection Boundary
+
+Daily Reflection/NuTuenSai intentionally does not use practice context in v1.9.9. Practice data is stored for future weekly/monthly Field Review context only. The app must not judge practice quality, score minutes, infer spiritual progress, recommend practice types, or turn practice context into medical, therapy, productivity, or identity claims.
+
+## Compatibility
+
+Old workbooks without practice fields still import normally because missing values normalize to empty. New exports include the practice fields in `Daily_Log` and document them in `Column_Guide`. The original workbook file is not modified during import.

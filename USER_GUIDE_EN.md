@@ -78,7 +78,7 @@ If you choose Light or Dark manually, that choice stays active until you switch 
 
 After the Welcome Glass, the app is organized into three views:
 
-- `Today` for current-day signals in two steps: `Today’s Signals 1/2` is Energy, Mind, Sleep Hours/Sleep, Hydration, Drink Profile, and Load & Recovery; `Mind Note 2/2` is Mind Note and the shortcut to Reflection/NuTuenSai
+- `Today` for current-day signals in two steps: `Today’s Signals 1/2` is Energy, Mind, Sleep Hours/Sleep, Hydration, Drink Profile, and Load & Recovery; `Mind Note 2/2` is Practice Context, Mind Note, and the shortcut to Reflection/NuTuenSai
 - `Reflection/NuTuenSai` for the compact NuTuenSai note strip, generated reflection preview/editing, and Save to Daily Log
 - `Log` for the Daily Log Table, Export Master Excel, Import Master Excel, and Clear Daily Log
 
@@ -97,6 +97,8 @@ Starting in v1.9.6 — Compact Signal Cockpit Layout, Today’s Signals 1/2 uses
 Cockpit statuses such as `Empty`, `Started`, and `Readable` are visual feedback only. They are not scores, judgments, or saved data changes.
 
 Starting in v1.9.7 — Symbolic Signal Cockpit Polish, the cockpit becomes more like a signal constellation, with four nodes around a central `Daily Balance Orb`. The orb and signal dots show how much of today is readable in a gentle way, not as a KPI, score, or judgment.
+
+Starting in v1.9.9 — Mindful Practice Context, Mind Note 2/2 adds a small `Practice before Mind Note` card. It can record an optional practice root/type and rough duration, such as breath/body, heart qualities, recollection/trust, letting go, elements/simplicity, visual steadiness, no practice, or other. This data is stored in Daily Log/Excel for future Field Review only; daily Reflection/NuTuenSai does not interpret it yet and does not score practice quality.
 
 Starting in v1.9.8 — Input-grounded Natural Reflection Composer, Reflection/NuTuenSai selects 2-4 meaningful anchors from today's input, such as water, sleep hours, drink context, activity/load, run detail, Mind Note, or light continuity context. It uses those anchors to write one more natural overview sentence while staying rule-based, local-first, non-medical, and non-chatbot.
 
@@ -257,6 +259,8 @@ When the day has very little data, the app should greet gently or invite a littl
 
 Mind Note is a small space for one line of inner context. It is not a therapy tool, not crisis support, and not a medical tool.
 
+Before Mind Note, the `Practice before Mind Note` card can record a light practice context if there was one today. The app stores this as `Practice_Root`, `Practice_Type`, `Practice_Minutes`, and `Practice_Context_JSON`. It is optional and is not used to judge practice, spiritual progress, or daily reflection meaning.
+
 Use it lightly:
 
 - Write one short line about what your mind is holding today
@@ -292,7 +296,7 @@ Click `Save to Daily Log` from Mind Note 2/2 when you want to save the current d
 
 Click `Save to Daily Log` from Reflection/NuTuenSai when you want to save the current day with generated or edited Reflection text.
 
-The saved row comes from the current app state, including Energy, Mind, Sleep, Sleep Hours, water, drinks, activities, Run Detail, load, Tomorrow Focus, NuTuenSai Reminder, Mind Note, and Reflection when present.
+The saved row comes from the current app state, including Energy, Mind, Sleep, Sleep Hours, water, drinks, activities, Run Detail, load, Tomorrow Focus, NuTuenSai Reminder, Practice Context, Mind Note, and Reflection when present.
 
 If the same date already exists, the app asks before replacing that row.
 

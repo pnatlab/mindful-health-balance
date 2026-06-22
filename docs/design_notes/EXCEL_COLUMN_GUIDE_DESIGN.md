@@ -56,6 +56,7 @@ Since v1.9.3, `Column_Guide` also documents optional structured fields:
 
 - `Sleep_Hours`: self-reported sleep duration used to derive the existing `Sleep` category gently.
 - `Run_Detail_JSON`: optional running context for load, hydration, and recovery. It is not training advice, pace judgment, or performance coaching.
+- `Practice_Root`, `Practice_Type`, `Practice_Minutes`, and `Practice_Context_JSON`: optional v1.9.9 mindful practice context stored for future Field Review. These fields are not daily Reflection inputs, not spiritual scoring, and not practice-quality judgment.
 
 ## Reading Principles
 

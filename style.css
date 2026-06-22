@@ -599,6 +599,19 @@ h2 {
   align-items: stretch;
 }
 
+[data-view-panel="today"][data-today-input-step="2"] .today-grid {
+  grid-template-columns: minmax(320px, 0.9fr) minmax(520px, 1.7fr);
+  align-items: start;
+}
+
+[data-view-panel="today"][data-today-input-step="2"] .practice-context-card {
+  grid-column: 1;
+}
+
+[data-view-panel="today"][data-today-input-step="2"] .mind-note-card {
+  grid-column: 2;
+}
+
 .daily-signal-cockpit {
   grid-column: 1;
   align-self: start;
@@ -1324,6 +1337,190 @@ body[data-theme="dark"] .today-state-card {
 
 .mind-note-card {
   order: 5;
+}
+
+.practice-context-card {
+  order: 4;
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  border-color: rgba(121, 170, 226, 0.18);
+  background:
+    radial-gradient(circle at 82% 16%, rgba(111, 167, 232, 0.15), transparent 28%),
+    radial-gradient(circle at 18% 8%, rgba(221, 198, 255, 0.18), transparent 24%),
+    linear-gradient(145deg, rgba(251, 253, 255, 0.68), rgba(248, 246, 255, 0.48));
+}
+
+.practice-visual-anchor {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(121, 170, 226, 0.16);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 22% 22%, rgba(255, 255, 255, 0.8), transparent 30%),
+    linear-gradient(135deg, rgba(236, 247, 255, 0.64), rgba(248, 244, 255, 0.48));
+}
+
+.practice-visual-orb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 86px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.94) 0 26%, rgba(196, 225, 255, 0.36) 38%, rgba(217, 202, 255, 0.18) 68%, transparent 70%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    0 14px 34px rgba(111, 167, 232, 0.12);
+}
+
+.practice-orb-ring,
+.practice-orb-core {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.practice-orb-ring {
+  inset: 13px;
+  border: 1px solid rgba(111, 167, 232, 0.28);
+  animation: practiceOrbBreathe 9s ease-in-out infinite;
+}
+
+.practice-orb-ring-two {
+  inset: 25px;
+  border-color: rgba(190, 162, 225, 0.24);
+  animation-delay: -3s;
+}
+
+.practice-orb-core {
+  width: 12px;
+  height: 12px;
+  background: rgba(90, 154, 222, 0.52);
+  box-shadow: 0 0 24px rgba(111, 167, 232, 0.32);
+}
+
+@keyframes practiceOrbBreathe {
+  0%, 100% {
+    opacity: 0.68;
+    transform: scale(0.98);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+.practice-visual-copy {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.practice-summary-pill {
+  width: fit-content;
+  max-width: 100%;
+  padding: 6px 10px;
+  border: 1px solid rgba(111, 167, 232, 0.2);
+  border-radius: 999px;
+  color: var(--active-text);
+  background: rgba(255, 255, 255, 0.56);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.practice-duration-summary {
+  color: var(--text-soft);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.practice-choice-group {
+  display: grid;
+  gap: 10px;
+}
+
+.practice-chip-list {
+  gap: 8px;
+}
+
+.practice-chip {
+  min-height: 36px;
+  padding: 8px 11px;
+  border-radius: 999px;
+  font-size: 0.92rem;
+}
+
+.practice-helper {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(111, 167, 232, 0.18);
+  border-radius: 8px;
+  background: rgba(246, 250, 255, 0.58);
+}
+
+.practice-empty-helper {
+  margin: 0;
+  color: var(--muted);
+}
+
+.practice-duration-block {
+  display: grid;
+  gap: 10px;
+}
+
+.practice-duration-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.practice-duration-grid label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.practice-duration-badge {
+  margin: 0;
+}
+
+body[data-theme="dark"] .practice-context-card {
+  border-color: rgba(142, 167, 255, 0.16);
+  background:
+    radial-gradient(circle at 82% 16%, rgba(142, 167, 255, 0.12), transparent 28%),
+    radial-gradient(circle at 18% 8%, rgba(197, 155, 255, 0.08), transparent 24%),
+    linear-gradient(145deg, rgba(27, 25, 48, 0.68), rgba(22, 32, 54, 0.45));
+}
+
+body[data-theme="dark"] .practice-visual-anchor {
+  border-color: rgba(142, 167, 255, 0.14);
+  background:
+    radial-gradient(circle at 22% 22%, rgba(255, 255, 255, 0.08), transparent 30%),
+    linear-gradient(135deg, rgba(25, 37, 61, 0.52), rgba(30, 23, 50, 0.42));
+}
+
+body[data-theme="dark"] .practice-visual-orb {
+  background:
+    radial-gradient(circle, rgba(238, 247, 255, 0.58) 0 20%, rgba(130, 180, 244, 0.18) 38%, rgba(197, 155, 255, 0.1) 68%, transparent 70%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 14px 34px rgba(80, 131, 218, 0.14);
+}
+
+body[data-theme="dark"] .practice-summary-pill {
+  border-color: rgba(142, 167, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body[data-theme="dark"] .practice-helper {
+  border-color: rgba(142, 167, 255, 0.16);
+  background: rgba(17, 16, 37, 0.34);
 }
 
 .today-state-card .segmented button,
@@ -2407,7 +2604,8 @@ body[data-theme="dark"] .soundwave-bar {
 @media (prefers-reduced-motion: reduce) {
   .soundwave-bar,
   .soundwave-line,
-  .nutuensai-soundwave::after {
+  .nutuensai-soundwave::after,
+  .practice-orb-ring {
     animation: none;
   }
 }
@@ -3022,6 +3220,15 @@ td:nth-child(10) {
     grid-template-columns: 1fr;
   }
 
+  [data-view-panel="today"][data-today-input-step="2"] .today-grid {
+    grid-template-columns: 1fr;
+  }
+
+  [data-view-panel="today"][data-today-input-step="2"] .practice-context-card,
+  [data-view-panel="today"][data-today-input-step="2"] .mind-note-card {
+    grid-column: 1;
+  }
+
   .daily-signal-cockpit,
   .today-signal-detail-card {
     grid-column: 1;
@@ -3151,6 +3358,15 @@ td:nth-child(10) {
     top: 16px;
     right: 16px;
     opacity: 0.72;
+  }
+
+  .practice-visual-anchor {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 10px;
+  }
+
+  .practice-visual-orb {
+    width: 70px;
   }
 
   .mind-note-card {
@@ -3283,6 +3499,27 @@ td:nth-child(10) {
   .balance-orb-text {
     max-width: 104px;
     font-size: 0.5rem;
+  }
+
+  .practice-visual-anchor {
+    gap: 10px;
+  }
+
+  .practice-visual-orb {
+    width: 58px;
+  }
+
+  .practice-summary-pill {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+  }
+
+  .practice-duration-summary {
+    font-size: 0.8rem;
+  }
+
+  .practice-duration-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .reminder-layout {

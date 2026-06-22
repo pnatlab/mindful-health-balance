@@ -64,7 +64,7 @@ TH | EN | 中文
 
 หลังผ่านหน้ากระจกต้อนรับ แอปจะแบ่งเป็น 3 view:
 
-- `วันนี้` สำหรับเติมสัญญาณวันนี้แบบ 2 จังหวะ: `สัญญาณวันนี้ 1/2` คือ Energy, Mind, Sleep Hours/Sleep, น้ำ, Drink Profile และ Load & Recovery; `ภาวะใจวันนี้ 2/2` คือ Mind Note และทางลัดไป Reflection/NuTuenSai
+- `วันนี้` สำหรับเติมสัญญาณวันนี้แบบ 2 จังหวะ: `สัญญาณวันนี้ 1/2` คือ Energy, Mind, Sleep Hours/Sleep, น้ำ, Drink Profile และ Load & Recovery; `ภาวะใจวันนี้ 2/2` คือ Practice Context, Mind Note และทางลัดไป Reflection/NuTuenSai
 - `Reflection` สำหรับดู NuTuenSai note แบบแถบสั้น ๆ, generate/review/edit reflection และ Save to Daily Log
 - `Log` สำหรับดู Daily Log Table, Export Master Excel, Import Master Excel และ Clear Daily Log
 
@@ -89,6 +89,8 @@ TH | EN | 中文
 ตั้งแต่ v1.9.8b — Reflection Breathing Markers หน้า Reflection/NuTuenSai อาจเติม emoji pause marker แบบน้อยมาก เช่น 🩵 หรือ 💧 เพื่อช่วยให้ประโยคยาวอ่านง่ายขึ้น marker เหล่านี้ไม่ใช่หัวข้อ ไม่ใช่คะแนน ไม่ใช่ diagnosis และไม่ใช่หมวดลับของระบบ
 
 ตั้งแต่ v1.9.8c — Reflection Sentence Smoothing input-grounded overview จะลดการใช้คำเชื่อมซ้ำ เช่น `ร่วมกับ` และอาจแยก rich input เป็นย่อหน้าสั้น ๆ ก่อนประโยคอ่านวันแบบนุ่ม ๆ โดยยังใช้ anchor และ intent เดิม ไม่ได้เพิ่มความหมายใหม่
+
+ตั้งแต่ v1.9.9 — Mindful Practice Context หน้า `ภาวะใจวันนี้ 2/2` เพิ่มการ์ด `ภาวนาก่อนวางใจ` ก่อน Mind Note เพื่อบันทึกฐานภาวนาแบบ optional เช่น ลมหายใจ/กาย คุณภาพใจ ระลึก/วางใจ หรือวางเบา ๆ พร้อมระยะเวลาโดยประมาณ ข้อมูลนี้ถูกเก็บใน Daily Log/Excel เพื่อ Field Review ในอนาคต แต่ Reflection/NuTuenSai รายวันยังไม่ตีความ ไม่ให้คะแนน และไม่ตัดสินการภาวนา
 
 ในหน้า Reflection/NuTuenSai จะมีปุ่มรองเล็ก ๆ คือ `กลับ Today 1/2` และ `กลับ Mind Note 2/2` เพื่อย้อนกลับไปเติมข้อมูลก่อน Save Daily Log ปุ่มเหล่านี้เป็นการนำทางเท่านั้น ไม่บันทึก ไม่ล้างข้อมูล และไม่ generate reflection ใหม่
 
@@ -233,6 +235,8 @@ Activity roots refine reflection wording เท่านั้น ไม่ไ�
 
 Mind Note เป็นช่องบันทึกใจแบบบาง ๆ ใช้คู่กับข้อมูลสุขภาพของวัน ไม่ใช่ therapy tool และไม่ใช่ medical tool
 
+ก่อน Mind Note จะมีการ์ด `ภาวนาก่อนวางใจ` สำหรับเลือกฐานภาวนาของวันนี้ถ้ามี เช่น รู้ลมหายใจ รู้กาย เมตตา อุเบกขา เห็นความไม่เที่ยง หรือไม่ได้ภาวนา แล้วกรอกชั่วโมง/นาทีแบบคร่าว ๆ ระบบจะเก็บเป็น `Practice_Root`, `Practice_Type`, `Practice_Minutes` และ `Practice_Context_JSON` โดยไม่ใช้ตัดสินคุณภาพการปฏิบัติ
+
 วิธีใช้สั้น ๆ:
 
 - เขียนสิ่งที่ใจถืออยู่ในวันนี้
@@ -268,7 +272,7 @@ Reflection ที่สร้างใหม่จะมีหัวใจฟ้
 
 กด `Save to Daily Log` จากหน้า Reflection/NuTuenSai เมื่อต้องการบันทึกข้อมูลวันนี้พร้อม generated/edited Reflection
 
-ข้อมูลที่บันทึกจะมาจาก state ปัจจุบันของหน้าเว็บ เช่น Energy, Mind, Sleep, Sleep Hours, น้ำ, เครื่องดื่ม, activities, Run Detail, load, reminder, Mind Note และ Reflection ถ้ามี
+ข้อมูลที่บันทึกจะมาจาก state ปัจจุบันของหน้าเว็บ เช่น Energy, Mind, Sleep, Sleep Hours, น้ำ, เครื่องดื่ม, activities, Run Detail, load, reminder, Practice Context, Mind Note และ Reflection ถ้ามี
 
 ถ้าวันเดิมมีข้อมูลอยู่แล้ว แอปจะถามก่อน replace/update row เดิม เพื่อไม่ให้บันทึกทับโดยไม่รู้ตัว
 
