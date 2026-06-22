@@ -1293,13 +1293,13 @@ const translations = {
         recovery: "Light / Recovery"
       },
       practiceRoots: {
-        breath_body_base: "Breath / body",
-        heart_quality: "Heart qualities",
-        recollection_trust: "Recollection / trust",
-        letting_go: "Letting go",
+        breath_body_base: "Breath / Body",
+        heart_quality: "Heart quality",
+        recollection_trust: "Recollection / Trust",
+        letting_go: "Letting go / Seeing clearly",
         elements_simplicity: "Elements / simplicity",
         visual_steadiness: "Visual steadiness",
-        other_or_none: "No practice / other"
+        other_or_none: "No practice / Other"
       },
       practiceTypes: {
         breath_awareness: "Breath awareness",
@@ -1971,7 +1971,7 @@ const translations = {
         breath_body_base: "呼吸 / 身体",
         heart_quality: "心的品质",
         recollection_trust: "忆念 / 信任",
-        letting_go: "放下",
+        letting_go: "放下 / 如实看见",
         elements_simplicity: "元素 / 简单",
         visual_steadiness: "视觉稳定",
         other_or_none: "未练习 / 其他"
@@ -2194,17 +2194,20 @@ const practiceGroups = [
   },
   {
     key: "elements_simplicity",
-    types: ["body_elements", "food_as_it_is", "simple_body_awareness"]
+    types: ["body_elements", "food_as_it_is", "simple_body_awareness"],
+    hiddenInUi: true
   },
   {
     key: "visual_steadiness",
-    types: ["light", "color", "open_space"]
+    types: ["light", "color", "open_space"],
+    hiddenInUi: true
   },
   {
     key: "other_or_none",
     types: ["none", "other"]
   }
 ];
+const visiblePracticeGroups = practiceGroups.filter((group) => !group.hiddenInUi);
 const practiceTypeToRoot = practiceGroups.reduce((acc, group) => {
   group.types.forEach((type) => {
     acc[type] = group.key;
@@ -2488,7 +2491,7 @@ function renderEnergyCauseOptions() {
 function renderPracticeOptions() {
   const rootList = document.querySelector("#practiceRootList");
   if (rootList) {
-    rootList.innerHTML = practiceGroups.map((group) => `
+    rootList.innerHTML = visiblePracticeGroups.map((group) => `
       <button type="button" class="practice-chip" data-practice-root="${escapeHtml(group.key)}">
         ${escapeHtml(t(`options.practiceRoots.${group.key}`))}
       </button>
@@ -2500,7 +2503,7 @@ function renderPracticeOptions() {
 function renderPracticeTypeOptions() {
   const typeList = document.querySelector("#practiceTypeList");
   if (!typeList) return;
-  const group = practiceGroups.find((entry) => entry.key === appState.practiceRoot);
+  const group = visiblePracticeGroups.find((entry) => entry.key === getVisiblePracticeRoot(appState.practiceRoot));
   if (!group) {
     typeList.innerHTML = `<p class="field-helper practice-empty-helper">${escapeHtml(t("practiceTypeEmpty"))}</p>`;
     return;
@@ -3490,6 +3493,13 @@ function normalizePracticeRoot(value) {
   return practiceGroups.some((group) => group.key === root) ? root : "";
 }
 
+function getVisiblePracticeRoot(root) {
+  const safeRoot = normalizePracticeRoot(root);
+  if (!safeRoot) return "";
+  const group = practiceGroups.find((entry) => entry.key === safeRoot);
+  return group?.hiddenInUi ? "other_or_none" : safeRoot;
+}
+
 function normalizePracticeType(value, root = "") {
   const type = String(value || "").trim();
   if (!practiceTypeToRoot[type]) return "";
@@ -3596,13 +3606,15 @@ function updatePracticeUI() {
   const inferredRoot = appState.practiceRoot || practiceTypeToRoot[appState.practiceType];
   const safeRoot = normalizePracticeRoot(inferredRoot);
   const safeType = normalizePracticeType(appState.practiceType, safeRoot);
+  const visibleRoot = getVisiblePracticeRoot(safeRoot);
+  const isLegacyHiddenRoot = Boolean(safeRoot && visibleRoot !== safeRoot);
   appState.practiceRoot = safeRoot;
   appState.practiceType = safeType;
 
   renderPracticeTypeOptions();
 
   document.querySelectorAll("[data-practice-root]").forEach((button) => {
-    button.classList.toggle("is-active", button.dataset.practiceRoot === safeRoot);
+    button.classList.toggle("is-active", button.dataset.practiceRoot === visibleRoot);
   });
   document.querySelectorAll("[data-practice-type]").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.practiceType === safeType);
@@ -3615,25 +3627,46 @@ function updatePracticeUI() {
   const durationBadge = document.querySelector("#practiceDurationBadge");
   const summaryPill = document.querySelector("#practiceSummaryPill");
   const durationSummary = document.querySelector("#practiceDurationSummary");
+  const typeSection = document.querySelector("#practiceTypeSection");
+  const durationSection = document.querySelector("#practiceDurationSection");
+  const showTypeSection = Boolean(visibleRoot);
+  const showDurationSection = Boolean(safeType && safeType !== "none" && !isLegacyHiddenRoot);
+
+  if (typeSection) {
+    typeSection.hidden = !showTypeSection;
+    typeSection.setAttribute("aria-hidden", String(!showTypeSection));
+  }
+  if (durationSection) {
+    durationSection.hidden = !showDurationSection;
+    durationSection.setAttribute("aria-hidden", String(!showDurationSection));
+  }
 
   if (hoursInput) hoursInput.value = durationParts.hours;
   if (minutesInput) minutesInput.value = durationParts.minutes;
   if (helper) {
-    helper.textContent = safeType ? t(`options.practiceTypeHelpers.${safeType}`) : t("practiceHelperDefault");
+    const helperType = isLegacyHiddenRoot ? "other" : safeType;
+    helper.textContent = helperType ? t(`options.practiceTypeHelpers.${helperType}`) : t("practiceHelperDefault");
   }
   if (durationBadge) {
     const minutes = normalizePracticeMinutes(appState.practiceMinutes);
     durationBadge.textContent = minutes === "" ? t("practiceDurationHint") : t("practiceDurationBadge", { minutes });
   }
   if (summaryPill) {
-    summaryPill.textContent = safeType
+    summaryPill.textContent = isLegacyHiddenRoot
+      ? t("options.practiceTypes.other")
+      : safeType
       ? t(`options.practiceTypes.${safeType}`)
       : t("practiceSummaryEmpty");
   }
   if (durationSummary) {
     const minutes = normalizePracticeMinutes(appState.practiceMinutes);
+    const summaryType = isLegacyHiddenRoot
+      ? t("options.practiceTypes.other")
+      : safeType
+        ? t(`options.practiceTypes.${safeType}`)
+        : "";
     durationSummary.textContent = safeType && minutes !== ""
-      ? t("practiceSummaryWithMinutes", { type: t(`options.practiceTypes.${safeType}`), minutes })
+      ? t("practiceSummaryWithMinutes", { type: summaryType, minutes })
       : t("practiceSummaryBase");
   }
 }

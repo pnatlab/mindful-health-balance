@@ -3354,9 +3354,11 @@ This is a naturalness polish only. It does not change anchor ranking, reflection
 
 # v1.9.9 - Mindful Practice Context
 
-v1.9.9 adds an optional practice context card before Mind Note 2/2. The card lets the user record a light practice base, practice type, and approximate duration before writing one line of inner context. It is inspired by the traditional Theravada 40 kammaṭṭhāna framework, but the UI groups the practices into modern daily contexts rather than showing a raw list of forty objects.
+v1.9.9 adds an optional practice context card before Mind Note 2/2. The card lets the user record a light practice base, practice type, and approximate duration before writing one line of inner context. It is inspired by the traditional Theravada 40 kammaṭṭhāna framework, but the UI exposes only lightweight daily-use practice contexts rather than showing a raw list of forty objects.
 
-On desktop, Mind Note 2/2 uses a balanced two-column layout: Practice Context on the left and Mind Note on the right. On mobile, Practice Context stacks above Mind Note. The practice card includes a small breathing-orb visual summary for selected type and minutes; the orb is presentation only, not a score, streak, achievement, or practice-quality marker.
+On desktop, Mind Note 2/2 uses a balanced two-column layout: Practice Context on the left and Mind Note on the right. The Mind Note card stretches visually with a taller text area so the right side feels like a real place to set down one line or one short paragraph. On mobile, Practice Context stacks above Mind Note. The practice card includes a small breathing-orb visual summary for selected type and minutes; the orb is presentation only, not a score, streak, achievement, or practice-quality marker.
+
+Practice Context uses progressive disclosure: root chips are visible by default, type chips appear after a root is selected, and duration appears only after a concrete practice type is selected. `No practice` keeps duration hidden.
 
 ## Practice Groups
 
@@ -3364,9 +3366,9 @@ On desktop, Mind Note 2/2 uses a balanced two-column layout: Practice Context on
 - `heart_quality`: loving-kindness, compassion, appreciative joy, equanimity
 - `recollection_trust`: recollection of Buddha, Dhamma, Sangha, virtue, generosity, peace
 - `letting_go`: impermanence, letting it be lighter, seeing without following
-- `elements_simplicity`: elements of the body, food as it is, simple body awareness
-- `visual_steadiness`: light, color, open space
 - `other_or_none`: no practice, other
+
+Specialized legacy-compatible roots such as `elements_simplicity` and `visual_steadiness` may still normalize from old saved/imported data, but they are not shown as selectable roots in the main daily UI.
 
 ## Daily_Log Fields
 

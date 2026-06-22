@@ -4,7 +4,7 @@
 
 v1.9.9 adds a small optional practice context layer before Mind Note. The purpose is to let the user record how they lightly placed the mind before writing one line, without turning Mindful Health Balance into a dhamma teaching system, spiritual scoring system, or meditation performance tracker.
 
-The feature is inspired by the traditional Theravada 40 kammaṭṭhāna framework, but it is presented as modern grouped practice contexts rather than a raw list of forty objects.
+The feature is inspired by the traditional Theravada 40 kammaṭṭhāna framework, but it is presented as modern grouped practice contexts rather than a raw list of forty objects. v1.9.9 intentionally exposes only lightweight daily-use groups in the main UI.
 
 ## UI Placement
 
@@ -17,6 +17,8 @@ On desktop, Mind Note 2/2 uses a balanced two-column layout:
 
 On mobile, Practice Context stacks above Mind Note.
 
+The desktop layout lets the Mind Note card stretch visually beside Practice Context. The Mind Note textarea has more vertical room than the earlier compact form so the right side feels like a real place to set down one line or one short paragraph.
+
 Visible labels:
 
 - TH: `ภาวนาก่อนวางใจ`
@@ -24,6 +26,13 @@ Visible labels:
 - ZH: `记录前的练习`
 
 The helper copy keeps the action light: choose a simple base, then write one line.
+
+Practice Context uses progressive disclosure:
+
+- default state shows the title, visual orb, helper, and root chips
+- type chips appear after a root is selected
+- duration appears only after a concrete practice type is selected
+- `No practice` keeps duration hidden
 
 ## Visual Anchor
 
@@ -39,11 +48,11 @@ The UI groups practice roots into public-safe daily options:
 - `heart_quality`: loving-kindness, compassion, appreciative joy, equanimity
 - `recollection_trust`: recollection of Buddha, Dhamma, Sangha, virtue, generosity, peace
 - `letting_go`: impermanence, letting it be lighter, seeing without following
-- `elements_simplicity`: elements of the body, food as it is, simple body awareness
-- `visual_steadiness`: light, color, open space
 - `other_or_none`: no practice, other
 
 These groups are descriptive anchors only. They are not used to infer spiritual attainment, personality, or practice quality.
+
+More specialized roots such as `elements_simplicity` and `visual_steadiness` are kept as legacy-compatible values for old workbooks/current-form data, but they are not shown as selectable roots in the v1.9.9 daily UI.
 
 ## Data Fields
 
@@ -93,6 +102,7 @@ Imports remain backward compatible:
 
 - old workbooks without practice fields normalize missing values to empty
 - new workbooks preserve practice fields
+- old rows with legacy hidden roots such as `elements_simplicity` or `visual_steadiness` remain readable and exportable
 - malformed or legacy artifact text in practice text/JSON fields is ignored rather than interpreted
 
 ## Guardrails
