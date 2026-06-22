@@ -39,7 +39,7 @@ Latest refinements include:
 - Reflection sentence smoothing to reduce repeated connectors and split rich anchor context into calmer sentences
 - Reflection breathing markers: very small emoji pause markers for readability without section headings
 - Input-grounded Reflection/NuTuenSai overview that selects 2-4 meaningful anchors from today's input
-- Symbolic Daily Signal Cockpit for four daily signals: inner state, water, drinks, and work/activity
+- Symbolic Daily Signal Cockpit for four daily signals: Inner State, Water, Drinks, and Work / Activity
 - Save from Today’s Signals 1/2 or Mind Note 2/2, with Reflection/NuTuenSai as an optional layer
 - Mobile cockpit navigation with active-detail scrolling and a back-to-cockpit control
 - Mobile-first header/settings hierarchy so daily input appears earlier

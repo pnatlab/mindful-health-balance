@@ -123,7 +123,7 @@ This gives the day context. For example, a low-sleep day or a scattered-mind day
 
 Sleep Hours derives the existing Sleep category with this rule: `< 5` hours = `Low`, `5 to < 7` hours = `Okay`, and `>= 7` hours = `Good`. This is self-reported recovery context, not diagnosis or health judgment.
 
-The small blue heart beside `Overall Mind Today` marks the main mind observation for the day. `Feeling of This Note` in Mind Note is the feeling of that specific note, not a judgment of the whole day.
+The small blue heart beside `Overall Mind Today` marks the main mind observation for the day. `Feeling in this note` in Mind Note is the feeling of that specific note, not a judgment of the whole day.
 
 `Feeling good` and `Relaxed` let the dataset capture days where the mind is a support signal, not only days with pressure or worry. The app treats these as supportive context, not a performance score and not proof that the whole day is fine. They should still be read together with hydration, sleep, load, energy, and Mind Note.
 
@@ -264,7 +264,7 @@ Before Mind Note, the `Practice before Mind Note` card can record a light practi
 Use it lightly:
 
 - Write one short line about what your mind is holding today
-- Choose `Feeling of This Note`, such as neutral, uneasy, worried, pressured, tired, scattered, feeling good, or grateful
+- Choose `Feeling in this note`, such as neutral, uneasy, worried, pressured, tired, scattered, feeling good, or grateful
 - Choose a support need, such as rest first, see the pattern, reduce pressure, hydrate gently, or leave it for now
 - Keep it short if that feels right
 - Use it to notice patterns between mind state, hydration, load, recovery, and sleep
