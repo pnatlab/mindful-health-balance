@@ -69,6 +69,18 @@ v1.9.8c adds connector hygiene on top of the composer. It keeps anchor ranking a
 
 Rich input can now be written as short anchor-context paragraphs followed by one gentle reading sentence. This preserves input grounding while reducing repeated terms such as `ร่วมกับ`, `with`, `today`, or `context`.
 
+## NuTuenSai Voice Cadence
+
+Thai Reflection may add a sparse NuTuenSai cadence across the detailed composition layer, including overview, hydration, recovery, adjustment, mind-note, or closing roles. Occasional `หนู`, `ค่ะ`, or `นะคะ` are quota-limited so the reflection does not become a chat transcript or add honorifics to every line.
+
+This voice layer may soften report-like wording such as `ระบบอ่าน` or `ควรถูกอ่านผ่าน`, but it must not change the underlying signal meaning. The app should not call the user `พี่` inside generated Reflection. Grounded input, user agency, and safety boundaries remain more important than warmth.
+
+## Low-data Reflection
+
+When today has no meaningful current input, or only a very thin signal, Reflection uses a short NuTuenSai prompt instead of composing the full detailed synthesis. If previous logs exist, the low-data branch may select one safe micro-continuity cue as background, such as prior load/run, low water, low sleep, structured pressure/support, or drink load.
+
+The previous-log cue remains background only. It must not summarize today in place of honest current data. The low-data branch reinforces that blank fields mean not recorded, not failure, and invites the user to add a small true signal first.
+
 ## Guardrails
 
 - Current-day input remains primary.

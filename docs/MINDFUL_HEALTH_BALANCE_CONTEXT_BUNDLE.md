@@ -3355,6 +3355,14 @@ The smoothing layer:
 
 This is a naturalness polish only. It does not change anchor ranking, reflection intent meaning, `Daily_Log`, export/import, localStorage, save behavior, schema, previous-log continuity, or reflection safety guardrails.
 
+## NuTuenSai Voice Cadence
+
+Thai Reflection may add sparse NuTuenSai cadence across the detailed composition layer, including overview, hydration, recovery, adjustment, mind-note, or closing roles. Occasional `หนู`, `ค่ะ`, or `นะคะ` are quota-limited and must not turn Reflection into chatbot persona or over-personalized intimacy. The voice layer may soften report-like wording, but it must not change signal meaning. The app should not call the user `พี่` inside generated Reflection, and grounded input remains more important than warmth.
+
+## Low-data Reflection
+
+When today has no meaningful current input, or only a very thin signal, Reflection uses a short NuTuenSai prompt instead of composing the full detailed synthesis. Previous logs may contribute one safe micro-continuity cue as background, such as prior load/run, low water, low sleep, structured pressure/support, or drink load. The cue must not summarize today in place of honest current data. Blank fields mean not recorded, not failure.
+
 # v1.9.9 - Mindful Practice Context
 
 v1.9.9 adds an optional practice context card before Mind Note 2/2. The card lets the user record a light practice base, practice type, and approximate duration before writing one line of inner context. It is inspired by Buddhist practice context, but the UI exposes four simple daily bases rather than showing a raw list of traditional objects.

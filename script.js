@@ -343,6 +343,17 @@ const translations = {
       soft_continue: "จาก {anchors} วันนี้อาจอ่านได้ว่าเป็นจังหวะที่ค่อย ๆ ต่อเนื่องได้ โดยไม่ต้องทำให้ทุกอย่างสมบูรณ์แบบ",
       fallback: "จากสัญญาณที่กรอกวันนี้ ระบบอ่านเป็นจุดเริ่มต้นเบา ๆ สำหรับดู pattern โดยไม่ต้องรีบสรุป"
     },
+    lowDataReflection: {
+      noData: "สวัสดีค่ะ วันนี้ข้อมูลยังบางมาก หนูขอชวนเติมสัญญาณวันนี้เล็กน้อยก่อน แล้วค่อยกลับมาสะท้อนกันนะคะ",
+      previousOnly: "สวัสดีค่ะ วันนี้ยังไม่มีข้อมูลใหม่มากนัก หนูพอเห็น log ก่อนหน้าเป็นฉากหลังได้เล็กน้อย แต่ยังไม่อยากสรุปวันนี้แทนข้อมูลจริงนะคะ เติมเท่าที่จำได้จริงสักนิดก็พอค่ะ",
+      previousLoad: "สวัสดีค่ะ วันนี้ข้อมูลใหม่ยังบางอยู่ แต่ถ้าใช้ log ก่อนหน้าเป็นฉากหลังเบา ๆ หนูเห็นว่าร่างกายอาจยังเหมาะกับการเริ่มจาก recovery มากกว่าการเร่งเพิ่มงานนะคะ เติมสัญญาณวันนี้สักนิด เช่น น้ำ การพัก หรือภาวะใจ แล้วค่อยกลับมาสะท้อนกันก็พอค่ะ",
+      previousWater: "สวัสดีค่ะ วันนี้ยังไม่มีข้อมูลใหม่มากนัก แต่จาก log ก่อนหน้า หนูขอชวนวางน้ำเป็นฐานเล็ก ๆ ก่อนนะคะ แค่เติมเท่าที่จริงวันนี้ เช่น น้ำแก้วแรกหรือภาวะใจตอนนี้ ก็พอให้ระบบอ่านต่อได้แล้วค่ะ",
+      previousSleep: "สวัสดีค่ะ วันนี้ข้อมูลยังบาง แต่ log ก่อนหน้าพอชี้ว่า recovery อาจยังเป็นฐานสำคัญอยู่ หนูอยากให้เริ่มวันนี้แบบไม่กดดันตัวเองมากนัก แล้วค่อยเติมสัญญาณที่จำได้จริงก็พอค่ะ",
+      previousMind: "สวัสดีค่ะ วันนี้ข้อมูลใหม่ยังน้อย แต่จาก Mind Note ก่อนหน้า หนูเห็นว่าความกดดันอาจเป็นสิ่งที่ควรวางเบา ๆ ก่อนนะคะ วันนี้ยังไม่ต้องสรุปอะไรไกล เติมแค่สัญญาณจริงเล็ก ๆ ก็พอค่ะ",
+      previousDrink: "สวัสดีค่ะ วันนี้ข้อมูลใหม่ยังบาง แต่จาก log ก่อนหน้า หนูขอวางเรื่องน้ำกับจังหวะพลังงานเป็นฉากหลังเบา ๆ ก่อนนะคะ เติมสัญญาณจริงวันนี้สัก 1–2 อย่าง แล้วค่อยกลับมาสะท้อนกันก็พอค่ะ",
+      previousGeneric: "สวัสดีค่ะ วันนี้ข้อมูลใหม่ยังบางอยู่ หนูพอใช้ log ก่อนหน้าเป็นฉากหลังได้เล็กน้อย แต่ยังไม่อยากสรุปวันนี้แทนข้อมูลจริงนะคะ ลองเติมสัญญาณวันนี้สัก 1–2 อย่าง แล้วค่อยกลับมาสะท้อนกันก็พอค่ะ",
+      thinData: "วันนี้มีสัญญาณใหม่บางส่วนแล้วค่ะ หนูอ่านได้แค่เบา ๆ ว่าเริ่มมีฐานให้ดู pattern แต่ยังไม่ต้องรีบสรุปมากกว่านี้ เติมส่วนที่จริงพอก็พอค่ะ"
+    },
     reflectionInputIntegration: {
       sleepLowHours: "วันนี้นอนประมาณ {hours} ชั่วโมง สัญญาณพลังงานจึงควรถูกอ่านอย่างอ่อนโยนขึ้น และควรเผื่อพื้นที่ให้ recovery",
       sleepOkayHours: "วันนี้นอนประมาณ {hours} ชั่วโมง ระบบอ่านเป็นโซนพอใช้ แต่ยังควรเผื่อแรงฟื้นตัวไว้",
@@ -1074,6 +1085,17 @@ const translations = {
       soft_continue: "With {anchors}, today can continue gently without needing every signal to be perfect.",
       fallback: "From the signals entered today, the system reads a gentle starting point for noticing patterns without rushing to conclude."
     },
+    lowDataReflection: {
+      noData: "There is not much new data for today yet. You can add a few true signals first, then return to reflection.",
+      previousOnly: "There is not much new data for today yet. Previous logs can be light background, but they should not speak for today. Add only what feels true enough when ready.",
+      previousLoad: "There is not much new data for today yet. From the previous log, recovery may be a gentle background cue, but it should not replace today’s truth. Add water, rest, or an inner-state signal when ready.",
+      previousWater: "There is not much new data for today yet. The previous log can lightly point back to water as a simple base. Add one true signal, such as the first glass of water or current inner state, when ready.",
+      previousSleep: "There is not much new data for today yet. The previous log can lightly suggest a gentler recovery rhythm, but it should not define today. Add only what feels true enough.",
+      previousMind: "There is not much new data for today yet. The previous Mind Note can be light background for reducing pressure, not a conclusion about today. Add one small true signal when ready.",
+      previousDrink: "There is not much new data for today yet. The previous drink context can be light background for returning to water or a steadier energy base. Add one or two true signals when ready.",
+      previousGeneric: "There is not much new data for today yet. Previous logs can be light background, but they should not speak for today. Add one or two true signals when ready.",
+      thinData: "There are a few new signals today. This is enough for a light starting point, but there is no need to conclude more than the data can hold."
+    },
     reflectionInputIntegration: {
       sleepLowHours: "Today had about {hours} hours of sleep, so energy signals deserve to be read more gently with recovery space.",
       sleepOkayHours: "Today had about {hours} hours of sleep. The system reads this as okay-ish, while still leaving room for recovery.",
@@ -1804,6 +1826,17 @@ const translations = {
       pause_not_push: "从 {anchors} 来看，recovery 和不继续 push 可能比增加 output 更适合今天。",
       soft_continue: "从 {anchors} 来看，今天可以温和地继续，不需要每个信号都完美。",
       fallback: "从今天填写的信号来看，系统会先把它当作温和观察 pattern 的起点，不急着下结论。"
+    },
+    lowDataReflection: {
+      noData: "今天的新数据还很少。可以先填写一些真实把握的信号，再回来做 reflection。",
+      previousOnly: "今天的新数据还很少。之前的 log 只能作为轻轻的背景，不能替今天下结论。准备好时，填写真实把握的一点就可以。",
+      previousLoad: "今天的新数据还很少。之前的 log 可以轻轻提醒 recovery 这个背景，但不能代替今天的真实情况。准备好时，先填写饮水、休息或内在状态的一点就可以。",
+      previousWater: "今天的新数据还很少。之前的 log 可以轻轻把饮水作为一个基础提醒。先填写一个真实信号，比如第一杯水或此刻状态，就够了。",
+      previousSleep: "今天的新数据还很少。之前的 log 可以轻轻提示恢复节奏，但不能定义今天。准备好时，填写真实把握的一点就可以。",
+      previousMind: "今天的新数据还很少。之前的 Mind Note 只能作为减少压力的轻微背景，不是今天的结论。先填写一个真实小信号就可以。",
+      previousDrink: "今天的新数据还很少。之前的饮品 context 可以轻轻提醒回到饮水或稳定能量基础。准备好时，填写一两个真实信号就可以。",
+      previousGeneric: "今天的新数据还很少。之前的 log 只能作为轻轻的背景，不能替今天下结论。可以先填写一两个真实信号。",
+      thinData: "今天已经有一点新的信号，可以作为温和的起点，但不需要超过数据本身去下结论。"
     },
     reflectionInputIntegration: {
       sleepLowHours: "今天大约睡了 {hours} 小时，所以能量信号可以更温和地阅读，并给 recovery 留空间。",
@@ -4833,7 +4866,8 @@ function composeInputGroundedReflection({ anchors = [], intent, signals } = {}) 
   const derivedIntent = intent || deriveReflectionIntent(rankedAnchors, signals);
   const anchorText = joinReflectionAnchorsNaturally(rankedAnchors, currentLanguage);
   const readingText = getInputGroundedReadingSentence(derivedIntent.primary);
-  return smoothReflectionConnectors(`${anchorText}\n\n${readingText}`);
+  const composedText = smoothReflectionConnectors(`${anchorText}\n\n${readingText}`);
+  return applyNuTuenSaiOverviewVoice(composedText, { anchors: rankedAnchors, intent: derivedIntent, signals });
 }
 
 function getInputGroundedReflectionContext(signals) {
@@ -4842,6 +4876,89 @@ function getInputGroundedReflectionContext(signals) {
   const intent = deriveReflectionIntent(rankedAnchors, signals);
   const text = composeInputGroundedReflection({ anchors: rankedAnchors, intent, signals });
   return { anchors: rankedAnchors, intent, signals, text };
+}
+
+function getCurrentDayReflectionAnchors(signals) {
+  return collectReflectionInputAnchors(signals)
+    .filter((anchor) => anchor.type !== "continuity");
+}
+
+function isLowDataReflectionCase(signals, anchors = getCurrentDayReflectionAnchors(signals)) {
+  if (!hasMeaningfulTodayInput()) return true;
+  if (anchors.length <= 1) return true;
+  const onlyHydration = anchors.length === 1 && anchors[0]?.type === "hydration";
+  const onlyMindLite = anchors.length === 1
+    && anchors[0]?.type === "mind"
+    && !String(signals.mindNote?.text || "").trim();
+  return onlyHydration || onlyMindLite;
+}
+
+function buildLowDataNuTuenSaiReflection(signals) {
+  const currentAnchors = getCurrentDayReflectionAnchors(signals);
+  if (!hasMeaningfulTodayInput()) {
+    const previousCue = getPreviousLogContinuityCue(signals.continuity?.rows || []);
+    return signals.continuity?.hasPrevious
+      ? t(`lowDataReflection.${previousCue.key}`)
+      : t("lowDataReflection.noData");
+  }
+  if (isLowDataReflectionCase(signals, currentAnchors)) {
+    return t("lowDataReflection.thinData");
+  }
+  return "";
+}
+
+function getPreviousLogContinuityCue(previousRows = []) {
+  const rows = (previousRows || []).map(normalizeLogRow).filter((row) => row.Date);
+  if (!rows.length) return { key: "previousOnly", type: "none" };
+  if (rows.some((row) => isHighLoadRow(row) || rowHasRunOrSportCarryover(row))) {
+    return { key: "previousLoad", type: "load" };
+  }
+  if (rows.some(rowHasLowOrModerateWaterCue)) {
+    return { key: "previousWater", type: "water" };
+  }
+  if (rows.some(rowHasLowishSleepSignal)) {
+    return { key: "previousSleep", type: "sleep" };
+  }
+  if (rows.some(rowHasStructuredMindPressureCue)) {
+    return { key: "previousMind", type: "mind" };
+  }
+  if (rows.some(rowHasDrinkLoadCue)) {
+    return { key: "previousDrink", type: "drink" };
+  }
+  return { key: "previousGeneric", type: "generic" };
+}
+
+function rowHasLowOrModerateWaterCue(row) {
+  const water = Number(row?.Water_ml) || 0;
+  return water > 0 && water <= 1500;
+}
+
+function rowHasStructuredMindPressureCue(row) {
+  const values = [
+    row?.Mind,
+    row?.Mind_Note_Feeling,
+    row?.Mind_Note_Support
+  ].map((value) => String(value || "").toLowerCase());
+  return values.some((value) => [
+    "กังวล",
+    "กดดัน",
+    "ฟุ้ง",
+    "worried",
+    "pressured",
+    "scattered",
+    "uneasy",
+    "reduce_pressure",
+    "rest_first",
+    "担心",
+    "有压力",
+    "分散"
+  ].some((token) => value.includes(token.toLowerCase())));
+}
+
+function rowHasDrinkLoadCue(row) {
+  return Number(row?.Caffeine_Score) >= 5
+    || Number(row?.Sugar_Score) >= 5
+    || Number(row?.Sweet_Drinks_Count) > 0;
 }
 
 function getInputGroundedReflectionBlock(signals, options = {}) {
@@ -4927,6 +5044,133 @@ function appendSoftMarker(text, marker) {
   if (!text || !marker) return text;
   if (/[🩵💧☕🌙🌱👣]\s*$/.test(text)) return text;
   return `${text} ${marker}`;
+}
+
+function applyNuTuenSaiOverviewVoice(text, context = {}) {
+  if (currentLanguage !== "th" || !text || text.includes("หนู")) return text;
+  if (!shouldUseNuTuenSaiVoiceSlot(context, "overview")) return text;
+
+  const variant = getNuTuenSaiVoiceVariant(context, 2);
+  const replacement = variant === 0
+    ? "วันนี้หนูอ่านได้ว่า"
+    : "จากสัญญาณวันนี้ หนูอ่านได้ว่า";
+
+  return String(text)
+    .replace("วันนี้จึงอาจอ่านได้ว่า", replacement)
+    .replace("จากสัญญาณที่กรอกวันนี้ ระบบอ่านเป็น", "จากสัญญาณที่กรอกวันนี้ หนูอ่านเป็น");
+}
+
+function applyNuTuenSaiReflectionVoice(blocks = [], context = {}) {
+  if (currentLanguage !== "th") return blocks;
+
+  const softenedBlocks = blocks.map((block) => ({
+    ...block,
+    text: softenNuTuenSaiReportLanguage(block.text, block.key)
+  }));
+  const voiceState = createNuTuenSaiVoiceState(softenedBlocks);
+  const maxPolite = softenedBlocks.filter((block) => String(block.text || "").trim()).length > 7 ? 3 : 2;
+  const targets = getNuTuenSaiVoiceTargets(context);
+  let voicedBlocks = softenedBlocks;
+
+  targets.forEach((targetKey) => {
+    if (voiceState.polite >= maxPolite) return;
+    voicedBlocks = voicedBlocks.map((block) => {
+      if (block.key !== targetKey || !canApplyNuTuenSaiLineVoice(block, voiceState)) return block;
+      const voicedText = addNuTuenSaiPoliteCadence(block.text, block.key, context);
+      updateNuTuenSaiVoiceState(voiceState, voicedText, block.text, block.key);
+      return { ...block, text: voicedText };
+    });
+  });
+
+  return voicedBlocks;
+}
+
+function shouldUseNuTuenSaiVoiceSlot(context = {}, slot = "overview") {
+  if (currentLanguage !== "th") return false;
+  if (slot === "overview" && context.signals?.mindNote?.uneasy) return false;
+  return true;
+}
+
+function getNuTuenSaiVoiceVariant(context = {}, modulo = 2) {
+  const anchorScore = (context.anchors || []).reduce((sum, anchor) => sum + String(anchor.key || anchor.type || "").length, 0);
+  const intentScore = String(context.intent?.primary || "").length;
+  const dateScore = String(appState.date || todayIso).split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  return Math.abs(anchorScore + intentScore + dateScore) % modulo;
+}
+
+function softenNuTuenSaiReportLanguage(text, role = "") {
+  if (currentLanguage !== "th" || !text) return text;
+  return String(text)
+    .replace(/ระบบอ่านเป็นจุดเริ่มต้นเบา ๆ/g, "ยังเป็นจุดเริ่มต้นเล็ก ๆ")
+    .replace(/ระบบอ่านเป็น/g, "วันนี้อ่านเป็น")
+    .replace(/ควรถูกอ่านผ่าน/g, "อาจเหมาะกับการมองผ่าน")
+    .replace(/support signal/g, "สัญญาณพยุงเล็ก ๆ")
+    .replace(/context ต่อเนื่อง/g, "การคุมบริบทต่อเนื่อง")
+    .replace(/เพิ่ม output/g, "เร่งผลลัพธ์")
+    .replace(/การเพิ่ม output/g, "การเร่งผลลัพธ์")
+    .replace(/ output/g, " ผลลัพธ์");
+}
+
+function createNuTuenSaiVoiceState(blocks = []) {
+  const text = blocks.map((block) => block.text || "").join("\n");
+  return {
+    noo: countTextOccurrences(text, "หนู"),
+    polite: countThaiPoliteCadence(text),
+    lastVoiceTarget: ""
+  };
+}
+
+function countTextOccurrences(text, pattern) {
+  return (String(text || "").match(new RegExp(pattern, "g")) || []).length;
+}
+
+function countThaiPoliteCadence(text) {
+  return countTextOccurrences(text, "ค่ะ") + countTextOccurrences(text, "นะคะ");
+}
+
+function getNuTuenSaiVoiceTargets(context = {}) {
+  const targets = [];
+  const hasAnchorType = (type) => (context.anchors || []).some((anchor) => anchor.type === type);
+  if (context.signals?.hydration?.low || context.signals?.hydration?.rising || hasAnchorType("hydration")) {
+    targets.push("hydration");
+  }
+  if (context.signals?.recoveryLoad?.high || context.signals?.sleepDetail?.low || hasAnchorType("run") || hasAnchorType("activity")) {
+    targets.push("recovery");
+  }
+  if (String(context.signals?.mindNote?.text || "").trim() || context.signals?.mindNote?.pressured || hasAnchorType("mind")) {
+    targets.push("mindNote");
+  }
+  targets.push("adjustment", "closing2");
+  return unique(targets).slice(0, 4);
+}
+
+function canApplyNuTuenSaiLineVoice(block, voiceState) {
+  if (!block?.text || block.key === "overview" || block.key === "spacer") return false;
+  if (voiceState.lastVoiceTarget === block.key) return false;
+  return !/ค่ะ|นะคะ/.test(block.text);
+}
+
+function addNuTuenSaiPoliteCadence(text, role = "", context = {}) {
+  const cleanText = String(text || "").trim();
+  if (!cleanText || /ค่ะ|นะคะ/.test(cleanText)) return text;
+  if (/นะ$/.test(cleanText)) return `${cleanText}คะ`;
+  if (/ก็พอ$/.test(cleanText)) return `${cleanText}ค่ะ`;
+
+  if (role === "adjustment") {
+    if (/ลอง|ถ้าจะปรับ|จิบ|พักตา|ลด/.test(cleanText)) return `${cleanText}ก็พอค่ะ`;
+    return `${cleanText}${["pause_not_push", "reduce_guilt", "protect_agency"].includes(context.intent?.primary) ? "นะคะ" : "ค่ะ"}`;
+  }
+  if (role === "mindNote") return `${cleanText}นะคะ`;
+  if (role === "closing2") {
+    return `${cleanText}${["pause_not_push", "reduce_guilt", "protect_agency"].includes(context.intent?.primary) ? "นะคะ" : "ค่ะ"}`;
+  }
+  return `${cleanText}ค่ะ`;
+}
+
+function updateNuTuenSaiVoiceState(voiceState, nextText, previousText = "", role = "") {
+  voiceState.noo += Math.max(0, countTextOccurrences(nextText, "หนู") - countTextOccurrences(previousText, "หนู"));
+  voiceState.polite += Math.max(0, countThaiPoliteCadence(nextText) - countThaiPoliteCadence(previousText));
+  voiceState.lastVoiceTarget = role;
 }
 
 function joinReflectionAnchorsNaturally(anchors = [], lang = currentLanguage) {
@@ -5465,6 +5709,9 @@ function buildReflectionDisplay() {
 }
 
 function buildReflectionDisplayFromSignals(signals) {
+  const lowDataReflection = buildLowDataNuTuenSaiReflection(signals);
+  if (lowDataReflection) return lowDataReflection;
+
   return [
     getReflectionDisplayOverview(signals),
     getInputGroundedReflectionBlock(signals, { withMarkers: true, compact: true }),
@@ -5558,6 +5805,9 @@ function truncateText(value, limit) {
 }
 
 function buildReflectionFromSignals(signals) {
+  const lowDataReflection = buildLowDataNuTuenSaiReflection(signals);
+  if (lowDataReflection) return lowDataReflection;
+
   const goodThings = [];
   const adjustments = [];
   const activityRootSummary = getActivitySpecificReflections(signals, { limit: 1 }).join(" ")
@@ -5658,8 +5908,13 @@ function buildReflectionFromSignals(signals) {
     { key: "closing1", text: t("reflection.closing1") },
     { key: "closing2", text: t("reflection.closing2") }
   ];
+  const voicedReflectionBlocks = applyNuTuenSaiReflectionVoice(reflectionBlocks, {
+    anchors: inputGroundedContext.anchors,
+    intent: inputGroundedContext.intent,
+    signals
+  });
 
-  return applyReflectionBreathingMarkers(reflectionBlocks, breathingMarkers)
+  return applyReflectionBreathingMarkers(voicedReflectionBlocks, breathingMarkers)
     .filter((line) => line !== "")
     .join("\n");
 }
