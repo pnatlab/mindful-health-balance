@@ -3362,11 +3362,13 @@ Practice Context uses progressive disclosure: root chips are visible by default,
 
 ## Practice Groups
 
-- `body`: standing, walking, sitting, lying down, breath awareness, body movement
-- `feeling_tone`: pleasant, unpleasant, neutral, uneasy, body discomfort, tense mind
-- `mind_thought`: observe mind, notice thoughts, Buddho, a gentle phrase, scattered mind, calm mind
-- `dhamma`: notice impermanence, notice defilement, recollect goodness, recollect virtue, see and release, notice wanting
+- `body`: notice standing, notice walking, notice sitting, notice lying down, notice the breath, notice body movement
+- `feeling_tone`: reflect on enoughness, reflect on lightness, recollect gratitude, recollect calm, recollect a good moment, reflect on impermanence
+- `mind_thought`: notice the mind, notice thoughts, repeat Buddho, use a gentle phrase, notice a scattered mind, notice a calm mind
+- `dhamma`: reflect on the three characteristics, think and notice defilement, recollect a good action, recollect kept virtue, see and release, think and notice wanting
 - `other_or_none`: no practice, other, just resting
+
+Practice type chips are phrased as small actions, not abstract categories. The `feeling_tone` group intentionally avoids direct negative-feeling choices in the visible UI and frames the practice as wholesome recollection or wisdom-oriented reflection.
 
 Legacy-compatible roots such as `breath_body_base`, `heart_quality`, `recollection_trust`, `letting_go`, `elements_simplicity`, and `visual_steadiness` may still normalize from old saved/imported data, but they are not shown as selectable roots in the main daily UI.
 

@@ -259,7 +259,7 @@ When the day has very little data, the app should greet gently or invite a littl
 
 Mind Note is a small space for one line of inner context. It is not a therapy tool, not crisis support, and not a medical tool.
 
-Before Mind Note, the `Practice before Mind Note` card can record a light practice context if there was one today. The app stores this as `Practice_Root`, `Practice_Type`, `Practice_Minutes`, and `Practice_Context_JSON`. It is optional and is not used to judge practice, spiritual progress, or daily reflection meaning.
+Before Mind Note, the `Practice before Mind Note` card can record a light practice context if there was one today. The app stores this as `Practice_Root`, `Practice_Type`, `Practice_Minutes`, and `Practice_Context_JSON`. It is optional and is not used to judge practice, spiritual progress, or daily reflection meaning. Type chips are written as small actions, such as noticing standing, recollecting gratitude, or thinking and noticing wanting, not as scores or direct fixation on distress.
 
 Use it lightly:
 

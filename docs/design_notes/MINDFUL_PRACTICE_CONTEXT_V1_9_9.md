@@ -44,13 +44,15 @@ This orb is a visual anchor only. It is not a score, streak, achievement, spirit
 
 The UI groups practice roots into four simple bases plus an optional none/other group:
 
-- `body`: standing, walking, sitting, lying down, breath awareness, body movement
-- `feeling_tone`: pleasant, unpleasant, neutral, uneasy, body discomfort, tense mind
-- `mind_thought`: observe mind, notice thoughts, Buddho, a gentle phrase, scattered mind, calm mind
-- `dhamma`: notice impermanence, notice defilement, recollect goodness, recollect virtue, see and release, notice wanting
+- `body`: notice standing, notice walking, notice sitting, notice lying down, notice the breath, notice body movement
+- `feeling_tone`: reflect on enoughness, reflect on lightness, recollect gratitude, recollect calm, recollect a good moment, reflect on impermanence
+- `mind_thought`: notice the mind, notice thoughts, repeat Buddho, use a gentle phrase, notice a scattered mind, notice a calm mind
+- `dhamma`: reflect on the three characteristics, think and notice defilement, recollect a good action, recollect kept virtue, see and release, think and notice wanting
 - `other_or_none`: no practice, other, just resting
 
 These groups are descriptive anchors only. They are not used to infer spiritual attainment, personality, or practice quality.
+
+Practice type chips are phrased as small actions, not abstract categories. The `feeling_tone` group intentionally avoids direct negative-feeling choices such as "unpleasant" or "distress" in the visible UI; it frames the practice as wholesome recollection or wisdom-oriented reflection so the app does not invite the user to fixate on suffering.
 
 Legacy roots such as `breath_body_base`, `heart_quality`, `recollection_trust`, `letting_go`, `elements_simplicity`, and `visual_steadiness` remain safe to import/normalize from old workbooks/current-form data, but they are not shown as selectable roots in the v1.9.9 daily UI.
 
