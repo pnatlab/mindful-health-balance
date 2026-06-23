@@ -1344,6 +1344,7 @@ Daily logging should not require Reflection first:
 - Reflection/NuTuenSai uses `บันทึก Reflection วันนี้` / `Save Today’s Reflection` / `保存今日 Reflection` to save current state plus generated/edited Reflection text.
 - Same-date saves should update the section being saved and keep other saved sections instead of silently creating duplicate rows or replacing the whole row.
 - Saving from Today should not auto-generate Reflection text.
+- The Daily Save Status bar derives from today’s saved Daily_Log row and shows the three save layers explicitly: Today’s Signals, Mind Note, and Reflection. It is orientation only, not a completion score; blank sections mean not recorded.
 
 These shortcuts are navigation only. They should switch back to the requested Today step, preserve the current form and any generated reflection preview, and must not save, clear, or generate reflection automatically. `Save Today’s Reflection` remains the primary save action on the Reflection/NuTuenSai page.
 

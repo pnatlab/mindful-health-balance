@@ -553,6 +553,48 @@ h2 {
   background: var(--active-bg);
 }
 
+.daily-save-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  margin: -6px 0 18px;
+  padding: 9px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  color: var(--text-soft);
+  background: rgba(255, 255, 255, 0.42);
+  box-shadow: var(--shadow-soft);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.daily-save-status-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: rgba(105, 124, 159, 0.48);
+  box-shadow: 0 0 0 4px rgba(105, 124, 159, 0.09);
+}
+
+.daily-save-status.is-partial .daily-save-status-dot {
+  background: #78a8ff;
+  box-shadow: 0 0 0 4px rgba(120, 168, 255, 0.15);
+}
+
+.daily-save-status.is-saved .daily-save-status-dot {
+  background: #65c8b0;
+  box-shadow: 0 0 0 4px rgba(101, 200, 176, 0.16);
+}
+
+body[data-theme="dark"] .daily-save-status {
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: none;
+}
+
 .view-panel {
   display: none;
 }

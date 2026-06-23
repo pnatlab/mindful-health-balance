@@ -56,6 +56,13 @@ const translations = {
     honestDataTodayNote: "เติมเท่าที่จริงก็พอ ข้อมูลที่จริงสำคัญกว่าข้อมูลที่ครบ",
     honestDataBlankNote: "ช่องที่เว้นไว้จะถูกอ่านว่าไม่ได้บันทึก ไม่ใช่ความผิดหรือคะแนนที่หายไป",
     todayStepTwoHelper: "วางภาวะใจสั้น ๆ ก่อนพาไป Reflection/NuTuenSai",
+    dailySaveStatusEmpty: "วันนี้ยังไม่มี Daily Log — เติมเท่าที่จริงแล้วบันทึกเมื่อพร้อม",
+    dailySaveStatusPartial: "วันนี้บันทึกแล้ว: {savedSections} · ยังเว้นไว้ได้: {unsavedSections}",
+    dailySaveStatusSaved: "บันทึกแล้ววันนี้: {savedSections} — ยังแก้เพิ่มได้โดยไม่ลบข้อมูลเดิม",
+    dailySaveStatusSavedNone: "วันนี้มี Daily Log แล้ว — ช่องที่เว้นไว้ยังแปลว่าไม่ได้บันทึก",
+    dailySaveSectionSignals: "สัญญาณวันนี้",
+    dailySaveSectionMindNote: "ภาวะใจ / Mind Note",
+    dailySaveSectionReflection: "Reflection",
     todayStepNext: "ถัดไป: ภาวะใจวันนี้ 2/2",
     todayStepBack: "กลับไปหน้า 1/2",
     todayStepReflection: "ไป Reflection/NuTuenSai",
@@ -780,6 +787,13 @@ const translations = {
     honestDataTodayNote: "Fill only what is true enough. Honest data matters more than complete data.",
     honestDataBlankNote: "Blank fields mean not recorded, not a mistake or a missing score.",
     todayStepTwoHelper: "Place a short mind note before moving to Reflection/NuTuenSai.",
+    dailySaveStatusEmpty: "No Daily Log saved for today yet — fill what is true enough and save when ready.",
+    dailySaveStatusPartial: "Saved today: {savedSections} · Still optional: {unsavedSections}",
+    dailySaveStatusSaved: "Saved today: {savedSections} — you can still update sections without erasing saved data.",
+    dailySaveStatusSavedNone: "Today’s Daily Log exists — blank sections still mean not recorded.",
+    dailySaveSectionSignals: "Today’s Signals",
+    dailySaveSectionMindNote: "Mind Note",
+    dailySaveSectionReflection: "Reflection",
     todayStepNext: "Next: Mind Note 2/2",
     todayStepBack: "Back to 1/2",
     todayStepReflection: "Go to Reflection/NuTuenSai",
@@ -1504,6 +1518,13 @@ const translations = {
     honestDataTodayNote: "只填写真实把握的部分。真实的数据比完整的数据更重要。",
     honestDataBlankNote: "空白字段表示未记录，不代表错误或少了分数。",
     todayStepTwoHelper: "轻轻写下心里的状态，再前往 Reflection/NuTuenSai。",
+    dailySaveStatusEmpty: "今天还没有保存 Daily Log —— 填写真实把握的部分，准备好时再保存。",
+    dailySaveStatusPartial: "今日已保存：{savedSections} · 仍可留空：{unsavedSections}",
+    dailySaveStatusSaved: "今日已保存：{savedSections} —— 仍可继续更新，不会删除已保存数据。",
+    dailySaveStatusSavedNone: "今天已有 Daily Log —— 空白部分仍表示未记录。",
+    dailySaveSectionSignals: "今日信号",
+    dailySaveSectionMindNote: "心念记录",
+    dailySaveSectionReflection: "Reflection",
     todayStepNext: "下一步：心念记录 2/2",
     todayStepBack: "返回 1/2",
     todayStepReflection: "前往 Reflection/NuTuenSai",
@@ -3013,6 +3034,7 @@ function syncUI() {
   updateTodayInputStepUI();
   updateTodaySignalCockpitUI();
   updateInputActiveCards();
+  updateDailySaveStatus();
 }
 
 function setActiveTodaySignal(signalKey, { userInitiated = false } = {}) {
@@ -5906,6 +5928,112 @@ function mergeDailyLogRow(existingRow, incomingRow, saveSource = "reflection") {
   return normalizeLogRow(merged);
 }
 
+function getTodaySavedLogRow() {
+  return getDailyLog()
+    .map(normalizeLogRow)
+    .find((row) => row.Date === todayIso);
+}
+
+function hasSavedTodaySignals(row) {
+  if (!row) return false;
+  return Boolean(
+    hasDailyLogValue(row.Energy)
+    || hasDailyLogValue(row.Mind)
+    || hasDailyLogValue(row.Sleep)
+    || hasDailyLogValue(row.Sleep_Hours)
+    || Number(row.Water_ml) > 0
+    || hasDailyLogValue(row.Drinks)
+    || hasDailyLogValue(row.Drink_Profile_JSON)
+    || hasDailyLogValue(row.Activities)
+    || hasDailyLogValue(row.Energy_Causes)
+    || Number(row.Load_Score) > 0
+    || hasDailyLogValue(row.Run_Detail_JSON)
+  );
+}
+
+function hasSavedMindNoteLayer(row) {
+  if (!row) return false;
+  return Boolean(
+    hasDailyLogValue(row.Practice_Root)
+    || hasDailyLogValue(row.Practice_Type)
+    || hasDailyLogValue(row.Practice_Minutes)
+    || hasDailyLogValue(row.Practice_Context_JSON)
+    || hasDailyLogValue(row.Mind_Note_Text)
+    || hasDailyLogValue(row.Mind_Note_Feeling)
+    || hasDailyLogValue(row.Mind_Note_Support)
+  );
+}
+
+function hasSavedReflectionLayer(row) {
+  if (!row) return false;
+  // Tomorrow_Focus and NuTuenSai_Reminder can be derived before Reflection save,
+  // so Reflection status is anchored to the actual stored reflection text.
+  return hasDailyLogValue(row.Reflection_Text);
+}
+
+function getDailySaveStatusState() {
+  const row = getTodaySavedLogRow();
+  if (!row) {
+    return {
+      state: "empty",
+      text: t("dailySaveStatusEmpty")
+    };
+  }
+
+  const sections = [
+    {
+      label: t("dailySaveSectionSignals"),
+      saved: hasSavedTodaySignals(row)
+    },
+    {
+      label: t("dailySaveSectionMindNote"),
+      saved: hasSavedMindNoteLayer(row)
+    },
+    {
+      label: t("dailySaveSectionReflection"),
+      saved: hasSavedReflectionLayer(row)
+    }
+  ];
+  const savedSections = sections.filter((section) => section.saved).map((section) => section.label);
+  const unsavedSections = sections.filter((section) => !section.saved).map((section) => section.label);
+
+  if (savedSections.length === sections.length) {
+    return {
+      state: "saved",
+      text: t("dailySaveStatusSaved", {
+        savedSections: savedSections.join(" · ")
+      })
+    };
+  }
+
+  if (!savedSections.length) {
+    return {
+      state: "partial",
+      text: t("dailySaveStatusSavedNone")
+    };
+  }
+
+  return {
+    state: "partial",
+    text: t("dailySaveStatusPartial", {
+      savedSections: savedSections.join(" · "),
+      unsavedSections: unsavedSections.join(" · ")
+    })
+  };
+}
+
+function updateDailySaveStatus() {
+  const status = document.querySelector("#dailySaveStatus");
+  const text = document.querySelector("#dailySaveStatusText");
+  if (!status || !text) return;
+
+  const statusState = getDailySaveStatusState();
+  status.classList.toggle("is-empty", statusState.state === "empty");
+  status.classList.toggle("is-partial", statusState.state === "partial");
+  status.classList.toggle("is-saved", statusState.state === "saved");
+  text.textContent = statusState.text;
+}
+
 function saveCurrentForm({ generateReflection = false } = {}) {
   if (generateReflection) {
     appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
@@ -6126,6 +6254,7 @@ function renderDailyLogTable() {
     </tr>
   `).join("");
   emptyState.classList.toggle("is-hidden", rows.length > 0);
+  updateDailySaveStatus();
 }
 
 function exportMasterExcel() {

@@ -41,6 +41,10 @@
       <button type="button" data-view="reflection" data-i18n="tabReflection">Reflection/NuTuenSai</button>
       <button type="button" data-view="log" data-i18n="tabLog">Log</button>
     </nav>
+    <div class="daily-save-status is-empty" id="dailySaveStatus" aria-live="polite">
+      <span class="daily-save-status-dot" aria-hidden="true"></span>
+      <span id="dailySaveStatusText" data-i18n="dailySaveStatusEmpty">วันนี้ยังไม่มี Daily Log — เติมเท่าที่จริงแล้วบันทึกเมื่อพร้อม</span>
+    </div>
     <p class="save-status global-status" id="saveStatus" aria-live="polite"></p>
 
     <section class="view-panel is-active" data-view-panel="today" aria-labelledby="todayViewTitle">
