@@ -618,16 +618,38 @@ const translations = {
         recovery: "วันเบา / ฟื้นตัว"
       },
       practiceRoots: {
-        breath_body_base: "ลมหายใจ / กาย",
-        heart_quality: "คุณภาพใจ",
-        recollection_trust: "ระลึก / วางใจ",
-        letting_go: "วาง / เห็นตามจริง",
-        elements_simplicity: "กาย / ธาตุ / อาหาร",
-        visual_steadiness: "ภาพ / แสง / พื้นที่",
+        body: "กาย",
+        feeling_tone: "เวทนา",
+        mind_thought: "จิต / คิด",
+        dhamma: "ธรรม",
         other_or_none: "ไม่ได้ภาวนา / อื่น ๆ"
       },
       practiceTypes: {
+        standing: "ยืน",
+        walking: "เดิน",
+        sitting: "นั่ง",
+        lying_down: "นอน",
         breath_awareness: "รู้ลมหายใจ",
+        body_movement: "รู้กายเคลื่อนไหว",
+        pleasant: "สุข",
+        unpleasant: "ทุกข์",
+        neutral_feeling: "เฉย ๆ",
+        uneasy_tone: "ไม่สบายใจ",
+        body_discomfort: "กายไม่สบาย",
+        tense_mind: "ใจตึง",
+        observe_mind: "ดูจิต",
+        notice_thoughts: "เห็นความคิด",
+        buddho: "พุทโธ",
+        gentle_phrase: "คำบริกรรมที่ชอบ",
+        scattered_mind: "ใจฟุ้ง",
+        calm_mind: "ใจสงบ",
+        notice_impermanence: "เห็นไตรลักษณ์",
+        notice_defilement: "เห็นกิเลส",
+        recollect_goodness: "นึกถึงความดีที่ทำ",
+        recollect_virtue: "นึกถึงศีลที่รักษา",
+        see_and_release: "เห็นแล้ววาง",
+        notice_wanting: "รู้ทันความอยาก",
+        just_resting: "พักเฉย ๆ",
         body_awareness: "รู้กาย",
         walking_awareness: "เดินรู้ตัว",
         metta: "เมตตา",
@@ -653,7 +675,31 @@ const translations = {
         other: "อื่น ๆ"
       },
       practiceTypeHelpers: {
-        breath_awareness: "รู้ลมหายใจเป็นฐาน ไม่ต้องบังคับให้สงบ",
+        standing: "สังเกตกายตามที่กำลังเป็น ไม่ต้องทำให้สงบหรือพิเศษ",
+        walking: "สังเกตกายตามที่กำลังเป็น ไม่ต้องทำให้สงบหรือพิเศษ",
+        sitting: "สังเกตกายตามที่กำลังเป็น ไม่ต้องทำให้สงบหรือพิเศษ",
+        lying_down: "สังเกตกายตามที่กำลังเป็น ไม่ต้องทำให้สงบหรือพิเศษ",
+        breath_awareness: "สังเกตกายตามที่กำลังเป็น ไม่ต้องทำให้สงบหรือพิเศษ",
+        body_movement: "สังเกตกายตามที่กำลังเป็น ไม่ต้องทำให้สงบหรือพิเศษ",
+        pleasant: "รู้ว่ามีสุข ทุกข์ หรือเฉย ๆ โดยไม่ต้องรีบผลักหรือดึง",
+        unpleasant: "รู้ว่ามีสุข ทุกข์ หรือเฉย ๆ โดยไม่ต้องรีบผลักหรือดึง",
+        neutral_feeling: "รู้ว่ามีสุข ทุกข์ หรือเฉย ๆ โดยไม่ต้องรีบผลักหรือดึง",
+        uneasy_tone: "รู้ว่ามีสุข ทุกข์ หรือเฉย ๆ โดยไม่ต้องรีบผลักหรือดึง",
+        body_discomfort: "รู้ว่ามีสุข ทุกข์ หรือเฉย ๆ โดยไม่ต้องรีบผลักหรือดึง",
+        tense_mind: "รู้ว่ามีสุข ทุกข์ หรือเฉย ๆ โดยไม่ต้องรีบผลักหรือดึง",
+        observe_mind: "เห็นจิตหรือความคิดที่เกิดขึ้น ไม่ต้องเข้าไปเถียงกับมัน",
+        notice_thoughts: "เห็นจิตหรือความคิดที่เกิดขึ้น ไม่ต้องเข้าไปเถียงกับมัน",
+        buddho: "ใช้คำเป็นฐานเบา ๆ โดยไม่กดดันตัวเอง",
+        gentle_phrase: "เลือกคำที่ไม่ยั่วกิเลสและไม่กดดันตัวเอง",
+        scattered_mind: "เห็นจิตหรือความคิดที่เกิดขึ้น ไม่ต้องเข้าไปเถียงกับมัน",
+        calm_mind: "เห็นจิตหรือความคิดที่เกิดขึ้น ไม่ต้องเข้าไปเถียงกับมัน",
+        notice_impermanence: "เห็นสิ่งที่เกิดขึ้นเป็นธรรมดา ไม่ต้องตัดสินว่าภาวนาดีหรือไม่ดี",
+        notice_defilement: "เห็นสิ่งที่เกิดขึ้นเป็นธรรมดา ไม่ต้องตัดสินว่าภาวนาดีหรือไม่ดี",
+        recollect_goodness: "เห็นสิ่งที่เกิดขึ้นเป็นธรรมดา ไม่ต้องตัดสินว่าภาวนาดีหรือไม่ดี",
+        recollect_virtue: "เห็นสิ่งที่เกิดขึ้นเป็นธรรมดา ไม่ต้องตัดสินว่าภาวนาดีหรือไม่ดี",
+        see_and_release: "เห็นสิ่งที่เกิดขึ้นเป็นธรรมดา ไม่ต้องตัดสินว่าภาวนาดีหรือไม่ดี",
+        notice_wanting: "เห็นสิ่งที่เกิดขึ้นเป็นธรรมดา ไม่ต้องตัดสินว่าภาวนาดีหรือไม่ดี",
+        just_resting: "ไม่เลือกก็ได้ วันนี้แค่รู้ว่ามีหรือไม่มีฐานก็พอ",
         body_awareness: "รู้กายเท่าที่รู้ได้ ไม่ต้องทำให้ดีเป็นพิเศษ",
         walking_awareness: "เดินรู้ตัวแบบนุ่ม ๆ ไม่ต้องทำให้เป็น performance",
         metta: "วางใจให้อ่อนลง โดยไม่ต้องบังคับให้รู้สึกดี",
@@ -1293,16 +1339,38 @@ const translations = {
         recovery: "Light / Recovery"
       },
       practiceRoots: {
-        breath_body_base: "Breath / Body",
-        heart_quality: "Heart quality",
-        recollection_trust: "Recollection / Trust",
-        letting_go: "Letting go / Seeing clearly",
-        elements_simplicity: "Elements / simplicity",
-        visual_steadiness: "Visual steadiness",
+        body: "Body",
+        feeling_tone: "Feeling tone",
+        mind_thought: "Mind / Thought",
+        dhamma: "Dhamma",
         other_or_none: "No practice / Other"
       },
       practiceTypes: {
+        standing: "Standing",
+        walking: "Walking",
+        sitting: "Sitting",
+        lying_down: "Lying down",
         breath_awareness: "Breath awareness",
+        body_movement: "Body movement",
+        pleasant: "Pleasant",
+        unpleasant: "Unpleasant",
+        neutral_feeling: "Neutral",
+        uneasy_tone: "Uneasy",
+        body_discomfort: "Body discomfort",
+        tense_mind: "Tense mind",
+        observe_mind: "Observe mind",
+        notice_thoughts: "Notice thoughts",
+        buddho: "Buddho",
+        gentle_phrase: "A gentle phrase",
+        scattered_mind: "Scattered mind",
+        calm_mind: "Calm mind",
+        notice_impermanence: "Notice impermanence",
+        notice_defilement: "Notice defilement",
+        recollect_goodness: "Recollect goodness",
+        recollect_virtue: "Recollect virtue",
+        see_and_release: "See and release",
+        notice_wanting: "Notice wanting",
+        just_resting: "Just resting",
         body_awareness: "Body awareness",
         walking_awareness: "Walking awareness",
         metta: "Loving-kindness",
@@ -1328,7 +1396,31 @@ const translations = {
         other: "Other"
       },
       practiceTypeHelpers: {
-        breath_awareness: "Use the breath as a base without forcing calm.",
+        standing: "Notice the body as it is, without needing to make it special.",
+        walking: "Notice the body as it is, without needing to make it special.",
+        sitting: "Notice the body as it is, without needing to make it special.",
+        lying_down: "Notice the body as it is, without needing to make it special.",
+        breath_awareness: "Notice the body as it is, without needing to make it special.",
+        body_movement: "Notice the body as it is, without needing to make it special.",
+        pleasant: "Notice pleasant, unpleasant, or neutral feeling without rushing to push or pull it.",
+        unpleasant: "Notice pleasant, unpleasant, or neutral feeling without rushing to push or pull it.",
+        neutral_feeling: "Notice pleasant, unpleasant, or neutral feeling without rushing to push or pull it.",
+        uneasy_tone: "Notice pleasant, unpleasant, or neutral feeling without rushing to push or pull it.",
+        body_discomfort: "Notice pleasant, unpleasant, or neutral feeling without rushing to push or pull it.",
+        tense_mind: "Notice pleasant, unpleasant, or neutral feeling without rushing to push or pull it.",
+        observe_mind: "Notice the mind or thoughts that arise, without needing to argue with them.",
+        notice_thoughts: "Notice the mind or thoughts that arise, without needing to argue with them.",
+        buddho: "Use the phrase as a light base without pressuring yourself.",
+        gentle_phrase: "Use a phrase that does not stir craving or pressure.",
+        scattered_mind: "Notice the mind or thoughts that arise, without needing to argue with them.",
+        calm_mind: "Notice the mind or thoughts that arise, without needing to argue with them.",
+        notice_impermanence: "Notice what appears as a natural process, without judging the practice as good or bad.",
+        notice_defilement: "Notice what appears as a natural process, without judging the practice as good or bad.",
+        recollect_goodness: "Notice what appears as a natural process, without judging the practice as good or bad.",
+        recollect_virtue: "Notice what appears as a natural process, without judging the practice as good or bad.",
+        see_and_release: "Notice what appears as a natural process, without judging the practice as good or bad.",
+        notice_wanting: "Notice what appears as a natural process, without judging the practice as good or bad.",
+        just_resting: "It is okay not to choose one. Noticing whether there was a base today is enough.",
         body_awareness: "Notice the body as it is, without needing to make it special.",
         walking_awareness: "Walk with awareness without turning it into performance.",
         metta: "Let the heart soften without forcing a good feeling.",
@@ -1968,16 +2060,38 @@ const translations = {
         recovery: "轻恢复"
       },
       practiceRoots: {
-        breath_body_base: "呼吸 / 身体",
-        heart_quality: "心的品质",
-        recollection_trust: "忆念 / 信任",
-        letting_go: "放下 / 如实看见",
-        elements_simplicity: "元素 / 简单",
-        visual_steadiness: "视觉稳定",
+        body: "身体",
+        feeling_tone: "感受",
+        mind_thought: "心 / 念头",
+        dhamma: "法",
         other_or_none: "未练习 / 其他"
       },
       practiceTypes: {
+        standing: "站立",
+        walking: "行走",
+        sitting: "坐着",
+        lying_down: "躺下",
         breath_awareness: "觉知呼吸",
+        body_movement: "觉知身体动作",
+        pleasant: "乐受",
+        unpleasant: "苦受",
+        neutral_feeling: "中性",
+        uneasy_tone: "不安",
+        body_discomfort: "身体不适",
+        tense_mind: "心紧",
+        observe_mind: "观心",
+        notice_thoughts: "看见念头",
+        buddho: "佛陀念",
+        gentle_phrase: "温和短句",
+        scattered_mind: "心散乱",
+        calm_mind: "心安静",
+        notice_impermanence: "看见三相",
+        notice_defilement: "看见烦恼",
+        recollect_goodness: "忆念善行",
+        recollect_virtue: "忆念戒",
+        see_and_release: "看见并放下",
+        notice_wanting: "觉知想要",
+        just_resting: "只是休息",
         body_awareness: "觉知身体",
         walking_awareness: "行走觉知",
         metta: "慈心",
@@ -2003,7 +2117,31 @@ const translations = {
         other: "其他"
       },
       practiceTypeHelpers: {
-        breath_awareness: "以呼吸为基础，不需要强迫自己平静。",
+        standing: "如实觉知身体，不需要让它变得特别。",
+        walking: "如实觉知身体，不需要让它变得特别。",
+        sitting: "如实觉知身体，不需要让它变得特别。",
+        lying_down: "如实觉知身体，不需要让它变得特别。",
+        breath_awareness: "如实觉知身体，不需要让它变得特别。",
+        body_movement: "如实觉知身体，不需要让它变得特别。",
+        pleasant: "觉知乐、苦或中性，不急着推开或抓住。",
+        unpleasant: "觉知乐、苦或中性，不急着推开或抓住。",
+        neutral_feeling: "觉知乐、苦或中性，不急着推开或抓住。",
+        uneasy_tone: "觉知乐、苦或中性，不急着推开或抓住。",
+        body_discomfort: "觉知乐、苦或中性，不急着推开或抓住。",
+        tense_mind: "觉知乐、苦或中性，不急着推开或抓住。",
+        observe_mind: "看见生起的心或念头，不需要跟它争辩。",
+        notice_thoughts: "看见生起的心或念头，不需要跟它争辩。",
+        buddho: "把短句作为轻轻的基础，不给自己压力。",
+        gentle_phrase: "选择不激起欲望、也不压迫自己的短句。",
+        scattered_mind: "看见生起的心或念头，不需要跟它争辩。",
+        calm_mind: "看见生起的心或念头，不需要跟它争辩。",
+        notice_impermanence: "把正在发生的看作自然过程，不判断练习好或不好。",
+        notice_defilement: "把正在发生的看作自然过程，不判断练习好或不好。",
+        recollect_goodness: "把正在发生的看作自然过程，不判断练习好或不好。",
+        recollect_virtue: "把正在发生的看作自然过程，不判断练习好或不好。",
+        see_and_release: "把正在发生的看作自然过程，不判断练习好或不好。",
+        notice_wanting: "把正在发生的看作自然过程，不判断练习好或不好。",
+        just_resting: "不选择也可以。今天只要知道有没有一个基础就足够。",
         body_awareness: "如实觉知身体，不需要做得特别好。",
         walking_awareness: "轻轻行走觉知，不把它变成 performance。",
         metta: "让心稍微软下来，不需要强迫自己感觉好。",
@@ -2167,15 +2305,46 @@ const recoveryModeActivityKeys = ["rest", "lightRecoveryDay"];
 const runningActivityKeys = ["easyRun", "shortQualityRun", "longRun"];
 const runningActivityPriority = ["longRun", "shortQualityRun", "easyRun"];
 const runSweatOptions = ["", "low", "medium", "high"];
-const practiceSourceKey = "40_kammatthana_modern_group";
+const practiceSourceKey = "four_bases_daily_context";
 const practiceGroups = [
   {
+    key: "body",
+    types: ["standing", "walking", "sitting", "lying_down", "breath_awareness", "body_movement"]
+  },
+  {
+    key: "feeling_tone",
+    types: ["pleasant", "unpleasant", "neutral_feeling", "uneasy_tone", "body_discomfort", "tense_mind"]
+  },
+  {
+    key: "mind_thought",
+    types: ["observe_mind", "notice_thoughts", "buddho", "gentle_phrase", "scattered_mind", "calm_mind"]
+  },
+  {
+    key: "dhamma",
+    types: [
+      "notice_impermanence",
+      "notice_defilement",
+      "recollect_goodness",
+      "recollect_virtue",
+      "see_and_release",
+      "notice_wanting"
+    ]
+  },
+  {
+    key: "other_or_none",
+    types: ["none", "other", "just_resting"]
+  },
+  // Legacy v1.9.9 roots remain readable for old localStorage/workbook values,
+  // but the daily UI now exposes only Body / Feeling tone / Mind-Thought / Dhamma.
+  {
     key: "breath_body_base",
-    types: ["breath_awareness", "body_awareness", "walking_awareness"]
+    types: ["body_awareness", "walking_awareness"],
+    hiddenInUi: true
   },
   {
     key: "heart_quality",
-    types: ["metta", "karuna", "mudita", "upekkha"]
+    types: ["metta", "karuna", "mudita", "upekkha"],
+    hiddenInUi: true
   },
   {
     key: "recollection_trust",
@@ -2186,11 +2355,13 @@ const practiceGroups = [
       "virtue_recollection",
       "generosity_recollection",
       "peace_recollection"
-    ]
+    ],
+    hiddenInUi: true
   },
   {
     key: "letting_go",
-    types: ["impermanence", "let_it_be_lighter", "see_without_following"]
+    types: ["impermanence", "let_it_be_lighter", "see_without_following"],
+    hiddenInUi: true
   },
   {
     key: "elements_simplicity",
@@ -2201,10 +2372,6 @@ const practiceGroups = [
     key: "visual_steadiness",
     types: ["light", "color", "open_space"],
     hiddenInUi: true
-  },
-  {
-    key: "other_or_none",
-    types: ["none", "other"]
   }
 ];
 const visiblePracticeGroups = practiceGroups.filter((group) => !group.hiddenInUi);
@@ -2214,6 +2381,37 @@ const practiceTypeToRoot = practiceGroups.reduce((acc, group) => {
   });
   return acc;
 }, {});
+const legacyPracticeRootMap = {
+  breath_body_base: "body",
+  recollection_trust: "dhamma",
+  letting_go: "dhamma",
+  heart_quality: "other_or_none",
+  elements_simplicity: "other_or_none",
+  visual_steadiness: "other_or_none"
+};
+const legacyPracticeTypeMap = {
+  body_awareness: "body_movement",
+  walking_awareness: "walking",
+  metta: "other",
+  karuna: "other",
+  mudita: "other",
+  upekkha: "other",
+  buddha_recollection: "recollect_goodness",
+  dhamma_recollection: "recollect_goodness",
+  sangha_recollection: "recollect_goodness",
+  virtue_recollection: "recollect_virtue",
+  generosity_recollection: "recollect_goodness",
+  peace_recollection: "see_and_release",
+  impermanence: "notice_impermanence",
+  let_it_be_lighter: "see_and_release",
+  see_without_following: "see_and_release",
+  body_elements: "other",
+  food_as_it_is: "other",
+  simple_body_awareness: "other",
+  light: "other",
+  color: "other",
+  open_space: "other"
+};
 
 const todayIso = new Date().toLocaleDateString("en-CA");
 
@@ -3490,6 +3688,8 @@ function updateRunDetailUI() {
 
 function normalizePracticeRoot(value) {
   const root = String(value || "").trim();
+  if (visiblePracticeGroups.some((group) => group.key === root)) return root;
+  if (legacyPracticeRootMap[root]) return legacyPracticeRootMap[root];
   return practiceGroups.some((group) => group.key === root) ? root : "";
 }
 
@@ -3501,7 +3701,8 @@ function getVisiblePracticeRoot(root) {
 }
 
 function normalizePracticeType(value, root = "") {
-  const type = String(value || "").trim();
+  const rawType = String(value || "").trim();
+  const type = legacyPracticeTypeMap[rawType] || rawType;
   if (!practiceTypeToRoot[type]) return "";
   const safeRoot = normalizePracticeRoot(root);
   if (safeRoot && practiceTypeToRoot[type] !== safeRoot) return "";
@@ -6095,18 +6296,18 @@ function buildColumnGuideRows() {
       column: "Practice_Root",
       thai: "รากฐานภาวนา",
       english: "Practice root",
-      meaning: "หมวด practice context แบบ modern group ที่ map กลับไปยังรากกรรมฐานกว้าง ๆ",
+      meaning: "หมวด practice context แบบ 4 ฐานที่เข้าใจง่าย เช่น กาย เวทนา จิต/คิด หรือธรรม",
       aiNote: "Stored for future Field Review context. Excluded from daily Reflection/NuTuenSai in v1.9.9; do not score or judge practice quality.",
-      example: "heart_quality"
+      example: "mind_thought"
     }),
     row({
       sheet: "Daily_Log",
       column: "Practice_Type",
       thai: "รูปแบบภาวนา",
       english: "Practice type",
-      meaning: "ตัวเลือก practice ที่ผู้ใช้เลือก เช่น breath_awareness, metta, impermanence, none หรือ other",
+      meaning: "ตัวเลือก practice ที่ผู้ใช้เลือก เช่น walking, observe_mind, notice_wanting, none หรือ other",
       aiNote: "Optional user-owned practice context. Do not infer spiritual progress, attainment, or personality.",
-      example: "metta"
+      example: "observe_mind"
     }),
     row({
       sheet: "Daily_Log",
@@ -6124,7 +6325,7 @@ function buildColumnGuideRows() {
       english: "Practice context JSON",
       meaning: "JSON compact สำหรับ root, type, minutes, source และ reflectDaily=false",
       aiNote: "Future field-review context only. reflectDaily=false means daily Reflection should intentionally ignore this field in v1.9.9.",
-      example: "{\"root\":\"heart_quality\",\"type\":\"metta\",\"minutes\":15,\"source\":\"40_kammatthana_modern_group\",\"reflectDaily\":false}"
+      example: "{\"root\":\"mind_thought\",\"type\":\"observe_mind\",\"minutes\":15,\"source\":\"four_bases_daily_context\",\"reflectDaily\":false}"
     }),
     row({
       sheet: "Daily_Log",

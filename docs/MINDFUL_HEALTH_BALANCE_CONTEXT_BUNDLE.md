@@ -3354,7 +3354,7 @@ This is a naturalness polish only. It does not change anchor ranking, reflection
 
 # v1.9.9 - Mindful Practice Context
 
-v1.9.9 adds an optional practice context card before Mind Note 2/2. The card lets the user record a light practice base, practice type, and approximate duration before writing one line of inner context. It is inspired by the traditional Theravada 40 kammaṭṭhāna framework, but the UI exposes only lightweight daily-use practice contexts rather than showing a raw list of forty objects.
+v1.9.9 adds an optional practice context card before Mind Note 2/2. The card lets the user record a light practice base, practice type, and approximate duration before writing one line of inner context. It is inspired by Buddhist practice context, but the UI exposes four simple daily bases rather than showing a raw list of traditional objects.
 
 On desktop, Mind Note 2/2 uses a balanced two-column layout: Practice Context on the left and Mind Note on the right. The Mind Note card stretches visually with a taller text area so the right side feels like a real place to set down one line or one short paragraph. On mobile, Practice Context stacks above Mind Note. The practice card includes a small breathing-orb visual summary for selected type and minutes; the orb is presentation only, not a score, streak, achievement, or practice-quality marker.
 
@@ -3362,13 +3362,13 @@ Practice Context uses progressive disclosure: root chips are visible by default,
 
 ## Practice Groups
 
-- `breath_body_base`: breath awareness, body awareness, walking awareness
-- `heart_quality`: loving-kindness, compassion, appreciative joy, equanimity
-- `recollection_trust`: recollection of Buddha, Dhamma, Sangha, virtue, generosity, peace
-- `letting_go`: impermanence, letting it be lighter, seeing without following
-- `other_or_none`: no practice, other
+- `body`: standing, walking, sitting, lying down, breath awareness, body movement
+- `feeling_tone`: pleasant, unpleasant, neutral, uneasy, body discomfort, tense mind
+- `mind_thought`: observe mind, notice thoughts, Buddho, a gentle phrase, scattered mind, calm mind
+- `dhamma`: notice impermanence, notice defilement, recollect goodness, recollect virtue, see and release, notice wanting
+- `other_or_none`: no practice, other, just resting
 
-Specialized legacy-compatible roots such as `elements_simplicity` and `visual_steadiness` may still normalize from old saved/imported data, but they are not shown as selectable roots in the main daily UI.
+Legacy-compatible roots such as `breath_body_base`, `heart_quality`, `recollection_trust`, `letting_go`, `elements_simplicity`, and `visual_steadiness` may still normalize from old saved/imported data, but they are not shown as selectable roots in the main daily UI.
 
 ## Daily_Log Fields
 
@@ -3379,7 +3379,7 @@ The patch adds optional backward-compatible columns:
 - `Practice_Minutes`
 - `Practice_Context_JSON`
 
-`Practice_Minutes` stores total minutes derived from the UI hours + minutes inputs. `Practice_Context_JSON` stores `root`, `type`, `minutes`, `source: "40_kammatthana_modern_group"`, and `reflectDaily: false`.
+`Practice_Minutes` stores total minutes derived from the UI hours + minutes inputs. `Practice_Context_JSON` stores `root`, `type`, `minutes`, `source: "four_bases_daily_context"`, and `reflectDaily: false`.
 
 ## Reflection Boundary
 

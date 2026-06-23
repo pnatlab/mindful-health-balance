@@ -4,7 +4,7 @@
 
 v1.9.9 adds a small optional practice context layer before Mind Note. The purpose is to let the user record how they lightly placed the mind before writing one line, without turning Mindful Health Balance into a dhamma teaching system, spiritual scoring system, or meditation performance tracker.
 
-The feature is inspired by the traditional Theravada 40 kammaṭṭhāna framework, but it is presented as modern grouped practice contexts rather than a raw list of forty objects. v1.9.9 intentionally exposes only lightweight daily-use groups in the main UI.
+The feature is inspired by Buddhist practice context, but it is presented as four simple daily bases rather than a raw list of traditional objects. v1.9.9 intentionally exposes only lightweight daily-use groups in the main UI.
 
 ## UI Placement
 
@@ -42,17 +42,17 @@ This orb is a visual anchor only. It is not a score, streak, achievement, spirit
 
 ## Practice Groups
 
-The UI groups practice roots into public-safe daily options:
+The UI groups practice roots into four simple bases plus an optional none/other group:
 
-- `breath_body_base`: breath awareness, body awareness, walking awareness
-- `heart_quality`: loving-kindness, compassion, appreciative joy, equanimity
-- `recollection_trust`: recollection of Buddha, Dhamma, Sangha, virtue, generosity, peace
-- `letting_go`: impermanence, letting it be lighter, seeing without following
-- `other_or_none`: no practice, other
+- `body`: standing, walking, sitting, lying down, breath awareness, body movement
+- `feeling_tone`: pleasant, unpleasant, neutral, uneasy, body discomfort, tense mind
+- `mind_thought`: observe mind, notice thoughts, Buddho, a gentle phrase, scattered mind, calm mind
+- `dhamma`: notice impermanence, notice defilement, recollect goodness, recollect virtue, see and release, notice wanting
+- `other_or_none`: no practice, other, just resting
 
 These groups are descriptive anchors only. They are not used to infer spiritual attainment, personality, or practice quality.
 
-More specialized roots such as `elements_simplicity` and `visual_steadiness` are kept as legacy-compatible values for old workbooks/current-form data, but they are not shown as selectable roots in the v1.9.9 daily UI.
+Legacy roots such as `breath_body_base`, `heart_quality`, `recollection_trust`, `letting_go`, `elements_simplicity`, and `visual_steadiness` remain safe to import/normalize from old workbooks/current-form data, but they are not shown as selectable roots in the v1.9.9 daily UI.
 
 ## Data Fields
 
@@ -69,10 +69,10 @@ v1.9.9 adds four backward-compatible optional `Daily_Log` columns:
 
 ```json
 {
-  "root": "heart_quality",
-  "type": "metta",
+  "root": "mind_thought",
+  "type": "observe_mind",
   "minutes": 15,
-  "source": "40_kammatthana_modern_group",
+  "source": "four_bases_daily_context",
   "reflectDaily": false
 }
 ```
@@ -102,7 +102,7 @@ Imports remain backward compatible:
 
 - old workbooks without practice fields normalize missing values to empty
 - new workbooks preserve practice fields
-- old rows with legacy hidden roots such as `elements_simplicity` or `visual_steadiness` remain readable and exportable
+- old rows with legacy hidden roots normalize to the closest conservative visible root where possible, or to `other_or_none` when the mapping would overclaim
 - malformed or legacy artifact text in practice text/JSON fields is ignored rather than interpreted
 
 ## Guardrails

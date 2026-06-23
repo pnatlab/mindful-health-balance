@@ -35,7 +35,7 @@ It is designed as a user-owned personal rhythm dataset, not as a medical tool. T
 
 Latest refinements include:
 
-- Mindful Practice Context card before Mind Note, with optional practice root/type and duration fields
+- Mindful Practice Context card before Mind Note, with optional four-base practice context and duration fields
 - Reflection sentence smoothing to reduce repeated connectors and split rich anchor context into calmer sentences
 - Reflection breathing markers: very small emoji pause markers for readability without section headings
 - Input-grounded Reflection/NuTuenSai overview that selects 2-4 meaningful anchors from today's input
@@ -129,7 +129,7 @@ Thai documentation, field notes, and original design context remain available in
 
 ## Version History / Design Trace
 
-- **v1.9.9 — Mindful Practice Context**: adds optional practice root/type/duration before Mind Note, stored for future Field Review while excluded from daily Reflection.
+- **v1.9.9 — Mindful Practice Context**: adds optional Body / Feeling tone / Mind-Thought / Dhamma practice context before Mind Note, stored for future Field Review while excluded from daily Reflection.
 - **v1.9.8c — Reflection Sentence Smoothing**: reduces repeated connectors and uses short paragraphs so input-grounded reflection reads more naturally.
 - **v1.9.8b — Reflection Breathing Markers**: adds minimal emoji pause markers to improve reflection readability without creating emoji headings or new signal categories.
 - **v1.9.8 — Input-grounded Natural Reflection Composer**: Reflection selects 2-4 meaningful input anchors and embeds them in a natural NuTuenSai overview.
