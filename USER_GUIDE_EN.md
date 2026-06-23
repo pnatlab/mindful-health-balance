@@ -23,6 +23,8 @@ You can use the app lightly at three natural moments:
 
 You do not need to keep the app open all day. It is meant to be a gentle mirror at the beginning, middle, and end of the day.
 
+You do not need to complete every field. Honest and steady data is more valuable than forced completeness. A blank field means not recorded or uncertain, not a missing score.
+
 ## 3. Language Switching
 
 The header includes language buttons:

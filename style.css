@@ -1783,6 +1783,18 @@ body[data-theme="dark"] .load-recovery-card {
   line-height: 1.65;
 }
 
+.honest-data-note {
+  max-width: 620px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.today-actions .honest-data-note {
+  max-width: 560px;
+  margin-top: 6px;
+}
+
 .metric {
   display: grid;
   min-width: 110px;
