@@ -248,8 +248,8 @@ const translations = {
     saveTodayDone: "บันทึกเข้า Daily Log แล้ว ไม่ต้องแบกต่อในหัวแล้วนะ",
     resetCurrentFormConfirm: "เคลียร์เฉพาะข้อมูลที่กำลังกรอกอยู่ ไม่ลบ Daily Log เดิม",
     resetCurrentFormDone: "เคลียร์หน้าปัจจุบันแล้ว Daily Log เดิมยังอยู่",
-    replaceConfirm: "มี log ของวันนี้อยู่แล้ว ต้องการ replace/update row เดิมไหม?",
-    replaceCancelled: "ยังไม่บันทึกทับ row เดิม ไม่ต้องรีบตัดสินใจก็ได้",
+    replaceConfirm: "วันนี้มี Daily Log อยู่แล้ว ระบบจะอัปเดตข้อมูลจากหน้านี้และเก็บข้อมูลเดิมส่วนอื่นไว้ ต้องการดำเนินการต่อไหม",
+    replaceCancelled: "ยังไม่อัปเดต Daily Log เดิม ไม่ต้องรีบตัดสินใจก็ได้",
     savedDailyLog: "บันทึกลง Daily Log แล้ว ไม่ต้องแบกต่อในหัวแล้วนะ",
     clearConfirm: "ต้องการล้าง Daily Log ทั้งหมดใน browser นี้ไหม?",
     clearedDailyLog: "ล้าง Daily Log ใน browser นี้แล้ว",
@@ -970,8 +970,8 @@ const translations = {
     saveTodayDone: "Saved to Daily Log. You do not have to carry it all in your head now.",
     resetCurrentFormConfirm: "This resets only the current form. Saved Daily Logs will not be deleted.",
     resetCurrentFormDone: "Current form reset. Saved Daily Logs are still here.",
-    replaceConfirm: "A log for this date already exists. Replace/update the existing row?",
-    replaceCancelled: "Not replacing the existing row. No need to rush the decision.",
+    replaceConfirm: "A Daily Log already exists for today. The app will update this section and keep other saved sections. Continue?",
+    replaceCancelled: "Not updating the existing Daily Log. No need to rush the decision.",
     savedDailyLog: "Saved to Daily Log. You do not have to carry it all in your head now.",
     clearConfirm: "Clear all Daily Log data in this browser?",
     clearedDailyLog: "Daily Log in this browser has been cleared.",
@@ -1692,8 +1692,8 @@ const translations = {
     saveTodayDone: "已保存到 Daily Log。现在不用再把它都放在脑子里了。",
     resetCurrentFormConfirm: "只会重置当前表单，不会删除已保存的每日记录。",
     resetCurrentFormDone: "当前表单已重置，已保存的每日记录仍然保留。",
-    replaceConfirm: "这个日期已经有记录了。要替换/更新原本的 row 吗？",
-    replaceCancelled: "没有覆盖旧记录。不需要急着决定。",
+    replaceConfirm: "今天已有 Daily Log。应用会更新当前部分，并保留其他已保存部分。继续吗？",
+    replaceCancelled: "没有更新已有的 Daily Log。不需要急着决定。",
     savedDailyLog: "已保存到 Daily Log。现在不用再把它都放在脑子里了。",
     clearConfirm: "要清空这个浏览器里的所有 Daily Log 吗？",
     clearedDailyLog: "这个浏览器里的 Daily Log 已清空。",
@@ -5772,6 +5772,134 @@ function buildDailyLogRow({ generateReflection = true } = {}) {
   };
 }
 
+const todaySignalsLogFields = [
+  "Date",
+  "Energy",
+  "Mind",
+  "Sleep",
+  "Sleep_Hours",
+  "Water_ml",
+  "Drinks",
+  "Sweet_Drinks_Count",
+  "Drink_Profile_JSON",
+  "Sugar_Score",
+  "Caffeine_Score",
+  "Milk_Drink_Count",
+  "Hydration_Support_Count",
+  "Activities",
+  "Run_Detail_JSON",
+  "Energy_Causes",
+  "Load_Score",
+  "Load_Level",
+  "Hydration_Status"
+];
+
+const mindNoteLogFields = [
+  "Practice_Root",
+  "Practice_Type",
+  "Practice_Minutes",
+  "Practice_Context_JSON",
+  "Mind_Note_Text",
+  "Mind_Note_Feeling",
+  "Mind_Note_Support"
+];
+
+const reflectionLogFields = [
+  "Reflection_Text",
+  "Tomorrow_Focus",
+  "NuTuenSai_Reminder"
+];
+
+const todaySignalMergeGroups = [
+  {
+    fields: ["Energy", "Mind", "Sleep", "Sleep_Hours"],
+    hasSignal: (row) => hasDailyLogValue(row.Energy)
+      || hasDailyLogValue(row.Mind)
+      || hasDailyLogValue(row.Sleep)
+      || hasDailyLogValue(row.Sleep_Hours)
+  },
+  {
+    fields: ["Water_ml", "Hydration_Status"],
+    hasSignal: (row) => Number(row.Water_ml) > 0
+  },
+  {
+    fields: [
+      "Drinks",
+      "Sweet_Drinks_Count",
+      "Drink_Profile_JSON",
+      "Sugar_Score",
+      "Caffeine_Score",
+      "Milk_Drink_Count",
+      "Hydration_Support_Count"
+    ],
+    hasSignal: (row) => hasDailyLogValue(row.Drink_Profile_JSON)
+      || hasDailyLogValue(row.Drinks)
+  },
+  {
+    fields: [
+      "Activities",
+      "Run_Detail_JSON",
+      "Energy_Causes",
+      "Load_Score",
+      "Load_Level"
+    ],
+    hasSignal: (row) => hasDailyLogValue(row.Activities)
+      || hasDailyLogValue(row.Run_Detail_JSON)
+      || hasDailyLogValue(row.Energy_Causes)
+      || Number(row.Load_Score) > 0
+  }
+];
+
+function hasDailyLogValue(value) {
+  if (value === null || value === undefined) return false;
+  if (typeof value === "number") return Number.isFinite(value) && value !== 0;
+  const text = String(value).trim();
+  return Boolean(text && text !== "[]" && text !== "{}");
+}
+
+function copyDailyLogFields(targetRow, sourceRow, fields) {
+  fields.forEach((field) => {
+    targetRow[field] = sourceRow[field] ?? "";
+  });
+}
+
+function mergeDailyLogRow(existingRow, incomingRow, saveSource = "reflection") {
+  const existing = normalizeLogRow(existingRow || {});
+  const incoming = normalizeLogRow(incomingRow || {});
+  const merged = { ...existing, Date: incoming.Date || existing.Date };
+
+  if (saveSource === "reflection") {
+    copyDailyLogFields(merged, incoming, [
+      ...todaySignalsLogFields,
+      ...mindNoteLogFields,
+      ...reflectionLogFields
+    ]);
+    return normalizeLogRow(merged);
+  }
+
+  if (saveSource === "today_signals") {
+    copyDailyLogFields(merged, incoming, todaySignalsLogFields);
+    return normalizeLogRow(merged);
+  }
+
+  if (saveSource === "mind_note") {
+    todaySignalMergeGroups.forEach((group) => {
+      if (group.hasSignal(incoming)) {
+        copyDailyLogFields(merged, incoming, group.fields);
+      }
+    });
+    copyDailyLogFields(merged, incoming, mindNoteLogFields);
+    return normalizeLogRow(merged);
+  }
+
+  copyDailyLogFields(merged, incoming, [
+    ...todaySignalsLogFields,
+    ...mindNoteLogFields,
+    ...reflectionLogFields
+  ]);
+  return normalizeLogRow(merged);
+}
+
 function saveCurrentForm({ generateReflection = false } = {}) {
   if (generateReflection) {
     appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
@@ -5928,7 +6056,7 @@ function normalizeExcelDate(value) {
   return String(value || "").trim();
 }
 
-function saveCurrentDailyLog({ generateReflection = true } = {}) {
+function saveCurrentDailyLog({ generateReflection = true, saveSource = "reflection" } = {}) {
   if (generateReflection) {
     appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
   }
@@ -5943,7 +6071,7 @@ function saveCurrentDailyLog({ generateReflection = true } = {}) {
       document.querySelector("#saveStatus").textContent = t("replaceCancelled");
       return;
     }
-    rows[existingIndex] = row;
+    rows[existingIndex] = mergeDailyLogRow(rows[existingIndex], row, saveSource);
   } else {
     rows.push(row);
   }
@@ -5956,11 +6084,12 @@ function saveCurrentDailyLog({ generateReflection = true } = {}) {
 }
 
 function saveToDailyLog() {
-  saveCurrentDailyLog({ generateReflection: true });
+  saveCurrentDailyLog({ generateReflection: true, saveSource: "reflection" });
 }
 
-function saveTodayLog() {
-  saveCurrentDailyLog({ generateReflection: false });
+function saveTodayLog({ source = "today_1" } = {}) {
+  const saveSource = source === "today_2" ? "mind_note" : "today_signals";
+  saveCurrentDailyLog({ generateReflection: false, saveSource });
 }
 
 function clearDailyLog() {
