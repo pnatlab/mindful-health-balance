@@ -19,7 +19,7 @@ Mindful Health Balance by MSxAI เป็น self-care reflection tool สำห
 
 - เช้า / เริ่มวัน: เลือก Energy, Mind และกรอก Sleep Hours หรือเลือก Sleep แบบคร่าว ๆ
 - ระหว่างวัน: กดน้ำ เลือกเครื่องดื่ม และกิจกรรมหลักเท่าที่จำเป็น
-- สิ้นวัน: กด `สรุปวันนี้` เพื่อสร้าง Reflection แล้ว Save to Daily Log
+- สิ้นวัน: กด `สรุปวันนี้` เพื่อสร้าง Reflection แล้วกด `บันทึก Reflection วันนี้`
 
 ไม่ต้องเปิดทั้งวัน แค่ใช้เป็นกระจกอ่อนโยนตอนเริ่มวัน ระหว่างวัน และก่อนจบวันก็พอ
 
@@ -65,7 +65,7 @@ TH | EN | 中文
 หลังผ่านหน้ากระจกต้อนรับ แอปจะแบ่งเป็น 3 view:
 
 - `วันนี้` สำหรับเติมสัญญาณวันนี้แบบ 2 จังหวะ: `สัญญาณวันนี้ 1/2` คือ Energy, Mind, Sleep Hours/Sleep, น้ำ, Drink Profile และ Load & Recovery; `ภาวะใจวันนี้ 2/2` คือ Practice Context, Mind Note และทางลัดไป Reflection/NuTuenSai
-- `Reflection` สำหรับดู NuTuenSai note แบบแถบสั้น ๆ, generate/review/edit reflection และ Save to Daily Log
+- `Reflection` สำหรับดู NuTuenSai note แบบแถบสั้น ๆ, generate/review/edit reflection และ `บันทึก Reflection วันนี้`
 - `Log` สำหรับดู Daily Log Table, Export Master Excel, Import Master Excel และ Clear Daily Log
 
 การเปลี่ยน view ไม่ลบข้อมูลที่กรอกอยู่ และไม่ลบ Daily Log เดิม
@@ -272,11 +272,11 @@ Reflection ที่สร้างใหม่จะมีหัวใจฟ้
 
 กด `บันทึกเข้า Daily Log` จาก `ภาวะใจวันนี้ 2/2` เมื่อต้องการบันทึกข้อมูลวันนี้พร้อม Mind Note โดย Reflection ยังว่างได้
 
-กด `Save to Daily Log` จากหน้า Reflection/NuTuenSai เมื่อต้องการบันทึกข้อมูลวันนี้พร้อม generated/edited Reflection
+กด `บันทึก Reflection วันนี้` จากหน้า Reflection/NuTuenSai เมื่อต้องการบันทึกข้อมูลวันนี้พร้อม generated/edited Reflection
 
 ข้อมูลที่บันทึกจะมาจาก state ปัจจุบันของหน้าเว็บ เช่น Energy, Mind, Sleep, Sleep Hours, น้ำ, เครื่องดื่ม, activities, Run Detail, load, reminder, Practice Context, Mind Note และ Reflection ถ้ามี
 
-ถ้าวันเดิมมีข้อมูลอยู่แล้ว แอปจะถามก่อน replace/update row เดิม เพื่อไม่ให้บันทึกทับโดยไม่รู้ตัว
+ถ้าวันเดิมมีข้อมูลอยู่แล้ว แอปจะถามก่อนอัปเดตข้อมูลจากหน้านั้น และจะเก็บข้อมูลเดิมส่วนอื่นไว้
 
 ### Daily Log Table
 

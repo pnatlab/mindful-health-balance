@@ -138,7 +138,7 @@ Thai documentation, field notes, and original design context remain available in
 - **v1.9.5 — LLI Continuity Reflection Layer**: Reflection reads the previous 1-3 logs as supportive context while keeping today's input primary.
 - **v1.9.4 — Reflection Input Integration Pass**: Reflection uses today's `Sleep_Hours`, `Run_Detail_JSON`, running subtype, AI-assisted work, hydration, and drink context more clearly.
 - **v1.9.3 — Structured Sleep & Run Detail**: Added optional `Sleep_Hours` and `Run_Detail_JSON` while preserving `Sleep`, `Activities`, and old workbook compatibility.
-- **v1.9.2 — Today Input Step Flow**: Split the Today view into Today’s Signals 1/2 and Mind Note 2/2, while allowing Save to Daily Log from Today or Reflection.
+- **v1.9.2 — Today Input Step Flow**: Split the Today view into Today’s Signals 1/2 and Mind Note 2/2, while allowing Daily Log saves from Today and Reflection saves from Reflection/NuTuenSai.
 - **v1.9 — Portable Field Memory Foundation**: Added AI-readable Excel context sheets, `Field_Review`, `Column_Guide`, and clearer export summary semantics.
 - **v1.8 — Activity / Profession-aware Load Presets**: Added activity roots for physical, cognitive, clinical, market, outdoor, sport, and recovery contexts.
 - **v1.7 — Minimal Layered UI**: Organized the app into Today, Reflection/NuTuenSai, and Log views.

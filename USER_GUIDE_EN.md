@@ -79,7 +79,7 @@ If you choose Light or Dark manually, that choice stays active until you switch 
 After the Welcome Glass, the app is organized into three views:
 
 - `Today` for current-day signals in two steps: `Today’s Signals 1/2` is Energy, Mind, Sleep Hours/Sleep, Hydration, Drink Profile, and Load & Recovery; `Mind Note 2/2` is Practice Context, Mind Note, and the shortcut to Reflection/NuTuenSai
-- `Reflection/NuTuenSai` for the compact NuTuenSai note strip, generated reflection preview/editing, and Save to Daily Log
+- `Reflection/NuTuenSai` for the compact NuTuenSai note strip, generated reflection preview/editing, and `Save Today’s Reflection`
 - `Log` for the Daily Log Table, Export Master Excel, Import Master Excel, and Clear Daily Log
 
 Switching views does not reset current inputs and does not delete saved Daily Logs.
@@ -296,11 +296,11 @@ Click `Save to Daily Log` from Today’s Signals 1/2 when you only want to recor
 
 Click `Save to Daily Log` from Mind Note 2/2 when you want to save the current day with Mind Note fields while leaving Reflection empty.
 
-Click `Save to Daily Log` from Reflection/NuTuenSai when you want to save the current day with generated or edited Reflection text.
+Click `Save Today’s Reflection` from Reflection/NuTuenSai when you want to save today’s data with the generated or edited Reflection.
 
 The saved row comes from the current app state, including Energy, Mind, Sleep, Sleep Hours, water, drinks, activities, Run Detail, load, Tomorrow Focus, NuTuenSai Reminder, Practice Context, Mind Note, and Reflection when present.
 
-If the same date already exists, the app asks before replacing that row.
+If the same date already exists, the app asks before updating this section and keeps other saved sections.
 
 ## 17. Daily Log Table
 

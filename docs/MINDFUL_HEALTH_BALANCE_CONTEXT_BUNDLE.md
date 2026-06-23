@@ -1341,11 +1341,11 @@ Daily logging should not require Reflection first:
 
 - Today Input 1/2 can save body, water, drink, activity, sleep, and load signals.
 - Today Input 2/2 can save the same current state plus Mind Note fields.
-- Reflection/NuTuenSai can save current state plus generated/edited Reflection text.
-- Same-date saves should update/replace the existing row through the existing confirmation flow instead of silently creating duplicate rows.
+- Reflection/NuTuenSai uses `บันทึก Reflection วันนี้` / `Save Today’s Reflection` / `保存今日 Reflection` to save current state plus generated/edited Reflection text.
+- Same-date saves should update the section being saved and keep other saved sections instead of silently creating duplicate rows or replacing the whole row.
 - Saving from Today should not auto-generate Reflection text.
 
-These shortcuts are navigation only. They should switch back to the requested Today step, preserve the current form and any generated reflection preview, and must not save, clear, or generate reflection automatically. Save to Daily Log remains the primary save action on the Reflection/NuTuenSai page.
+These shortcuts are navigation only. They should switch back to the requested Today step, preserve the current form and any generated reflection preview, and must not save, clear, or generate reflection automatically. `Save Today’s Reflection` remains the primary save action on the Reflection/NuTuenSai page.
 
 ## 6. Clear Current Form Placement
 
@@ -3087,7 +3087,7 @@ Today | Reflection/NuTuenSai | Log
 บทบาทปัจจุบันคือ:
 
 - `Today`: กรอกข้อมูลวันนี้ เช่น Energy, Mind, Sleep, Hydration, Drink Profile, Load & Recovery และ Mind Note
-- `Reflection/NuTuenSai`: ดู mindful reminder, generate/review/edit End-of-Day Reflection และ Save to Daily Log
+- `Reflection/NuTuenSai`: ดู mindful reminder, generate/review/edit End-of-Day Reflection และบันทึก Reflection วันนี้
 - `Log`: ดู Daily Log, Export Master Excel, Import Master Excel และ Clear Daily Log
 
 โครงนี้เหมาะกับ v1.9 เพราะระบบยังวนอยู่กับ daily logging และ daily closure เป็นหลัก
