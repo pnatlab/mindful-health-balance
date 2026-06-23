@@ -19,6 +19,8 @@ Reflection/NuTuenSai is no longer required before saving. Users can save a pract
 
 ## 2. Step Structure
 
+A small top step switcher shows both `สัญญาณวันนี้ 1/2` / `Today’s Signals 1/2` / `今日信号 1/2` and `ภาวะใจวันนี้ 2/2` / `Mind Note 2/2` / `心念记录 2/2`. It is an orientation and light-navigation control only; the bottom buttons remain the main action controls after each step.
+
 ### Today Input 1/2
 
 Contains:
@@ -34,12 +36,12 @@ Collect body, energy, hydration, drink, activity, and recovery context.
 Buttons:
 
 - Secondary: เคลียร์หน้าปัจจุบัน / Clear Current Form / 清除当前表单
-- Practical save: บันทึกวันนี้ / Save Today Log / 保存今日记录
-- Primary: ถัดไป: บันทึกภาวะใจ / Next: Mind Note / 下一步：心情记录
+- Daily Log save: บันทึกเข้า Daily Log / Save to Daily Log / 保存到 Daily Log
+- Primary: ถัดไป: ภาวะใจวันนี้ 2/2 / Next: Mind Note 2/2 / 下一步：心念记录 2/2
 
 Reason:
 Clear Current Form resets the current unsaved form, so it should live on step 1/2 where the main input starts. This lets users clear early without needing to enter the Mind Note step.
-Save Today Log lets users record body, water, drink, and activity signals without being forced into Mind Note or Reflection first.
+Save to Daily Log lets users record body, water, drink, and activity signals without being forced into Mind Note or Reflection first.
 
 ### Today Input 2/2
 
@@ -54,7 +56,7 @@ Let the user place the current mind note before reviewing or saving.
 Buttons:
 
 - Secondary: กลับไปหน้า 1/2 / Back to 1/2 / 返回 1/2
-- Practical save: บันทึกวันนี้ / Save Today Log / 保存今日记录
+- Daily Log save: บันทึกเข้า Daily Log / Save to Daily Log / 保存到 Daily Log
 - Primary: ไป Reflection/NuTuenSai / Go to Reflection/NuTuenSai / 前往 Reflection/NuTuenSai
 
 Important:
@@ -62,7 +64,7 @@ Important:
 - Do not show เคลียร์หน้าปัจจุบัน on Today 2/2.
 - Keep step 2/2 calm and focused.
 - ไป Reflection/NuTuenSai is a navigation shortcut only, not a save action.
-- บันทึกวันนี้ saves the current daily row with Mind Note if present, while Reflection text may remain empty.
+- บันทึกเข้า Daily Log saves the current daily row with Mind Note if present, while Reflection text may remain empty.
 
 ## 3. State Model
 

@@ -72,6 +72,8 @@ TH | EN | 中文
 
 ตั้งแต่ v1.9.2 — Today Input Step Flow ปุ่ม `เคลียร์หน้าปัจจุบัน` อยู่เฉพาะ `สัญญาณวันนี้ 1/2` ส่วน `สัญญาณวันนี้ 1/2` และ `ภาวะใจวันนี้ 2/2` มีปุ่ม `บันทึกเข้า Daily Log` เพื่อบันทึก Daily Log ได้ทันที การไป Reflection/NuTuenSai เป็นการนำทางเท่านั้น ไม่ใช่การบันทึกข้อมูล
 
+หน้า Today มี step switcher เล็ก ๆ ด้านบนสำหรับสลับระหว่าง `สัญญาณวันนี้ 1/2` และ `ภาวะใจวันนี้ 2/2` ส่วนปุ่มด้านล่างยังเป็นปุ่ม action หลักหลังกรอกแต่ละหน้าเสร็จ
+
 ตั้งแต่ v1.9.3 — Structured Sleep & Run Detail แอปเพิ่ม `Sleep_Hours` และ `Run_Detail_JSON` แบบ optional โดยยังเก็บ `Sleep` และ `Activities` เดิมไว้เพื่อ compatibility กับ Daily Log และ Excel เก่า
 
 ตั้งแต่ v1.9.4 — Reflection Input Integration Pass หน้า Reflection/NuTuenSai อ่าน `Sleep_Hours`, running detail, running subtype, โค้ดดิ้งเบา ๆ / AI ช่วยงาน และ hydration context ของวันนี้ได้ละเอียดขึ้น แต่ยังใช้เฉพาะข้อมูลวันนี้ ไม่อ่าน Daily Log แถวก่อนหน้า และไม่ให้ training advice หรือ medical advice

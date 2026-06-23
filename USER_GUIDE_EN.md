@@ -86,6 +86,8 @@ Switching views does not reset current inputs and does not delete saved Daily Lo
 
 Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only on Today’s Signals 1/2. Today’s Signals 1/2 and Mind Note 2/2 now include `Save to Daily Log`, so you can save the Daily Log without visiting Reflection first. Going to Reflection/NuTuenSai is navigation only; it does not save data.
 
+The Today page also has a small top step switcher for moving between `Today’s Signals 1/2` and `Mind Note 2/2`. The bottom buttons remain the main action controls after you finish each step.
+
 Starting in v1.9.3 — Structured Sleep & Run Detail, the app adds optional `Sleep_Hours` and `Run_Detail_JSON` while keeping the existing `Sleep` and `Activities` fields for Daily Log and old Excel compatibility.
 
 Starting in v1.9.4 — Reflection Input Integration Pass, Reflection/NuTuenSai reads today's `Sleep_Hours`, running detail, running subtype, light coding / AI-assisted work, and hydration context more clearly. It still uses only today's current input, does not read previous Daily Log rows, and does not provide training or medical advice.

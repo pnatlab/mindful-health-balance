@@ -51,6 +51,7 @@ const translations = {
     todayViewTitle: "สัญญาณวันนี้",
     todayStepOneLabel: "สัญญาณวันนี้ 1/2",
     todayStepTwoLabel: "ภาวะใจวันนี้ 2/2",
+    todayStepSwitcherAria: "สลับระหว่างหน้าสัญญาณวันนี้และภาวะใจวันนี้",
     todayStepOneHelper: "ค่อย ๆ เติมสัญญาณวันนี้: ภาวะใจ น้ำ เครื่องดื่ม และงาน/กิจกรรม",
     todayStepTwoHelper: "วางภาวะใจสั้น ๆ ก่อนพาไป Reflection/NuTuenSai",
     todayStepNext: "ถัดไป: ภาวะใจวันนี้ 2/2",
@@ -772,6 +773,7 @@ const translations = {
     todayViewTitle: "Today’s Signals",
     todayStepOneLabel: "Today’s Signals 1/2",
     todayStepTwoLabel: "Mind Note 2/2",
+    todayStepSwitcherAria: "Switch between Today’s Signals and Mind Note",
     todayStepOneHelper: "Gently fill today's signals: Inner State, Water, Drinks, and Work / Activity.",
     todayStepTwoHelper: "Place a short mind note before moving to Reflection/NuTuenSai.",
     todayStepNext: "Next: Mind Note 2/2",
@@ -1493,6 +1495,7 @@ const translations = {
     todayViewTitle: "今日信号",
     todayStepOneLabel: "今日信号 1/2",
     todayStepTwoLabel: "心念记录 2/2",
+    todayStepSwitcherAria: "在今日信号和心念记录之间切换",
     todayStepOneHelper: "慢慢补充今日信号：内在状态、饮水、饮品和工作/活动。",
     todayStepTwoHelper: "轻轻写下心里的状态，再前往 Reflection/NuTuenSai。",
     todayStepNext: "下一步：心念记录 2/2",
@@ -2889,6 +2892,9 @@ function bindEvents() {
 
   document.querySelector("#goTodayStepTwo").addEventListener("click", () => setTodayInputStep(2));
   document.querySelector("#goTodayStepOne").addEventListener("click", () => setTodayInputStep(1));
+  document.querySelectorAll("[data-today-step-switch]").forEach((button) => {
+    button.addEventListener("click", () => setTodayInputStep(button.dataset.todayStepSwitch));
+  });
   document.querySelector("#goReflectionFromToday").addEventListener("click", goToReflectionFromToday);
   document.querySelector("#backToTodayStepOne").addEventListener("click", () => goToTodayStep(1));
   document.querySelector("#backToTodayStepTwo").addEventListener("click", () => goToTodayStep(2));
@@ -3105,6 +3111,15 @@ function updateTodayInputStepUI() {
   if (helper) {
     helper.textContent = t(todayInputStep === 2 ? "todayStepTwoHelper" : "todayStepOneHelper");
   }
+  document.querySelectorAll("[data-today-step-switch]").forEach((button) => {
+    const isActive = button.dataset.todayStepSwitch === String(todayInputStep);
+    button.classList.toggle("is-active", isActive);
+    if (isActive) {
+      button.setAttribute("aria-current", "step");
+    } else {
+      button.removeAttribute("aria-current");
+    }
+  });
 }
 
 function updateTodaySignalCockpitUI() {
