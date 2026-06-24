@@ -127,6 +127,7 @@ const translations = {
     todayStateCue: "สังเกตเร็ว ๆ ของวันนี้",
     energyLabel: "Energy",
     mindLabel: "ใจโดยรวมวันนี้",
+    mindScaleHelper: "เลือกคำที่ใกล้กับใจวันนี้ที่สุด เฉย ๆ คือจุดกลาง ไม่ใช่คะแนน",
     sleepLabel: "Sleep",
     sleepHoursLabel: "นอนกี่ชั่วโมง",
     sleepHoursUnit: "ชั่วโมง",
@@ -581,7 +582,7 @@ const translations = {
     },
     options: {
       energy: { low: "ต่ำ", medium: "กลาง", good: "ดี" },
-      mind: { calm: "เฉย ๆ", worried: "กังวล", pressured: "กดดัน", scattered: "ฟุ้ง", feeling_good: "รู้สึกดี", relaxed: "ผ่อนคลาย" },
+      mind: { very_heavy: "หนักมาก", uneasy: "ไม่สบายใจ", pressured: "กดดัน", neutral: "เฉย ๆ", okay: "พอไหว", feeling_good: "รู้สึกดี", relaxed: "ผ่อนคลาย" },
       sleep: { low: "น้อย", okay: "พอใช้", good: "ดี" },
       drinks: {
         water: "น้ำเปล่า",
@@ -869,6 +870,7 @@ const translations = {
     todayStateCue: "Quick observation for today",
     energyLabel: "Energy",
     mindLabel: "Overall Mind Today",
+    mindScaleHelper: "Choose the word closest to today’s mind. Neutral is the middle point, not a score.",
     sleepLabel: "Sleep",
     sleepHoursLabel: "Sleep hours",
     sleepHoursUnit: "hours",
@@ -1323,7 +1325,7 @@ const translations = {
     },
     options: {
       energy: { low: "Low", medium: "Medium", good: "Good" },
-      mind: { calm: "Neutral", worried: "Worried", pressured: "Pressured", scattered: "Scattered", feeling_good: "Feeling good", relaxed: "Relaxed" },
+      mind: { very_heavy: "Very heavy", uneasy: "Uneasy", pressured: "Pressured", neutral: "Neutral", okay: "Okay", feeling_good: "Feeling good", relaxed: "Relaxed" },
       sleep: { low: "Low", okay: "Okay", good: "Good" },
       drinks: {
         water: "Plain water",
@@ -1611,6 +1613,7 @@ const translations = {
     todayStateCue: "今天的快速观察",
     energyLabel: "Energy",
     mindLabel: "今天整体心境",
+    mindScaleHelper: "选择最接近今天内在状态的词。一般是中间点，不是分数。",
     sleepLabel: "Sleep",
     sleepHoursLabel: "睡了几小时",
     sleepHoursUnit: "小时",
@@ -2065,7 +2068,7 @@ const translations = {
     },
     options: {
       energy: { low: "低", medium: "中", good: "好" },
-      mind: { calm: "一般", worried: "担心", pressured: "有压力", scattered: "分散", feeling_good: "感觉不错", relaxed: "放松" },
+      mind: { very_heavy: "很沉重", uneasy: "不安", pressured: "有压力", neutral: "一般", okay: "还可以", feeling_good: "感觉不错", relaxed: "放松" },
       sleep: { low: "少", okay: "还可以", good: "好" },
       drinks: {
         water: "白水",
@@ -2509,6 +2512,38 @@ const defaultState = {
   mindNoteSupport: ""
 };
 
+const mindStateAliases = {
+  "นิ่ง": "เฉย ๆ",
+  "Calm": "เฉย ๆ",
+  "平静": "เฉย ๆ",
+  "Neutral": "เฉย ๆ",
+  "一般": "เฉย ๆ",
+  "Worried": "ไม่สบายใจ",
+  "กังวล": "ไม่สบายใจ",
+  "担心": "ไม่สบายใจ",
+  "Scattered": "กดดัน",
+  "ฟุ้ง": "กดดัน",
+  "分散": "กดดัน",
+  "Very heavy": "หนักมาก",
+  "很沉重": "หนักมาก",
+  "Uneasy": "ไม่สบายใจ",
+  "不安": "ไม่สบายใจ",
+  "Pressured": "กดดัน",
+  "有压力": "กดดัน",
+  "Okay": "พอไหว",
+  "还可以": "พอไหว",
+  "Feeling good": "รู้สึกดี",
+  "感觉不错": "รู้สึกดี",
+  "Relaxed": "ผ่อนคลาย",
+  "放松": "ผ่อนคลาย"
+};
+
+function normalizeMindStateValue(value) {
+  const text = String(value || "").trim();
+  if (!text) return "";
+  return mindStateAliases[text] || text;
+}
+
 let currentLanguage = loadLanguage();
 let currentThemePreference = getThemePreference();
 let appState = loadState();
@@ -2675,6 +2710,8 @@ function loadState() {
       ? parsed.drinkProfiles.map(normalizeDrinkProfile)
       : legacyDrinksToProfiles(parsed.drinks || []);
     parsed.energyCauses = Array.isArray(parsed.energyCauses) ? parsed.energyCauses : [];
+    parsed.selectedState = { ...structuredClone(defaultState.selectedState), ...(parsed.selectedState || {}) };
+    parsed.selectedState.mind = normalizeMindStateValue(parsed.selectedState.mind);
     parsed.sleepHours = normalizeSleepHours(parsed.sleepHours);
     parsed.runDetail = normalizeRunDetail(parsed.runDetail);
     parsed.practiceRoot = normalizePracticeRoot(parsed.practiceRoot || practiceTypeToRoot[parsed.practiceType]);
@@ -4211,7 +4248,10 @@ function getHydrationTierFromActivity({
     || hasType("clinical_focus");
   const hasSportSweat = hasLongRun || hasShortQualitySport || hasLightSport || hasType("sport_intensity_load");
   const hasStrongActivity = hasSportSweat || hasOutdoorHeat || hasCognitive;
-  const hasRecoverySignal = sleepLow || energy === "ต่ำ" || mind === "ฟุ้ง" || mind === "กดดัน";
+  const normalizedMind = normalizeMindStateValue(mind);
+  const hasRecoverySignal = sleepLow
+    || energy === "ต่ำ"
+    || ["หนักมาก", "ไม่สบายใจ", "กดดัน"].includes(normalizedMind);
   let tier = "base";
   let rangeMin = 2000;
   let rangeMax = 2400;
@@ -4455,7 +4495,7 @@ function buildContinuitySignals(currentSignals, previousRows = []) {
   const cognitiveLoadContinuity = cognitiveLoadCount >= 2
     || (cognitiveLoadCount >= 1 && getSelectedActivityKeys(currentSignals.recoveryLoad.activities).includes("lightCodingAiAssist"));
   const mindCarryover = pressuredMindCount >= 1
-    && (currentSignals.mindNote.pressured || currentSignals.mindNote.worried || currentSignals.mindNote.mind === "ฟุ้ง");
+    && (currentSignals.mindNote.pressured || currentSignals.mindNote.worried);
   const mindSoftening = pressuredMindCount >= 1 && currentSignals.mindNote.positive;
   const hydrationShiftKey = hydrationShift >= 700 ? "higher" : hydrationShift <= -700 ? "lower" : "";
 
@@ -4518,7 +4558,23 @@ function rowHasPressureMindSignal(row) {
     row?.Mind_Note_Feeling,
     row?.Mind_Note_Text
   ].map((value) => String(value || "").toLowerCase());
-  return values.some((value) => ["กังวล", "กดดัน", "ฟุ้ง", "worried", "pressured", "scattered", "uneasy", "担心", "有压力", "分散"].some((token) => value.includes(token.toLowerCase())));
+  return values.some((value) => [
+    "หนักมาก",
+    "ไม่สบายใจ",
+    "กังวล",
+    "กดดัน",
+    "ฟุ้ง",
+    "very heavy",
+    "uneasy",
+    "worried",
+    "pressured",
+    "scattered",
+    "很沉重",
+    "不安",
+    "担心",
+    "有压力",
+    "分散"
+  ].some((token) => value.includes(token.toLowerCase())));
 }
 
 function getRowActivityKeys(row) {
@@ -4940,9 +4996,13 @@ function rowHasStructuredMindPressureCue(row) {
     row?.Mind_Note_Support
   ].map((value) => String(value || "").toLowerCase());
   return values.some((value) => [
+    "หนักมาก",
+    "ไม่สบายใจ",
     "กังวล",
     "กดดัน",
     "ฟุ้ง",
+    "very heavy",
+    "uneasy",
     "worried",
     "pressured",
     "scattered",
@@ -4950,6 +5010,8 @@ function rowHasStructuredMindPressureCue(row) {
     "reduce_pressure",
     "rest_first",
     "担心",
+    "很沉重",
+    "不安",
     "有压力",
     "分散"
   ].some((token) => value.includes(token.toLowerCase())));
@@ -5572,9 +5634,13 @@ function isSupportEnergyCause(cause) {
 }
 
 function getMindNoteSignal() {
-  const mind = appState.selectedState.mind;
+  const mind = normalizeMindStateValue(appState.selectedState.mind);
   const feeling = appState.mindNoteFeeling;
   const support = appState.mindNoteSupport;
+  const heavy = mind === "หนักมาก";
+  const uneasyMind = mind === "ไม่สบายใจ";
+  const pressuredMind = mind === "กดดัน";
+  const okayEnough = mind === "พอไหว";
   const overallFeelingGood = mind === "รู้สึกดี";
   const noteFeelingGood = feeling === "feeling_good";
   const feelingGood = overallFeelingGood || noteFeelingGood;
@@ -5584,15 +5650,17 @@ function getMindNoteSignal() {
     text: appState.mindNoteText || "",
     feeling,
     support,
-    pressured: mind === "กดดัน" || feeling === "pressured",
-    doublePressure: mind === "กดดัน" && feeling === "pressured",
-    worried: mind === "กังวล" || feeling === "worried",
-    uneasy: feeling === "uneasy",
+    heavy,
+    okayEnough,
+    pressured: heavy || pressuredMind || feeling === "pressured",
+    doublePressure: pressuredMind && feeling === "pressured",
+    worried: uneasyMind || feeling === "worried",
+    uneasy: uneasyMind || feeling === "uneasy",
     overallFeelingGood,
     noteFeelingGood,
     feelingGood,
     relaxed,
-    positive: feelingGood || relaxed,
+    positive: okayEnough || feelingGood || relaxed,
     restFirst: support === "rest_first",
     hydrateGently: support === "hydrate_gently"
   };
@@ -5712,14 +5780,22 @@ function buildReflectionDisplayFromSignals(signals) {
   const lowDataReflection = buildLowDataNuTuenSaiReflection(signals);
   if (lowDataReflection) return lowDataReflection;
 
-  return [
-    getReflectionDisplayOverview(signals),
-    getInputGroundedReflectionBlock(signals, { withMarkers: true, compact: true }),
-    getReflectionDisplayContinuity(signals),
-    getReflectionDisplayAdjustment(signals),
-    getReflectionDisplayTomorrow(signals),
-    getReflectionDisplayMindNote()
-  ].filter(Boolean).join("\n\n");
+  const inputGroundedContext = getInputGroundedReflectionContext(signals);
+  const displayBlocks = normalizeReflectionBlocks([
+    { key: "overview", text: getReflectionDisplayOverview(signals) },
+    { key: "inputGrounded", text: getInputGroundedReflectionBlock(signals, { withMarkers: true, compact: true }) },
+    { key: "continuity", text: getReflectionDisplayContinuity(signals) },
+    { key: "adjustment", text: getReflectionDisplayAdjustment(signals) },
+    { key: "tomorrow", text: getReflectionDisplayTomorrow(signals) },
+    { key: "mindNote", text: getReflectionDisplayMindNote() }
+  ], {
+    anchors: inputGroundedContext.anchors,
+    intent: inputGroundedContext.intent,
+    signals,
+    compact: true
+  });
+
+  return displayBlocks.map((block) => block.text).filter(Boolean).join("\n\n");
 }
 
 function getReflectionDisplayContinuity(signals) {
@@ -5802,6 +5878,187 @@ function truncateText(value, limit) {
   const text = String(value || "").trim();
   if (text.length <= limit) return text;
   return `${text.slice(0, limit - 1).trim()}…`;
+}
+
+function normalizeReflectionBlocks(blocks = [], context = {}) {
+  const preparedBlocks = mergeOverlappingReflectionThemes(blocks, context);
+  return dedupeReflectionBlocks(preparedBlocks, context);
+}
+
+function mergeOverlappingReflectionThemes(blocks = [], context = {}) {
+  const recoveryCue = getMergedRecoveryReflectionCue(context.signals);
+  if (!recoveryCue) return blocks;
+
+  const recoveryBlockCount = blocks.filter((block) => (
+    getReflectionBlockThemes(block, context).includes("recovery")
+  )).length;
+  if (recoveryBlockCount < 3) return blocks;
+
+  return blocks.map((block) => (
+    block.key === "adjustment" ? { ...block, text: recoveryCue } : block
+  ));
+}
+
+function getMergedRecoveryReflectionCue(signals = {}) {
+  const cues = [];
+  if (signals.sleepDetail?.low || signals.energySleep?.sleepLow) cues.push("sleep");
+  if (signals.runDetail?.hasRunActivity || signals.runDetail?.isLongRun || signals.runDetail?.isShortQualityRun) cues.push("run");
+  if (signals.recoveryLoad?.high) cues.push("load");
+  if (signals.mindNote?.restFirst) cues.push("rest");
+  if (signals.mindNote?.pressured || signals.mindNote?.uneasy) cues.push("mind");
+  if (unique(cues).length < 2) return "";
+
+  if (currentLanguage === "en") {
+    const parts = [];
+    if (cues.includes("sleep")) parts.push("low sleep");
+    if (cues.includes("run")) parts.push("running load");
+    else if (cues.includes("load")) parts.push("today's load");
+    if (cues.includes("rest")) parts.push("a rest-first support need");
+    if (!parts.length) return "";
+    return `Today has ${joinListNaturally(parts)} pointing toward recovery. Let that become one clear cue to avoid pushing more, rather than repeating it in several ways.`;
+  }
+
+  if (currentLanguage === "zh") {
+    const parts = [];
+    if (cues.includes("sleep")) parts.push("睡眠偏少");
+    if (cues.includes("run")) parts.push("跑步 load");
+    else if (cues.includes("load")) parts.push("今天的 load");
+    if (cues.includes("rest")) parts.push("Mind Note 指向先休息");
+    if (!parts.length) return "";
+    return `今天有${parts.join("、")}一起指向 recovery。把它当成一个清楚的提示就好，不需要继续加压。`;
+  }
+
+  const parts = [];
+  if (cues.includes("sleep")) parts.push("นอนน้อย");
+  if (cues.includes("run")) parts.push("load จากการวิ่ง");
+  else if (cues.includes("load")) parts.push("load ของวัน");
+  if (cues.includes("rest")) parts.push("Mind Note ชี้ไปทางพักก่อน");
+  if (cues.includes("mind") && !cues.includes("rest")) parts.push("ภาวะใจมีแรงกด");
+  if (!parts.length) return "";
+  return `วันนี้มี${joinListNaturally(parts)}อยู่ในภาพเดียวกัน หนูอ่านเป็นสัญญาณให้ recovery นำก่อนการเร่งเพิ่มนะคะ`;
+}
+
+function joinListNaturally(items = []) {
+  const list = items.filter(Boolean);
+  if (list.length <= 1) return list[0] || "";
+  if (currentLanguage === "th") {
+    if (list.length === 2) return `${list[0]}และ${list[1]}`;
+    return `${list.slice(0, -1).join(" ")} และ${list[list.length - 1]}`;
+  }
+  if (currentLanguage === "en") {
+    if (list.length === 2) return `${list[0]} and ${list[1]}`;
+    return `${list.slice(0, -1).join(", ")}, and ${list[list.length - 1]}`;
+  }
+  return list.join("、");
+}
+
+function dedupeReflectionBlocks(blocks = [], context = {}) {
+  const records = blocks.map((block, index) => {
+    const normalizedBlock = typeof block === "string" ? { key: "", text: block } : { ...block };
+    return {
+      ...normalizedBlock,
+      index,
+      text: String(normalizedBlock.text || "").trim(),
+      themes: getReflectionBlockThemes(normalizedBlock, context),
+      priority: getReflectionBlockPriority(normalizedBlock)
+    };
+  });
+  const themeBuckets = new Map();
+
+  records.forEach((record) => {
+    if (!record.text || isProtectedReflectionBlock(record)) return;
+    const themes = record.themes.filter((theme) => theme !== "closing");
+    if (!themes.length) return;
+
+    for (const theme of themes) {
+      const maxForTheme = getReflectionThemeLimit(theme, context);
+      const bucket = themeBuckets.get(theme) || [];
+      if (bucket.length < maxForTheme) {
+        bucket.push(record);
+        themeBuckets.set(theme, bucket);
+        continue;
+      }
+
+      const weakest = bucket.reduce((lowest, item) => (
+        item.priority < lowest.priority ? item : lowest
+      ), bucket[0]);
+      if (record.priority > weakest.priority) {
+        weakest.drop = true;
+        bucket.splice(bucket.indexOf(weakest), 1, record);
+        themeBuckets.set(theme, bucket);
+        continue;
+      }
+
+      record.drop = true;
+      break;
+    }
+  });
+
+  return records
+    .filter((record) => !record.drop)
+    .sort((a, b) => a.index - b.index)
+    .map(({ index, themes, priority, drop, ...block }) => block);
+}
+
+function isProtectedReflectionBlock(block) {
+  return ["overview", "inputGrounded", "closing1", "closing2", "spacer"].includes(block.key);
+}
+
+function getReflectionThemeLimit(theme, context = {}) {
+  if (theme === "mind_note") return 2;
+  if (theme === "recovery") return context.compact ? 1 : 2;
+  if (theme === "closing") return 3;
+  return 1;
+}
+
+function getReflectionBlockPriority(block) {
+  const priorities = {
+    overview: 100,
+    inputGrounded: 95,
+    adjustment: 90,
+    energyCause: 78,
+    hydration: 75,
+    recovery: 70,
+    mindNote: 68,
+    mindHolding: 62,
+    tomorrow: 58,
+    continuity: 55,
+    reminder: 45,
+    good: 35,
+    closing1: 20,
+    closing2: 20,
+    spacer: 0
+  };
+  return priorities[block.key] ?? 50;
+}
+
+function getReflectionBlockThemes(block = {}, context = {}) {
+  const themes = new Set();
+  const text = String(block.text || "").toLowerCase();
+  const add = (theme) => themes.add(theme);
+
+  if (["hydration"].includes(block.key)) add("hydration");
+  if (["recovery"].includes(block.key)) add("recovery");
+  if (["mindNote", "mindHolding"].includes(block.key)) add("mind_note");
+  if (["tomorrow", "closing1", "closing2"].includes(block.key)) add("closing");
+
+  const keywordThemes = [
+    ["recovery", ["recovery", "พัก", "ไม่เร่ง", "ไม่ push", "push", "พักก่อน", "ลดแรงกดดัน", "rest", "not pushing", "recover", "恢复", "不急", "พักตา"]],
+    ["hydration", ["น้ำ", "จิบ", "ดื่ม", "hydration", "water", "喝水", "饮水"]],
+    ["load", ["load", "run", "วิ่ง", "กิจกรรม", "งาน", "context", "output", "ผลลัพธ์", "activity", "work", "跑", "活动", "工作"]],
+    ["sleep_energy", ["นอน", "sleep", "ชั่วโมง", "energy", "พลังงาน", "睡", "小时", "能量"]],
+    ["mind_note", ["mind note", "ภาวะใจ", "ใจ", "กังวล", "กดดัน", "ล้า", "support need", "心", "心念"]],
+    ["drink", ["caffeine", "กาแฟ", "เครื่องดื่ม", "sweetness", "คาเฟอีน", "ความหวาน", "drink", "饮品", "咖啡因", "甜"]],
+    ["honest_data", ["ข้อมูลยังบาง", "เติมเท่าที่จริง", "log ก่อนหน้า", "previous log", "not much new data", "真实", "记录"]],
+    ["closing", ["พรุ่งนี้", "tomorrow", "ปิดวัน", "จังหวะพรุ่งนี้", "明天"]]
+  ];
+
+  keywordThemes.forEach(([theme, keywords]) => {
+    if (keywords.some((keyword) => text.includes(keyword.toLowerCase()))) add(theme);
+  });
+
+  if (block.key === "adjustment" && context.signals?.mindNote?.restFirst) add("recovery");
+  return [...themes];
 }
 
 function buildReflectionFromSignals(signals) {
@@ -5908,7 +6165,12 @@ function buildReflectionFromSignals(signals) {
     { key: "closing1", text: t("reflection.closing1") },
     { key: "closing2", text: t("reflection.closing2") }
   ];
-  const voicedReflectionBlocks = applyNuTuenSaiReflectionVoice(reflectionBlocks, {
+  const normalizedReflectionBlocks = normalizeReflectionBlocks(reflectionBlocks, {
+    anchors: inputGroundedContext.anchors,
+    intent: inputGroundedContext.intent,
+    signals
+  });
+  const voicedReflectionBlocks = applyNuTuenSaiReflectionVoice(normalizedReflectionBlocks, {
     anchors: inputGroundedContext.anchors,
     intent: inputGroundedContext.intent,
     signals
@@ -6025,7 +6287,7 @@ function buildDailyLogRow({ generateReflection = true } = {}) {
   return {
     Date: appState.date,
     Energy: appState.selectedState.energy,
-    Mind: appState.selectedState.mind,
+    Mind: normalizeMindStateValue(appState.selectedState.mind),
     Sleep: sleepCategory,
     Sleep_Hours: sleepHours,
     Water_ml: appState.waterMl,
@@ -6388,6 +6650,7 @@ function normalizeLogRow(row) {
   const legacySupportNeed = cleanLegacyTextValue(row.Support_Need ?? "", "Support_Need");
   normalized.Mind_Note_Support = cleanLegacyTextValue(row.Mind_Note_Support ?? normalized.Mind_Note_Support, "Mind_Note_Support")
     || legacySupportNeed;
+  normalized.Mind = normalizeMindStateValue(normalized.Mind);
   normalized.Sleep_Hours = normalizeSleepHours(normalized.Sleep_Hours);
   if (normalized.Sleep_Hours !== "") {
     normalized.Sleep = deriveSleepCategory(normalized.Sleep_Hours) || normalized.Sleep;
@@ -6659,9 +6922,9 @@ function buildColumnGuideRows() {
       column: "Mind",
       thai: "ใจโดยรวมวันนี้",
       english: "Overall mind today",
-      meaning: "สภาพใจโดยรวมของวัน เช่น เฉย ๆ กังวล ผ่อนคลาย",
-      aiNote: "Read as context for pattern reflection. Do not diagnose emotion or assume identity.",
-      example: "ผ่อนคลาย"
+      meaning: "สเกลภาวะใจโดยรวมของวัน เรียงจากหนักไปเบา/ดี เช่น หนักมาก ไม่สบายใจ กดดัน เฉย ๆ พอไหว รู้สึกดี ผ่อนคลาย",
+      aiNote: "Read as an ordered descriptive context signal, not a score, diagnosis, identity claim, or proof that the whole day was good/bad.",
+      example: "พอไหว"
     }),
     row({
       sheet: "Daily_Log",
@@ -7092,7 +7355,7 @@ function buildColumnGuideRows() {
       english: "Common mind states",
       meaning: "Mind states ที่พบบ่อยพร้อมจำนวน",
       aiNote: "Use as descriptive starting point, not personality inference.",
-      example: "ผ่อนคลาย (5) | กังวล (2)",
+      example: "พอไหว (5) | ไม่สบายใจ (2)",
       canonical: false
     }),
     row({
@@ -7490,21 +7753,30 @@ function localizeStateValue(column, value) {
       "好": "options.energy.good"
     },
     Mind: {
-      "นิ่ง": "options.mind.calm",
-      "เฉย ๆ": "options.mind.calm",
-      "Calm": "options.mind.calm",
-      "Neutral": "options.mind.calm",
-      "平静": "options.mind.calm",
-      "一般": "options.mind.calm",
-      "กังวล": "options.mind.worried",
-      "Worried": "options.mind.worried",
-      "担心": "options.mind.worried",
+      "หนักมาก": "options.mind.very_heavy",
+      "Very heavy": "options.mind.very_heavy",
+      "很沉重": "options.mind.very_heavy",
+      "ไม่สบายใจ": "options.mind.uneasy",
+      "Uneasy": "options.mind.uneasy",
+      "不安": "options.mind.uneasy",
+      "กังวล": "options.mind.uneasy",
+      "Worried": "options.mind.uneasy",
+      "担心": "options.mind.uneasy",
       "กดดัน": "options.mind.pressured",
       "Pressured": "options.mind.pressured",
       "有压力": "options.mind.pressured",
-      "ฟุ้ง": "options.mind.scattered",
-      "Scattered": "options.mind.scattered",
-      "分散": "options.mind.scattered",
+      "ฟุ้ง": "options.mind.pressured",
+      "Scattered": "options.mind.pressured",
+      "分散": "options.mind.pressured",
+      "นิ่ง": "options.mind.neutral",
+      "เฉย ๆ": "options.mind.neutral",
+      "Calm": "options.mind.neutral",
+      "Neutral": "options.mind.neutral",
+      "平静": "options.mind.neutral",
+      "一般": "options.mind.neutral",
+      "พอไหว": "options.mind.okay",
+      "Okay": "options.mind.okay",
+      "还可以": "options.mind.okay",
       "รู้สึกดี": "options.mind.feeling_good",
       "Feeling good": "options.mind.feeling_good",
       "感觉不错": "options.mind.feeling_good",

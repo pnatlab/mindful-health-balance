@@ -69,6 +69,12 @@ v1.9.8c adds connector hygiene on top of the composer. It keeps anchor ranking a
 
 Rich input can now be written as short anchor-context paragraphs followed by one gentle reading sentence. This preserves input grounding while reducing repeated terms such as `ร่วมกับ`, `with`, `today`, or `context`.
 
+## Anti-repetition Layer
+
+The detailed Reflection pipeline also includes a small rule-based anti-repetition layer. After reflection blocks are assembled, but before final NuTuenSai voice cadence and breathing markers are applied, the app groups overlapping themes such as recovery, hydration, load/run/activity, sleep/energy, drink context, Mind Note/support need, honest-data/low-data, and closing/tomorrow focus.
+
+When several blocks point to the same meaning, such as low sleep, run/load, and a rest-first support need all pointing toward recovery, the layer keeps the most specific block and may merge the shared recovery cue into one clearer sentence. It reduces repeated `rest / recovery / not push` statements without changing signal selection, anchor ranking, reflection intent, or saved data.
+
 ## NuTuenSai Voice Cadence
 
 Thai Reflection may add a sparse NuTuenSai cadence across the detailed composition layer, including overview, hydration, recovery, adjustment, mind-note, or closing roles. Occasional `หนู`, `ค่ะ`, or `นะคะ` are quota-limited so the reflection does not become a chat transcript or add honorifics to every line.

@@ -121,17 +121,19 @@ Main Today cards also show a soft blue active layer when that card has current i
 Choose the current state as honestly and simply as possible:
 
 - Energy: Low / Medium / Good
-- Overall Mind Today: Neutral / Worried / Pressured / Scattered / Feeling good / Relaxed
+- Overall Mind Today: Very heavy / Uneasy / Pressured / Neutral / Okay / Feeling good / Relaxed
 - Sleep Hours: optional decimal hours, such as 6.5
 - Sleep: derived as Low / Okay / Good from Sleep Hours, or chosen roughly if hours are not entered
 
-This gives the day context. For example, a low-sleep day or a scattered-mind day should not be used to judge the whole picture.
+Overall Mind Today is an ordered descriptive scale from heavier states toward lighter/supportive states. It is not a score. `Neutral` is the middle point, and choosing the closest true word is enough.
+
+This gives the day context. For example, a low-sleep day or a pressured-mind day should not be used to judge the whole picture.
 
 Sleep Hours derives the existing Sleep category with this rule: `< 5` hours = `Low`, `5 to < 7` hours = `Okay`, and `>= 7` hours = `Good`. This is self-reported recovery context, not diagnosis or health judgment.
 
 The small blue heart beside `Overall Mind Today` marks the main mind observation for the day. `Feeling in this note` in Mind Note is the feeling of that specific note, not a judgment of the whole day.
 
-`Feeling good` and `Relaxed` let the dataset capture days where the mind is a support signal, not only days with pressure or worry. The app treats these as supportive context, not a performance score and not proof that the whole day is fine. They should still be read together with hydration, sleep, load, energy, and Mind Note.
+`Okay`, `Feeling good`, and `Relaxed` let the dataset capture days where the mind is a support signal, not only days with pressure or uneasiness. The app treats these as supportive context, not a performance score and not proof that the whole day is fine. They should still be read together with hydration, sleep, load, energy, and Mind Note.
 
 On the Today page, this card includes a small sun or moon visual based on the browser's local time. It is only a gentle energy-rhythm cue and does not affect saved data or processing.
 
@@ -156,7 +158,7 @@ Starting in v1.9.x, the Hydration card shows a flexible estimated range based on
 
 On a long-run day, around 3.0 L is treated as a good zone, with gentle cues to notice sweat, thirst, or urine color. If intake reaches 4.0 L or more, the app does not push more; it reminds the user to spread intake and avoid forcing a large amount at once.
 
-The system separates activity load from recovery-only signals such as low sleep, low energy, or scattered mind. If only a recovery signal is present, it should not describe the day as heavy activity load; it should keep hydration as a gentle base alongside rest. This guidance uses existing signals, adds no new inputs, and is not medical advice, diagnosis, or an exact requirement.
+The system separates activity load from recovery-only signals such as low sleep, low energy, or a very heavy/uneasy/pressured overall mind state. If only a recovery signal is present, it should not describe the day as heavy activity load; it should keep hydration as a gentle base alongside rest. This guidance uses existing signals, adds no new inputs, and is not medical advice, diagnosis, or an exact requirement.
 
 ## 10. Drinks / Drink Profile
 

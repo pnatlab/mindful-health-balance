@@ -625,7 +625,7 @@ High-water safety wording:
 - If water is already around 3.0 L on a long-run day, treat it as a good zone and invite small extra sips only if sweat remains high or urine color is dark.
 - If water is already around 4.0 L or more, do not push more. Invite spreading intake through the day and observing thirst, urine color, and sweat cues.
 
-When recovery-only signals are present, such as low sleep, low energy, scattered mind, or pressure without a clear activity load, the UI should keep the base range and use recovery wording. Low sleep alone does not mean activity load is high.
+When recovery-only signals are present, such as low sleep, low energy, or a very heavy/uneasy/pressured overall mind state without a clear activity load, the UI should keep the base range and use recovery wording. Low sleep alone does not mean activity load is high.
 
 When strong activity and recovery signals both appear, the UI can keep the activity/sweat range while using a hydration-and-recovery cue.
 
@@ -754,15 +754,19 @@ Drink Sweetness Insight should make sweet-drink patterns easier to notice gently
 # Mind State Wording Decision
 
 Date: 2026-05-23
+Updated: 2026-06-24
 
-This note records a display-wording decision only. It does not change canonical values, data schema, localStorage keys, Excel columns, export/import behavior, scoring, or reflection logic.
+This note records a display-wording and scale-order decision only. It does not add data schema, localStorage keys, Excel columns, export/import behavior, scoring, streaks, or diagnosis.
 
 - `ใจโดยรวมวันนี้` / `Overall Mind Today` is the quick observation of the whole day.
 - `ความรู้สึกของบันทึกนี้` / `Feeling in this note` is the feeling attached to that specific Mind Note entry.
-- Thai display wording uses `เฉย ๆ` instead of `นิ่ง` so calmness is not presented as an ideal state the user should force.
-- English display wording uses `Neutral` instead of `Calm`.
-- Chinese display wording uses `一般` instead of `平静`.
-- Older display words such as `นิ่ง`, `Calm`, and `平静` remain accepted as aliases when old saved or imported values are localized.
+- The main `Mind` field is now an ordered descriptive scale, not a score:
+  - TH: `หนักมาก` -> `ไม่สบายใจ` -> `กดดัน` -> `เฉย ๆ` -> `พอไหว` -> `รู้สึกดี` -> `ผ่อนคลาย`
+  - EN: `Very heavy` -> `Uneasy` -> `Pressured` -> `Neutral` -> `Okay` -> `Feeling good` -> `Relaxed`
+  - ZH: `很沉重` -> `不安` -> `有压力` -> `一般` -> `还可以` -> `感觉不错` -> `放松`
+- `เฉย ๆ` / `Neutral` / `一般` is the middle point, not an ideal state and not a negative state.
+- `พอไหว` / `Okay` / `还可以` is a light support signal, not proof that the whole day is fine.
+- Older display words such as `นิ่ง`, `Calm`, `平静`, `กังวล`, `Worried`, `担心`, `ฟุ้ง`, `Scattered`, and `分散` remain accepted as aliases for old saved or imported values.
 
 ---
 
@@ -854,7 +858,7 @@ This note carries a good feeling. The system can read it as a small supportive s
 
 ## Purpose
 
-Today State should be able to record both burden signals and support signals. The mind state field is not only for neutral, worried, pressured, or scattered days. Some days the user may feel better, softer, or more relaxed, and that signal belongs in the same daily field memory.
+Today State should be able to record both burden signals and support signals. The mind state field is an ordered descriptive scale from heavier states toward lighter/supportive states, not a score. Some days the user may feel okay, better, softer, or more relaxed, and that signal belongs in the same daily field memory.
 
 ## Added Options
 
@@ -2053,7 +2057,7 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 ## 1. Core Reflection Principles
 
 - Reflect patterns, not diagnose.
-- Do not assume fear unless the user selected worried/pressured or wrote it in a note.
+- Do not assume fear unless the user selected uneasy/pressured/heavy mind state or wrote it in a note.
 - Low data should produce a gentle greeting or neutral reminder, not analysis.
 - Positive signals are support signals, not proof the whole day is good.
 - Recovery signals and activity load must be separated.
@@ -2081,10 +2085,11 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 | Energy | low | Body/system may have lower resources. | Care and recovery cue. | Blame or productivity pressure. |
 | Energy | medium | Mixed or balanced energy. | Keep observing layers. | Forcing a strong conclusion. |
 | Energy | good | Energy is available today. | Use energy gently; still protect recovery. | Assuming no fatigue or no need for rest. |
-| Overall Mind Today | neutral | Overall mind is not strongly burdened or positive. | Simple steady observation. | Treating neutral as ideal calm. |
-| Overall Mind Today | worried | Worry is a care signal. | "A signal to care, not an order to rush." | Diagnosis, anxiety labeling, fear amplification. |
+| Overall Mind Today | very heavy | Mind state is carrying a lot today. | Reduce pressure; keep reflection gentle and non-diagnostic. | Treating it as a mental-health diagnosis or identity claim. |
+| Overall Mind Today | uneasy | Uneasiness is present. | Care signal, not an order to rush or fix. | Anxiety labeling or fear amplification. |
 | Overall Mind Today | pressured | Pressure is present. | Reduce pressure; no need to fix everything. | Productivity praise that reinforces pressure. |
-| Overall Mind Today | scattered | Attention/mind may be dispersed. | Gentle grounding and small rhythm cues. | Over-analysis or labeling the user. |
+| Overall Mind Today | neutral | Overall mind is in the middle point. | Simple steady observation. | Treating neutral as ideal calm or as a negative state. |
+| Overall Mind Today | okay | Mind is workable enough. | Light support signal; keep reading other body/load layers. | Saying everything is fine. |
 | Overall Mind Today | feeling good | Mind can support the system. | Support signal, not performance score. | Saying the whole day was good. |
 | Overall Mind Today | relaxed | Mind has softened. | Supportive context; still read body/load. | Ignoring sleep, energy, or load. |
 | Mind Note Feeling | neutral | The note tone is light or plain. | Let the note stay simple. | Forcing meaning. |
@@ -2186,7 +2191,7 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 | Sweet soda + caffeine | Soda + high sweetness + caffeine | Drink gave alertness/sweetness; return to water base. | Guilt, diet, or medical tone. | Drink-load signal, not moral score. |
 | High load + enough water | High load + water enough | Hydration can be base; recovery follows load. Long run/heavy sweat may use a higher range, but 3.0 L can already be a good zone. | Telling user to drink more aggressively. | Pair water with recovery and body cues. |
 | Rest day + positive mind | Rest/light day + feeling good/relaxed | Steady/supportive day; preserve rhythm. | Pushing productivity. | Do not turn support into pressure. |
-| Scattered mind + low water | Scattered mind + low water | Small water rhythm plus gentle grounding. | Over-analysis. | Keep cue small and practical. |
+| Heavy/uneasy mind + low water | Heavy/uneasy mind + low water | Small water rhythm plus gentle grounding. | Over-analysis. | Keep cue small and practical. |
 | Pressured mind + deep work | Pressured + deep work/cognitive load | Reduce pressure, recover focus, no need to fix all at once. | Productivity praise reinforcing pressure. | Recovery and pressure reduction first. |
 | Grateful note + high load | Grateful note + high load | Gratitude as support, still protect recovery. | Gratitude cancels fatigue. | Support and fatigue can coexist. |
 
@@ -2419,7 +2424,7 @@ Activity Load Roots should make reflection more context-aware without turning wo
 
 - [ ] Today State กรอกง่ายหรือยัง
 - [ ] Energy Cause มีทั้ง depletion และ support factors
-- [ ] Mind State มีทั้ง neutral / pressure / scattered / positive states
+- [ ] Mind State เป็น ordered descriptive scale จาก very heavy / uneasy / pressured / neutral / okay / positive states
 - [ ] Hydration note ไม่ยาวหรือรกเกินไป
 - [ ] Load & Recovery chips ไม่เยอะจนผู้ใช้ท้อ
 - [ ] Mind Note ยังเป็นพื้นที่เบา ๆ ไม่เหมือน therapy form
@@ -2476,7 +2481,7 @@ Activity Load Roots should make reflection more context-aware without turning wo
 - [ ] Energy low + enough_sleep ถูกอ่านเป็น layered signal ไม่ใช่ error
 - [ ] Energy good + low_sleep ไม่ถูกสรุปว่าทุกอย่างดี
 - [ ] Energy low + light_mind แยกกายกับใจได้
-- [ ] Positive Mind State เช่น รู้สึกดี / ผ่อนคลาย เป็น support signal ไม่ใช่ performance score
+- [ ] Supportive Mind State เช่น พอไหว / รู้สึกดี / ผ่อนคลาย เป็น support signal ไม่ใช่ performance score
 - [ ] Contradiction ถูกอ่านเป็น layered signal ไม่ใช่ invalid data
 - [ ] ระบบไม่ใช้คำว่า wrong / inconsistent / conflict ใน user-facing text
 
@@ -3350,6 +3355,12 @@ The smoothing layer:
 - keeps one gentle reading sentence after the anchor context
 - limits repeated terms such as `วันนี้`, `today`, `context`, and `บริบท`
 - preserves breathing markers from v1.9.8b without using emoji as headings
+
+# v1.9.8d - Reflection Anti-repetition Layer
+
+Reflection/NuTuenSai now has a small rule-based anti-repetition layer after block assembly and before final voice cadence. It groups overlapping themes such as recovery/rest/not-push, hydration/water, load/run/activity, sleep/energy, drink context, Mind Note/support need, honest-data/low-data, and closing/tomorrow focus.
+
+When several signals point to the same meaning, such as low sleep, run/load, and a rest-first support need all pointing toward recovery, the layer keeps the most specific block and can merge the shared cue into one clearer sentence. This reduces repeated report-like lines without changing signal selection, anchor ranking, reflection intent, schema, export/import, localStorage, or save behavior.
 
 ## Boundary
 
