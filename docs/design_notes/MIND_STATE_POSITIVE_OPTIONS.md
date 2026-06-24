@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Today State should be able to record both burden signals and support signals. The mind state field is not only for neutral, worried, pressured, or scattered days. Some days the user may feel better, softer, or more relaxed, and that signal belongs in the same daily field memory.
+Today State should be able to record both burden signals and support signals. The mind state field is an ordered descriptive scale from heavier states toward lighter/supportive states, not a score. Some days the user may feel okay, better, softer, or more relaxed, and that signal belongs in the same daily field memory.
 
 ## Added Options
 

@@ -5,7 +5,7 @@ This matrix summarizes how Mindful Health Balance reads user signals and reflect
 ## 1. Core Reflection Principles
 
 - Reflect patterns, not diagnose.
-- Do not assume fear unless the user selected worried/pressured or wrote it in a note.
+- Do not assume fear unless the user selected uneasy/pressured/heavy mind state or wrote it in a note.
 - Low data should produce a gentle greeting or neutral reminder, not analysis.
 - Positive signals are support signals, not proof the whole day is good.
 - Recovery signals and activity load must be separated.
@@ -51,10 +51,11 @@ The v1.9.8 composer adds an overview layer before detailed reflection notes.
 | Energy | low | Body/system may have lower resources. | Care and recovery cue. | Blame or productivity pressure. |
 | Energy | medium | Mixed or balanced energy. | Keep observing layers. | Forcing a strong conclusion. |
 | Energy | good | Energy is available today. | Use energy gently; still protect recovery. | Assuming no fatigue or no need for rest. |
-| Overall Mind Today | neutral | Overall mind is not strongly burdened or positive. | Simple steady observation. | Treating neutral as ideal calm. |
-| Overall Mind Today | worried | Worry is a care signal. | "A signal to care, not an order to rush." | Diagnosis, anxiety labeling, fear amplification. |
+| Overall Mind Today | very heavy | Mind state is carrying a lot today. | Reduce pressure; keep reflection gentle and non-diagnostic. | Treating it as a mental-health diagnosis or identity claim. |
+| Overall Mind Today | uneasy | Uneasiness is present. | Care signal, not an order to rush or fix. | Anxiety labeling or fear amplification. |
 | Overall Mind Today | pressured | Pressure is present. | Reduce pressure; no need to fix everything. | Productivity praise that reinforces pressure. |
-| Overall Mind Today | scattered | Attention/mind may be dispersed. | Gentle grounding and small rhythm cues. | Over-analysis or labeling the user. |
+| Overall Mind Today | neutral | Overall mind is in the middle point. | Simple steady observation. | Treating neutral as ideal calm or as a negative state. |
+| Overall Mind Today | okay | Mind is workable enough. | Light support signal; keep reading other body/load layers. | Saying everything is fine. |
 | Overall Mind Today | feeling good | Mind can support the system. | Support signal, not performance score. | Saying the whole day was good. |
 | Overall Mind Today | relaxed | Mind has softened. | Supportive context; still read body/load. | Ignoring sleep, energy, or load. |
 | Mind Note Feeling | neutral | The note tone is light or plain. | Let the note stay simple. | Forcing meaning. |
@@ -156,7 +157,7 @@ Activity Root Summary is the short copy layer used when the UI needs a compact s
 | Sweet soda + caffeine | Soda + high sweetness + caffeine | Drink gave alertness/sweetness; return to water base. | Guilt, diet, or medical tone. | Drink-load signal, not moral score. |
 | High load + enough water | High load + water enough | Hydration can be base; recovery follows load. Long run/heavy sweat may use a higher range, but 3.0 L can already be a good zone. | Telling user to drink more aggressively. | Pair water with recovery and body cues. |
 | Rest day + positive mind | Rest/light day + feeling good/relaxed | Steady/supportive day; preserve rhythm. | Pushing productivity. | Do not turn support into pressure. |
-| Scattered mind + low water | Scattered mind + low water | Small water rhythm plus gentle grounding. | Over-analysis. | Keep cue small and practical. |
+| Heavy/uneasy mind + low water | Heavy/uneasy mind + low water | Small water rhythm plus gentle grounding. | Over-analysis. | Keep cue small and practical. |
 | Pressured mind + deep work | Pressured + deep work/cognitive load | Reduce pressure, recover focus, no need to fix all at once. | Productivity praise reinforcing pressure. | Recovery and pressure reduction first. |
 | Grateful note + high load | Grateful note + high load | Gratitude as support, still protect recovery. | Gratitude cancels fatigue. | Support and fatigue can coexist. |
 

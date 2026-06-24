@@ -48,7 +48,7 @@ High-water safety wording:
 - If water is already around 3.0 L on a long-run day, treat it as a good zone and invite small extra sips only if sweat remains high or urine color is dark.
 - If water is already around 4.0 L or more, do not push more. Invite spreading intake through the day and observing thirst, urine color, and sweat cues.
 
-When recovery-only signals are present, such as low sleep, low energy, scattered mind, or pressure without a clear activity load, the UI should keep the base range and use recovery wording. Low sleep alone does not mean activity load is high.
+When recovery-only signals are present, such as low sleep, low energy, or a very heavy/uneasy/pressured overall mind state without a clear activity load, the UI should keep the base range and use recovery wording. Low sleep alone does not mean activity load is high.
 
 When strong activity and recovery signals both appear, the UI can keep the activity/sweat range while using a hydration-and-recovery cue.
 

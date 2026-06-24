@@ -21,7 +21,7 @@
 
 - [ ] Today State กรอกง่ายหรือยัง
 - [ ] Energy Cause มีทั้ง depletion และ support factors
-- [ ] Mind State มีทั้ง neutral / pressure / scattered / positive states
+- [ ] Mind State เป็น ordered descriptive scale จาก very heavy / uneasy / pressured / neutral / okay / positive states
 - [ ] Hydration note ไม่ยาวหรือรกเกินไป
 - [ ] Load & Recovery chips ไม่เยอะจนผู้ใช้ท้อ
 - [ ] Mind Note ยังเป็นพื้นที่เบา ๆ ไม่เหมือน therapy form
@@ -78,7 +78,7 @@
 - [ ] Energy low + enough_sleep ถูกอ่านเป็น layered signal ไม่ใช่ error
 - [ ] Energy good + low_sleep ไม่ถูกสรุปว่าทุกอย่างดี
 - [ ] Energy low + light_mind แยกกายกับใจได้
-- [ ] Positive Mind State เช่น รู้สึกดี / ผ่อนคลาย เป็น support signal ไม่ใช่ performance score
+- [ ] Supportive Mind State เช่น พอไหว / รู้สึกดี / ผ่อนคลาย เป็น support signal ไม่ใช่ performance score
 - [ ] Contradiction ถูกอ่านเป็น layered signal ไม่ใช่ invalid data
 - [ ] ระบบไม่ใช้คำว่า wrong / inconsistent / conflict ใน user-facing text
 
