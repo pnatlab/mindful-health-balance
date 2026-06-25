@@ -3402,8 +3402,11 @@ The patch adds optional backward-compatible columns:
 - `Practice_Type`
 - `Practice_Minutes`
 - `Practice_Context_JSON`
+- `Practice_Note`
 
-`Practice_Minutes` stores total minutes derived from the UI hours + minutes inputs. `Practice_Context_JSON` stores `root`, `type`, `minutes`, `source: "four_bases_daily_context"`, and `reflectDaily: false`.
+`Practice_Minutes` stores total minutes derived from the UI hours + minutes inputs. `Practice_Note` stores a short plain-text note for the practice situation, good action, or wholesome context the user wants to remember. `Practice_Context_JSON` stores `root`, `type`, `minutes`, `note`, `source: "four_bases_daily_context"`, and `reflectDaily: false`.
+
+`Practice_Note` is duplicated into `Practice_Context_JSON.note` intentionally: the plain column is easy to read in Excel, while the JSON note keeps the structured context portable. It is not a merit score, spiritual assessment, proof of being good, therapy field, or daily Reflection input by default.
 
 ## Reflection Boundary
 

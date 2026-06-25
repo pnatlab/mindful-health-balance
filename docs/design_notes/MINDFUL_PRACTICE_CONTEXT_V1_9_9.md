@@ -58,12 +58,13 @@ Legacy roots such as `breath_body_base`, `heart_quality`, `recollection_trust`, 
 
 ## Data Fields
 
-v1.9.9 adds four backward-compatible optional `Daily_Log` columns:
+v1.9.9 adds backward-compatible optional `Daily_Log` columns:
 
 - `Practice_Root`
 - `Practice_Type`
 - `Practice_Minutes`
 - `Practice_Context_JSON`
+- `Practice_Note`
 
 `Practice_Minutes` stores total minutes derived from the UI's hours + minutes inputs.
 
@@ -74,10 +75,15 @@ v1.9.9 adds four backward-compatible optional `Daily_Log` columns:
   "root": "mind_thought",
   "type": "observe_mind",
   "minutes": 15,
+  "note": "ไปให้อาหารปลาที่วัด",
   "source": "four_bases_daily_context",
   "reflectDaily": false
 }
 ```
+
+`Practice_Note` stores a short plain-text note for the practice situation, good action, or wholesome context the user wants to remember. It is duplicated into `Practice_Context_JSON.note` intentionally: `Practice_Note` is easy to read in Excel, while the JSON note keeps the structured context portable.
+
+The note is not a merit score, spiritual assessment, proof of being good, therapy field, or daily Reflection input by default. It is stored for future weekly/monthly Field Review.
 
 `reflectDaily: false` is intentional. It marks this field as future Field Review context, not a daily Reflection signal in v1.9.9.
 

@@ -29,6 +29,7 @@ const DAILY_LOG_COLUMNS = [
   "Practice_Type",
   "Practice_Minutes",
   "Practice_Context_JSON",
+  "Practice_Note",
   "Mind_Note_Text",
   "Mind_Note_Feeling",
   "Mind_Note_Support"
@@ -221,6 +222,9 @@ const translations = {
     practiceMinutesLabel: "นาที",
     practiceHoursPlaceholder: "0",
     practiceMinutesPlaceholder: "15",
+    practiceNoteLabel: "หมายเหตุ / สิ่งดีที่ได้ทำ",
+    practiceNotePlaceholder: "เช่น ไปให้อาหารปลาที่วัด, ระลึกถึงความดีที่ทำ, วางใจไม่ตอบโต้",
+    practiceNoteHelper: "เขียนสั้น ๆ ได้ ไม่ใช่คะแนนบุญหรือการประเมินตัวเอง",
     practiceDurationHint: "เว้นว่างได้ ไม่มีคะแนนหรือ streak",
     practiceDurationBadge: "รวมประมาณ {minutes} นาที",
     practiceTypeEmpty: "เลือกฐานก่อน หรือเว้นว่างไว้ได้",
@@ -964,6 +968,9 @@ const translations = {
     practiceMinutesLabel: "Minutes",
     practiceHoursPlaceholder: "0",
     practiceMinutesPlaceholder: "15",
+    practiceNoteLabel: "Practice note / Good action",
+    practiceNotePlaceholder: "e.g. fed fish at the temple, recollected a good action, chose not to react",
+    practiceNoteHelper: "A short note is enough. This is context, not a score.",
     practiceDurationHint: "Leave blank if needed. No score or streak.",
     practiceDurationBadge: "About {minutes} min total",
     practiceTypeEmpty: "Choose a base first, or leave this blank.",
@@ -1707,6 +1714,9 @@ const translations = {
     practiceMinutesLabel: "分钟",
     practiceHoursPlaceholder: "0",
     practiceMinutesPlaceholder: "15",
+    practiceNoteLabel: "练习备注 / 善行",
+    practiceNotePlaceholder: "例如：在寺院喂鱼、忆念善行、选择不反应",
+    practiceNoteHelper: "简单记录即可。这是背景，不是评分。",
     practiceDurationHint: "可以留空。没有分数，也没有 streak。",
     practiceDurationBadge: "约 {minutes} 分钟",
     practiceTypeEmpty: "可以先选择基础，也可以留空。",
@@ -2507,6 +2517,7 @@ const defaultState = {
   practiceRoot: "",
   practiceType: "",
   practiceMinutes: "",
+  practiceNote: "",
   mindNoteText: "",
   mindNoteFeeling: "",
   mindNoteSupport: ""
@@ -2717,6 +2728,7 @@ function loadState() {
     parsed.practiceRoot = normalizePracticeRoot(parsed.practiceRoot || practiceTypeToRoot[parsed.practiceType]);
     parsed.practiceType = normalizePracticeType(parsed.practiceType, parsed.practiceRoot);
     parsed.practiceMinutes = normalizePracticeMinutes(parsed.practiceMinutes);
+    parsed.practiceNote = cleanLegacyTextValue(parsed.practiceNote || "", "Practice_Note");
     applyDerivedSleepFromHours(parsed);
     return parsed;
   } catch {
@@ -2978,6 +2990,11 @@ function bindEvents() {
     document.querySelector(selector)?.addEventListener("change", updatePracticeDurationFromForm);
   });
 
+  document.querySelector("#practiceNoteInput")?.addEventListener("input", (event) => {
+    appState.practiceNote = event.target.value;
+    markTodayMindNoteFlowActive();
+  });
+
   document.querySelectorAll("[data-mind-note-field]").forEach((button) => {
     button.addEventListener("click", () => {
       const field = button.dataset.mindNoteField;
@@ -3076,6 +3093,7 @@ function syncUI() {
   appState.practiceRoot = normalizePracticeRoot(appState.practiceRoot);
   appState.practiceType = normalizePracticeType(appState.practiceType, appState.practiceRoot);
   appState.practiceMinutes = normalizePracticeMinutes(appState.practiceMinutes);
+  appState.practiceNote = cleanLegacyTextValue(appState.practiceNote || "", "Practice_Note");
   applyDerivedSleepFromHours(appState);
   appState.loadScore = calculateLoadScore();
   appState.loadLevel = getLoadLevel(appState.loadScore);
@@ -3091,6 +3109,7 @@ function syncUI() {
   document.querySelector("#mindfulReminder").textContent = getMindfulReminder();
   document.querySelector("#reflectionOutput").value = appState.generatedReflection;
   document.querySelector("#mindNoteText").value = appState.mindNoteText || "";
+  document.querySelector("#practiceNoteInput").value = appState.practiceNote || "";
 
   updateReflectionPreview();
   updateStateButtons();
@@ -3859,6 +3878,7 @@ function hasPracticeContextInput(state = appState) {
     normalizePracticeRoot(state.practiceRoot)
     || normalizePracticeType(state.practiceType, state.practiceRoot)
     || normalizePracticeMinutes(state.practiceMinutes) !== ""
+    || String(state.practiceNote || "").trim()
   );
 }
 
@@ -3866,13 +3886,15 @@ function buildPracticeContextObject(state = appState) {
   const root = normalizePracticeRoot(state.practiceRoot);
   const type = normalizePracticeType(state.practiceType, root);
   const minutes = type === "none" ? 0 : normalizePracticeMinutes(state.practiceMinutes);
+  const note = cleanLegacyTextValue(state.practiceNote || "", "Practice_Note");
 
-  if (!root && !type && minutes === "") return null;
+  if (!root && !type && minutes === "" && !note) return null;
 
   return {
     root,
     type,
     minutes,
+    note,
     source: practiceSourceKey,
     reflectDaily: false
   };
@@ -3897,11 +3919,13 @@ function normalizePracticeContextJsonForRow(value, row = {}) {
   const root = normalizePracticeRoot(parsed.root || row.Practice_Root);
   const type = normalizePracticeType(parsed.type || row.Practice_Type, root);
   const minutes = type === "none" ? 0 : normalizePracticeMinutes(parsed.minutes ?? row.Practice_Minutes);
-  if (!root && !type && minutes === "") return "";
+  const note = cleanLegacyTextValue(parsed.note ?? row.Practice_Note ?? "", "Practice_Note");
+  if (!root && !type && minutes === "" && !note) return "";
   return JSON.stringify({
     root,
     type,
     minutes,
+    note,
     source: parsed.source || practiceSourceKey,
     reflectDaily: false
   });
@@ -3943,8 +3967,10 @@ function updatePracticeUI() {
   const durationSummary = document.querySelector("#practiceDurationSummary");
   const typeSection = document.querySelector("#practiceTypeSection");
   const durationSection = document.querySelector("#practiceDurationSection");
+  const noteSection = document.querySelector("#practiceNoteSection");
   const showTypeSection = Boolean(visibleRoot);
   const showDurationSection = Boolean(safeType && safeType !== "none" && !isLegacyHiddenRoot);
+  const showNoteSection = Boolean((safeType && !isLegacyHiddenRoot) || String(appState.practiceNote || "").trim());
 
   if (typeSection) {
     typeSection.hidden = !showTypeSection;
@@ -3953,6 +3979,10 @@ function updatePracticeUI() {
   if (durationSection) {
     durationSection.hidden = !showDurationSection;
     durationSection.setAttribute("aria-hidden", String(!showDurationSection));
+  }
+  if (noteSection) {
+    noteSection.hidden = !showNoteSection;
+    noteSection.setAttribute("aria-hidden", String(!showNoteSection));
   }
 
   if (hoursInput) hoursInput.value = durationParts.hours;
@@ -6310,6 +6340,7 @@ function buildDailyLogRow({ generateReflection = true } = {}) {
     Practice_Type: practiceContext?.type || "",
     Practice_Minutes: practiceContext?.minutes ?? "",
     Practice_Context_JSON: practiceContext ? JSON.stringify(practiceContext) : "",
+    Practice_Note: practiceContext?.note || "",
     Mind_Note_Text: appState.mindNoteText || "",
     Mind_Note_Feeling: appState.mindNoteFeeling || "",
     Mind_Note_Support: appState.mindNoteSupport || "",
@@ -6344,6 +6375,7 @@ const mindNoteLogFields = [
   "Practice_Type",
   "Practice_Minutes",
   "Practice_Context_JSON",
+  "Practice_Note",
   "Mind_Note_Text",
   "Mind_Note_Feeling",
   "Mind_Note_Support"
@@ -6475,6 +6507,7 @@ function hasSavedMindNoteLayer(row) {
     || hasDailyLogValue(row.Practice_Type)
     || hasDailyLogValue(row.Practice_Minutes)
     || hasDailyLogValue(row.Practice_Context_JSON)
+    || hasDailyLogValue(row.Practice_Note)
     || hasDailyLogValue(row.Mind_Note_Text)
     || hasDailyLogValue(row.Mind_Note_Feeling)
     || hasDailyLogValue(row.Mind_Note_Support)
@@ -6606,6 +6639,7 @@ const legacyTextLikeFields = new Set([
   "Practice_Root",
   "Practice_Type",
   "Practice_Context_JSON",
+  "Practice_Note",
   "Mind_Note_Text",
   "Mind_Note_Feeling",
   "Mind_Note_Support",
@@ -6668,6 +6702,7 @@ function normalizeLogRow(row) {
   normalized.Practice_Root = normalizePracticeRoot(normalized.Practice_Root);
   normalized.Practice_Type = normalizePracticeType(normalized.Practice_Type, normalized.Practice_Root);
   normalized.Practice_Minutes = normalizePracticeMinutes(normalized.Practice_Minutes);
+  normalized.Practice_Note = cleanLegacyTextValue(normalized.Practice_Note, "Practice_Note");
   normalized.Practice_Context_JSON = normalizePracticeContextJsonForRow(normalized.Practice_Context_JSON, normalized);
   if (normalized.Practice_Context_JSON) {
     const practiceContext = parsePracticeContextJson(normalized.Practice_Context_JSON);
@@ -6676,6 +6711,7 @@ function normalizeLogRow(row) {
     normalized.Practice_Minutes = normalized.Practice_Minutes === ""
       ? normalizePracticeMinutes(practiceContext.minutes)
       : normalized.Practice_Minutes;
+    normalized.Practice_Note = normalized.Practice_Note || cleanLegacyTextValue(practiceContext.note || "", "Practice_Note");
   }
   normalized.Reflection_Text = cleanLegacyTextValue(row.Reflection_Text ?? row.Reflection ?? "", "Reflection_Text");
   return normalized;
@@ -7120,9 +7156,18 @@ function buildColumnGuideRows() {
       column: "Practice_Context_JSON",
       thai: "บริบทการภาวนาแบบ JSON",
       english: "Practice context JSON",
-      meaning: "JSON compact สำหรับ root, type, minutes, source และ reflectDaily=false",
+      meaning: "JSON compact สำหรับ root, type, minutes, note, source และ reflectDaily=false",
       aiNote: "Future field-review context only. reflectDaily=false means daily Reflection should intentionally ignore this field in v1.9.9.",
-      example: "{\"root\":\"mind_thought\",\"type\":\"observe_mind\",\"minutes\":15,\"source\":\"four_bases_daily_context\",\"reflectDaily\":false}"
+      example: "{\"root\":\"mind_thought\",\"type\":\"observe_mind\",\"minutes\":15,\"note\":\"ไปให้อาหารปลาที่วัด\",\"source\":\"four_bases_daily_context\",\"reflectDaily\":false}"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Practice_Note",
+      thai: "หมายเหตุภาวนา / สิ่งดีที่ได้ทำ",
+      english: "Practice note / good action",
+      meaning: "หมายเหตุสั้น ๆ เกี่ยวกับบริบทการภาวนา สิ่งดีที่ได้ทำ หรือบริบทกุศลกรรมที่ผู้ใช้อยากจำไว้",
+      aiNote: "Qualitative field memory for future Field Review only. Not a merit score, spiritual assessment, diagnosis, or daily Reflection input by default.",
+      example: "ไปให้อาหารปลาที่วัด"
     }),
     row({
       sheet: "Daily_Log",
@@ -7694,7 +7739,8 @@ function localizePracticeContextJson(value) {
   return [
     detail.root ? t(`options.practiceRoots.${detail.root}`) : "",
     detail.type ? t(`options.practiceTypes.${detail.type}`) : "",
-    detail.minutes !== "" && detail.minutes !== undefined ? `${detail.minutes} min` : ""
+    detail.minutes !== "" && detail.minutes !== undefined ? `${detail.minutes} min` : "",
+    detail.note || ""
   ].filter(Boolean).join(" / ");
 }
 

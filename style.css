@@ -1533,6 +1533,7 @@ body[data-theme="dark"] .today-state-card {
 }
 
 .practice-type-section[hidden],
+.practice-note-block[hidden],
 .practice-duration-block[hidden] {
   display: none !important;
 }
@@ -1566,6 +1567,22 @@ body[data-theme="dark"] .today-state-card {
   gap: 10px;
 }
 
+.practice-note-block {
+  display: grid;
+  gap: 8px;
+}
+
+.practice-note-block textarea {
+  min-height: 76px;
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-color: rgba(111, 167, 232, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(242, 248, 255, 0.48)),
+    var(--textarea-bg);
+  line-height: 1.65;
+}
+
 .practice-duration-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1581,6 +1598,12 @@ body[data-theme="dark"] .today-state-card {
 
 .practice-duration-badge {
   margin: 0;
+}
+
+body[data-theme="dark"] .practice-note-block textarea {
+  background:
+    linear-gradient(180deg, rgba(24, 20, 42, 0.72), rgba(28, 34, 66, 0.44)),
+    var(--textarea-bg);
 }
 
 body[data-theme="dark"] .practice-context-card {
