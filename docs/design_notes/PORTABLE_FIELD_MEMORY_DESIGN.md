@@ -2,9 +2,9 @@
 
 ## Purpose
 
-Mindful Health Balance is a local-first self-care logging interface that helps a user create an AI-readable record of daily life while keeping ownership of the data.
+Mindful Health Balance is a local-first personal rhythm research prototype that helps a user create an AI-readable record of daily life while keeping ownership of the data.
 
-The app is not only a hydration tracker or a daily health dashboard. It is a bridge between lived experience and AI reflection. A user can record daily signals, export them as a structured Excel file, review the file privately, or choose to share it with an AI assistant so the assistant can better understand real patterns across body, behavior, mind, intention, load, and recovery.
+The app is not only a hydration tracker, daily health dashboard, or SaaS product surface. It is a bridge between lived experience and AI reflection. A user can record daily signals, export them as a structured Excel file, review the file privately, or choose to share it with an AI assistant so the assistant can better understand real patterns across body, behavior, mind, intention, practice context, load, and recovery.
 
 The goal is to help an AI understand the user's patterns from user-owned evidence, not only from chat memory or in-the-moment self-reporting.
 
@@ -38,7 +38,7 @@ It records relationships across several layers:
 - Body: hydration, sleep, caffeine, sugar, load.
 - Behavior: activities, work, exercise, rest.
 - Mind: state, worry, calm, pressure.
-- Intention: support need, mind note, reflection context.
+- Intention: support need, mind note, practice context, practice note, reflection context.
 - Recovery: rest, tomorrow focus, carryover.
 - Reflection: AI-generated reminder and user-facing reflection.
 
@@ -56,6 +56,7 @@ Mindful Health Balance is not:
 - A surveillance system.
 - A gamified score system that pressures the user.
 - A replacement for professional care.
+- A production SaaS platform with account-based ownership of the user's data.
 
 The app should avoid presenting itself as a tool that can determine disease, predict health danger, diagnose mental state, or replace medical or psychological support. Its role is self-care reflection and pattern visibility.
 

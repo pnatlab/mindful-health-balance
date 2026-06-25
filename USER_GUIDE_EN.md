@@ -2,16 +2,19 @@
 
 ## 1. What This App Is
 
-Mindful Health Balance by MSxAI is a self-care reflection tool for gently noticing daily health patterns. It is not designed to judge you, pressure you, or make you rush to fix numbers.
+Mindful Health Balance by MSxAI is a local-first personal rhythm research prototype and user-owned field memory for AI-assisted self-reflection. It is not designed to judge you, pressure you, or make you rush to fix numbers.
 
-The app helps you observe gentle pattern awareness across:
+The app helps you record honest daily signals as structured local data across:
 
 - Hydration
 - Caffeine and sugary drinks
 - Load and recovery
 - Energy, sleep, and mind state
+- Practice context, Mind Note, and Reflection
 
 This app is not a medical tool, not a diagnosis system, and not a replacement for professional care or medical follow-up.
+
+Its value is not in being a production SaaS platform. Its value is in a portable, user-owned data layer that can later be reviewed by the user or intentionally shared with AI without handing agency to the system.
 
 ## 2. When To Use It
 
@@ -88,6 +91,8 @@ Switching views does not reset current inputs and does not delete saved Daily Lo
 
 Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only on Today’s Signals 1/2. Today’s Signals 1/2 and Mind Note 2/2 now include `Save to Daily Log`, so you can save the Daily Log without visiting Reflection first. Going to Reflection/NuTuenSai is navigation only; it does not save data.
 
+Same-day saves use a source-aware safe merge. Saving Today’s Signals updates only that layer and preserves saved Practice Context, Practice Note, Mind Note, and Reflection. Saving Mind Note 2/2 updates Practice/Mind Note fields while preserving Reflection. Reflection uses `Save Today’s Reflection` when you want to save the generated or edited Reflection layer.
+
 The Today page also has a small top step switcher for moving between `Today’s Signals 1/2` and `Mind Note 2/2`. The bottom buttons remain the main action controls after you finish each step.
 
 The Daily Log status bar near the top shows which of the three layers have already been saved today: `Today’s Signals`, `Mind Note`, and `Reflection`. It is not a completion score. Sections can remain blank when they were not recorded or are uncertain.
@@ -104,9 +109,11 @@ Cockpit statuses such as `Empty`, `Started`, and `Readable` are visual feedback 
 
 Starting in v1.9.7 — Symbolic Signal Cockpit Polish, the cockpit becomes more like a signal constellation, with four nodes around a central `Daily Balance Orb`. The orb and signal dots show how much of today is readable in a gentle way, not as a KPI, score, or judgment.
 
-Starting in v1.9.9 — Mindful Practice Context, Mind Note 2/2 adds a small `Practice before Mind Note` card. It can record an optional practice root/type and rough duration using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma, plus No practice / Other. This data is stored in Daily Log/Excel for future Field Review only; daily Reflection/NuTuenSai does not interpret it yet and does not score practice quality.
+Starting in v1.9.9 — Mindful Practice Context, Mind Note 2/2 adds a small `Practice before Mind Note` card. It can record an optional practice root/type, rough duration, and `Practice_Note` using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma, plus No practice / Other. This data is stored in Daily Log/Excel for future Field Review only; daily Reflection/NuTuenSai does not interpret it yet and does not score practice quality.
 
 Starting in v1.9.8 — Input-grounded Natural Reflection Composer, Reflection/NuTuenSai selects 2-4 meaningful anchors from today's input, such as water, sleep hours, drink context, activity/load, run detail, Mind Note, or light continuity context. It uses those anchors to write one more natural overview sentence while staying rule-based, local-first, non-medical, and non-chatbot.
+
+The latest Reflection layer also includes NuTuenSai voice cadence in Thai, low-data micro-continuity using previous logs as background only, and a rule-based anti-repetition layer so overlapping recovery/load/sleep/support cues do not repeat the same meaning several times.
 
 Starting in v1.9.8b — Reflection Breathing Markers, Reflection/NuTuenSai may add a very small number of emoji pause markers, such as 🩵 or 💧, to make longer sentences easier to read. These markers are not headings, scores, diagnoses, or hidden categories.
 

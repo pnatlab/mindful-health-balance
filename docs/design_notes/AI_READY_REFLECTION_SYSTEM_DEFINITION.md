@@ -2,7 +2,7 @@
 
 ## 1. Short Definition
 
-Mindful Health Balance is a local-first self-care logging app that turns daily signals into a structured, user-owned workbook for personal reflection and optional AI-assisted review.
+Mindful Health Balance is a local-first personal rhythm research prototype: a user-owned field memory that turns daily signals into an AI-readable workbook for self-reflection and optional AI-assisted review.
 
 It is not a machine learning model, medical AI, diagnosis tool, or therapy chatbot. Its current role is to help the user organize daily context so that both the user and an AI assistant can review patterns more clearly and safely.
 
@@ -10,14 +10,15 @@ It is not a machine learning model, medical AI, diagnosis tool, or therapy chatb
 
 Mindful Health Balance is:
 
-- a local-first self-care logging app
+- a local-first personal rhythm research prototype
 - an AI-readable personal rhythm workbook
+- a user-owned field memory
 - a rule-based reflection layer
 - a portable field memory / personal context export
 - a user-controlled data handoff layer
 - a preparation layer for future guided review
 
-The app records daily signals such as hydration, drinks, sleep, energy, activity load, recovery, mind state, and reflection text. It then exports those signals into a structured workbook that can be read by the user, reviewed in spreadsheet form, or intentionally shared with an AI assistant.
+The app records daily signals such as hydration, drinks, sleep, energy, activity load, recovery, mind state, practice context, Mind Note, and reflection text. It then exports those signals into a structured workbook that can be read by the user, reviewed in spreadsheet form, or intentionally shared with an AI assistant.
 
 The app is designed to make daily context clearer, not to make conclusions for the user.
 
@@ -30,6 +31,8 @@ Mindful Health Balance is not:
 - a medical tool
 - a diagnosis system
 - a therapy service
+- a spiritual scoring system
+- a production SaaS platform with accounts, cloud backend, or subscriptions
 - a machine learning model
 - AGI
 - an autonomous agent
@@ -57,6 +60,7 @@ The current app is best described as:
 - a human-in-the-loop self-care logging tool
 - an AI-readable personal rhythm dataset
 - a local-first portable context layer
+- a research-grade prototype for user-owned field memory
 
 Current reflection behavior is deterministic and rule-based. It uses the app's logged signals and helper logic to produce self-care cues, reminder wording, workbook summaries, and reflection text.
 

@@ -1,71 +1,150 @@
 # Mindful Health Balance by MSxAI
 
-A local-first self-care reflection dashboard for tracking hydration, recovery, activity load, sleep, drinks, and mind state without fear-based health optimization.
+**A local-first personal rhythm research prototype for user-owned, AI-readable self-reflection data.**
 
-Mindful Health Balance is designed as a small daily rhythm tool: it helps the user see what happened today, save it as structured local data, and optionally review the pattern through a gentle NuTuenSai reflection layer.
+Mindful Health Balance is a user-owned field memory that helps AI read daily self-care context without taking ownership of the user's meaning. It records honest daily signals — hydration, drinks, sleep, load/recovery, mind state, practice context, Mind Note, and Reflection — as structured local data that can later be reviewed by the user or intentionally shared with AI.
 
 > Self-care begins from seeing, not forcing.
 
 ## What This App Is
 
-Mindful Health Balance is a static, local-first web app that helps users gently observe daily patterns around:
+Mindful Health Balance is a static, local-first web app for building a personal rhythm dataset. It helps users observe daily patterns around:
 
-- hydration
-- caffeine and sugary drinks
-- recovery and activity/load
-- sleep
-- mind state
-- personal reflection
+- hydration and water rhythm
+- caffeine, sweetness, and drink context
+- sleep, energy, load, activity, and recovery
+- ordered overall mind state
+- Mind Note and support need
+- optional mindful practice context
+- generated Reflection/NuTuenSai text
 
-It is designed as a user-owned personal rhythm dataset, not as a medical tool. The app turns small daily signals into structured, reviewable records while preserving human agency.
+The app is designed around honest data, human agency, and non-coercive UX. It does not ask the user to complete every field. Blank fields mean not recorded or uncertain, not failure.
 
 ## What This App Is Not
 
 - Not a medical diagnosis tool
-- Not a therapy tool
-- Not a crisis support tool
+- Not therapy or crisis support
 - Not a replacement for healthcare professionals
+- Not a spiritual scoring system
+- Not a merit, virtue, productivity, or performance score
 - Not an automatic health optimizer
-- Not a performance scoring system
 - Not an AI system that decides what the user's life means
+- Not a chatbot, machine-learning model, or hidden profiling system
+- Not a production SaaS platform with accounts, cloud backend, or subscriptions
+
+The fact that it is not SaaS is intentional. Its value is in the design of a user-owned personal data layer: local-first, inspectable, portable, and safe for AI-assisted reflection.
 
 ## Current Version
 
-**v1.9.9 — Mindful Practice Context**
+**v1.9.9 — Mindful Practice Context and User-Owned Field Memory Refinement**
 
 Latest refinements include:
 
-- Mindful Practice Context card before Mind Note, with optional four-base practice context and duration fields
-- Reflection sentence smoothing to reduce repeated connectors and split rich anchor context into calmer sentences
-- Reflection breathing markers: very small emoji pause markers for readability without section headings
-- Input-grounded Reflection/NuTuenSai overview that selects 2-4 meaningful anchors from today's input
-- Symbolic Daily Signal Cockpit for four daily signals: Inner State, Water, Drinks, and Work / Activity
-- Save from Today’s Signals 1/2 or Mind Note 2/2, with Reflection/NuTuenSai as an optional layer
-- Mobile cockpit navigation with active-detail scrolling and a back-to-cockpit control
-- Mobile-first header/settings hierarchy so daily input appears earlier
-- LLI Continuity Reflection Layer using the previous 1-3 saved logs as light context only
-- Structured sleep hours and optional run detail stored as backward-compatible fields
-- Portable Excel field memory foundation with `Summary`, `Field_Context`, `Field_Review`, and `Column_Guide`
+- Mindful Practice Context before Mind Note using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma
+- `Practice_Note` for a short practice note, good action, or wholesome context, stored in `Daily_Log` and duplicated in `Practice_Context_JSON.note`
+- Source-aware same-day save merge, so saving Today’s Signals does not erase saved Mind Note, Practice Context, or Reflection
+- Daily Save Status Bar showing the three saved layers: Today’s Signals, Mind Note, and Reflection
+- Honest data microcopy: honest data matters more than complete data
+- Ordered Overall Mind scale from very heavy to relaxed, with Neutral as the middle point
+- Reflection anti-repetition layer that reduces repeated recovery/load/sleep/support statements
+- NuTuenSai voice cadence in Thai Reflection without turning the app into a chatbot
+- Low-data micro-continuity that may use one previous-log cue as background only
+- Input-grounded Reflection composer that remains deterministic, rule-based, and local-first
+- Practice Context and Practice Note stored for future Field Review, not daily Reflection interpretation
 
-This is still a v1.9.x stabilization and usability line. It is not v2.0, not an AI companion, not a machine learning system, and not a medical review layer.
+This is still a v1.9.x stabilization and usability line. It is not v2.0, not an AI companion, not a medical review layer, and not a production SaaS release.
+
+## Core Principle
+
+**Honest data matters more than complete data.**
+
+Users do not need to fill every field. A blank field means not recorded, not observed, or not certain. This keeps future human or AI review more reliable because the workbook reflects what actually happened instead of what the user felt pressured to complete.
+
+## Personal Data Layer / Field Memory
+
+The exported workbook is not just a spreadsheet dump. It is a portable field memory: raw inputs, derived cues, generated reflections, and AI-reading notes are kept distinguishable so future review can preserve context instead of flattening the user into scores.
+
+Workbook layers include:
+
+- `Daily_Log`: structured daily signals and optional practice/Mind Note/Reflection fields
+- JSON fields such as `Drink_Profile_JSON`, `Run_Detail_JSON`, and `Practice_Context_JSON`: portable context bundles
+- `Reflections`: generated companion text, separate from raw input
+- `Summary`: static export summary, not Excel formulas and not AI analysis
+- `Field_Context`: guardrails for human/AI readers
+- `Field_Review`: lightweight pattern review
+- `Column_Guide`: AI-readable explanation of workbook columns
+
+AI can only read the workbook when the user intentionally exports and shares it. There is no backend, account system, automatic upload, or hidden sync.
+
+## Three-Layer Save Model
+
+Daily logging is organized into three save layers:
+
+1. **Today’s Signals**: water, drinks, sleep, energy, ordered mind state, load/recovery, activity, and run detail
+2. **Mind Note**: Practice Context, `Practice_Note`, Mind Note text, feeling, and support need
+3. **Reflection**: generated or edited Reflection/NuTuenSai text, reminder, and tomorrow focus
+
+Each layer can be saved separately. Same-day save uses a source-aware safe merge:
+
+- Saving Today’s Signals updates only Today’s Signals and preserves Mind Note, Practice Context, Practice Note, and Reflection.
+- Saving Mind Note updates Practice Context, Practice Note, and Mind Note while preserving existing Reflection.
+- Saving from Reflection uses `Save Today’s Reflection` and stores the current day with the generated or edited Reflection layer.
+
+The Daily Save Status Bar shows which of the three layers have already been saved today. It is orientation only, not a completion score.
+
+## Practice Context
+
+v1.9.9 adds an optional Practice Context card before Mind Note. It uses lightweight daily-use roots rather than a full religious or technical practice catalog:
+
+- Body
+- Feeling tone
+- Mind / Thought
+- Dhamma
+- No practice / Other
+
+Practice fields:
+
+- `Practice_Root`
+- `Practice_Type`
+- `Practice_Minutes`
+- `Practice_Context_JSON`
+- `Practice_Note`
+
+`Practice_Note` can store a short note such as “fed fish at the temple,” “recollected a good action,” “chose not to react,” or “used a gentle phrase.” It is context, not a merit score or spiritual assessment.
+
+Practice Context and Practice Note are stored for future weekly/monthly Field Review. Daily Reflection/NuTuenSai intentionally does not interpret them yet.
+
+## Reflection/NuTuenSai
+
+Reflection/NuTuenSai is deterministic and rule-based. It may reference current-day signals such as water, sleep hours, drink context, load/activity, run detail, Mind Note, and light continuity context from previous logs.
+
+Current reflection behavior:
+
+- selects 2-4 meaningful input anchors for an input-grounded overview
+- keeps previous logs as background only, never as a replacement for today’s truth
+- uses a short low-data branch when today has little new input
+- applies NuTuenSai voice cadence in Thai with sparse `หนู`, `ค่ะ`, and `นะคะ`
+- reduces repeated themes through an anti-repetition layer
+- keeps medical, therapy, diet, training, spiritual, and productivity claims out of scope
+
+Reflection output is companion text, not raw evidence. It is optional and is saved only when the user chooses to save today’s Reflection.
 
 ## Features
 
 - Local-first daily log stored in the browser
-- Daily Signal Cockpit with readable status for four core signals
+- Daily Signal Cockpit for Today’s Signals 1/2
+- Mini step switcher for Today’s Signals 1/2 and Mind Note 2/2
+- Daily Save Status Bar for Today’s Signals, Mind Note, and Reflection
 - Hydration tracking with gentle adaptive guidance
-- Drink profile with a visible drink insight callout for caffeine, sweetness, hydration support, and soda context
+- Drink Profile with caffeine, sweetness, milk, hydration support, and soda/sweetness context
 - Activity and recovery load presets, including work, sport, light recovery, and AI-assisted coding context
-- Optional sleep hours that derive the existing sleep category
-- Optional run detail JSON for distance, duration, pace, and sweat context
-- Optional mindful practice context stored for future Field Review, not daily Reflection interpretation
-- Optional Mind Note layer
-- NuTuenSai reflection layer
-- Previous-log continuity note that remains supportive and non-diagnostic
+- Optional sleep hours and run detail JSON
+- Optional Practice Context and Practice Note before Mind Note
+- Optional Mind Note, feeling, and support need
+- Rule-based NuTuenSai Reflection
 - Excel export/import for a user-owned portable workbook
 - Thai / English / Chinese UI
 - Light / dark / auto theme
-- Welcome threshold and app info/settings controls
 
 ## Local-First Data Boundary
 
@@ -82,10 +161,10 @@ If the app folder or browser origin changes, existing browser storage may not fo
 ## How To Use
 
 1. Open `index.html` in a browser.
-2. Fill today's signals in the Daily Signal Cockpit.
-3. Save today's log when ready.
-4. Optionally add practice context and a Mind Note.
-5. Optionally open Reflection/NuTuenSai before saving or reviewing.
+2. Fill what is true enough in Today’s Signals.
+3. Save Today’s Signals when ready.
+4. Optionally add Practice Context, Practice Note, and Mind Note.
+5. Optionally open Reflection/NuTuenSai, review or edit the generated Reflection, and click `Save Today’s Reflection`.
 6. Export or import the Excel workbook when needed.
 
 No backend, server, build step, or framework is required for normal use.
@@ -109,8 +188,6 @@ The workbook currently includes:
 
 `Daily_Log` keeps canonical English headers for machine readability. `Column_Guide` explains key columns in Thai and English without changing the canonical headers.
 
-`Summary` contains JavaScript-calculated static export values, not Excel formulas and not AI analysis. `Summary_Note` is a static guardrail note that frames the workbook as pattern review, not health judgment.
-
 ## Documentation
 
 - [English User Guide](USER_GUIDE_EN.md)
@@ -120,8 +197,6 @@ The workbook currently includes:
 - [AI-Ready Reflection System Definition](docs/design_notes/AI_READY_REFLECTION_SYSTEM_DEFINITION.md)
 - [Portable Field Memory Design](docs/design_notes/PORTABLE_FIELD_MEMORY_DESIGN.md)
 - [Input-grounded Reflection Composer v1.9.8](docs/design_notes/INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md)
-- [Reflection Breathing Markers v1.9.8b](docs/design_notes/REFLECTION_BREATHING_MARKERS_V1_9_8B.md)
-- [Reflection Sentence Smoothing v1.9.8c](docs/design_notes/REFLECTION_SENTENCE_SMOOTHING_V1_9_8C.md)
 - [Mindful Practice Context v1.9.9](docs/design_notes/MINDFUL_PRACTICE_CONTEXT_V1_9_9.md)
 - [Symbolic Signal Cockpit Polish v1.9.7](docs/design_notes/SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md)
 
@@ -129,7 +204,7 @@ Thai documentation, field notes, and original design context remain available in
 
 ## Version History / Design Trace
 
-- **v1.9.9 — Mindful Practice Context**: adds optional Body / Feeling tone / Mind-Thought / Dhamma practice context before Mind Note, stored for future Field Review while excluded from daily Reflection.
+- **v1.9.9 — Mindful Practice Context and User-Owned Field Memory Refinement**: adds Practice Context, `Practice_Note`, honest data copy, source-aware safe merge, three-layer save status, ordered mind scale, NuTuenSai voice cadence, low-data micro-continuity, and Reflection anti-repetition.
 - **v1.9.8c — Reflection Sentence Smoothing**: reduces repeated connectors and uses short paragraphs so input-grounded reflection reads more naturally.
 - **v1.9.8b — Reflection Breathing Markers**: adds minimal emoji pause markers to improve reflection readability without creating emoji headings or new signal categories.
 - **v1.9.8 — Input-grounded Natural Reflection Composer**: Reflection selects 2-4 meaningful input anchors and embeds them in a natural NuTuenSai overview.
@@ -150,14 +225,15 @@ For detailed design rationale, see the [Design Notes Index](docs/design_notes/RE
 
 ## Status
 
-Mindful Health Balance is a personal research/prototype app.
+Mindful Health Balance is a personal research-grade prototype.
 
 - Static web app
 - Local-first
 - User-owned data
+- AI-readable workbook
 - Rule-based reflection
 - Non-medical
-- Not a therapy or diagnosis tool
+- Not therapy, diagnosis, spiritual scoring, or production SaaS
 - Not a machine learning model
 
 ## License / Ownership

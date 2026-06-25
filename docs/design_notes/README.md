@@ -8,7 +8,7 @@ Future folder migration may happen later as a dedicated docs patch.
 
 ## 00 Foundation
 
-Core identity, public definition, portable field memory, local-first behavior, and AI-ready reflection boundaries.
+Core identity, public definition, portable field memory, local-first behavior, and AI-ready reflection boundaries. The current positioning is a local-first personal rhythm research prototype and user-owned field memory for AI-assisted self-reflection.
 
 - [AI_READY_REFLECTION_SYSTEM_DEFINITION.md](AI_READY_REFLECTION_SYSTEM_DEFINITION.md) - Public-facing definition of the app as an AI-ready, local-first self-care reflection system.
 - [PORTABLE_FIELD_MEMORY_DESIGN.md](PORTABLE_FIELD_MEMORY_DESIGN.md) - Foundation for the exported workbook as portable, user-owned field memory.
@@ -32,10 +32,10 @@ Today and Reflection page hierarchy, preview synthesis, NuTuenSai note strip, ze
 - [INPUT_AWARE_CARD_STATE.md](INPUT_AWARE_CARD_STATE.md) - Defines the Blue Active Card Layer for visual-only input-aware Today cards.
 - [STRUCTURED_SLEEP_RUN_DETAIL_V1_9_3.md](STRUCTURED_SLEEP_RUN_DETAIL_V1_9_3.md) - Records the v1.9.3 decision for optional Sleep_Hours and Run_Detail_JSON inside existing Today cards.
 - [LLI_CONTINUITY_REFLECTION_LAYER_V1_9_5.md](LLI_CONTINUITY_REFLECTION_LAYER_V1_9_5.md) - Defines the v1.9.5 Previous Log Context / LLI continuity layer for reading the latest 1-3 prior logs as supportive context.
-- [INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md](INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md) - Defines the v1.9.8 rule-based composer that selects 2-4 input anchors for a natural NuTuenSai overview.
+- [INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md](INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md) - Defines the v1.9.8 rule-based composer, NuTuenSai voice cadence, low-data micro-continuity, and anti-repetition layer.
 - [REFLECTION_BREATHING_MARKERS_V1_9_8B.md](REFLECTION_BREATHING_MARKERS_V1_9_8B.md) - Defines the v1.9.8b soft emoji breathing markers for reflection readability without section headings.
 - [REFLECTION_SENTENCE_SMOOTHING_V1_9_8C.md](REFLECTION_SENTENCE_SMOOTHING_V1_9_8C.md) - Defines the v1.9.8c connector hygiene layer that splits rich anchor context into more natural sentences.
-- [MINDFUL_PRACTICE_CONTEXT_V1_9_9.md](MINDFUL_PRACTICE_CONTEXT_V1_9_9.md) - Defines the v1.9.9 optional practice context layer before Mind Note, stored for future Field Review and excluded from daily Reflection.
+- [MINDFUL_PRACTICE_CONTEXT_V1_9_9.md](MINDFUL_PRACTICE_CONTEXT_V1_9_9.md) - Defines the v1.9.9 optional practice context and Practice_Note layer before Mind Note, stored for future Field Review and excluded from daily Reflection.
 - [COMPACT_SIGNAL_COCKPIT_LAYOUT_V1_9_6.md](COMPACT_SIGNAL_COCKPIT_LAYOUT_V1_9_6.md) - Defines the v1.9.6 two-card Today Input 1/2 cockpit layout experiment.
 - [SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md](SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md) - Defines the v1.9.7 symbolic constellation polish for the Today cockpit.
 

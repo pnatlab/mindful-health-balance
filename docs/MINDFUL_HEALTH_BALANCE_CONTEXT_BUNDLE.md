@@ -39,7 +39,7 @@ This bundle combines the key design notes for Mindful Health Balance v1.9 and th
 
 ## 1. Short Definition
 
-Mindful Health Balance is a local-first self-care logging app that turns daily signals into a structured, user-owned workbook for personal reflection and optional AI-assisted review.
+Mindful Health Balance is a local-first personal rhythm research prototype: a user-owned field memory that turns daily signals into an AI-readable workbook for self-reflection and optional AI-assisted review.
 
 It is not a machine learning model, medical AI, diagnosis tool, or therapy chatbot. Its current role is to help the user organize daily context so that both the user and an AI assistant can review patterns more clearly and safely.
 
@@ -47,14 +47,15 @@ It is not a machine learning model, medical AI, diagnosis tool, or therapy chatb
 
 Mindful Health Balance is:
 
-- a local-first self-care logging app
+- a local-first personal rhythm research prototype
 - an AI-readable personal rhythm workbook
+- a user-owned field memory
 - a rule-based reflection layer
 - a portable field memory / personal context export
 - a user-controlled data handoff layer
 - a preparation layer for future guided review
 
-The app records daily signals such as hydration, drinks, sleep, energy, activity load, recovery, mind state, and reflection text. It then exports those signals into a structured workbook that can be read by the user, reviewed in spreadsheet form, or intentionally shared with an AI assistant.
+The app records daily signals such as hydration, drinks, sleep, energy, activity load, recovery, mind state, practice context, Mind Note, and reflection text. It then exports those signals into a structured workbook that can be read by the user, reviewed in spreadsheet form, or intentionally shared with an AI assistant.
 
 The app is designed to make daily context clearer, not to make conclusions for the user.
 
@@ -67,6 +68,8 @@ Mindful Health Balance is not:
 - a medical tool
 - a diagnosis system
 - a therapy service
+- a spiritual scoring system
+- a production SaaS platform with accounts, cloud backend, or subscriptions
 - a machine learning model
 - AGI
 - an autonomous agent
@@ -94,6 +97,7 @@ The current app is best described as:
 - a human-in-the-loop self-care logging tool
 - an AI-readable personal rhythm dataset
 - a local-first portable context layer
+- a research-grade prototype for user-owned field memory
 
 Current reflection behavior is deterministic and rule-based. It uses the app's logged signals and helper logic to produce self-care cues, reminder wording, workbook summaries, and reflection text.
 
@@ -152,9 +156,9 @@ Mindful Health Balance helps people record daily self-care signals in a structur
 
 ## Purpose
 
-Mindful Health Balance is a local-first self-care logging interface that helps a user create an AI-readable record of daily life while keeping ownership of the data.
+Mindful Health Balance is a local-first personal rhythm research prototype that helps a user create an AI-readable record of daily life while keeping ownership of the data.
 
-The app is not only a hydration tracker or a daily health dashboard. It is a bridge between lived experience and AI reflection. A user can record daily signals, export them as a structured Excel file, review the file privately, or choose to share it with an AI assistant so the assistant can better understand real patterns across body, behavior, mind, intention, load, and recovery.
+The app is not only a hydration tracker, daily health dashboard, or SaaS product surface. It is a bridge between lived experience and AI reflection. A user can record daily signals, export them as a structured Excel file, review the file privately, or choose to share it with an AI assistant so the assistant can better understand real patterns across body, behavior, mind, intention, practice context, load, and recovery.
 
 The goal is to help an AI understand the user's patterns from user-owned evidence, not only from chat memory or in-the-moment self-reporting.
 
@@ -187,8 +191,8 @@ It records relationships across several layers:
 
 - Body: hydration, sleep, caffeine, sugar, load.
 - Behavior: activities, work, exercise, rest.
-- Mind: state, worry, calm, pressure.
-- Intention: support need, mind note, reflection context.
+- Mind: ordered mind state, pressure, uneasiness, support signals.
+- Intention: support need, mind note, practice context, practice note, reflection context.
 - Recovery: rest, tomorrow focus, carryover.
 - Reflection: AI-generated reminder and user-facing reflection.
 
