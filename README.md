@@ -134,6 +134,7 @@ Reflection output is companion text, not raw evidence. It is optional and is sav
 - Local-first daily log stored in the browser
 - Daily Signal Cockpit for Today’s Signals 1/2
 - Mini step switcher for Today’s Signals 1/2 and Mind Note 2/2
+- Same-day current form draft autosave in localStorage
 - Daily Save Status Bar for Today’s Signals, Mind Note, and Reflection
 - Restore Today’s Log to load a saved Daily_Log row back into the current form without saving or changing the log
 - Hydration tracking with gentle adaptive guidance
@@ -152,6 +153,8 @@ Reflection output is companion text, not raw evidence. It is optional and is sav
 Mindful Health Balance is local-first and user-controlled.
 
 - Daily data is stored in browser `localStorage` on the user's device.
+- Current form edits are autosaved locally as a same-day draft; if the draft is missing but today already has a saved Daily Log row, the app can load that row back into the form on startup.
+- `Save to Daily Log` is still required to write or update a saved row in the Daily Log table.
 - There is no backend and no automatic upload.
 - The exported Excel workbook belongs to the user.
 - AI can only read the workbook when the user intentionally exports and shares it.

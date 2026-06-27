@@ -1256,6 +1256,8 @@ Reason:
 Clear Current Form resets the current unsaved form, so it should live on step 1/2 where the main input starts. This lets users clear early without needing to enter the Mind Note step.
 Restore Today’s Log loads an already saved Daily_Log row back into the current form after the form was cleared or reset. It does not create a row, save automatically, clear Daily_Log, generate Reflection, or change export/import structure. It tries today’s row first; if today has no row, it asks before loading the latest saved row into the current-day form.
 Save to Daily Log lets users record body, water, drink, and activity signals without being forced into Mind Note or Reflection first.
+User-driven current form changes autosave to the existing same-day draft key in localStorage. This keeps the in-progress Today form available after reload, while `Save to Daily Log` remains the only action that writes or merges a saved Daily_Log row.
+If the same-day draft is missing or empty and the user has not intentionally cleared the current form today, startup hydration can load today’s saved Daily_Log row back into the current form. This fallback uses today’s row only; latest-row fallback remains a manual Restore Today’s Log action with confirmation.
 
 ### Today Input 2/2
 
@@ -1336,6 +1338,16 @@ Input-aware visual feedback:
 - This active layer is visual feedback only.
 - It is not a score, completion state, success state, diagnosis, or judgment.
 - It must not be stored in Daily_Log, localStorage data schema, or Excel export.
+
+Current form draft persistence:
+
+- User input changes should persist to the existing `mindfulHealthBalance:{todayIso}` draft key.
+- Startup should prefer a meaningful same-day draft.
+- If no meaningful draft exists and today has a saved Daily_Log row, startup may hydrate the current form from today’s saved row.
+- If Clear Current Form was intentionally used today, startup should keep the form empty until the user edits again or uses Restore Today’s Log.
+- Draft persistence must not create Daily_Log rows.
+- Clear Current Form removes the current-day draft key only.
+- Save to Daily Log still controls the saved dataset through source-aware safe merge.
 
 ## 5. Reflection/NuTuenSai Navigation
 

@@ -93,6 +93,8 @@ Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only 
 
 `Restore Today’s Log` appears beside `Clear Current Form`. It loads the saved Daily_Log row for today back into the current form, which is useful if the current form was cleared by mistake. It does not create a new row, save automatically, delete Daily Log data, or generate Reflection. If there is no row for today, the app asks before loading the latest saved row into today’s form.
 
+During the day, the current form autosaves as a local browser draft when you enter or select data, so a reload can bring the form back. If the draft is missing but today already has a saved Daily_Log row, the app loads today’s row back into the form on startup, except after an intentional `Clear Current Form`. This draft is not a saved Daily_Log row until you click `Save to Daily Log` or `Save Today’s Reflection`.
+
 Same-day saves use a source-aware safe merge. Saving Today’s Signals updates only that layer and preserves saved Practice Context, Practice Note, Mind Note, and Reflection. Saving Mind Note 2/2 updates Practice/Mind Note fields while preserving Reflection. Reflection uses `Save Today’s Reflection` when you want to save the generated or edited Reflection layer.
 
 The Today page also has a small top step switcher for moving between `Today’s Signals 1/2` and `Mind Note 2/2`. The bottom buttons remain the main action controls after you finish each step.

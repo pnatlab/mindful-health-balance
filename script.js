@@ -3,6 +3,7 @@ const DAILY_LOG_KEY = "mindfulHealthDailyLog";
 const LANGUAGE_KEY = "mindfulHealthLanguage";
 const WELCOME_KEY_PREFIX = "mindfulHealthWelcomeSeen";
 const THEME_KEY = "mindfulHealthTheme";
+const CURRENT_FORM_CLEARED_PREFIX = "mindfulHealthCurrentFormCleared";
 const DAILY_LOG_COLUMNS = [
   "Date",
   "Energy",
@@ -2609,6 +2610,10 @@ function storageKey() {
   return `${STORAGE_PREFIX}:${todayIso}`;
 }
 
+function currentFormClearedKey() {
+  return `${CURRENT_FORM_CLEARED_PREFIX}:${todayIso}`;
+}
+
 function welcomeStorageKey() {
   return `${WELCOME_KEY_PREFIX}:${todayIso}`;
 }
@@ -2729,29 +2734,50 @@ function startTodayStateOrbRefresh() {
 
 function loadState() {
   const saved = localStorage.getItem(storageKey());
-  if (!saved) {
-    return structuredClone(defaultState);
+  if (saved) {
+    try {
+      const parsed = normalizeDraftState(JSON.parse(saved));
+      if (hasMeaningfulCurrentFormDraft(parsed)) return parsed;
+    } catch {
+      // Fall through to today's saved Daily_Log row if the draft is malformed.
+    }
   }
 
-  try {
-    const parsed = { ...structuredClone(defaultState), ...JSON.parse(saved), date: todayIso };
-    parsed.drinkProfiles = Array.isArray(parsed.drinkProfiles) && parsed.drinkProfiles.length
-      ? parsed.drinkProfiles.map(normalizeDrinkProfile)
-      : legacyDrinksToProfiles(parsed.drinks || []);
-    parsed.energyCauses = Array.isArray(parsed.energyCauses) ? parsed.energyCauses : [];
-    parsed.selectedState = { ...structuredClone(defaultState.selectedState), ...(parsed.selectedState || {}) };
-    parsed.selectedState.mind = normalizeMindStateValue(parsed.selectedState.mind);
-    parsed.sleepHours = normalizeSleepHours(parsed.sleepHours);
-    parsed.runDetail = normalizeRunDetail(parsed.runDetail);
-    parsed.practiceRoot = normalizePracticeRoot(parsed.practiceRoot || practiceTypeToRoot[parsed.practiceType]);
-    parsed.practiceType = normalizePracticeType(parsed.practiceType, parsed.practiceRoot);
-    parsed.practiceMinutes = normalizePracticeMinutes(parsed.practiceMinutes);
-    parsed.practiceNote = cleanLegacyTextValue(parsed.practiceNote || "", "Practice_Note");
-    applyDerivedSleepFromHours(parsed);
-    return parsed;
-  } catch {
-    return structuredClone(defaultState);
+  if (!wasCurrentFormIntentionallyClearedToday()) {
+    const todayRow = getTodayRawDailyLogRow();
+    if (todayRow) {
+      const restored = buildStateFromDailyLogRow(todayRow);
+      localStorage.setItem(storageKey(), JSON.stringify(restored));
+      return restored;
+    }
   }
+
+  return structuredClone(defaultState);
+}
+
+function getTodayRawDailyLogRow() {
+  return getDailyLog().find((row) => normalizeExcelDate(row?.Date) === todayIso) || null;
+}
+
+function normalizeDraftState(state = {}) {
+  const parsed = { ...structuredClone(defaultState), ...(state || {}), date: todayIso };
+  parsed.drinkProfiles = Array.isArray(parsed.drinkProfiles) && parsed.drinkProfiles.length
+    ? parsed.drinkProfiles.map(normalizeDrinkProfile)
+    : legacyDrinksToProfiles(parsed.drinks || []);
+  parsed.energyCauses = Array.isArray(parsed.energyCauses) ? parsed.energyCauses : [];
+  parsed.activities = Array.isArray(parsed.activities) ? parsed.activities : [];
+  parsed.selectedState = { ...structuredClone(defaultState.selectedState), ...(parsed.selectedState || {}) };
+  parsed.selectedState.mind = normalizeMindStateValue(parsed.selectedState.mind);
+  parsed.sleepHours = normalizeSleepHours(parsed.sleepHours);
+  parsed.runDetail = normalizeRunDetail(parsed.runDetail);
+  parsed.practiceRoot = normalizePracticeRoot(parsed.practiceRoot || practiceTypeToRoot[parsed.practiceType]);
+  parsed.practiceType = normalizePracticeType(parsed.practiceType, parsed.practiceRoot);
+  parsed.practiceMinutes = normalizePracticeMinutes(parsed.practiceMinutes);
+  parsed.practiceNote = cleanRestoreTextValue(parsed.practiceNote || "");
+  parsed.mindNoteText = cleanRestoreTextValue(parsed.mindNoteText || "");
+  parsed.generatedReflection = cleanRestoreTextValue(parsed.generatedReflection || "");
+  applyDerivedSleepFromHours(parsed);
+  return parsed;
 }
 
 function renderDate() {
@@ -2898,37 +2924,37 @@ function bindEvents() {
       if (group.dataset.field === "sleep" && button.dataset.value !== "น้อย") {
         appState.activities = appState.activities.filter((item) => item !== "นอนน้อย");
       }
-      syncUI();
+      syncUIAndPersistDraft();
     });
   });
 
   document.querySelector("#sleepHoursInput").addEventListener("input", (event) => {
     appState.sleepHours = normalizeSleepHours(event.target.value);
     applyDerivedSleepFromHours(appState);
-    syncUI();
+    syncUIAndPersistDraft();
   });
 
   document.querySelectorAll("[data-water]").forEach((button) => {
     button.addEventListener("click", () => {
       appState.waterMl += Number(button.dataset.water);
-      syncUI();
+      syncUIAndPersistDraft();
     });
   });
 
   document.querySelector("#resetWater").addEventListener("click", () => {
     appState.waterMl = 0;
-    syncUI();
+    syncUIAndPersistDraft();
   });
 
   document.querySelector("#drinkTypeSelect").addEventListener("change", applyDrinkDefaults);
   document.querySelector("#addDrink").addEventListener("click", () => {
     appState.drinkProfiles = [...(appState.drinkProfiles || []), getDrinkProfileFromForm()];
-    syncUI();
+    syncUIAndPersistDraft();
   });
   document.querySelector("#clearDrinks").addEventListener("click", () => {
     appState.drinkProfiles = [];
     appState.drinks = [];
-    syncUI();
+    syncUIAndPersistDraft();
   });
 
 	  document.querySelector("#activitiesList").addEventListener("click", (event) => {
@@ -2941,7 +2967,7 @@ function bindEvents() {
       ? appState.activities.filter((item) => item !== activity)
       : [...appState.activities, activity];
 
-	    syncUI();
+	    syncUIAndPersistDraft();
 	  });
 
   ["#runDistanceInput", "#runDurationHoursInput", "#runDurationMinutesInput", "#runSweatSelect"].forEach((selector) => {
@@ -2956,7 +2982,7 @@ function bindEvents() {
     appState.energyCauses = appState.energyCauses.includes(cause)
       ? appState.energyCauses.filter((item) => item !== cause)
       : [...appState.energyCauses, cause];
-    syncUI();
+    syncUIAndPersistDraft();
   });
 
   document.querySelector("#generateReflection").addEventListener("click", generateReflectionWithPulse);
@@ -2965,6 +2991,7 @@ function bindEvents() {
   document.querySelector("#reflectionOutput").addEventListener("input", (event) => {
     appState.generatedReflection = event.target.value;
     updateReflectionPreview();
+    persistCurrentFormDraft();
   });
 
   document.querySelector("#toggleReflectionEdit").addEventListener("click", () => {
@@ -2976,6 +3003,7 @@ function bindEvents() {
   document.querySelector("#mindNoteText").addEventListener("input", (event) => {
     appState.mindNoteText = event.target.value;
     markTodayMindNoteFlowActive();
+    persistCurrentFormDraft();
   });
 
   document.querySelector("#practiceRootList")?.addEventListener("click", (event) => {
@@ -2988,7 +3016,7 @@ function bindEvents() {
     }
     renderPracticeTypeOptions();
     markTodayMindNoteFlowActive();
-    syncUI();
+    syncUIAndPersistDraft();
   });
 
   document.querySelector("#practiceTypeList")?.addEventListener("click", (event) => {
@@ -3000,7 +3028,7 @@ function bindEvents() {
       appState.practiceRoot = practiceTypeToRoot[appState.practiceType] || "";
     }
     markTodayMindNoteFlowActive();
-    syncUI();
+    syncUIAndPersistDraft();
   });
 
   ["#practiceDurationHoursInput", "#practiceDurationMinutesInput"].forEach((selector) => {
@@ -3011,6 +3039,7 @@ function bindEvents() {
   document.querySelector("#practiceNoteInput")?.addEventListener("input", (event) => {
     appState.practiceNote = event.target.value;
     markTodayMindNoteFlowActive();
+    persistCurrentFormDraft();
   });
 
   document.querySelectorAll("[data-mind-note-field]").forEach((button) => {
@@ -3018,7 +3047,7 @@ function bindEvents() {
       const field = button.dataset.mindNoteField;
       appState[field] = appState[field] === button.dataset.value ? "" : button.dataset.value;
       markTodayMindNoteFlowActive();
-      syncUI();
+      syncUIAndPersistDraft();
     });
   });
 
@@ -3145,6 +3174,15 @@ function syncUI() {
   updateDailySaveStatus();
 }
 
+function persistCurrentFormDraft() {
+  saveCurrentForm({ generateReflection: false });
+}
+
+function syncUIAndPersistDraft() {
+  syncUI();
+  persistCurrentFormDraft();
+}
+
 function setActiveTodaySignal(signalKey, { userInitiated = false } = {}) {
   const safeSignal = ["state", "hydration", "drinks", "load"].includes(signalKey) ? signalKey : "hydration";
   activeTodaySignal = safeSignal;
@@ -3206,6 +3244,24 @@ function hasMindNoteInput(state = appState) {
     || state.mindNoteFeeling
     || state.mindNoteSupport
     || hasPracticeContextInput(state)
+  );
+}
+
+function hasMeaningfulCurrentFormDraft(state = {}) {
+  const selected = state.selectedState || {};
+  return Boolean(
+    Number(state.waterMl) > 0
+    || Boolean(selected.energy || selected.mind || selected.sleep)
+    || hasValidSleepHours(state.sleepHours)
+    || (state.drinkProfiles || []).length > 0
+    || (state.drinks || []).length > 0
+    || (state.activities || []).length > 0
+    || (state.energyCauses || []).length > 0
+    || hasMeaningfulRunDetail(state.runDetail)
+    || hasPracticeContextInput(state)
+    || Boolean(String(state.mindNoteText || "").trim())
+    || Boolean(state.mindNoteFeeling || state.mindNoteSupport)
+    || Boolean(String(state.generatedReflection || "").trim())
   );
 }
 
@@ -3805,7 +3861,7 @@ function updateRunDetailFromForm() {
     ),
     sweat: document.querySelector("#runSweatSelect")?.value || ""
   });
-  syncUI();
+  syncUIAndPersistDraft();
 }
 
 function updateRunDetailUI() {
@@ -3956,7 +4012,7 @@ function updatePracticeDurationFromForm() {
     document.querySelector("#practiceDurationMinutesInput")?.value || ""
   ));
   markTodayMindNoteFlowActive();
-  syncUI();
+  syncUIAndPersistDraft();
 }
 
 function updatePracticeUI() {
@@ -4054,12 +4110,19 @@ function getActivityOptionByValue(value) {
 
 function normalizeActivityValuesForState(values = []) {
   return values
-    .map((value) => getActivityOptionByValue(value)?.label || cleanLegacyTextValue(value, "Activities"))
+    .map((value) => getActivityOptionByValue(value)?.label || cleanRestoreTextValue(value))
     .filter(Boolean);
 }
 
+function cleanRestoreTextValue(value) {
+  if (value === "" || value === null || value === undefined) return "";
+  const text = String(value).trim();
+  if (!text) return "";
+  return ["undefined", "null", "nan", "[object object]"].includes(text.toLowerCase()) ? "" : text;
+}
+
 function normalizeStateChoiceValue(group, value) {
-  const text = cleanLegacyTextValue(value, group === "sleep" ? "Sleep" : "Energy");
+  const text = cleanRestoreTextValue(value);
   if (!text) return "";
   const entries = translations.th.options[group] || {};
   const direct = Object.values(entries).find((entry) => entry === text);
@@ -5806,6 +5869,7 @@ function generateReflectionWithPulse() {
   isEditingReflection = false;
   isGeneratingReflection = true;
   updateReflectionPreview();
+  persistCurrentFormDraft();
 
   reflectionGenerationTimerId = setTimeout(() => {
     isGeneratingReflection = false;
@@ -5824,6 +5888,7 @@ function clearGeneratedReflection() {
   isEditingReflection = false;
   appState.generatedReflection = "";
   updateReflectionPreview();
+  persistCurrentFormDraft();
 }
 
 function ensureReflectionSignature(text) {
@@ -6623,10 +6688,23 @@ function updateDailySaveStatus() {
   text.textContent = statusState.text;
 }
 
+function markCurrentFormClearedToday() {
+  localStorage.setItem(currentFormClearedKey(), "true");
+}
+
+function clearCurrentFormClearedMarker() {
+  localStorage.removeItem(currentFormClearedKey());
+}
+
+function wasCurrentFormIntentionallyClearedToday() {
+  return localStorage.getItem(currentFormClearedKey()) === "true";
+}
+
 function saveCurrentForm({ generateReflection = false } = {}) {
   if (generateReflection) {
     appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
   }
+  clearCurrentFormClearedMarker();
   localStorage.setItem(storageKey(), JSON.stringify(appState));
 }
 
@@ -6636,6 +6714,7 @@ function resetCurrentForm() {
   isEditingReflection = false;
   appState = structuredClone(defaultState);
   localStorage.removeItem(storageKey());
+  markCurrentFormClearedToday();
   resetTodayInputStep();
   resetDrinkProfileForm();
   syncUI();
@@ -6697,13 +6776,23 @@ function parseDrinkProfilesForRestore(row) {
   return profiles.length ? profiles : legacyDrinksToProfiles(splitLogValues(row.Drinks));
 }
 
-function loadDailyLogRowIntoCurrentState(row) {
-  const normalized = normalizeLogRow(row || {});
+function buildStateFromDailyLogRow(row) {
+  const normalized = {};
+  DAILY_LOG_COLUMNS.forEach((column) => {
+    normalized[column] = row?.[column] ?? "";
+  });
+  normalized.Date = normalizeExcelDate(normalized.Date);
+  normalized.Mind = normalizeMindStateValue(normalized.Mind);
+  normalized.Sleep_Hours = normalizeSleepHours(normalized.Sleep_Hours);
+  if (normalized.Sleep_Hours !== "") {
+    normalized.Sleep = deriveSleepCategory(normalized.Sleep_Hours) || normalized.Sleep;
+  }
+  normalized.Water_ml = Number(normalized.Water_ml) || 0;
   const practiceContext = parsePracticeContextJson(normalized.Practice_Context_JSON);
   const practiceRoot = normalizePracticeRoot(normalized.Practice_Root || practiceContext.root);
   const practiceType = normalizePracticeType(normalized.Practice_Type || practiceContext.type, practiceRoot);
 
-  appState = {
+  const restoredState = {
     ...structuredClone(defaultState),
     date: todayIso,
     waterMl: Number(normalized.Water_ml) || 0,
@@ -6718,18 +6807,23 @@ function loadDailyLogRowIntoCurrentState(row) {
     },
     sleepHours: normalizeSleepHours(normalized.Sleep_Hours),
     runDetail: normalizeRunDetail(normalized.Run_Detail_JSON),
-    generatedReflection: cleanLegacyTextValue(normalized.Reflection_Text, "Reflection_Text"),
+    generatedReflection: cleanRestoreTextValue(normalized.Reflection_Text),
     practiceRoot,
     practiceType,
     practiceMinutes: normalized.Practice_Minutes === ""
       ? normalizePracticeMinutes(practiceContext.minutes)
       : normalizePracticeMinutes(normalized.Practice_Minutes),
-    practiceNote: cleanLegacyTextValue(normalized.Practice_Note || practiceContext.note || "", "Practice_Note"),
-    mindNoteText: cleanLegacyTextValue(normalized.Mind_Note_Text, "Mind_Note_Text"),
-    mindNoteFeeling: cleanLegacyTextValue(normalized.Mind_Note_Feeling, "Mind_Note_Feeling"),
-    mindNoteSupport: cleanLegacyTextValue(normalized.Mind_Note_Support, "Mind_Note_Support")
+    practiceNote: cleanRestoreTextValue(normalized.Practice_Note || practiceContext.note || ""),
+    mindNoteText: cleanRestoreTextValue(normalized.Mind_Note_Text),
+    mindNoteFeeling: cleanRestoreTextValue(normalized.Mind_Note_Feeling),
+    mindNoteSupport: cleanRestoreTextValue(normalized.Mind_Note_Support)
   };
-  applyDerivedSleepFromHours(appState);
+  applyDerivedSleepFromHours(restoredState);
+  return restoredState;
+}
+
+function loadDailyLogRowIntoCurrentState(row) {
+  appState = buildStateFromDailyLogRow(row);
   isEditingReflection = false;
 }
 
