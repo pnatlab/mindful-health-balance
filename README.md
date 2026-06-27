@@ -135,6 +135,7 @@ Reflection output is companion text, not raw evidence. It is optional and is sav
 - Daily Signal Cockpit for Today’s Signals 1/2
 - Mini step switcher for Today’s Signals 1/2 and Mind Note 2/2
 - Daily Save Status Bar for Today’s Signals, Mind Note, and Reflection
+- Restore Today’s Log to load a saved Daily_Log row back into the current form without saving or changing the log
 - Hydration tracking with gentle adaptive guidance
 - Drink Profile with caffeine, sweetness, milk, hydration support, and soda/sweetness context
 - Activity and recovery load presets, including work, sport, light recovery, and AI-assisted coding context
@@ -165,7 +166,8 @@ If the app folder or browser origin changes, existing browser storage may not fo
 3. Save Today’s Signals when ready.
 4. Optionally add Practice Context, Practice Note, and Mind Note.
 5. Optionally open Reflection/NuTuenSai, review or edit the generated Reflection, and click `Save Today’s Reflection`.
-6. Export or import the Excel workbook when needed.
+6. If the current form is cleared by mistake, use `Restore Today’s Log` to load today’s saved row back into the form. If there is no row for today, the app asks before loading the latest saved row.
+7. Export or import the Excel workbook when needed.
 
 No backend, server, build step, or framework is required for normal use.
 

@@ -1248,11 +1248,13 @@ Collect body, energy, hydration, drink, activity, and recovery context.
 Buttons:
 
 - Secondary: เคลียร์หน้าปัจจุบัน / Clear Current Form / 清除当前表单
+- Secondary recovery: เรียกข้อมูลวันนี้กลับมา / Restore Today’s Log / 恢复今日记录
 - Daily Log save: บันทึกเข้า Daily Log / Save to Daily Log / 保存到 Daily Log
 - Primary: ถัดไป: ภาวะใจวันนี้ 2/2 / Next: Mind Note 2/2 / 下一步：心念记录 2/2
 
 Reason:
 Clear Current Form resets the current unsaved form, so it should live on step 1/2 where the main input starts. This lets users clear early without needing to enter the Mind Note step.
+Restore Today’s Log loads an already saved Daily_Log row back into the current form after the form was cleared or reset. It does not create a row, save automatically, clear Daily_Log, generate Reflection, or change export/import structure. It tries today’s row first; if today has no row, it asks before loading the latest saved row into the current-day form.
 Save to Daily Log lets users record body, water, drink, and activity signals without being forced into Mind Note or Reflection first.
 
 ### Today Input 2/2
@@ -1314,6 +1316,13 @@ After successful Save Daily Log:
 After Clear Current Form:
 
 - Reset Today Input step to 1/2.
+
+After Restore Today’s Log:
+
+- Keep the current form date as today.
+- Restore Today’s Signals, Practice Context, Practice_Note, Mind Note, and Reflection text from the saved row when present.
+- Refresh the UI without changing Daily_Log row count or saving automatically.
+- Keep the Daily Save Status bar derived from saved Daily_Log, not from unsaved current-form state.
 
 After new date / date rollover:
 

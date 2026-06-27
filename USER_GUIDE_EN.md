@@ -91,6 +91,8 @@ Switching views does not reset current inputs and does not delete saved Daily Lo
 
 Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only on Today’s Signals 1/2. Today’s Signals 1/2 and Mind Note 2/2 now include `Save to Daily Log`, so you can save the Daily Log without visiting Reflection first. Going to Reflection/NuTuenSai is navigation only; it does not save data.
 
+`Restore Today’s Log` appears beside `Clear Current Form`. It loads the saved Daily_Log row for today back into the current form, which is useful if the current form was cleared by mistake. It does not create a new row, save automatically, delete Daily Log data, or generate Reflection. If there is no row for today, the app asks before loading the latest saved row into today’s form.
+
 Same-day saves use a source-aware safe merge. Saving Today’s Signals updates only that layer and preserves saved Practice Context, Practice Note, Mind Note, and Reflection. Saving Mind Note 2/2 updates Practice/Mind Note fields while preserving Reflection. Reflection uses `Save Today’s Reflection` when you want to save the generated or edited Reflection layer.
 
 The Today page also has a small top step switcher for moving between `Today’s Signals 1/2` and `Mind Note 2/2`. The bottom buttons remain the main action controls after you finish each step.

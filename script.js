@@ -245,6 +245,7 @@ const translations = {
     saveTodayLog: "บันทึกเข้า Daily Log",
     todayResetTitle: "Current Form",
     resetCurrentForm: "เคลียร์หน้าปัจจุบัน",
+    restoreCurrentForm: "เรียกข้อมูลวันนี้กลับมา",
     clearDailyLog: "Clear Daily Log",
     exportMasterExcel: "Export Master Excel",
     importMasterExcel: "Import Master Excel",
@@ -262,6 +263,11 @@ const translations = {
     saveTodayDone: "บันทึกเข้า Daily Log แล้ว ไม่ต้องแบกต่อในหัวแล้วนะ",
     resetCurrentFormConfirm: "เคลียร์เฉพาะข้อมูลที่กำลังกรอกอยู่ ไม่ลบ Daily Log เดิม",
     resetCurrentFormDone: "เคลียร์หน้าปัจจุบันแล้ว Daily Log เดิมยังอยู่",
+    restoreCurrentFormOverwriteConfirm: "ฟอร์มปัจจุบันมีข้อมูลอยู่แล้ว การเรียกข้อมูลจาก Daily Log จะเขียนทับฟอร์มปัจจุบัน แต่ไม่ลบ Daily Log ต้องการดำเนินการต่อไหม",
+    restoreLatestLogConfirm: "ยังไม่มี Daily Log ของวันนี้ ต้องการเรียกข้อมูลแถวล่าสุด ({date}) กลับมาในฟอร์มหรือไม่",
+    restoreCurrentFormDone: "เรียกข้อมูลจาก Daily Log กลับมาในฟอร์มแล้ว ยังไม่ได้บันทึกซ้ำ",
+    restoreCurrentFormEmpty: "ยังไม่มี Daily Log ให้เรียกกลับ",
+    restoreCurrentFormCancelled: "ยังไม่เรียกข้อมูลกลับมา ฟอร์มปัจจุบันยังอยู่เหมือนเดิม",
     replaceConfirm: "วันนี้มี Daily Log อยู่แล้ว ระบบจะอัปเดตข้อมูลจากหน้านี้และเก็บข้อมูลเดิมส่วนอื่นไว้ ต้องการดำเนินการต่อไหม",
     replaceCancelled: "ยังไม่อัปเดต Daily Log เดิม ไม่ต้องรีบตัดสินใจก็ได้",
     savedDailyLog: "บันทึกลง Daily Log แล้ว ไม่ต้องแบกต่อในหัวแล้วนะ",
@@ -991,6 +997,7 @@ const translations = {
     saveTodayLog: "Save to Daily Log",
     todayResetTitle: "Current Form",
     resetCurrentForm: "Reset Current Form",
+    restoreCurrentForm: "Restore Today’s Log",
     clearDailyLog: "Clear Daily Log",
     exportMasterExcel: "Export Master Excel",
     importMasterExcel: "Import Master Excel",
@@ -1008,6 +1015,11 @@ const translations = {
     saveTodayDone: "Saved to Daily Log. You do not have to carry it all in your head now.",
     resetCurrentFormConfirm: "This resets only the current form. Saved Daily Logs will not be deleted.",
     resetCurrentFormDone: "Current form reset. Saved Daily Logs are still here.",
+    restoreCurrentFormOverwriteConfirm: "The current form already has unsaved data. Restoring from Daily Log will overwrite the current form only, not the saved log. Continue?",
+    restoreLatestLogConfirm: "No Daily Log exists for today. Restore the latest saved row ({date}) into the form?",
+    restoreCurrentFormDone: "Daily Log data restored into the current form. It has not been saved again.",
+    restoreCurrentFormEmpty: "No saved Daily Log is available to restore.",
+    restoreCurrentFormCancelled: "Restore cancelled. The current form is unchanged.",
     replaceConfirm: "A Daily Log already exists for today. The app will update this section and keep other saved sections. Continue?",
     replaceCancelled: "Not updating the existing Daily Log. No need to rush the decision.",
     savedDailyLog: "Saved to Daily Log. You do not have to carry it all in your head now.",
@@ -1737,6 +1749,7 @@ const translations = {
     saveTodayLog: "保存到 Daily Log",
     todayResetTitle: "当前表单",
     resetCurrentForm: "重置当前表单",
+    restoreCurrentForm: "恢复今日记录",
     clearDailyLog: "清空 Daily Log",
     exportMasterExcel: "导出 Master Excel",
     importMasterExcel: "导入 Master Excel",
@@ -1754,6 +1767,11 @@ const translations = {
     saveTodayDone: "已保存到 Daily Log。现在不用再把它都放在脑子里了。",
     resetCurrentFormConfirm: "只会重置当前表单，不会删除已保存的每日记录。",
     resetCurrentFormDone: "当前表单已重置，已保存的每日记录仍然保留。",
+    restoreCurrentFormOverwriteConfirm: "当前表单已有未保存数据。从 Daily Log 恢复会覆盖当前表单，但不会删除已保存记录。继续吗？",
+    restoreLatestLogConfirm: "今天还没有 Daily Log。要将最近保存的记录（{date}）恢复到表单中吗？",
+    restoreCurrentFormDone: "已将 Daily Log 数据恢复到当前表单。尚未再次保存。",
+    restoreCurrentFormEmpty: "没有可恢复的 Daily Log。",
+    restoreCurrentFormCancelled: "已取消恢复。当前表单保持不变。",
     replaceConfirm: "今天已有 Daily Log。应用会更新当前部分，并保留其他已保存部分。继续吗？",
     replaceCancelled: "没有更新已有的 Daily Log。不需要急着决定。",
     savedDailyLog: "已保存到 Daily Log。现在不用再把它都放在脑子里了。",
@@ -3016,6 +3034,7 @@ function bindEvents() {
   document.querySelector("#saveTodayFromStepTwo").addEventListener("click", () => saveTodayLog({ source: "today_2" }));
   document.querySelector("#saveDailyLog").addEventListener("click", saveToDailyLog);
   document.querySelector("#resetCurrentForm").addEventListener("click", resetCurrentForm);
+  document.querySelector("#restoreCurrentForm").addEventListener("click", restoreCurrentFormFromDailyLog);
   document.querySelector("#clearDailyLog").addEventListener("click", clearDailyLog);
   document.querySelector("#exportMasterExcel").addEventListener("click", exportMasterExcel);
   document.querySelector("#importMasterExcel").addEventListener("click", () => {
@@ -4031,6 +4050,26 @@ function getActivityOptionByValue(value) {
     if (activity.legacyLabels?.includes(normalized)) return true;
     return Object.keys(translations).some((lang) => translations[lang].options.activities[activity.key] === normalized);
   }) || null;
+}
+
+function normalizeActivityValuesForState(values = []) {
+  return values
+    .map((value) => getActivityOptionByValue(value)?.label || cleanLegacyTextValue(value, "Activities"))
+    .filter(Boolean);
+}
+
+function normalizeStateChoiceValue(group, value) {
+  const text = cleanLegacyTextValue(value, group === "sleep" ? "Sleep" : "Energy");
+  if (!text) return "";
+  const entries = translations.th.options[group] || {};
+  const direct = Object.values(entries).find((entry) => entry === text);
+  if (direct) return direct;
+
+  for (const key of Object.keys(entries)) {
+    const found = Object.keys(translations).some((lang) => translations[lang].options[group]?.[key] === text);
+    if (found) return entries[key];
+  }
+  return text;
 }
 
 function getDrinkMetaByType(type) {
@@ -6601,6 +6640,97 @@ function resetCurrentForm() {
   resetDrinkProfileForm();
   syncUI();
   document.querySelector("#saveStatus").textContent = t("resetCurrentFormDone");
+}
+
+function hasCurrentFormDataForRestore(state = appState) {
+  return Boolean(
+    hasMeaningfulTodayInput()
+    || hasPracticeContextInput(state)
+    || String(state.generatedReflection || "").trim()
+  );
+}
+
+function getLatestSavedLogRow() {
+  const rows = getDailyLog()
+    .map(normalizeLogRow)
+    .filter((row) => row.Date)
+    .sort((a, b) => String(b.Date).localeCompare(String(a.Date)));
+  return rows[0] || null;
+}
+
+function getDailyLogRowForRestore() {
+  const todayRow = getTodaySavedLogRow();
+  if (todayRow) return todayRow;
+
+  const latestRow = getLatestSavedLogRow();
+  if (!latestRow) return null;
+
+  const shouldRestoreLatest = confirm(t("restoreLatestLogConfirm", { date: latestRow.Date }));
+  return shouldRestoreLatest ? latestRow : null;
+}
+
+function restoreCurrentFormFromDailyLog() {
+  const row = getDailyLogRowForRestore();
+  const saveStatus = document.querySelector("#saveStatus");
+  if (!row) {
+    if (saveStatus) saveStatus.textContent = getDailyLog().length
+      ? t("restoreCurrentFormCancelled")
+      : t("restoreCurrentFormEmpty");
+    return;
+  }
+
+  if (hasCurrentFormDataForRestore() && !confirm(t("restoreCurrentFormOverwriteConfirm"))) {
+    if (saveStatus) saveStatus.textContent = t("restoreCurrentFormCancelled");
+    return;
+  }
+
+  loadDailyLogRowIntoCurrentState(row);
+  saveCurrentForm({ generateReflection: false });
+  renderPracticeTypeOptions();
+  resetDrinkProfileForm();
+  syncUI();
+  if (saveStatus) saveStatus.textContent = t("restoreCurrentFormDone");
+}
+
+function parseDrinkProfilesForRestore(row) {
+  const profiles = parseDrinkProfilesFromRow(row);
+  return profiles.length ? profiles : legacyDrinksToProfiles(splitLogValues(row.Drinks));
+}
+
+function loadDailyLogRowIntoCurrentState(row) {
+  const normalized = normalizeLogRow(row || {});
+  const practiceContext = parsePracticeContextJson(normalized.Practice_Context_JSON);
+  const practiceRoot = normalizePracticeRoot(normalized.Practice_Root || practiceContext.root);
+  const practiceType = normalizePracticeType(normalized.Practice_Type || practiceContext.type, practiceRoot);
+
+  appState = {
+    ...structuredClone(defaultState),
+    date: todayIso,
+    waterMl: Number(normalized.Water_ml) || 0,
+    drinks: splitLogValues(normalized.Drinks),
+    drinkProfiles: parseDrinkProfilesForRestore(normalized),
+    activities: normalizeActivityValuesForState(splitLogValues(normalized.Activities)),
+    energyCauses: splitLogValues(normalized.Energy_Causes),
+    selectedState: {
+      energy: normalizeStateChoiceValue("energy", normalized.Energy),
+      mind: normalizeMindStateValue(normalized.Mind),
+      sleep: normalizeStateChoiceValue("sleep", normalized.Sleep)
+    },
+    sleepHours: normalizeSleepHours(normalized.Sleep_Hours),
+    runDetail: normalizeRunDetail(normalized.Run_Detail_JSON),
+    generatedReflection: cleanLegacyTextValue(normalized.Reflection_Text, "Reflection_Text"),
+    practiceRoot,
+    practiceType,
+    practiceMinutes: normalized.Practice_Minutes === ""
+      ? normalizePracticeMinutes(practiceContext.minutes)
+      : normalizePracticeMinutes(normalized.Practice_Minutes),
+    practiceNote: cleanLegacyTextValue(normalized.Practice_Note || practiceContext.note || "", "Practice_Note"),
+    mindNoteText: cleanLegacyTextValue(normalized.Mind_Note_Text, "Mind_Note_Text"),
+    mindNoteFeeling: cleanLegacyTextValue(normalized.Mind_Note_Feeling, "Mind_Note_Feeling"),
+    mindNoteSupport: cleanLegacyTextValue(normalized.Mind_Note_Support, "Mind_Note_Support")
+  };
+  applyDerivedSleepFromHours(appState);
+  isEditingReflection = false;
 }
 
 function getDailyLog() {
