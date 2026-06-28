@@ -1053,11 +1053,11 @@ const translations = {
       addSips: "Add small sips across the day without forcing it all at once.",
       stopPush: "Stop pushing more today and make recovery the main task.",
       keepBalance: "Keep the balanced rhythm. There is no need to add more than the day asks for.",
-      closing1: "You do not have to fix everything today. Seeing the pattern more clearly already means the system is working.",
+      closing1: "You do not have to fix everything today. Seeing the pattern more clearly is already enough for today.",
       closing2: "The goal is not a better number quickly. The goal is a system that does not break from rushing."
     },
     reflectionDisplay: {
-      overviewEnergyLayered: "Today, the energy level and its causes may be describing different layers of the system. Both can be true without one signal canceling the other.",
+      overviewEnergyLayered: "Today, the energy level and its causes may be describing different layers of the day. Both can be true without one signal canceling the other.",
       overviewRecoveryHydratedRest: "Today looks like a day where recovery mattered more than adding more effort. Hydration was enough to serve as a base, and choosing rest first matched the day's energy.",
       overviewRecoveryHydrated: "Today looks like a day where the body needed recovery more than adding anything new. Hydration was enough to serve as a base, and the day does not need to be judged from one signal.",
       overviewRecovery: "Today seems to ask for recovery more than adding anything new. Let hydration, rest, and mind state return to a steady base gradually.",
@@ -1090,9 +1090,9 @@ const translations = {
       waterLow: "water is around {water} ml and still returning toward baseline",
       waterBase: "water is around {water} ml and can already serve as a base",
       sleepHours: "sleep was about {hours} hours",
-      drinkCaffeine: "caffeine was part of the context",
+      drinkCaffeine: "caffeine was present today",
       drinkSweetness: "sweetness in drinks was one signal today",
-      drinkContext: "caffeine or sweetness was part of the drink context",
+      drinkContext: "caffeine or sweet drinks were present today",
       activity: "{activity} was part of today's load",
       run: "{run} was part of the load and recovery context",
       mindFeeling: "the Mind Note carried a {feeling} tone",
@@ -1105,7 +1105,7 @@ const translations = {
       protect_agency: "With {anchors}, the data can support a clearer choice of rhythm while the meaning of the day stays with you.",
       pause_not_push: "With {anchors}, recovery and not pushing more may fit the day better than adding output.",
       soft_continue: "With {anchors}, today can continue gently without needing every signal to be perfect.",
-      fallback: "From the signals entered today, the system reads a gentle starting point for noticing patterns without rushing to conclude."
+      fallback: "From the signals entered today, this can be a gentle starting point for noticing patterns without rushing to conclude."
     },
     lowDataReflection: {
       noData: "There is not much new data for today yet. You can add a few true signals first, then return to reflection.",
@@ -1114,13 +1114,13 @@ const translations = {
       previousWater: "There is not much new data for today yet. The previous log can lightly point back to water as a simple base. Add one true signal, such as the first glass of water or current inner state, when ready.",
       previousSleep: "There is not much new data for today yet. The previous log can lightly suggest a gentler recovery rhythm, but it should not define today. Add only what feels true enough.",
       previousMind: "There is not much new data for today yet. The previous Mind Note can be light background for reducing pressure, not a conclusion about today. Add one small true signal when ready.",
-      previousDrink: "There is not much new data for today yet. The previous drink context can be light background for returning to water or a steadier energy base. Add one or two true signals when ready.",
+      previousDrink: "There is not much new data for today yet. Previous drinks can be light background for returning to water or a steadier energy base. Add one or two true signals when ready.",
       previousGeneric: "There is not much new data for today yet. Previous logs can be light background, but they should not speak for today. Add one or two true signals when ready.",
       thinData: "There are a few new signals today. This is enough for a light starting point, but there is no need to conclude more than the data can hold."
     },
     reflectionInputIntegration: {
       sleepLowHours: "Today had about {hours} hours of sleep, so energy signals deserve to be read more gently with recovery space.",
-      sleepOkayHours: "Today had about {hours} hours of sleep. The system reads this as okay-ish, while still leaving room for recovery.",
+      sleepOkayHours: "Today had about {hours} hours of sleep. That can be okay-ish, while still leaving room for recovery.",
       sleepGoodHours: "Today had about {hours} hours of sleep, which can support the day's rhythm.",
       easyRun: "Today included an easy run as gentle movement. Let recovery follow the body without rushing.",
       shortQualityRun: "Today reads as a short quality run. The distance may not be long, but intensity still counts as load that deserves recovery.",
@@ -1185,9 +1185,9 @@ const translations = {
     drinkSweetnessInsight: {
       low: "Today’s drinks did not add much sweetness load, and plain water remained a good base.",
       moderate: "There was some sweetness today, but it does not need to become guilt. The next drink can simply return to water or rest.",
-      sodaLow: "There was soda today, but the sweetness level was not high, so the system reads it more as drink context than a sweetness load.",
+      sodaLow: "There was soda today, but the logged sweetness level was not high, so it is more of a drink note than a sweetness load.",
       sodaHigh: "Today’s soda added sweetness load, but it does not need to be judged. The next drink can simply return to plain water or rest.",
-      sweetCaffeine: "Today’s drinks offered both alertness and sweetness. The system may invite plain water back as the base without judging the earlier drinks.",
+      sweetCaffeine: "Today’s drinks offered both alertness and sweetness. Plain water can return as the base without judging the earlier drinks.",
       sweetLowRecovery: "If sleep or energy was low, sweetness may have helped in the short term, while recovery and water still deserve space afterward.",
       sweetHighLoad: "If today included higher load or activity, sweetness may be part of the day’s energy, while water and recovery can follow afterward."
     },
@@ -1211,7 +1211,7 @@ const translations = {
       restFirst: "Today, pausing is allowed. Not everything needs to move forward immediately."
     },
     signalReflection: {
-      goodConsistency: "You noticed a rhythm where hydration and load are not pressuring the system too much",
+      goodConsistency: "You noticed a rhythm where hydration and load are not adding too much pressure",
       noExtraDrinks: "Extra drinks beyond plain water are staying light",
       noticedSignals: "You started seeing the relationship between water, drinks, recovery, and mind state",
       sleepLoadRecovery: "Low sleep or high load makes recovery the first useful signal today",
@@ -1219,11 +1219,11 @@ const translations = {
       hydrationCaffeine: "Water is still low while caffeine is rising. Steadier sips and rest are enough to return the rhythm.",
       hydrationLoad: "If exercise, heat, or sustained activity was part of the day, hydration can be part of recovery, not just a target.",
       hydrationRecovery: "This looks more like a recovery signal than an activity-load signal. Hydration can stay gentle and steady rather than becoming a bigger number.",
-      positiveMindFeelingGood: "Today's overall mind state seems more positive, which may support the system without needing to push harder.",
-      mindNoteFeelingGood: "This note carries a good feeling. The system can read it as a small supportive signal, not as a claim that the whole day was perfect.",
+      positiveMindFeelingGood: "Today's overall mind state seems more positive, which may support self-care without needing to push harder.",
+      mindNoteFeelingGood: "This note carries a good feeling. It can be a small supportive signal, not a claim that the whole day was perfect.",
       positiveMindRelaxed: "Today the mind seems more relaxed, which may help self-care come from less pressure.",
       pressure: "Pressure has been noticed. Rushing to fix does not need to be today's answer.",
-      uneasy: "This note carries some uneasiness. The system can treat it as something to gently place down, not something that must be fixed immediately.",
+      uneasy: "This note carries some uneasiness. It can be placed down gently, not fixed immediately.",
       resourceLow: "Energy may be low because water, food, or sleep resources are low; this is information, not blame.",
       steadyHydration: "Place steadier water moments across the day without forcing it all at once."
     },
@@ -1236,7 +1236,7 @@ const translations = {
       cognitive_load: "Today used sustained focus and visual attention. Resting the eyes and reducing mental loops are part of recovery.",
       sleep_debt_load: "Do not judge your energy from a low-sleep day. Recovery comes before adding more load.",
       physical_load: "Today used some body energy. Let recovery have space without adding more too quickly.",
-      recovery: "Today has room for the system to recover and keep a rhythm that can last."
+      recovery: "Today has room for recovery and a rhythm that can last."
     },
     activityRootReflection: {
       clinical_focus: "Today used sustained precision, hands, eyes, and nervous-system focus. Quiet recovery deserves space too.",
@@ -1264,7 +1264,7 @@ const translations = {
       lightCodingAiAssist: "Today reads as light coding or AI-assisted work rather than full deep work. The main load is guiding context, reviewing output, and making small decisions over time, so eye rest and closing mental loops still matter.",
       shortQualityRun: "Today reads more like a short quality run than a long run. The body used intensity even if the distance was not long, so recovery can follow the effort without adding pressure.",
       rest: "Today is a rest rhythm and does not add much main load to the body.",
-      lightRecoveryDay: "Today is a light rhythm that lets the system recover gradually.",
+      lightRecoveryDay: "Today is a light rhythm that lets recovery build gradually.",
       lowSleepRest: "Low sleep may have affected today's energy, and choosing a rest day helps avoid adding another load layer.",
       lowSleepLightRecovery: "There is a low-sleep signal today, and a lighter rhythm may help recovery catch up with the body."
     },
@@ -1295,11 +1295,11 @@ const translations = {
     mindNoteReminder: {
       pressured: "The pressure is noticed. Today does not need to fix everything; returning to consistency is enough.",
       worried: "Worry is a signal to care, not an order to rush.",
-      uneasy: "This note carries some uneasiness. The system can treat it as something to gently place down, not something that must be fixed immediately.",
-      hydrate_gently: "Hydrate gently today. Let the system settle without forcing the numbers."
+      uneasy: "This note carries some uneasiness. It can be placed down gently, not fixed immediately.",
+      hydrate_gently: "Hydrate gently today. Let the rhythm settle without forcing the numbers."
     },
     recoveryNote: {
-      sleepLoadHigh: "The system used a lot while rest was not full. Let recovery come before adding another round.",
+      sleepLoadHigh: "The day used a lot while rest was not full. Let recovery come before adding another round.",
       endorphin: "Good-feeling energy can sometimes hide tired signals. Leave some room for recovery.",
       high: "Recovery is part of performance. Today is enough for heavy body use.",
       lowSleep: "Do not judge your health from a low-sleep day. Let rest help rebalance the picture.",
@@ -1315,7 +1315,7 @@ const translations = {
       sweet: "Reduce sweetness by one step without turning today into punishment.",
       caffeine: "Lower caffeine by one step and give water and rest more space.",
       restNoGuilt: "Rest without guilt, then come back to the pattern gently.",
-      steady: "Keep the system sustainable for one more day."
+      steady: "Keep the rhythm sustainable for one more day."
     },
     tomorrowFocusByLoadType: {
       clinical_focus: "Give the hands, eyes, and nervous-system focus a quiet recovery window.",
@@ -5370,7 +5370,10 @@ function updateNuTuenSaiVoiceState(voiceState, nextText, previousText = "", role
 function joinReflectionAnchorsNaturally(anchors = [], lang = currentLanguage) {
   const phrases = anchors.map((anchor) => anchor.text).filter(Boolean);
   if (!phrases.length) return "";
-  if (phrases.length === 1) return smoothReflectionConnectors(phrases[0]);
+  if (phrases.length === 1) {
+    if (lang === "en") return `Today includes ${formatEnglishAnchorPhrase(phrases[0])}.`;
+    return smoothReflectionConnectors(phrases[0]);
+  }
 
   if (lang === "en") return joinEnglishReflectionAnchors(phrases);
   if (lang === "zh") return joinChineseReflectionAnchors(phrases);
@@ -5401,12 +5404,12 @@ function joinEnglishReflectionAnchors(phrases) {
   if (phrases.length === 3) {
     return [
       `Today includes ${cleanPhrases[0]} and ${cleanPhrases[1]}.`,
-      `${capitalizeFirstLetter(cleanPhrases[2])} is another part of the context.`
+      `Another signal is ${cleanPhrases[2]}.`
     ].join("\n\n");
   }
   return [
     `Today includes ${cleanPhrases[0]} and ${cleanPhrases[1]}.`,
-    `${capitalizeFirstLetter(cleanPhrases[2])} is another part of the context, while ${cleanPhrases[3]}.`
+    `Other signals include ${cleanPhrases[2]} and ${cleanPhrases[3]}.`
   ].join("\n\n");
 }
 
@@ -5478,9 +5481,22 @@ function formatEnglishAnchorPhrase(value) {
     .trim()
     .replace(/^water is around /i, "water around ")
     .replace(/^sleep was about ([\d.]+) hours/i, "about $1 hours of sleep")
-    .replace(/^caffeine was part of the context/i, "caffeine in the context")
-    .replace(/^caffeine or sweetness was part of the drink context/i, "caffeine or sweetness in the drink context")
-    .replace(/^sweetness in drinks was one signal today/i, "sweetness in drinks");
+    .replace(/^caffeine was part of the context/i, "caffeine as a body signal")
+    .replace(/^caffeine was present today/i, "caffeine as a body signal")
+    .replace(/^caffeine or sweetness was part of the drink context/i, "caffeine or sweet drinks as a body signal")
+    .replace(/^caffeine or sweet drinks were present today/i, "caffeine or sweet drinks as a body signal")
+    .replace(/^sweetness in drinks was one signal today/i, "sweetness in drinks")
+    .replace(/^(.+) was part of today's load$/i, "$1 as part of today's load")
+    .replace(/^(.+) was part of the load and recovery context$/i, "$1 as part of the day's load and recovery picture")
+    .replace(/^the support need was (.+)$/i, (_, support) => formatEnglishSupportNeedAnchor(support))
+    .replace(/^the Mind Note carried a (.+) tone$/i, "a $1 tone in the Mind Note");
+}
+
+function formatEnglishSupportNeedAnchor(value) {
+  const support = String(value || "").trim();
+  if (!support) return "a support need";
+  if (/^rest first$/i.test(support)) return "a rest-first support need";
+  return `a support need of “${support}”`;
 }
 
 function formatChineseAnchorPhrase(value) {
@@ -5897,17 +5913,33 @@ function ensureReflectionSignature(text) {
   return trimmed.endsWith(REFLECTION_SIGNATURE) ? trimmed : `${trimmed} ${REFLECTION_SIGNATURE}`;
 }
 
+function sanitizeReflectionOutputText(text) {
+  const output = String(text || "");
+  if (currentLanguage !== "en") return output;
+
+  return output
+    .replace(/,?\s*rather than repeating it in several ways/gi, "")
+    .replace(/\banti-repetition\b/gi, "reflection")
+    .replace(/\bdedupe\b/gi, "simplify")
+    .replace(/\breflection blocks?\b/gi, "reflection")
+    .replace(/\btheme grouping\b/gi, "reflection grouping")
+    .replace(/\bmerge logic\b/gi, "reflection flow")
+    .replace(/[ \t]{2,}/g, " ")
+    .replace(/\s+\n/g, "\n")
+    .trim();
+}
+
 function getReflectionGenerationDelay() {
   const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
   return prefersReducedMotion ? 120 : REFLECTION_GENERATION_DELAY_MS;
 }
 
 function buildReflection() {
-  return buildReflectionFromSignals(buildSignals());
+  return sanitizeReflectionOutputText(buildReflectionFromSignals(buildSignals()));
 }
 
 function buildReflectionDisplay() {
-  return buildReflectionDisplayFromSignals(buildSignals());
+  return sanitizeReflectionOutputText(buildReflectionDisplayFromSignals(buildSignals()));
 }
 
 function buildReflectionDisplayFromSignals(signals) {
@@ -5929,7 +5961,7 @@ function buildReflectionDisplayFromSignals(signals) {
     compact: true
   });
 
-  return displayBlocks.map((block) => block.text).filter(Boolean).join("\n\n");
+  return sanitizeReflectionOutputText(displayBlocks.map((block) => block.text).filter(Boolean).join("\n\n"));
 }
 
 function getReflectionDisplayContinuity(signals) {
@@ -6049,7 +6081,7 @@ function getMergedRecoveryReflectionCue(signals = {}) {
     else if (cues.includes("load")) parts.push("today's load");
     if (cues.includes("rest")) parts.push("a rest-first support need");
     if (!parts.length) return "";
-    return `Today has ${joinListNaturally(parts)} pointing toward recovery. Let that become one clear cue to avoid pushing more, rather than repeating it in several ways.`;
+    return `Today carries a clear recovery signal: ${joinListNaturally(parts)}. Let recovery come before adding more output today.`;
   }
 
   if (currentLanguage === "zh") {
