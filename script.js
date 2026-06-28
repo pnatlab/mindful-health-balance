@@ -1063,10 +1063,10 @@ const translations = {
       overviewRecovery: "Today seems to ask for recovery more than adding anything new. Let hydration, rest, and mind state return to a steady base gradually.",
       overviewActivityHydrated: "Today had more activity load than a rest day. Hydration was enough to serve as a base, and recovery can move together with the day's load.",
       overviewActivity: "Today had more activity load than a rest day. If sweat or sustained effort was part of it, hydration and recovery can gradually catch up with the body.",
-      overviewPositiveMindActivity: "Today includes real energy use, while the overall mind state seems supportive. Use that support gently and still let recovery move with the load.",
+      overviewPositiveMindActivity: "Today includes real energy use, while the overall mind state seems supportive. Use that support gently and let recovery move with the load.",
       overviewPositiveMindRecovery: "Today the mind seems supportive, while the body may still be asking for recovery. Both signals can coexist without making the whole day automatically fine.",
       overviewPositiveMindSupport: "Today's overall mind state seems more positive, which may support self-care without needing to push harder.",
-      overviewMindNoteFeelingGoodActivity: "This note carries a good feeling, while today still included real energy use. Treat it as a small supportive signal and still let recovery move with the load.",
+      overviewMindNoteFeelingGoodActivity: "This note carries a good feeling, while today still included real energy use. Treat it as a small supportive signal and let recovery move with the load.",
       overviewMindNoteFeelingGoodRecovery: "This note carries a good feeling, while the body may still be asking for recovery. Both signals can coexist without making the whole day perfect.",
       overviewMindNoteFeelingGoodSupport: "This note carries a good feeling. It can be read as a small supportive signal, not as a claim that the whole day was perfect.",
       overviewCaffeine: "Today, caffeine may have supported alertness or rhythm. Plain water can return as the base without making coffee something to feel bad about.",
@@ -5047,22 +5047,27 @@ function deriveReflectionIntent(anchors, signals) {
   return { primary, secondary, scores: intentScores };
 }
 
-function composeInputGroundedReflection({ anchors = [], intent, signals } = {}) {
+function composeInputGroundedReflection({ anchors = [], intent, signals, omitReading = false } = {}) {
   if (!hasMeaningfulTodayInput()) return t("inputGroundedComposer.fallback");
   const rankedAnchors = rankReflectionAnchors(anchors.length ? anchors : collectReflectionInputAnchors(signals), signals);
   if (!rankedAnchors.length) return t("inputGroundedComposer.fallback");
   const derivedIntent = intent || deriveReflectionIntent(rankedAnchors, signals);
   const anchorText = joinReflectionAnchorsNaturally(rankedAnchors, currentLanguage);
   const readingText = getInputGroundedReadingSentence(derivedIntent.primary);
-  const composedText = smoothReflectionConnectors(`${anchorText}\n\n${readingText}`);
+  const composedText = smoothReflectionConnectors(omitReading ? anchorText : `${anchorText}\n\n${readingText}`);
   return applyNuTuenSaiOverviewVoice(composedText, { anchors: rankedAnchors, intent: derivedIntent, signals });
 }
 
-function getInputGroundedReflectionContext(signals) {
+function getInputGroundedReflectionContext(signals, options = {}) {
   const anchors = collectReflectionInputAnchors(signals);
   const rankedAnchors = rankReflectionAnchors(anchors, signals);
   const intent = deriveReflectionIntent(rankedAnchors, signals);
-  const text = composeInputGroundedReflection({ anchors: rankedAnchors, intent, signals });
+  const text = composeInputGroundedReflection({
+    anchors: rankedAnchors,
+    intent,
+    signals,
+    omitReading: Boolean(options.omitReading)
+  });
   return { anchors: rankedAnchors, intent, signals, text };
 }
 
@@ -5156,7 +5161,9 @@ function rowHasDrinkLoadCue(row) {
 }
 
 function getInputGroundedReflectionBlock(signals, options = {}) {
-  const context = getInputGroundedReflectionContext(signals);
+  const context = getInputGroundedReflectionContext(signals, {
+    omitReading: shouldOmitInputGroundedReadingForRecovery(signals)
+  });
   if (!options.withMarkers) return context.text;
   const markers = selectReflectionBreathingMarkers({
     anchors: context.anchors,
@@ -5165,6 +5172,11 @@ function getInputGroundedReflectionBlock(signals, options = {}) {
     compact: Boolean(options.compact)
   });
   return applyReflectionBreathingMarkers(context.text, markers, { compact: Boolean(options.compact) });
+}
+
+function shouldOmitInputGroundedReadingForRecovery(signals) {
+  return currentLanguage === "en"
+    && Boolean(getMergedRecoveryReflectionCue(signals));
 }
 
 function selectReflectionBreathingMarkers({ anchors = [], intent = {}, signals, compact = false } = {}) {
@@ -5483,13 +5495,48 @@ function formatEnglishAnchorPhrase(value) {
     .replace(/^sleep was about ([\d.]+) hours/i, "about $1 hours of sleep")
     .replace(/^caffeine was part of the context/i, "caffeine as a body signal")
     .replace(/^caffeine was present today/i, "caffeine as a body signal")
-    .replace(/^caffeine or sweetness was part of the drink context/i, "caffeine or sweet drinks as a body signal")
-    .replace(/^caffeine or sweet drinks were present today/i, "caffeine or sweet drinks as a body signal")
+    .replace(/^caffeine or sweetness was part of the drink context/i, "caffeine or sweet drinks as body cues")
+    .replace(/^caffeine or sweet drinks were present today/i, "caffeine or sweet drinks as body cues")
     .replace(/^sweetness in drinks was one signal today/i, "sweetness in drinks")
     .replace(/^(.+) was part of today's load$/i, "$1 as part of today's load")
-    .replace(/^(.+) was part of the load and recovery context$/i, "$1 as part of the day's load and recovery picture")
+    .replace(/^(.+) was part of the load and recovery context$/i, (_, run) => formatEnglishRunAnchor(run))
     .replace(/^the support need was (.+)$/i, (_, support) => formatEnglishSupportNeedAnchor(support))
     .replace(/^the Mind Note carried a (.+) tone$/i, "a $1 tone in the Mind Note");
+}
+
+function formatEnglishRunAnchor(value) {
+  const parts = String(value || "")
+    .split("/")
+    .map((part) => part.trim())
+    .filter(Boolean);
+  const type = parts[0] || "";
+  const distance = parts.find((part) => /\bkm\b/i.test(part)) || "";
+  const duration = parts.find((part) => /\b(hr|min|hour|minute)\b/i.test(part)) || "";
+  const load = parts.find((part) => /^high$/i.test(part)) || "";
+
+  if (/long run/i.test(type)) {
+    const loadPrefix = load ? "a high-load long run" : "a long run";
+    const distanceText = distance ? ` of ${distance}` : "";
+    const durationText = duration ? ` in ${formatEnglishRunDurationPhrase(duration)}` : "";
+    return `${loadPrefix}${distanceText}${durationText}`;
+  }
+
+  if (/short quality run/i.test(type)) {
+    const distanceText = distance ? ` of ${distance}` : "";
+    const durationText = duration ? ` in ${formatEnglishRunDurationPhrase(duration)}` : "";
+    return `a short quality run${distanceText}${durationText}`;
+  }
+
+  return `${parts.join(" / ")} as part of the day's load and recovery picture`;
+}
+
+function formatEnglishRunDurationPhrase(value) {
+  return String(value || "")
+    .trim()
+    .replace(/^about\b/i, "around")
+    .replace(/\bhr\b/gi, "hour")
+    .replace(/\bhrs\b/gi, "hours")
+    .replace(/\bmin\b/gi, "minutes");
 }
 
 function formatEnglishSupportNeedAnchor(value) {
@@ -5946,7 +5993,9 @@ function buildReflectionDisplayFromSignals(signals) {
   const lowDataReflection = buildLowDataNuTuenSaiReflection(signals);
   if (lowDataReflection) return lowDataReflection;
 
-  const inputGroundedContext = getInputGroundedReflectionContext(signals);
+  const inputGroundedContext = getInputGroundedReflectionContext(signals, {
+    omitReading: shouldOmitInputGroundedReadingForRecovery(signals)
+  });
   const displayBlocks = normalizeReflectionBlocks([
     { key: "overview", text: getReflectionDisplayOverview(signals) },
     { key: "inputGrounded", text: getInputGroundedReflectionBlock(signals, { withMarkers: true, compact: true }) },
@@ -6081,7 +6130,7 @@ function getMergedRecoveryReflectionCue(signals = {}) {
     else if (cues.includes("load")) parts.push("today's load");
     if (cues.includes("rest")) parts.push("a rest-first support need");
     if (!parts.length) return "";
-    return `Today carries a clear recovery signal: ${joinListNaturally(parts)}. Let recovery come before adding more output today.`;
+    return "Recovery may fit the day better than adding more output.";
   }
 
   if (currentLanguage === "zh") {
@@ -6240,7 +6289,9 @@ function buildReflectionFromSignals(signals) {
     : getActivityRootReflections(signals, { limit: 2 });
   const sweetnessInsight = signals.drinkLoad.sweetnessInsight;
   const drinkReflectionNote = getDrinkReflectionNote(signals);
-  const inputGroundedContext = getInputGroundedReflectionContext(signals);
+  const inputGroundedContext = getInputGroundedReflectionContext(signals, {
+    omitReading: shouldOmitInputGroundedReadingForRecovery(signals)
+  });
   const inputGroundedOverview = inputGroundedContext.text;
 
   if (signals.hydration.steady && signals.recoveryLoad.light) {
