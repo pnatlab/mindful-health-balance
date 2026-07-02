@@ -72,9 +72,12 @@ Workbook layers include:
 - `Summary`: static export summary, not Excel formulas and not AI analysis
 - `Field_Context`: guardrails for human/AI readers
 - `Field_Review`: lightweight pattern review
-- `Column_Guide`: AI-readable explanation of workbook columns
+- `Column_Guide`: AI-readable explanation of workbook columns, units, allowed interpretation, and forbidden interpretation
+- `AI_Context`: workbook-level semantic guardrails, including that this is self-care data and not finance/expense data
 
 AI can only read the workbook when the user intentionally exports and shares it. There is no backend, account system, automatic upload, or hidden sync.
+
+`Mindful_Health_Balance_Master.xlsx` is designed to be AI-readable as well as human-readable. `Column_Guide` and `AI_Context` help language models understand units and boundaries, for example that `Water_ml` means milliliters of water, not money or expenses. LLM outputs should still be treated as drafts for the user to audit.
 
 ## Three-Layer Save Model
 
@@ -190,8 +193,9 @@ The workbook currently includes:
 - `Field_Context`
 - `Field_Review`
 - `Column_Guide`
+- `AI_Context`
 
-`Daily_Log` keeps canonical English headers for machine readability. `Column_Guide` explains key columns in Thai and English without changing the canonical headers.
+`Daily_Log` keeps canonical English headers for machine readability. `Column_Guide` explains key columns in Thai and English, including units and forbidden interpretations, without changing the canonical headers. `AI_Context` tells AI readers that the workbook is a self-care reflection log, not a finance, expense, accounting, trading, or spending workbook.
 
 ## Documentation
 

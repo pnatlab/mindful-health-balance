@@ -319,7 +319,7 @@ Daily Log Table คือตารางดูย้อนหลังในห�
 Mindful_Health_Balance_Master.xlsx
 ```
 
-ไฟล์นี้มี 6 sheets:
+ไฟล์นี้มี 7 sheets:
 
 - Daily_Log
 - Summary
@@ -327,6 +327,7 @@ Mindful_Health_Balance_Master.xlsx
 - Field_Context
 - Field_Review
 - Column_Guide
+- AI_Context
 
 ใช้ไฟล์นี้เป็น master backup หรือเปิดดูใน Excel ได้เมื่ออยากเห็นภาพรวมหลายวัน
 
@@ -334,11 +335,15 @@ Mindful_Health_Balance_Master.xlsx
 
 `Summary_Note` เป็นข้อความกำกับคงที่ว่าไฟล์นี้ช่วยดู pattern และ balance recovery ไม่ใช่การตัดสินสุขภาพจากวันใดวันหนึ่ง
 
-`Column_Guide` เป็น sheet คู่มือคอลัมน์ที่อธิบายชื่อ column เดิมด้วยภาษาไทย/อังกฤษ เช่น `Thai_Label`, `English_Label`, `Meaning`, `AI_Reading_Note`, `Example_Value` และ `Is_Canonical` โดยไม่เปลี่ยน header เดิมของ `Daily_Log` จึงยังปลอดภัยต่อ import และ future v2.0 parser
+`Column_Guide` เป็น sheet คู่มือคอลัมน์ที่อธิบายชื่อ column เดิมพร้อมความหมาย หน่วย ชนิดข้อมูล allowed interpretation, forbidden interpretation, AI reading note, label, example และ canonical status โดยไม่เปลี่ยน header เดิมของ `Daily_Log` จึงยังปลอดภัยต่อ import และ future v2.0 parser
+
+`AI_Context` เป็น sheet บริบทระดับ workbook สำหรับ AI/LLM โดยระบุชัดว่าไฟล์นี้เป็น self-care reflection workbook ไม่ใช่ finance/expense/accounting/trading/spending workbook เช่น `Water_ml` คือปริมาณน้ำหน่วยมิลลิลิตร ไม่ใช่เงินหรือค่าใช้จ่าย
 
 ตั้งแต่ v1.9.3 `Daily_Log` มี optional columns ใหม่คือ `Sleep_Hours` และ `Run_Detail_JSON` โดยยังเก็บ `Sleep` และ `Activities` เดิมไว้ครบ ไฟล์เก่าที่ไม่มีสองคอลัมน์นี้ยัง import ได้ตามปกติ
 
 ตั้งแต่ v1.9 เป็นต้นไป `Field_Context` จะอธิบายว่าไฟล์นี้เป็น local-first self-care log ที่ผู้ใช้เป็นเจ้าของเอง และถ้าผู้ใช้เลือกนำไปให้ AI/LLM อ่าน ควรอ่านเพื่อ pattern reflection เท่านั้น ไม่ใช่ diagnosis หรือ medical advice
+
+ผลลัพธ์จาก LLM ที่อ่าน workbook นี้ยังควรถูกผู้ใช้ตรวจทานเสมอ context sheets ช่วยลดการอ่านผิด แต่ไม่ได้ทำให้ AI เป็นผู้ตัดสินความหมายของข้อมูล
 
 `Field_Review` เป็น summary เบา ๆ ของข้อมูลที่มีอยู่ เช่น ช่วงวันที่ ค่าเฉลี่ยน้ำ วันที่ load สูง mind/support ที่พบบ่อย drink-load summary และจำนวนวันที่มี Mind Note หรือ Reflection ข้อมูลนี้ใช้เพื่อช่วยเห็น pattern อย่างอ่อนโยน ไม่ใช่การวินิจฉัยโรคหรือการประเมินความเสี่ยงสุขภาพ
 

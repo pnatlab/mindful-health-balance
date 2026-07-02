@@ -343,7 +343,7 @@ Click `Export Master Excel` to download:
 Mindful_Health_Balance_Master.xlsx
 ```
 
-The file includes six sheets:
+The file includes seven sheets:
 
 - Daily_Log
 - Summary
@@ -351,6 +351,7 @@ The file includes six sheets:
 - Field_Context
 - Field_Review
 - Column_Guide
+- AI_Context
 
 Use this file as a master backup or open it in Excel when you want to review a longer period.
 
@@ -358,11 +359,15 @@ Use this file as a master backup or open it in Excel when you want to review a l
 
 `Summary_Note` is a static guardrail message. It reminds readers that the workbook supports pattern review and recovery balance, not judgment of health from any single day.
 
-`Column_Guide` is a column dictionary sheet. It explains canonical column names with `Thai_Label`, `English_Label`, `Meaning`, `AI_Reading_Note`, `Example_Value`, and `Is_Canonical` without changing the original `Daily_Log` headers, so import and future v2.0 parsers can keep using stable keys.
+`Column_Guide` is a column dictionary sheet. It explains canonical column names with meaning, unit, data type, allowed interpretation, forbidden interpretation, AI reading notes, labels, examples, and canonical status without changing the original `Daily_Log` headers, so import and future v2.0 parsers can keep using stable keys.
+
+`AI_Context` is a workbook-level guide for AI/LLM readers. It states that this is a self-care reflection workbook, not a finance, expense, accounting, trading, or spending workbook. For example, `Water_ml` means milliliters of water, not money or expenses.
 
 Starting in v1.9.3, `Daily_Log` includes two optional columns: `Sleep_Hours` and `Run_Detail_JSON`. The existing `Sleep` and `Activities` fields remain, and older workbooks without these two columns still import normally.
 
 Starting in v1.9, `Field_Context` explains that the workbook is a local-first self-care log owned by the user. If the user chooses to share it with an AI/LLM, the AI should read it for pattern reflection only, not for diagnosis or medical advice.
+
+LLM outputs from this workbook should still be audited by the user. The context sheets reduce misreading, but they do not make an AI interpretation authoritative.
 
 `Field_Review` is a lightweight descriptive summary of available entries, such as review period, average water, high-load days, common mind/support patterns, drink-load summary, and days with Mind Note or Reflection. It is for gentle pattern reflection, not disease diagnosis or health-risk prediction.
 

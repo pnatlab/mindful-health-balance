@@ -430,10 +430,15 @@ Instead, add a separate `Column_Guide` sheet.
 | --- | --- |
 | `Sheet` | Workbook sheet name where the column appears. |
 | `Column` | Canonical column name. |
+| `Meaning` | Plain description of what the column stores. |
+| `Unit` | Unit or value class, such as `ml`, `hours`, `minutes`, `count`, `descriptive score`, `JSON`, or `text`. |
+| `Data_Type` | Expected data type such as `number`, `text`, or `json/text`. |
+| `Allowed_Interpretation` | What an AI/human reader may safely infer from the column. |
+| `Forbidden_Interpretation` | What an AI/human reader must not infer from the column. |
+| `AI_Read_Note` | Safe reading guidance for AI/dev agents. |
 | `Thai_Label` | Human-readable Thai label. |
 | `English_Label` | Human-readable English label. |
-| `Meaning` | Plain description of what the column stores. |
-| `AI_Reading_Note` | Safe reading guidance for AI/dev agents. |
+| `AI_Reading_Note` | Backward-friendly duplicate of `AI_Read_Note` for older documentation/tools. |
 | `Example_Value` | Example value for orientation. |
 | `Is_Canonical` | Whether the column is part of the canonical machine-readable surface. |
 
@@ -446,8 +451,11 @@ The guide includes key columns from:
 - `Reflections`
 - `Field_Context`
 - `Field_Review`
+- `AI_Context`
 
 `Daily_Log` remains the primary canonical data table for import and future parser stability.
+
+The workbook also includes `AI_Context`, a workbook-level semantic guard sheet with key/value rows. It tells AI/LLM readers that the workbook is a self-care reflection log, not a finance, expense, accounting, trading, or spending workbook. It explicitly notes that `Water_ml` means milliliters of water, not money or baht.
 
 Since v1.9.3, `Column_Guide` also documents optional structured fields:
 
@@ -471,6 +479,7 @@ Avoid:
 - diagnosis
 - therapy claims
 - financial advice
+- financial inference from self-care numeric fields
 - risk prediction
 - good/bad user framing
 
@@ -509,7 +518,7 @@ This change does not alter:
 
 Old exported workbooks remain importable because import reads `Daily_Log`.
 
-New exported workbooks remain importable because `Column_Guide` is an additional sheet and import still reads `Daily_Log`.
+New exported workbooks remain importable because `Column_Guide` and `AI_Context` are additional sheets and import still reads `Daily_Log`.
 
 ## Future v2.0 Use
 

@@ -35,6 +35,22 @@ const DAILY_LOG_COLUMNS = [
   "Mind_Note_Feeling",
   "Mind_Note_Support"
 ];
+const COLUMN_GUIDE_HEADERS = [
+  "Sheet",
+  "Column",
+  "Meaning",
+  "Unit",
+  "Data_Type",
+  "Allowed_Interpretation",
+  "Forbidden_Interpretation",
+  "AI_Read_Note",
+  "Thai_Label",
+  "English_Label",
+  "AI_Reading_Note",
+  "Example_Value",
+  "Is_Canonical"
+];
+const AI_CONTEXT_HEADERS = ["Key", "Value"];
 
 const translations = {
   th: {
@@ -7149,7 +7165,10 @@ function exportMasterExcel() {
   });
   const fieldReviewSheet = XLSX.utils.json_to_sheet([buildFieldReview(rows)]);
   const columnGuideSheet = XLSX.utils.json_to_sheet(buildColumnGuideRows(), {
-    header: ["Sheet", "Column", "Thai_Label", "English_Label", "Meaning", "AI_Reading_Note", "Example_Value", "Is_Canonical"]
+    header: COLUMN_GUIDE_HEADERS
+  });
+  const aiContextSheet = XLSX.utils.json_to_sheet(buildAIContextRows(), {
+    header: AI_CONTEXT_HEADERS
   });
 
   applySheetReadability(dailySheet, [14, 12, 16, 12, 14, 14, 28, 18, 34, 14, 16, 18, 22, 28, 34, 28, 12, 14, 28, 28, 30, 24, 24, 24]);
@@ -7157,7 +7176,8 @@ function exportMasterExcel() {
   applySheetReadability(reflectionSheet, [14, 30, 22, 22, 72]);
   applySheetReadability(fieldContextSheet, [28, 90]);
   applySheetReadability(fieldReviewSheet, [20, 20, 14, 18, 18, 18, 16, 22, 22, 22, 22, 22, 18, 18, 18, 24, 36, 92, 92, 92]);
-  applySheetReadability(columnGuideSheet, [18, 26, 28, 28, 58, 78, 28, 14]);
+  applySheetReadability(columnGuideSheet, [18, 28, 58, 18, 18, 64, 72, 78, 28, 28, 78, 28, 14]);
+  applySheetReadability(aiContextSheet, [28, 110]);
 
   XLSX.utils.book_append_sheet(workbook, dailySheet, "Daily_Log");
   XLSX.utils.book_append_sheet(workbook, summarySheet, "Summary");
@@ -7165,6 +7185,7 @@ function exportMasterExcel() {
   XLSX.utils.book_append_sheet(workbook, fieldContextSheet, "Field_Context");
   XLSX.utils.book_append_sheet(workbook, fieldReviewSheet, "Field_Review");
   XLSX.utils.book_append_sheet(workbook, columnGuideSheet, "Column_Guide");
+  XLSX.utils.book_append_sheet(workbook, aiContextSheet, "AI_Context");
   XLSX.writeFile(workbook, "Mindful_Health_Balance_Master.xlsx");
   document.querySelector("#saveStatus").textContent = t("exportedMaster");
 }
@@ -7220,6 +7241,282 @@ function buildFieldContextRows() {
   ];
 }
 
+function buildAIContextRows() {
+  return [
+    {
+      Key: "Workbook_Type",
+      Value: "Mindful Health Balance self-care reflection log"
+    },
+    {
+      Key: "Workbook_Purpose",
+      Value: "Tracks daily self-care signals such as hydration, drinks, sleep, energy, activity load, mind state, practice context, and reflection."
+    },
+    {
+      Key: "Not_Finance_Workbook",
+      Value: "This workbook is not a finance, expense, accounting, trading, or spending workbook."
+    },
+    {
+      Key: "No_Expense_Data",
+      Value: "Daily_Log does not contain money, expenses, cost, price, spending, revenue, or THB columns."
+    },
+    {
+      Key: "Water_ml",
+      Value: "Water_ml means plain water intake in milliliters. For example, 3750 means 3,750 ml of water, not 3,750 baht."
+    },
+    {
+      Key: "Scores",
+      Value: "Sugar_Score, Caffeine_Score, and Load_Score are descriptive self-care signals, not medical scores and not money."
+    },
+    {
+      Key: "Mind_State",
+      Value: "Mind and Mind_Note fields are self-reported categories/text, not mental-health diagnosis or personality inference."
+    },
+    {
+      Key: "Practice_Context",
+      Value: "Practice fields are optional context. Practice_Minutes is duration in minutes, not a spiritual score or merit score."
+    },
+    {
+      Key: "Medical_Boundary",
+      Value: "Do not diagnose, prescribe, or replace professional medical advice."
+    },
+    {
+      Key: "Interpretation_Rule",
+      Value: "Use Column_Guide for column meanings, units, and forbidden interpretations. If unclear, say unclear instead of guessing."
+    },
+    {
+      Key: "Forbidden_Global_Inference",
+      Value: "Do not infer money, expenses, cost, price, THB, revenue, financial behavior, diagnosis, personality, or self-worth from numeric or text fields."
+    }
+  ];
+}
+
+const COLUMN_SEMANTIC_GUIDE = {
+  "Daily_Log.Energy": {
+    unit: "category/text",
+    dataType: "text",
+    allowed: "User-selected energy category for the day",
+    forbidden: "medical diagnosis, productivity score, self-worth judgment, money"
+  },
+  "Daily_Log.Mind": {
+    unit: "category/text",
+    dataType: "text",
+    allowed: "User-selected overall mind-state category for the day",
+    forbidden: "mental-health diagnosis, personality inference, clinical assessment, self-worth judgment"
+  },
+  "Daily_Log.Sleep": {
+    unit: "category/text",
+    dataType: "text",
+    allowed: "User-selected sleep category or qualitative sleep signal",
+    forbidden: "medical diagnosis, sleep disorder diagnosis, money"
+  },
+  "Daily_Log.Sleep_Hours": {
+    unit: "hours",
+    dataType: "number",
+    allowed: "Self-reported sleep duration in hours",
+    forbidden: "money, cost, score, medical diagnosis"
+  },
+  "Daily_Log.Water_ml": {
+    unit: "ml",
+    dataType: "number",
+    allowed: "Daily plain water intake in milliliters",
+    forbidden: "money, expense, cost, price, THB, spending, revenue",
+    aiNote: "3750 means 3,750 ml of water, not 3,750 baht."
+  },
+  "Daily_Log.Drinks": {
+    unit: "text/list",
+    dataType: "text",
+    allowed: "Logged drink names or summaries for the day",
+    forbidden: "expense list, price list, purchase history, financial transaction"
+  },
+  "Daily_Log.Sweet_Drinks_Count": {
+    unit: "count",
+    dataType: "number",
+    allowed: "Count of logged drinks with visible sweetness load",
+    forbidden: "grams of sugar, calories, money, expense"
+  },
+  "Daily_Log.Drink_Profile_JSON": {
+    unit: "JSON",
+    dataType: "json/text",
+    allowed: "Structured drink profile context such as type, sweetness, caffeine, milk, and amount",
+    forbidden: "financial transaction data, purchase receipt, expense record"
+  },
+  "Daily_Log.Activities": {
+    unit: "text/list",
+    dataType: "text",
+    allowed: "User-selected activity/load context for the day",
+    forbidden: "profession inference, identity claim, productivity score, money"
+  },
+  "Daily_Log.Energy_Causes": {
+    unit: "text/list",
+    dataType: "text",
+    allowed: "User-selected factors that may affect energy or recovery",
+    forbidden: "medical diagnosis, productivity score, blame, money"
+  },
+  "Daily_Log.Hydration_Status": {
+    unit: "text",
+    dataType: "text",
+    allowed: "Gentle hydration self-care cue derived from logged water/drink context",
+    forbidden: "medical treatment, diagnosis, command, money"
+  },
+  "Daily_Log.Sugar_Score": {
+    unit: "descriptive score",
+    dataType: "number",
+    allowed: "Approximate descriptive sugar-load signal from drink profile",
+    forbidden: "exact grams of sugar, calories, medical diagnosis, money"
+  },
+  "Daily_Log.Caffeine_Score": {
+    unit: "descriptive score",
+    dataType: "number",
+    allowed: "Approximate descriptive caffeine-load signal from drink profile",
+    forbidden: "exact mg caffeine unless explicitly provided, medical diagnosis, money"
+  },
+  "Daily_Log.Milk_Drink_Count": {
+    unit: "count",
+    dataType: "number",
+    allowed: "Count of logged milk-containing drinks",
+    forbidden: "money, expense, dairy diagnosis"
+  },
+  "Daily_Log.Hydration_Support_Count": {
+    unit: "count",
+    dataType: "number",
+    allowed: "Count of drinks that may lightly support hydration context",
+    forbidden: "medical treatment, diagnosis, money"
+  },
+  "Daily_Log.Run_Detail_JSON": {
+    unit: "JSON",
+    dataType: "json/text",
+    allowed: "Running distance/duration/sweat context if provided",
+    forbidden: "race result, medical diagnosis, exact training prescription"
+  },
+  "Daily_Log.Load_Score": {
+    unit: "descriptive score",
+    dataType: "number",
+    allowed: "Descriptive activity/load signal for the day",
+    forbidden: "performance judgment, medical risk, diagnosis, money"
+  },
+  "Daily_Log.Load_Level": {
+    unit: "category/text",
+    dataType: "text",
+    allowed: "Descriptive load category for the day",
+    forbidden: "medical diagnosis, performance judgment, money"
+  },
+  "Daily_Log.Tomorrow_Focus": {
+    unit: "text",
+    dataType: "text",
+    allowed: "Gentle reflection output or next-day focus text",
+    forbidden: "medical advice, diagnosis, instruction, command"
+  },
+  "Daily_Log.NuTuenSai_Reminder": {
+    unit: "text",
+    dataType: "text",
+    allowed: "Gentle reflection output or reminder text",
+    forbidden: "medical advice, diagnosis, instruction, command"
+  },
+  "Daily_Log.Practice_Minutes": {
+    unit: "minutes",
+    dataType: "number",
+    allowed: "Optional practice duration context",
+    forbidden: "spiritual score, merit score, achievement score, self-worth judgment"
+  },
+  "Daily_Log.Practice_Context_JSON": {
+    unit: "JSON",
+    dataType: "json/text",
+    allowed: "Structured optional practice context for future Field Review",
+    forbidden: "spiritual score, diagnosis, self-worth judgment"
+  },
+  "Daily_Log.Practice_Root": {
+    unit: "category/text",
+    dataType: "text",
+    allowed: "Optional practice base selected by the user",
+    forbidden: "spiritual score, merit score, personality inference, self-worth judgment"
+  },
+  "Daily_Log.Practice_Type": {
+    unit: "category/text",
+    dataType: "text",
+    allowed: "Optional practice type selected by the user",
+    forbidden: "spiritual score, merit score, personality inference, self-worth judgment"
+  },
+  "Daily_Log.Practice_Note": {
+    unit: "text",
+    dataType: "text",
+    allowed: "Optional short note about practice context, good action, or remembered wholesome context",
+    forbidden: "merit score, self-worth judgment, diagnosis"
+  },
+  "Daily_Log.Mind_Note_Text": {
+    unit: "text",
+    dataType: "text",
+    allowed: "User-owned qualitative note for the day",
+    forbidden: "diagnosis, therapy assessment, personality inference"
+  },
+  "Daily_Log.Mind_Note_Feeling": {
+    unit: "category/text",
+    dataType: "text",
+    allowed: "User-selected feeling label for the Mind Note",
+    forbidden: "diagnosis, personality inference"
+  },
+  "Daily_Log.Mind_Note_Support": {
+    unit: "category/text",
+    dataType: "text",
+    allowed: "User-selected support need for the note",
+    forbidden: "clinical recommendation, diagnosis, dependency assessment"
+  },
+  "Reflections.Reflection_Text": {
+    unit: "text",
+    dataType: "text",
+    allowed: "Generated or user-edited reflection text saved by the user",
+    forbidden: "medical advice, diagnosis, command, raw evidence, financial inference"
+  },
+  "AI_Context.Key": {
+    unit: "text",
+    dataType: "text",
+    allowed: "Workbook-level context key for AI/human readers",
+    forbidden: "data value, diagnosis, financial inference"
+  },
+  "AI_Context.Value": {
+    unit: "text",
+    dataType: "text",
+    allowed: "Workbook-level semantic guardrail for AI/human readers",
+    forbidden: "raw Daily_Log evidence, diagnosis, financial inference"
+  }
+};
+
+function getColumnSemanticGuide(sheet, column) {
+  const specific = COLUMN_SEMANTIC_GUIDE[`${sheet}.${column}`] || {};
+  return {
+    unit: specific.unit || inferColumnUnit(column),
+    dataType: specific.dataType || inferColumnDataType(column),
+    allowed: specific.allowed || "Use according to the Meaning and AI_Read_Note for this row.",
+    forbidden: specific.forbidden || getDefaultForbiddenInterpretation(sheet, column),
+    aiNote: specific.aiNote || ""
+  };
+}
+
+function inferColumnUnit(column = "") {
+  if (/_ml$/i.test(column)) return "ml";
+  if (/Hours$/i.test(column)) return "hours";
+  if (/Minutes$/i.test(column)) return "minutes";
+  if (/Count|Days|Total|Score|Average/i.test(column)) return "number";
+  if (/JSON$/i.test(column)) return "JSON";
+  if (/Date|Start|End/i.test(column)) return "date/text";
+  return "text";
+}
+
+function inferColumnDataType(column = "") {
+  if (/JSON$/i.test(column)) return "json/text";
+  if (/_ml$|Hours$|Minutes$|Count|Days|Total|Score|Average/i.test(column)) return "number";
+  return "text";
+}
+
+function getDefaultForbiddenInterpretation(sheet, column) {
+  if (sheet === "Daily_Log") {
+    return "money, expense, cost, price, THB, diagnosis, self-worth judgment";
+  }
+  if (sheet === "Summary" || sheet === "Field_Review") {
+    return "diagnosis, prediction, score of the user's worth, financial inference";
+  }
+  return "diagnosis, financial inference, self-worth judgment";
+}
+
 function buildColumnGuideRows() {
   const row = ({
     sheet,
@@ -7230,16 +7527,26 @@ function buildColumnGuideRows() {
     aiNote,
     example = "",
     canonical = true
-  }) => ({
-    Sheet: sheet,
-    Column: column,
-    Thai_Label: thai,
-    English_Label: english,
-    Meaning: meaning,
-    AI_Reading_Note: aiNote,
-    Example_Value: example,
-    Is_Canonical: canonical ? "yes" : "no"
-  });
+  }) => {
+    const semantic = getColumnSemanticGuide(sheet, column);
+    const finalAiNote = semantic.aiNote || aiNote;
+
+    return {
+      Sheet: sheet,
+      Column: column,
+      Meaning: meaning,
+      Unit: semantic.unit,
+      Data_Type: semantic.dataType,
+      Allowed_Interpretation: semantic.allowed,
+      Forbidden_Interpretation: semantic.forbidden,
+      AI_Read_Note: finalAiNote,
+      Thai_Label: thai,
+      English_Label: english,
+      AI_Reading_Note: finalAiNote,
+      Example_Value: example,
+      Is_Canonical: canonical ? "yes" : "no"
+    };
+  };
 
   return [
     row({
@@ -7638,6 +7945,26 @@ function buildColumnGuideRows() {
       meaning: "คำอธิบายขอบเขตการอ่าน workbook",
       aiNote: "Follow these boundaries when using the workbook.",
       example: "Do not use it for diagnosis.",
+      canonical: false
+    }),
+    row({
+      sheet: "AI_Context",
+      column: "Key",
+      thai: "คีย์บริบทสำหรับ AI",
+      english: "AI context key",
+      meaning: "ชื่อหัวข้อของ semantic guard ระดับ workbook",
+      aiNote: "Read these rows before interpreting Daily_Log values.",
+      example: "Not_Finance_Workbook",
+      canonical: false
+    }),
+    row({
+      sheet: "AI_Context",
+      column: "Value",
+      thai: "รายละเอียดบริบทสำหรับ AI",
+      english: "AI context value",
+      meaning: "ข้อความกำกับความหมายและข้อห้ามการตีความระดับ workbook",
+      aiNote: "Use these guardrails to avoid misreading self-care numbers as finance, diagnosis, or self-worth.",
+      example: "Water_ml means plain water intake in milliliters, not baht.",
       canonical: false
     }),
     row({
