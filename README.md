@@ -215,6 +215,8 @@ Visual Slice 1 begins moving Field Review toward the `NuTuenSai Field Reflection
 
 Field Review cards also use NuTuenSai Field Room background images for hydration, sleep/recovery, load/recovery, drinks context, Mind Note, and missing/blank data. These images are presentation assets only; they do not change review logic, source boundaries, or workbook data.
 
+Field Review UI v2 presents those six cards as guided Field Rooms. The page opens one room at a time, with a room selector, locked chat-style bubbles for source, evidence, NuTuenSai reading, and next gentle attention, plus a suggested next-room navigation button. It looks conversational, but it is still deterministic and has no text input, LLM, free-form ask, or correlation engine.
+
 The cards are descriptive pattern summaries. Missing data means not recorded, not failure. Numeric fields keep their workbook boundaries: for example, `Water_ml` is plain water in milliliters, not money or expense data.
 
 ## Documentation
@@ -234,6 +236,7 @@ Thai documentation, field notes, and original design context remain available in
 
 ## Version History / Design Trace
 
+- **MHB 2.0 Field Review UI v2 — Guided Field Rooms Workspace**: Replaces the visible six-card grid with a guided room selector and active room workspace using locked chat-style bubbles. Suggested next room is navigation only, while the content remains deterministic, source-bound, non-LLM, non-chatbot, and non-correlation.
 - **MHB 2.0 Field Review Visual Slice 1**: Begins the NuTuenSai Field Reflection Studio shell with a warm hero, segmented timeframe pill, overview chips, CSS-only rhythm dots, and softer review cards while keeping Field Review rule-based, source-bound, non-LLM, non-chatbot, and non-correlation.
 - **MHB 2.0 Slice A — Rule-based Field Review**: Added Field Review / ประมวลข้อมูล tab, timeframe selector, deterministic NuTuenSai-style review cards from `Daily_Log`, and documented Signal Relationships / Correlation Review as future Slice A+/B backlog only.
 - **v1.9.9 — Mindful Practice Context and User-Owned Field Memory Refinement**: adds Practice Context, `Practice_Note`, honest data copy, source-aware safe merge, three-layer save status, ordered mind scale, NuTuenSai voice cadence, low-data micro-continuity, and Reflection anti-repetition.

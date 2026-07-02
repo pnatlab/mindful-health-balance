@@ -142,6 +142,8 @@ Visual Slice 1 starts shaping Field Review as a NuTuenSai studio experience, wit
 
 The six review cards now use NuTuenSai Field Room background images for hydration, sleep/recovery, load/recovery, drinks context, Mind Note, and missing/blank data. These images are presentation only; they do not change review logic and do not add LLM, free-form ask, or correlation behavior.
 
+Field Review UI v2 changes the visible layout from all cards at once to a guided one-room-at-a-time workspace. It includes a room selector, locked chat-style bubbles for source, evidence, NuTuenSai reading, and next gentle attention, plus a suggested next-room button. That button is navigation only, not an AI recommendation.
+
 This page is not a chatbot, does not call an LLM, does not include free-form ask, does not calculate correlations, and does not diagnose or give medical advice. Blank fields mean not recorded, not failure or a missing score.
 
 To review an exported workbook, import the Master Excel file from `Log` first. Field Review then reads the imported Daily Log from localStorage.

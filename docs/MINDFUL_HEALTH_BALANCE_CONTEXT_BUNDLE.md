@@ -746,6 +746,8 @@ Field Review Visual Slice 1 starts the NuTuenSai Field Reflection Studio directi
 
 NuTuenSai Field Room background images may be used behind the six Field Review cards. The images provide visual language for hydration, sleep/recovery, load/recovery, drinks context, Mind Note, and missing/blank data, but they remain presentation assets only and must not be treated as evidence, inference, score, or additional user data.
 
+Field Review UI v2 may present these six Field Rooms as a guided one-room-at-a-time workspace. The room selector, locked chat-style bubbles, focus chips, and suggested next-room button are deterministic navigation and presentation layers. They must not introduce free-form chat, user prompts, LLM-generated answers, correlation, charts, diagnosis, scoring, or new data fields.
+
 ## Compatibility
 
 This refinement must preserve:

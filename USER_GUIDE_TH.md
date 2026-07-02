@@ -130,6 +130,8 @@ Visual Slice 1 ทำให้หน้า `ประมวลข้อมูล
 
 การ์ดทั้ง 6 ใบมีภาพพื้นหลัง NuTuenSai Field Rooms ตามหมวด hydration, sleep/recovery, load/recovery, drinks context, Mind Note และ missing/blank data ภาพเหล่านี้เป็น presentation layer เท่านั้น ไม่เปลี่ยน logic การอ่านข้อมูลและไม่เพิ่ม LLM/free-form/correlation
 
+Field Review UI v2 เปลี่ยนจากการเห็นการ์ดทั้งหมดพร้อมกันเป็น workspace แบบเลือกห้องข้อมูลทีละห้อง มี room selector, bubble แบบ locked conversation สำหรับ source, หลักฐาน, หนูตื่นสายอ่านว่า และรอบถัดไปลองสังเกต รวมถึงปุ่มไปห้องถัดไป ปุ่มนี้เป็น navigation เท่านั้น ไม่ใช่คำแนะนำจาก AI
+
 หน้านี้ไม่ใช่ chatbot ไม่เรียก LLM ไม่รับคำถาม free-form ไม่คำนวณ correlation และไม่วินิจฉัยหรือให้คำแนะนำทางการแพทย์ ช่องว่างแปลว่ายังไม่ได้บันทึก ไม่ใช่ความผิดหรือคะแนนที่หายไป
 
 ถ้าต้องการ review workbook ที่ export ไว้ ให้ไปหน้า `Log` แล้ว import Master Excel ก่อน จากนั้นหน้า `ประมวลข้อมูล` จะอ่านจาก Daily Log ที่ import เข้ามาใน localStorage

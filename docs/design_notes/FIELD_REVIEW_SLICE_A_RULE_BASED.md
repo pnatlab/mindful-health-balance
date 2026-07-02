@@ -77,8 +77,11 @@ Allowed presentation changes:
 - CSS-only selected-rhythm dot strip using selected rows as visual anchors
 - lighter review card styling while keeping Evidence, NuTuenSai reads, and Next gentle attention visible
 - NuTuenSai Field Room background images behind the six review cards, with readability overlays and safe fallback when images do not load
+- guided Field Rooms workspace with a room selector, one active room panel, locked chat-style bubbles, focus chips, and suggested next-room navigation
 
 This visual slice must remain presentation-only. It must not add a chart library, correlation calculation, relationship matrix, LLM call, free-form ask box, diagnosis wording, score/ranking system, finance interpretation, or schema change.
+
+The chat-like workspace is not a chatbot. Bubbles are rendered from deterministic source-bound card data only: selected `Daily_Log` window, evidence, NuTuenSai-style reading, and next gentle attention. Suggested next room buttons only change the active room and do not create recommendations or new analysis.
 
 ## Future Backlog
 
