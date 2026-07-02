@@ -742,6 +742,8 @@ Field_Review may include descriptive drink-load summaries such as days with swee
 
 These summaries are descriptive only. They are not diagnosis, nutrition advice, medical advice, health-risk prediction, or moral evaluation.
 
+Field Review Visual Slice 1 starts the NuTuenSai Field Reflection Studio direction. The visual layer may include a warm studio hero, segmented timeframe control, soft overview chips, and a CSS-only selected-rhythm dot strip. These are presentation aids only: they do not add a chart library, correlation calculation, free-form ask, LLM call, diagnosis, scoring, or new data schema.
+
 ## Compatibility
 
 This refinement must preserve:

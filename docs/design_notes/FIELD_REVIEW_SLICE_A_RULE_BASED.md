@@ -65,6 +65,20 @@ Slice A may vary tone by selected timeframe:
 
 Timeframe voice should sit beside the evidence and should not replace numeric evidence.
 
+## Visual Slice 1 — NuTuenSai Field Reflection Studio Shell
+
+Visual Slice 1 may make Field Review feel less like a report page and more like a gentle NuTuenSai field reflection studio.
+
+Allowed presentation changes:
+
+- studio hero copy and CSS-only water-light/rhythm motif
+- segmented timeframe control for 7 days, 14 days, 30 days, and all available
+- soft overview chips derived from the same selected `Daily_Log` rows
+- CSS-only selected-rhythm dot strip using selected rows as visual anchors
+- lighter review card styling while keeping Evidence, NuTuenSai reads, and Next gentle attention visible
+
+This visual slice must remain presentation-only. It must not add a chart library, correlation calculation, relationship matrix, LLM call, free-form ask box, diagnosis wording, score/ranking system, finance interpretation, or schema change.
+
 ## Future Backlog
 
 Future slices are separate from Slice A:

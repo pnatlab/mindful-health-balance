@@ -138,6 +138,8 @@ Review cards cover hydration, sleep/recovery, load/recovery, drinks/caffeine/swe
 
 The card voice changes lightly by timeframe: 7 days is an early signal, 14 days is an emerging rhythm, 30 days is a month-level rhythm, and all available data is a long-view reflection that still respects each day's context.
 
+Visual Slice 1 starts shaping Field Review as a NuTuenSai studio experience, with a warmer hero, segmented timeframe pill, overview chips from real data, and a CSS-only selected-rhythm moment. It does not add a chart library, and evidence remains source-bound to `Daily_Log`.
+
 This page is not a chatbot, does not call an LLM, does not include free-form ask, does not calculate correlations, and does not diagnose or give medical advice. Blank fields mean not recorded, not failure or a missing score.
 
 To review an exported workbook, import the Master Excel file from `Log` first. Field Review then reads the imported Daily Log from localStorage.

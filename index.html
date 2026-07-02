@@ -544,41 +544,63 @@
     </section>
     </section>
 
-    <section class="view-panel" data-view-panel="field-review" aria-labelledby="fieldReviewViewTitle">
-      <div class="view-heading field-review-heading">
-        <p class="section-kicker" data-i18n="tabFieldReview">ประมวลข้อมูล</p>
-        <h2 id="fieldReviewViewTitle" data-i18n="fieldReviewViewTitle">ประมวลข้อมูลจาก Daily Log</h2>
-        <p class="section-helper" data-i18n="fieldReviewViewHelper">หน้านี้สรุป pattern จากข้อมูลที่บันทึกไว้เท่านั้น ไม่ใช่การวินิจฉัยหรือคำแนะนำทางการแพทย์</p>
-      </div>
-
-      <section class="control-panel field-review-controls" aria-labelledby="fieldReviewControlsTitle">
-        <div>
-          <p class="section-kicker" data-i18n="fieldReviewBoundaryKicker">Local Field Review</p>
-          <h2 id="fieldReviewControlsTitle" data-i18n="fieldReviewControlsTitle">Rule-based review</h2>
-          <p data-i18n="fieldReviewSafetyCopy">การประมวลนี้เป็นการอ่าน pattern จากข้อมูลที่พี่บันทึกไว้ ไม่ใช่การวินิจฉัย ไม่ใช่คำแนะนำทางการแพทย์ และไม่ตัดสินว่าทำดีหรือไม่ดี</p>
+    <section class="view-panel field-review-studio" data-view-panel="field-review" aria-labelledby="fieldReviewViewTitle">
+      <section class="field-studio-hero glass-card" aria-labelledby="fieldReviewViewTitle">
+        <div class="field-studio-hero-copy">
+          <p class="section-kicker" data-i18n="fieldReviewBoundaryKicker">LOCAL FIELD REVIEW</p>
+          <h2 id="fieldReviewViewTitle" data-i18n="fieldReviewViewTitle">สตูดิโอประมวลจังหวะที่พี่บันทึกไว้</h2>
+          <p class="section-helper" data-i18n="fieldReviewViewHelper">หนูตื่นสายอ่าน pattern จาก Daily Log ที่พี่บันทึกไว้ แบบไม่วินิจฉัย ไม่ตัดสิน และไม่เดาเกินข้อมูล</p>
+          <p class="field-studio-boundary" data-i18n="fieldReviewSafetyCopy">การประมวลนี้เป็นการอ่าน pattern จากข้อมูลที่พี่บันทึกไว้ ไม่ใช่การวินิจฉัย ไม่ใช่คำแนะนำทางการแพทย์ และไม่ตัดสินว่าทำดีหรือไม่ดี</p>
         </div>
-        <label class="field-review-timeframe-label" for="fieldReviewTimeframe">
-          <span data-i18n="fieldReviewTimeframeLabel">ช่วงข้อมูล</span>
-          <select id="fieldReviewTimeframe" class="field-review-timeframe-select">
-            <option value="7" data-i18n="fieldReviewTimeframe7">7 days</option>
-            <option value="14" data-i18n="fieldReviewTimeframe14">14 days</option>
-            <option value="30" data-i18n="fieldReviewTimeframe30">30 days</option>
-            <option value="all" data-i18n="fieldReviewTimeframeAll">All available</option>
-          </select>
-        </label>
+        <div class="field-studio-orb" aria-hidden="true">
+          <span class="field-studio-orb-ring"></span>
+          <span class="field-studio-orb-core"></span>
+          <span class="field-studio-orb-wave"></span>
+        </div>
+      </section>
+
+      <section class="field-studio-controls" aria-labelledby="fieldReviewControlsTitle">
+        <div>
+          <p class="section-kicker" data-i18n="fieldReviewTimeframeLabel">ช่วงข้อมูล</p>
+          <h2 id="fieldReviewControlsTitle" data-i18n="fieldReviewControlsTitle">เลือกจังหวะที่จะอ่าน</h2>
+        </div>
+        <div class="timeframe-segments" role="group" aria-label="Field Review timeframe" data-i18n-aria-label="fieldReviewTimeframeLabel">
+          <button type="button" class="timeframe-segment" data-field-review-timeframe="7" data-i18n="fieldReviewTimeframe7">7 วัน</button>
+          <button type="button" class="timeframe-segment" data-field-review-timeframe="14" data-i18n="fieldReviewTimeframe14">14 วัน</button>
+          <button type="button" class="timeframe-segment" data-field-review-timeframe="30" data-i18n="fieldReviewTimeframe30">30 วัน</button>
+          <button type="button" class="timeframe-segment" data-field-review-timeframe="all" data-i18n="fieldReviewTimeframeAll">ทั้งหมดที่มี</button>
+        </div>
+        <select id="fieldReviewTimeframe" class="field-review-timeframe-select is-hidden" aria-hidden="true" tabindex="-1">
+          <option value="7" data-i18n="fieldReviewTimeframe7">7 days</option>
+          <option value="14" data-i18n="fieldReviewTimeframe14">14 days</option>
+          <option value="30" data-i18n="fieldReviewTimeframe30">30 days</option>
+          <option value="all" data-i18n="fieldReviewTimeframeAll">All available</option>
+        </select>
       </section>
 
       <section class="field-review-status-panel glass-card" aria-live="polite">
         <div class="card-heading">
           <div>
-            <p class="section-kicker" data-i18n="fieldReviewStatusKicker">Daily_Log source</p>
-            <h2 data-i18n="fieldReviewStatusTitle">Selected data</h2>
+            <p class="section-kicker" data-i18n="fieldReviewStatusKicker">อ่านจาก Daily_Log</p>
+            <h2 data-i18n="fieldReviewStatusTitle">จังหวะข้อมูลที่เลือก</h2>
           </div>
           <span class="soft-badge" id="fieldReviewDataStatus">0 logs</span>
         </div>
-        <p class="table-helper" data-i18n="fieldReviewSourceNote">Field Review reads saved Daily_Log rows in this browser. Import a Master Excel file from Log first if you want to review that workbook.</p>
+        <div class="rhythm-overview-strip" id="fieldReviewOverviewStrip"></div>
+        <p class="table-helper" data-i18n="fieldReviewSourceNote">Field Review อ่าน Daily_Log ที่บันทึกไว้ใน browser นี้ ถ้าต้องการ review workbook ให้ import Master Excel จากหน้า Log ก่อน</p>
         <p class="field-review-empty is-hidden" id="fieldReviewEmptyState" data-i18n="fieldReviewEmptyState">ยังไม่มี Daily Log ให้ประมวล</p>
         <p class="field-review-thin is-hidden" id="fieldReviewThinState" data-i18n="fieldReviewThinState">ข้อมูลยังบางมาก จึงอ่านได้แค่สัญญาณเบื้องต้น</p>
+      </section>
+
+      <section class="field-rhythm-moment glass-card" aria-labelledby="fieldRhythmTitle">
+        <div class="card-heading">
+          <div>
+            <p class="section-kicker" data-i18n="fieldRhythmKicker">Rhythm field</p>
+            <h2 id="fieldRhythmTitle" data-i18n="fieldRhythmTitle">จังหวะข้อมูลที่เลือก</h2>
+          </div>
+        </div>
+        <div class="rhythm-dot-line" id="fieldRhythmDotLine" aria-hidden="true"></div>
+        <p class="field-rhythm-placeholder is-hidden" id="fieldRhythmPlaceholder" data-i18n="fieldRhythmPlaceholder">ยังไม่มีจังหวะข้อมูลให้แสดง</p>
       </section>
 
       <section class="field-review-card-grid" id="fieldReviewCards" aria-live="polite"></section>

@@ -128,10 +128,10 @@ const translations = {
     logViewTitle: "Log & Export",
     logViewHelper: "ดูบันทึกย้อนหลังและจัดการไฟล์ backup ของระบบ",
     logControlsTitle: "Backup Controls",
-    fieldReviewViewTitle: "ประมวลข้อมูลจาก Daily Log",
-    fieldReviewViewHelper: "หน้านี้สรุป pattern จากข้อมูลที่บันทึกไว้เท่านั้น ไม่ใช่การวินิจฉัยหรือคำแนะนำทางการแพทย์",
-    fieldReviewBoundaryKicker: "Local Field Review",
-    fieldReviewControlsTitle: "Rule-based review",
+    fieldReviewViewTitle: "สตูดิโอประมวลจังหวะที่พี่บันทึกไว้",
+    fieldReviewViewHelper: "หนูตื่นสายอ่าน pattern จาก Daily Log ที่พี่บันทึกไว้ แบบไม่วินิจฉัย ไม่ตัดสิน และไม่เดาเกินข้อมูล",
+    fieldReviewBoundaryKicker: "LOCAL FIELD REVIEW",
+    fieldReviewControlsTitle: "เลือกจังหวะที่จะอ่าน",
     fieldReviewSafetyCopy: "การประมวลนี้เป็นการอ่าน pattern จากข้อมูลที่พี่บันทึกไว้ ไม่ใช่การวินิจฉัย ไม่ใช่คำแนะนำทางการแพทย์ และไม่ตัดสินว่าทำดีหรือไม่ดี",
     fieldReviewTimeframeLabel: "ช่วงข้อมูล",
     fieldReviewTimeframe7: "7 วัน",
@@ -139,7 +139,7 @@ const translations = {
     fieldReviewTimeframe30: "30 วัน",
     fieldReviewTimeframeAll: "ทั้งหมดที่มี",
     fieldReviewStatusKicker: "อ่านจาก Daily_Log",
-    fieldReviewStatusTitle: "ข้อมูลที่เลือก",
+    fieldReviewStatusTitle: "จังหวะข้อมูลที่เลือก",
     fieldReviewSourceNote: "Field Review อ่าน Daily_Log ที่บันทึกไว้ใน browser นี้ ถ้าต้องการ review workbook ให้ import Master Excel จากหน้า Log ก่อน",
     fieldReviewEmptyState: "ยังไม่มี Daily Log ให้ประมวล",
     fieldReviewThinState: "ข้อมูลยังบางมาก จึงอ่านได้แค่สัญญาณเบื้องต้น",
@@ -183,6 +183,16 @@ const translations = {
     fieldReviewMissingItemWater: "Water_ml {count}",
     fieldReviewMissingItemActivities: "Activities {count}",
     fieldReviewMissingItemMindNote: "Mind Note {count}",
+    fieldReviewOverviewReviewedDays: "วันที่อ่าน",
+    fieldReviewOverviewAverageWater: "น้ำเฉลี่ย",
+    fieldReviewOverviewHighLoad: "วัน load สูง",
+    fieldReviewOverviewLowRecovery: "วัน sleep/recovery บาง",
+    fieldReviewOverviewDrinkLoad: "วันมีเครื่องดื่มเด่น",
+    fieldReviewOverviewMindNote: "วันมี Mind Note",
+    fieldReviewOverviewNoValue: "ยังว่าง",
+    fieldRhythmKicker: "Rhythm field",
+    fieldRhythmTitle: "จังหวะข้อมูลที่เลือก",
+    fieldRhythmPlaceholder: "ยังไม่มีจังหวะข้อมูลให้แสดง",
     fieldReviewEvidenceLabel: "หลักฐานจาก Daily_Log",
     fieldReviewReadingLabel: "หนูตื่นสายอ่านว่า",
     fieldReviewNextAttentionLabel: "รอบถัดไปลองสังเกต",
@@ -968,18 +978,18 @@ const translations = {
     logViewTitle: "Log & Export",
     logViewHelper: "Review saved logs and manage your backup files.",
     logControlsTitle: "Backup Controls",
-    fieldReviewViewTitle: "Field Review from Daily Log",
-    fieldReviewViewHelper: "This page reviews patterns from saved log data only. It is not diagnosis or medical advice.",
-    fieldReviewBoundaryKicker: "Local Field Review",
-    fieldReviewControlsTitle: "Rule-based review",
+    fieldReviewViewTitle: "NuTuenSai Field Reflection Studio",
+    fieldReviewViewHelper: "NuTuenSai reads patterns from saved Daily Log data without diagnosis, judgment, or guessing beyond the record.",
+    fieldReviewBoundaryKicker: "LOCAL FIELD REVIEW",
+    fieldReviewControlsTitle: "Choose the rhythm to read",
     fieldReviewSafetyCopy: "This review reads patterns from saved data. It is not diagnosis, medical advice, or a judgment of good or bad performance.",
     fieldReviewTimeframeLabel: "Timeframe",
     fieldReviewTimeframe7: "7 days",
     fieldReviewTimeframe14: "14 days",
     fieldReviewTimeframe30: "30 days",
-    fieldReviewTimeframeAll: "All available",
+    fieldReviewTimeframeAll: "All",
     fieldReviewStatusKicker: "Daily_Log source",
-    fieldReviewStatusTitle: "Selected data",
+    fieldReviewStatusTitle: "Selected rhythm",
     fieldReviewSourceNote: "Field Review reads saved Daily_Log rows in this browser. Import a Master Excel file from Log first if you want to review that workbook.",
     fieldReviewEmptyState: "No Daily Log data available for review yet.",
     fieldReviewThinState: "The data is still thin, so this review only shows early signals.",
@@ -1023,6 +1033,16 @@ const translations = {
     fieldReviewMissingItemWater: "Water_ml {count}",
     fieldReviewMissingItemActivities: "Activities {count}",
     fieldReviewMissingItemMindNote: "Mind Note {count}",
+    fieldReviewOverviewReviewedDays: "Reviewed days",
+    fieldReviewOverviewAverageWater: "Average water",
+    fieldReviewOverviewHighLoad: "High-load days",
+    fieldReviewOverviewLowRecovery: "Low sleep/recovery days",
+    fieldReviewOverviewDrinkLoad: "Drink-context days",
+    fieldReviewOverviewMindNote: "Mind Note days",
+    fieldReviewOverviewNoValue: "Not yet",
+    fieldRhythmKicker: "Rhythm field",
+    fieldRhythmTitle: "Selected rhythm",
+    fieldRhythmPlaceholder: "No selected rhythm to show yet.",
     fieldReviewEvidenceLabel: "Evidence from Daily_Log",
     fieldReviewReadingLabel: "NuTuenSai reads",
     fieldReviewNextAttentionLabel: "Next gentle attention",
@@ -1808,18 +1828,18 @@ const translations = {
     logViewTitle: "记录与导出",
     logViewHelper: "查看已保存的记录，并管理备份文件。",
     logControlsTitle: "备份控制",
-    fieldReviewViewTitle: "从 Daily Log 回顾场域",
-    fieldReviewViewHelper: "此页面只根据已保存的记录回顾 pattern，不是诊断，也不是医疗建议。",
-    fieldReviewBoundaryKicker: "本机 Field Review",
-    fieldReviewControlsTitle: "规则式回顾",
+    fieldReviewViewTitle: "NuTuenSai 场域回顾工作室",
+    fieldReviewViewHelper: "NuTuenSai 温柔读取已保存 Daily Log 的 pattern，不诊断、不评判，也不超出记录去猜测。",
+    fieldReviewBoundaryKicker: "LOCAL FIELD REVIEW",
+    fieldReviewControlsTitle: "选择要读取的节奏",
     fieldReviewSafetyCopy: "这个回顾只读取已保存数据里的 pattern，不是诊断、医疗建议，也不是对表现好坏的判断。",
     fieldReviewTimeframeLabel: "时间范围",
     fieldReviewTimeframe7: "7 天",
     fieldReviewTimeframe14: "14 天",
     fieldReviewTimeframe30: "30 天",
-    fieldReviewTimeframeAll: "全部可用",
+    fieldReviewTimeframeAll: "全部",
     fieldReviewStatusKicker: "读取 Daily_Log",
-    fieldReviewStatusTitle: "已选择的数据",
+    fieldReviewStatusTitle: "所选节奏",
     fieldReviewSourceNote: "Field Review 读取本浏览器中保存的 Daily_Log。如果想回顾某个 workbook，请先在 Log 页面导入 Master Excel。",
     fieldReviewEmptyState: "目前还没有 Daily Log 可以回顾。",
     fieldReviewThinState: "数据仍然很薄，所以这里只显示早期信号。",
@@ -1863,6 +1883,16 @@ const translations = {
     fieldReviewMissingItemWater: "Water_ml {count}",
     fieldReviewMissingItemActivities: "Activities {count}",
     fieldReviewMissingItemMindNote: "Mind Note {count}",
+    fieldReviewOverviewReviewedDays: "读取天数",
+    fieldReviewOverviewAverageWater: "平均饮水",
+    fieldReviewOverviewHighLoad: "高 load 日",
+    fieldReviewOverviewLowRecovery: "Sleep/recovery 较薄日",
+    fieldReviewOverviewDrinkLoad: "饮品背景日",
+    fieldReviewOverviewMindNote: "Mind Note 日",
+    fieldReviewOverviewNoValue: "尚未记录",
+    fieldRhythmKicker: "Rhythm field",
+    fieldRhythmTitle: "所选节奏",
+    fieldRhythmPlaceholder: "还没有可显示的数据节奏。",
     fieldReviewEvidenceLabel: "来自 Daily_Log 的依据",
     fieldReviewReadingLabel: "NuTuenSai 读取为",
     fieldReviewNextAttentionLabel: "下次温柔留意",
@@ -3352,6 +3382,15 @@ function bindEvents() {
 	  });
 	  document.querySelector("#importExcelFile").addEventListener("change", importMasterExcel);
 	  document.querySelector("#fieldReviewTimeframe")?.addEventListener("change", renderFieldReview);
+  document.querySelector(".timeframe-segments")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-field-review-timeframe]");
+    if (!button) return;
+    const timeframeSelect = document.querySelector("#fieldReviewTimeframe");
+    if (timeframeSelect) {
+      timeframeSelect.value = button.dataset.fieldReviewTimeframe;
+    }
+    renderFieldReview();
+  });
 	}
 
 function initWelcome() {
@@ -8571,6 +8610,7 @@ function getFieldReviewStats(rows = [], totalRows = rows.length) {
   const highLoadRows = selectedRows.filter(isHighLoadRow);
   const lowSleepRows = selectedRows.filter(hasLowSleepRecoverySignal);
   const lowEnergyRows = selectedRows.filter((row) => isLowEnergyValue(row.Energy));
+  const drinkContextRows = selectedRows.filter((row) => Number(row.Caffeine_Score) > 0 || rowHasSweetDrinkLoad(row));
 
   return {
     rows: selectedRows,
@@ -8595,6 +8635,7 @@ function getFieldReviewStats(rows = [], totalRows = rows.length) {
     highLoadLowEnergyRows: highLoadRows.filter((row) => isLowEnergyValue(row.Energy)),
     caffeineDays: selectedRows.filter((row) => Number(row.Caffeine_Score) > 0).length,
     sweetDrinkDays: selectedRows.filter(rowHasSweetDrinkLoad).length,
+    drinkContextDays: drinkContextRows.length,
     highSugarDays: selectedRows.filter(rowHasHighSugarLoad).length,
     mindNoteDays: selectedRows.filter((row) => String(row.Mind_Note_Text || "").trim()).length,
     supportDays: selectedRows.filter((row) => String(row.Mind_Note_Support || "").trim()).length,
@@ -8666,12 +8707,13 @@ function buildNuTuenSaiNextAttention(cardType, stats) {
   return t(keyByType[cardType]);
 }
 
-function createFieldReviewCard(titleKey, evidence, reading, nextAttention) {
+function createFieldReviewCard(titleKey, evidence, reading, nextAttention, motif = "") {
   return {
     title: t(titleKey),
     evidence,
     reading,
-    nextAttention
+    nextAttention,
+    motif
   };
 }
 
@@ -8692,7 +8734,8 @@ function buildHydrationReviewCard(rows = [], timeframe = "7") {
     "fieldReviewHydrationTitle",
     evidence,
     buildNuTuenSaiCardReading("hydration", stats, timeframe),
-    buildNuTuenSaiNextAttention("hydration", stats)
+    buildNuTuenSaiNextAttention("hydration", stats),
+    "💧"
   );
 }
 
@@ -8705,7 +8748,8 @@ function buildSleepRecoveryReviewCard(rows = [], timeframe = "7") {
       lowEnergy: formatReviewNumber(stats.lowEnergyRows.length)
     }),
     buildNuTuenSaiCardReading("sleep", stats, timeframe),
-    buildNuTuenSaiNextAttention("sleep", stats)
+    buildNuTuenSaiNextAttention("sleep", stats),
+    "☾"
   );
 }
 
@@ -8719,7 +8763,8 @@ function buildLoadRecoveryReviewCard(rows = [], timeframe = "7") {
       highLoadLowEnergy: formatReviewNumber(stats.highLoadLowEnergyRows.length)
     }),
     buildNuTuenSaiCardReading("load", stats, timeframe),
-    buildNuTuenSaiNextAttention("load", stats)
+    buildNuTuenSaiNextAttention("load", stats),
+    "〰"
   );
 }
 
@@ -8733,7 +8778,8 @@ function buildDrinksReviewCard(rows = [], timeframe = "7") {
       highSugarDays: formatReviewNumber(stats.highSugarDays)
     }),
     buildNuTuenSaiCardReading("drinks", stats, timeframe),
-    buildNuTuenSaiNextAttention("drinks", stats)
+    buildNuTuenSaiNextAttention("drinks", stats),
+    "☕"
   );
 }
 
@@ -8747,7 +8793,8 @@ function buildMindNoteReviewCard(rows = [], timeframe = "7") {
       practiceNoteDays: formatReviewNumber(stats.practiceNoteDays)
     }),
     buildNuTuenSaiCardReading("mind", stats, timeframe),
-    buildNuTuenSaiNextAttention("mind", stats)
+    buildNuTuenSaiNextAttention("mind", stats),
+    "🩵"
   );
 }
 
@@ -8766,7 +8813,8 @@ function buildMissingDataReviewCard(rows = [], timeframe = "7") {
       ? t("fieldReviewMissingEvidence", { items: missingItems.join(" | ") })
       : t("fieldReviewMissingNone"),
     buildNuTuenSaiCardReading("missing", stats, timeframe),
-    buildNuTuenSaiNextAttention("missing", stats)
+    buildNuTuenSaiNextAttention("missing", stats),
+    "·"
   );
 }
 
@@ -8780,6 +8828,94 @@ function buildFieldReviewCards(rows = [], timeframe = "7") {
     buildMindNoteReviewCard(rows, timeframe),
     buildMissingDataReviewCard(rows, timeframe)
   ];
+}
+
+function updateFieldReviewTimeframeSegments(timeframe = "7") {
+  document.querySelectorAll("[data-field-review-timeframe]").forEach((button) => {
+    const isActive = button.dataset.fieldReviewTimeframe === timeframe;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
+function renderFieldReviewOverview(rows = [], allRows = []) {
+  const overview = document.querySelector("#fieldReviewOverviewStrip");
+  if (!overview) return;
+  const stats = getFieldReviewStats(rows, allRows.length);
+  const emptyValue = t("fieldReviewOverviewNoValue");
+  const items = [
+    {
+      label: t("fieldReviewOverviewReviewedDays"),
+      value: rows.length ? formatReviewNumber(rows.length) : emptyValue
+    },
+    {
+      label: t("fieldReviewOverviewAverageWater"),
+      value: stats.waterValues.length ? `${formatReviewNumber(stats.averageWater)} ml` : emptyValue
+    },
+    {
+      label: t("fieldReviewOverviewHighLoad"),
+      value: rows.length ? formatReviewNumber(stats.highLoadRows.length) : emptyValue
+    },
+    {
+      label: t("fieldReviewOverviewLowRecovery"),
+      value: rows.length ? formatReviewNumber(stats.lowSleepRows.length) : emptyValue
+    },
+    {
+      label: t("fieldReviewOverviewDrinkLoad"),
+      value: rows.length ? formatReviewNumber(stats.drinkContextDays) : emptyValue
+    },
+    {
+      label: t("fieldReviewOverviewMindNote"),
+      value: rows.length ? formatReviewNumber(stats.mindNoteDays) : emptyValue
+    }
+  ];
+
+  overview.innerHTML = items.map((item) => `
+    <div class="soft-insight-chip">
+      <span>${escapeHtml(item.label)}</span>
+      <strong>${escapeHtml(item.value)}</strong>
+    </div>
+  `).join("");
+}
+
+function getRhythmDotMeta(row) {
+  const normalizedRow = normalizeLogRow(row);
+  const water = Number(normalizedRow.Water_ml) || 0;
+  const hasWater = water > 0;
+  const hasLoad = isHighLoadRow(normalizedRow);
+  const hasNote = Boolean(String(normalizedRow.Mind_Note_Text || "").trim());
+  const signalCount = [hasWater, hasLoad, hasNote].filter(Boolean).length;
+  return {
+    className: [
+      hasWater ? "has-water" : "",
+      hasLoad ? "has-load" : "",
+      hasNote ? "has-note" : "",
+      signalCount ? "" : "is-quiet"
+    ].filter(Boolean).join(" "),
+    size: 8 + signalCount * 3,
+    alpha: signalCount ? Math.min(0.96, 0.45 + signalCount * 0.16) : 0.28
+  };
+}
+
+function renderFieldRhythmMoment(rows = []) {
+  const line = document.querySelector("#fieldRhythmDotLine");
+  const placeholder = document.querySelector("#fieldRhythmPlaceholder");
+  if (!line || !placeholder) return;
+
+  const visibleRows = rows.slice(-30);
+  const hasRows = visibleRows.length > 0;
+  placeholder.classList.toggle("is-hidden", hasRows);
+  line.classList.toggle("is-empty", !hasRows);
+
+  if (!hasRows) {
+    line.innerHTML = "";
+    return;
+  }
+
+  line.innerHTML = visibleRows.map((row) => {
+    const meta = getRhythmDotMeta(row);
+    return `<span class="rhythm-dot ${meta.className}" style="--dot-size: ${meta.size}px; --dot-alpha: ${meta.alpha};"></span>`;
+  }).join("");
 }
 
 function renderFieldReview() {
@@ -8796,6 +8932,10 @@ function renderFieldReview() {
   const hasRows = rows.length > 0;
   const isThin = hasRows && rows.length < 3;
 
+  updateFieldReviewTimeframeSegments(timeframe);
+  renderFieldReviewOverview(rows, allRows);
+  renderFieldRhythmMoment(rows);
+
   status.textContent = hasRows
     ? timeframe === "all"
       ? t("fieldReviewAllDataStatus", { used: formatReviewNumber(rows.length) })
@@ -8808,8 +8948,9 @@ function renderFieldReview() {
   emptyState.classList.toggle("is-hidden", hasRows);
   thinState.classList.toggle("is-hidden", !isThin);
   container.innerHTML = buildFieldReviewCards(rows, timeframe).map((card) => `
-    <article class="glass-card field-review-card">
+    <article class="glass-card field-review-card studio-review-card">
       <div class="card-heading">
+        <span class="field-review-card-motif" aria-hidden="true">${escapeHtml(card.motif)}</span>
         <div>
           <p class="section-kicker">${escapeHtml(t("tabFieldReview"))}</p>
           <h3>${escapeHtml(card.title)}</h3>
@@ -8821,11 +8962,11 @@ function renderFieldReview() {
       </div>
       <div class="field-review-card-section field-review-card-reading">
         <p class="field-review-card-label">${escapeHtml(t("fieldReviewReadingLabel"))}</p>
-        <p>${escapeHtml(card.reading)}</p>
+        <p class="nuntuensai-reading-panel">${escapeHtml(card.reading)}</p>
       </div>
       <div class="field-review-card-section field-review-card-next">
         <p class="field-review-card-label">${escapeHtml(t("fieldReviewNextAttentionLabel"))}</p>
-        <p>${escapeHtml(card.nextAttention)}</p>
+        <p class="next-attention-ribbon">${escapeHtml(card.nextAttention)}</p>
       </div>
     </article>
   `).join("");

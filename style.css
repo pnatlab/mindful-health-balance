@@ -3212,20 +3212,134 @@ body[data-theme="dark"] .reflection-zen-button {
   padding: 22px;
 }
 
-.field-review-heading {
-  max-width: 760px;
-}
-
-.field-review-controls {
-  align-items: center;
-}
-
-.field-review-timeframe-label {
+.field-review-studio {
   display: grid;
-  gap: 8px;
-  min-width: min(100%, 220px);
+  gap: 18px;
+}
+
+.field-studio-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(140px, 210px);
+  gap: 24px;
+  align-items: center;
+  overflow: hidden;
+  padding: 28px;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(101, 200, 176, 0.18), transparent 34%),
+    radial-gradient(circle at 90% 10%, rgba(120, 168, 255, 0.18), transparent 30%),
+    var(--card-bg);
+}
+
+.field-studio-hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+}
+
+.field-studio-hero h2 {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 3.1rem);
+  line-height: 1.08;
+}
+
+.field-studio-boundary {
+  margin: 14px 0 0;
   color: var(--text-soft);
-  font-weight: 800;
+  line-height: 1.7;
+}
+
+.field-studio-orb {
+  position: relative;
+  justify-self: center;
+  width: min(34vw, 178px);
+  min-width: 128px;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 38% 32%, rgba(255, 255, 255, 0.92), rgba(190, 244, 232, 0.48) 35%, rgba(120, 168, 255, 0.16) 72%, transparent 74%);
+  box-shadow: 0 24px 70px rgba(44, 148, 132, 0.24);
+}
+
+.field-studio-orb-ring,
+.field-studio-orb-core,
+.field-studio-orb-wave {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.field-studio-orb-ring {
+  border: 1px solid rgba(101, 200, 176, 0.34);
+  transform: scale(1.08);
+}
+
+.field-studio-orb-core {
+  inset: 24%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.86), rgba(101, 200, 176, 0.28));
+  box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.72);
+}
+
+.field-studio-orb-wave {
+  inset: 14%;
+  border: 1px solid rgba(120, 168, 255, 0.24);
+  transform: rotate(-12deg) scaleX(1.18);
+}
+
+.field-studio-controls {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 2px;
+}
+
+.field-studio-controls h2 {
+  margin: 2px 0 0;
+  font-size: 1.12rem;
+}
+
+.timeframe-segments {
+  display: inline-flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 5px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.44);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+}
+
+body[data-theme="dark"] .timeframe-segments {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.timeframe-segment {
+  min-height: 38px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--text-soft);
+  background: transparent;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.timeframe-segment:hover {
+  color: var(--text-main);
+  transform: translateY(-1px);
+}
+
+.timeframe-segment.is-active {
+  color: var(--text-main);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(209, 248, 240, 0.78));
+  box-shadow: 0 10px 24px rgba(44, 148, 132, 0.16);
+}
+
+body[data-theme="dark"] .timeframe-segment.is-active {
+  background: rgba(101, 200, 176, 0.18);
 }
 
 .field-review-timeframe-select {
@@ -3241,8 +3355,129 @@ body[data-theme="dark"] .reflection-zen-button {
 }
 
 .field-review-status-panel {
-  margin-top: 18px;
   padding: 22px;
+}
+
+.rhythm-overview-strip {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0 14px;
+}
+
+.soft-insight-chip {
+  min-height: 78px;
+  padding: 12px;
+  border: 1px solid rgba(101, 200, 176, 0.22);
+  border-radius: 14px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(230, 248, 244, 0.46));
+  color: var(--text-soft);
+  box-shadow: 0 10px 28px rgba(32, 112, 104, 0.07);
+}
+
+body[data-theme="dark"] .soft-insight-chip {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.soft-insight-chip span,
+.soft-insight-chip strong {
+  display: block;
+}
+
+.soft-insight-chip span {
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.soft-insight-chip strong {
+  margin-top: 8px;
+  color: var(--text-main);
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.field-rhythm-moment {
+  position: relative;
+  overflow: hidden;
+  padding: 22px;
+}
+
+.field-rhythm-moment::before {
+  content: "";
+  position: absolute;
+  inset: auto 20px 18px;
+  height: 48px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse at center, rgba(101, 200, 176, 0.16), transparent 68%);
+  pointer-events: none;
+}
+
+.rhythm-dot-line {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 58px;
+  padding: 16px;
+  overflow-x: auto;
+  border: 1px solid rgba(101, 200, 176, 0.18);
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, transparent, rgba(120, 168, 255, 0.1), transparent),
+    rgba(255, 255, 255, 0.32);
+}
+
+body[data-theme="dark"] .rhythm-dot-line {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.rhythm-dot-line.is-empty {
+  display: none;
+}
+
+.rhythm-dot {
+  flex: 0 0 auto;
+  width: var(--dot-size, 10px);
+  height: var(--dot-size, 10px);
+  border-radius: 999px;
+  opacity: var(--dot-alpha, 0.54);
+  background: rgba(101, 200, 176, 0.55);
+  box-shadow: 0 0 0 4px rgba(101, 200, 176, 0.08);
+  animation: rhythmDotFade 360ms ease both;
+}
+
+.rhythm-dot.has-load {
+  background: rgba(120, 168, 255, 0.68);
+}
+
+.rhythm-dot.has-note {
+  box-shadow: 0 0 0 4px rgba(101, 200, 176, 0.1), 0 0 18px rgba(101, 200, 176, 0.24);
+}
+
+.rhythm-dot.is-quiet {
+  background: rgba(144, 154, 163, 0.38);
+  box-shadow: 0 0 0 4px rgba(144, 154, 163, 0.08);
+}
+
+.field-rhythm-placeholder {
+  position: relative;
+  z-index: 1;
+  margin: 12px 0 0;
+  color: var(--text-soft);
+}
+
+@keyframes rhythmDotFade {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.92);
+  }
+  to {
+    opacity: var(--dot-alpha, 0.54);
+    transform: translateY(0) scale(1);
+  }
 }
 
 .field-review-empty,
@@ -3270,6 +3505,40 @@ body[data-theme="dark"] .field-review-thin {
 
 .field-review-card {
   padding: 20px;
+}
+
+.studio-review-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(101, 200, 176, 0.18);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.studio-review-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: linear-gradient(180deg, rgba(101, 200, 176, 0.56), rgba(120, 168, 255, 0.28));
+}
+
+.studio-review-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(101, 200, 176, 0.34);
+  box-shadow: 0 18px 42px rgba(32, 112, 104, 0.12);
+}
+
+.field-review-card-motif {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(101, 200, 176, 0.22);
+  border-radius: 999px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(224, 249, 243, 0.46));
+  box-shadow: 0 10px 22px rgba(44, 148, 132, 0.1);
+  font-size: 1.1rem;
 }
 
 .field-review-card h3 {
@@ -3311,6 +3580,20 @@ body[data-theme="dark"] .field-review-card-next {
 
 .field-review-card-next {
   border-left-color: rgba(120, 168, 255, 0.48);
+}
+
+.nuntuensai-reading-panel,
+.next-attention-ribbon {
+  line-height: 1.72;
+}
+
+.nuntuensai-reading-panel {
+  color: var(--text-main);
+  font-weight: 760;
+}
+
+.next-attention-ribbon {
+  color: var(--text-soft);
 }
 
 .field-review-card-label {
@@ -3667,6 +3950,33 @@ td:nth-child(10) {
 	    padding: 18px;
 	  }
 
+  .field-studio-hero {
+    grid-template-columns: 1fr;
+    padding: 22px;
+  }
+
+  .field-studio-orb {
+    width: 132px;
+    justify-self: start;
+  }
+
+  .field-studio-controls {
+    display: grid;
+    gap: 12px;
+  }
+
+  .timeframe-segments {
+    width: 100%;
+  }
+
+  .timeframe-segment {
+    flex: 1 1 calc(50% - 4px);
+  }
+
+  .rhythm-overview-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
 	  .field-review-card-grid {
 	    grid-template-columns: 1fr;
 	  }
@@ -3711,6 +4021,26 @@ td:nth-child(10) {
 	  .field-review-status-panel {
 	    padding: 18px;
 	  }
+
+  .field-studio-hero {
+    padding: 20px;
+  }
+
+  .field-studio-hero h2 {
+    font-size: 1.65rem;
+  }
+
+  .rhythm-overview-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .soft-insight-chip {
+    min-height: auto;
+  }
+
+  .rhythm-dot-line {
+    border-radius: 18px;
+  }
 
   .card-heading {
     display: grid;
