@@ -39,6 +39,7 @@
     <nav class="view-tabs" data-i18n-aria-label="viewTabsAria" aria-label="Mindful Health Balance views">
       <button type="button" data-view="today" data-i18n="tabToday">วันนี้</button>
       <button type="button" data-view="reflection" data-i18n="tabReflection">Reflection/NuTuenSai</button>
+      <button type="button" data-view="field-review" data-i18n="tabFieldReview">ประมวลข้อมูล</button>
       <button type="button" data-view="log" data-i18n="tabLog">Log</button>
     </nav>
     <div class="daily-save-status is-empty" id="dailySaveStatus" aria-live="polite">
@@ -541,6 +542,46 @@
         <button type="button" class="primary-button btn-save-log" id="saveDailyLog" data-i18n="saveDailyLog">Save Today’s Reflection</button>
       </div>
     </section>
+    </section>
+
+    <section class="view-panel" data-view-panel="field-review" aria-labelledby="fieldReviewViewTitle">
+      <div class="view-heading field-review-heading">
+        <p class="section-kicker" data-i18n="tabFieldReview">ประมวลข้อมูล</p>
+        <h2 id="fieldReviewViewTitle" data-i18n="fieldReviewViewTitle">ประมวลข้อมูลจาก Daily Log</h2>
+        <p class="section-helper" data-i18n="fieldReviewViewHelper">หน้านี้สรุป pattern จากข้อมูลที่บันทึกไว้เท่านั้น ไม่ใช่การวินิจฉัยหรือคำแนะนำทางการแพทย์</p>
+      </div>
+
+      <section class="control-panel field-review-controls" aria-labelledby="fieldReviewControlsTitle">
+        <div>
+          <p class="section-kicker" data-i18n="fieldReviewBoundaryKicker">Local Field Review</p>
+          <h2 id="fieldReviewControlsTitle" data-i18n="fieldReviewControlsTitle">Rule-based review</h2>
+          <p data-i18n="fieldReviewSafetyCopy">การประมวลนี้เป็นการอ่าน pattern จากข้อมูลที่พี่บันทึกไว้ ไม่ใช่การวินิจฉัย ไม่ใช่คำแนะนำทางการแพทย์ และไม่ตัดสินว่าทำดีหรือไม่ดี</p>
+        </div>
+        <label class="field-review-timeframe-label" for="fieldReviewTimeframe">
+          <span data-i18n="fieldReviewTimeframeLabel">ช่วงข้อมูล</span>
+          <select id="fieldReviewTimeframe" class="field-review-timeframe-select">
+            <option value="7" data-i18n="fieldReviewTimeframe7">7 days</option>
+            <option value="14" data-i18n="fieldReviewTimeframe14">14 days</option>
+            <option value="30" data-i18n="fieldReviewTimeframe30">30 days</option>
+            <option value="all" data-i18n="fieldReviewTimeframeAll">All available</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="field-review-status-panel glass-card" aria-live="polite">
+        <div class="card-heading">
+          <div>
+            <p class="section-kicker" data-i18n="fieldReviewStatusKicker">Daily_Log source</p>
+            <h2 data-i18n="fieldReviewStatusTitle">Selected data</h2>
+          </div>
+          <span class="soft-badge" id="fieldReviewDataStatus">0 logs</span>
+        </div>
+        <p class="table-helper" data-i18n="fieldReviewSourceNote">Field Review reads saved Daily_Log rows in this browser. Import a Master Excel file from Log first if you want to review that workbook.</p>
+        <p class="field-review-empty is-hidden" id="fieldReviewEmptyState" data-i18n="fieldReviewEmptyState">ยังไม่มี Daily Log ให้ประมวล</p>
+        <p class="field-review-thin is-hidden" id="fieldReviewThinState" data-i18n="fieldReviewThinState">ข้อมูลยังบางมาก จึงอ่านได้แค่สัญญาณเบื้องต้น</p>
+      </section>
+
+      <section class="field-review-card-grid" id="fieldReviewCards" aria-live="polite"></section>
     </section>
 
     <section class="view-panel" data-view-panel="log" aria-labelledby="logViewTitle">

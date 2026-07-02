@@ -65,6 +65,7 @@ const translations = {
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
     tabReflection: "Reflection/NuTuenSai",
+    tabFieldReview: "ประมวลข้อมูล",
     tabLog: "Log",
     todayViewTitle: "สัญญาณวันนี้",
     todayStepOneLabel: "สัญญาณวันนี้ 1/2",
@@ -127,6 +128,61 @@ const translations = {
     logViewTitle: "Log & Export",
     logViewHelper: "ดูบันทึกย้อนหลังและจัดการไฟล์ backup ของระบบ",
     logControlsTitle: "Backup Controls",
+    fieldReviewViewTitle: "ประมวลข้อมูลจาก Daily Log",
+    fieldReviewViewHelper: "หน้านี้สรุป pattern จากข้อมูลที่บันทึกไว้เท่านั้น ไม่ใช่การวินิจฉัยหรือคำแนะนำทางการแพทย์",
+    fieldReviewBoundaryKicker: "Local Field Review",
+    fieldReviewControlsTitle: "Rule-based review",
+    fieldReviewSafetyCopy: "การประมวลนี้เป็นการอ่าน pattern จากข้อมูลที่พี่บันทึกไว้ ไม่ใช่การวินิจฉัย ไม่ใช่คำแนะนำทางการแพทย์ และไม่ตัดสินว่าทำดีหรือไม่ดี",
+    fieldReviewTimeframeLabel: "ช่วงข้อมูล",
+    fieldReviewTimeframe7: "7 วัน",
+    fieldReviewTimeframe14: "14 วัน",
+    fieldReviewTimeframe30: "30 วัน",
+    fieldReviewTimeframeAll: "ทั้งหมดที่มี",
+    fieldReviewStatusKicker: "อ่านจาก Daily_Log",
+    fieldReviewStatusTitle: "ข้อมูลที่เลือก",
+    fieldReviewSourceNote: "Field Review อ่าน Daily_Log ที่บันทึกไว้ใน browser นี้ ถ้าต้องการ review workbook ให้ import Master Excel จากหน้า Log ก่อน",
+    fieldReviewEmptyState: "ยังไม่มี Daily Log ให้ประมวล",
+    fieldReviewThinState: "ข้อมูลยังบางมาก จึงอ่านได้แค่สัญญาณเบื้องต้น",
+    fieldReviewNoDataStatus: "ยังไม่มีข้อมูลให้ประมวล",
+    fieldReviewDataStatus: "ใช้ข้อมูล {used} วันจากทั้งหมด {total} วัน",
+    fieldReviewAllDataStatus: "ใช้ข้อมูลทั้งหมด {used} วัน",
+    fieldReviewRowsEvidence: "{count} วันในช่วงที่เลือก",
+    fieldReviewHydrationTitle: "Hydration pattern",
+    fieldReviewHydrationEmpty: "ยังไม่มีข้อมูลน้ำดื่มในช่วงที่เลือก จึงอ่าน hydration ได้อย่างจำกัด",
+    fieldReviewHydrationSteady: "ช่วงนี้น้ำดื่มดูค่อนข้างนิ่งในข้อมูลที่บันทึกไว้ อ่านเป็นฐาน self-care ได้แบบเบา ๆ",
+    fieldReviewHydrationVaries: "ช่วงนี้น้ำดื่มมีความแกว่งระหว่างวันที่บันทึกต่ำกับวันที่บันทึกสูง",
+    fieldReviewHydrationEvidence: "เฉลี่ย {average} ml · ต่ำสุด {min} ml · สูงสุด {max} ml · วันน้ำน้อย {low} · วันน้ำสูง {high}",
+    fieldReviewHydrationNote: "ควรอ่านร่วมกับ load, sleep และกิจกรรม ไม่ใช่ดูตัวเลขวันเดียว และ Water_ml คือมิลลิลิตรของน้ำเปล่า ไม่ใช่เงินหรือค่าใช้จ่าย",
+    fieldReviewSleepTitle: "Sleep / recovery pattern",
+    fieldReviewSleepSummary: "มีสัญญาณ sleep/recovery ที่ควรอ่านอย่างอ่อนโยนในช่วงที่เลือก",
+    fieldReviewSleepLight: "ข้อมูล sleep/recovery ยังไม่ชี้ pattern หนักในช่วงนี้",
+    fieldReviewSleepEvidence: "วัน sleep/recovery บางหรือต่ำ {lowSleep} · วันพลังงานต่ำ {lowEnergy}",
+    fieldReviewSleepNote: "อ่านเป็น recovery signal ไม่ใช่การวินิจฉัยหรือการทำนายความเสี่ยง",
+    fieldReviewLoadTitle: "Load / recovery pattern",
+    fieldReviewLoadSummary: "มีวันที่ load สูงในช่วงที่เลือก จึงเหมาะอ่านคู่กับ sleep และ energy",
+    fieldReviewLoadLight: "load ในช่วงที่เลือกดูยังไม่หนักมากจากข้อมูลที่มี",
+    fieldReviewLoadEvidence: "วัน load สูง {highLoad} · load สูงร่วมกับ sleep/recovery ต่ำ {highLoadLowSleep} · load สูงร่วมกับพลังงานต่ำ {highLoadLowEnergy}",
+    fieldReviewLoadNote: "นี่เป็นสัญญาณให้เว้นพื้นที่ recovery ไม่ใช่คะแนน performance หรือสุขภาพ",
+    fieldReviewDrinksTitle: "Drinks / caffeine / sweetness pattern",
+    fieldReviewDrinksSummary: "เครื่องดื่ม คาเฟอีน หรือความหวานปรากฏในช่วงที่เลือก",
+    fieldReviewDrinksLight: "drink-load จากคาเฟอีนหรือความหวานดูยังเบาในช่วงที่เลือก",
+    fieldReviewDrinksEvidence: "วันมีคาเฟอีน {caffeineDays} · วันมีความหวาน {sweetDays} · วันน้ำตาลสูง {highSugarDays}",
+    fieldReviewDrinksNote: "อ่านเป็น drink-load context เท่านั้น ไม่ประเมินแคลอรี ไม่เดา mg คาเฟอีน และไม่ตีความเป็นค่าใช้จ่ายหรือการซื้อ",
+    fieldReviewMindTitle: "Mind Note / support need pattern",
+    fieldReviewMindSummary: "มี Mind Note หรือ support need เป็นบริบทให้ทบทวนแบบ user-owned",
+    fieldReviewMindEmpty: "ยังมี Mind Note หรือ support need ไม่มากในช่วงที่เลือก",
+    fieldReviewMindEvidence: "วันที่มี Mind Note {mindNoteDays} · วันที่เลือก support need {supportDays} · วันที่มี Practice Note {practiceNoteDays}",
+    fieldReviewMindNote: "บันทึกเหล่านี้เป็นบริบท ไม่ใช่การวินิจฉัยบุคลิกภาพ คะแนนใจ คะแนนบุญ หรือการประเมินคุณค่าตัวเอง",
+    fieldReviewMissingTitle: "Missing / blank data pattern",
+    fieldReviewMissingSummary: "มีบางช่องที่เว้นว่างในช่วงที่เลือก ซึ่งช่วยบอกว่าข้อมูลส่วนไหนยังไม่ได้บันทึก",
+    fieldReviewMissingLight: "ข้อมูลสำคัญส่วนใหญ่มีให้ review ในช่วงที่เลือก",
+    fieldReviewMissingEvidence: "ช่องที่เว้นว่างหรือไม่ได้บันทึก: {items}",
+    fieldReviewMissingNone: "ไม่พบช่องสำคัญที่เว้นว่างบ่อยในช่วงที่เลือก",
+    fieldReviewMissingNote: "ช่องว่างหมายถึงยังไม่ได้บันทึก ไม่ใช่ความผิด ไม่ใช่คะแนนที่หายไป และไม่ควรถูกเติมด้วยการเดา",
+    fieldReviewMissingItemSleep: "Sleep {count}",
+    fieldReviewMissingItemWater: "Water_ml {count}",
+    fieldReviewMissingItemActivities: "Activities {count}",
+    fieldReviewMissingItemMindNote: "Mind Note {count}",
     welcomeKicker: "PNAT2026 HEALTH BALANCE",
     welcomeTitle: "ยินดีต้อนรับกลับมา",
     welcomeSubtitle: "ดูแลคนอื่นมาเยอะแล้ว\nอย่าลืมดูแลตัวเองด้วยน๊าา",
@@ -817,6 +873,7 @@ const translations = {
     viewTabsAria: "Choose app view",
     tabToday: "Today",
     tabReflection: "Reflection/NuTuenSai",
+    tabFieldReview: "Field Review",
     tabLog: "Log",
     todayViewTitle: "Today’s Signals",
     todayStepOneLabel: "Today’s Signals 1/2",
@@ -879,6 +936,61 @@ const translations = {
     logViewTitle: "Log & Export",
     logViewHelper: "Review saved logs and manage your backup files.",
     logControlsTitle: "Backup Controls",
+    fieldReviewViewTitle: "Field Review from Daily Log",
+    fieldReviewViewHelper: "This page reviews patterns from saved log data only. It is not diagnosis or medical advice.",
+    fieldReviewBoundaryKicker: "Local Field Review",
+    fieldReviewControlsTitle: "Rule-based review",
+    fieldReviewSafetyCopy: "This review reads patterns from saved data. It is not diagnosis, medical advice, or a judgment of good or bad performance.",
+    fieldReviewTimeframeLabel: "Timeframe",
+    fieldReviewTimeframe7: "7 days",
+    fieldReviewTimeframe14: "14 days",
+    fieldReviewTimeframe30: "30 days",
+    fieldReviewTimeframeAll: "All available",
+    fieldReviewStatusKicker: "Daily_Log source",
+    fieldReviewStatusTitle: "Selected data",
+    fieldReviewSourceNote: "Field Review reads saved Daily_Log rows in this browser. Import a Master Excel file from Log first if you want to review that workbook.",
+    fieldReviewEmptyState: "No Daily Log data available for review yet.",
+    fieldReviewThinState: "The data is still thin, so this review only shows early signals.",
+    fieldReviewNoDataStatus: "No data available for review yet",
+    fieldReviewDataStatus: "Using {used} days from {total} saved days",
+    fieldReviewAllDataStatus: "Using all {used} saved days",
+    fieldReviewRowsEvidence: "{count} selected days",
+    fieldReviewHydrationTitle: "Hydration pattern",
+    fieldReviewHydrationEmpty: "There is no water amount recorded in the selected range, so hydration can only be read lightly.",
+    fieldReviewHydrationSteady: "Hydration appears relatively steady in the selected saved data and can be read as a gentle self-care base.",
+    fieldReviewHydrationVaries: "Hydration varies across the selected days between lower and higher recorded water days.",
+    fieldReviewHydrationEvidence: "Average {average} ml · min {min} ml · max {max} ml · low-water days {low} · high-water days {high}",
+    fieldReviewHydrationNote: "Read this together with load, sleep, and activity, not as a single-day judgment. Water_ml means milliliters of plain water, not money or expense.",
+    fieldReviewSleepTitle: "Sleep / recovery pattern",
+    fieldReviewSleepSummary: "Sleep/recovery signals appear in the selected range and can be read gently.",
+    fieldReviewSleepLight: "Sleep/recovery does not show a heavy pattern in the selected saved data.",
+    fieldReviewSleepEvidence: "Thin or low sleep/recovery days {lowSleep} · low-energy days {lowEnergy}",
+    fieldReviewSleepNote: "Read this as a recovery signal, not diagnosis or risk prediction.",
+    fieldReviewLoadTitle: "Load / recovery pattern",
+    fieldReviewLoadSummary: "High-load days appear in the selected range, so they can be read alongside sleep and energy.",
+    fieldReviewLoadLight: "Load does not appear especially heavy in the selected saved data.",
+    fieldReviewLoadEvidence: "High-load days {highLoad} · high load with low sleep/recovery {highLoadLowSleep} · high load with low energy {highLoadLowEnergy}",
+    fieldReviewLoadNote: "This is a signal to leave room for recovery, not a performance or health score.",
+    fieldReviewDrinksTitle: "Drinks / caffeine / sweetness pattern",
+    fieldReviewDrinksSummary: "Drinks, caffeine, or sweetness appear in the selected range.",
+    fieldReviewDrinksLight: "Caffeine and sweetness drink-load appear light in the selected range.",
+    fieldReviewDrinksEvidence: "Caffeine days {caffeineDays} · sweet-drink days {sweetDays} · high-sugar days {highSugarDays}",
+    fieldReviewDrinksNote: "Read this as drink-load context only. It does not estimate calories, exact caffeine mg, expenses, purchases, or prices.",
+    fieldReviewMindTitle: "Mind Note / support need pattern",
+    fieldReviewMindSummary: "Mind Notes or support needs are present as user-owned review context.",
+    fieldReviewMindEmpty: "There are not many Mind Notes or support needs in the selected range yet.",
+    fieldReviewMindEvidence: "Days with Mind Note {mindNoteDays} · days with support need {supportDays} · days with Practice Note {practiceNoteDays}",
+    fieldReviewMindNote: "These notes are context, not personality diagnosis, mind score, spiritual score, merit score, or self-worth judgment.",
+    fieldReviewMissingTitle: "Missing / blank data pattern",
+    fieldReviewMissingSummary: "Some fields are blank in the selected range, which shows where data was not recorded.",
+    fieldReviewMissingLight: "Most key fields have enough saved data for this light review.",
+    fieldReviewMissingEvidence: "Blank or not-recorded fields: {items}",
+    fieldReviewMissingNone: "No key fields are frequently blank in the selected range.",
+    fieldReviewMissingNote: "Blank means not recorded, not failure, not a missing score, and not something to fill by guessing.",
+    fieldReviewMissingItemSleep: "Sleep {count}",
+    fieldReviewMissingItemWater: "Water_ml {count}",
+    fieldReviewMissingItemActivities: "Activities {count}",
+    fieldReviewMissingItemMindNote: "Mind Note {count}",
     welcomeKicker: "PNAT2026 HEALTH BALANCE",
     welcomeTitle: "Welcome back,",
     welcomeSubtitle: "You have cared for many things today.\nDon't forget to care for yourself too.",
@@ -1569,6 +1681,7 @@ const translations = {
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
     tabReflection: "反思/NuTuenSai",
+    tabFieldReview: "场域回顾",
     tabLog: "记录",
     todayViewTitle: "今日信号",
     todayStepOneLabel: "今日信号 1/2",
@@ -1631,6 +1744,61 @@ const translations = {
     logViewTitle: "记录与导出",
     logViewHelper: "查看已保存的记录，并管理备份文件。",
     logControlsTitle: "备份控制",
+    fieldReviewViewTitle: "从 Daily Log 回顾场域",
+    fieldReviewViewHelper: "此页面只根据已保存的记录回顾 pattern，不是诊断，也不是医疗建议。",
+    fieldReviewBoundaryKicker: "本机 Field Review",
+    fieldReviewControlsTitle: "规则式回顾",
+    fieldReviewSafetyCopy: "这个回顾只读取已保存数据里的 pattern，不是诊断、医疗建议，也不是对表现好坏的判断。",
+    fieldReviewTimeframeLabel: "时间范围",
+    fieldReviewTimeframe7: "7 天",
+    fieldReviewTimeframe14: "14 天",
+    fieldReviewTimeframe30: "30 天",
+    fieldReviewTimeframeAll: "全部可用",
+    fieldReviewStatusKicker: "读取 Daily_Log",
+    fieldReviewStatusTitle: "已选择的数据",
+    fieldReviewSourceNote: "Field Review 读取本浏览器中保存的 Daily_Log。如果想回顾某个 workbook，请先在 Log 页面导入 Master Excel。",
+    fieldReviewEmptyState: "目前还没有 Daily Log 可以回顾。",
+    fieldReviewThinState: "数据仍然很薄，所以这里只显示早期信号。",
+    fieldReviewNoDataStatus: "目前没有可回顾的数据",
+    fieldReviewDataStatus: "使用 {used} 天，共 {total} 天已保存数据",
+    fieldReviewAllDataStatus: "使用全部 {used} 天已保存数据",
+    fieldReviewRowsEvidence: "已选择 {count} 天",
+    fieldReviewHydrationTitle: "补水 pattern",
+    fieldReviewHydrationEmpty: "所选范围内还没有饮水量记录，所以只能轻轻阅读补水信号。",
+    fieldReviewHydrationSteady: "所选记录里的饮水看起来相对稳定，可以作为温和的自我照顾基础来阅读。",
+    fieldReviewHydrationVaries: "所选日期中的饮水量有高低变化。",
+    fieldReviewHydrationEvidence: "平均 {average} ml · 最低 {min} ml · 最高 {max} ml · 低饮水日 {low} · 高饮水日 {high}",
+    fieldReviewHydrationNote: "请和 load、sleep、activity 一起阅读，不用用单日数字判断。Water_ml 是白水毫升数，不是金钱或支出。",
+    fieldReviewSleepTitle: "睡眠 / 恢复 pattern",
+    fieldReviewSleepSummary: "所选范围中出现 sleep/recovery 信号，可以温和阅读。",
+    fieldReviewSleepLight: "所选数据里 sleep/recovery 没有显示很重的 pattern。",
+    fieldReviewSleepEvidence: "睡眠/恢复较薄或较低的日子 {lowSleep} · 低能量日 {lowEnergy}",
+    fieldReviewSleepNote: "把它读作恢复信号，而不是诊断或风险预测。",
+    fieldReviewLoadTitle: "Load / recovery pattern",
+    fieldReviewLoadSummary: "所选范围中有较高 load 的日子，可以和 sleep、energy 一起阅读。",
+    fieldReviewLoadLight: "所选数据里的 load 看起来不特别重。",
+    fieldReviewLoadEvidence: "高 load 日 {highLoad} · 高 load 且 sleep/recovery 低 {highLoadLowSleep} · 高 load 且 energy 低 {highLoadLowEnergy}",
+    fieldReviewLoadNote: "这是给 recovery 留空间的信号，不是表现分数或健康分数。",
+    fieldReviewDrinksTitle: "饮品 / 咖啡因 / 甜度 pattern",
+    fieldReviewDrinksSummary: "所选范围中出现饮品、咖啡因或甜度信号。",
+    fieldReviewDrinksLight: "所选范围内咖啡因与甜度的 drink-load 看起来较轻。",
+    fieldReviewDrinksEvidence: "咖啡因日 {caffeineDays} · 甜饮日 {sweetDays} · 高糖信号日 {highSugarDays}",
+    fieldReviewDrinksNote: "这只作为 drink-load context，不估算热量、准确咖啡因 mg、支出、购买或价格。",
+    fieldReviewMindTitle: "Mind Note / support need pattern",
+    fieldReviewMindSummary: "Mind Note 或 support need 已作为用户自己的回顾背景出现。",
+    fieldReviewMindEmpty: "所选范围内 Mind Note 或 support need 还不多。",
+    fieldReviewMindEvidence: "有 Mind Note 的日子 {mindNoteDays} · 有 support need 的日子 {supportDays} · 有 Practice Note 的日子 {practiceNoteDays}",
+    fieldReviewMindNote: "这些记录是背景，不是人格诊断、心境分数、修行分数、功德分数或自我价值判断。",
+    fieldReviewMissingTitle: "缺失 / 空白数据 pattern",
+    fieldReviewMissingSummary: "所选范围中有一些字段为空，说明这些部分尚未记录。",
+    fieldReviewMissingLight: "大多数关键字段已有足够数据支持这次轻量回顾。",
+    fieldReviewMissingEvidence: "空白或未记录字段：{items}",
+    fieldReviewMissingNone: "所选范围内没有关键字段频繁空白。",
+    fieldReviewMissingNote: "空白表示未记录，不是失败，不是少了分数，也不需要用猜测补上。",
+    fieldReviewMissingItemSleep: "Sleep {count}",
+    fieldReviewMissingItemWater: "Water_ml {count}",
+    fieldReviewMissingItemActivities: "Activities {count}",
+    fieldReviewMissingItemMindNote: "Mind Note {count}",
     welcomeKicker: "PNAT2026 HEALTH BALANCE",
     welcomeTitle: "欢迎回来",
     welcomeSubtitle: "今天你已经照顾了很多事情。\n也别忘了温柔地照顾自己。",
@@ -2924,10 +3092,11 @@ function bindEvents() {
     renderActivityOptions();
     renderEnergyCauseOptions();
     renderPracticeOptions();
-    applyThemePreference();
-    syncUI();
-    renderDailyLogTable();
-  });
+	    applyThemePreference();
+	    syncUI();
+	    renderDailyLogTable();
+	    renderFieldReview();
+	  });
 
   document.querySelectorAll(".choice-group").forEach((group) => {
     group.addEventListener("click", (event) => {
@@ -3080,13 +3249,14 @@ function bindEvents() {
   document.querySelector("#saveDailyLog").addEventListener("click", saveToDailyLog);
   document.querySelector("#resetCurrentForm").addEventListener("click", resetCurrentForm);
   document.querySelector("#restoreCurrentForm").addEventListener("click", restoreCurrentFormFromDailyLog);
-  document.querySelector("#clearDailyLog").addEventListener("click", clearDailyLog);
-  document.querySelector("#exportMasterExcel").addEventListener("click", exportMasterExcel);
-  document.querySelector("#importMasterExcel").addEventListener("click", () => {
-    document.querySelector("#importExcelFile").click();
-  });
-  document.querySelector("#importExcelFile").addEventListener("change", importMasterExcel);
-}
+	  document.querySelector("#clearDailyLog").addEventListener("click", clearDailyLog);
+	  document.querySelector("#exportMasterExcel").addEventListener("click", exportMasterExcel);
+	  document.querySelector("#importMasterExcel").addEventListener("click", () => {
+	    document.querySelector("#importExcelFile").click();
+	  });
+	  document.querySelector("#importExcelFile").addEventListener("change", importMasterExcel);
+	  document.querySelector("#fieldReviewTimeframe")?.addEventListener("change", renderFieldReview);
+	}
 
 function initWelcome() {
   const hasSeenWelcome = sessionStorage.getItem(welcomeStorageKey()) === "true";
@@ -3127,14 +3297,17 @@ function hideWelcome({ remember = true, instant = false } = {}) {
   setActiveView("today");
 }
 
-function setActiveView(view) {
-  if (!["today", "reflection", "log"].includes(view)) return;
-  if (view === "today") {
-    prepareTodayStepForOpen();
-  }
-  currentView = view;
-  updateViewPanels();
-}
+	function setActiveView(view) {
+	  if (!["today", "reflection", "field-review", "log"].includes(view)) return;
+	  if (view === "today") {
+	    prepareTodayStepForOpen();
+	  }
+	  currentView = view;
+	  updateViewPanels();
+	  if (view === "field-review") {
+	    renderFieldReview();
+	  }
+	}
 
 function updateViewPanels() {
   document.querySelectorAll("[data-view-panel]").forEach((panel) => {
@@ -7132,6 +7305,7 @@ function renderDailyLogTable() {
   `).join("");
   emptyState.classList.toggle("is-hidden", rows.length > 0);
   updateDailySaveStatus();
+  renderFieldReview();
 }
 
 function exportMasterExcel() {
@@ -8266,6 +8440,234 @@ function getMostCommon(values) {
     return acc;
   }, {});
   return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+}
+
+function getAllFieldReviewRows() {
+  return getDailyLog()
+    .map(normalizeLogRow)
+    .filter((row) => row.Date)
+    .sort((a, b) => String(a.Date).localeCompare(String(b.Date)));
+}
+
+function getFieldReviewRows(timeframe = "7") {
+  const allRows = getAllFieldReviewRows();
+  if (timeframe === "all") return allRows;
+
+  const limit = Number(timeframe);
+  if (!Number.isFinite(limit) || limit <= 0) return allRows.slice(-7);
+  return allRows.slice(-limit);
+}
+
+function formatReviewNumber(value) {
+  return Number(value || 0).toLocaleString(translations[currentLanguage].locale);
+}
+
+function hasLowSleepRecoverySignal(row) {
+  const sleepHours = normalizeSleepHours(row?.Sleep_Hours);
+  return rowHasLowSleepSignal(row) || (sleepHours !== "" && sleepHours < 6);
+}
+
+function getFieldReviewStats(rows = [], totalRows = rows.length) {
+  const selectedRows = rows.map(normalizeLogRow);
+  const waterValues = selectedRows
+    .map((row) => Number(row.Water_ml) || 0)
+    .filter((value) => value > 0);
+  const highLoadRows = selectedRows.filter(isHighLoadRow);
+  const lowSleepRows = selectedRows.filter(hasLowSleepRecoverySignal);
+  const lowEnergyRows = selectedRows.filter((row) => isLowEnergyValue(row.Energy));
+
+  return {
+    rows: selectedRows,
+    totalRows,
+    selectedCount: selectedRows.length,
+    waterValues,
+    averageWater: waterValues.length
+      ? Math.round(waterValues.reduce((sum, value) => sum + value, 0) / waterValues.length)
+      : 0,
+    minWater: waterValues.length ? Math.min(...waterValues) : 0,
+    maxWater: waterValues.length ? Math.max(...waterValues) : 0,
+    lowWaterDays: waterValues.filter((value) => value < 1500).length,
+    highWaterDays: waterValues.filter((value) => value > 3000).length,
+    lowSleepRows,
+    lowEnergyRows,
+    highLoadRows,
+    highLoadLowSleepRows: highLoadRows.filter(hasLowSleepRecoverySignal),
+    highLoadLowEnergyRows: highLoadRows.filter((row) => isLowEnergyValue(row.Energy)),
+    caffeineDays: selectedRows.filter((row) => Number(row.Caffeine_Score) > 0).length,
+    sweetDrinkDays: selectedRows.filter(rowHasSweetDrinkLoad).length,
+    highSugarDays: selectedRows.filter(rowHasHighSugarLoad).length,
+    mindNoteDays: selectedRows.filter((row) => String(row.Mind_Note_Text || "").trim()).length,
+    supportDays: selectedRows.filter((row) => String(row.Mind_Note_Support || "").trim()).length,
+    practiceNoteDays: selectedRows.filter((row) => String(row.Practice_Note || "").trim()).length,
+    missingSleepDays: selectedRows.filter((row) => !String(row.Sleep || "").trim() && normalizeSleepHours(row.Sleep_Hours) === "").length,
+    missingWaterDays: selectedRows.filter((row) => Number(row.Water_ml) <= 0).length,
+    missingActivitiesDays: selectedRows.filter((row) => !String(row.Activities || "").trim()).length,
+    missingMindNoteDays: selectedRows.filter((row) => !String(row.Mind_Note_Text || "").trim()).length
+  };
+}
+
+function createFieldReviewCard(titleKey, summaryKey, evidence, noteKey) {
+  return {
+    title: t(titleKey),
+    summary: t(summaryKey),
+    evidence,
+    note: t(noteKey)
+  };
+}
+
+function buildHydrationReviewCard(rows = []) {
+  const stats = getFieldReviewStats(rows);
+  const hasWater = stats.waterValues.length > 0;
+  const summaryKey = !hasWater
+    ? "fieldReviewHydrationEmpty"
+    : stats.maxWater - stats.minWater > 1200
+      ? "fieldReviewHydrationVaries"
+      : "fieldReviewHydrationSteady";
+  const evidence = hasWater
+    ? t("fieldReviewHydrationEvidence", {
+      average: formatReviewNumber(stats.averageWater),
+      min: formatReviewNumber(stats.minWater),
+      max: formatReviewNumber(stats.maxWater),
+      low: formatReviewNumber(stats.lowWaterDays),
+      high: formatReviewNumber(stats.highWaterDays)
+    })
+    : t("fieldReviewRowsEvidence", { count: formatReviewNumber(rows.length) });
+
+  return createFieldReviewCard(
+    "fieldReviewHydrationTitle",
+    summaryKey,
+    evidence,
+    "fieldReviewHydrationNote"
+  );
+}
+
+function buildSleepRecoveryReviewCard(rows = []) {
+  const stats = getFieldReviewStats(rows);
+  const hasRecoverySignal = stats.lowSleepRows.length > 0 || stats.lowEnergyRows.length > 0;
+  return createFieldReviewCard(
+    "fieldReviewSleepTitle",
+    hasRecoverySignal ? "fieldReviewSleepSummary" : "fieldReviewSleepLight",
+    t("fieldReviewSleepEvidence", {
+      lowSleep: formatReviewNumber(stats.lowSleepRows.length),
+      lowEnergy: formatReviewNumber(stats.lowEnergyRows.length)
+    }),
+    "fieldReviewSleepNote"
+  );
+}
+
+function buildLoadRecoveryReviewCard(rows = []) {
+  const stats = getFieldReviewStats(rows);
+  return createFieldReviewCard(
+    "fieldReviewLoadTitle",
+    stats.highLoadRows.length ? "fieldReviewLoadSummary" : "fieldReviewLoadLight",
+    t("fieldReviewLoadEvidence", {
+      highLoad: formatReviewNumber(stats.highLoadRows.length),
+      highLoadLowSleep: formatReviewNumber(stats.highLoadLowSleepRows.length),
+      highLoadLowEnergy: formatReviewNumber(stats.highLoadLowEnergyRows.length)
+    }),
+    "fieldReviewLoadNote"
+  );
+}
+
+function buildDrinksReviewCard(rows = []) {
+  const stats = getFieldReviewStats(rows);
+  const hasDrinkLoad = stats.caffeineDays > 0 || stats.sweetDrinkDays > 0 || stats.highSugarDays > 0;
+  return createFieldReviewCard(
+    "fieldReviewDrinksTitle",
+    hasDrinkLoad ? "fieldReviewDrinksSummary" : "fieldReviewDrinksLight",
+    t("fieldReviewDrinksEvidence", {
+      caffeineDays: formatReviewNumber(stats.caffeineDays),
+      sweetDays: formatReviewNumber(stats.sweetDrinkDays),
+      highSugarDays: formatReviewNumber(stats.highSugarDays)
+    }),
+    "fieldReviewDrinksNote"
+  );
+}
+
+function buildMindNoteReviewCard(rows = []) {
+  const stats = getFieldReviewStats(rows);
+  const hasMindContext = stats.mindNoteDays > 0 || stats.supportDays > 0 || stats.practiceNoteDays > 0;
+  return createFieldReviewCard(
+    "fieldReviewMindTitle",
+    hasMindContext ? "fieldReviewMindSummary" : "fieldReviewMindEmpty",
+    t("fieldReviewMindEvidence", {
+      mindNoteDays: formatReviewNumber(stats.mindNoteDays),
+      supportDays: formatReviewNumber(stats.supportDays),
+      practiceNoteDays: formatReviewNumber(stats.practiceNoteDays)
+    }),
+    "fieldReviewMindNote"
+  );
+}
+
+function buildMissingDataReviewCard(rows = []) {
+  const stats = getFieldReviewStats(rows);
+  const missingItems = [
+    stats.missingSleepDays ? t("fieldReviewMissingItemSleep", { count: formatReviewNumber(stats.missingSleepDays) }) : "",
+    stats.missingWaterDays ? t("fieldReviewMissingItemWater", { count: formatReviewNumber(stats.missingWaterDays) }) : "",
+    stats.missingActivitiesDays ? t("fieldReviewMissingItemActivities", { count: formatReviewNumber(stats.missingActivitiesDays) }) : "",
+    stats.missingMindNoteDays ? t("fieldReviewMissingItemMindNote", { count: formatReviewNumber(stats.missingMindNoteDays) }) : ""
+  ].filter(Boolean);
+
+  return createFieldReviewCard(
+    "fieldReviewMissingTitle",
+    missingItems.length ? "fieldReviewMissingSummary" : "fieldReviewMissingLight",
+    missingItems.length
+      ? t("fieldReviewMissingEvidence", { items: missingItems.join(" | ") })
+      : t("fieldReviewMissingNone"),
+    "fieldReviewMissingNote"
+  );
+}
+
+function buildFieldReviewCards(rows = []) {
+  if (!rows.length) return [];
+  return [
+    buildHydrationReviewCard(rows),
+    buildSleepRecoveryReviewCard(rows),
+    buildLoadRecoveryReviewCard(rows),
+    buildDrinksReviewCard(rows),
+    buildMindNoteReviewCard(rows),
+    buildMissingDataReviewCard(rows)
+  ];
+}
+
+function renderFieldReview() {
+  const container = document.querySelector("#fieldReviewCards");
+  const status = document.querySelector("#fieldReviewDataStatus");
+  const emptyState = document.querySelector("#fieldReviewEmptyState");
+  const thinState = document.querySelector("#fieldReviewThinState");
+  const timeframeSelect = document.querySelector("#fieldReviewTimeframe");
+  if (!container || !status || !emptyState || !thinState) return;
+
+  const timeframe = timeframeSelect?.value || "7";
+  const allRows = getAllFieldReviewRows();
+  const rows = getFieldReviewRows(timeframe);
+  const hasRows = rows.length > 0;
+  const isThin = hasRows && rows.length < 3;
+
+  status.textContent = hasRows
+    ? timeframe === "all"
+      ? t("fieldReviewAllDataStatus", { used: formatReviewNumber(rows.length) })
+      : t("fieldReviewDataStatus", {
+        used: formatReviewNumber(rows.length),
+        total: formatReviewNumber(allRows.length)
+      })
+    : t("fieldReviewNoDataStatus");
+
+  emptyState.classList.toggle("is-hidden", hasRows);
+  thinState.classList.toggle("is-hidden", !isThin);
+  container.innerHTML = buildFieldReviewCards(rows).map((card) => `
+    <article class="glass-card field-review-card">
+      <div class="card-heading">
+        <div>
+          <p class="section-kicker">${escapeHtml(t("tabFieldReview"))}</p>
+          <h3>${escapeHtml(card.title)}</h3>
+        </div>
+      </div>
+      <p class="field-review-card-summary">${escapeHtml(card.summary)}</p>
+      <p class="field-review-card-evidence">${escapeHtml(card.evidence)}</p>
+      <p class="field-review-card-note">${escapeHtml(card.note)}</p>
+    </article>
+  `).join("");
 }
 
 function importMasterExcel(event) {

@@ -3449,3 +3449,45 @@ Daily Reflection/NuTuenSai intentionally does not use practice context in v1.9.9
 ## Compatibility
 
 Old workbooks without practice fields still import normally because missing values normalize to empty. New exports include the practice fields in `Daily_Log` and document them in `Column_Guide`. The original workbook file is not modified during import.
+
+# MHB 2.0 Slice A - Rule-Based Field Review
+
+MHB 2.0 starts with a conservative Field Review / ประมวลข้อมูล tab.
+
+Slice A reads saved `Daily_Log` rows from browser localStorage and renders deterministic review cards. It does not change `Daily_Log`, export/import behavior, save behavior, restore behavior, localStorage keys, Reflection generation, Practice Context behavior, `AI_Context`, or `Column_Guide`.
+
+## Slice A Behavior
+
+- Source: normalized `Daily_Log` rows from localStorage.
+- Timeframes: 7 days, 14 days, 30 days, or all available saved rows.
+- Cards: hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support need, and missing/blank data.
+- Thin data: fewer than 3 rows shows a low-data message and only early signals.
+- Missing data: blank means not recorded, not failure, not a missing score.
+- Numeric fields follow workbook boundaries. `Water_ml` means plain water intake in milliliters, not money, baht, expense, spending, cost, price, or revenue.
+
+## Slice A Non-Goals
+
+Slice A is not:
+
+- a chatbot
+- a free-form Ask My Log surface
+- an LLM connector
+- a medical assistant
+- diagnosis or medical advice
+- therapy interpretation
+- finance/expense/accounting/trading/spending analysis
+- productivity scoring
+- spiritual scoring, merit scoring, or practice-quality judgment
+- correlation or causation analysis
+
+## Future Slice A+/B Backlog
+
+Signal Relationships / Correlation Review is documented in `docs/design_notes/FIELD_REVIEW_SLICE_A_RULE_BASED.md` as a future Slice A+/B backlog only.
+
+Future wording should prefer:
+
+- TH: สัญญาณที่เคลื่อนไหวร่วมกัน
+- EN: Signals moving together
+- EN alternate: Signal Relationships
+
+Correlation is not causation. Future relationship review would require deterministic calculation, explicit category mapping before ordinal variables are used, and minimum n rules. This Slice A patch does not implement correlation UI, correlation helpers, Pearson/Spearman calculations, category mappings, relationship matrices, charts, or free-form relationship questions.

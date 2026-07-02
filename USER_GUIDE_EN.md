@@ -79,12 +79,13 @@ When `Auto` is selected, the app uses the time on your device:
 
 If you choose Light or Dark manually, that choice stays active until you switch back to Auto.
 
-## 7. 3-Layer UI: Today / Reflection / Log
+## 7. 4-Layer UI: Today / Reflection / Field Review / Log
 
-After the Welcome Glass, the app is organized into three views:
+After the Welcome Glass, the app is organized into four views:
 
 - `Today` for current-day signals in two steps: `Today’s Signals 1/2` is Energy, Mind, Sleep Hours/Sleep, Hydration, Drink Profile, and Load & Recovery; `Mind Note 2/2` is Practice Context, Mind Note, and the shortcut to Reflection/NuTuenSai
 - `Reflection/NuTuenSai` for the compact NuTuenSai note strip, generated reflection preview/editing, and `Save Today’s Reflection`
+- `Field Review` for rule-based review from saved `Daily_Log`, with 7-day, 14-day, 30-day, and all-available timeframes
 - `Log` for the Daily Log Table, Export Master Excel, Import Master Excel, and Clear Daily Log
 
 Switching views does not reset current inputs and does not delete saved Daily Logs.
@@ -115,6 +116,8 @@ Starting in v1.9.7 — Symbolic Signal Cockpit Polish, the cockpit becomes more 
 
 Starting in v1.9.9 — Mindful Practice Context, Mind Note 2/2 adds a small `Practice before Mind Note` card. It can record an optional practice root/type, rough duration, and `Practice_Note` using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma, plus No practice / Other. This data is stored in Daily Log/Excel for future Field Review only; daily Reflection/NuTuenSai does not interpret it yet and does not score practice quality.
 
+Starting in MHB 2.0 Slice A, the `Field Review` tab begins conservative rule-based review. It reads only `Daily_Log` in localStorage and shows deterministic cards for hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support, and missing/blank data. It has no free-form ask, no LLM call, and no correlation calculation/UI.
+
 Starting in v1.9.8 — Input-grounded Natural Reflection Composer, Reflection/NuTuenSai selects 2-4 meaningful anchors from today's input, such as water, sleep hours, drink context, activity/load, run detail, Mind Note, or light continuity context. It uses those anchors to write one more natural overview sentence while staying rule-based, local-first, non-medical, and non-chatbot.
 
 The latest Reflection layer also includes NuTuenSai voice cadence in Thai, low-data micro-continuity using previous logs as background only, and a rule-based anti-repetition layer so overlapping recovery/load/sleep/support cues do not repeat the same meaning several times.
@@ -127,7 +130,17 @@ The Reflection/NuTuenSai page also includes small secondary shortcuts, `Back to 
 
 Main Today cards also show a soft blue active layer when that card has current input. This is visual feedback only; it is not a score, completion state, diagnosis, or judgment.
 
-## 8. Today State
+## 8. Field Review
+
+The `Field Review` tab is MHB 2.0 Slice A. It is rule-based only and reviews patterns from saved `Daily_Log` rows in this browser. You can choose 7 days, 14 days, 30 days, or all available saved rows.
+
+Review cards cover hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support need, and missing/blank data. If there are fewer than 3 rows, the page says the data is still thin and only shows early signals.
+
+This page is not a chatbot, does not call an LLM, does not include free-form ask, does not calculate correlations, and does not diagnose or give medical advice. Blank fields mean not recorded, not failure or a missing score.
+
+To review an exported workbook, import the Master Excel file from `Log` first. Field Review then reads the imported Daily Log from localStorage.
+
+## 9. Today State
 
 Choose the current state as honestly and simply as possible:
 
@@ -154,7 +167,7 @@ Energy Cause is not only for factors that lower energy. It can also record what 
 
 Some days, Energy level and Energy Cause may seem to point in different directions, such as low energy with enough sleep or good energy with stress. The app treats this as a layered signal, not a data entry error: body, mind, and recovery may be speaking from different layers.
 
-## 9. Hydration
+## 10. Hydration
 
 Use Hydration to roughly log plain water:
 
@@ -171,7 +184,7 @@ On a long-run day, around 3.0 L is treated as a good zone, with gentle cues to n
 
 The system separates activity load from recovery-only signals such as low sleep, low energy, or a very heavy/uneasy/pressured overall mind state. If only a recovery signal is present, it should not describe the day as heavy activity load; it should keep hydration as a gentle base alongside rest. This guidance uses existing signals, adds no new inputs, and is not medical advice, diagnosis, or an exact requirement.
 
-## 10. Drinks / Drink Profile
+## 11. Drinks / Drink Profile
 
 Drink Profile is for drinks other than plain water, such as coffee, tea, cocoa, sweet drinks, juice, or soda / soft drinks. Plain water should be logged in the Hydration card so it does not need to be entered twice.
 
@@ -195,7 +208,7 @@ Reflection/NuTuenSai may mention drink context when relevant, such as low water 
 
 Soda / soft drink is only a Drink Type. It does not mean the drink must be sweet, because zero-sugar or low-sugar options can exist. The app reads the Sweetness field first, so soda with low sweetness is treated as drink context, while soda with high sweetness is treated as a gentle drink-load signal, not diet advice, medical advice, or a judgment.
 
-## 11. Load & Recovery
+## 12. Load & Recovery
 
 Load & Recovery is not only about exercise. It also includes work that uses focus, posture, standing, decision energy, outdoor effort, body energy, and the day's recovery mode.
 
@@ -248,7 +261,7 @@ Starting in v1.9.x, the app uses Activity Load Roots to read the root of the day
 
 Activity roots refine reflection wording only. They do not change Load Score, Daily Log, Excel export/import, or schema. The app does not infer identity; it should not say you are a doctor, photographer, investor, or any profession. It only reads the selected activity as context for that day.
 
-## 12. Mindful Reminder
+## 13. Mindful Reminder
 
 The Mindful Reminder shows a short NuTuenSai note based on today’s key signals, such as low water, high caffeine, low sleep, high load, or a pressured mind state.
 
@@ -256,7 +269,7 @@ NuTuenSai is a gentle reflection layer for noticing patterns. It is not a doctor
 
 The goal is to help you return to consistency, not to scare you or make you fix everything in one day.
 
-## 13. Signal-Based Reflection
+## 14. Signal-Based Reflection
 
 From v1.6 onward, Mindful Reminder and End-of-Day Reflection are generated from relationships between signals rather than single numbers alone.
 
@@ -274,7 +287,7 @@ The app does not use these signals to diagnose or judge health. It uses them to 
 
 When the day has very little data, the app should greet gently or invite a little Today’s Signals before deeper reflection. It should not over-analyze low-data states or assume fear unless the user selected or wrote worry/pressure directly.
 
-## 14. Mind Note
+## 15. Mind Note
 
 Mind Note is a small space for one line of inner context. It is not a therapy tool, not crisis support, and not a medical tool.
 
@@ -290,7 +303,7 @@ Use it lightly:
 - Keep it short if that feels right
 - Use it to notice patterns between mind state, hydration, load, recovery, and sleep
 
-## 15. Reflection Generator
+## 16. Reflection Generator
 
 Click `Reflect` to create a NuTuenSai-style reflection for the day.
 
@@ -309,7 +322,7 @@ During generation, a short zen listening moment appears. After a reflection exis
 
 Newly generated reflections end with one blue heart, `🩵`, as a light NuTuenSai signature. It is not a score or assessment.
 
-## 16. Save To Daily Log
+## 17. Save To Daily Log
 
 Click `Save to Daily Log` from Today’s Signals 1/2 when you only want to record water, drinks, sleep, activity, and load signals without going to Reflection.
 
@@ -321,19 +334,19 @@ The saved row comes from the current app state, including Energy, Mind, Sleep, S
 
 If the same date already exists, the app asks before updating this section and keeps other saved sections.
 
-## 17. Daily Log Table
+## 18. Daily Log Table
 
 The Daily Log Table shows saved days in the browser. It helps you review patterns across multiple days, such as high-load days, low-sleep days, low-water days, or pressured-mind days.
 
 This table is not a judgment table. It is a local mirror for seeing life rhythm over time.
 
-## 18. Clear Daily Log
+## 19. Clear Daily Log
 
 Click `Clear Daily Log` only when you want to remove all saved logs from this browser.
 
 This clears historical Daily Log data from localStorage in the current browser. It does not affect any exported Excel files you already downloaded.
 
-## 19. Export / Import Master Excel
+## 20. Export / Import Master Excel
 
 ### Export Master Excel
 
@@ -379,7 +392,7 @@ The app reads the `Daily_Log` sheet and restores the rows into the Daily Log Tab
 
 The core data is local-only in the browser/localStorage. There is no auto-upload.
 
-## 20. How To Open The App
+## 21. How To Open The App
 
 Open this folder:
 
@@ -397,7 +410,7 @@ The app is a static web app. It does not require a backend server or framework.
 
 If `Export Master Excel` does not work, check that the browser can load the SheetJS CDN, because Excel export/import uses a browser-side library.
 
-## 21. Important Reminders
+## 22. Important Reminders
 
 - This app helps you notice patterns. It does not judge health.
 - You do not need to enter everything perfectly.
@@ -411,6 +424,6 @@ If `Export Master Excel` does not work, check that the browser can load the Shee
 - Sweetness and caffeine are drink-load signals, not moral scores.
 - Activity roots refine reflection wording; they do not infer identity.
 
-## 22. Core Sentence Of The System
+## 23. Core Sentence Of The System
 
 Mindful Health Balance by MSxAI is a gentle mirror for noticing how hydration, coffee, sweet drinks, load, recovery, sleep, and mind state connect, without rushing to judge yourself from one day of data.

@@ -36,11 +36,16 @@ The fact that it is not SaaS is intentional. Its value is in the design of a use
 
 ## Current Version
 
-**v1.9.9 — Mindful Practice Context and User-Owned Field Memory Refinement**
+**MHB 2.0 Slice A — Rule-based Field Review**
 
 Latest refinements include:
 
 - Mindful Practice Context before Mind Note using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma
+- Field Review / ประมวลข้อมูล tab for deterministic multi-day review from saved `Daily_Log`
+- timeframe selector for 7 days, 14 days, 30 days, or all available saved rows
+- rule-based review cards for hydration, sleep/recovery, load/recovery, drinks, Mind Note/support, and missing data
+- Field Review remains local-first, read-only, non-medical, non-chatbot, and non-LLM
+- Signal Relationships / Correlation Review is documented as future Slice A+/B backlog only; no correlation calculation or UI is included yet
 - `Practice_Note` for a short practice note, good action, or wholesome context, stored in `Daily_Log` and duplicated in `Practice_Context_JSON.note`
 - Source-aware same-day save merge, so saving Today’s Signals does not erase saved Mind Note, Practice Context, or Reflection
 - Daily Save Status Bar showing the three saved layers: Today’s Signals, Mind Note, and Reflection
@@ -50,9 +55,9 @@ Latest refinements include:
 - NuTuenSai voice cadence in Thai Reflection without turning the app into a chatbot
 - Low-data micro-continuity that may use one previous-log cue as background only
 - Input-grounded Reflection composer that remains deterministic, rule-based, and local-first
-- Practice Context and Practice Note stored for future Field Review, not daily Reflection interpretation
+- Practice Context and Practice Note stored for Field Review context, not daily Reflection interpretation
 
-This is still a v1.9.x stabilization and usability line. It is not v2.0, not an AI companion, not a medical review layer, and not a production SaaS release.
+MHB 2.0 starts conservatively with rule-based Field Review. It is not an AI companion, not free-form Ask My Log, not a medical review layer, not correlation/causation analysis, and not a production SaaS release.
 
 ## Core Principle
 
@@ -147,6 +152,7 @@ Reflection output is companion text, not raw evidence. It is optional and is sav
 - Optional Practice Context and Practice Note before Mind Note
 - Optional Mind Note, feeling, and support need
 - Rule-based NuTuenSai Reflection
+- Rule-based Field Review from saved `Daily_Log`
 - Excel export/import for a user-owned portable workbook
 - Thai / English / Chinese UI
 - Light / dark / auto theme
@@ -173,7 +179,8 @@ If the app folder or browser origin changes, existing browser storage may not fo
 4. Optionally add Practice Context, Practice Note, and Mind Note.
 5. Optionally open Reflection/NuTuenSai, review or edit the generated Reflection, and click `Save Today’s Reflection`.
 6. If the current form is cleared by mistake, use `Restore Today’s Log` to load today’s saved row back into the form. If there is no row for today, the app asks before loading the latest saved row.
-7. Export or import the Excel workbook when needed.
+7. Open Field Review to review saved `Daily_Log` patterns across 7, 14, 30, or all available days.
+8. Export or import the Excel workbook when needed.
 
 No backend, server, build step, or framework is required for normal use.
 
@@ -197,6 +204,12 @@ The workbook currently includes:
 
 `Daily_Log` keeps canonical English headers for machine readability. `Column_Guide` explains key columns in Thai and English, including units and forbidden interpretations, without changing the canonical headers. `AI_Context` tells AI readers that the workbook is a self-care reflection log, not a finance, expense, accounting, trading, or spending workbook.
 
+## Field Review
+
+The Field Review tab is the first MHB 2.0 slice. It reads saved `Daily_Log` rows from localStorage and shows rule-based review cards only. It does not call an LLM, does not provide a free-form question box, does not calculate correlations, and does not change export/import/save/restore behavior.
+
+The cards are descriptive pattern summaries. Missing data means not recorded, not failure. Numeric fields keep their workbook boundaries: for example, `Water_ml` is plain water in milliliters, not money or expense data.
+
 ## Documentation
 
 - [English User Guide](USER_GUIDE_EN.md)
@@ -207,12 +220,14 @@ The workbook currently includes:
 - [Portable Field Memory Design](docs/design_notes/PORTABLE_FIELD_MEMORY_DESIGN.md)
 - [Input-grounded Reflection Composer v1.9.8](docs/design_notes/INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md)
 - [Mindful Practice Context v1.9.9](docs/design_notes/MINDFUL_PRACTICE_CONTEXT_V1_9_9.md)
+- [Field Review Slice A — Rule-Based Daily Log Review](docs/design_notes/FIELD_REVIEW_SLICE_A_RULE_BASED.md)
 - [Symbolic Signal Cockpit Polish v1.9.7](docs/design_notes/SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md)
 
 Thai documentation, field notes, and original design context remain available in `USER_GUIDE_TH.md`, the app UI, and the design notes.
 
 ## Version History / Design Trace
 
+- **MHB 2.0 Slice A — Rule-based Field Review**: Added Field Review / ประมวลข้อมูล tab, timeframe selector, deterministic review cards from `Daily_Log`, and documented Signal Relationships / Correlation Review as future Slice A+/B backlog only.
 - **v1.9.9 — Mindful Practice Context and User-Owned Field Memory Refinement**: adds Practice Context, `Practice_Note`, honest data copy, source-aware safe merge, three-layer save status, ordered mind scale, NuTuenSai voice cadence, low-data micro-continuity, and Reflection anti-repetition.
 - **v1.9.8c — Reflection Sentence Smoothing**: reduces repeated connectors and uses short paragraphs so input-grounded reflection reads more naturally.
 - **v1.9.8b — Reflection Breathing Markers**: adds minimal emoji pause markers to improve reflection readability without creating emoji headings or new signal categories.

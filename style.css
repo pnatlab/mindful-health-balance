@@ -3212,6 +3212,92 @@ body[data-theme="dark"] .reflection-zen-button {
   padding: 22px;
 }
 
+.field-review-heading {
+  max-width: 760px;
+}
+
+.field-review-controls {
+  align-items: center;
+}
+
+.field-review-timeframe-label {
+  display: grid;
+  gap: 8px;
+  min-width: min(100%, 220px);
+  color: var(--text-soft);
+  font-weight: 800;
+}
+
+.field-review-timeframe-select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  color: var(--text-main);
+  background: var(--input-bg);
+  font: inherit;
+  font-weight: 800;
+}
+
+.field-review-status-panel {
+  margin-top: 18px;
+  padding: 22px;
+}
+
+.field-review-empty,
+.field-review-thin {
+  margin: 12px 0 0;
+  padding: 12px 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  color: var(--text-soft);
+  background: rgba(255, 255, 255, 0.42);
+  line-height: 1.65;
+}
+
+body[data-theme="dark"] .field-review-empty,
+body[data-theme="dark"] .field-review-thin {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.field-review-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.field-review-card {
+  padding: 20px;
+}
+
+.field-review-card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.field-review-card-summary,
+.field-review-card-evidence,
+.field-review-card-note {
+  margin: 12px 0 0;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+.field-review-card-evidence {
+  padding: 10px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  color: var(--text-main);
+  background: var(--table-bg);
+  font-weight: 800;
+}
+
+.field-review-card-note {
+  font-size: 0.92rem;
+}
+
 .table-helper {
   margin-bottom: 14px;
   color: var(--text-soft);
@@ -3548,13 +3634,17 @@ td:nth-child(10) {
     grid-column: auto;
   }
 
-  .daily-log-section {
-    padding: 18px;
-  }
+	  .daily-log-section {
+	    padding: 18px;
+	  }
 
-  .date-pill {
-    width: fit-content;
-  }
+	  .field-review-card-grid {
+	    grid-template-columns: 1fr;
+	  }
+
+	  .date-pill {
+	    width: fit-content;
+	  }
 
   .hero-side {
     justify-items: start;
@@ -3586,11 +3676,12 @@ td:nth-child(10) {
     width: 100%;
   }
 
-  .glass-card,
-  .control-panel,
-  .daily-log-section {
-    padding: 18px;
-  }
+	  .glass-card,
+	  .control-panel,
+	  .daily-log-section,
+	  .field-review-status-panel {
+	    padding: 18px;
+	  }
 
   .card-heading {
     display: grid;

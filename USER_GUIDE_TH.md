@@ -65,12 +65,13 @@ TH | EN | 中文
 
 ถ้าเลือก `สว่าง` หรือ `มืด` เอง ระบบจะคงค่าที่เลือกไว้ และจะไม่เปลี่ยนตามเวลา จนกว่าจะกลับมาเลือก `อัตโนมัติ` อีกครั้ง
 
-## 2.5 โครงหน้าแบบ 3 ชั้น
+## 2.5 โครงหน้าแบบ 4 ชั้น
 
-หลังผ่านหน้ากระจกต้อนรับ แอปจะแบ่งเป็น 3 view:
+หลังผ่านหน้ากระจกต้อนรับ แอปจะแบ่งเป็น 4 view:
 
 - `วันนี้` สำหรับเติมสัญญาณวันนี้แบบ 2 จังหวะ: `สัญญาณวันนี้ 1/2` คือ Energy, Mind, Sleep Hours/Sleep, น้ำ, Drink Profile และ Load & Recovery; `ภาวะใจวันนี้ 2/2` คือ Practice Context, Mind Note และทางลัดไป Reflection/NuTuenSai
 - `Reflection` สำหรับดู NuTuenSai note แบบแถบสั้น ๆ, generate/review/edit reflection และ `บันทึก Reflection วันนี้`
+- `ประมวลข้อมูล` สำหรับ Field Review แบบ rule-based จาก Daily_Log ที่บันทึกไว้ เลือกช่วง 7 / 14 / 30 วัน หรือทั้งหมดที่มี
 - `Log` สำหรับดู Daily Log Table, Export Master Excel, Import Master Excel และ Clear Daily Log
 
 การเปลี่ยน view ไม่ลบข้อมูลที่กรอกอยู่ และไม่ลบ Daily Log เดิม
@@ -107,6 +108,8 @@ TH | EN | 中文
 
 ตั้งแต่ v1.9.9 — Mindful Practice Context หน้า `ภาวะใจวันนี้ 2/2` เพิ่มการ์ด `ภาวนาก่อนวางใจ` ก่อน Mind Note เพื่อบันทึกฐานภาวนาแบบ optional ด้วย 4 ฐานที่เข้าใจง่าย: กาย เวทนา จิต/คิด และธรรม รวมถึงไม่ได้ภาวนา/อื่น ๆ พร้อมระยะเวลาโดยประมาณและ `Practice_Note` สำหรับหมายเหตุการภาวนา/สิ่งดีที่ได้ทำ ข้อมูลนี้ถูกเก็บใน Daily Log/Excel เพื่อ Field Review ในอนาคต แต่ Reflection/NuTuenSai รายวันยังไม่ตีความ ไม่ให้คะแนน และไม่ตัดสินการภาวนา
 
+ตั้งแต่ MHB 2.0 Slice A — หน้า `ประมวลข้อมูล` เริ่ม Field Review แบบ conservative โดยอ่านจาก `Daily_Log` ใน localStorage เท่านั้น แสดงการ์ด hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support และ missing/blank data แบบ deterministic ไม่มี free-form ask ไม่มี LLM call และยังไม่มี correlation calculation/UI
+
 Reflection ล่าสุดมี NuTuenSai voice cadence ในภาษาไทย, low-data micro-continuity ที่ใช้ log ก่อนหน้าเป็นฉากหลังเท่านั้น และ anti-repetition layer แบบ rule-based เพื่อลดการพูดวนเมื่อหลายสัญญาณชี้เรื่อง recovery/load/sleep/support ไปทางเดียวกัน
 
 ในหน้า Reflection/NuTuenSai จะมีปุ่มรองเล็ก ๆ คือ `กลับ Today 1/2` และ `กลับ Mind Note 2/2` เพื่อย้อนกลับไปเติมข้อมูลก่อน Save Daily Log ปุ่มเหล่านี้เป็นการนำทางเท่านั้น ไม่บันทึก ไม่ล้างข้อมูล และไม่ generate reflection ใหม่
@@ -114,6 +117,16 @@ Reflection ล่าสุดมี NuTuenSai voice cadence ในภาษา�
 การ์ดหลักในหน้า Today จะมีชั้นสีฟ้าอ่อนเมื่อการ์ดนั้นมีข้อมูลในฟอร์มปัจจุบันแล้ว ชั้นนี้เป็น visual feedback เท่านั้น ไม่ใช่คะแนน ไม่ใช่สถานะสำเร็จ ไม่ใช่ diagnosis และไม่ใช่การตัดสินผู้ใช้
 
 ## 3. วิธีใช้งานแต่ละส่วน
+
+### ประมวลข้อมูล / Field Review
+
+หน้า `ประมวลข้อมูล` เป็น MHB 2.0 Slice A แบบ rule-based เท่านั้น ใช้สำหรับอ่าน pattern จาก `Daily_Log` ที่บันทึกไว้ใน browser นี้ ผู้ใช้เลือกช่วงข้อมูลได้ 7 วัน, 14 วัน, 30 วัน หรือทั้งหมดที่มี
+
+การ์ด review จะสรุป hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support need และช่องที่ยังเว้นว่าง โดยอิงข้อมูลที่มีจริง ถ้าข้อมูลน้อยกว่า 3 rows ระบบจะแสดงว่าข้อมูลยังบางและอ่านได้แค่สัญญาณเบื้องต้น
+
+หน้านี้ไม่ใช่ chatbot ไม่เรียก LLM ไม่รับคำถาม free-form ไม่คำนวณ correlation และไม่วินิจฉัยหรือให้คำแนะนำทางการแพทย์ ช่องว่างแปลว่ายังไม่ได้บันทึก ไม่ใช่ความผิดหรือคะแนนที่หายไป
+
+ถ้าต้องการ review workbook ที่ export ไว้ ให้ไปหน้า `Log` แล้ว import Master Excel ก่อน จากนั้นหน้า `ประมวลข้อมูล` จะอ่านจาก Daily Log ที่ import เข้ามาใน localStorage
 
 ### Today State
 
