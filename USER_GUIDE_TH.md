@@ -108,7 +108,7 @@ TH | EN | 中文
 
 ตั้งแต่ v1.9.9 — Mindful Practice Context หน้า `ภาวะใจวันนี้ 2/2` เพิ่มการ์ด `ภาวนาก่อนวางใจ` ก่อน Mind Note เพื่อบันทึกฐานภาวนาแบบ optional ด้วย 4 ฐานที่เข้าใจง่าย: กาย เวทนา จิต/คิด และธรรม รวมถึงไม่ได้ภาวนา/อื่น ๆ พร้อมระยะเวลาโดยประมาณและ `Practice_Note` สำหรับหมายเหตุการภาวนา/สิ่งดีที่ได้ทำ ข้อมูลนี้ถูกเก็บใน Daily Log/Excel เพื่อ Field Review ในอนาคต แต่ Reflection/NuTuenSai รายวันยังไม่ตีความ ไม่ให้คะแนน และไม่ตัดสินการภาวนา
 
-ตั้งแต่ MHB 2.0 Slice A — หน้า `ประมวลข้อมูล` เริ่ม Field Review แบบ conservative โดยอ่านจาก `Daily_Log` ใน localStorage เท่านั้น แสดงการ์ด hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support และ missing/blank data แบบ deterministic ไม่มี free-form ask ไม่มี LLM call และยังไม่มี correlation calculation/UI
+ตั้งแต่ MHB 2.0 Slice A — หน้า `ประมวลข้อมูล` เริ่ม Field Review แบบ conservative โดยอ่านจาก `Daily_Log` ใน localStorage เท่านั้น แสดงการ์ด hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support และ missing/blank data แบบ deterministic การ์ดแต่ละใบมีหลักฐานจากข้อมูลจริง เสียงหนูตื่นสายแบบ rule-based และสิ่งที่ชวนสังเกตรอบถัดไป ไม่มี free-form ask ไม่มี LLM call และยังไม่มี correlation calculation/UI
 
 Reflection ล่าสุดมี NuTuenSai voice cadence ในภาษาไทย, low-data micro-continuity ที่ใช้ log ก่อนหน้าเป็นฉากหลังเท่านั้น และ anti-repetition layer แบบ rule-based เพื่อลดการพูดวนเมื่อหลายสัญญาณชี้เรื่อง recovery/load/sleep/support ไปทางเดียวกัน
 
@@ -122,7 +122,9 @@ Reflection ล่าสุดมี NuTuenSai voice cadence ในภาษา�
 
 หน้า `ประมวลข้อมูล` เป็น MHB 2.0 Slice A แบบ rule-based เท่านั้น ใช้สำหรับอ่าน pattern จาก `Daily_Log` ที่บันทึกไว้ใน browser นี้ ผู้ใช้เลือกช่วงข้อมูลได้ 7 วัน, 14 วัน, 30 วัน หรือทั้งหมดที่มี
 
-การ์ด review จะสรุป hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support need และช่องที่ยังเว้นว่าง โดยอิงข้อมูลที่มีจริง ถ้าข้อมูลน้อยกว่า 3 rows ระบบจะแสดงว่าข้อมูลยังบางและอ่านได้แค่สัญญาณเบื้องต้น
+การ์ด review จะสรุป hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support need และช่องที่ยังเว้นว่าง โดยอิงข้อมูลที่มีจริง แต่ละการ์ดแยกเป็น 3 ชั้น: หลักฐานจาก `Daily_Log`, `หนูตื่นสายอ่านว่า`, และ `รอบถัดไปลองสังเกต` ถ้าข้อมูลน้อยกว่า 3 rows ระบบจะแสดงว่าข้อมูลยังบางและอ่านได้แค่สัญญาณเบื้องต้น
+
+เสียงของการ์ดเปลี่ยนตาม timeframe แบบเบา ๆ: 7 วันคือสัญญาณสั้น ๆ, 14 วันคือจังหวะที่เริ่มซ้ำ, 30 วันคือภาพระดับเดือน, และทั้งหมดที่มีคือภาพระยะยาวที่ยังต้องอ่านตามบริบทของแต่ละวัน
 
 หน้านี้ไม่ใช่ chatbot ไม่เรียก LLM ไม่รับคำถาม free-form ไม่คำนวณ correlation และไม่วินิจฉัยหรือให้คำแนะนำทางการแพทย์ ช่องว่างแปลว่ายังไม่ได้บันทึก ไม่ใช่ความผิดหรือคะแนนที่หายไป
 

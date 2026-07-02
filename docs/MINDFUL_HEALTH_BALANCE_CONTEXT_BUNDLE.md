@@ -3461,6 +3461,9 @@ Slice A reads saved `Daily_Log` rows from browser localStorage and renders deter
 - Source: normalized `Daily_Log` rows from localStorage.
 - Timeframes: 7 days, 14 days, 30 days, or all available saved rows.
 - Cards: hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support need, and missing/blank data.
+- Card structure: evidence from `Daily_Log`, deterministic NuTuenSai-style reading, and gentle next attention.
+- Voice: rule-based templates only. No LLM-generated live text.
+- Timeframe voice: 7 days is an early signal, 14 days is an emerging rhythm, 30 days is a month-level rhythm, and all available data is long-view reflection.
 - Thin data: fewer than 3 rows shows a low-data message and only early signals.
 - Missing data: blank means not recorded, not failure, not a missing score.
 - Numeric fields follow workbook boundaries. `Water_ml` means plain water intake in milliliters, not money, baht, expense, spending, cost, price, or revenue.

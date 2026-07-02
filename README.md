@@ -44,6 +44,7 @@ Latest refinements include:
 - Field Review / ประมวลข้อมูล tab for deterministic multi-day review from saved `Daily_Log`
 - timeframe selector for 7 days, 14 days, 30 days, or all available saved rows
 - rule-based review cards for hydration, sleep/recovery, load/recovery, drinks, Mind Note/support, and missing data
+- NuTuenSai-style deterministic card voice with evidence, source-bound reading, and gentle next attention
 - Field Review remains local-first, read-only, non-medical, non-chatbot, and non-LLM
 - Signal Relationships / Correlation Review is documented as future Slice A+/B backlog only; no correlation calculation or UI is included yet
 - `Practice_Note` for a short practice note, good action, or wholesome context, stored in `Daily_Log` and duplicated in `Practice_Context_JSON.note`
@@ -206,7 +207,9 @@ The workbook currently includes:
 
 ## Field Review
 
-The Field Review tab is the first MHB 2.0 slice. It reads saved `Daily_Log` rows from localStorage and shows rule-based review cards only. It does not call an LLM, does not provide a free-form question box, does not calculate correlations, and does not change export/import/save/restore behavior.
+The Field Review tab is the first MHB 2.0 slice. It reads saved `Daily_Log` rows from localStorage and shows rule-based review cards only. Each card keeps numeric evidence visible, then adds a deterministic NuTuenSai-style reading and a gentle next attention. The selected timeframe changes the reading tone lightly: 7 days is an early signal, 14 days is an emerging rhythm, 30 days is a month-level rhythm, and all available data is a long-view reflection.
+
+Field Review does not call an LLM, does not provide a free-form question box, does not calculate correlations, and does not change export/import/save/restore behavior.
 
 The cards are descriptive pattern summaries. Missing data means not recorded, not failure. Numeric fields keep their workbook boundaries: for example, `Water_ml` is plain water in milliliters, not money or expense data.
 
@@ -227,7 +230,7 @@ Thai documentation, field notes, and original design context remain available in
 
 ## Version History / Design Trace
 
-- **MHB 2.0 Slice A — Rule-based Field Review**: Added Field Review / ประมวลข้อมูล tab, timeframe selector, deterministic review cards from `Daily_Log`, and documented Signal Relationships / Correlation Review as future Slice A+/B backlog only.
+- **MHB 2.0 Slice A — Rule-based Field Review**: Added Field Review / ประมวลข้อมูล tab, timeframe selector, deterministic NuTuenSai-style review cards from `Daily_Log`, and documented Signal Relationships / Correlation Review as future Slice A+/B backlog only.
 - **v1.9.9 — Mindful Practice Context and User-Owned Field Memory Refinement**: adds Practice Context, `Practice_Note`, honest data copy, source-aware safe merge, three-layer save status, ordered mind scale, NuTuenSai voice cadence, low-data micro-continuity, and Reflection anti-repetition.
 - **v1.9.8c — Reflection Sentence Smoothing**: reduces repeated connectors and uses short paragraphs so input-grounded reflection reads more naturally.
 - **v1.9.8b — Reflection Breathing Markers**: adds minimal emoji pause markers to improve reflection readability without creating emoji headings or new signal categories.

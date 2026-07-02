@@ -183,6 +183,38 @@ const translations = {
     fieldReviewMissingItemWater: "Water_ml {count}",
     fieldReviewMissingItemActivities: "Activities {count}",
     fieldReviewMissingItemMindNote: "Mind Note {count}",
+    fieldReviewEvidenceLabel: "หลักฐานจาก Daily_Log",
+    fieldReviewReadingLabel: "หนูตื่นสายอ่านว่า",
+    fieldReviewNextAttentionLabel: "รอบถัดไปลองสังเกต",
+    fieldReviewWindowVoice7: "ในช่วง 7 วันนี้ หนูอ่านเป็นสัญญาณสั้น ๆ มากกว่าข้อสรุปค่ะ",
+    fieldReviewWindowVoice14: "ในช่วง 14 วันนี้ pattern เริ่มพอให้เห็นจังหวะซ้ำบางอย่างค่ะ",
+    fieldReviewWindowVoice30: "ในช่วง 30 วันนี้ ภาพรวมเริ่มพอใช้ดูจังหวะของเดือนนี้ได้ค่ะ",
+    fieldReviewWindowVoiceAll: "เมื่อดูข้อมูลทั้งหมด หนูอ่านเป็นภาพรวมระยะยาว แต่ยังควรจำไว้ว่าบริบทของแต่ละวันไม่เหมือนกันค่ะ",
+    fieldReviewHydrationReadingEmpty: "หนูยังอ่าน hydration ได้เบามาก เพราะช่วงนี้ไม่มี Water_ml ที่บันทึกไว้ชัดค่ะ",
+    fieldReviewHydrationReadingVaries: "หนูอ่านว่าน้ำดื่มในช่วงนี้มีความแกว่ง ควรดูคู่กับ load, sleep และกิจกรรม ไม่ใช่ดูตัวเลขวันเดียวค่ะ",
+    fieldReviewHydrationReadingSteady: "หนูอ่านว่าน้ำดื่มช่วงนี้ค่อนข้างมีฐานที่เห็นได้ แต่ยังควรดูร่วมกับบริบทของแต่ละวันค่ะ",
+    fieldReviewHydrationNextLowLoad: "ลองดูวันที่ load สูงแต่น้ำต่ำเป็นพิเศษ โดยอ่านเป็นสัญญาณดูแล ไม่ใช่ความผิดนะคะ",
+    fieldReviewHydrationNextDefault: "ลองสังเกตว่าวันที่น้ำสูงหรือต่ำมากมีบริบทของ sleep, load หรือกิจกรรมแบบไหนค่ะ",
+    fieldReviewSleepReadingSignal: "หนูอ่านว่าสัญญาณ sleep/recovery ยังควรได้รับพื้นที่อ่อนโยน โดยเฉพาะวันที่พลังงานต่ำหรือภาระเยอะค่ะ",
+    fieldReviewSleepReadingLight: "หนูอ่านว่า sleep/recovery ในช่วงนี้ยังไม่ชี้สัญญาณหนักจากข้อมูลที่มีค่ะ",
+    fieldReviewSleepNextSignal: "ลองสังเกตวันที่ sleep/recovery ต่ำว่ามี load, caffeine หรือ Mind Note อะไรอยู่ข้าง ๆ บ้างนะคะ",
+    fieldReviewSleepNextDefault: "ถ้ารอบหน้ามีข้อมูล sleep เพิ่ม หนูจะอ่านจังหวะ recovery ได้นุ่มและชัดขึ้นค่ะ",
+    fieldReviewLoadReadingHigh: "วันที่ load สูงไม่ได้แปลว่าดีหรือไม่ดี แต่เป็นสัญญาณให้ดูว่าการพักตามทันภาระของวันไหมค่ะ",
+    fieldReviewLoadReadingLight: "หนูอ่านว่า load ในช่วงนี้ยังไม่หนักมากจากข้อมูลที่บันทึกไว้ และยังควรดูตามบริบทของแต่ละวันค่ะ",
+    fieldReviewLoadNextRecovery: "ลองสังเกตวันที่ load สูงพร้อม sleep/recovery ต่ำเป็นพิเศษนะคะ",
+    fieldReviewLoadNextDefault: "รอบถัดไปลองดูว่า load สูงเกิดในวันแบบไหน และมีพื้นที่พักตามมาหรือเปล่าค่ะ",
+    fieldReviewDrinksReadingSignal: "หนูอ่านว่านี่เป็นบริบทของเครื่องดื่ม ไม่ใช่แคลอรี ไม่ใช่ mg คาเฟอีน และไม่ใช่ค่าใช้จ่ายค่ะ",
+    fieldReviewDrinksReadingLight: "หนูอ่านว่า drink-load จากคาเฟอีนหรือความหวานยังดูเบาในช่วงที่เลือกค่ะ",
+    fieldReviewDrinksNextSignal: "ลองสังเกตวันที่มีคาเฟอีนหรือความหวานร่วมกับ sleep, water และ load โดยไม่ต้องตัดสินเครื่องดื่มนั้นค่ะ",
+    fieldReviewDrinksNextDefault: "ถ้ารอบหน้ามี drink context เพิ่ม หนูจะช่วยดูจังหวะเครื่องดื่มแบบไม่ตัดสินค่ะ",
+    fieldReviewMindReadingSignal: "Mind Note เป็นพื้นที่ที่พี่เก็บบริบทของตัวเอง หนูอ่านเป็นร่องรอยของการดูแล ไม่ใช่การวินิจฉัยค่ะ",
+    fieldReviewMindReadingEmpty: "ช่วงนี้ Mind Note หรือ support need ยังไม่มาก หนูเลยอ่านส่วนนี้เป็นพื้นที่ที่ยังเปิดไว้ได้ค่ะ",
+    fieldReviewMindNextSignal: "ลองดูว่า support need แบบไหนโผล่ซ้ำบ่อย และวันนั้นร่างกายหรือ load เป็นอย่างไรนะคะ",
+    fieldReviewMindNextDefault: "ถ้ารอบหน้ามี Mind Note เพิ่ม หนูจะอ่านเป็นบริบทของการดูแล ไม่ใช่การประเมินตัวตนค่ะ",
+    fieldReviewMissingReadingSignal: "ช่องที่เว้นไว้หมายถึงยังไม่ได้บันทึก ไม่ใช่ความผิด ข้อมูลที่จริงสำคัญกว่าข้อมูลที่ครบค่ะ",
+    fieldReviewMissingReadingLight: "หนูอ่านว่าข้อมูลสำคัญในช่วงนี้พอมีฐานให้ review เบา ๆ แล้ว แต่ช่องว่างยังเว้นไว้ได้เสมอค่ะ",
+    fieldReviewMissingNextSignal: "ลองเลือกเพียง 1 ช่องที่อยากบันทึกให้สม่ำเสมอขึ้น ไม่ต้องเติมทุกอย่างให้ครบค่ะ",
+    fieldReviewMissingNextDefault: "รอบถัดไปยังเก็บเท่าที่จริงก็พอค่ะ ความจริงของข้อมูลสำคัญกว่าความครบ",
     welcomeKicker: "PNAT2026 HEALTH BALANCE",
     welcomeTitle: "ยินดีต้อนรับกลับมา",
     welcomeSubtitle: "ดูแลคนอื่นมาเยอะแล้ว\nอย่าลืมดูแลตัวเองด้วยน๊าา",
@@ -991,6 +1023,38 @@ const translations = {
     fieldReviewMissingItemWater: "Water_ml {count}",
     fieldReviewMissingItemActivities: "Activities {count}",
     fieldReviewMissingItemMindNote: "Mind Note {count}",
+    fieldReviewEvidenceLabel: "Evidence from Daily_Log",
+    fieldReviewReadingLabel: "NuTuenSai reads",
+    fieldReviewNextAttentionLabel: "Next gentle attention",
+    fieldReviewWindowVoice7: "In this 7-day window, this is an early signal rather than a conclusion.",
+    fieldReviewWindowVoice14: "Across 14 days, some repeated rhythm starts to become visible.",
+    fieldReviewWindowVoice30: "Across 30 days, the data starts to show a month-level rhythm.",
+    fieldReviewWindowVoiceAll: "Across all available data, this becomes a long-view reflection, while each day still has its own context.",
+    fieldReviewHydrationReadingEmpty: "NuTuenSai can only read hydration lightly here because no clear Water_ml values are recorded in this window.",
+    fieldReviewHydrationReadingVaries: "NuTuenSai reads hydration as variable across this window. View it together with load, sleep, and activity, not as a single-day judgment.",
+    fieldReviewHydrationReadingSteady: "NuTuenSai reads hydration as having a visible base in this window, while each day still deserves its own context.",
+    fieldReviewHydrationNextLowLoad: "Gently notice days where load is high but water is low, as a care signal rather than a mistake.",
+    fieldReviewHydrationNextDefault: "Gently notice what sleep, load, or activity context appears beside especially low or high water days.",
+    fieldReviewSleepReadingSignal: "NuTuenSai reads these as sleep/recovery signals that deserve gentle space, especially near low-energy or high-load days.",
+    fieldReviewSleepReadingLight: "NuTuenSai does not read a heavy sleep/recovery pattern from the selected saved data.",
+    fieldReviewSleepNextSignal: "Gently notice what load, caffeine, or Mind Note context sits beside lower sleep/recovery days.",
+    fieldReviewSleepNextDefault: "If more sleep data appears next time, NuTuenSai can read the recovery rhythm more clearly.",
+    fieldReviewLoadReadingHigh: "High-load days do not mean good or bad. NuTuenSai reads them as signals to see whether recovery had room to follow the day.",
+    fieldReviewLoadReadingLight: "NuTuenSai reads the selected load pattern as not especially heavy, while still keeping each day in context.",
+    fieldReviewLoadNextRecovery: "Gently notice days where high load appears with low sleep/recovery.",
+    fieldReviewLoadNextDefault: "For the next review, notice what kind of day high load appears in and whether recovery follows.",
+    fieldReviewDrinksReadingSignal: "NuTuenSai reads this as drink-load context, not calories, exact caffeine mg, expenses, purchases, or prices.",
+    fieldReviewDrinksReadingLight: "NuTuenSai reads caffeine and sweetness drink-load as light in the selected window.",
+    fieldReviewDrinksNextSignal: "Gently notice caffeine or sweetness days alongside sleep, water, and load without judging the drink.",
+    fieldReviewDrinksNextDefault: "If more drink context appears next time, NuTuenSai can read the rhythm gently without judging it.",
+    fieldReviewMindReadingSignal: "Mind Note is a user-owned context space. NuTuenSai reads it as a trace of care, not diagnosis.",
+    fieldReviewMindReadingEmpty: "There are not many Mind Notes or support needs here yet, so NuTuenSai reads this as space that can remain open.",
+    fieldReviewMindNextSignal: "Gently notice which support needs repeat and what body or load context appears near them.",
+    fieldReviewMindNextDefault: "If more Mind Notes appear next time, NuTuenSai will read them as care context, not identity assessment.",
+    fieldReviewMissingReadingSignal: "Blank fields mean not recorded, not failure. Honest data matters more than complete data.",
+    fieldReviewMissingReadingLight: "NuTuenSai reads the key data as enough for a light review, while blank fields can still remain blank.",
+    fieldReviewMissingNextSignal: "Choose only one field you may want to record more steadily. There is no need to complete everything.",
+    fieldReviewMissingNextDefault: "Next time, keep recording what is true enough. Truthful data matters more than completeness.",
     welcomeKicker: "PNAT2026 HEALTH BALANCE",
     welcomeTitle: "Welcome back,",
     welcomeSubtitle: "You have cared for many things today.\nDon't forget to care for yourself too.",
@@ -1799,6 +1863,38 @@ const translations = {
     fieldReviewMissingItemWater: "Water_ml {count}",
     fieldReviewMissingItemActivities: "Activities {count}",
     fieldReviewMissingItemMindNote: "Mind Note {count}",
+    fieldReviewEvidenceLabel: "来自 Daily_Log 的依据",
+    fieldReviewReadingLabel: "NuTuenSai 读取为",
+    fieldReviewNextAttentionLabel: "下次温柔留意",
+    fieldReviewWindowVoice7: "在这 7 天里，这更像早期信号，不是结论。",
+    fieldReviewWindowVoice14: "在 14 天里，一些重复节奏开始可以被看见。",
+    fieldReviewWindowVoice30: "在 30 天里，数据开始呈现这个月的节奏。",
+    fieldReviewWindowVoiceAll: "看全部可用数据时，这是长期视角的回顾，但每一天仍有自己的背景。",
+    fieldReviewHydrationReadingEmpty: "这里还没有清楚记录 Water_ml，所以 NuTuenSai 只能很轻地阅读补水信号。",
+    fieldReviewHydrationReadingVaries: "NuTuenSai 读取到这段时间的饮水有起伏，适合和 load、sleep、activity 一起看，而不是用单日数字判断。",
+    fieldReviewHydrationReadingSteady: "NuTuenSai 读取到这段时间有可见的饮水基础，同时每一天仍需要放回自己的背景里看。",
+    fieldReviewHydrationNextLowLoad: "下次可以轻轻留意 load 高但水较低的日子，把它看作照顾信号，不是错误。",
+    fieldReviewHydrationNextDefault: "下次可以留意特别低或高的饮水日旁边，有什么 sleep、load 或 activity 背景。",
+    fieldReviewSleepReadingSignal: "NuTuenSai 把这些读作 sleep/recovery 信号，尤其在低能量或高 load 附近，需要温柔地留出空间。",
+    fieldReviewSleepReadingLight: "从已保存的数据来看，NuTuenSai 没有读到很重的 sleep/recovery pattern。",
+    fieldReviewSleepNextSignal: "下次可以轻轻留意 sleep/recovery 较低的日子旁边，有什么 load、咖啡因或 Mind Note 背景。",
+    fieldReviewSleepNextDefault: "如果下次有更多 sleep 数据，NuTuenSai 可以更清楚地阅读 recovery 节奏。",
+    fieldReviewLoadReadingHigh: "高 load 的日子不代表好或不好。NuTuenSai 读取它们，是为了看 recovery 有没有空间跟上那一天。",
+    fieldReviewLoadReadingLight: "NuTuenSai 读取到所选范围的 load 不算特别重，同时仍保留每一天自己的背景。",
+    fieldReviewLoadNextRecovery: "下次可以轻轻留意高 load 同时 sleep/recovery 较低的日子。",
+    fieldReviewLoadNextDefault: "下次可以看高 load 出现在什么样的日子，以及后面有没有 recovery 空间。",
+    fieldReviewDrinksReadingSignal: "NuTuenSai 把这读作饮品负荷背景，不是热量、准确咖啡因 mg、支出、购买或价格。",
+    fieldReviewDrinksReadingLight: "NuTuenSai 读取到所选范围内咖啡因和甜度 drink-load 较轻。",
+    fieldReviewDrinksNextSignal: "下次可以温柔留意有咖啡因或甜度的日子，与 sleep、water 和 load 怎样并排出现，不需要评价饮品。",
+    fieldReviewDrinksNextDefault: "如果下次有更多饮品背景，NuTuenSai 会继续温柔阅读，不做判断。",
+    fieldReviewMindReadingSignal: "Mind Note 是用户自己的背景空间。NuTuenSai 把它读作照顾的痕迹，不是诊断。",
+    fieldReviewMindReadingEmpty: "这里 Mind Note 或 support need 还不多，所以 NuTuenSai 把它读作仍然可以保持开放的空间。",
+    fieldReviewMindNextSignal: "下次可以轻轻留意哪些 support need 重复出现，以及旁边有什么身体或 load 背景。",
+    fieldReviewMindNextDefault: "如果下次有更多 Mind Note，NuTuenSai 会把它读作照顾背景，不是身份评估。",
+    fieldReviewMissingReadingSignal: "空白表示未记录，不是失败。真实的数据比完整的数据更重要。",
+    fieldReviewMissingReadingLight: "NuTuenSai 读取到关键数据已经足够做轻量回顾，同时空白仍然可以保持空白。",
+    fieldReviewMissingNextSignal: "下次只选择一个想更稳定记录的字段就好，不需要把所有东西填满。",
+    fieldReviewMissingNextDefault: "下次继续记录真实把握的部分即可。真实比完整更重要。",
     welcomeKicker: "PNAT2026 HEALTH BALANCE",
     welcomeTitle: "欢迎回来",
     welcomeSubtitle: "今天你已经照顾了很多事情。\n也别忘了温柔地照顾自己。",
@@ -8491,6 +8587,10 @@ function getFieldReviewStats(rows = [], totalRows = rows.length) {
     lowSleepRows,
     lowEnergyRows,
     highLoadRows,
+    highLoadLowWaterRows: highLoadRows.filter((row) => {
+      const water = Number(row.Water_ml) || 0;
+      return water > 0 && water < 1500;
+    }),
     highLoadLowSleepRows: highLoadRows.filter(hasLowSleepRecoverySignal),
     highLoadLowEnergyRows: highLoadRows.filter((row) => isLowEnergyValue(row.Energy)),
     caffeineDays: selectedRows.filter((row) => Number(row.Caffeine_Score) > 0).length,
@@ -8506,23 +8606,78 @@ function getFieldReviewStats(rows = [], totalRows = rows.length) {
   };
 }
 
-function createFieldReviewCard(titleKey, summaryKey, evidence, noteKey) {
+function getFieldReviewWindowVoice(timeframe = "7") {
+  if (timeframe === "all") return t("fieldReviewWindowVoiceAll");
+  if (timeframe === "30") return t("fieldReviewWindowVoice30");
+  if (timeframe === "14") return t("fieldReviewWindowVoice14");
+  return t("fieldReviewWindowVoice7");
+}
+
+function buildNuTuenSaiCardReading(cardType, stats, timeframe = "7") {
+  const windowVoice = getFieldReviewWindowVoice(timeframe);
+  const keyByType = {
+    hydration: stats.waterValues.length === 0
+      ? "fieldReviewHydrationReadingEmpty"
+      : stats.maxWater - stats.minWater > 1200
+        ? "fieldReviewHydrationReadingVaries"
+        : "fieldReviewHydrationReadingSteady",
+    sleep: stats.lowSleepRows.length > 0 || stats.lowEnergyRows.length > 0
+      ? "fieldReviewSleepReadingSignal"
+      : "fieldReviewSleepReadingLight",
+    load: stats.highLoadRows.length
+      ? "fieldReviewLoadReadingHigh"
+      : "fieldReviewLoadReadingLight",
+    drinks: stats.caffeineDays > 0 || stats.sweetDrinkDays > 0 || stats.highSugarDays > 0
+      ? "fieldReviewDrinksReadingSignal"
+      : "fieldReviewDrinksReadingLight",
+    mind: stats.mindNoteDays > 0 || stats.supportDays > 0 || stats.practiceNoteDays > 0
+      ? "fieldReviewMindReadingSignal"
+      : "fieldReviewMindReadingEmpty",
+    missing: stats.missingSleepDays || stats.missingWaterDays || stats.missingActivitiesDays || stats.missingMindNoteDays
+      ? "fieldReviewMissingReadingSignal"
+      : "fieldReviewMissingReadingLight"
+  };
+
+  return `${windowVoice} ${t(keyByType[cardType])}`;
+}
+
+function buildNuTuenSaiNextAttention(cardType, stats) {
+  const keyByType = {
+    hydration: stats.highLoadLowWaterRows.length
+      ? "fieldReviewHydrationNextLowLoad"
+      : "fieldReviewHydrationNextDefault",
+    sleep: stats.lowSleepRows.length || stats.lowEnergyRows.length
+      ? "fieldReviewSleepNextSignal"
+      : "fieldReviewSleepNextDefault",
+    load: stats.highLoadLowSleepRows.length
+      ? "fieldReviewLoadNextRecovery"
+      : "fieldReviewLoadNextDefault",
+    drinks: stats.caffeineDays || stats.sweetDrinkDays || stats.highSugarDays
+      ? "fieldReviewDrinksNextSignal"
+      : "fieldReviewDrinksNextDefault",
+    mind: stats.mindNoteDays || stats.supportDays || stats.practiceNoteDays
+      ? "fieldReviewMindNextSignal"
+      : "fieldReviewMindNextDefault",
+    missing: stats.missingSleepDays || stats.missingWaterDays || stats.missingActivitiesDays || stats.missingMindNoteDays
+      ? "fieldReviewMissingNextSignal"
+      : "fieldReviewMissingNextDefault"
+  };
+
+  return t(keyByType[cardType]);
+}
+
+function createFieldReviewCard(titleKey, evidence, reading, nextAttention) {
   return {
     title: t(titleKey),
-    summary: t(summaryKey),
     evidence,
-    note: t(noteKey)
+    reading,
+    nextAttention
   };
 }
 
-function buildHydrationReviewCard(rows = []) {
+function buildHydrationReviewCard(rows = [], timeframe = "7") {
   const stats = getFieldReviewStats(rows);
   const hasWater = stats.waterValues.length > 0;
-  const summaryKey = !hasWater
-    ? "fieldReviewHydrationEmpty"
-    : stats.maxWater - stats.minWater > 1200
-      ? "fieldReviewHydrationVaries"
-      : "fieldReviewHydrationSteady";
   const evidence = hasWater
     ? t("fieldReviewHydrationEvidence", {
       average: formatReviewNumber(stats.averageWater),
@@ -8535,71 +8690,68 @@ function buildHydrationReviewCard(rows = []) {
 
   return createFieldReviewCard(
     "fieldReviewHydrationTitle",
-    summaryKey,
     evidence,
-    "fieldReviewHydrationNote"
+    buildNuTuenSaiCardReading("hydration", stats, timeframe),
+    buildNuTuenSaiNextAttention("hydration", stats)
   );
 }
 
-function buildSleepRecoveryReviewCard(rows = []) {
+function buildSleepRecoveryReviewCard(rows = [], timeframe = "7") {
   const stats = getFieldReviewStats(rows);
-  const hasRecoverySignal = stats.lowSleepRows.length > 0 || stats.lowEnergyRows.length > 0;
   return createFieldReviewCard(
     "fieldReviewSleepTitle",
-    hasRecoverySignal ? "fieldReviewSleepSummary" : "fieldReviewSleepLight",
     t("fieldReviewSleepEvidence", {
       lowSleep: formatReviewNumber(stats.lowSleepRows.length),
       lowEnergy: formatReviewNumber(stats.lowEnergyRows.length)
     }),
-    "fieldReviewSleepNote"
+    buildNuTuenSaiCardReading("sleep", stats, timeframe),
+    buildNuTuenSaiNextAttention("sleep", stats)
   );
 }
 
-function buildLoadRecoveryReviewCard(rows = []) {
+function buildLoadRecoveryReviewCard(rows = [], timeframe = "7") {
   const stats = getFieldReviewStats(rows);
   return createFieldReviewCard(
     "fieldReviewLoadTitle",
-    stats.highLoadRows.length ? "fieldReviewLoadSummary" : "fieldReviewLoadLight",
     t("fieldReviewLoadEvidence", {
       highLoad: formatReviewNumber(stats.highLoadRows.length),
       highLoadLowSleep: formatReviewNumber(stats.highLoadLowSleepRows.length),
       highLoadLowEnergy: formatReviewNumber(stats.highLoadLowEnergyRows.length)
     }),
-    "fieldReviewLoadNote"
+    buildNuTuenSaiCardReading("load", stats, timeframe),
+    buildNuTuenSaiNextAttention("load", stats)
   );
 }
 
-function buildDrinksReviewCard(rows = []) {
+function buildDrinksReviewCard(rows = [], timeframe = "7") {
   const stats = getFieldReviewStats(rows);
-  const hasDrinkLoad = stats.caffeineDays > 0 || stats.sweetDrinkDays > 0 || stats.highSugarDays > 0;
   return createFieldReviewCard(
     "fieldReviewDrinksTitle",
-    hasDrinkLoad ? "fieldReviewDrinksSummary" : "fieldReviewDrinksLight",
     t("fieldReviewDrinksEvidence", {
       caffeineDays: formatReviewNumber(stats.caffeineDays),
       sweetDays: formatReviewNumber(stats.sweetDrinkDays),
       highSugarDays: formatReviewNumber(stats.highSugarDays)
     }),
-    "fieldReviewDrinksNote"
+    buildNuTuenSaiCardReading("drinks", stats, timeframe),
+    buildNuTuenSaiNextAttention("drinks", stats)
   );
 }
 
-function buildMindNoteReviewCard(rows = []) {
+function buildMindNoteReviewCard(rows = [], timeframe = "7") {
   const stats = getFieldReviewStats(rows);
-  const hasMindContext = stats.mindNoteDays > 0 || stats.supportDays > 0 || stats.practiceNoteDays > 0;
   return createFieldReviewCard(
     "fieldReviewMindTitle",
-    hasMindContext ? "fieldReviewMindSummary" : "fieldReviewMindEmpty",
     t("fieldReviewMindEvidence", {
       mindNoteDays: formatReviewNumber(stats.mindNoteDays),
       supportDays: formatReviewNumber(stats.supportDays),
       practiceNoteDays: formatReviewNumber(stats.practiceNoteDays)
     }),
-    "fieldReviewMindNote"
+    buildNuTuenSaiCardReading("mind", stats, timeframe),
+    buildNuTuenSaiNextAttention("mind", stats)
   );
 }
 
-function buildMissingDataReviewCard(rows = []) {
+function buildMissingDataReviewCard(rows = [], timeframe = "7") {
   const stats = getFieldReviewStats(rows);
   const missingItems = [
     stats.missingSleepDays ? t("fieldReviewMissingItemSleep", { count: formatReviewNumber(stats.missingSleepDays) }) : "",
@@ -8610,23 +8762,23 @@ function buildMissingDataReviewCard(rows = []) {
 
   return createFieldReviewCard(
     "fieldReviewMissingTitle",
-    missingItems.length ? "fieldReviewMissingSummary" : "fieldReviewMissingLight",
     missingItems.length
       ? t("fieldReviewMissingEvidence", { items: missingItems.join(" | ") })
       : t("fieldReviewMissingNone"),
-    "fieldReviewMissingNote"
+    buildNuTuenSaiCardReading("missing", stats, timeframe),
+    buildNuTuenSaiNextAttention("missing", stats)
   );
 }
 
-function buildFieldReviewCards(rows = []) {
+function buildFieldReviewCards(rows = [], timeframe = "7") {
   if (!rows.length) return [];
   return [
-    buildHydrationReviewCard(rows),
-    buildSleepRecoveryReviewCard(rows),
-    buildLoadRecoveryReviewCard(rows),
-    buildDrinksReviewCard(rows),
-    buildMindNoteReviewCard(rows),
-    buildMissingDataReviewCard(rows)
+    buildHydrationReviewCard(rows, timeframe),
+    buildSleepRecoveryReviewCard(rows, timeframe),
+    buildLoadRecoveryReviewCard(rows, timeframe),
+    buildDrinksReviewCard(rows, timeframe),
+    buildMindNoteReviewCard(rows, timeframe),
+    buildMissingDataReviewCard(rows, timeframe)
   ];
 }
 
@@ -8655,7 +8807,7 @@ function renderFieldReview() {
 
   emptyState.classList.toggle("is-hidden", hasRows);
   thinState.classList.toggle("is-hidden", !isThin);
-  container.innerHTML = buildFieldReviewCards(rows).map((card) => `
+  container.innerHTML = buildFieldReviewCards(rows, timeframe).map((card) => `
     <article class="glass-card field-review-card">
       <div class="card-heading">
         <div>
@@ -8663,9 +8815,18 @@ function renderFieldReview() {
           <h3>${escapeHtml(card.title)}</h3>
         </div>
       </div>
-      <p class="field-review-card-summary">${escapeHtml(card.summary)}</p>
-      <p class="field-review-card-evidence">${escapeHtml(card.evidence)}</p>
-      <p class="field-review-card-note">${escapeHtml(card.note)}</p>
+      <div class="field-review-card-section field-review-card-evidence">
+        <p class="field-review-card-label">${escapeHtml(t("fieldReviewEvidenceLabel"))}</p>
+        <p>${escapeHtml(card.evidence)}</p>
+      </div>
+      <div class="field-review-card-section field-review-card-reading">
+        <p class="field-review-card-label">${escapeHtml(t("fieldReviewReadingLabel"))}</p>
+        <p>${escapeHtml(card.reading)}</p>
+      </div>
+      <div class="field-review-card-section field-review-card-next">
+        <p class="field-review-card-label">${escapeHtml(t("fieldReviewNextAttentionLabel"))}</p>
+        <p>${escapeHtml(card.nextAttention)}</p>
+      </div>
     </article>
   `).join("");
 }

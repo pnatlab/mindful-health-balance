@@ -3277,12 +3277,14 @@ body[data-theme="dark"] .field-review-thin {
   font-size: 1.05rem;
 }
 
-.field-review-card-summary,
-.field-review-card-evidence,
-.field-review-card-note {
+.field-review-card-section {
   margin: 12px 0 0;
   color: var(--text-soft);
   line-height: 1.65;
+}
+
+.field-review-card-section p {
+  margin: 0;
 }
 
 .field-review-card-evidence {
@@ -3294,7 +3296,34 @@ body[data-theme="dark"] .field-review-thin {
   font-weight: 800;
 }
 
-.field-review-card-note {
+.field-review-card-reading,
+.field-review-card-next {
+  padding: 10px 12px;
+  border-left: 3px solid rgba(101, 200, 176, 0.45);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+body[data-theme="dark"] .field-review-card-reading,
+body[data-theme="dark"] .field-review-card-next {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.field-review-card-next {
+  border-left-color: rgba(120, 168, 255, 0.48);
+}
+
+.field-review-card-label {
+  margin: 0 0 4px !important;
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.field-review-card-next,
+.field-review-card-reading {
   font-size: 0.92rem;
 }
 

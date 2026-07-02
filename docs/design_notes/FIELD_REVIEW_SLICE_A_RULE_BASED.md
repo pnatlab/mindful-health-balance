@@ -42,9 +42,28 @@ Review cards may summarize:
 - Mind Note and support need pattern
 - missing or blank data pattern
 
-Each card should include a short summary, evidence from available rows, and a gentle note. Wording should preserve agency and use language such as "may", "appears", "suggests", "can be read as", "อาจ", "ดูเหมือน", and "เป็นสัญญาณ".
+Each card should use a three-layer structure:
+
+1. Evidence line from available `Daily_Log` rows.
+2. NuTuenSai-style deterministic reading.
+3. Gentle next attention.
+
+The voice layer is rule-based and template-driven. It may sound warmer than a dashboard, but it must not become live LLM generation, free-form chat, diagnosis, advice, correlation, or causation analysis.
+
+Wording should preserve agency and use language such as "may", "appears", "suggests", "can be read as", "อาจ", "ดูเหมือน", and "เป็นสัญญาณ".
 
 Avoid wording that sounds like command, diagnosis, risk prediction, moral judgment, or proof that the user is doing well or badly.
+
+## Timeframe Voice
+
+Slice A may vary tone by selected timeframe:
+
+- 7 days: short window, early signal, no over-conclusion.
+- 14 days: emerging rhythm, enough to notice some repetition.
+- 30 days: month-level rhythm, still not diagnosis.
+- All available: long-view reflection, while remembering that day contexts vary.
+
+Timeframe voice should sit beside the evidence and should not replace numeric evidence.
 
 ## Future Backlog
 

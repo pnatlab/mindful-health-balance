@@ -116,7 +116,7 @@ Starting in v1.9.7 — Symbolic Signal Cockpit Polish, the cockpit becomes more 
 
 Starting in v1.9.9 — Mindful Practice Context, Mind Note 2/2 adds a small `Practice before Mind Note` card. It can record an optional practice root/type, rough duration, and `Practice_Note` using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma, plus No practice / Other. This data is stored in Daily Log/Excel for future Field Review only; daily Reflection/NuTuenSai does not interpret it yet and does not score practice quality.
 
-Starting in MHB 2.0 Slice A, the `Field Review` tab begins conservative rule-based review. It reads only `Daily_Log` in localStorage and shows deterministic cards for hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support, and missing/blank data. It has no free-form ask, no LLM call, and no correlation calculation/UI.
+Starting in MHB 2.0 Slice A, the `Field Review` tab begins conservative rule-based review. It reads only `Daily_Log` in localStorage and shows deterministic cards for hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support, and missing/blank data. Each card keeps evidence visible, then adds a rule-based NuTuenSai reading and a gentle next attention. It has no free-form ask, no LLM call, and no correlation calculation/UI.
 
 Starting in v1.9.8 — Input-grounded Natural Reflection Composer, Reflection/NuTuenSai selects 2-4 meaningful anchors from today's input, such as water, sleep hours, drink context, activity/load, run detail, Mind Note, or light continuity context. It uses those anchors to write one more natural overview sentence while staying rule-based, local-first, non-medical, and non-chatbot.
 
@@ -134,7 +134,9 @@ Main Today cards also show a soft blue active layer when that card has current i
 
 The `Field Review` tab is MHB 2.0 Slice A. It is rule-based only and reviews patterns from saved `Daily_Log` rows in this browser. You can choose 7 days, 14 days, 30 days, or all available saved rows.
 
-Review cards cover hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support need, and missing/blank data. If there are fewer than 3 rows, the page says the data is still thin and only shows early signals.
+Review cards cover hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support need, and missing/blank data. Each card has three layers: evidence from `Daily_Log`, `NuTuenSai reads`, and `Next gentle attention`. If there are fewer than 3 rows, the page says the data is still thin and only shows early signals.
+
+The card voice changes lightly by timeframe: 7 days is an early signal, 14 days is an emerging rhythm, 30 days is a month-level rhythm, and all available data is a long-view reflection that still respects each day's context.
 
 This page is not a chatbot, does not call an LLM, does not include free-form ask, does not calculate correlations, and does not diagnose or give medical advice. Blank fields mean not recorded, not failure or a missing score.
 
