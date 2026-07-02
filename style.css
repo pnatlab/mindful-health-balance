@@ -3520,6 +3520,33 @@ body[data-theme="dark"] .field-review-thin {
   inset: 0 auto 0 0;
   width: 4px;
   background: linear-gradient(180deg, rgba(101, 200, 176, 0.56), rgba(120, 168, 255, 0.28));
+  z-index: 2;
+}
+
+.field-room-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.82) 46%, rgba(255, 255, 255, 0.46) 100%),
+    var(--field-room-image);
+  background-position: center, center right;
+  background-size: cover, cover;
+  opacity: 0.86;
+  pointer-events: none;
+}
+
+body[data-theme="dark"] .field-room-card::after {
+  background-image:
+    linear-gradient(90deg, rgba(22, 31, 42, 0.92) 0%, rgba(22, 31, 42, 0.78) 48%, rgba(22, 31, 42, 0.48) 100%),
+    var(--field-room-image);
+  opacity: 0.78;
+}
+
+.studio-review-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .studio-review-card:hover {
@@ -3561,7 +3588,8 @@ body[data-theme="dark"] .field-review-thin {
   border: 1px solid var(--border-soft);
   border-radius: 8px;
   color: var(--text-main);
-  background: var(--table-bg);
+  background: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(10px);
   font-weight: 800;
 }
 
@@ -3570,12 +3598,14 @@ body[data-theme="dark"] .field-review-thin {
   padding: 10px 12px;
   border-left: 3px solid rgba(101, 200, 176, 0.45);
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(10px);
 }
 
+body[data-theme="dark"] .field-review-card-evidence,
 body[data-theme="dark"] .field-review-card-reading,
 body[data-theme="dark"] .field-review-card-next {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(22, 31, 42, 0.66);
 }
 
 .field-review-card-next {

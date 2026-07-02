@@ -213,6 +213,8 @@ Field Review does not call an LLM, does not provide a free-form question box, do
 
 Visual Slice 1 begins moving Field Review toward the `NuTuenSai Field Reflection Studio`: a softer studio hero, segmented timeframe control, source-bound overview chips, and a CSS-only rhythm moment. It does not add a chart library; the visual layer still reflects saved `Daily_Log` evidence only.
 
+Field Review cards also use NuTuenSai Field Room background images for hydration, sleep/recovery, load/recovery, drinks context, Mind Note, and missing/blank data. These images are presentation assets only; they do not change review logic, source boundaries, or workbook data.
+
 The cards are descriptive pattern summaries. Missing data means not recorded, not failure. Numeric fields keep their workbook boundaries: for example, `Water_ml` is plain water in milliliters, not money or expense data.
 
 ## Documentation

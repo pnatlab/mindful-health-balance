@@ -8707,13 +8707,24 @@ function buildNuTuenSaiNextAttention(cardType, stats) {
   return t(keyByType[cardType]);
 }
 
-function createFieldReviewCard(titleKey, evidence, reading, nextAttention, motif = "") {
+const FIELD_ROOM_IMAGES = {
+  hydration: "assets/field-review/field-room-hydration.png",
+  sleepRecovery: "assets/field-review/field-room-sleep-recovery.png",
+  loadRecovery: "assets/field-review/field-room-load-recovery.png",
+  drinks: "assets/field-review/field-room-drinks-context.png",
+  mindNote: "assets/field-review/field-room-mind-note.png",
+  missing: "assets/field-review/field-room-missing-blank.png"
+};
+
+function createFieldReviewCard(titleKey, evidence, reading, nextAttention, motif = "", roomType = "") {
   return {
     title: t(titleKey),
     evidence,
     reading,
     nextAttention,
-    motif
+    motif,
+    roomType,
+    roomImage: FIELD_ROOM_IMAGES[roomType] || ""
   };
 }
 
@@ -8735,7 +8746,8 @@ function buildHydrationReviewCard(rows = [], timeframe = "7") {
     evidence,
     buildNuTuenSaiCardReading("hydration", stats, timeframe),
     buildNuTuenSaiNextAttention("hydration", stats),
-    "💧"
+    "💧",
+    "hydration"
   );
 }
 
@@ -8749,7 +8761,8 @@ function buildSleepRecoveryReviewCard(rows = [], timeframe = "7") {
     }),
     buildNuTuenSaiCardReading("sleep", stats, timeframe),
     buildNuTuenSaiNextAttention("sleep", stats),
-    "☾"
+    "☾",
+    "sleepRecovery"
   );
 }
 
@@ -8764,7 +8777,8 @@ function buildLoadRecoveryReviewCard(rows = [], timeframe = "7") {
     }),
     buildNuTuenSaiCardReading("load", stats, timeframe),
     buildNuTuenSaiNextAttention("load", stats),
-    "〰"
+    "〰",
+    "loadRecovery"
   );
 }
 
@@ -8779,7 +8793,8 @@ function buildDrinksReviewCard(rows = [], timeframe = "7") {
     }),
     buildNuTuenSaiCardReading("drinks", stats, timeframe),
     buildNuTuenSaiNextAttention("drinks", stats),
-    "☕"
+    "☕",
+    "drinks"
   );
 }
 
@@ -8794,7 +8809,8 @@ function buildMindNoteReviewCard(rows = [], timeframe = "7") {
     }),
     buildNuTuenSaiCardReading("mind", stats, timeframe),
     buildNuTuenSaiNextAttention("mind", stats),
-    "🩵"
+    "🩵",
+    "mindNote"
   );
 }
 
@@ -8814,7 +8830,8 @@ function buildMissingDataReviewCard(rows = [], timeframe = "7") {
       : t("fieldReviewMissingNone"),
     buildNuTuenSaiCardReading("missing", stats, timeframe),
     buildNuTuenSaiNextAttention("missing", stats),
-    "·"
+    "·",
+    "missing"
   );
 }
 
@@ -8948,7 +8965,7 @@ function renderFieldReview() {
   emptyState.classList.toggle("is-hidden", hasRows);
   thinState.classList.toggle("is-hidden", !isThin);
   container.innerHTML = buildFieldReviewCards(rows, timeframe).map((card) => `
-    <article class="glass-card field-review-card studio-review-card">
+    <article class="glass-card field-review-card studio-review-card field-room-card" data-field-room="${escapeHtml(card.roomType)}" style="--field-room-image: url('${escapeHtml(card.roomImage)}');">
       <div class="card-heading">
         <span class="field-review-card-motif" aria-hidden="true">${escapeHtml(card.motif)}</span>
         <div>

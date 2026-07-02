@@ -76,6 +76,7 @@ Allowed presentation changes:
 - soft overview chips derived from the same selected `Daily_Log` rows
 - CSS-only selected-rhythm dot strip using selected rows as visual anchors
 - lighter review card styling while keeping Evidence, NuTuenSai reads, and Next gentle attention visible
+- NuTuenSai Field Room background images behind the six review cards, with readability overlays and safe fallback when images do not load
 
 This visual slice must remain presentation-only. It must not add a chart library, correlation calculation, relationship matrix, LLM call, free-form ask box, diagnosis wording, score/ranking system, finance interpretation, or schema change.
 

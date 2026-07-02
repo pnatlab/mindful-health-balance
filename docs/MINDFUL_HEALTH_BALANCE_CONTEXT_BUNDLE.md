@@ -744,6 +744,8 @@ These summaries are descriptive only. They are not diagnosis, nutrition advice, 
 
 Field Review Visual Slice 1 starts the NuTuenSai Field Reflection Studio direction. The visual layer may include a warm studio hero, segmented timeframe control, soft overview chips, and a CSS-only selected-rhythm dot strip. These are presentation aids only: they do not add a chart library, correlation calculation, free-form ask, LLM call, diagnosis, scoring, or new data schema.
 
+NuTuenSai Field Room background images may be used behind the six Field Review cards. The images provide visual language for hydration, sleep/recovery, load/recovery, drinks context, Mind Note, and missing/blank data, but they remain presentation assets only and must not be treated as evidence, inference, score, or additional user data.
+
 ## Compatibility
 
 This refinement must preserve:

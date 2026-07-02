@@ -140,6 +140,8 @@ The card voice changes lightly by timeframe: 7 days is an early signal, 14 days 
 
 Visual Slice 1 starts shaping Field Review as a NuTuenSai studio experience, with a warmer hero, segmented timeframe pill, overview chips from real data, and a CSS-only selected-rhythm moment. It does not add a chart library, and evidence remains source-bound to `Daily_Log`.
 
+The six review cards now use NuTuenSai Field Room background images for hydration, sleep/recovery, load/recovery, drinks context, Mind Note, and missing/blank data. These images are presentation only; they do not change review logic and do not add LLM, free-form ask, or correlation behavior.
+
 This page is not a chatbot, does not call an LLM, does not include free-form ask, does not calculate correlations, and does not diagnose or give medical advice. Blank fields mean not recorded, not failure or a missing score.
 
 To review an exported workbook, import the Master Excel file from `Log` first. Field Review then reads the imported Daily Log from localStorage.
