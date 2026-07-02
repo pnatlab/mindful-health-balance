@@ -144,6 +144,10 @@ The six review cards now use NuTuenSai Field Room background images for hydratio
 
 Field Review UI v2 changes the visible layout from all cards at once to a guided one-room-at-a-time workspace. It includes a room selector, locked chat-style bubbles for source, evidence, NuTuenSai reading, and next gentle attention, plus a suggested next-room button. That button is navigation only, not an AI recommendation.
 
+Field Review UI v2.1 makes the room feel more like a locked guided conversation. NuTuenSai asks a predefined focus question, and you choose a predefined chip: overview, evidence, next gentle attention, or show all. The response still comes from deterministic `Daily_Log` card data, not from live text generation.
+
+Field Review UI v2.2 places that flow into a conversation stack: NuTuenSai question, locked choice chips, source-bound response, and next-room continuation. The choices sit under the question, so they act like guided answers rather than a top menu.
+
 This page is not a chatbot, does not call an LLM, does not include free-form ask, does not calculate correlations, and does not diagnose or give medical advice. Blank fields mean not recorded, not failure or a missing score.
 
 To review an exported workbook, import the Master Excel file from `Log` first. Field Review then reads the imported Daily Log from localStorage.

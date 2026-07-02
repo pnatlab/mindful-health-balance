@@ -217,6 +217,10 @@ Field Review cards also use NuTuenSai Field Room background images for hydration
 
 Field Review UI v2 presents those six cards as guided Field Rooms. The page opens one room at a time, with a room selector, locked chat-style bubbles for source, evidence, NuTuenSai reading, and next gentle attention, plus a suggested next-room navigation button. It looks conversational, but it is still deterministic and has no text input, LLM, free-form ask, or correlation engine.
 
+Field Review UI v2.1 turns those bubbles into a locked guided conversation flow: NuTuenSai asks a predefined focus question, the user chooses a predefined focus chip, and the visible response changes between overview, evidence, next attention, or show all. Suggested next/related rooms are navigation only, not AI recommendations.
+
+Field Review UI v2.2 refines the active room into a conversation stack: question bubble, locked choices, source-bound response bubbles, then next-room continuation. The stack keeps the chat-like feeling without adding text input, LLM generation, free-form ask, or new analysis.
+
 The cards are descriptive pattern summaries. Missing data means not recorded, not failure. Numeric fields keep their workbook boundaries: for example, `Water_ml` is plain water in milliliters, not money or expense data.
 
 ## Documentation

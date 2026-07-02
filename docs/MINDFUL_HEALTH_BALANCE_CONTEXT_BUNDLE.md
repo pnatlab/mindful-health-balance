@@ -748,6 +748,10 @@ NuTuenSai Field Room background images may be used behind the six Field Review c
 
 Field Review UI v2 may present these six Field Rooms as a guided one-room-at-a-time workspace. The room selector, locked chat-style bubbles, focus chips, and suggested next-room button are deterministic navigation and presentation layers. They must not introduce free-form chat, user prompts, LLM-generated answers, correlation, charts, diagnosis, scoring, or new data fields.
 
+Field Review UI v2.1 may refine that workspace into a locked guided conversation flow. NuTuenSai asks predefined focus questions, the user selects predefined focus chips, and the response swaps between source-bound overview, evidence, next attention, or show-all bubbles. Suggested next/related room buttons are navigation only; they are not AI recommendations or new analysis.
+
+Field Review UI v2.2 may place the guided flow into a conversation stack: question bubble, locked choice chips, source-bound response bubbles, then next-room continuation. This changes presentation order only. It must not add text input, free-form prompting, LLM-generated responses, correlation, charts, diagnosis, scoring, or schema changes.
+
 ## Compatibility
 
 This refinement must preserve:

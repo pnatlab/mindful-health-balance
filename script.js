@@ -206,11 +206,23 @@ const translations = {
     fieldRoomMissingLabel: "ช่องว่างข้อมูล",
     fieldRoomSourceLabel: "จังหวะที่เลือก",
     fieldRoomSourceBubble: "หนูตื่นสายกำลังอ่าน Daily_Log ในช่วง {timeframe} ที่พี่เลือกอยู่ค่ะ",
+    fieldRoomFlowModeLabel: "แชทนำทางแบบเลือกคำถาม · ไม่ใช่ LLM",
+    fieldRoomQuestionLabel: "หนูตื่นสายถาม",
+    fieldRoomQuestionHydration: "พี่อยากให้หนูอ่านจังหวะน้ำจากมุมไหนคะ",
+    fieldRoomQuestionSleepRecovery: "พี่อยากให้หนูอ่าน sleep/recovery จากมุมไหนคะ",
+    fieldRoomQuestionLoadRecovery: "พี่อยากให้หนูดูภาระกับการพักจากมุมไหนคะ",
+    fieldRoomQuestionDrinks: "พี่อยากดูบริบทเครื่องดื่มจากมุมไหนคะ",
+    fieldRoomQuestionMindNote: "พี่อยากให้หนูอ่านพื้นที่ Mind Note จากมุมไหนคะ",
+    fieldRoomQuestionMissing: "พี่อยากดูช่องว่างข้อมูลจากมุมไหนคะ",
     fieldRoomFocusOverview: "ภาพรวม",
-    fieldRoomFocusEvidence: "หลักฐาน",
-    fieldRoomFocusNext: "รอบถัดไป",
+    fieldRoomFocusEvidence: "หลักฐานจากข้อมูล",
+    fieldRoomFocusNext: "รอบถัดไปลองสังเกต",
+    fieldRoomFocusAll: "ดูทั้งหมด",
     fieldRoomNextButton: "ดูห้องถัดไป",
     fieldRoomNextRoomButton: "ดู {room} ต่อ",
+    fieldRoomNextPrompt: "ต่อไปพี่อยากให้หนูเปิดห้องไหนต่อคะ",
+    fieldRoomNextHelper: "หนูพาไปดูห้องถัดไปได้ค่ะ",
+    fieldRoomRelatedButton: "เปิด {room} ที่เกี่ยวข้อง",
     fieldReviewWindowVoice7: "ในช่วง 7 วันนี้ หนูอ่านเป็นสัญญาณสั้น ๆ มากกว่าข้อสรุปค่ะ",
     fieldReviewWindowVoice14: "ในช่วง 14 วันนี้ pattern เริ่มพอให้เห็นจังหวะซ้ำบางอย่างค่ะ",
     fieldReviewWindowVoice30: "ในช่วง 30 วันนี้ ภาพรวมเริ่มพอใช้ดูจังหวะของเดือนนี้ได้ค่ะ",
@@ -1071,11 +1083,23 @@ const translations = {
     fieldRoomMissingLabel: "Missing / Blank",
     fieldRoomSourceLabel: "Selected window",
     fieldRoomSourceBubble: "NuTuenSai is reading the selected Daily_Log window: {timeframe}.",
+    fieldRoomFlowModeLabel: "Guided review · No free-form LLM chat",
+    fieldRoomQuestionLabel: "NuTuenSai asks",
+    fieldRoomQuestionHydration: "Which hydration angle would you like NuTuenSai to read?",
+    fieldRoomQuestionSleepRecovery: "Which sleep/recovery angle would you like NuTuenSai to read?",
+    fieldRoomQuestionLoadRecovery: "Which load and recovery angle would you like NuTuenSai to read?",
+    fieldRoomQuestionDrinks: "Which drinks context angle would you like to view?",
+    fieldRoomQuestionMindNote: "Which Mind Note angle would you like NuTuenSai to read?",
+    fieldRoomQuestionMissing: "Which blank-data angle would you like to view?",
     fieldRoomFocusOverview: "Overview",
-    fieldRoomFocusEvidence: "Evidence",
-    fieldRoomFocusNext: "Next attention",
+    fieldRoomFocusEvidence: "Evidence from data",
+    fieldRoomFocusNext: "Next gentle attention",
+    fieldRoomFocusAll: "Show all",
     fieldRoomNextButton: "View next room",
     fieldRoomNextRoomButton: "Continue to {room}",
+    fieldRoomNextPrompt: "Which room would you like NuTuenSai to open next?",
+    fieldRoomNextHelper: "NuTuenSai can open the next room.",
+    fieldRoomRelatedButton: "Open related {room}",
     fieldReviewWindowVoice7: "In this 7-day window, this is an early signal rather than a conclusion.",
     fieldReviewWindowVoice14: "Across 14 days, some repeated rhythm starts to become visible.",
     fieldReviewWindowVoice30: "Across 30 days, the data starts to show a month-level rhythm.",
@@ -1936,11 +1960,23 @@ const translations = {
     fieldRoomMissingLabel: "空白数据",
     fieldRoomSourceLabel: "所选时间窗",
     fieldRoomSourceBubble: "NuTuenSai 正在温柔读取所选 Daily_Log 时间窗：{timeframe}。",
+    fieldRoomFlowModeLabel: "引导式回顾 · 不是自由 LLM 聊天",
+    fieldRoomQuestionLabel: "NuTuenSai 轻轻问",
+    fieldRoomQuestionHydration: "你想让 NuTuenSai 从哪个角度读取饮水节奏？",
+    fieldRoomQuestionSleepRecovery: "你想让 NuTuenSai 从哪个角度读取睡眠/恢复？",
+    fieldRoomQuestionLoadRecovery: "你想让 NuTuenSai 从哪个角度看负荷与恢复？",
+    fieldRoomQuestionDrinks: "你想从哪个角度看饮品情境？",
+    fieldRoomQuestionMindNote: "你想让 NuTuenSai 从哪个角度读取 Mind Note 空间？",
+    fieldRoomQuestionMissing: "你想从哪个角度看空白数据？",
     fieldRoomFocusOverview: "概览",
-    fieldRoomFocusEvidence: "依据",
+    fieldRoomFocusEvidence: "数据依据",
     fieldRoomFocusNext: "下次轻观察",
+    fieldRoomFocusAll: "全部显示",
     fieldRoomNextButton: "查看下一个房间",
     fieldRoomNextRoomButton: "继续看 {room}",
+    fieldRoomNextPrompt: "接下来想让 NuTuenSai 打开哪个房间？",
+    fieldRoomNextHelper: "NuTuenSai 可以打开下一个房间。",
+    fieldRoomRelatedButton: "打开相关的 {room}",
     fieldReviewWindowVoice7: "在这 7 天里，这更像早期信号，不是结论。",
     fieldReviewWindowVoice14: "在 14 天里，一些重复节奏开始可以被看见。",
     fieldReviewWindowVoice30: "在 30 天里，数据开始呈现这个月的节奏。",
@@ -8791,7 +8827,8 @@ const FIELD_REVIEW_ROOM_ORDER = [
 const FIELD_REVIEW_FOCUS_ORDER = [
   { type: "overview", labelKey: "fieldRoomFocusOverview", bubbleType: "source" },
   { type: "evidence", labelKey: "fieldRoomFocusEvidence", bubbleType: "evidence" },
-  { type: "next", labelKey: "fieldRoomFocusNext", bubbleType: "next" }
+  { type: "next", labelKey: "fieldRoomFocusNext", bubbleType: "next" },
+  { type: "all", labelKey: "fieldRoomFocusAll", bubbleType: "all" }
 ];
 
 function normalizeFieldReviewRoom(roomType) {
@@ -8813,11 +8850,35 @@ function getFieldReviewNextRoomType(roomType) {
   return FIELD_REVIEW_ROOM_ORDER[nextIndex].type;
 }
 
+function getFieldReviewRelatedRoomType(roomType) {
+  const relatedByRoom = {
+    hydration: "loadRecovery",
+    sleepRecovery: "loadRecovery",
+    loadRecovery: "sleepRecovery",
+    drinks: "sleepRecovery",
+    mindNote: "missing",
+    missing: "hydration"
+  };
+  return normalizeFieldReviewRoom(relatedByRoom[roomType]);
+}
+
 function getFieldReviewTimeframeLabel(timeframe = "7") {
   if (timeframe === "all") return t("fieldReviewTimeframeAll");
   if (timeframe === "30") return t("fieldReviewTimeframe30");
   if (timeframe === "14") return t("fieldReviewTimeframe14");
   return t("fieldReviewTimeframe7");
+}
+
+function getFieldRoomQuestion(roomType) {
+  const questionKeyByRoom = {
+    hydration: "fieldRoomQuestionHydration",
+    sleepRecovery: "fieldRoomQuestionSleepRecovery",
+    loadRecovery: "fieldRoomQuestionLoadRecovery",
+    drinks: "fieldRoomQuestionDrinks",
+    mindNote: "fieldRoomQuestionMindNote",
+    missing: "fieldRoomQuestionMissing"
+  };
+  return t(questionKeyByRoom[roomType] || "fieldRoomQuestionHydration");
 }
 
 function createFieldReviewCard(titleKey, evidence, reading, nextAttention, motif = "", roomType = "") {
@@ -8975,17 +9036,95 @@ function renderFieldRoomFocusChips() {
   }).join("");
 }
 
-function getFieldRoomBubbleActiveClass(focusType) {
-  if (activeFieldReviewFocus === focusType) return "is-active";
-  if (activeFieldReviewFocus === "overview" && focusType === "reading") return "is-companion-active";
-  return "";
-}
-
 function renderFieldRoomBubble({ focusType, className, label, text }) {
   return `
-    <div class="field-chat-bubble ${className} ${getFieldRoomBubbleActiveClass(focusType)}" data-field-focus-target="${escapeHtml(focusType)}">
+    <div class="field-chat-bubble ${className}" data-field-focus-target="${escapeHtml(focusType)}">
       <p class="field-chat-bubble-label">${escapeHtml(label)}</p>
       <p>${escapeHtml(text)}</p>
+    </div>
+  `;
+}
+
+function renderFieldRoomNextActions(activeRoomType) {
+  const nextRoomType = getFieldReviewNextRoomType(activeRoomType);
+  const relatedRoomType = getFieldReviewRelatedRoomType(activeRoomType);
+  const nextRoomLabel = getFieldReviewRoomLabel(nextRoomType);
+  const relatedRoomLabel = getFieldReviewRoomLabel(relatedRoomType);
+  const showRelated = relatedRoomType && relatedRoomType !== nextRoomType;
+
+  return `
+    <div class="field-room-next-actions">
+      <div>
+        <p>${escapeHtml(t("fieldRoomNextPrompt"))}</p>
+        <span>${escapeHtml(t("fieldRoomNextHelper"))}</span>
+      </div>
+      <button type="button" class="ghost-button field-room-next-button" data-field-room-target="${escapeHtml(nextRoomType)}">
+        ${escapeHtml(t("fieldRoomNextRoomButton", { room: nextRoomLabel }))}
+      </button>
+      ${showRelated ? `
+        <button type="button" class="ghost-button field-room-next-button" data-field-room-target="${escapeHtml(relatedRoomType)}">
+          ${escapeHtml(t("fieldRoomRelatedButton", { room: relatedRoomLabel }))}
+        </button>
+      ` : ""}
+    </div>
+  `;
+}
+
+function renderFieldRoomConversation(activeCard, timeframe = "7") {
+  const timeframeLabel = getFieldReviewTimeframeLabel(timeframe);
+  const sourceText = t("fieldRoomSourceBubble", { timeframe: timeframeLabel });
+  const focus = normalizeFieldReviewFocus(activeFieldReviewFocus);
+  const questionBubble = renderFieldRoomBubble({
+    focusType: "question",
+    className: "field-chat-bubble-question",
+    label: t("fieldRoomQuestionLabel"),
+    text: getFieldRoomQuestion(activeCard.roomType)
+  });
+  const sourceBubble = renderFieldRoomBubble({
+    focusType: "source",
+    className: "field-chat-bubble-source",
+    label: t("fieldRoomSourceLabel"),
+    text: sourceText
+  });
+  const evidenceBubble = renderFieldRoomBubble({
+    focusType: "evidence",
+    className: "field-chat-bubble-evidence",
+    label: t("fieldReviewEvidenceLabel"),
+    text: activeCard.evidence
+  });
+  const readingBubble = renderFieldRoomBubble({
+    focusType: "reading",
+    className: "field-chat-bubble-reading",
+    label: t("fieldReviewReadingLabel"),
+    text: activeCard.reading
+  });
+  const nextBubble = renderFieldRoomBubble({
+    focusType: "next",
+    className: "field-chat-bubble-next",
+    label: t("fieldReviewNextAttentionLabel"),
+    text: activeCard.nextAttention
+  });
+  const bubblesByFocus = {
+    overview: [sourceBubble, readingBubble],
+    evidence: [sourceBubble, evidenceBubble],
+    next: [sourceBubble, nextBubble],
+    all: [sourceBubble, evidenceBubble, readingBubble, nextBubble]
+  };
+  const selectedResponseBubbles = bubblesByFocus[focus] || bubblesByFocus.overview;
+  const shouldShowNextActions = focus === "next" || focus === "all";
+
+  return `
+    <div class="field-room-chat" aria-live="polite">
+      ${questionBubble}
+      <div class="field-room-choice-stack">
+        <div class="field-room-focus-chips" role="group" aria-label="${escapeHtml(t("fieldRoomQuestionLabel"))}">
+          ${renderFieldRoomFocusChips()}
+        </div>
+      </div>
+      <div class="field-room-response-stack">
+        ${selectedResponseBubbles.join("")}
+      </div>
+      ${shouldShowNextActions ? renderFieldRoomNextActions(activeCard.roomType) : ""}
     </div>
   `;
 }
@@ -9000,11 +9139,6 @@ function renderFieldRoomWorkspace(cards = [], timeframe = "7") {
 
   const activeCard = cardsByRoom[activeFieldReviewRoom] || cards[0];
   if (!activeCard) return "";
-
-  const nextRoomType = getFieldReviewNextRoomType(activeCard.roomType);
-  const nextRoomLabel = getFieldReviewRoomLabel(nextRoomType);
-  const timeframeLabel = getFieldReviewTimeframeLabel(timeframe);
-  const sourceText = t("fieldRoomSourceBubble", { timeframe: timeframeLabel });
 
   return `
     <div class="field-room-workspace">
@@ -9025,46 +9159,11 @@ function renderFieldRoomWorkspace(cards = [], timeframe = "7") {
             <div>
               <p class="section-kicker">${escapeHtml(getFieldReviewRoomLabel(activeCard.roomType))}</p>
               <h3>${escapeHtml(activeCard.title)}</h3>
+              <p class="field-room-flow-label">${escapeHtml(t("fieldRoomFlowModeLabel"))}</p>
             </div>
           </div>
 
-          <div class="field-room-focus-chips" role="group" aria-label="${escapeHtml(t("fieldRoomWorkspaceTitle"))}">
-            ${renderFieldRoomFocusChips()}
-          </div>
-
-          <div class="field-room-chat" aria-live="polite">
-            ${renderFieldRoomBubble({
-              focusType: "overview",
-              className: "field-chat-bubble-source",
-              label: t("fieldRoomSourceLabel"),
-              text: sourceText
-            })}
-            ${renderFieldRoomBubble({
-              focusType: "evidence",
-              className: "field-chat-bubble-evidence",
-              label: t("fieldReviewEvidenceLabel"),
-              text: activeCard.evidence
-            })}
-            ${renderFieldRoomBubble({
-              focusType: "reading",
-              className: "field-chat-bubble-reading",
-              label: t("fieldReviewReadingLabel"),
-              text: activeCard.reading
-            })}
-            ${renderFieldRoomBubble({
-              focusType: "next",
-              className: "field-chat-bubble-next",
-              label: t("fieldReviewNextAttentionLabel"),
-              text: activeCard.nextAttention
-            })}
-          </div>
-
-          <div class="field-room-next-actions">
-            <span>${escapeHtml(t("fieldRoomNextButton"))}</span>
-            <button type="button" class="ghost-button field-room-next-button" data-field-room-target="${escapeHtml(nextRoomType)}">
-              ${escapeHtml(t("fieldRoomNextRoomButton", { room: nextRoomLabel }))}
-            </button>
-          </div>
+          ${renderFieldRoomConversation(activeCard, timeframe)}
         </section>
       </article>
     </div>

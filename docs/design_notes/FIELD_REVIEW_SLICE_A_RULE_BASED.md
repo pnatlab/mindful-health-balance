@@ -78,10 +78,12 @@ Allowed presentation changes:
 - lighter review card styling while keeping Evidence, NuTuenSai reads, and Next gentle attention visible
 - NuTuenSai Field Room background images behind the six review cards, with readability overlays and safe fallback when images do not load
 - guided Field Rooms workspace with a room selector, one active room panel, locked chat-style bubbles, focus chips, and suggested next-room navigation
+- locked guided conversation flow where NuTuenSai asks predefined focus questions, the user chooses predefined chips, and the visible response changes deterministically
+- conversation stack layout where the active room renders question, locked choices, source-bound response, and next-room continuation in that order
 
 This visual slice must remain presentation-only. It must not add a chart library, correlation calculation, relationship matrix, LLM call, free-form ask box, diagnosis wording, score/ranking system, finance interpretation, or schema change.
 
-The chat-like workspace is not a chatbot. Bubbles are rendered from deterministic source-bound card data only: selected `Daily_Log` window, evidence, NuTuenSai-style reading, and next gentle attention. Suggested next room buttons only change the active room and do not create recommendations or new analysis.
+The chat-like workspace is not a chatbot. Bubbles are rendered from deterministic source-bound card data only: selected `Daily_Log` window, evidence, NuTuenSai-style reading, and next gentle attention. Focus chips are locked questions, not prompts sent to an LLM. Suggested next/related room buttons only change the active room and do not create recommendations or new analysis.
 
 ## Future Backlog
 

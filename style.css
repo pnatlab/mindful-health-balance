@@ -3650,6 +3650,13 @@ body[data-theme="dark"] .field-room-panel::before {
   line-height: 1.18;
 }
 
+.field-room-flow-label {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
 .field-room-panel-motif {
   width: 48px;
   height: 48px;
@@ -3658,29 +3665,31 @@ body[data-theme="dark"] .field-room-panel::before {
 .field-room-focus-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 9px;
   max-width: 720px;
-  margin: 18px 0;
 }
 
 .field-room-focus-chip {
-  min-height: 34px;
-  padding: 7px 12px;
-  border: 1px solid rgba(101, 200, 176, 0.22);
-  border-radius: 999px;
+  min-height: 38px;
+  padding: 8px 13px;
+  border: 1px solid rgba(126, 148, 230, 0.2);
+  border-radius: 14px;
   color: var(--text-soft);
-  background: rgba(255, 255, 255, 0.56);
+  background: rgba(255, 255, 255, 0.68);
   font: inherit;
   font-size: 0.84rem;
   font-weight: 900;
   cursor: pointer;
-  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+  box-shadow: 0 10px 24px rgba(32, 112, 104, 0.06);
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
 }
 
 .field-room-focus-chip:hover,
 .field-room-focus-chip.is-active {
   color: var(--text-main);
-  background: rgba(213, 249, 241, 0.78);
+  border-color: rgba(101, 200, 176, 0.46);
+  background: linear-gradient(135deg, rgba(213, 249, 241, 0.86), rgba(232, 232, 255, 0.74));
+  box-shadow: 0 14px 30px rgba(68, 136, 184, 0.11);
   transform: translateY(-1px);
 }
 
@@ -3697,6 +3706,17 @@ body[data-theme="dark"] .field-room-focus-chip.is-active {
   display: grid;
   gap: 12px;
   max-width: 760px;
+  margin-top: 18px;
+}
+
+.field-room-choice-stack,
+.field-room-response-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.field-room-choice-stack {
+  padding: 2px 0 4px 18px;
 }
 
 .field-chat-bubble {
@@ -3718,21 +3738,50 @@ body[data-theme="dark"] .field-room-focus-chip.is-active {
 
 .field-chat-bubble-label {
   margin-bottom: 5px !important;
-  color: var(--accent);
+  color: #4b7fd5;
   font-size: 0.74rem;
   font-weight: 950;
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
+.field-chat-bubble-question {
+  max-width: 78%;
+  color: var(--text-main);
+  border-color: rgba(126, 190, 230, 0.32);
+  background: rgba(255, 255, 255, 0.76);
+  font-weight: 820;
+}
+
+.field-chat-bubble-source {
+  max-width: 74%;
+  padding: 10px 13px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.58);
+  font-size: 0.88rem;
+}
+
+.field-chat-bubble-evidence {
+  color: var(--text-main);
+  border-color: rgba(126, 148, 230, 0.22);
+  background: rgba(255, 255, 255, 0.74);
+}
+
 .field-chat-bubble-reading {
   margin-left: 24px;
   color: var(--text-main);
+  border-color: rgba(101, 200, 176, 0.36);
+  border-left-width: 4px;
+  background: linear-gradient(135deg, rgba(219, 251, 244, 0.82), rgba(232, 240, 255, 0.74));
   font-weight: 760;
 }
 
 .field-chat-bubble-next {
   margin-left: 48px;
+  color: var(--text-main);
+  border-color: rgba(126, 148, 230, 0.34);
+  border-left-width: 4px;
+  background: linear-gradient(135deg, rgba(238, 236, 255, 0.8), rgba(226, 248, 255, 0.7));
 }
 
 .field-chat-bubble.is-active,
@@ -3745,6 +3794,26 @@ body[data-theme="dark"] .field-room-focus-chip.is-active {
 
 body[data-theme="dark"] .field-chat-bubble {
   background: rgba(21, 29, 39, 0.72);
+}
+
+body[data-theme="dark"] .field-chat-bubble-question {
+  background: rgba(101, 200, 176, 0.14);
+}
+
+body[data-theme="dark"] .field-chat-bubble-source {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+body[data-theme="dark"] .field-chat-bubble-evidence {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body[data-theme="dark"] .field-chat-bubble-reading {
+  background: linear-gradient(135deg, rgba(60, 118, 110, 0.34), rgba(54, 70, 116, 0.28));
+}
+
+body[data-theme="dark"] .field-chat-bubble-next {
+  background: linear-gradient(135deg, rgba(76, 65, 121, 0.34), rgba(48, 91, 118, 0.26));
 }
 
 body[data-theme="dark"] .field-chat-bubble.is-active,
@@ -3762,6 +3831,22 @@ body[data-theme="dark"] .field-chat-bubble.is-companion-active {
   color: var(--text-soft);
   font-size: 0.9rem;
   font-weight: 850;
+}
+
+.field-room-next-actions div {
+  display: grid;
+  gap: 2px;
+  min-width: 190px;
+}
+
+.field-room-next-actions p {
+  margin: 0;
+  color: var(--text-main);
+}
+
+.field-room-next-actions span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
 }
 
 .field-room-next-button {
@@ -4389,7 +4474,11 @@ td:nth-child(10) {
   }
 
   .field-room-focus-chips {
-    margin: 14px 0;
+    gap: 7px;
+  }
+
+  .field-room-choice-stack {
+    padding-left: 0;
   }
 
   .field-chat-bubble,
