@@ -4030,6 +4030,45 @@ body[data-theme="dark"] .field-chat-bubble.is-companion-active {
   text-transform: uppercase;
 }
 
+.signal-engine-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  max-width: 900px;
+  padding: 11px 12px;
+  border: 1px solid rgba(105, 170, 230, 0.2);
+  border-radius: 16px;
+  color: var(--text-soft);
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(10px);
+  line-height: 1.5;
+}
+
+.signal-engine-legend p {
+  margin: 0 4px 0 0;
+  color: #2f75c5;
+  font-size: 0.76rem;
+  font-weight: 950;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.signal-engine-legend span {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(244, 250, 255, 0.78);
+  font-size: 0.78rem;
+}
+
+.signal-engine-legend strong {
+  color: #2f75c5;
+  font-size: 0.9rem;
+}
+
 .signal-relationship-layout {
   display: grid;
   grid-template-columns: minmax(260px, 0.86fr) minmax(300px, 1.14fr);
@@ -4100,16 +4139,31 @@ body[data-theme="dark"] .field-chat-bubble.is-companion-active {
   font-weight: 950;
 }
 
+.signal-relationship-plain-summary {
+  display: block;
+  color: #315f9d;
+  font-size: 0.88rem;
+  font-weight: 850;
+  line-height: 1.55;
+}
+
 .signal-relationship-technical {
   display: block;
   color: var(--text-muted);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   line-height: 1.5;
+  opacity: 0.82;
 }
 
-.signal-relationship-summary span,
-.signal-relationship-row-meta span {
+.signal-relationship-evidence-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  align-items: center;
+}
+
+.signal-relationship-evidence-chip {
   display: inline-flex;
   align-items: center;
   min-height: 28px;
@@ -4121,12 +4175,10 @@ body[data-theme="dark"] .field-chat-bubble.is-companion-active {
   font-weight: 900;
 }
 
-.signal-relationship-row-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  color: var(--text-muted);
-  font-size: 0.82rem;
+.signal-relationship-evidence-chip-r {
+  color: #1f66ad;
+  background: linear-gradient(135deg, rgba(210, 235, 255, 0.96), rgba(235, 247, 255, 0.88));
+  box-shadow: inset 0 0 0 1px rgba(105, 170, 230, 0.18);
 }
 
 .signal-relationship-detail {
@@ -4148,6 +4200,51 @@ body[data-theme="dark"] .field-chat-bubble.is-companion-active {
 .signal-relationship-detail h4 {
   margin: 0;
   font-size: clamp(1.15rem, 2vw, 1.45rem);
+}
+
+.signal-relationship-detail-summary {
+  margin: -4px 0 0;
+}
+
+.signal-relationship-evidence-block {
+  display: grid;
+  gap: 8px;
+  padding: 13px 14px;
+  border: 1px solid rgba(105, 170, 230, 0.24);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.signal-relationship-evidence-label {
+  margin: 0;
+  color: #2f75c5;
+  font-size: 0.74rem;
+  font-weight: 950;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.signal-relationship-r-helper {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.signal-relationship-detail-audit {
+  display: grid;
+  gap: 3px;
+  padding-left: 10px;
+  border-left: 2px solid rgba(105, 170, 230, 0.22);
+}
+
+.signal-relationship-detail-audit span {
+  color: #6090bd;
+  font-family: var(--font-sans, inherit);
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .relationship-coefficient {
@@ -4208,8 +4305,10 @@ body[data-theme="dark"] .signal-engine-panel {
 }
 
 body[data-theme="dark"] .signal-engine-boundary,
+body[data-theme="dark"] .signal-engine-legend,
 body[data-theme="dark"] .signal-relationship-row,
 body[data-theme="dark"] .signal-relationship-detail,
+body[data-theme="dark"] .signal-relationship-evidence-block,
 body[data-theme="dark"] .relationship-empty-state {
   background: rgba(255, 255, 255, 0.07);
 }
@@ -4225,10 +4324,16 @@ body[data-theme="dark"] .signal-relationship-row-active {
   box-shadow: 0 18px 46px rgba(80, 146, 214, 0.24);
 }
 
-body[data-theme="dark"] .signal-relationship-summary span,
-body[data-theme="dark"] .signal-relationship-row-meta span {
+body[data-theme="dark"] .signal-engine-legend span,
+body[data-theme="dark"] .signal-relationship-evidence-chip {
   color: #b8dcff;
   background: rgba(105, 170, 230, 0.14);
+}
+
+body[data-theme="dark"] .signal-relationship-plain-summary,
+body[data-theme="dark"] .signal-relationship-evidence-label,
+body[data-theme="dark"] .signal-relationship-detail-audit span {
+  color: #9fd0ff;
 }
 
 body[data-theme="dark"] .relationship-coefficient {

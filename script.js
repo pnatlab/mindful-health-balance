@@ -251,6 +251,20 @@ const translations = {
     signalEngineSignature: "MHB · NuTuenSai",
     signalEngineNoValidRows: "ยังไม่มีคู่สัญญาณที่มีข้อมูลครบอย่างน้อย 10 วันในช่วงนี้",
     signalEngineHiddenPairs: "คู่ที่ยังไม่แสดงเพราะข้อมูลยังไม่พอหรือความแปรผันของตัวเลขยังไม่พอ: {pairs}",
+    signalEngineEvidenceLabel: "หลักฐานคำนวณ",
+    signalEngineAuditLabel: "audit line",
+    signalEngineRHelper: "r บอกทิศทางและความแน่นของการเคลื่อนไหวร่วมกัน ไม่ใช่เหตุและผล",
+    signalEngineLegendTitle: "วิธีอ่านสัญญาณ",
+    signalEngineLegendSame: "ทางเดียวกัน = สองสัญญาณมักขึ้น/ลงไปด้วยกัน",
+    signalEngineLegendOpposite: "สวนทางกัน = สัญญาณหนึ่งสูงขึ้น อีกสัญญาณมักลดลง",
+    signalEngineLegendUnclear: "ยังไม่ชัด = ยังไม่เห็นจังหวะร่วมกันพอ",
+    signalEngineSummarySameWeak: "เคลื่อนไหวทางเดียวกันแบบสัญญาณเบา ๆ",
+    signalEngineSummarySameModerate: "เคลื่อนไหวทางเดียวกันระดับหนึ่งในข้อมูลที่เลือก",
+    signalEngineSummarySameStrong: "เคลื่อนไหวทางเดียวกันค่อนข้างชัดในข้อมูลที่เลือก",
+    signalEngineSummaryOppositeWeak: "เคลื่อนไหวสวนทางกันแบบสัญญาณเบา ๆ",
+    signalEngineSummaryOppositeModerate: "เคลื่อนไหวสวนทางกันระดับหนึ่งในข้อมูลที่เลือก",
+    signalEngineSummaryOppositeStrong: "เคลื่อนไหวสวนทางกันค่อนข้างชัดในข้อมูลที่เลือก",
+    signalEngineSummaryNearZero: "ยังไม่เห็นจังหวะร่วมกันชัด",
     signalEngineMeaningPositive: "หนูอ่านว่าสองสัญญาณนี้มีแนวโน้มเคลื่อนไหวไปทางเดียวกันในข้อมูลที่พี่บันทึกไว้ ช่วงที่ {xLabel} สูงขึ้น มักมาพร้อม {yLabel} ที่สูงขึ้นระดับหนึ่ง ความแรงของสัญญาณอยู่ที่ {strength} และควรอ่านตามจำนวนข้อมูล {pairedDays} เท่านั้นค่ะ",
     signalEngineMeaningNegative: "หนูอ่านว่าสองสัญญาณนี้มีแนวโน้มเคลื่อนไหวสวนทางกันในข้อมูลที่พี่บันทึกไว้ เมื่อ {xLabel} สูงขึ้น {yLabel} มักลดลงระดับหนึ่ง ความแรงของสัญญาณอยู่ที่ {strength} และควรอ่านตามจำนวนข้อมูล {pairedDays} เท่านั้นค่ะ",
     signalEngineMeaningNeutral: "หนูอ่านว่าสองสัญญาณนี้ยังไม่เคลื่อนไหวร่วมกันชัดในข้อมูลที่พี่เลือก จึงควรถือเป็นสัญญาณเบามาก ไม่ใช่ข้อสรุปค่ะ",
@@ -1159,6 +1173,20 @@ const translations = {
     signalEngineSignature: "MHB · NuTuenSai",
     signalEngineNoValidRows: "No signal pair has at least 10 complete paired days in this window yet.",
     signalEngineHiddenPairs: "Pairs not shown because they do not yet have enough paired days or usable numeric variation: {pairs}",
+    signalEngineEvidenceLabel: "Evidence",
+    signalEngineAuditLabel: "audit line",
+    signalEngineRHelper: "r shows direction and tightness of co-movement, not cause and effect.",
+    signalEngineLegendTitle: "How to read",
+    signalEngineLegendSame: "Same direction = signals tend to rise/fall together",
+    signalEngineLegendOpposite: "Opposite direction = one rises while the other tends to fall",
+    signalEngineLegendUnclear: "Unclear = no clear co-moving rhythm yet",
+    signalEngineSummarySameWeak: "Same direction, light signal",
+    signalEngineSummarySameModerate: "Same direction, visible shared rhythm",
+    signalEngineSummarySameStrong: "Same direction, fairly clear in this window",
+    signalEngineSummaryOppositeWeak: "Opposite direction, light signal",
+    signalEngineSummaryOppositeModerate: "Opposite direction, visible shared rhythm",
+    signalEngineSummaryOppositeStrong: "Opposite direction, fairly clear in this window",
+    signalEngineSummaryNearZero: "No clear co-moving rhythm yet",
     signalEngineMeaningPositive: "NuTuenSai reads these two signals as moving in the same direction in the saved data. When {xLabel} is higher, {yLabel} tends to appear higher to some degree. The signal strength is {strength}, and it should be read only within the {pairedDays} available here.",
     signalEngineMeaningNegative: "NuTuenSai reads these two signals as moving in opposite directions in the saved data. When {xLabel} is higher, {yLabel} tends to appear lower to some degree. The signal strength is {strength}, and it should be read only within the {pairedDays} available here.",
     signalEngineMeaningNeutral: "NuTuenSai reads these two signals as not clearly moving together in the selected data, so this should be held as a very light signal rather than a conclusion.",
@@ -2067,6 +2095,20 @@ const translations = {
     signalEngineSignature: "MHB · NuTuenSai",
     signalEngineNoValidRows: "这段时间还没有任何一组信号达到至少 10 个完整配对日期。",
     signalEngineHiddenPairs: "因为配对天数或数字变化还不够而暂不显示的组合：{pairs}",
+    signalEngineEvidenceLabel: "计算依据",
+    signalEngineAuditLabel: "audit line",
+    signalEngineRHelper: "r 表示共同移动的方向和紧密程度，不是因果。",
+    signalEngineLegendTitle: "如何阅读信号",
+    signalEngineLegendSame: "同向 = 两个信号常一起升/降",
+    signalEngineLegendOpposite: "反向 = 一个信号升高时，另一个常降低",
+    signalEngineLegendUnclear: "尚不清楚 = 还没有足够清楚的共同节奏",
+    signalEngineSummarySameWeak: "同向移动，轻微信号",
+    signalEngineSummarySameModerate: "同向移动，在所选数据中有一些共同节奏",
+    signalEngineSummarySameStrong: "同向移动，在所选数据中较清楚",
+    signalEngineSummaryOppositeWeak: "反向移动，轻微信号",
+    signalEngineSummaryOppositeModerate: "反向移动，在所选数据中有一些共同节奏",
+    signalEngineSummaryOppositeStrong: "反向移动，在所选数据中较清楚",
+    signalEngineSummaryNearZero: "还没有清楚的共同节奏",
     signalEngineMeaningPositive: "NuTuenSai 读取到这两个信号在保存数据中倾向于同向移动。当 {xLabel} 较高时，{yLabel} 也常在某种程度上较高。这个信号强度为 {strength}，只能放在这里的 {pairedDays} 里轻轻阅读。",
     signalEngineMeaningNegative: "NuTuenSai 读取到这两个信号在保存数据中倾向于反向移动。当 {xLabel} 较高时，{yLabel} 常在某种程度上较低。这个信号强度为 {strength}，只能放在这里的 {pairedDays} 里轻轻阅读。",
     signalEngineMeaningNeutral: "NuTuenSai 读取到这两个信号在所选数据中还没有清楚地一起移动，所以这里只能当作很轻的信号，而不是结论。",
@@ -9518,35 +9560,61 @@ function buildRelationshipMeaning(card) {
   });
 }
 
+function getSignalRelationshipSummaryText(card) {
+  const category = getRelationshipVoiceCategory(card);
+  const keyByCategory = {
+    sameWeak: "signalEngineSummarySameWeak",
+    sameModerate: "signalEngineSummarySameModerate",
+    sameStrong: "signalEngineSummarySameStrong",
+    oppositeWeak: "signalEngineSummaryOppositeWeak",
+    oppositeModerate: "signalEngineSummaryOppositeModerate",
+    oppositeStrong: "signalEngineSummaryOppositeStrong",
+    nearZero: "signalEngineSummaryNearZero"
+  };
+  return t(keyByCategory[category] || "signalEngineSummaryNearZero");
+}
+
+function renderSignalRelationshipEvidenceChips(card) {
+  const pairedDays = t("signalEnginePairedDays", { count: formatReviewNumber(card.n) });
+  return `
+    <span class="signal-relationship-evidence-chips" aria-label="${escapeHtml(t("signalEngineEvidenceLabel"))}">
+      <span class="signal-relationship-evidence-chip signal-relationship-evidence-chip-r">${escapeHtml(card.coefficientText)}</span>
+      <span class="signal-relationship-evidence-chip">${escapeHtml(pairedDays)}</span>
+      <span class="signal-relationship-evidence-chip">${escapeHtml(card.phase)}</span>
+      <span class="signal-relationship-evidence-chip">${escapeHtml(card.direction)}</span>
+      <span class="signal-relationship-evidence-chip">${escapeHtml(card.strength)}</span>
+    </span>
+  `;
+}
+
 function renderSignalRelationshipRow(card, selectedPairKey) {
   const isActive = card.pairKey === selectedPairKey;
   return `
     <button type="button" class="signal-relationship-row ${isActive ? "signal-relationship-row-active" : ""}" data-signal-relationship-target="${escapeHtml(card.pairKey)}" aria-pressed="${String(isActive)}">
       <span class="signal-relationship-summary">
         <strong>${escapeHtml(card.displayPairName)}</strong>
-        <span>${escapeHtml(card.phase)}</span>
       </span>
+      <span class="signal-relationship-plain-summary">${escapeHtml(getSignalRelationshipSummaryText(card))}</span>
+      ${renderSignalRelationshipEvidenceChips(card)}
       <span class="signal-relationship-technical">${escapeHtml(card.rawPairName)}</span>
-      <span class="signal-relationship-row-meta">
-        <span>${escapeHtml(card.coefficientText)}</span>
-        <span>${escapeHtml(t("signalEnginePairedDays", { count: formatReviewNumber(card.n) }))}</span>
-        <span>${escapeHtml(card.direction)}</span>
-        <span>${escapeHtml(card.strength)}</span>
-      </span>
     </button>
   `;
 }
 
 function renderSignalRelationshipDetail(card) {
-  const pairedDays = t("signalEnginePairedDays", { count: formatReviewNumber(card.n) });
   return `
     <article class="signal-relationship-detail" aria-live="polite">
       <p class="section-kicker">${escapeHtml(t("signalEngineMeaningLabel"))}</p>
       <h4>${escapeHtml(card.displayPairName)}</h4>
-      <p class="signal-relationship-technical">${escapeHtml(card.rawPairName)}</p>
-      <p class="relationship-coefficient">
-        ${escapeHtml(card.coefficientText)}
-        <span>${escapeHtml(pairedDays)}</span>
+      <p class="signal-relationship-plain-summary signal-relationship-detail-summary">${escapeHtml(getSignalRelationshipSummaryText(card))}</p>
+      <div class="signal-relationship-evidence-block">
+        <p class="signal-relationship-evidence-label">${escapeHtml(t("signalEngineEvidenceLabel"))}</p>
+        ${renderSignalRelationshipEvidenceChips(card)}
+        <p class="signal-relationship-r-helper">${escapeHtml(t("signalEngineRHelper"))}</p>
+      </div>
+      <p class="signal-relationship-technical signal-relationship-detail-audit">
+        <span>${escapeHtml(t("signalEngineAuditLabel"))}</span>
+        ${escapeHtml(card.rawPairName)}
       </p>
       <p class="signal-relationship-meaning">${escapeHtml(buildRelationshipMeaning(card))}</p>
       <p class="signal-relationship-boundary">${escapeHtml(t("signalEngineBoundary"))}</p>
@@ -9564,6 +9632,17 @@ function renderSignalRelationshipUnavailableNote(cards = []) {
     <p class="relationship-category-note">
       ${escapeHtml(t("signalEngineHiddenPairs", { pairs: hiddenPairs.join(", ") }))}
     </p>
+  `;
+}
+
+function renderSignalRelationshipLegend() {
+  return `
+    <div class="signal-engine-legend" aria-label="${escapeHtml(t("signalEngineLegendTitle"))}">
+      <p>${escapeHtml(t("signalEngineLegendTitle"))}</p>
+      <span><strong>↗</strong>${escapeHtml(t("signalEngineLegendSame"))}</span>
+      <span><strong>↘</strong>${escapeHtml(t("signalEngineLegendOpposite"))}</span>
+      <span><strong>·</strong>${escapeHtml(t("signalEngineLegendUnclear"))}</span>
+    </div>
   `;
 }
 
@@ -9600,6 +9679,7 @@ function renderSignalRelationshipEngine(rows = [], timeframe = "7") {
         <span>${escapeHtml(t("fieldRoomSourceBubble", { timeframe: timeframeLabel }))}</span>
         <span>${escapeHtml(t("signalEngineBoundary"))}</span>
       </div>
+      ${renderSignalRelationshipLegend()}
       ${readableCards.length ? `
         <div class="signal-relationship-layout">
           ${renderSignalRelationshipList(readableCards, activeSignalRelationshipPair)}

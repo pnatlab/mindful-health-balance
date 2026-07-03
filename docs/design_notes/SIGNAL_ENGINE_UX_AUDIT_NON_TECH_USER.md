@@ -410,6 +410,13 @@ Suggested next patch name:
 
 `MHB Signal Engine UX Polish - r helper + compact legend`
 
+Implementation status:
+
+- Implemented the plain-language `r` helper near the selected relationship evidence.
+- Implemented a compact same-direction / opposite-direction / unclear legend.
+- Rebalanced relationship rows and detail panels toward meaning-first reading order while keeping `r`, paired days, and raw audit lines visible.
+- No Pearson calculation, ranking, minimum-n rule, voice matrix classification, LLM, chart, free-form ask, or category mapping was added or changed by this polish.
+
 ## 10. Final Recommendation
 
 Recommended next three improvements:

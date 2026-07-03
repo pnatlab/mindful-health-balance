@@ -140,7 +140,7 @@ Field Review UI v2.3 ย้าย choice chips ที่ล็อกไว้ไ
 
 ใน sidebar ระบบแยกห้องข้อมูลทั้ง 6 ออกจากปุ่ม `Signal Engine` ภาษาอังกฤษล้วน เพื่อให้เห็นว่าเป็น engine พิเศษ ไม่ใช่ห้องสะท้อนข้อมูลลำดับที่ 7
 
-ห้อง `ความสัมพันธ์` / `Signal Engine` เพิ่มการอ่านความสัมพันธ์แบบ conservative โดยคำนวณ Pearson เฉพาะ numeric-to-numeric จาก `Daily_Log` เช่น `Water_ml`, `Sleep_Hours`, `Load_Score`, `Caffeine_Score`, `Sugar_Score` และ `Practice_Minutes` รายการจะแสดงได้สูงสุด 5 แถวที่มีข้อมูลครบและจัดตามความชัดของค่า `r`; หัวข้อแถวใช้ชื่อแบบความหมาย เช่น น้ำดื่ม, ชั่วโมงนอน, กิจกรรม/งานของวัน และยังแสดง raw column pair เป็นหลักฐานตรวจสอบได้ เมื่อกดแต่ละแถวจะเปิดชั้นความหมายจาก Meaning Voice Matrix ที่เลือกเสียงตามคู่สัญญาณ ทิศทาง ความแรง และจำนวน paired rows ยังไม่ map category fields และย้ำเสมอว่า correlation ไม่ใช่เหตุและผล
+ห้อง `ความสัมพันธ์` / `Signal Engine` เพิ่มการอ่านความสัมพันธ์แบบ conservative โดยคำนวณ Pearson เฉพาะ numeric-to-numeric จาก `Daily_Log` เช่น `Water_ml`, `Sleep_Hours`, `Load_Score`, `Caffeine_Score`, `Sugar_Score` และ `Practice_Minutes` รายการจะแสดงได้สูงสุด 5 แถวที่มีข้อมูลครบและจัดตามความชัดของค่า `r`; หัวข้อแถวใช้ชื่อแบบความหมาย เช่น น้ำดื่ม, ชั่วโมงนอน, กิจกรรม/งานของวัน แล้วตามด้วยประโยคสรุปภาษาคน, evidence chips สำหรับ `r`/จำนวน paired days, และ legend สั้น ๆ สำหรับทางเดียวกัน/สวนทางกัน/ยังไม่ชัด raw column pair ยังแสดงเป็นหลักฐานตรวจสอบได้ และ detail panel มี r helper สำหรับคนที่ไม่คุ้นสถิติ เมื่อกดแต่ละแถวจะเปิดชั้นความหมายจาก Meaning Voice Matrix ที่เลือกเสียงตามคู่สัญญาณ ทิศทาง ความแรง และจำนวน paired rows ยังไม่ map category fields และย้ำเสมอว่า correlation ไม่ใช่เหตุและผล
 
 หน้านี้ไม่ใช่ chatbot ไม่เรียก LLM ไม่รับคำถาม free-form และไม่วินิจฉัยหรือให้คำแนะนำทางการแพทย์ ช่องว่างแปลว่ายังไม่ได้บันทึก ไม่ใช่ความผิดหรือคะแนนที่หายไป
 
