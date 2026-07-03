@@ -116,7 +116,7 @@ Starting in v1.9.7 — Symbolic Signal Cockpit Polish, the cockpit becomes more 
 
 Starting in v1.9.9 — Mindful Practice Context, Mind Note 2/2 adds a small `Practice before Mind Note` card. It can record an optional practice root/type, rough duration, and `Practice_Note` using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma, plus No practice / Other. This data is stored in Daily Log/Excel for future Field Review only; daily Reflection/NuTuenSai does not interpret it yet and does not score practice quality.
 
-Starting in MHB 2.0 Slice A, the `Field Review` tab begins conservative rule-based review. It reads only `Daily_Log` in localStorage and shows deterministic cards for hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support, and missing/blank data. Each card keeps evidence visible, then adds a rule-based NuTuenSai reading and a gentle next attention. It has no free-form ask, no LLM call, and no correlation calculation/UI.
+Starting in MHB 2.0 Slice A, the `Field Review` tab begins conservative rule-based review. It reads only `Daily_Log` in localStorage and shows deterministic cards for hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support, and missing/blank data. Each card keeps evidence visible, then adds a rule-based NuTuenSai reading and a gentle next attention. It has no free-form ask and no LLM call. The Signal Engine shows bounded numeric-to-numeric Pearson relationship rows with human-readable signal labels, raw column audit lines, and a deterministic `MHB · NuTuenSai` meaning detail, without charts, matrices, or category mapping.
 
 Starting in v1.9.8 — Input-grounded Natural Reflection Composer, Reflection/NuTuenSai selects 2-4 meaningful anchors from today's input, such as water, sleep hours, drink context, activity/load, run detail, Mind Note, or light continuity context. It uses those anchors to write one more natural overview sentence while staying rule-based, local-first, non-medical, and non-chatbot.
 
@@ -150,7 +150,9 @@ Field Review UI v2.2 places that flow into a conversation stack: NuTuenSai quest
 
 Field Review UI v2.3 moves the locked choices to a bottom action area below the response. The room now reads first as question, Daily_Log source context, and response, while the focus choices and next-room buttons stay as clear controls outside the chat body.
 
-This page is not a chatbot, does not call an LLM, does not include free-form ask, does not calculate correlations, and does not diagnose or give medical advice. Blank fields mean not recorded, not failure or a missing score.
+The `Signal Engine` room adds a conservative relationship review. It calculates deterministic Pearson relationships for numeric-to-numeric `Daily_Log` fields only, such as `Water_ml`, `Sleep_Hours`, `Load_Score`, `Caffeine_Score`, `Sugar_Score`, and `Practice_Minutes`. It shows up to five valid rows ranked by absolute `r`; row titles use readable labels such as Water intake, Sleep, and Daily load, while the raw column pair remains visible as technical evidence. Clicking a row opens a meaning detail signed `MHB · NuTuenSai`. It does not map category fields yet, and correlation is always shown as not causation.
+
+This page is not a chatbot, does not call an LLM, does not include free-form ask, and does not diagnose or give medical advice. Blank fields mean not recorded, not failure or a missing score.
 
 To review an exported workbook, import the Master Excel file from `Log` first. Field Review then reads the imported Daily Log from localStorage.
 

@@ -46,7 +46,7 @@ Latest refinements include:
 - rule-based review cards for hydration, sleep/recovery, load/recovery, drinks, Mind Note/support, and missing data
 - NuTuenSai-style deterministic card voice with evidence, source-bound reading, and gentle next attention
 - Field Review remains local-first, read-only, non-medical, non-chatbot, and non-LLM
-- Signal Relationships / Correlation Review is documented as future Slice A+/B backlog only; no correlation calculation or UI is included yet
+- Signal Engine for bounded numeric-to-numeric relationship review from `Daily_Log`, now shown as top relationship rows with human-readable labels, raw column audit lines, and a deterministic `MHB · NuTuenSai` meaning detail, with no LLM, chart, matrix, or category mapping
 - `Practice_Note` for a short practice note, good action, or wholesome context, stored in `Daily_Log` and duplicated in `Practice_Context_JSON.note`
 - Source-aware same-day save merge, so saving Today’s Signals does not erase saved Mind Note, Practice Context, or Reflection
 - Daily Save Status Bar showing the three saved layers: Today’s Signals, Mind Note, and Reflection
@@ -58,7 +58,7 @@ Latest refinements include:
 - Input-grounded Reflection composer that remains deterministic, rule-based, and local-first
 - Practice Context and Practice Note stored for Field Review context, not daily Reflection interpretation
 
-MHB 2.0 starts conservatively with rule-based Field Review. It is not an AI companion, not free-form Ask My Log, not a medical review layer, not correlation/causation analysis, and not a production SaaS release.
+MHB 2.0 starts conservatively with rule-based Field Review. It is not an AI companion, not free-form Ask My Log, not a medical review layer, not causation analysis, and not a production SaaS release.
 
 ## Core Principle
 
@@ -209,19 +209,21 @@ The workbook currently includes:
 
 The Field Review tab is the first MHB 2.0 slice. It reads saved `Daily_Log` rows from localStorage and shows rule-based review cards only. Each card keeps numeric evidence visible, then adds a deterministic NuTuenSai-style reading and a gentle next attention. The selected timeframe changes the reading tone lightly: 7 days is an early signal, 14 days is an emerging rhythm, 30 days is a month-level rhythm, and all available data is a long-view reflection.
 
-Field Review does not call an LLM, does not provide a free-form question box, does not calculate correlations, and does not change export/import/save/restore behavior.
+Field Review does not call an LLM, does not provide a free-form question box, and does not change export/import/save/restore behavior.
 
 Visual Slice 1 begins moving Field Review toward the `NuTuenSai Field Reflection Studio`: a softer studio hero, segmented timeframe control, source-bound overview chips, and a CSS-only rhythm moment. It does not add a chart library; the visual layer still reflects saved `Daily_Log` evidence only.
 
 Field Review cards also use NuTuenSai Field Room background images for hydration, sleep/recovery, load/recovery, drinks context, Mind Note, and missing/blank data. These images are presentation assets only; they do not change review logic, source boundaries, or workbook data.
 
-Field Review UI v2 presents those six cards as guided Field Rooms. The page opens one room at a time, with a room selector, locked chat-style bubbles for source, evidence, NuTuenSai reading, and next gentle attention, plus a suggested next-room navigation button. It looks conversational, but it is still deterministic and has no text input, LLM, free-form ask, or correlation engine.
+Field Review UI v2 presents those six cards as guided Field Rooms. The page opens one room at a time, with a room selector, locked chat-style bubbles for source, evidence, NuTuenSai reading, and next gentle attention, plus a suggested next-room navigation button. It looks conversational, but it is still deterministic and has no text input, LLM, or free-form ask; the six reflection rooms do not perform relationship calculation themselves.
 
 Field Review UI v2.1 turns those bubbles into a locked guided conversation flow: NuTuenSai asks a predefined focus question, the user chooses a predefined focus chip, and the visible response changes between overview, evidence, next attention, or show all. Suggested next/related rooms are navigation only, not AI recommendations.
 
 Field Review UI v2.2 refines the active room into a conversation stack: question bubble, locked choices, source-bound response bubbles, then next-room continuation. The stack keeps the chat-like feeling without adding text input, LLM generation, free-form ask, or new analysis.
 
 Field Review UI v2.3 moves locked focus choices into a normal bottom action area below the response, together with next-room navigation. The chat body now reads as question, source context, and response first; the buttons remain deterministic controls outside the answer flow.
+
+Field Review also includes a conservative `Signal Engine` room. It calculates numeric-to-numeric Pearson relationships from selected `Daily_Log` rows only, ranks up to five valid relationships by absolute `r`, and opens a centered meaning detail signed `MHB · NuTuenSai`. Row titles use human-readable signal labels first, while raw column pairs such as `Water_ml ↔ Load_Score` remain visible as technical evidence. It uses minimum-n rules before showing `r`, does not map category fields yet, and always frames correlation as not causation, diagnosis, or medical advice.
 
 The cards are descriptive pattern summaries. Missing data means not recorded, not failure. Numeric fields keep their workbook boundaries: for example, `Water_ml` is plain water in milliliters, not money or expense data.
 

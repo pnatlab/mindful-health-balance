@@ -28,7 +28,7 @@ Slice A does not include:
 - finance, expense, accounting, trading, or spending interpretation
 - productivity scoring
 - spiritual scoring, merit scoring, or practice-quality judgment
-- correlation UI, helpers, coefficients, matrix, chart, or calculation
+- causal relationship claims, chart/matrix relationship UI, category mapping, or LLM-based correlation
 - relationship/causation claims
 
 ## Review Card Boundary
@@ -81,8 +81,9 @@ Allowed presentation changes:
 - locked guided conversation flow where NuTuenSai asks predefined focus questions, the user chooses predefined chips, and the visible response changes deterministically
 - conversation stack layout where the active room renders question, locked choices, source-bound response, and next-room continuation in that order
 - bottom action area layout where locked choices and next-room navigation sit below the response, not between the question and answer
+- Signal Relationship Engine as a seventh room for deterministic numeric-to-numeric Pearson relationship rows with human-readable labels, raw column audit lines, and a source-bound meaning detail
 
-This visual slice must remain presentation-only. It must not add a chart library, correlation calculation, relationship matrix, LLM call, free-form ask box, diagnosis wording, score/ranking system, finance interpretation, or schema change.
+This visual slice must remain bounded. It must not add a chart library, relationship matrix, LLM call, free-form ask box, diagnosis wording, score/ranking system, finance interpretation, category mapping, or schema change.
 
 The chat-like workspace is not a chatbot. Bubbles are rendered from deterministic source-bound card data only: selected `Daily_Log` window, evidence, NuTuenSai-style reading, and next gentle attention. Focus chips are locked questions, not prompts sent to an LLM. Suggested next/related room buttons only change the active room and do not create recommendations or new analysis.
 
@@ -95,9 +96,9 @@ Future slices are separate from Slice A:
 - Slice C: local context packet export for an external Local LLM Lab.
 - Slice D: free-form Ask My Log only after guardrails, source boundaries, and deterministic review behavior are proven.
 
-## Future Slice A+/B — Signal Relationships / Correlation Review
+## Signal Relationships / Correlation Review
 
-Correlation Review is a future feature, not Slice A.
+Signal Relationship Engine is now a conservative Slice A relationship layer for numeric-to-numeric fields only. It presents up to five valid relationship rows ranked by absolute `r`; row titles use human-readable signal labels first, raw column pairs remain visible as technical evidence, and selecting a row opens a deterministic meaning detail signed `MHB · NuTuenSai`.
 
 The safer naming should be:
 
@@ -105,9 +106,9 @@ The safer naming should be:
 - EN: Signals moving together
 - EN alternate: Signal Relationships
 
-Correlation is not causation. If this feature is added later, the UI must avoid implying cause and effect, diagnosis, risk prediction, health status, personality inference, or medical advice.
+Correlation is not causation. The UI must avoid implying cause and effect, diagnosis, risk prediction, health status, personality inference, or medical advice.
 
-Numeric variables that may be considered in the future:
+Numeric variables that may be considered:
 
 - `Water_ml`
 - `Sleep_Hours`
@@ -121,9 +122,12 @@ Numeric variables that may be considered in the future:
 
 Category variables such as `Energy`, `Mind`, `Sleep`, `Load_Level`, and `Mind_Note_Support` require explicit mapping before any relationship review. The app must not guess category order or let an AI infer mappings from text.
 
-Possible future methods:
+Implemented method:
 
 - Pearson for numeric-to-numeric variables.
+
+Possible future methods:
+
 - Spearman for explicitly mapped ordinal variables.
 
 Minimum n rule:
@@ -132,10 +136,10 @@ Minimum n rule:
 - `n 10-29`: show as tentative signal only.
 - `n >= 30`: show as observed pattern, still not cause and effect.
 
-If implemented later, correlation must be deterministic calculation only. Do not let an LLM compute correlation from text by itself.
+Correlation must be deterministic calculation only. Do not let an LLM compute correlation from text by itself.
 
-This patch must not implement correlation UI, helpers, calculations, coefficients, category mappings, relationship matrices, charts, or free-form relationship questions.
+This patch implements only relationship rows and meaning details for selected numeric pairs. It must not implement category mappings, relationship matrices, charts, Spearman, or free-form relationship questions.
 
 ## Guardrail Sentence
 
-Field Review Slice A should help the user review saved Daily Log patterns gently and locally, without turning Mindful Health Balance into a chatbot, diagnosis system, finance analyzer, productivity judge, spiritual scorer, or correlation/causation engine.
+Field Review Slice A should help the user review saved Daily Log patterns gently and locally, without turning Mindful Health Balance into a chatbot, diagnosis system, finance analyzer, productivity judge, spiritual scorer, or causation engine.

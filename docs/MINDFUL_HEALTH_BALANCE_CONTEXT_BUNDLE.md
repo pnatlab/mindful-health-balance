@@ -742,7 +742,7 @@ Field_Review may include descriptive drink-load summaries such as days with swee
 
 These summaries are descriptive only. They are not diagnosis, nutrition advice, medical advice, health-risk prediction, or moral evaluation.
 
-Field Review Visual Slice 1 starts the NuTuenSai Field Reflection Studio direction. The visual layer may include a warm studio hero, segmented timeframe control, soft overview chips, and a CSS-only selected-rhythm dot strip. These are presentation aids only: they do not add a chart library, correlation calculation, free-form ask, LLM call, diagnosis, scoring, or new data schema.
+Field Review Visual Slice 1 starts the NuTuenSai Field Reflection Studio direction. The visual layer may include a warm studio hero, segmented timeframe control, soft overview chips, and a CSS-only selected-rhythm dot strip. These are presentation aids only: they do not add a chart library, free-form ask, LLM call, diagnosis, scoring, or new data schema.
 
 NuTuenSai Field Room background images may be used behind the six Field Review cards. The images provide visual language for hydration, sleep/recovery, load/recovery, drinks context, Mind Note, and missing/blank data, but they remain presentation assets only and must not be treated as evidence, inference, score, or additional user data.
 
@@ -753,6 +753,8 @@ Field Review UI v2.1 may refine that workspace into a locked guided conversation
 Field Review UI v2.2 may place the guided flow into a conversation stack: question bubble, locked choice chips, source-bound response bubbles, then next-room continuation. This changes presentation order only. It must not add text input, free-form prompting, LLM-generated responses, correlation, charts, diagnosis, scoring, or schema changes.
 
 Field Review UI v2.3 may move locked choice chips into a normal bottom action area below the response stack, alongside next-room navigation. This keeps the chat body focused on question, source context, and response while preserving deterministic controls outside the answer flow.
+
+Signal Relationship Engine may add a conservative seventh room for deterministic numeric-to-numeric Pearson relationships from selected `Daily_Log` rows. It may present up to five valid relationship rows ranked by absolute `r`, using human-readable signal labels as the primary UI while keeping raw column names visible as technical evidence, then open a source-bound meaning detail signed `MHB · NuTuenSai`. It must use minimum-n rules, avoid category mapping unless explicit, avoid charts/matrices in this slice, and always state that correlation is not causation, diagnosis, risk prediction, or medical advice.
 
 ## Compatibility
 
@@ -3505,4 +3507,4 @@ Future wording should prefer:
 - EN: Signals moving together
 - EN alternate: Signal Relationships
 
-Correlation is not causation. Future relationship review would require deterministic calculation, explicit category mapping before ordinal variables are used, and minimum n rules. This Slice A patch does not implement correlation UI, correlation helpers, Pearson/Spearman calculations, category mappings, relationship matrices, charts, or free-form relationship questions.
+Correlation is not causation. Signal Engine uses deterministic Pearson calculation for selected numeric-to-numeric pairs only, with minimum n rules. Category mapping before ordinal variables, Spearman, relationship matrices, charts, and free-form relationship questions remain out of scope.

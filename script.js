@@ -204,6 +204,7 @@ const translations = {
     fieldRoomDrinksLabel: "เครื่องดื่ม",
     fieldRoomMindNoteLabel: "Mind Note",
     fieldRoomMissingLabel: "ช่องว่างข้อมูล",
+    fieldRoomSignalEngineLabel: "ความสัมพันธ์",
     fieldRoomSourceLabel: "จังหวะที่เลือก",
     fieldRoomSourceBubble: "หนูตื่นสายกำลังอ่าน Daily_Log ในช่วง {timeframe} ที่พี่เลือกอยู่ค่ะ",
     fieldRoomFlowModeLabel: "แชทนำทางแบบเลือกคำถาม · ไม่ใช่ LLM",
@@ -224,6 +225,35 @@ const translations = {
     fieldRoomNextPrompt: "ต่อไปพี่อยากให้หนูเปิดห้องไหนต่อคะ",
     fieldRoomNextHelper: "หนูพาไปดูห้องถัดไปได้ค่ะ",
     fieldRoomRelatedButton: "เปิด {room} ที่เกี่ยวข้อง",
+    signalEngineTitle: "เครื่องอ่านความสัมพันธ์ของสัญญาณ",
+    signalEngineKicker: "Signal Relationship Engine",
+    signalEngineSubtitle: "หน้านี้อ่านว่าสัญญาณใดเคลื่อนไหวร่วมกันใน Daily_Log ไม่ใช่เหตุและผล ไม่ใช่การวินิจฉัย",
+    signalEngineBoundary: "ความสัมพันธ์ไม่ใช่เหตุและผล และไม่ใช่คำแนะนำทางการแพทย์",
+    signalEngineThinState: "ข้อมูลที่มีคู่ตัวเลขครบยังน้อยเกินไปสำหรับอ่านความสัมพันธ์อย่างปลอดภัย",
+    signalEngineCategoryNote: "Category mapping เช่น Energy, Mind, Sleep, Load_Level และ Mind_Note_Support เป็นงานอนาคต และต้องมี mapping ที่ชัดเจนก่อนเท่านั้น",
+    signalEnginePairedDays: "{count} วันที่มีข้อมูลครบ",
+    signalEngineCoefficient: "r = {value}",
+    signalEngineTentative: "tentative signal",
+    signalEngineObserved: "observed pattern",
+    signalEngineDirectionPositive: "เคลื่อนไหวทางเดียวกัน",
+    signalEngineDirectionNegative: "เคลื่อนไหวสวนทางกัน",
+    signalEngineDirectionNeutral: "ยังไม่ชัด",
+    signalEngineStrengthUnclear: "near zero / unclear",
+    signalEngineStrengthWeak: "weak",
+    signalEngineStrengthModerate: "moderate",
+    signalEngineStrengthStrong: "strong",
+    signalEngineReadingPositive: "หนูอ่านว่าในข้อมูลชุดนี้ สองสัญญาณนี้มีแนวโน้มเคลื่อนไหวทางเดียวกันแบบ {strength} แต่ยังไม่ใช่เหตุและผลค่ะ",
+    signalEngineReadingNegative: "หนูอ่านว่าในข้อมูลชุดนี้ สองสัญญาณนี้มีแนวโน้มเคลื่อนไหวสวนทางกันแบบ {strength} แต่ยังไม่ใช่เหตุและผลค่ะ",
+    signalEngineReadingNeutral: "หนูอ่านว่าความสัมพันธ์ของสองสัญญาณนี้ยังไม่ชัดในข้อมูลที่เลือก จึงควรอ่านแบบเบามากค่ะ",
+    signalEngineNoCoefficient: "ยังไม่แสดงค่า r เพราะต้องมีข้อมูลตัวเลขครบและมีความแปรผันเพียงพอ",
+    signalEngineListLabel: "สัญญาณความสัมพันธ์ที่เห็นชัดสุด",
+    signalEngineMeaningLabel: "ความหมายที่อ่านได้",
+    signalEngineSignature: "MHB · NuTuenSai",
+    signalEngineNoValidRows: "ยังไม่มีคู่สัญญาณที่มีข้อมูลครบอย่างน้อย 10 วันในช่วงนี้",
+    signalEngineHiddenPairs: "คู่ที่ยังไม่แสดงเพราะข้อมูลยังไม่พอหรือความแปรผันของตัวเลขยังไม่พอ: {pairs}",
+    signalEngineMeaningPositive: "หนูอ่านว่าสองสัญญาณนี้มีแนวโน้มเคลื่อนไหวไปทางเดียวกันในข้อมูลที่พี่บันทึกไว้ ช่วงที่ {xLabel} สูงขึ้น มักมาพร้อม {yLabel} ที่สูงขึ้นระดับหนึ่ง ความแรงของสัญญาณอยู่ที่ {strength} และควรอ่านตามจำนวนข้อมูล {pairedDays} เท่านั้นค่ะ",
+    signalEngineMeaningNegative: "หนูอ่านว่าสองสัญญาณนี้มีแนวโน้มเคลื่อนไหวสวนทางกันในข้อมูลที่พี่บันทึกไว้ เมื่อ {xLabel} สูงขึ้น {yLabel} มักลดลงระดับหนึ่ง ความแรงของสัญญาณอยู่ที่ {strength} และควรอ่านตามจำนวนข้อมูล {pairedDays} เท่านั้นค่ะ",
+    signalEngineMeaningNeutral: "หนูอ่านว่าสองสัญญาณนี้ยังไม่เคลื่อนไหวร่วมกันชัดในข้อมูลที่พี่เลือก จึงควรถือเป็นสัญญาณเบามาก ไม่ใช่ข้อสรุปค่ะ",
     fieldReviewWindowVoice7: "ในช่วง 7 วันนี้ หนูอ่านเป็นสัญญาณสั้น ๆ มากกว่าข้อสรุปค่ะ",
     fieldReviewWindowVoice14: "ในช่วง 14 วันนี้ pattern เริ่มพอให้เห็นจังหวะซ้ำบางอย่างค่ะ",
     fieldReviewWindowVoice30: "ในช่วง 30 วันนี้ ภาพรวมเริ่มพอใช้ดูจังหวะของเดือนนี้ได้ค่ะ",
@@ -1082,6 +1112,7 @@ const translations = {
     fieldRoomDrinksLabel: "Drinks Context",
     fieldRoomMindNoteLabel: "Mind Note",
     fieldRoomMissingLabel: "Missing / Blank",
+    fieldRoomSignalEngineLabel: "Signal Engine",
     fieldRoomSourceLabel: "Selected window",
     fieldRoomSourceBubble: "NuTuenSai is reading the selected Daily_Log window: {timeframe}.",
     fieldRoomFlowModeLabel: "Guided review · No free-form LLM chat",
@@ -1102,6 +1133,35 @@ const translations = {
     fieldRoomNextPrompt: "Which room would you like NuTuenSai to open next?",
     fieldRoomNextHelper: "NuTuenSai can open the next room.",
     fieldRoomRelatedButton: "Open related {room}",
+    signalEngineTitle: "Signal Relationship Engine",
+    signalEngineKicker: "Signals moving together",
+    signalEngineSubtitle: "This page reads which saved signals move together in Daily_Log. It is not causation, diagnosis, or medical advice.",
+    signalEngineBoundary: "Correlation is not causation, diagnosis, or medical advice.",
+    signalEngineThinState: "There are not enough paired numeric records to read relationships safely yet.",
+    signalEngineCategoryNote: "Category mapping such as Energy, Mind, Sleep, Load_Level, and Mind_Note_Support is future work and must be explicit before use.",
+    signalEnginePairedDays: "{count} paired days",
+    signalEngineCoefficient: "r = {value}",
+    signalEngineTentative: "tentative signal",
+    signalEngineObserved: "observed pattern",
+    signalEngineDirectionPositive: "same-direction signal",
+    signalEngineDirectionNegative: "opposite-direction signal",
+    signalEngineDirectionNeutral: "unclear",
+    signalEngineStrengthUnclear: "near zero / unclear",
+    signalEngineStrengthWeak: "weak",
+    signalEngineStrengthModerate: "moderate",
+    signalEngineStrengthStrong: "strong",
+    signalEngineReadingPositive: "NuTuenSai reads this as a {strength} same-direction signal in the saved data. This is not causation.",
+    signalEngineReadingNegative: "NuTuenSai reads this as a {strength} opposite-direction signal in the saved data. This is not causation.",
+    signalEngineReadingNeutral: "NuTuenSai reads this relationship as unclear in the selected data, so it should be held very lightly.",
+    signalEngineNoCoefficient: "r is hidden because paired numeric records and enough variation are needed.",
+    signalEngineListLabel: "Clearest relationship signals",
+    signalEngineMeaningLabel: "Meaning layer",
+    signalEngineSignature: "MHB · NuTuenSai",
+    signalEngineNoValidRows: "No signal pair has at least 10 complete paired days in this window yet.",
+    signalEngineHiddenPairs: "Pairs not shown because they do not yet have enough paired days or usable numeric variation: {pairs}",
+    signalEngineMeaningPositive: "NuTuenSai reads these two signals as moving in the same direction in the saved data. When {xLabel} is higher, {yLabel} tends to appear higher to some degree. The signal strength is {strength}, and it should be read only within the {pairedDays} available here.",
+    signalEngineMeaningNegative: "NuTuenSai reads these two signals as moving in opposite directions in the saved data. When {xLabel} is higher, {yLabel} tends to appear lower to some degree. The signal strength is {strength}, and it should be read only within the {pairedDays} available here.",
+    signalEngineMeaningNeutral: "NuTuenSai reads these two signals as not clearly moving together in the selected data, so this should be held as a very light signal rather than a conclusion.",
     fieldReviewWindowVoice7: "In this 7-day window, this is an early signal rather than a conclusion.",
     fieldReviewWindowVoice14: "Across 14 days, some repeated rhythm starts to become visible.",
     fieldReviewWindowVoice30: "Across 30 days, the data starts to show a month-level rhythm.",
@@ -1960,6 +2020,7 @@ const translations = {
     fieldRoomDrinksLabel: "饮品情境",
     fieldRoomMindNoteLabel: "Mind Note",
     fieldRoomMissingLabel: "空白数据",
+    fieldRoomSignalEngineLabel: "信号关系",
     fieldRoomSourceLabel: "所选时间窗",
     fieldRoomSourceBubble: "NuTuenSai 正在温柔读取所选 Daily_Log 时间窗：{timeframe}。",
     fieldRoomFlowModeLabel: "引导式回顾 · 不是自由 LLM 聊天",
@@ -1980,6 +2041,35 @@ const translations = {
     fieldRoomNextPrompt: "接下来想让 NuTuenSai 打开哪个房间？",
     fieldRoomNextHelper: "NuTuenSai 可以打开下一个房间。",
     fieldRoomRelatedButton: "打开相关的 {room}",
+    signalEngineTitle: "信号关系引擎",
+    signalEngineKicker: "一起移动的信号",
+    signalEngineSubtitle: "这里读取 Daily_Log 中哪些已保存信号一起移动。它不是因果、诊断或医疗建议。",
+    signalEngineBoundary: "相关性不是因果、诊断或医疗建议。",
+    signalEngineThinState: "可配对的数字记录还不够，暂时不适合安全读取关系。",
+    signalEngineCategoryNote: "Energy、Mind、Sleep、Load_Level、Mind_Note_Support 等类别 mapping 是未来工作，必须先明确定义，不能猜。",
+    signalEnginePairedDays: "{count} 个配对日期",
+    signalEngineCoefficient: "r = {value}",
+    signalEngineTentative: "暂时信号",
+    signalEngineObserved: "已观察到的 pattern",
+    signalEngineDirectionPositive: "同向移动",
+    signalEngineDirectionNegative: "反向移动",
+    signalEngineDirectionNeutral: "尚不清楚",
+    signalEngineStrengthUnclear: "接近零 / 不清楚",
+    signalEngineStrengthWeak: "较弱",
+    signalEngineStrengthModerate: "中等",
+    signalEngineStrengthStrong: "较强",
+    signalEngineReadingPositive: "NuTuenSai 读取到保存数据里这两个信号有 {strength} 的同向移动，但这不是因果。",
+    signalEngineReadingNegative: "NuTuenSai 读取到保存数据里这两个信号有 {strength} 的反向移动，但这不是因果。",
+    signalEngineReadingNeutral: "NuTuenSai 读取到所选数据里的关系还不清楚，所以这里只能轻轻放着看。",
+    signalEngineNoCoefficient: "暂不显示 r，因为需要完整配对的数字记录，也需要足够的变化。",
+    signalEngineListLabel: "较清楚的关系信号",
+    signalEngineMeaningLabel: "含义层",
+    signalEngineSignature: "MHB · NuTuenSai",
+    signalEngineNoValidRows: "这段时间还没有任何一组信号达到至少 10 个完整配对日期。",
+    signalEngineHiddenPairs: "因为配对天数或数字变化还不够而暂不显示的组合：{pairs}",
+    signalEngineMeaningPositive: "NuTuenSai 读取到这两个信号在保存数据中倾向于同向移动。当 {xLabel} 较高时，{yLabel} 也常在某种程度上较高。这个信号强度为 {strength}，只能放在这里的 {pairedDays} 里轻轻阅读。",
+    signalEngineMeaningNegative: "NuTuenSai 读取到这两个信号在保存数据中倾向于反向移动。当 {xLabel} 较高时，{yLabel} 常在某种程度上较低。这个信号强度为 {strength}，只能放在这里的 {pairedDays} 里轻轻阅读。",
+    signalEngineMeaningNeutral: "NuTuenSai 读取到这两个信号在所选数据中还没有清楚地一起移动，所以这里只能当作很轻的信号，而不是结论。",
     fieldReviewWindowVoice7: "在这 7 天里，这更像早期信号，不是结论。",
     fieldReviewWindowVoice14: "在 14 天里，一些重复节奏开始可以被看见。",
     fieldReviewWindowVoice30: "在 30 天里，数据开始呈现这个月的节奏。",
@@ -2979,6 +3069,7 @@ let todayInputStepResetAfterSave = false;
 let activeTodaySignal = "hydration";
 let activeFieldReviewRoom = "hydration";
 let activeFieldReviewFocus = "overview";
+let activeSignalRelationshipPair = "";
 let isEditingReflection = false;
 let isGeneratingReflection = false;
 let reflectionGenerationTimerId;
@@ -3482,6 +3573,13 @@ function bindEvents() {
     if (roomButton) {
       activeFieldReviewRoom = normalizeFieldReviewRoom(roomButton.dataset.fieldRoomTarget);
       activeFieldReviewFocus = "overview";
+      renderFieldReview();
+      return;
+    }
+
+    const relationshipButton = event.target.closest("[data-signal-relationship-target]");
+    if (relationshipButton) {
+      activeSignalRelationshipPair = relationshipButton.dataset.signalRelationshipTarget || "";
       renderFieldReview();
       return;
     }
@@ -8824,7 +8922,8 @@ const FIELD_REVIEW_ROOM_ORDER = [
   { type: "loadRecovery", labelKey: "fieldRoomLoadRecoveryLabel" },
   { type: "drinks", labelKey: "fieldRoomDrinksLabel" },
   { type: "mindNote", labelKey: "fieldRoomMindNoteLabel" },
-  { type: "missing", labelKey: "fieldRoomMissingLabel" }
+  { type: "missing", labelKey: "fieldRoomMissingLabel" },
+  { type: "signalEngine", labelKey: "fieldRoomSignalEngineLabel", motif: "∿" }
 ];
 
 const FIELD_REVIEW_FOCUS_ORDER = [
@@ -8860,7 +8959,8 @@ function getFieldReviewRelatedRoomType(roomType) {
     loadRecovery: "sleepRecovery",
     drinks: "sleepRecovery",
     mindNote: "missing",
-    missing: "hydration"
+    missing: "signalEngine",
+    signalEngine: "hydration"
   };
   return normalizeFieldReviewRoom(relatedByRoom[roomType]);
 }
@@ -9015,13 +9115,317 @@ function buildFieldReviewCards(rows = [], timeframe = "7") {
   ];
 }
 
+const SIGNAL_RELATIONSHIP_PAIRS = [
+  { x: "Water_ml", y: "Load_Score" },
+  { x: "Sleep_Hours", y: "Load_Score" },
+  { x: "Sleep_Hours", y: "Caffeine_Score" },
+  { x: "Sugar_Score", y: "Sleep_Hours" },
+  { x: "Caffeine_Score", y: "Load_Score" },
+  { x: "Practice_Minutes", y: "Sleep_Hours" }
+];
+
+const SIGNAL_RELATIONSHIP_LABELS = {
+  Water_ml: {
+    th: "น้ำดื่ม",
+    en: "Water intake",
+    zh: "饮水量"
+  },
+  Load_Score: {
+    th: "ภาระของวัน",
+    en: "Daily load",
+    zh: "每日负荷"
+  },
+  Sleep_Hours: {
+    th: "การนอน",
+    en: "Sleep",
+    zh: "睡眠"
+  },
+  Caffeine_Score: {
+    th: "คาเฟอีน",
+    en: "Caffeine",
+    zh: "咖啡因"
+  },
+  Sugar_Score: {
+    th: "ความหวาน",
+    en: "Sweetness",
+    zh: "甜度"
+  },
+  Practice_Minutes: {
+    th: "เวลาภาวนา",
+    en: "Practice minutes",
+    zh: "练习分钟"
+  }
+};
+
+function getSignalRelationshipLabel(column, lang = currentLanguage) {
+  return SIGNAL_RELATIONSHIP_LABELS[column]?.[lang] || SIGNAL_RELATIONSHIP_LABELS[column]?.en || column;
+}
+
+function getSignalRelationshipSentenceLabel(column, lang = currentLanguage) {
+  const label = getSignalRelationshipLabel(column, lang);
+  return lang === "en" ? label.charAt(0).toLowerCase() + label.slice(1) : label;
+}
+
+function formatSignalPairLabel(xColumn, yColumn) {
+  return `${getSignalRelationshipLabel(xColumn)} ↔ ${getSignalRelationshipLabel(yColumn)}`;
+}
+
+function formatSignalPairRaw(xColumn, yColumn) {
+  return `${xColumn} ↔ ${yColumn}`;
+}
+
+function isFiniteNumber(value) {
+  return typeof value === "number" && Number.isFinite(value);
+}
+
+function getNumericValue(row, column) {
+  const value = row?.[column];
+  if (column === "Sleep_Hours") {
+    const sleepHours = normalizeSleepHours(value);
+    return sleepHours === "" ? null : sleepHours;
+  }
+  if (column === "Water_ml") {
+    const water = Number(value);
+    return Number.isFinite(water) && water > 0 ? water : null;
+  }
+  if (column === "Practice_Minutes") {
+    const minutes = normalizePracticeMinutes(value);
+    return minutes === "" ? null : minutes;
+  }
+  const numericValue = Number(value);
+  return Number.isFinite(numericValue) ? numericValue : null;
+}
+
+function getPairedNumericRows(rows = [], xColumn, yColumn) {
+  return rows
+    .map(normalizeLogRow)
+    .map((row) => ({
+      x: getNumericValue(row, xColumn),
+      y: getNumericValue(row, yColumn)
+    }))
+    .filter((pair) => isFiniteNumber(pair.x) && isFiniteNumber(pair.y));
+}
+
+function calculatePearsonCorrelation(pairs = []) {
+  const n = pairs.length;
+  if (n < 2) return null;
+  const xMean = pairs.reduce((sum, pair) => sum + pair.x, 0) / n;
+  const yMean = pairs.reduce((sum, pair) => sum + pair.y, 0) / n;
+  const parts = pairs.reduce((acc, pair) => {
+    const xDiff = pair.x - xMean;
+    const yDiff = pair.y - yMean;
+    acc.numerator += xDiff * yDiff;
+    acc.xSquare += xDiff * xDiff;
+    acc.ySquare += yDiff * yDiff;
+    return acc;
+  }, { numerator: 0, xSquare: 0, ySquare: 0 });
+  const denominator = Math.sqrt(parts.xSquare * parts.ySquare);
+  if (!denominator) return null;
+  return Math.max(-1, Math.min(1, parts.numerator / denominator));
+}
+
+function getCorrelationStrength(r) {
+  const abs = Math.abs(r);
+  if (abs < 0.2) return { type: "unclear", label: t("signalEngineStrengthUnclear") };
+  if (abs < 0.4) return { type: "weak", label: t("signalEngineStrengthWeak") };
+  if (abs < 0.7) return { type: "moderate", label: t("signalEngineStrengthModerate") };
+  return { type: "strong", label: t("signalEngineStrengthStrong") };
+}
+
+function interpretCorrelationCoefficient(r, n) {
+  if (!isFiniteNumber(r)) {
+    return {
+      coefficientText: t("signalEngineNoCoefficient"),
+      direction: t("signalEngineDirectionNeutral"),
+      strength: t("signalEngineStrengthUnclear"),
+      phase: n >= 30 ? t("signalEngineObserved") : t("signalEngineTentative"),
+      reading: t("signalEngineReadingNeutral")
+    };
+  }
+  const strength = getCorrelationStrength(r);
+  const direction = Math.abs(r) < 0.2
+    ? t("signalEngineDirectionNeutral")
+    : r > 0
+      ? t("signalEngineDirectionPositive")
+      : t("signalEngineDirectionNegative");
+  const reading = Math.abs(r) < 0.2
+    ? t("signalEngineReadingNeutral")
+    : r > 0
+      ? t("signalEngineReadingPositive", { strength: strength.label })
+      : t("signalEngineReadingNegative", { strength: strength.label });
+
+  return {
+    coefficientText: t("signalEngineCoefficient", { value: r.toFixed(2) }),
+    direction,
+    strength: strength.label,
+    phase: n >= 30 ? t("signalEngineObserved") : t("signalEngineTentative"),
+    reading
+  };
+}
+
+function buildSignalRelationshipCards(rows = []) {
+  return SIGNAL_RELATIONSHIP_PAIRS.map((pair) => {
+    const pairs = getPairedNumericRows(rows, pair.x, pair.y);
+    const n = pairs.length;
+    const r = n >= 10 ? calculatePearsonCorrelation(pairs) : null;
+    const interpretation = n >= 10
+      ? interpretCorrelationCoefficient(r, n)
+      : {
+        coefficientText: t("signalEngineNoCoefficient"),
+        direction: t("signalEngineDirectionNeutral"),
+        strength: t("signalEngineStrengthUnclear"),
+        phase: t("signalEngineTentative"),
+        reading: t("signalEngineThinState")
+      };
+
+    return {
+      pairKey: `${pair.x}__${pair.y}`,
+      pairName: formatSignalPairLabel(pair.x, pair.y),
+      displayPairName: formatSignalPairLabel(pair.x, pair.y),
+      rawPairName: formatSignalPairRaw(pair.x, pair.y),
+      xLabel: getSignalRelationshipLabel(pair.x),
+      yLabel: getSignalRelationshipLabel(pair.y),
+      xSentenceLabel: getSignalRelationshipSentenceLabel(pair.x),
+      ySentenceLabel: getSignalRelationshipSentenceLabel(pair.y),
+      xColumn: pair.x,
+      yColumn: pair.y,
+      n,
+      hasCoefficient: n >= 10 && isFiniteNumber(r),
+      r,
+      absR: isFiniteNumber(r) ? Math.abs(r) : 0,
+      ...interpretation
+    };
+  });
+}
+
+function getRankedSignalRelationships(cards = []) {
+  return cards
+    .filter((card) => card.hasCoefficient)
+    .sort((a, b) => b.absR - a.absR)
+    .slice(0, 5);
+}
+
+function buildRelationshipMeaning(card) {
+  const pairedDays = t("signalEnginePairedDays", { count: formatReviewNumber(card.n) });
+  if (!card.hasCoefficient || Math.abs(card.r) < 0.2) {
+    return t("signalEngineMeaningNeutral");
+  }
+  const templateKey = card.r > 0 ? "signalEngineMeaningPositive" : "signalEngineMeaningNegative";
+  return t(templateKey, {
+    xLabel: card.xSentenceLabel,
+    yLabel: card.ySentenceLabel,
+    strength: card.strength,
+    pairedDays
+  });
+}
+
+function renderSignalRelationshipRow(card, selectedPairKey) {
+  const isActive = card.pairKey === selectedPairKey;
+  return `
+    <button type="button" class="signal-relationship-row ${isActive ? "signal-relationship-row-active" : ""}" data-signal-relationship-target="${escapeHtml(card.pairKey)}" aria-pressed="${String(isActive)}">
+      <span class="signal-relationship-summary">
+        <strong>${escapeHtml(card.displayPairName)}</strong>
+        <span>${escapeHtml(card.phase)}</span>
+      </span>
+      <span class="signal-relationship-technical">${escapeHtml(card.rawPairName)}</span>
+      <span class="signal-relationship-row-meta">
+        <span>${escapeHtml(card.coefficientText)}</span>
+        <span>${escapeHtml(t("signalEnginePairedDays", { count: formatReviewNumber(card.n) }))}</span>
+        <span>${escapeHtml(card.direction)}</span>
+        <span>${escapeHtml(card.strength)}</span>
+      </span>
+    </button>
+  `;
+}
+
+function renderSignalRelationshipDetail(card) {
+  const pairedDays = t("signalEnginePairedDays", { count: formatReviewNumber(card.n) });
+  return `
+    <article class="signal-relationship-detail" aria-live="polite">
+      <p class="section-kicker">${escapeHtml(t("signalEngineMeaningLabel"))}</p>
+      <h4>${escapeHtml(card.displayPairName)}</h4>
+      <p class="signal-relationship-technical">${escapeHtml(card.rawPairName)}</p>
+      <p class="relationship-coefficient">
+        ${escapeHtml(card.coefficientText)}
+        <span>${escapeHtml(pairedDays)}</span>
+      </p>
+      <p class="signal-relationship-meaning">${escapeHtml(buildRelationshipMeaning(card))}</p>
+      <p class="signal-relationship-boundary">${escapeHtml(t("signalEngineBoundary"))}</p>
+      <p class="signal-relationship-signature">${escapeHtml(t("signalEngineSignature"))}</p>
+    </article>
+  `;
+}
+
+function renderSignalRelationshipUnavailableNote(cards = []) {
+  const hiddenPairs = cards
+    .filter((card) => !card.hasCoefficient)
+    .map((card) => `${card.displayPairName} · ${card.rawPairName} (${formatReviewNumber(card.n)})`);
+  if (!hiddenPairs.length) return "";
+  return `
+    <p class="relationship-category-note">
+      ${escapeHtml(t("signalEngineHiddenPairs", { pairs: hiddenPairs.join(", ") }))}
+    </p>
+  `;
+}
+
+function renderSignalRelationshipList(cards = [], selectedPairKey = "") {
+  return `
+    <div class="signal-relationship-list-wrap">
+      <p class="signal-relationship-list-label">${escapeHtml(t("signalEngineListLabel"))}</p>
+      <div class="signal-relationship-list" role="list">
+        ${cards.map((card) => renderSignalRelationshipRow(card, selectedPairKey)).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderSignalRelationshipEngine(rows = [], timeframe = "7") {
+  const cards = buildSignalRelationshipCards(rows);
+  const readableCards = getRankedSignalRelationships(cards);
+  const timeframeLabel = getFieldReviewTimeframeLabel(timeframe);
+  const selectedCard = readableCards.find((card) => card.pairKey === activeSignalRelationshipPair) || readableCards[0];
+  activeSignalRelationshipPair = selectedCard?.pairKey || "";
+
+  return `
+    <section class="signal-engine-panel" data-field-room="signalEngine" role="tabpanel">
+      <div class="signal-engine-hero">
+        <span class="signal-engine-motif" aria-hidden="true">∿</span>
+        <div>
+          <p class="section-kicker">${escapeHtml(t("signalEngineKicker"))}</p>
+          <h3>${escapeHtml(t("signalEngineTitle"))}</h3>
+          <p>${escapeHtml(t("signalEngineSubtitle"))}</p>
+        </div>
+      </div>
+      <div class="signal-engine-boundary">
+        <strong>${escapeHtml(t("fieldRoomSourceLabel"))}</strong>
+        <span>${escapeHtml(t("fieldRoomSourceBubble", { timeframe: timeframeLabel }))}</span>
+        <span>${escapeHtml(t("signalEngineBoundary"))}</span>
+      </div>
+      ${readableCards.length ? `
+        <div class="signal-relationship-layout">
+          ${renderSignalRelationshipList(readableCards, activeSignalRelationshipPair)}
+          ${renderSignalRelationshipDetail(selectedCard)}
+        </div>
+        ${renderSignalRelationshipUnavailableNote(cards)}
+      ` : `
+        <div class="relationship-empty-state">
+          <p>${escapeHtml(t("signalEngineNoValidRows"))}</p>
+          <p>${escapeHtml(t("signalEngineThinState"))}</p>
+        </div>
+        ${renderSignalRelationshipUnavailableNote(cards)}
+      `}
+      <p class="relationship-category-note">${escapeHtml(t("signalEngineCategoryNote"))}</p>
+    </section>
+  `;
+}
+
 function renderFieldRoomSelector(cardsByRoom) {
   return FIELD_REVIEW_ROOM_ORDER.map((room) => {
     const card = cardsByRoom[room.type];
     const isActive = room.type === activeFieldReviewRoom;
     return `
       <button type="button" class="field-room-button ${isActive ? "field-room-button-active" : ""}" data-field-room-target="${escapeHtml(room.type)}" role="tab" aria-selected="${String(isActive)}" aria-pressed="${String(isActive)}">
-        <span class="field-room-button-motif" aria-hidden="true">${escapeHtml(card?.motif || "·")}</span>
+        <span class="field-room-button-motif" aria-hidden="true">${escapeHtml(card?.motif || room.motif || "·")}</span>
         <span>${escapeHtml(t(room.labelKey))}</span>
       </button>
     `;
@@ -9135,7 +9539,7 @@ function renderFieldRoomConversation(activeCard, timeframe = "7") {
   `;
 }
 
-function renderFieldRoomWorkspace(cards = [], timeframe = "7") {
+function renderFieldRoomWorkspace(cards = [], timeframe = "7", rows = []) {
   const cardsByRoom = cards.reduce((acc, card) => {
     acc[card.roomType] = card;
     return acc;
@@ -9159,18 +9563,20 @@ function renderFieldRoomWorkspace(cards = [], timeframe = "7") {
       </aside>
 
       <article class="field-room-main">
-        <section class="field-room-panel" data-field-room="${escapeHtml(activeCard.roomType)}" role="tabpanel" style="--field-room-image: url('${escapeHtml(activeCard.roomImage)}');">
-          <div class="field-room-panel-heading">
-            <span class="field-review-card-motif field-room-panel-motif" aria-hidden="true">${escapeHtml(activeCard.motif)}</span>
-            <div>
-              <p class="section-kicker">${escapeHtml(getFieldReviewRoomLabel(activeCard.roomType))}</p>
-              <h3>${escapeHtml(activeCard.title)}</h3>
-              <p class="field-room-flow-label">${escapeHtml(t("fieldRoomFlowModeLabel"))}</p>
+        ${activeFieldReviewRoom === "signalEngine" ? renderSignalRelationshipEngine(rows, timeframe) : `
+          <section class="field-room-panel" data-field-room="${escapeHtml(activeCard.roomType)}" role="tabpanel" style="--field-room-image: url('${escapeHtml(activeCard.roomImage)}');">
+            <div class="field-room-panel-heading">
+              <span class="field-review-card-motif field-room-panel-motif" aria-hidden="true">${escapeHtml(activeCard.motif)}</span>
+              <div>
+                <p class="section-kicker">${escapeHtml(getFieldReviewRoomLabel(activeCard.roomType))}</p>
+                <h3>${escapeHtml(activeCard.title)}</h3>
+                <p class="field-room-flow-label">${escapeHtml(t("fieldRoomFlowModeLabel"))}</p>
+              </div>
             </div>
-          </div>
 
-          ${renderFieldRoomConversation(activeCard, timeframe)}
-        </section>
+            ${renderFieldRoomConversation(activeCard, timeframe)}
+          </section>
+        `}
       </article>
     </div>
   `;
@@ -9295,7 +9701,7 @@ function renderFieldReview() {
   thinState.classList.toggle("is-hidden", !isThin);
   const cards = buildFieldReviewCards(rows, timeframe);
   container.classList.toggle("is-room-workspace", hasRows);
-  container.innerHTML = hasRows ? renderFieldRoomWorkspace(cards, timeframe) : "";
+  container.innerHTML = hasRows ? renderFieldRoomWorkspace(cards, timeframe, rows) : "";
 }
 
 function importMasterExcel(event) {
