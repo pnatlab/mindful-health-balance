@@ -9619,7 +9619,9 @@ function renderSignalRelationshipEngine(rows = [], timeframe = "7") {
 }
 
 function renderFieldRoomSelector(cardsByRoom) {
-  return FIELD_REVIEW_ROOM_ORDER.map((room) => {
+  const guidedRooms = FIELD_REVIEW_ROOM_ORDER.filter((room) => room.type !== "signalEngine");
+  const signalEngineRoom = FIELD_REVIEW_ROOM_ORDER.find((room) => room.type === "signalEngine");
+  const roomButtons = guidedRooms.map((room) => {
     const card = cardsByRoom[room.type];
     const isActive = room.type === activeFieldReviewRoom;
     return `
@@ -9629,6 +9631,23 @@ function renderFieldRoomSelector(cardsByRoom) {
       </button>
     `;
   }).join("");
+
+  if (!signalEngineRoom) return roomButtons;
+  const isEngineActive = activeFieldReviewRoom === "signalEngine";
+
+  return `
+    ${roomButtons}
+    <div class="field-room-engine-section">
+      <p class="field-room-engine-label">SIGNAL ENGINE</p>
+      <button type="button" class="field-room-button field-room-engine-button ${isEngineActive ? "field-room-engine-button-active" : ""}" data-field-room-target="signalEngine" role="tab" aria-selected="${String(isEngineActive)}" aria-pressed="${String(isEngineActive)}">
+        <span class="field-room-button-motif field-room-engine-motif" aria-hidden="true">${escapeHtml(signalEngineRoom.motif || "∿")}</span>
+        <span>
+          <span class="field-room-engine-title">Signal Engine</span>
+          <span class="field-room-engine-caption">Co-movement reader</span>
+        </span>
+      </button>
+    </div>
+  `;
 }
 
 function renderFieldRoomFocusChips() {

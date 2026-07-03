@@ -754,6 +754,8 @@ Field Review UI v2.2 may place the guided flow into a conversation stack: questi
 
 Field Review UI v2.3 may move locked choice chips into a normal bottom action area below the response stack, alongside next-room navigation. This keeps the chat body focused on question, source context, and response while preserving deterministic controls outside the answer flow.
 
+The Field Review sidebar may visually separate the six Guided Field Rooms from the English-only `Signal Engine` entry. This is presentation hierarchy only; it must not change room behavior or relationship calculation.
+
 Signal Relationship Engine may add a conservative seventh room for deterministic numeric-to-numeric Pearson relationships from selected `Daily_Log` rows. It may present up to five valid relationship rows ranked by absolute `r`, using a NuTuenSai Meaning Dictionary as the primary UI while keeping raw column names visible as technical evidence, then open a source-bound Meaning Voice Matrix detail signed `MHB · NuTuenSai`. The runtime voice must be selected by pair key, direction band, strength band, and paired-row count band; templates are deterministic and must not be LLM-generated. It must use minimum-n rules, avoid category mapping unless explicit, avoid charts/matrices in this slice, and always state that correlation is not causation, diagnosis, risk prediction, or medical advice.
 
 ## Compatibility

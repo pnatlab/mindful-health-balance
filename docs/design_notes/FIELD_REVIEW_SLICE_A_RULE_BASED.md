@@ -78,6 +78,7 @@ Allowed presentation changes:
 - lighter review card styling while keeping Evidence, NuTuenSai reads, and Next gentle attention visible
 - NuTuenSai Field Room background images behind the six review cards, with readability overlays and safe fallback when images do not load
 - guided Field Rooms workspace with a room selector, one active room panel, locked chat-style bubbles, focus chips, and suggested next-room navigation
+- sidebar hierarchy that separates the six Guided Field Rooms from the English-only `Signal Engine` entry
 - locked guided conversation flow where NuTuenSai asks predefined focus questions, the user chooses predefined chips, and the visible response changes deterministically
 - conversation stack layout where the active room renders question, locked choices, source-bound response, and next-room continuation in that order
 - bottom action area layout where locked choices and next-room navigation sit below the response, not between the question and answer

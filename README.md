@@ -223,6 +223,8 @@ Field Review UI v2.2 refines the active room into a conversation stack: question
 
 Field Review UI v2.3 moves locked focus choices into a normal bottom action area below the response, together with next-room navigation. The chat body now reads as question, source context, and response first; the buttons remain deterministic controls outside the answer flow.
 
+The sidebar separates the six Guided Field Rooms from the English-only `Signal Engine` entry so the relationship engine reads as a special module, not a seventh reflection room.
+
 Field Review also includes a conservative `Signal Engine` room. It calculates numeric-to-numeric Pearson relationships from selected `Daily_Log` rows only, ranks up to five valid relationships by absolute `r`, and opens a centered meaning detail signed `MHB · NuTuenSai`. Row titles use human-readable signal labels first, while raw column pairs such as `Water_ml ↔ Load_Score` remain visible as technical evidence. The meaning layer uses the deterministic NuTuenSai Meaning Voice Matrix: pair, direction, strength, and paired-row count choose the voice, not LLM generation. It uses minimum-n rules before showing `r`, does not map category fields yet, and always frames correlation as not causation, diagnosis, or medical advice.
 
 The cards are descriptive pattern summaries. Missing data means not recorded, not failure. Numeric fields keep their workbook boundaries: for example, `Water_ml` is plain water in milliliters, not money or expense data.

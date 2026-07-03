@@ -150,6 +150,8 @@ Field Review UI v2.2 places that flow into a conversation stack: NuTuenSai quest
 
 Field Review UI v2.3 moves the locked choices to a bottom action area below the response. The room now reads first as question, Daily_Log source context, and response, while the focus choices and next-room buttons stay as clear controls outside the chat body.
 
+The sidebar separates the six Guided Field Rooms from the English-only `Signal Engine` entry so the engine reads as a special module, not a seventh reflection room.
+
 The `Signal Engine` room adds a conservative relationship review. It calculates deterministic Pearson relationships for numeric-to-numeric `Daily_Log` fields only, such as `Water_ml`, `Sleep_Hours`, `Load_Score`, `Caffeine_Score`, `Sugar_Score`, and `Practice_Minutes`. It shows up to five valid rows ranked by absolute `r`; row titles use readable labels such as Water intake, Sleep hours, and Daily activity/load, while the raw column pair remains visible as technical evidence. Clicking a row opens a Meaning Voice Matrix detail signed `MHB · NuTuenSai`; the voice is selected by pair, direction, strength, and paired-row count. It does not map category fields yet, and correlation is always shown as not causation.
 
 This page is not a chatbot, does not call an LLM, does not include free-form ask, and does not diagnose or give medical advice. Blank fields mean not recorded, not failure or a missing score.

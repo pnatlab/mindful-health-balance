@@ -3592,6 +3592,73 @@ body[data-theme="dark"] .field-room-button-motif {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.field-room-engine-section {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(105, 170, 230, 0.2);
+}
+
+.field-room-engine-label {
+  margin: 0 2px;
+  color: #2f75c5;
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.field-room-engine-button {
+  min-height: 58px;
+  border-color: rgba(105, 170, 230, 0.24);
+  background:
+    radial-gradient(circle at top right, rgba(225, 242, 255, 0.64), transparent 42%),
+    rgba(255, 255, 255, 0.52);
+}
+
+.field-room-engine-button:hover,
+.field-room-engine-button-active {
+  color: var(--text-main);
+  border-color: rgba(80, 146, 214, 0.56);
+  background: linear-gradient(135deg, rgba(225, 242, 255, 0.96), rgba(246, 250, 255, 0.82));
+  box-shadow: 0 16px 38px rgba(80, 146, 214, 0.14);
+}
+
+.field-room-engine-title,
+.field-room-engine-caption {
+  display: block;
+}
+
+.field-room-engine-title {
+  font-weight: 950;
+}
+
+.field-room-engine-caption {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 820;
+}
+
+.field-room-engine-motif {
+  color: #347dc5;
+  background: rgba(225, 242, 255, 0.86);
+}
+
+body[data-theme="dark"] .field-room-engine-section {
+  border-top-color: rgba(142, 198, 255, 0.18);
+}
+
+body[data-theme="dark"] .field-room-engine-button {
+  background: rgba(105, 170, 230, 0.1);
+}
+
+body[data-theme="dark"] .field-room-engine-button:hover,
+body[data-theme="dark"] .field-room-engine-button-active {
+  background: rgba(105, 170, 230, 0.18);
+}
+
 .field-room-main {
   min-width: 0;
 }
@@ -4692,6 +4759,19 @@ td:nth-child(10) {
     flex: 0 0 auto;
     min-width: 148px;
     max-width: 220px;
+  }
+
+  .field-room-engine-section {
+    flex: 0 0 210px;
+    margin-top: 0;
+    padding-top: 0;
+    padding-left: 12px;
+    border-top: 0;
+    border-left: 1px solid rgba(105, 170, 230, 0.22);
+  }
+
+  .field-room-engine-button {
+    min-width: 190px;
   }
 
   .field-room-panel {
