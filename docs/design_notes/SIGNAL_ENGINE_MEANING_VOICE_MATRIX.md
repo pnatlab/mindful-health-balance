@@ -1,12 +1,12 @@
 # Signal Engine Meaning Voice Matrix
 
-This note defines the test/design matrix for the future NuTuenSai Meaning Voice Matrix in the MHB Signal Relationship Engine.
+This note defines the test/design matrix for the NuTuenSai Meaning Voice Matrix in the MHB Signal Relationship Engine.
 
 It depends on:
 
 - `docs/design_notes/SIGNAL_ENGINE_CORRELATION_REFERENCE.md`
 
-This is a design/test reference only. It must not change runtime behavior, UI, Pearson calculation, top-5 ranking, minimum-n rules, export/import, or workbook schema.
+This is the source-of-truth design/test reference for runtime wording. It must not change Pearson calculation, top-5 ranking, minimum-n rules, export/import, or workbook schema.
 
 ## Scope
 

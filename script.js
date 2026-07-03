@@ -3075,6 +3075,7 @@ let isGeneratingReflection = false;
 let reflectionGenerationTimerId;
 const REFLECTION_GENERATION_DELAY_MS = 850;
 const REFLECTION_SIGNATURE = "🩵";
+const FIELD_REVIEW_DEFAULT_TIMEFRAME = "30";
 
 document.addEventListener("DOMContentLoaded", () => {
   applyThemePreference(currentThemePreference);
@@ -9154,13 +9155,13 @@ const SIGNAL_RELATIONSHIP_LABELS = {
 const SIGNAL_RELATIONSHIP_MEANING_TEMPLATES = {
   "Water_ml|Load_Score": {
     positive: {
-      th: "หนูอ่านว่าสองสัญญาณนี้เคลื่อนไหวไปทางเดียวกันในข้อมูลที่พี่บันทึกไว้ วันที่กิจกรรม งาน หรือแรงใช้ของวันสูงขึ้น มักมาพร้อมปริมาณน้ำที่บันทึกไว้สูงขึ้นด้วย ซึ่งอ่านได้ค่อนข้างสมเหตุสมผล เพราะวันที่ใช้แรงหรือมีภาระมาก ร่างกายอาจต้องการน้ำมากขึ้นตามบริบทของวันค่ะ แต่ความสัมพันธ์นี้ยังเป็นเพียงสัญญาณจาก Daily_Log ไม่ใช่เหตุและผลนะคะ",
+      th: "วันที่กิจกรรม งาน หรือแรงใช้ของวันสูงขึ้น มักมาพร้อมปริมาณน้ำที่บันทึกไว้สูงขึ้นด้วย จึงเหมาะกับการอ่านร่วมกับบริบทของวัน เช่น อากาศ กิจกรรมจริง และพื้นที่พักค่ะ",
       en: "NuTuenSai reads these signals as moving in the same direction in the saved data. Higher daily activity, work, or body-use load tends to appear with higher recorded water intake. This can make sense as day context, but it is still only a Daily_Log relationship signal, not causation.",
       zh: "NuTuenSai 读取到这两个信号在记录中倾向于同向移动。活动、工作或身体使用负荷较高的日子，常和较高的记录饮水量一起出现。这可以作为当天背景来温柔阅读，但仍只是 Daily_Log 里的关系信号，不是因果。"
     },
     negative: {
-      th: "หนูอ่านว่าสองสัญญาณนี้เคลื่อนไหวสวนทางกันในข้อมูลที่เลือก วันที่กิจกรรม งาน หรือแรงใช้ของวันสูงขึ้น อาจไม่ได้มาพร้อมปริมาณน้ำที่บันทึกไว้สูงขึ้นในช่วงนี้ จึงเป็นจุดให้สังเกตบริบทของวัน เช่น อากาศ กิจกรรมจริง และการพัก โดยยังไม่สรุปว่าอะไรเป็นสาเหตุค่ะ",
-      en: "NuTuenSai reads these signals as moving in opposite directions in the selected data. Higher daily activity, work, or body-use load does not appear with higher recorded water intake in this window. Treat this as a point to observe alongside weather, activity context, and recovery, not a cause-and-effect claim.",
+      th: "วันที่กิจกรรม งาน หรือแรงใช้ของวันสูงขึ้น อาจไม่ได้มาพร้อมปริมาณน้ำที่บันทึกไว้สูงขึ้นในช่วงนี้ จึงเป็นจุดให้สังเกตบริบทของวัน เช่น อากาศ กิจกรรมจริง และการพัก โดยยังไม่รีบสรุปค่ะ",
+      en: "NuTuenSai reads these signals as moving in opposite directions in the selected data. Higher daily activity, work, or body-use load does not appear with higher recorded water intake in this window. Treat this as a point to observe alongside weather, activity context, and recovery, not a fixed explanation.",
       zh: "NuTuenSai 读取到这两个信号在所选数据中倾向于反向移动。活动、工作或身体使用负荷较高时，记录的饮水量并没有同步升高。可以和天气、实际活动、恢复一起看，但不要当作因果。"
     },
     neutral: {
@@ -9194,7 +9195,7 @@ const SIGNAL_RELATIONSHIP_MEANING_TEMPLATES = {
     },
     negative: {
       th: "หนูอ่านว่าวันที่ชั่วโมงนอนน้อยลงอาจมาพร้อม caffeine load ที่สูงขึ้นบางส่วนในข้อมูลชุดนี้ อาจเป็นจุดให้สังเกตวันที่ใช้คาเฟอีนเพื่อพยุงพลัง แต่ยังไม่ใช่เหตุและผลค่ะ",
-      en: "NuTuenSai reads that lower recorded sleep hours may appear with higher caffeinated drinks or caffeine load in this data. This can be a gentle point to notice around using caffeine to carry the day, but it is not causation.",
+      en: "NuTuenSai reads that lower recorded sleep hours may appear with higher caffeinated drinks or caffeine load in this data. This can be a gentle point to notice around using caffeine to carry the day, while staying away from over-reading.",
       zh: "NuTuenSai 读取到记录睡眠较少的日子，可能和较高的含咖啡因饮品或咖啡因负荷一起出现。可以温柔观察是否用咖啡因支撑白天，但这不是因果。"
     },
     neutral: {
@@ -9210,8 +9211,8 @@ const SIGNAL_RELATIONSHIP_MEANING_TEMPLATES = {
       zh: "NuTuenSai 读取到这两个信号在所选数据中倾向于同向移动，但需要温柔谨慎地看。甜味情境和记录睡眠时长都可能受当天许多其他因素影响。"
     },
     negative: {
-      th: "หนูอ่านว่าในข้อมูลช่วงนี้ วันที่บริบทความหวานสูงขึ้น มักเคลื่อนไหวสวนทางกับชั่วโมงนอนบางส่วน อาจเป็นสัญญาณให้พี่สังเกตจังหวะวันที่นอนน้อย พลังงานแกว่ง หรือมีเครื่องดื่มหวานเข้ามาช่วยพยุงวัน แต่ยังไม่ควรสรุปว่าอย่างใดเป็นสาเหตุของอีกอย่างค่ะ",
-      en: "NuTuenSai reads that higher sweet drinks or sweetness context tends to move opposite to recorded sleep hours in this window. This may be a signal to notice lower-sleep days, shifting energy, or sweet drinks helping carry the day, without concluding that one causes the other.",
+      th: "หนูอ่านว่าในข้อมูลช่วงนี้ วันที่บริบทความหวานสูงขึ้น มักเคลื่อนไหวสวนทางกับชั่วโมงนอนบางส่วน อาจเป็นสัญญาณให้พี่สังเกตจังหวะวันที่นอนน้อย พลังงานแกว่ง หรือมีเครื่องดื่มหวานเข้ามาช่วยพยุงวัน แต่ยังไม่ควรรีบผูกเรื่องเข้าหากันเกินข้อมูลค่ะ",
+      en: "NuTuenSai reads that higher sweet drinks or sweetness context tends to move opposite to recorded sleep hours in this window. This may be a signal to notice lower-sleep days, shifting energy, or sweet drinks helping carry the day, without turning it into a fixed explanation.",
       zh: "NuTuenSai 读取到这段时间甜饮或甜味情境较高的日子，常和记录睡眠时长呈反向移动。这可以提醒你观察睡得较少、能量波动或甜饮支撑一天的节奏，但不要总结成因果。"
     },
     neutral: {
@@ -9256,6 +9257,42 @@ const SIGNAL_RELATIONSHIP_MEANING_TEMPLATES = {
   }
 };
 
+const SIGNAL_RELATIONSHIP_VOICE_FRAMES = {
+  th: {
+    tentative: "ในข้อมูลช่วงนี้ หนูอ่านเป็นสัญญาณเบื้องต้น เพราะจำนวนวันที่มีข้อมูลครบยังไม่มากพอให้สรุปหนัก ๆ ค่ะ",
+    observed: "จากจำนวนข้อมูลที่มากขึ้น หนูอ่านเป็น pattern ที่เห็นจากข้อมูลที่พี่บันทึกไว้ แต่ยังต้องอ่านร่วมกับบริบทของแต่ละวันค่ะ",
+    sameWeak: "สองสัญญาณนี้เคลื่อนไหวไปทางเดียวกันแบบสัญญาณเบา ๆ",
+    sameModerate: "สองสัญญาณนี้เคลื่อนไหวไปทางเดียวกัน และเห็นจังหวะร่วมกันระดับหนึ่ง",
+    sameStrong: "สองสัญญาณนี้เคลื่อนไหวไปทางเดียวกันค่อนข้างชัดในข้อมูลที่เลือก",
+    oppositeWeak: "สองสัญญาณนี้เคลื่อนไหวสวนทางกันแบบสัญญาณเบา ๆ",
+    oppositeModerate: "สองสัญญาณนี้เคลื่อนไหวสวนทางกัน และเห็นจังหวะร่วมกันระดับหนึ่ง",
+    oppositeStrong: "สองสัญญาณนี้เคลื่อนไหวสวนทางกันค่อนข้างชัดในข้อมูลที่เลือก",
+    nearZero: "หนูยังอ่านเป็นภาวะยังไม่ชัด ไม่ใช่สัญญาณต่ำหรือหลักฐานอ่อน ๆ ค่ะ"
+  },
+  en: {
+    tentative: "In this selected window, NuTuenSai reads this as a tentative signal because the paired data is still limited.",
+    observed: "With more paired data available, NuTuenSai reads this as an observed pattern in the saved record, while each day still has its own context.",
+    sameWeak: "These two signals move in the same direction as a light signal.",
+    sameModerate: "These two signals move in the same direction with a visible shared rhythm.",
+    sameStrong: "These two signals move in the same direction fairly clearly in the selected data.",
+    oppositeWeak: "These two signals move in opposite directions as a light signal.",
+    oppositeModerate: "These two signals move in opposite directions with a visible shared rhythm.",
+    oppositeStrong: "These two signals move in opposite directions fairly clearly in the selected data.",
+    nearZero: "NuTuenSai reads this as unclear, not as weak evidence."
+  },
+  zh: {
+    tentative: "在这段所选数据里，NuTuenSai 先把它当作暂时信号，因为完整配对天数还不算多。",
+    observed: "在较多配对数据下，NuTuenSai 把它读作已观察到的 pattern，但每一天仍有自己的背景。",
+    sameWeak: "这两个信号轻微地同向移动。",
+    sameModerate: "这两个信号同向移动，并开始看见一定程度的共同节奏。",
+    sameStrong: "这两个信号在所选数据中同向移动得比较清楚。",
+    oppositeWeak: "这两个信号轻微地反向移动。",
+    oppositeModerate: "这两个信号反向移动，并开始看见一定程度的共同节奏。",
+    oppositeStrong: "这两个信号在所选数据中反向移动得比较清楚。",
+    nearZero: "NuTuenSai 把这里读作尚不清楚，而不是较弱证据。"
+  }
+};
+
 function getSignalRelationshipLabel(column, lang = currentLanguage) {
   return SIGNAL_RELATIONSHIP_LABELS[column]?.display?.[lang]
     || SIGNAL_RELATIONSHIP_LABELS[column]?.display?.en
@@ -9273,10 +9310,48 @@ function getSignalRelationshipDirectionType(card) {
   return card.r > 0 ? "positive" : "negative";
 }
 
+function getRelationshipStrengthBand(r) {
+  const abs = Math.abs(r);
+  if (abs < 0.2) return "nearZero";
+  if (abs < 0.4) return "weak";
+  if (abs < 0.7) return "moderate";
+  return "strong";
+}
+
+function getRelationshipDirectionBand(r) {
+  if (!isFiniteNumber(r) || Math.abs(r) < 0.2) return "nearZero";
+  return r > 0 ? "same" : "opposite";
+}
+
+function getRelationshipVoiceCategory(card) {
+  const direction = getRelationshipDirectionBand(card?.r);
+  const strength = getRelationshipStrengthBand(card?.r || 0);
+  if (direction === "nearZero" || strength === "nearZero") return "nearZero";
+  return `${direction}${strength.charAt(0).toUpperCase()}${strength.slice(1)}`;
+}
+
+function getPairedRowBand(n) {
+  if (n < 10) return "thin";
+  if (n < 30) return "tentative";
+  return "observed";
+}
+
 function getPairSpecificMeaningTemplate(card, lang = currentLanguage) {
   const directionType = getSignalRelationshipDirectionType(card);
-  const templateSet = SIGNAL_RELATIONSHIP_MEANING_TEMPLATES[card.pairKey]?.[directionType];
+  const templateSet = SIGNAL_RELATIONSHIP_MEANING_TEMPLATES[card.voiceKey]?.[directionType];
   return templateSet?.[lang] || templateSet?.en || "";
+}
+
+function buildPairSpecificRelationshipMeaning(card, lang = currentLanguage) {
+  return getPairSpecificMeaningTemplate(card, lang);
+}
+
+function buildSignalRelationshipVoice(card, lang = currentLanguage) {
+  const frames = SIGNAL_RELATIONSHIP_VOICE_FRAMES[lang] || SIGNAL_RELATIONSHIP_VOICE_FRAMES.en;
+  const nFrame = frames[getPairedRowBand(card.n)] || "";
+  const categoryFrame = frames[getRelationshipVoiceCategory(card)] || "";
+  const pairMeaning = buildPairSpecificRelationshipMeaning(card, lang);
+  return [nFrame, categoryFrame, pairMeaning].filter(Boolean).join(" ");
 }
 
 function getSignalRelationshipSentenceLabel(column, lang = currentLanguage) {
@@ -9398,6 +9473,7 @@ function buildSignalRelationshipCards(rows = []) {
 
     return {
       pairKey: `${pair.x}__${pair.y}`,
+      voiceKey: `${pair.x}|${pair.y}`,
       pairName: formatSignalPairLabel(pair.x, pair.y),
       displayPairName: formatSignalPairLabel(pair.x, pair.y),
       rawPairName: formatSignalPairRaw(pair.x, pair.y),
@@ -9427,7 +9503,7 @@ function getRankedSignalRelationships(cards = []) {
 
 function buildRelationshipMeaning(card) {
   const pairedDays = t("signalEnginePairedDays", { count: formatReviewNumber(card.n) });
-  const pairSpecificMeaning = getPairSpecificMeaningTemplate(card);
+  const pairSpecificMeaning = buildSignalRelationshipVoice(card);
   if (pairSpecificMeaning) return pairSpecificMeaning;
 
   if (!card.hasCoefficient || Math.abs(card.r) < 0.2) {
@@ -9801,7 +9877,7 @@ function renderFieldReview() {
   const timeframeSelect = document.querySelector("#fieldReviewTimeframe");
   if (!container || !status || !emptyState || !thinState) return;
 
-  const timeframe = timeframeSelect?.value || "7";
+  const timeframe = timeframeSelect?.value || FIELD_REVIEW_DEFAULT_TIMEFRAME;
   const allRows = getAllFieldReviewRows();
   const rows = getFieldReviewRows(timeframe);
   const hasRows = rows.length > 0;

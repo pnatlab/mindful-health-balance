@@ -207,7 +207,7 @@ The workbook currently includes:
 
 ## Field Review
 
-The Field Review tab is the first MHB 2.0 slice. It reads saved `Daily_Log` rows from localStorage and shows rule-based review cards only. Each card keeps numeric evidence visible, then adds a deterministic NuTuenSai-style reading and a gentle next attention. The selected timeframe changes the reading tone lightly: 7 days is an early signal, 14 days is an emerging rhythm, 30 days is a month-level rhythm, and all available data is a long-view reflection.
+The Field Review tab is the first MHB 2.0 slice. It reads saved `Daily_Log` rows from localStorage and shows rule-based review cards only. Each card keeps numeric evidence visible, then adds a deterministic NuTuenSai-style reading and a gentle next attention. The default timeframe is now 30 days so Field Review and Signal Engine have a better chance of enough paired data; users can still switch to 7 days, 14 days, or all available data. The selected timeframe changes the reading tone lightly: 7 days is an early signal, 14 days is an emerging rhythm, 30 days is a month-level rhythm, and all available data is a long-view reflection.
 
 Field Review does not call an LLM, does not provide a free-form question box, and does not change export/import/save/restore behavior.
 
@@ -223,7 +223,7 @@ Field Review UI v2.2 refines the active room into a conversation stack: question
 
 Field Review UI v2.3 moves locked focus choices into a normal bottom action area below the response, together with next-room navigation. The chat body now reads as question, source context, and response first; the buttons remain deterministic controls outside the answer flow.
 
-Field Review also includes a conservative `Signal Engine` room. It calculates numeric-to-numeric Pearson relationships from selected `Daily_Log` rows only, ranks up to five valid relationships by absolute `r`, and opens a centered meaning detail signed `MHB · NuTuenSai`. Row titles use human-readable signal labels first, while raw column pairs such as `Water_ml ↔ Load_Score` remain visible as technical evidence. The meaning layer uses a deterministic NuTuenSai Meaning Dictionary and pair-specific templates, not LLM generation. It uses minimum-n rules before showing `r`, does not map category fields yet, and always frames correlation as not causation, diagnosis, or medical advice.
+Field Review also includes a conservative `Signal Engine` room. It calculates numeric-to-numeric Pearson relationships from selected `Daily_Log` rows only, ranks up to five valid relationships by absolute `r`, and opens a centered meaning detail signed `MHB · NuTuenSai`. Row titles use human-readable signal labels first, while raw column pairs such as `Water_ml ↔ Load_Score` remain visible as technical evidence. The meaning layer uses the deterministic NuTuenSai Meaning Voice Matrix: pair, direction, strength, and paired-row count choose the voice, not LLM generation. It uses minimum-n rules before showing `r`, does not map category fields yet, and always frames correlation as not causation, diagnosis, or medical advice.
 
 The cards are descriptive pattern summaries. Missing data means not recorded, not failure. Numeric fields keep their workbook boundaries: for example, `Water_ml` is plain water in milliliters, not money or expense data.
 

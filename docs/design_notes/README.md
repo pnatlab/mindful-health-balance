@@ -58,6 +58,7 @@ Field Review Slice A, future Field Review Companion, timeframe-aware review, v2 
 
 - [FIELD_REVIEW_SLICE_A_RULE_BASED.md](FIELD_REVIEW_SLICE_A_RULE_BASED.md) - Locks MHB 2.0 Slice A as rule-based Daily_Log review only and records Signal Relationships / Correlation Review as future Slice A+/B backlog.
 - [SIGNAL_ENGINE_CORRELATION_REFERENCE.md](SIGNAL_ENGINE_CORRELATION_REFERENCE.md) - Locks conservative Pearson correlation interpretation bands for Signal Engine before the future Meaning Voice Matrix.
+- [SIGNAL_ENGINE_MEANING_VOICE_MATRIX.md](SIGNAL_ENGINE_MEANING_VOICE_MATRIX.md) - Defines the deterministic pair/direction/strength/n voice matrix for Signal Engine meaning details.
 - [FIELD_REVIEW_COMPANION_V2.md](FIELD_REVIEW_COMPANION_V2.md) - Roadmap for a guided Field Review Companion rather than an open-ended chatbot.
 - [FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](FIELD_REVIEW_TIMEFRAME_LAYER_V2.md) - Roadmap for choosing day/week/month/long-term review frames honestly.
 - [NAVIGATION_ARCHITECTURE_V2.md](NAVIGATION_ARCHITECTURE_V2.md) - Proposed v2 navigation structure including Field Review.

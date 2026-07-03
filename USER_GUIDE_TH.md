@@ -120,7 +120,7 @@ Reflection ล่าสุดมี NuTuenSai voice cadence ในภาษา�
 
 ### ประมวลข้อมูล / Field Review
 
-หน้า `ประมวลข้อมูล` เป็น MHB 2.0 Slice A แบบ rule-based เท่านั้น ใช้สำหรับอ่าน pattern จาก `Daily_Log` ที่บันทึกไว้ใน browser นี้ ผู้ใช้เลือกช่วงข้อมูลได้ 7 วัน, 14 วัน, 30 วัน หรือทั้งหมดที่มี
+หน้า `ประมวลข้อมูล` เป็น MHB 2.0 Slice A แบบ rule-based เท่านั้น ใช้สำหรับอ่าน pattern จาก `Daily_Log` ที่บันทึกไว้ใน browser นี้ ค่าเริ่มต้นเป็น 30 วันเพื่อให้ Signal Engine มีโอกาสเจอ paired rows มากขึ้น ผู้ใช้ยังเลือกกลับเป็น 7 วัน, 14 วัน หรือทั้งหมดที่มีได้เหมือนเดิม
 
 การ์ด review จะสรุป hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support need และช่องที่ยังเว้นว่าง โดยอิงข้อมูลที่มีจริง แต่ละการ์ดแยกเป็น 3 ชั้น: หลักฐานจาก `Daily_Log`, `หนูตื่นสายอ่านว่า`, และ `รอบถัดไปลองสังเกต` ถ้าข้อมูลน้อยกว่า 3 rows ระบบจะแสดงว่าข้อมูลยังบางและอ่านได้แค่สัญญาณเบื้องต้น
 
@@ -138,7 +138,7 @@ Field Review UI v2.2 จัด flow นี้ให้เป็น conversation 
 
 Field Review UI v2.3 ย้าย choice chips ที่ล็อกไว้ไปอยู่ใน bottom action area ใต้คำตอบ พร้อมปุ่มไปห้องถัดไป ทำให้ตัวบทสนทนาอ่านเป็นคำถาม, source/context จาก Daily_Log, และคำตอบก่อน ส่วนปุ่มยังเป็น control ที่แยกจากคำตอบอย่างชัดเจน
 
-ห้อง `ความสัมพันธ์` / `Signal Engine` เพิ่มการอ่านความสัมพันธ์แบบ conservative โดยคำนวณ Pearson เฉพาะ numeric-to-numeric จาก `Daily_Log` เช่น `Water_ml`, `Sleep_Hours`, `Load_Score`, `Caffeine_Score`, `Sugar_Score` และ `Practice_Minutes` รายการจะแสดงได้สูงสุด 5 แถวที่มีข้อมูลครบและจัดตามความชัดของค่า `r`; หัวข้อแถวใช้ชื่อแบบความหมาย เช่น น้ำดื่ม, ชั่วโมงนอน, กิจกรรม/งานของวัน และยังแสดง raw column pair เป็นหลักฐานตรวจสอบได้ เมื่อกดแต่ละแถวจะเปิดชั้นความหมายจาก template เฉพาะคู่สัญญาณที่ลงชื่อ `MHB · NuTuenSai` ยังไม่ map category fields และย้ำเสมอว่า correlation ไม่ใช่เหตุและผล
+ห้อง `ความสัมพันธ์` / `Signal Engine` เพิ่มการอ่านความสัมพันธ์แบบ conservative โดยคำนวณ Pearson เฉพาะ numeric-to-numeric จาก `Daily_Log` เช่น `Water_ml`, `Sleep_Hours`, `Load_Score`, `Caffeine_Score`, `Sugar_Score` และ `Practice_Minutes` รายการจะแสดงได้สูงสุด 5 แถวที่มีข้อมูลครบและจัดตามความชัดของค่า `r`; หัวข้อแถวใช้ชื่อแบบความหมาย เช่น น้ำดื่ม, ชั่วโมงนอน, กิจกรรม/งานของวัน และยังแสดง raw column pair เป็นหลักฐานตรวจสอบได้ เมื่อกดแต่ละแถวจะเปิดชั้นความหมายจาก Meaning Voice Matrix ที่เลือกเสียงตามคู่สัญญาณ ทิศทาง ความแรง และจำนวน paired rows ยังไม่ map category fields และย้ำเสมอว่า correlation ไม่ใช่เหตุและผล
 
 หน้านี้ไม่ใช่ chatbot ไม่เรียก LLM ไม่รับคำถาม free-form และไม่วินิจฉัยหรือให้คำแนะนำทางการแพทย์ ช่องว่างแปลว่ายังไม่ได้บันทึก ไม่ใช่ความผิดหรือคะแนนที่หายไป
 

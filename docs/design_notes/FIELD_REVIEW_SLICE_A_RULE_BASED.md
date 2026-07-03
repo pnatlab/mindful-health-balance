@@ -98,7 +98,7 @@ Future slices are separate from Slice A:
 
 ## Signal Relationships / Correlation Review
 
-Signal Relationship Engine is now a conservative Slice A relationship layer for numeric-to-numeric fields only. It presents up to five valid relationship rows ranked by absolute `r`; row titles use a NuTuenSai Meaning Dictionary first, raw column pairs remain visible as technical evidence, and selecting a row opens a deterministic pair-specific meaning detail signed `MHB · NuTuenSai`. The meaning templates are authored rules, not LLM generation.
+Signal Relationship Engine is now a conservative Slice A relationship layer for numeric-to-numeric fields only. It presents up to five valid relationship rows ranked by absolute `r`; row titles use a NuTuenSai Meaning Dictionary first, raw column pairs remain visible as technical evidence, and selecting a row opens a deterministic Meaning Voice Matrix detail signed `MHB · NuTuenSai`. The runtime voice is selected by pair key, direction band, strength band, and paired-row count band. The meaning templates are authored rules, not LLM generation.
 
 The safer naming should be:
 
