@@ -754,7 +754,7 @@ Field Review UI v2.2 may place the guided flow into a conversation stack: questi
 
 Field Review UI v2.3 may move locked choice chips into a normal bottom action area below the response stack, alongside next-room navigation. This keeps the chat body focused on question, source context, and response while preserving deterministic controls outside the answer flow.
 
-Signal Relationship Engine may add a conservative seventh room for deterministic numeric-to-numeric Pearson relationships from selected `Daily_Log` rows. It may present up to five valid relationship rows ranked by absolute `r`, using human-readable signal labels as the primary UI while keeping raw column names visible as technical evidence, then open a source-bound meaning detail signed `MHB · NuTuenSai`. It must use minimum-n rules, avoid category mapping unless explicit, avoid charts/matrices in this slice, and always state that correlation is not causation, diagnosis, risk prediction, or medical advice.
+Signal Relationship Engine may add a conservative seventh room for deterministic numeric-to-numeric Pearson relationships from selected `Daily_Log` rows. It may present up to five valid relationship rows ranked by absolute `r`, using a NuTuenSai Meaning Dictionary as the primary UI while keeping raw column names visible as technical evidence, then open a source-bound pair-specific meaning detail signed `MHB · NuTuenSai`. These templates are deterministic and must not be LLM-generated. It must use minimum-n rules, avoid category mapping unless explicit, avoid charts/matrices in this slice, and always state that correlation is not causation, diagnosis, risk prediction, or medical advice.
 
 ## Compatibility
 

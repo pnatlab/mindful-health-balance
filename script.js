@@ -9126,43 +9126,161 @@ const SIGNAL_RELATIONSHIP_PAIRS = [
 
 const SIGNAL_RELATIONSHIP_LABELS = {
   Water_ml: {
-    th: "น้ำดื่ม",
-    en: "Water intake",
-    zh: "饮水量"
+    display: { th: "น้ำดื่ม", en: "Water intake", zh: "饮水量" },
+    meaning: { th: "ปริมาณน้ำที่พี่บันทึกไว้", en: "recorded water intake", zh: "记录的饮水量" }
   },
   Load_Score: {
-    th: "ภาระของวัน",
-    en: "Daily load",
-    zh: "每日负荷"
+    display: { th: "กิจกรรม/งานของวัน", en: "Daily activity/load", zh: "每日活动/负荷" },
+    meaning: { th: "กิจกรรม งาน หรือแรงใช้ของวัน", en: "daily activity, work, or body-use load", zh: "当天的活动、工作或身体使用负荷" }
   },
   Sleep_Hours: {
-    th: "การนอน",
-    en: "Sleep",
-    zh: "睡眠"
+    display: { th: "ชั่วโมงนอน", en: "Sleep hours", zh: "睡眠时长" },
+    meaning: { th: "ชั่วโมงนอนที่บันทึกไว้", en: "recorded sleep hours", zh: "记录的睡眠时长" }
   },
   Caffeine_Score: {
-    th: "คาเฟอีน",
-    en: "Caffeine",
-    zh: "咖啡因"
+    display: { th: "เครื่องดื่มคาเฟอีน", en: "Caffeinated drinks", zh: "含咖啡因饮品" },
+    meaning: { th: "เครื่องดื่มที่มีคาเฟอีนหรือ caffeine load ที่บันทึกไว้", en: "caffeinated drinks or caffeine load", zh: "记录的含咖啡因饮品或咖啡因负荷" }
   },
   Sugar_Score: {
-    th: "ความหวาน",
-    en: "Sweetness",
-    zh: "甜度"
+    display: { th: "บริบทความหวาน", en: "Sweetness context", zh: "甜味情境" },
+    meaning: { th: "เครื่องดื่ม/บริบทความหวานที่บันทึกไว้", en: "sweet drinks or sweetness context", zh: "记录的甜饮或甜味情境" }
   },
   Practice_Minutes: {
-    th: "เวลาภาวนา",
-    en: "Practice minutes",
-    zh: "练习分钟"
+    display: { th: "เวลาภาวนา", en: "Practice minutes", zh: "练习分钟" },
+    meaning: { th: "เวลาภาวนาที่บันทึกไว้", en: "recorded practice minutes", zh: "记录的练习分钟" }
+  }
+};
+
+const SIGNAL_RELATIONSHIP_MEANING_TEMPLATES = {
+  "Water_ml|Load_Score": {
+    positive: {
+      th: "หนูอ่านว่าสองสัญญาณนี้เคลื่อนไหวไปทางเดียวกันในข้อมูลที่พี่บันทึกไว้ วันที่กิจกรรม งาน หรือแรงใช้ของวันสูงขึ้น มักมาพร้อมปริมาณน้ำที่บันทึกไว้สูงขึ้นด้วย ซึ่งอ่านได้ค่อนข้างสมเหตุสมผล เพราะวันที่ใช้แรงหรือมีภาระมาก ร่างกายอาจต้องการน้ำมากขึ้นตามบริบทของวันค่ะ แต่ความสัมพันธ์นี้ยังเป็นเพียงสัญญาณจาก Daily_Log ไม่ใช่เหตุและผลนะคะ",
+      en: "NuTuenSai reads these signals as moving in the same direction in the saved data. Higher daily activity, work, or body-use load tends to appear with higher recorded water intake. This can make sense as day context, but it is still only a Daily_Log relationship signal, not causation.",
+      zh: "NuTuenSai 读取到这两个信号在记录中倾向于同向移动。活动、工作或身体使用负荷较高的日子，常和较高的记录饮水量一起出现。这可以作为当天背景来温柔阅读，但仍只是 Daily_Log 里的关系信号，不是因果。"
+    },
+    negative: {
+      th: "หนูอ่านว่าสองสัญญาณนี้เคลื่อนไหวสวนทางกันในข้อมูลที่เลือก วันที่กิจกรรม งาน หรือแรงใช้ของวันสูงขึ้น อาจไม่ได้มาพร้อมปริมาณน้ำที่บันทึกไว้สูงขึ้นในช่วงนี้ จึงเป็นจุดให้สังเกตบริบทของวัน เช่น อากาศ กิจกรรมจริง และการพัก โดยยังไม่สรุปว่าอะไรเป็นสาเหตุค่ะ",
+      en: "NuTuenSai reads these signals as moving in opposite directions in the selected data. Higher daily activity, work, or body-use load does not appear with higher recorded water intake in this window. Treat this as a point to observe alongside weather, activity context, and recovery, not a cause-and-effect claim.",
+      zh: "NuTuenSai 读取到这两个信号在所选数据中倾向于反向移动。活动、工作或身体使用负荷较高时，记录的饮水量并没有同步升高。可以和天气、实际活动、恢复一起看，但不要当作因果。"
+    },
+    neutral: {
+      th: "ในข้อมูลช่วงนี้ หนูยังไม่เห็นจังหวะร่วมกันชัดระหว่างปริมาณน้ำกับกิจกรรม/งานของวัน จึงควรอ่านเป็นสัญญาณเบา ๆ และดูร่วมกับ sleep, เครื่องดื่ม และกิจกรรมจริงของวันค่ะ",
+      en: "In this window, NuTuenSai does not yet see a clear rhythm between recorded water intake and daily activity/load. Hold it lightly and read it alongside sleep, drinks, and the real activity context of each day.",
+      zh: "在这段数据里，NuTuenSai 还没有看见记录饮水量和每日活动/负荷之间清楚的共同节奏。可以轻轻放着看，并和睡眠、饮品、当天真实活动一起阅读。"
+    }
+  },
+  "Sleep_Hours|Load_Score": {
+    positive: {
+      th: "หนูอ่านว่าสองสัญญาณนี้เคลื่อนไหวไปทางเดียวกันในข้อมูลที่เลือก วันที่กิจกรรม งาน หรือแรงใช้ของวันสูงขึ้น มักมาพร้อมชั่วโมงนอนที่บันทึกไว้สูงขึ้นบางส่วน อาจสะท้อนวันที่ร่างกายมีแรงและมีพื้นที่พักตามมา แต่ยังควรอ่านร่วมกับบริบทของวัน ไม่ใช่ข้อสรุปค่ะ",
+      en: "NuTuenSai reads these signals as moving in the same direction here. Higher daily activity/load tends to appear with higher recorded sleep hours to some degree. This may reflect days where energy and rest both have space, but it should stay contextual, not a conclusion.",
+      zh: "NuTuenSai 读取到这两个信号在这里倾向于同向移动。每日活动/负荷较高时，也常和较高的记录睡眠时长一起出现。它可能只是有体力也有休息空间的日子背景，不是结论。"
+    },
+    negative: {
+      th: "หนูอ่านว่าวันที่กิจกรรม งาน หรือแรงใช้ของวันสูงขึ้น อาจมาพร้อมชั่วโมงนอนที่ลดลงบางส่วนในข้อมูลช่วงนี้ จึงเป็นจุดที่น่าดูต่อเรื่อง recovery แต่ยังไม่ใช่การวินิจฉัยหรือเหตุและผลค่ะ",
+      en: "NuTuenSai reads that higher daily activity, work, or body-use load may appear with lower recorded sleep hours in this window. This can be a gentle recovery signal to keep observing, not diagnosis or causation.",
+      zh: "NuTuenSai 读取到活动、工作或身体使用负荷较高的日子，可能和较低的记录睡眠时长一起出现。这可以作为恢复节奏的轻观察，不是诊断或因果。"
+    },
+    neutral: {
+      th: "ในข้อมูลที่เลือก ความสัมพันธ์ระหว่างชั่วโมงนอนกับกิจกรรม/งานของวันยังไม่ชัดมากพอ หนูจึงอ่านเป็นสัญญาณเบา ๆ มากกว่าข้อสรุปค่ะ",
+      en: "In the selected data, the relationship between recorded sleep hours and daily activity/load is not clear enough yet. NuTuenSai reads it as a light signal rather than a conclusion.",
+      zh: "在所选数据中，记录睡眠时长和每日活动/负荷之间的关系还不够清楚。NuTuenSai 只把它当作轻信号，不是结论。"
+    }
+  },
+  "Sleep_Hours|Caffeine_Score": {
+    positive: {
+      th: "หนูอ่านว่าสองสัญญาณนี้เคลื่อนไหวไปทางเดียวกันในข้อมูลที่เลือก ชั่วโมงนอนที่บันทึกไว้สูงขึ้นมักมาพร้อมเครื่องดื่มที่มีคาเฟอีนหรือ caffeine load ที่สูงขึ้นบางส่วน จึงควรอ่านเป็นบริบทของวัน เช่น งาน เวลา และเครื่องดื่ม ไม่ใช่คำตัดสินเรื่องการพักค่ะ",
+      en: "NuTuenSai reads these signals as moving in the same direction here. Higher recorded sleep hours tend to appear with higher caffeinated drinks or caffeine load to some degree. Read this as day context around work, timing, and drinks, not a judgment about rest.",
+      zh: "NuTuenSai 读取到这两个信号在这里倾向于同向移动。记录睡眠时长较高时，也可能和较高的含咖啡因饮品或咖啡因负荷一起出现。请把它当作工作、时间和饮品背景，不是对休息的评价。"
+    },
+    negative: {
+      th: "หนูอ่านว่าวันที่ชั่วโมงนอนน้อยลงอาจมาพร้อม caffeine load ที่สูงขึ้นบางส่วนในข้อมูลชุดนี้ อาจเป็นจุดให้สังเกตวันที่ใช้คาเฟอีนเพื่อพยุงพลัง แต่ยังไม่ใช่เหตุและผลค่ะ",
+      en: "NuTuenSai reads that lower recorded sleep hours may appear with higher caffeinated drinks or caffeine load in this data. This can be a gentle point to notice around using caffeine to carry the day, but it is not causation.",
+      zh: "NuTuenSai 读取到记录睡眠较少的日子，可能和较高的含咖啡因饮品或咖啡因负荷一起出现。可以温柔观察是否用咖啡因支撑白天，但这不是因果。"
+    },
+    neutral: {
+      th: "ในข้อมูลที่เลือก หนูยังไม่เห็นความสัมพันธ์ชัดระหว่างชั่วโมงนอนกับเครื่องดื่มที่มีคาเฟอีน จึงควรอ่านเป็นสัญญาณเบา ๆ และยังไม่ควรสรุปค่ะ",
+      en: "In the selected data, NuTuenSai does not yet see a clear relationship between recorded sleep hours and caffeinated drinks. Hold it as a light signal, not a conclusion.",
+      zh: "在所选数据中，NuTuenSai 还没有看见记录睡眠时长和含咖啡因饮品之间清楚的关系。请把它当作轻信号，不要下结论。"
+    }
+  },
+  "Sugar_Score|Sleep_Hours": {
+    positive: {
+      th: "หนูอ่านว่าสองสัญญาณนี้เคลื่อนไหวไปทางเดียวกันในข้อมูลที่เลือก แต่ควรอ่านอย่างระวัง เพราะบริบทความหวานและชั่วโมงนอนอาจมีปัจจัยของวันอื่น ๆ เข้ามาเกี่ยวข้องค่ะ",
+      en: "NuTuenSai reads these signals as moving in the same direction in the selected data, but this should be held carefully. Sweetness context and recorded sleep hours can both be shaped by many other parts of the day.",
+      zh: "NuTuenSai 读取到这两个信号在所选数据中倾向于同向移动，但需要温柔谨慎地看。甜味情境和记录睡眠时长都可能受当天许多其他因素影响。"
+    },
+    negative: {
+      th: "หนูอ่านว่าในข้อมูลช่วงนี้ วันที่บริบทความหวานสูงขึ้น มักเคลื่อนไหวสวนทางกับชั่วโมงนอนบางส่วน อาจเป็นสัญญาณให้พี่สังเกตจังหวะวันที่นอนน้อย พลังงานแกว่ง หรือมีเครื่องดื่มหวานเข้ามาช่วยพยุงวัน แต่ยังไม่ควรสรุปว่าอย่างใดเป็นสาเหตุของอีกอย่างค่ะ",
+      en: "NuTuenSai reads that higher sweet drinks or sweetness context tends to move opposite to recorded sleep hours in this window. This may be a signal to notice lower-sleep days, shifting energy, or sweet drinks helping carry the day, without concluding that one causes the other.",
+      zh: "NuTuenSai 读取到这段时间甜饮或甜味情境较高的日子，常和记录睡眠时长呈反向移动。这可以提醒你观察睡得较少、能量波动或甜饮支撑一天的节奏，但不要总结成因果。"
+    },
+    neutral: {
+      th: "ในข้อมูลที่เลือก หนูยังไม่เห็นความสัมพันธ์ชัดระหว่างบริบทความหวานกับชั่วโมงนอน จึงควรอ่านเป็นข้อมูลประกอบ ไม่ใช่ข้อสรุปเรื่องการพักหรือเครื่องดื่มค่ะ",
+      en: "In the selected data, NuTuenSai does not yet see a clear relationship between sweetness context and recorded sleep hours. Treat it as supporting context, not a conclusion about rest or drinks.",
+      zh: "在所选数据中，NuTuenSai 还没有看见甜味情境和记录睡眠时长之间清楚的关系。它只是辅助背景，不是关于休息或饮品的结论。"
+    }
+  },
+  "Caffeine_Score|Load_Score": {
+    positive: {
+      th: "หนูอ่านว่าวันที่มีเครื่องดื่มที่มีคาเฟอีนมากขึ้น มักอยู่ในวันที่กิจกรรม งาน หรือแรงใช้ของวันสูงขึ้นบางส่วน หนูอ่านเป็นบริบทของการพยุงพลังระหว่างวัน มากกว่าการตัดสินว่าดีหรือไม่ดีค่ะ",
+      en: "NuTuenSai reads that higher caffeinated drinks or caffeine load often appears on days with higher activity, work, or body-use load. This is day-support context, not a good-or-bad judgment.",
+      zh: "NuTuenSai 读取到含咖啡因饮品或咖啡因负荷较高时，常出现在活动、工作或身体使用负荷较高的日子。这里读作支撑一天的背景，不是好坏评价。"
+    },
+    negative: {
+      th: "หนูอ่านว่าสองสัญญาณนี้เคลื่อนไหวสวนทางกันในข้อมูลที่เลือก วันที่กิจกรรม งาน หรือแรงใช้ของวันสูงขึ้นไม่ได้มาพร้อม caffeine load ที่สูงขึ้นในช่วงนี้ จึงควรอ่านเป็นบริบทเฉพาะของช่วงข้อมูล ไม่ใช่ข้อสรุปค่ะ",
+      en: "NuTuenSai reads these signals as moving in opposite directions in the selected data. Higher activity/load does not appear with higher caffeine load in this window, so keep this as context for this data slice, not a conclusion.",
+      zh: "NuTuenSai 读取到这两个信号在所选数据中倾向于反向移动。活动/负荷较高时，并没有和较高的咖啡因负荷一起出现。请把它当作这段数据的背景，不是结论。"
+    },
+    neutral: {
+      th: "ในข้อมูลช่วงนี้ หนูยังไม่เห็นว่าคาเฟอีนกับกิจกรรม/งานของวันเคลื่อนไหวร่วมกันชัดพอ จึงควรอ่านเป็นข้อมูลประกอบ ไม่ใช่ข้อสรุปค่ะ",
+      en: "In this window, NuTuenSai does not yet see caffeinated drinks and daily activity/load moving together clearly enough. Treat it as supporting context, not a conclusion.",
+      zh: "在这段数据中，NuTuenSai 还没有看见含咖啡因饮品和每日活动/负荷清楚地一起移动。请把它当作辅助背景，不是结论。"
+    }
+  },
+  "Practice_Minutes|Sleep_Hours": {
+    positive: {
+      th: "หนูอ่านว่าสองสัญญาณนี้เคลื่อนไหวไปทางเดียวกันในข้อมูลที่เลือก เวลาภาวนาที่บันทึกไว้อาจมาพร้อมชั่วโมงนอนที่สูงขึ้นบางส่วน แต่ควรอ่านเป็นบริบทการดูแลตัวเอง ไม่ใช่คะแนนการภาวนาหรือคุณภาพการพักค่ะ",
+      en: "NuTuenSai reads these signals as moving in the same direction in the selected data. Recorded practice minutes may appear with higher recorded sleep hours to some degree, but this is self-care context, not a practice score or sleep-quality judgment.",
+      zh: "NuTuenSai 读取到这两个信号在所选数据中倾向于同向移动。记录的练习分钟可能和较高的记录睡眠时长一起出现，但这只是自我照顾背景，不是练习评分或睡眠质量评价。"
+    },
+    negative: {
+      th: "หนูอ่านว่าสองสัญญาณนี้เคลื่อนไหวสวนทางกันในข้อมูลที่เลือก เวลาภาวนาที่บันทึกไว้อาจมาพร้อมชั่วโมงนอนที่ลดลงบางส่วน แต่ยังไม่ควรสรุปเรื่องคุณภาพการพักหรือการภาวนา เพราะบริบทของแต่ละวันอาจต่างกันมากค่ะ",
+      en: "NuTuenSai reads these signals as moving in opposite directions in the selected data. Recorded practice minutes may appear with lower recorded sleep hours to some degree, but this should not become a judgment about rest quality or practice because each day's context can vary.",
+      zh: "NuTuenSai 读取到这两个信号在所选数据中倾向于反向移动。记录的练习分钟可能和较低的记录睡眠时长一起出现，但不要把它变成休息质量或练习的评价，因为每天的背景可能很不同。"
+    },
+    neutral: {
+      th: "ในข้อมูลที่เลือก หนูยังไม่เห็นจังหวะร่วมกันชัดระหว่างเวลาภาวนากับชั่วโมงนอน จึงควรอ่านเพียงเป็นบริบทประกอบ ไม่ใช่คะแนนการภาวนาหรือคุณภาพการพักค่ะ",
+      en: "In the selected data, NuTuenSai does not yet see a clear rhythm between recorded practice minutes and recorded sleep hours. Read this only as supporting context, not a practice score or sleep-quality judgment.",
+      zh: "在所选数据中，NuTuenSai 还没有看见记录练习分钟和记录睡眠时长之间清楚的共同节奏。请只把它当作辅助背景，不是练习评分或睡眠质量评价。"
+    }
   }
 };
 
 function getSignalRelationshipLabel(column, lang = currentLanguage) {
-  return SIGNAL_RELATIONSHIP_LABELS[column]?.[lang] || SIGNAL_RELATIONSHIP_LABELS[column]?.en || column;
+  return SIGNAL_RELATIONSHIP_LABELS[column]?.display?.[lang]
+    || SIGNAL_RELATIONSHIP_LABELS[column]?.display?.en
+    || column;
+}
+
+function getSignalMeaningPhrase(column, lang = currentLanguage) {
+  return SIGNAL_RELATIONSHIP_LABELS[column]?.meaning?.[lang]
+    || SIGNAL_RELATIONSHIP_LABELS[column]?.meaning?.en
+    || getSignalRelationshipLabel(column, lang);
+}
+
+function getSignalRelationshipDirectionType(card) {
+  if (!card?.hasCoefficient || Math.abs(card.r) < 0.2) return "neutral";
+  return card.r > 0 ? "positive" : "negative";
+}
+
+function getPairSpecificMeaningTemplate(card, lang = currentLanguage) {
+  const directionType = getSignalRelationshipDirectionType(card);
+  const templateSet = SIGNAL_RELATIONSHIP_MEANING_TEMPLATES[card.pairKey]?.[directionType];
+  return templateSet?.[lang] || templateSet?.en || "";
 }
 
 function getSignalRelationshipSentenceLabel(column, lang = currentLanguage) {
-  const label = getSignalRelationshipLabel(column, lang);
+  const label = getSignalMeaningPhrase(column, lang);
   return lang === "en" ? label.charAt(0).toLowerCase() + label.slice(1) : label;
 }
 
@@ -9285,6 +9403,8 @@ function buildSignalRelationshipCards(rows = []) {
       rawPairName: formatSignalPairRaw(pair.x, pair.y),
       xLabel: getSignalRelationshipLabel(pair.x),
       yLabel: getSignalRelationshipLabel(pair.y),
+      xMeaningPhrase: getSignalMeaningPhrase(pair.x),
+      yMeaningPhrase: getSignalMeaningPhrase(pair.y),
       xSentenceLabel: getSignalRelationshipSentenceLabel(pair.x),
       ySentenceLabel: getSignalRelationshipSentenceLabel(pair.y),
       xColumn: pair.x,
@@ -9307,6 +9427,9 @@ function getRankedSignalRelationships(cards = []) {
 
 function buildRelationshipMeaning(card) {
   const pairedDays = t("signalEnginePairedDays", { count: formatReviewNumber(card.n) });
+  const pairSpecificMeaning = getPairSpecificMeaningTemplate(card);
+  if (pairSpecificMeaning) return pairSpecificMeaning;
+
   if (!card.hasCoefficient || Math.abs(card.r) < 0.2) {
     return t("signalEngineMeaningNeutral");
   }

@@ -108,7 +108,7 @@ TH | EN | 中文
 
 ตั้งแต่ v1.9.9 — Mindful Practice Context หน้า `ภาวะใจวันนี้ 2/2` เพิ่มการ์ด `ภาวนาก่อนวางใจ` ก่อน Mind Note เพื่อบันทึกฐานภาวนาแบบ optional ด้วย 4 ฐานที่เข้าใจง่าย: กาย เวทนา จิต/คิด และธรรม รวมถึงไม่ได้ภาวนา/อื่น ๆ พร้อมระยะเวลาโดยประมาณและ `Practice_Note` สำหรับหมายเหตุการภาวนา/สิ่งดีที่ได้ทำ ข้อมูลนี้ถูกเก็บใน Daily Log/Excel เพื่อ Field Review ในอนาคต แต่ Reflection/NuTuenSai รายวันยังไม่ตีความ ไม่ให้คะแนน และไม่ตัดสินการภาวนา
 
-ตั้งแต่ MHB 2.0 Slice A — หน้า `ประมวลข้อมูล` เริ่ม Field Review แบบ conservative โดยอ่านจาก `Daily_Log` ใน localStorage เท่านั้น แสดงการ์ด hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support และ missing/blank data แบบ deterministic การ์ดแต่ละใบมีหลักฐานจากข้อมูลจริง เสียงหนูตื่นสายแบบ rule-based และสิ่งที่ชวนสังเกตรอบถัดไป ไม่มี free-form ask ไม่มี LLM call ส่วน Signal Engine แสดงแถวความสัมพันธ์จาก Pearson เฉพาะ numeric-to-numeric ด้วยชื่อสัญญาณแบบคนอ่านเข้าใจ พร้อม raw column เป็นหลักฐานรองและชั้นความหมาย `MHB · NuTuenSai` โดยยังไม่มี chart, matrix หรือ category mapping
+ตั้งแต่ MHB 2.0 Slice A — หน้า `ประมวลข้อมูล` เริ่ม Field Review แบบ conservative โดยอ่านจาก `Daily_Log` ใน localStorage เท่านั้น แสดงการ์ด hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support และ missing/blank data แบบ deterministic การ์ดแต่ละใบมีหลักฐานจากข้อมูลจริง เสียงหนูตื่นสายแบบ rule-based และสิ่งที่ชวนสังเกตรอบถัดไป ไม่มี free-form ask ไม่มี LLM call ส่วน Signal Engine แสดงแถวความสัมพันธ์จาก Pearson เฉพาะ numeric-to-numeric ด้วย NuTuenSai Meaning Dictionary, raw column เป็นหลักฐานรอง และชั้นความหมาย `MHB · NuTuenSai` แบบ pair-specific โดยยังไม่มี chart, matrix หรือ category mapping
 
 Reflection ล่าสุดมี NuTuenSai voice cadence ในภาษาไทย, low-data micro-continuity ที่ใช้ log ก่อนหน้าเป็นฉากหลังเท่านั้น และ anti-repetition layer แบบ rule-based เพื่อลดการพูดวนเมื่อหลายสัญญาณชี้เรื่อง recovery/load/sleep/support ไปทางเดียวกัน
 
@@ -138,7 +138,7 @@ Field Review UI v2.2 จัด flow นี้ให้เป็น conversation 
 
 Field Review UI v2.3 ย้าย choice chips ที่ล็อกไว้ไปอยู่ใน bottom action area ใต้คำตอบ พร้อมปุ่มไปห้องถัดไป ทำให้ตัวบทสนทนาอ่านเป็นคำถาม, source/context จาก Daily_Log, และคำตอบก่อน ส่วนปุ่มยังเป็น control ที่แยกจากคำตอบอย่างชัดเจน
 
-ห้อง `ความสัมพันธ์` / `Signal Engine` เพิ่มการอ่านความสัมพันธ์แบบ conservative โดยคำนวณ Pearson เฉพาะ numeric-to-numeric จาก `Daily_Log` เช่น `Water_ml`, `Sleep_Hours`, `Load_Score`, `Caffeine_Score`, `Sugar_Score` และ `Practice_Minutes` รายการจะแสดงได้สูงสุด 5 แถวที่มีข้อมูลครบและจัดตามความชัดของค่า `r`; หัวข้อแถวใช้ชื่อแบบความหมาย เช่น น้ำดื่ม, การนอน, ภาระของวัน และยังแสดง raw column pair เป็นหลักฐานตรวจสอบได้ เมื่อกดแต่ละแถวจะเปิดชั้นความหมายที่ลงชื่อ `MHB · NuTuenSai` ยังไม่ map category fields และย้ำเสมอว่า correlation ไม่ใช่เหตุและผล
+ห้อง `ความสัมพันธ์` / `Signal Engine` เพิ่มการอ่านความสัมพันธ์แบบ conservative โดยคำนวณ Pearson เฉพาะ numeric-to-numeric จาก `Daily_Log` เช่น `Water_ml`, `Sleep_Hours`, `Load_Score`, `Caffeine_Score`, `Sugar_Score` และ `Practice_Minutes` รายการจะแสดงได้สูงสุด 5 แถวที่มีข้อมูลครบและจัดตามความชัดของค่า `r`; หัวข้อแถวใช้ชื่อแบบความหมาย เช่น น้ำดื่ม, ชั่วโมงนอน, กิจกรรม/งานของวัน และยังแสดง raw column pair เป็นหลักฐานตรวจสอบได้ เมื่อกดแต่ละแถวจะเปิดชั้นความหมายจาก template เฉพาะคู่สัญญาณที่ลงชื่อ `MHB · NuTuenSai` ยังไม่ map category fields และย้ำเสมอว่า correlation ไม่ใช่เหตุและผล
 
 หน้านี้ไม่ใช่ chatbot ไม่เรียก LLM ไม่รับคำถาม free-form และไม่วินิจฉัยหรือให้คำแนะนำทางการแพทย์ ช่องว่างแปลว่ายังไม่ได้บันทึก ไม่ใช่ความผิดหรือคะแนนที่หายไป
 
