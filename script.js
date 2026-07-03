@@ -214,6 +214,7 @@ const translations = {
     fieldRoomQuestionDrinks: "พี่อยากดูบริบทเครื่องดื่มจากมุมไหนคะ",
     fieldRoomQuestionMindNote: "พี่อยากให้หนูอ่านพื้นที่ Mind Note จากมุมไหนคะ",
     fieldRoomQuestionMissing: "พี่อยากดูช่องว่างข้อมูลจากมุมไหนคะ",
+    fieldRoomActionLabel: "เลือกมุมที่จะอ่านต่อ",
     fieldRoomFocusOverview: "ภาพรวม",
     fieldRoomFocusEvidence: "หลักฐานจากข้อมูล",
     fieldRoomFocusNext: "รอบถัดไปลองสังเกต",
@@ -1091,6 +1092,7 @@ const translations = {
     fieldRoomQuestionDrinks: "Which drinks context angle would you like to view?",
     fieldRoomQuestionMindNote: "Which Mind Note angle would you like NuTuenSai to read?",
     fieldRoomQuestionMissing: "Which blank-data angle would you like to view?",
+    fieldRoomActionLabel: "Choose what to read next",
     fieldRoomFocusOverview: "Overview",
     fieldRoomFocusEvidence: "Evidence from data",
     fieldRoomFocusNext: "Next gentle attention",
@@ -1968,6 +1970,7 @@ const translations = {
     fieldRoomQuestionDrinks: "你想从哪个角度看饮品情境？",
     fieldRoomQuestionMindNote: "你想让 NuTuenSai 从哪个角度读取 Mind Note 空间？",
     fieldRoomQuestionMissing: "你想从哪个角度看空白数据？",
+    fieldRoomActionLabel: "选择接下来要读取的角度",
     fieldRoomFocusOverview: "概览",
     fieldRoomFocusEvidence: "数据依据",
     fieldRoomFocusNext: "下次轻观察",
@@ -9105,26 +9108,29 @@ function renderFieldRoomConversation(activeCard, timeframe = "7") {
     text: activeCard.nextAttention
   });
   const bubblesByFocus = {
-    overview: [sourceBubble, readingBubble],
-    evidence: [sourceBubble, evidenceBubble],
-    next: [sourceBubble, nextBubble],
-    all: [sourceBubble, evidenceBubble, readingBubble, nextBubble]
+    overview: [readingBubble],
+    evidence: [evidenceBubble],
+    next: [nextBubble],
+    all: [evidenceBubble, readingBubble, nextBubble]
   };
   const selectedResponseBubbles = bubblesByFocus[focus] || bubblesByFocus.overview;
-  const shouldShowNextActions = focus === "next" || focus === "all";
 
   return `
     <div class="field-room-chat" aria-live="polite">
       ${questionBubble}
+      ${sourceBubble}
+      <div class="field-room-response-stack">
+        ${selectedResponseBubbles.join("")}
+      </div>
+    </div>
+    <div class="field-room-action-area">
       <div class="field-room-choice-stack">
+        <p class="field-room-action-label">${escapeHtml(t("fieldRoomActionLabel"))}</p>
         <div class="field-room-focus-chips" role="group" aria-label="${escapeHtml(t("fieldRoomQuestionLabel"))}">
           ${renderFieldRoomFocusChips()}
         </div>
       </div>
-      <div class="field-room-response-stack">
-        ${selectedResponseBubbles.join("")}
-      </div>
-      ${shouldShowNextActions ? renderFieldRoomNextActions(activeCard.roomType) : ""}
+      ${renderFieldRoomNextActions(activeCard.roomType)}
     </div>
   `;
 }

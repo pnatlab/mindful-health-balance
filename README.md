@@ -221,6 +221,8 @@ Field Review UI v2.1 turns those bubbles into a locked guided conversation flow:
 
 Field Review UI v2.2 refines the active room into a conversation stack: question bubble, locked choices, source-bound response bubbles, then next-room continuation. The stack keeps the chat-like feeling without adding text input, LLM generation, free-form ask, or new analysis.
 
+Field Review UI v2.3 moves locked focus choices into a normal bottom action area below the response, together with next-room navigation. The chat body now reads as question, source context, and response first; the buttons remain deterministic controls outside the answer flow.
+
 The cards are descriptive pattern summaries. Missing data means not recorded, not failure. Numeric fields keep their workbook boundaries: for example, `Water_ml` is plain water in milliliters, not money or expense data.
 
 ## Documentation

@@ -148,6 +148,8 @@ Field Review UI v2.1 makes the room feel more like a locked guided conversation.
 
 Field Review UI v2.2 places that flow into a conversation stack: NuTuenSai question, locked choice chips, source-bound response, and next-room continuation. The choices sit under the question, so they act like guided answers rather than a top menu.
 
+Field Review UI v2.3 moves the locked choices to a bottom action area below the response. The room now reads first as question, Daily_Log source context, and response, while the focus choices and next-room buttons stay as clear controls outside the chat body.
+
 This page is not a chatbot, does not call an LLM, does not include free-form ask, does not calculate correlations, and does not diagnose or give medical advice. Blank fields mean not recorded, not failure or a missing score.
 
 To review an exported workbook, import the Master Excel file from `Log` first. Field Review then reads the imported Daily Log from localStorage.

@@ -80,6 +80,7 @@ Allowed presentation changes:
 - guided Field Rooms workspace with a room selector, one active room panel, locked chat-style bubbles, focus chips, and suggested next-room navigation
 - locked guided conversation flow where NuTuenSai asks predefined focus questions, the user chooses predefined chips, and the visible response changes deterministically
 - conversation stack layout where the active room renders question, locked choices, source-bound response, and next-room continuation in that order
+- bottom action area layout where locked choices and next-room navigation sit below the response, not between the question and answer
 
 This visual slice must remain presentation-only. It must not add a chart library, correlation calculation, relationship matrix, LLM call, free-form ask box, diagnosis wording, score/ranking system, finance interpretation, or schema change.
 

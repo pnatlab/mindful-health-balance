@@ -752,6 +752,8 @@ Field Review UI v2.1 may refine that workspace into a locked guided conversation
 
 Field Review UI v2.2 may place the guided flow into a conversation stack: question bubble, locked choice chips, source-bound response bubbles, then next-room continuation. This changes presentation order only. It must not add text input, free-form prompting, LLM-generated responses, correlation, charts, diagnosis, scoring, or schema changes.
 
+Field Review UI v2.3 may move locked choice chips into a normal bottom action area below the response stack, alongside next-room navigation. This keeps the chat body focused on question, source context, and response while preserving deterministic controls outside the answer flow.
+
 ## Compatibility
 
 This refinement must preserve:
