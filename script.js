@@ -250,6 +250,7 @@ const translations = {
     signalEngineHiddenPairs: "คู่ที่ยังไม่แสดงเพราะข้อมูลยังไม่พอหรือความแปรผันของตัวเลขยังไม่พอ: {pairs}",
     signalEngineEvidenceLabel: "หลักฐานคำนวณ",
     signalEngineAuditLabel: "audit line",
+    signalEngineNextObservationLabel: "ลองสังเกตต่อ",
     signalEngineRHelper: "r บอกทิศทางและความแน่นของการเคลื่อนไหวร่วมกัน ไม่ใช่เหตุและผล",
     signalEngineLegendTitle: "วิธีอ่านสัญญาณ",
     signalEngineLegendSame: "ทางเดียวกัน = สองสัญญาณมักขึ้น/ลงไปด้วยกัน",
@@ -1169,6 +1170,7 @@ const translations = {
     signalEngineHiddenPairs: "Pairs not shown because they do not yet have enough paired days or usable numeric variation: {pairs}",
     signalEngineEvidenceLabel: "Evidence",
     signalEngineAuditLabel: "audit line",
+    signalEngineNextObservationLabel: "Gentle next observation",
     signalEngineRHelper: "r shows direction and tightness of co-movement, not cause and effect.",
     signalEngineLegendTitle: "How to read",
     signalEngineLegendSame: "Same direction = signals tend to rise/fall together",
@@ -2088,6 +2090,7 @@ const translations = {
     signalEngineHiddenPairs: "因为配对天数或数字变化还不够而暂不显示的组合：{pairs}",
     signalEngineEvidenceLabel: "计算依据",
     signalEngineAuditLabel: "audit line",
+    signalEngineNextObservationLabel: "下次温柔观察",
     signalEngineRHelper: "r 表示共同移动的方向和紧密程度，不是因果。",
     signalEngineLegendTitle: "如何阅读信号",
     signalEngineLegendSame: "同向 = 两个信号常一起升/降",
@@ -9353,6 +9356,111 @@ const SIGNAL_RELATIONSHIP_VOICE_FRAMES = {
   }
 };
 
+const SIGNAL_RELATIONSHIP_NEXT_OBSERVATIONS = {
+  "Water_ml|Load_Score": {
+    positive: {
+      th: "ถ้าวันไหนกิจกรรม งาน หรือแรงใช้ของวันสูงขึ้น อาจลองสังเกตว่าน้ำที่พี่เตรียมไว้พอกับจังหวะของวันไหม โดยอ่านเป็นจุดดูแลตัวเองร่วมกับบริบท ไม่ใช่ข้อสรุปตายตัวค่ะ",
+      en: "On days when activity, work, or body-use load is higher, you might gently observe whether the water you prepared fits that day's rhythm. Read it as a self-care point with context, not a fixed conclusion.",
+      zh: "如果某天活动、工作或身体使用负荷较高，可以轻轻观察准备的水是否贴合当天节奏。把它当作和当天背景一起看的照顾点，而不是固定结论。"
+    },
+    negative: {
+      th: "ถ้าวันที่ใช้แรงหรือมีกิจกรรมเยอะไม่ได้มาพร้อมน้ำที่บันทึกไว้สูงขึ้น อาจลองดูบริบทของวันนั้นเพิ่ม เช่น อากาศ การเดินทาง หรือเวลาพัก โดยยังไม่รีบสรุปค่ะ",
+      en: "If higher-load days do not appear with higher recorded water, one gentle place to observe is the day's context, such as weather, travel, or rest windows, without rushing to a conclusion.",
+      zh: "如果负荷较高的日子没有和较高记录饮水一起出现，可以再看当天背景，例如天气、移动或休息空间，不急着下结论。"
+    },
+    neutral: {
+      th: "ตอนนี้สัญญาณน้ำกับกิจกรรม/งานของวันยังไม่ชัดพอ หนูจึงยังไม่ชวนทดลองอะไรเฉพาะทาง แต่อาจเก็บข้อมูลต่อแล้วกลับมาอ่านร่วมกับบริบทของวันค่ะ",
+      en: "The water and daily activity/load signal is not clear enough yet, so NuTuenSai would not suggest a specific experiment. You can keep collecting data and read it again with day context.",
+      zh: "目前饮水和每日活动/负荷之间的信号还不够清楚，所以 NuTuenSai 不会提出具体实验。可以继续记录，再和当天背景一起回来看。"
+    }
+  },
+  "Sleep_Hours|Load_Score": {
+    positive: {
+      th: "ถ้าวันที่งานหรือกิจกรรมเยอะยังมีชั่วโมงนอนมากขึ้นด้วย อาจลองสังเกตว่ามีเงื่อนไขอะไรที่ช่วยให้ภาระกับการพักอยู่ร่วมกันได้ เช่น เวลาเริ่มงาน พื้นที่พัก หรือการวางแผนวันค่ะ",
+      en: "If higher-load days also appear with higher sleep hours, you might observe what conditions let load and rest coexist, such as start time, rest space, or day planning.",
+      zh: "如果负荷较高的日子也和较多睡眠一起出现，可以观察是什么条件让负荷和休息能共存，例如开始时间、休息空间或一天的安排。"
+    },
+    negative: {
+      th: "ถ้าช่วงไหนกิจกรรมหรืองานสูงขึ้น อาจลองสังเกตว่าพื้นที่นอนและ recovery ถูกบีบลงไหม เป็นจุดดูแลจังหวะพัก ไม่ใช่ข้อสรุปเรื่องสุขภาพค่ะ",
+      en: "When activity or work rises, you might gently observe whether sleep and recovery space feels squeezed. This is a rest-rhythm observation, not a health conclusion.",
+      zh: "当活动或工作升高时，可以轻轻观察睡眠和恢复空间是否被压缩。这是休息节奏的观察，不是健康结论。"
+    },
+    neutral: {
+      th: "ตอนนี้ความสัมพันธ์ระหว่างชั่วโมงนอนกับกิจกรรม/งานของวันยังไม่ชัดพอ หนูจึงชวนเพียงเก็บข้อมูลต่อและอ่านคู่กับบริบทจริงของแต่ละวันค่ะ",
+      en: "The relationship between sleep hours and daily activity/load is not clear enough yet. NuTuenSai would only invite continued logging and reading it with each day's real context.",
+      zh: "睡眠时长和每日活动/负荷之间目前还不够清楚。NuTuenSai 只会邀请继续记录，并和每天真实背景一起看。"
+    }
+  },
+  "Sleep_Hours|Caffeine_Score": {
+    positive: {
+      th: "ถ้าชั่วโมงนอนและเครื่องดื่มคาเฟอีนเคลื่อนไหวไปทางเดียวกันในช่วงนี้ อาจลองดูบริบทเวลา งาน และชนิดเครื่องดื่มร่วมกัน โดยยังไม่ตัดสินว่าการพักหรือคาเฟอีนดีหรือไม่ดีค่ะ",
+      en: "If sleep hours and caffeinated drinks move in the same direction here, you might observe timing, work context, and drink type together, without judging rest or caffeine as good or bad.",
+      zh: "如果睡眠时长和含咖啡因饮品在这段时间同向移动，可以一起观察时间、工作背景和饮品类型，不评价休息或咖啡因好坏。"
+    },
+    negative: {
+      th: "ถ้าพี่อยากค่อย ๆ ลดเครื่องดื่มคาเฟอีน อาจลองสังเกตจังหวะนอนและพื้นที่พักไปพร้อมกัน เพราะในข้อมูลช่วงนี้ วันที่ชั่วโมงนอนน้อยมักมาพร้อม caffeine load ที่สูงขึ้นบางส่วนค่ะ",
+      en: "If you want to gently reduce caffeinated drinks, one useful place to observe is sleep and recovery space. In this selected data, lower sleep hours tended to appear with higher caffeine load to some degree.",
+      zh: "如果想温柔地减少含咖啡因饮品，可以同时观察睡眠节奏和恢复空间。在这段所选数据里，较少睡眠时长常和较高咖啡因负荷一起出现。"
+    },
+    neutral: {
+      th: "ตอนนี้ยังไม่เห็นจังหวะร่วมกันชัดพอ หนูจึงยังไม่ชวนทดลองอะไรหนัก ๆ แต่อาจเก็บข้อมูลต่ออีกระยะเพื่อดูว่าความสัมพันธ์นี้ชัดขึ้นไหมค่ะ",
+      en: "This signal is not clear enough yet, so NuTuenSai would not invite a strong experiment. You might keep logging a little longer and see whether the relationship becomes clearer.",
+      zh: "目前这个信号还不够清楚，所以 NuTuenSai 不会邀请明显实验。可以再记录一段时间，看看关系是否变清楚。"
+    }
+  },
+  "Sugar_Score|Sleep_Hours": {
+    positive: {
+      th: "ถ้าความหวานกับชั่วโมงนอนเคลื่อนไหวไปทางเดียวกัน อาจลองสังเกตบริบทของวัน เช่น เวลากิน/ดื่ม พลังงาน และงานในวันนั้น โดยยังไม่สรุปว่าอย่างหนึ่งอธิบายอีกอย่างค่ะ",
+      en: "If sweetness context and sleep hours move in the same direction, you might observe the day context, such as timing, energy, and work that day, without making one explain the other.",
+      zh: "如果甜味情境和睡眠时长同向移动，可以观察当天背景，例如饮用时间、能量和工作，而不要让一个解释另一个。"
+    },
+    negative: {
+      th: "ถ้าพี่อยากสังเกตเรื่องความหวาน อาจลองดูวันที่นอนน้อย พลังงานแกว่ง หรือมีเครื่องดื่มหวานเข้ามาพยุงวันร่วมกัน เพราะข้อมูลช่วงนี้มีจังหวะสวนทางกันบางส่วนค่ะ",
+      en: "If you want to observe sweetness, you might look at lower-sleep days, shifting energy, or sweet drinks supporting the day together, because this window shows some opposite-direction rhythm.",
+      zh: "如果想观察甜味，可以一起看睡得较少、能量波动或甜饮支撑一天的日子，因为这段数据里有一些反向节奏。"
+    },
+    neutral: {
+      th: "ตอนนี้บริบทความหวานกับชั่วโมงนอนยังไม่ชัดพอ หนูจึงชวนดูเป็นข้อมูลประกอบและเก็บต่ออีกระยะก่อนค่ะ",
+      en: "Sweetness context and sleep hours are not clear enough yet, so NuTuenSai would treat this as supporting context and keep observing longer.",
+      zh: "甜味情境和睡眠时长目前还不够清楚，所以 NuTuenSai 只会把它当作辅助背景，并继续观察。"
+    }
+  },
+  "Caffeine_Score|Load_Score": {
+    positive: {
+      th: "ถ้าวันไหนงานหรือกิจกรรมแน่น อาจลองสังเกตว่าเครื่องดื่มคาเฟอีนเข้ามาเป็นตัวพยุงพลังมากขึ้นไหม แล้วดูว่ามีวิธีพักสั้น ๆ หรือดื่มน้ำร่วมด้วยได้ไหมค่ะ",
+      en: "On dense work or activity days, you might observe whether caffeinated drinks become more of a day-support signal, then notice whether short rest or water can sit beside it.",
+      zh: "在工作或活动较密集的日子，可以观察含咖啡因饮品是否更像支撑一天的信号，再看看短休息或饮水能否一起出现。"
+    },
+    negative: {
+      th: "ถ้างานหรือกิจกรรมสูงแต่คาเฟอีนไม่ได้สูงตามในช่วงนี้ อาจลองสังเกตว่าอะไรช่วยพยุงวันแทน เช่น พื้นที่พัก น้ำ หรือจังหวะงาน โดยยังไม่สรุปเป็นสูตรค่ะ",
+      en: "If higher-load days do not appear with higher caffeine in this window, you might observe what else supports the day, such as rest space, water, or work rhythm, without turning it into a formula.",
+      zh: "如果负荷较高的日子并没有和较高咖啡因一起出现，可以观察还有什么支撑当天，例如休息空间、饮水或工作节奏，不把它变成公式。"
+    },
+    neutral: {
+      th: "ตอนนี้คาเฟอีนกับกิจกรรม/งานของวันยังไม่ชัดพอ หนูจึงยังไม่ชวนทดลองเฉพาะทาง แต่อาจดูต่อว่าคู่สัญญาณนี้เปลี่ยนไปไหมเมื่อมีข้อมูลมากขึ้นค่ะ",
+      en: "Caffeine and daily activity/load are not clear enough yet, so NuTuenSai would not invite a specific experiment. You might revisit this pair when more data is available.",
+      zh: "咖啡因和每日活动/负荷目前还不够清楚，所以 NuTuenSai 不会邀请具体实验。可以在数据更多时再回来看。"
+    }
+  },
+  "Practice_Minutes|Sleep_Hours": {
+    positive: {
+      th: "ถ้าพี่อยากดูคู่นี้ต่อ ให้มองเวลาภาวนาเป็นบริบทการดูแลตัวเอง ไม่ใช่คะแนนภาวนา แล้วสังเกตว่ามันอยู่ร่วมกับจังหวะนอนอย่างไรค่ะ",
+      en: "If you want to keep observing this pair, read practice minutes as self-care context, not a practice score, and notice how it sits beside sleep rhythm.",
+      zh: "如果想继续观察这组，请把练习分钟看作自我照顾背景，不是练习分数，并观察它如何和睡眠节奏一起出现。"
+    },
+    negative: {
+      th: "ถ้าคู่นี้เคลื่อนไหวสวนทางกัน ให้มองอย่างเบามากค่ะ เวลาภาวนาไม่ใช่คะแนน และชั่วโมงนอนไม่ใช่ตัวตัดสินคุณภาพการดูแลตัวเอง อาจแค่สังเกตบริบทของวันที่เลือกภาวนาและพื้นที่พักร่วมกัน",
+      en: "If this pair moves in opposite directions, hold it very lightly. Practice minutes are not a score, and sleep hours do not define self-care quality. You might only observe the context around practice and rest space together.",
+      zh: "如果这组反向移动，请非常轻地看。练习分钟不是分数，睡眠时长也不定义自我照顾质量。只需观察练习背景和休息空间如何同在。"
+    },
+    neutral: {
+      th: "ตอนนี้เวลาภาวนากับชั่วโมงนอนยังไม่เห็นจังหวะร่วมกันชัด ให้มองเป็นบริบทประกอบ ไม่ใช่คะแนนภาวนาหรือคุณภาพการพักค่ะ",
+      en: "Practice minutes and sleep hours do not show a clear shared rhythm yet. Read this as supporting context, not a practice score or rest-quality judgment.",
+      zh: "练习分钟和睡眠时长目前还没有清楚的共同节奏。请把它当作辅助背景，不是练习分数或休息质量评价。"
+    }
+  }
+};
+
 function getSignalRelationshipLabel(column, lang = currentLanguage) {
   return SIGNAL_RELATIONSHIP_LABELS[column]?.display?.[lang]
     || SIGNAL_RELATIONSHIP_LABELS[column]?.display?.en
@@ -9591,6 +9699,36 @@ function buildRelationshipMeaning(card) {
   });
 }
 
+function getSignalRelationshipNextObservationFrame(card, lang = currentLanguage) {
+  if (card.n >= 10 && card.n < 30) {
+    return {
+      th: "ข้อมูลช่วงนี้ยังเป็นสัญญาณเบื้องต้น จึงเหมาะกับการทดลองสังเกตเบา ๆ เท่านั้นค่ะ",
+      en: "This window is still an early signal, so any next step can stay a light observation only.",
+      zh: "这段数据仍是早期信号，所以下一步只适合轻轻观察。"
+    }[lang] || "This window is still an early signal, so any next step can stay a light observation only.";
+  }
+  if (card.n >= 30) {
+    return {
+      th: "จากข้อมูลที่เห็นซ้ำมากขึ้น หนูชวนอ่านเป็นจุดสังเกตต่อ ไม่ใช่ข้อสรุปค่ะ",
+      en: "With more repeated data visible, NuTuenSai frames this as a next observation point, not a conclusion.",
+      zh: "在较多重复数据下，NuTuenSai 把它作为下次观察点，而不是结论。"
+    }[lang] || "With more repeated data visible, NuTuenSai frames this as a next observation point, not a conclusion.";
+  }
+  return "";
+}
+
+function buildSignalRelationshipNextObservation(card, lang = currentLanguage) {
+  const directionType = getSignalRelationshipDirectionType(card);
+  const templateSet = SIGNAL_RELATIONSHIP_NEXT_OBSERVATIONS[card.voiceKey] || {};
+  const template = templateSet[directionType]?.[lang]
+    || templateSet[directionType]?.en
+    || templateSet.neutral?.[lang]
+    || templateSet.neutral?.en
+    || "";
+  const frame = getSignalRelationshipNextObservationFrame(card, lang);
+  return [frame, template].filter(Boolean).join(" ");
+}
+
 function getSignalRelationshipSummaryText(card) {
   const category = getRelationshipVoiceCategory(card);
   const keyByCategory = {
@@ -9660,6 +9798,10 @@ function renderSignalRelationshipDetail(card) {
         ${escapeHtml(card.rawPairName)}
       </p>
       <p class="signal-relationship-meaning">${escapeHtml(buildRelationshipMeaning(card))}</p>
+      <div class="signal-next-observation">
+        <p class="signal-next-observation-title">${escapeHtml(t("signalEngineNextObservationLabel"))}</p>
+        <p class="signal-next-observation-body">${escapeHtml(buildSignalRelationshipNextObservation(card))}</p>
+      </div>
       <p class="signal-relationship-boundary">${escapeHtml(t("signalEngineBoundary"))}</p>
       <p class="signal-relationship-signature">${escapeHtml(t("signalEngineSignature"))}</p>
     </article>

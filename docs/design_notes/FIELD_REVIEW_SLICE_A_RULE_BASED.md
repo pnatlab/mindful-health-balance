@@ -82,7 +82,7 @@ Allowed presentation changes:
 - locked guided conversation flow where NuTuenSai asks predefined focus questions, the user chooses predefined chips, and the visible response changes deterministically
 - conversation stack layout where the active room renders question, locked choices, source-bound response, and next-room continuation in that order
 - bottom action area layout where locked choices and next-room navigation sit below the response, not between the question and answer
-- Signal Relationship Engine as a seventh room for deterministic numeric-to-numeric Pearson relationship rows with semantic pair icons/accents, a NuTuenSai Meaning Dictionary, visible `r`/paired-day evidence chips, compact same/opposite/unclear legend, raw column audit lines, and source-bound pair-specific meaning details
+- Signal Relationship Engine as a seventh room for deterministic numeric-to-numeric Pearson relationship rows with semantic pair icons/accents, a NuTuenSai Meaning Dictionary, visible `r`/paired-day evidence chips, compact same/opposite/unclear legend, raw column audit lines, source-bound pair-specific meaning details, and a Gentle Next Observation layer
 
 This visual slice must remain bounded. It must not add a chart library, relationship matrix, LLM call, free-form ask box, diagnosis wording, score/ranking system, finance interpretation, category mapping, or schema change.
 
@@ -99,7 +99,7 @@ Future slices are separate from Slice A:
 
 ## Signal Relationships / Correlation Review
 
-Signal Relationship Engine is now a conservative Slice A relationship layer for numeric-to-numeric fields only. It presents up to five valid relationship rows ranked by absolute `r`; row titles use a NuTuenSai Meaning Dictionary first with semantic pair icons/accents, `r` and paired-day counts remain visible as evidence chips, raw column pairs remain visible as technical evidence, and selecting a row opens a deterministic Meaning Voice Matrix detail signed `MHB · NuTuenSai`. The UI may include a compact legend and plain-language `r` helper for non-technical users, but the calculation and classification stay unchanged. The runtime voice is selected by pair key, direction band, strength band, and paired-row count band. The meaning templates are authored rules, not LLM generation.
+Signal Relationship Engine is now a conservative Slice A relationship layer for numeric-to-numeric fields only. It presents up to five valid relationship rows ranked by absolute `r`; row titles use a NuTuenSai Meaning Dictionary first with semantic pair icons/accents, `r` and paired-day counts remain visible as evidence chips, raw column pairs remain visible as technical evidence, and selecting a row opens a deterministic Meaning Voice Matrix detail signed `MHB · NuTuenSai`. The detail also includes a Gentle Next Observation layer that turns co-movement into a self-observation prompt, not advice, diagnosis, or causation. The UI may include a compact legend and plain-language `r` helper for non-technical users, but the calculation and classification stay unchanged. The runtime voice is selected by pair key, direction band, strength band, and paired-row count band. The meaning and observation templates are authored rules, not LLM generation.
 
 The safer naming should be:
 

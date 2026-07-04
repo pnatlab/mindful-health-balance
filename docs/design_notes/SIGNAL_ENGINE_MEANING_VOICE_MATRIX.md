@@ -19,6 +19,42 @@ Signal Engine reads numeric-to-numeric co-movement from `Daily_Log` as explorato
 
 It must keep raw column names as audit evidence, but the primary user-facing wording should use human-readable meaning phrases.
 
+## Gentle Next Observation Layer
+
+Runtime may add a `Gentle Next Observation` block after the NuTuenSai meaning paragraph and before the boundary line.
+
+This layer turns correlation into a self-observation prompt, not a recommendation, diagnosis, or causal conclusion.
+
+It must be deterministic and selected from:
+
+- relationship pair
+- direction band
+- strength band
+- paired-row count band
+
+Near-zero relationships must use an unclear observation voice and should not invite a specific experiment. `n 10-29` must keep tentative wording. `n >= 30` may say there is more repeated data, while still avoiding cause/effect language.
+
+Allowed wording includes:
+
+- "ลองสังเกต"
+- "อาจลองดู"
+- "เป็นจุดที่น่าดูต่อ"
+- "ถ้าพี่อยากทดลองเบา ๆ"
+- "อ่านร่วมกับบริบทของวัน"
+- "ยังไม่ใช่ข้อสรุป"
+
+Forbidden wording includes:
+
+- "ทำให้"
+- "เป็นสาเหตุ"
+- "รักษา"
+- "แก้"
+- "ต้อง"
+- "จะช่วยลดแน่นอน"
+- "causes"
+- "leads to"
+- diagnosis, risk, medical advice, performance score, or spiritual score wording
+
 ## Meaning Dictionary
 
 Use these human meanings as the primary language layer:
