@@ -742,7 +742,7 @@ Field_Review may include descriptive drink-load summaries such as days with swee
 
 These summaries are descriptive only. They are not diagnosis, nutrition advice, medical advice, health-risk prediction, or moral evaluation.
 
-Field Review Visual Slice 1 starts the NuTuenSai Field Reflection Studio direction. The visual layer may include a warm studio hero, segmented timeframe control, soft overview chips, and a CSS-only selected-rhythm dot strip. These are presentation aids only: they do not add a chart library, free-form ask, LLM call, diagnosis, scoring, or new data schema.
+Field Review Visual Slice 1 starts the NuTuenSai Field Reflection Studio direction. The current visual layer uses a compact Daily_Log context header with segmented timeframe control, soft overview chips, and boundary copy in one tighter section. The earlier selected-rhythm dot strip has been removed to reduce visual noise. These are presentation aids only: they do not add a chart library, free-form ask, LLM call, diagnosis, scoring, or new data schema.
 
 NuTuenSai Field Room background images may be used behind the six Field Review cards. The images provide visual language for hydration, sleep/recovery, load/recovery, drinks context, Mind Note, and missing/blank data, but they remain presentation assets only and must not be treated as evidence, inference, score, or additional user data.
 
@@ -756,7 +756,7 @@ Field Review UI v2.3 may move locked choice chips into a normal bottom action ar
 
 The Field Review sidebar may visually separate the six Guided Field Rooms from the English-only `Signal Engine` entry. This is presentation hierarchy only; it must not change room behavior or relationship calculation.
 
-Signal Relationship Engine may add a conservative seventh room for deterministic numeric-to-numeric Pearson relationships from selected `Daily_Log` rows. It may present up to five valid relationship rows ranked by absolute `r`, using a NuTuenSai Meaning Dictionary as the primary UI while keeping `r`, paired-day count, and raw column names visible as technical evidence. It may include a compact same/opposite/unclear legend and a plain-language `r` helper so non-technical users can read the evidence without hiding it. Selecting a row opens a source-bound Meaning Voice Matrix detail signed `MHB · NuTuenSai`. The runtime voice must be selected by pair key, direction band, strength band, and paired-row count band; templates are deterministic and must not be LLM-generated. It must use minimum-n rules, avoid category mapping unless explicit, avoid charts/matrices in this slice, and always state that correlation is not causation, diagnosis, risk prediction, or medical advice.
+Signal Relationship Engine may add a conservative seventh room for deterministic numeric-to-numeric Pearson relationships from selected `Daily_Log` rows. It may present up to five valid relationship rows ranked by absolute `r`, using a NuTuenSai Meaning Dictionary as the primary UI while keeping `r`, paired-day count, and raw column names visible as technical evidence. It may include semantic pair icons/accents, a compact same/opposite/unclear legend, and a plain-language `r` helper so non-technical users can read the evidence without hiding it. Selecting a row opens a source-bound Meaning Voice Matrix detail signed `MHB · NuTuenSai`. The runtime voice must be selected by pair key, direction band, strength band, and paired-row count band; templates are deterministic and must not be LLM-generated. It must use minimum-n rules, avoid category mapping unless explicit, avoid charts/matrices in this slice, and always state that correlation is not causation, diagnosis, risk prediction, or medical advice.
 
 ## Compatibility
 
@@ -3460,7 +3460,7 @@ The patch adds optional backward-compatible columns:
 
 ## Reflection Boundary
 
-Daily Reflection/NuTuenSai intentionally does not use practice context in v1.9.9. Practice data is stored for future weekly/monthly Field Review context only. The app must not judge practice quality, score minutes, infer spiritual progress, recommend practice types, or turn practice context into medical, therapy, productivity, or identity claims.
+Daily Reflection/NuTuenSai intentionally does not use practice context by default. Practice data is stored for Field Review context only. The app must not judge practice quality, score minutes, infer spiritual progress, recommend practice types, or turn practice context into medical, therapy, productivity, or identity claims.
 
 ## Compatibility
 

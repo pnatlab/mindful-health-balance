@@ -114,7 +114,7 @@ Cockpit statuses such as `Empty`, `Started`, and `Readable` are visual feedback 
 
 Starting in v1.9.7 — Symbolic Signal Cockpit Polish, the cockpit becomes more like a signal constellation, with four nodes around a central `Daily Balance Orb`. The orb and signal dots show how much of today is readable in a gentle way, not as a KPI, score, or judgment.
 
-Starting in v1.9.9 — Mindful Practice Context, Mind Note 2/2 adds a small `Practice before Mind Note` card. It can record an optional practice root/type, rough duration, and `Practice_Note` using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma, plus No practice / Other. This data is stored in Daily Log/Excel for future Field Review only; daily Reflection/NuTuenSai does not interpret it yet and does not score practice quality.
+Starting in v1.9.9 — Mindful Practice Context, Mind Note 2/2 adds a small `Practice before Mind Note` card. It can record an optional practice root/type, rough duration, and `Practice_Note` using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma, plus No practice / Other. This data is stored in Daily Log/Excel for Field Review context; daily Reflection/NuTuenSai does not interpret it yet and does not score practice quality.
 
 Starting in MHB 2.0 Slice A, the `Field Review` tab begins conservative rule-based review. It reads only `Daily_Log` in localStorage and shows deterministic cards for hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support, and missing/blank data. Each card keeps evidence visible, then adds a rule-based NuTuenSai reading and a gentle next attention. It has no free-form ask and no LLM call. The Signal Engine shows bounded numeric-to-numeric Pearson relationship rows with a NuTuenSai Meaning Dictionary, raw column audit lines, and a pair-specific deterministic `MHB · NuTuenSai` meaning detail, without charts, matrices, or category mapping.
 
@@ -138,7 +138,7 @@ Review cards cover hydration, sleep/recovery, load/recovery, drinks/caffeine/swe
 
 The card voice changes lightly by timeframe: 7 days is an early signal, 14 days is an emerging rhythm, 30 days is a month-level rhythm, and all available data is a long-view reflection that still respects each day's context.
 
-Visual Slice 1 starts shaping Field Review as a NuTuenSai studio experience, with a warmer hero, segmented timeframe pill, overview chips from real data, and a CSS-only selected-rhythm moment. It does not add a chart library, and evidence remains source-bound to `Daily_Log`.
+Field Review now uses a compact Daily_Log context header with the `LOCAL FIELD REVIEW` label, selected timeframe controls, overview chips from real data, and boundary copy in one tighter section. The separate selected-rhythm strip has been removed to reduce visual noise. It does not add a chart library, and evidence remains source-bound to `Daily_Log`.
 
 The six review cards now use NuTuenSai Field Room background images for hydration, sleep/recovery, load/recovery, drinks context, Mind Note, and missing/blank data. These images are presentation only; they do not change review logic and do not add LLM, free-form ask, or correlation behavior.
 
@@ -152,7 +152,7 @@ Field Review UI v2.3 moves the locked choices to a bottom action area below the 
 
 The sidebar separates the six Guided Field Rooms from the English-only `Signal Engine` entry so the engine reads as a special module, not a seventh reflection room.
 
-The `Signal Engine` room adds a conservative relationship review. It calculates deterministic Pearson relationships for numeric-to-numeric `Daily_Log` fields only, such as `Water_ml`, `Sleep_Hours`, `Load_Score`, `Caffeine_Score`, `Sugar_Score`, and `Practice_Minutes`. It shows up to five valid rows ranked by absolute `r`; row titles use readable labels such as Water intake, Sleep hours, and Daily activity/load, followed by a plain signal sentence, visible evidence chips for `r` and paired days, and a compact same/opposite/unclear legend. The raw column pair remains visible as technical evidence, and the detail panel includes an `r` helper for non-technical readers. Clicking a row opens a Meaning Voice Matrix detail signed `MHB · NuTuenSai`; the voice is selected by pair, direction, strength, and paired-row count. It does not map category fields yet, and correlation is always shown as not causation.
+The `Signal Engine` room adds a conservative relationship review. It calculates deterministic Pearson relationships for numeric-to-numeric `Daily_Log` fields only, such as `Water_ml`, `Sleep_Hours`, `Load_Score`, `Caffeine_Score`, `Sugar_Score`, and `Practice_Minutes`. It shows up to five valid rows ranked by absolute `r`; row titles use readable labels such as Water intake, Sleep hours, and Daily activity/load, with semantic pair icons/accents, a plain signal sentence, visible evidence chips for `r` and paired days, and a compact same/opposite/unclear legend. The raw column pair remains visible as technical evidence, and the detail panel includes an `r` helper for non-technical readers. Clicking a row opens a Meaning Voice Matrix detail signed `MHB · NuTuenSai`; the voice is selected by pair, direction, strength, and paired-row count. It does not map category fields yet, and correlation is always shown as not causation.
 
 This page is not a chatbot, does not call an LLM, does not include free-form ask, and does not diagnose or give medical advice. Blank fields mean not recorded, not failure or a missing score.
 
@@ -311,7 +311,7 @@ Mind Note is a small space for one line of inner context. It is not a therapy to
 
 Before Mind Note, the `Practice before Mind Note` card can record a light practice context if there was one today. The app stores this as `Practice_Root`, `Practice_Type`, `Practice_Minutes`, `Practice_Context_JSON`, and `Practice_Note`. It is optional and is not used to judge practice, spiritual progress, or daily reflection meaning. Type chips are written as small actions, such as noticing standing, recollecting gratitude, or thinking and noticing wanting, not as scores or direct fixation on distress.
 
-`Practice_Note` is an optional short note for a practice situation, good action, or wholesome context the user wants to remember, such as feeding fish at a temple, helping someone, recollecting a good action, or choosing not to react. It is field memory for future Field Review, not a merit score, self-assessment, or daily Reflection input yet.
+`Practice_Note` is an optional short note for a practice situation, good action, or wholesome context the user wants to remember, such as feeding fish at a temple, helping someone, recollecting a good action, or choosing not to react. It is field memory for Field Review, not a merit score, self-assessment, or daily Reflection input yet.
 
 Use it lightly:
 

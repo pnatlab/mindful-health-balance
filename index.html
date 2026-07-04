@@ -545,62 +545,44 @@
     </section>
 
     <section class="view-panel field-review-studio" data-view-panel="field-review" aria-labelledby="fieldReviewViewTitle">
-      <section class="field-studio-hero glass-card" aria-labelledby="fieldReviewViewTitle">
-        <div class="field-studio-hero-copy">
-          <p class="section-kicker" data-i18n="fieldReviewBoundaryKicker">LOCAL FIELD REVIEW</p>
-          <h2 id="fieldReviewViewTitle" data-i18n="fieldReviewViewTitle">สตูดิโอประมวลจังหวะที่พี่บันทึกไว้</h2>
-          <p class="section-helper" data-i18n="fieldReviewViewHelper">หนูตื่นสายอ่าน pattern จาก Daily Log ที่พี่บันทึกไว้ แบบไม่วินิจฉัย ไม่ตัดสิน และไม่เดาเกินข้อมูล</p>
-          <p class="field-studio-boundary" data-i18n="fieldReviewSafetyCopy">การประมวลนี้เป็นการอ่าน pattern จากข้อมูลที่พี่บันทึกไว้ ไม่ใช่การวินิจฉัย ไม่ใช่คำแนะนำทางการแพทย์ และไม่ตัดสินว่าทำดีหรือไม่ดี</p>
-        </div>
-        <div class="field-studio-orb" aria-hidden="true">
-          <span class="field-studio-orb-ring"></span>
-          <span class="field-studio-orb-core"></span>
-          <span class="field-studio-orb-wave"></span>
-        </div>
-      </section>
-
-      <section class="field-studio-controls" aria-labelledby="fieldReviewControlsTitle">
-        <div>
-          <p class="section-kicker" data-i18n="fieldReviewTimeframeLabel">ช่วงข้อมูล</p>
-          <h2 id="fieldReviewControlsTitle" data-i18n="fieldReviewControlsTitle">เลือกจังหวะที่จะอ่าน</h2>
-        </div>
-        <div class="timeframe-segments" role="group" aria-label="Field Review timeframe" data-i18n-aria-label="fieldReviewTimeframeLabel">
-          <button type="button" class="timeframe-segment" data-field-review-timeframe="7" data-i18n="fieldReviewTimeframe7">7 วัน</button>
-          <button type="button" class="timeframe-segment" data-field-review-timeframe="14" data-i18n="fieldReviewTimeframe14">14 วัน</button>
-          <button type="button" class="timeframe-segment" data-field-review-timeframe="30" data-i18n="fieldReviewTimeframe30">30 วัน</button>
-          <button type="button" class="timeframe-segment" data-field-review-timeframe="all" data-i18n="fieldReviewTimeframeAll">ทั้งหมดที่มี</button>
-        </div>
-        <select id="fieldReviewTimeframe" class="field-review-timeframe-select is-hidden" aria-hidden="true" tabindex="-1">
-          <option value="7" data-i18n="fieldReviewTimeframe7">7 days</option>
-          <option value="14" data-i18n="fieldReviewTimeframe14">14 days</option>
-          <option value="30" data-i18n="fieldReviewTimeframe30" selected>30 days</option>
-          <option value="all" data-i18n="fieldReviewTimeframeAll">All available</option>
-        </select>
-      </section>
-
-      <section class="field-review-status-panel glass-card" aria-live="polite">
-        <div class="card-heading">
-          <div>
-            <p class="section-kicker" data-i18n="fieldReviewStatusKicker">อ่านจาก Daily_Log</p>
-            <h2 data-i18n="fieldReviewStatusTitle">จังหวะข้อมูลที่เลือก</h2>
+      <section class="field-review-context-block glass-card" aria-labelledby="fieldReviewViewTitle" aria-live="polite">
+        <div class="field-review-context-top">
+          <div class="field-review-context-copy">
+            <p class="section-kicker" data-i18n="fieldReviewBoundaryKicker">LOCAL FIELD REVIEW</p>
+            <h2 id="fieldReviewViewTitle" data-i18n="fieldReviewViewTitle">ประมวลจังหวะจาก Daily_Log</h2>
+            <p class="section-helper" data-i18n="fieldReviewViewHelper">หนูตื่นสายอ่านข้อมูลที่พี่บันทึกไว้ในช่วงที่เลือก เพื่อช่วยเห็น pattern อย่างมีขอบเขต</p>
+            <p class="field-studio-boundary" data-i18n="fieldReviewSafetyCopy">ไม่ใช่การวินิจฉัย ไม่ใช่คำแนะนำทางการแพทย์ และไม่สรุปว่าอะไรเป็นเหตุของอะไร</p>
           </div>
           <span class="soft-badge" id="fieldReviewDataStatus">0 logs</span>
         </div>
+
+        <section class="field-studio-controls" aria-labelledby="fieldReviewControlsTitle">
+          <div>
+            <p class="section-kicker" data-i18n="fieldReviewTimeframeLabel">ช่วงข้อมูล</p>
+            <h2 id="fieldReviewControlsTitle" data-i18n="fieldReviewControlsTitle">เลือกจังหวะที่จะอ่าน</h2>
+          </div>
+          <div class="timeframe-segments" role="group" aria-label="Field Review timeframe" data-i18n-aria-label="fieldReviewTimeframeLabel">
+            <button type="button" class="timeframe-segment" data-field-review-timeframe="7" data-i18n="fieldReviewTimeframe7">7 วัน</button>
+            <button type="button" class="timeframe-segment" data-field-review-timeframe="14" data-i18n="fieldReviewTimeframe14">14 วัน</button>
+            <button type="button" class="timeframe-segment" data-field-review-timeframe="30" data-i18n="fieldReviewTimeframe30">30 วัน</button>
+            <button type="button" class="timeframe-segment" data-field-review-timeframe="all" data-i18n="fieldReviewTimeframeAll">ทั้งหมดที่มี</button>
+          </div>
+          <select id="fieldReviewTimeframe" class="field-review-timeframe-select is-hidden" aria-hidden="true" tabindex="-1">
+            <option value="7" data-i18n="fieldReviewTimeframe7">7 days</option>
+            <option value="14" data-i18n="fieldReviewTimeframe14">14 days</option>
+            <option value="30" data-i18n="fieldReviewTimeframe30" selected>30 days</option>
+            <option value="all" data-i18n="fieldReviewTimeframeAll">All available</option>
+          </select>
+        </section>
+
+        <div class="field-review-summary-heading">
+          <p class="section-kicker" data-i18n="fieldReviewStatusKicker">Daily_Log summary</p>
+          <h3 data-i18n="fieldReviewStatusTitle">สรุป Daily_Log ที่เลือก</h3>
+        </div>
         <div class="rhythm-overview-strip" id="fieldReviewOverviewStrip"></div>
-        <p class="table-helper" data-i18n="fieldReviewSourceNote">Field Review อ่าน Daily_Log ที่บันทึกไว้ใน browser นี้ ถ้าต้องการ review workbook ให้ import Master Excel จากหน้า Log ก่อน</p>
+        <p class="table-helper" data-i18n="fieldReviewSourceNote">อ่านจาก Daily_Log ใน browser นี้ หากต้องการอ่าน workbook ให้ import Master Excel ก่อน</p>
         <p class="field-review-empty is-hidden" id="fieldReviewEmptyState" data-i18n="fieldReviewEmptyState">ยังไม่มี Daily Log ให้ประมวล</p>
         <p class="field-review-thin is-hidden" id="fieldReviewThinState" data-i18n="fieldReviewThinState">ข้อมูลยังบางมาก จึงอ่านได้แค่สัญญาณเบื้องต้น</p>
-      </section>
-
-      <section class="field-rhythm-moment glass-card" aria-labelledby="fieldRhythmTitle">
-        <div class="card-heading">
-          <div>
-            <p class="section-kicker" data-i18n="fieldRhythmKicker">Rhythm field</p>
-            <h2 id="fieldRhythmTitle" data-i18n="fieldRhythmTitle">จังหวะข้อมูลที่เลือก</h2>
-          </div>
-        </div>
-        <div class="rhythm-dot-line" id="fieldRhythmDotLine" aria-hidden="true"></div>
-        <p class="field-rhythm-placeholder is-hidden" id="fieldRhythmPlaceholder" data-i18n="fieldRhythmPlaceholder">ยังไม่มีจังหวะข้อมูลให้แสดง</p>
       </section>
 
       <section class="field-review-card-grid" id="fieldReviewCards" aria-live="polite"></section>
@@ -677,11 +659,11 @@
       <div class="app-info-copy">
         <p class="eyebrow" data-i18n="eyebrow">Personal mindful dashboard</p>
         <h2 id="appInfoTitle" data-i18n="title">Mindful Health Balance by MSxAI</h2>
-        <p class="version" data-i18n="version">v1.9.9 — Mindful Practice Context</p>
-        <p class="subtitle" data-i18n="subtitle">ไม่ใช่การรีบแก้เลข แต่คือการสร้างระบบที่อยู่ได้จริง</p>
+        <p class="version" data-i18n="version">v2.0 — Field Review & Signal Engine</p>
+        <p class="subtitle" data-i18n="subtitle">แอปบันทึกจังหวะชีวิตแบบ local-first พร้อม Field Review และ Signal Engine</p>
         <p class="app-info-note">
-          <strong data-i18n="noticeTitle">Self-care reflection tool</strong>
-          <span data-i18n="noticeText">แอปนี้ช่วยดู pattern และ balance recovery เท่านั้น ไม่ใช่เครื่องมือวินิจฉัย และไม่ใช้แทนแพทย์หรือการติดตามตามนัด</span>
+          <strong data-i18n="noticeTitle">Boundary-aware field review</strong>
+          <span data-i18n="noticeText">อ่าน pattern และสัญญาณที่เคลื่อนไหวร่วมกันจากข้อมูลที่บันทึกไว้ ไม่ใช่การวินิจฉัย คำแนะนำทางการแพทย์ หรือเหตุและผล</span>
         </p>
       </div>
       <div class="app-settings-controls">

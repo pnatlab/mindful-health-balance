@@ -106,7 +106,7 @@ TH | EN | 中文
 
 ตั้งแต่ v1.9.8c — Reflection Sentence Smoothing input-grounded overview จะลดการใช้คำเชื่อมซ้ำ เช่น `ร่วมกับ` และอาจแยก rich input เป็นย่อหน้าสั้น ๆ ก่อนประโยคอ่านวันแบบนุ่ม ๆ โดยยังใช้ anchor และ intent เดิม ไม่ได้เพิ่มความหมายใหม่
 
-ตั้งแต่ v1.9.9 — Mindful Practice Context หน้า `ภาวะใจวันนี้ 2/2` เพิ่มการ์ด `ภาวนาก่อนวางใจ` ก่อน Mind Note เพื่อบันทึกฐานภาวนาแบบ optional ด้วย 4 ฐานที่เข้าใจง่าย: กาย เวทนา จิต/คิด และธรรม รวมถึงไม่ได้ภาวนา/อื่น ๆ พร้อมระยะเวลาโดยประมาณและ `Practice_Note` สำหรับหมายเหตุการภาวนา/สิ่งดีที่ได้ทำ ข้อมูลนี้ถูกเก็บใน Daily Log/Excel เพื่อ Field Review ในอนาคต แต่ Reflection/NuTuenSai รายวันยังไม่ตีความ ไม่ให้คะแนน และไม่ตัดสินการภาวนา
+ตั้งแต่ v1.9.9 — Mindful Practice Context หน้า `ภาวะใจวันนี้ 2/2` เพิ่มการ์ด `ภาวนาก่อนวางใจ` ก่อน Mind Note เพื่อบันทึกฐานภาวนาแบบ optional ด้วย 4 ฐานที่เข้าใจง่าย: กาย เวทนา จิต/คิด และธรรม รวมถึงไม่ได้ภาวนา/อื่น ๆ พร้อมระยะเวลาโดยประมาณและ `Practice_Note` สำหรับหมายเหตุการภาวนา/สิ่งดีที่ได้ทำ ข้อมูลนี้ถูกเก็บใน Daily Log/Excel เพื่อเป็นบริบทของ Field Review แต่ Reflection/NuTuenSai รายวันยังไม่ตีความ ไม่ให้คะแนน และไม่ตัดสินการภาวนา
 
 ตั้งแต่ MHB 2.0 Slice A — หน้า `ประมวลข้อมูล` เริ่ม Field Review แบบ conservative โดยอ่านจาก `Daily_Log` ใน localStorage เท่านั้น แสดงการ์ด hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support และ missing/blank data แบบ deterministic การ์ดแต่ละใบมีหลักฐานจากข้อมูลจริง เสียงหนูตื่นสายแบบ rule-based และสิ่งที่ชวนสังเกตรอบถัดไป ไม่มี free-form ask ไม่มี LLM call ส่วน Signal Engine แสดงแถวความสัมพันธ์จาก Pearson เฉพาะ numeric-to-numeric ด้วย NuTuenSai Meaning Dictionary, raw column เป็นหลักฐานรอง และชั้นความหมาย `MHB · NuTuenSai` แบบ pair-specific โดยยังไม่มี chart, matrix หรือ category mapping
 
@@ -126,7 +126,7 @@ Reflection ล่าสุดมี NuTuenSai voice cadence ในภาษา�
 
 เสียงของการ์ดเปลี่ยนตาม timeframe แบบเบา ๆ: 7 วันคือสัญญาณสั้น ๆ, 14 วันคือจังหวะที่เริ่มซ้ำ, 30 วันคือภาพระดับเดือน, และทั้งหมดที่มีคือภาพระยะยาวที่ยังต้องอ่านตามบริบทของแต่ละวัน
 
-Visual Slice 1 ทำให้หน้า `ประมวลข้อมูล` เริ่มเป็นสตูดิโอ NuTuenSai มากขึ้น: มี hero ที่อ่อนโยน, timeframe แบบ segmented pill, overview chips จากข้อมูลจริง และจังหวะข้อมูลแบบ CSS-only โดยยังไม่เพิ่ม chart library และยังยึดหลักฐานจาก `Daily_Log` เหมือนเดิม
+หน้า `ประมวลข้อมูล` ตอนนี้ใช้ compact Daily_Log context header ที่รวม `LOCAL FIELD REVIEW`, ปุ่มเลือก timeframe, overview chips จากข้อมูลจริง และ boundary copy ไว้ในส่วนเดียว ส่วน selected-rhythm strip ถูกถอดออกเพื่อลด visual noise โดยยังไม่เพิ่ม chart library และยังยึดหลักฐานจาก `Daily_Log` เหมือนเดิม
 
 การ์ดทั้ง 6 ใบมีภาพพื้นหลัง NuTuenSai Field Rooms ตามหมวด hydration, sleep/recovery, load/recovery, drinks context, Mind Note และ missing/blank data ภาพเหล่านี้เป็น presentation layer เท่านั้น ไม่เปลี่ยน logic การอ่านข้อมูลและไม่เพิ่ม LLM/free-form/correlation
 
@@ -140,7 +140,7 @@ Field Review UI v2.3 ย้าย choice chips ที่ล็อกไว้ไ
 
 ใน sidebar ระบบแยกห้องข้อมูลทั้ง 6 ออกจากปุ่ม `Signal Engine` ภาษาอังกฤษล้วน เพื่อให้เห็นว่าเป็น engine พิเศษ ไม่ใช่ห้องสะท้อนข้อมูลลำดับที่ 7
 
-ห้อง `ความสัมพันธ์` / `Signal Engine` เพิ่มการอ่านความสัมพันธ์แบบ conservative โดยคำนวณ Pearson เฉพาะ numeric-to-numeric จาก `Daily_Log` เช่น `Water_ml`, `Sleep_Hours`, `Load_Score`, `Caffeine_Score`, `Sugar_Score` และ `Practice_Minutes` รายการจะแสดงได้สูงสุด 5 แถวที่มีข้อมูลครบและจัดตามความชัดของค่า `r`; หัวข้อแถวใช้ชื่อแบบความหมาย เช่น น้ำดื่ม, ชั่วโมงนอน, กิจกรรม/งานของวัน แล้วตามด้วยประโยคสรุปภาษาคน, evidence chips สำหรับ `r`/จำนวน paired days, และ legend สั้น ๆ สำหรับทางเดียวกัน/สวนทางกัน/ยังไม่ชัด raw column pair ยังแสดงเป็นหลักฐานตรวจสอบได้ และ detail panel มี r helper สำหรับคนที่ไม่คุ้นสถิติ เมื่อกดแต่ละแถวจะเปิดชั้นความหมายจาก Meaning Voice Matrix ที่เลือกเสียงตามคู่สัญญาณ ทิศทาง ความแรง และจำนวน paired rows ยังไม่ map category fields และย้ำเสมอว่า correlation ไม่ใช่เหตุและผล
+ห้อง `ความสัมพันธ์` / `Signal Engine` เพิ่มการอ่านความสัมพันธ์แบบ conservative โดยคำนวณ Pearson เฉพาะ numeric-to-numeric จาก `Daily_Log` เช่น `Water_ml`, `Sleep_Hours`, `Load_Score`, `Caffeine_Score`, `Sugar_Score` และ `Practice_Minutes` รายการจะแสดงได้สูงสุด 5 แถวที่มีข้อมูลครบและจัดตามความชัดของค่า `r`; หัวข้อแถวใช้ชื่อแบบความหมาย เช่น น้ำดื่ม, ชั่วโมงนอน, กิจกรรม/งานของวัน พร้อม icon/accent เฉพาะคู่สัญญาณ แล้วตามด้วยประโยคสรุปภาษาคน, evidence chips สำหรับ `r`/จำนวน paired days, และ legend สั้น ๆ สำหรับทางเดียวกัน/สวนทางกัน/ยังไม่ชัด raw column pair ยังแสดงเป็นหลักฐานตรวจสอบได้ และ detail panel มี r helper สำหรับคนที่ไม่คุ้นสถิติ เมื่อกดแต่ละแถวจะเปิดชั้นความหมายจาก Meaning Voice Matrix ที่เลือกเสียงตามคู่สัญญาณ ทิศทาง ความแรง และจำนวน paired rows ยังไม่ map category fields และย้ำเสมอว่า correlation ไม่ใช่เหตุและผล
 
 หน้านี้ไม่ใช่ chatbot ไม่เรียก LLM ไม่รับคำถาม free-form และไม่วินิจฉัยหรือให้คำแนะนำทางการแพทย์ ช่องว่างแปลว่ายังไม่ได้บันทึก ไม่ใช่ความผิดหรือคะแนนที่หายไป
 

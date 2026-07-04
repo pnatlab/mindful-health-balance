@@ -36,17 +36,18 @@ The fact that it is not SaaS is intentional. Its value is in the design of a use
 
 ## Current Version
 
-**MHB 2.0 Slice A — Rule-based Field Review**
+**MHB 2.0 — Field Review & Signal Engine**
 
 Latest refinements include:
 
 - Mindful Practice Context before Mind Note using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma
 - Field Review / ประมวลข้อมูล tab for deterministic multi-day review from saved `Daily_Log`
 - timeframe selector for 7 days, 14 days, 30 days, or all available saved rows
+- compact Field Review context header with selected `Daily_Log` summary chips and no separate rhythm strip
 - rule-based review cards for hydration, sleep/recovery, load/recovery, drinks, Mind Note/support, and missing data
 - NuTuenSai-style deterministic card voice with evidence, source-bound reading, and gentle next attention
 - Field Review remains local-first, read-only, non-medical, non-chatbot, and non-LLM
-- Signal Engine for bounded numeric-to-numeric relationship review from `Daily_Log`, now shown as top relationship rows with a deterministic NuTuenSai Meaning Dictionary, raw column audit lines, and a pair-specific `MHB · NuTuenSai` meaning detail, with no LLM, chart, matrix, or category mapping
+- Signal Engine for bounded numeric-to-numeric relationship review from `Daily_Log`, now shown as top relationship rows with semantic pair accents, a deterministic NuTuenSai Meaning Dictionary, raw column audit lines, and a pair-specific `MHB · NuTuenSai` meaning detail, with no LLM, chart, matrix, or category mapping
 - `Practice_Note` for a short practice note, good action, or wholesome context, stored in `Daily_Log` and duplicated in `Practice_Context_JSON.note`
 - Source-aware same-day save merge, so saving Today’s Signals does not erase saved Mind Note, Practice Context, or Reflection
 - Daily Save Status Bar showing the three saved layers: Today’s Signals, Mind Note, and Reflection
@@ -211,7 +212,7 @@ The Field Review tab is the first MHB 2.0 slice. It reads saved `Daily_Log` rows
 
 Field Review does not call an LLM, does not provide a free-form question box, and does not change export/import/save/restore behavior.
 
-Visual Slice 1 begins moving Field Review toward the `NuTuenSai Field Reflection Studio`: a softer studio hero, segmented timeframe control, source-bound overview chips, and a CSS-only rhythm moment. It does not add a chart library; the visual layer still reflects saved `Daily_Log` evidence only.
+The Field Review header is now a compact Daily_Log context block: it keeps the `LOCAL FIELD REVIEW` label, selected timeframe controls, source-bound overview chips, and boundary copy in one tighter section. The separate CSS rhythm strip was removed to reduce visual noise. It does not add a chart library; the visual layer still reflects saved `Daily_Log` evidence only.
 
 Field Review cards also use NuTuenSai Field Room background images for hydration, sleep/recovery, load/recovery, drinks context, Mind Note, and missing/blank data. These images are presentation assets only; they do not change review logic, source boundaries, or workbook data.
 
@@ -225,7 +226,7 @@ Field Review UI v2.3 moves locked focus choices into a normal bottom action area
 
 The sidebar separates the six Guided Field Rooms from the English-only `Signal Engine` entry so the relationship engine reads as a special module, not a seventh reflection room.
 
-Field Review also includes a conservative `Signal Engine` room. It calculates numeric-to-numeric Pearson relationships from selected `Daily_Log` rows only, ranks up to five valid relationships by absolute `r`, and opens a centered meaning detail signed `MHB · NuTuenSai`. Row titles use human-readable signal labels first, with a plain signal sentence, visible evidence chips for `r` and paired days, a compact same/opposite/unclear legend, and an `r` helper for non-technical readers. Raw column pairs such as `Water_ml ↔ Load_Score` remain visible as technical evidence. The meaning layer uses the deterministic NuTuenSai Meaning Voice Matrix: pair, direction, strength, and paired-row count choose the voice, not LLM generation. It uses minimum-n rules before showing `r`, does not map category fields yet, and always frames correlation as not causation, diagnosis, or medical advice.
+Field Review also includes a conservative `Signal Engine` room. It calculates numeric-to-numeric Pearson relationships from selected `Daily_Log` rows only, ranks up to five valid relationships by absolute `r`, and opens a centered meaning detail signed `MHB · NuTuenSai`. Row titles use human-readable signal labels first, with pair-specific semantic icons/accents, a plain signal sentence, visible evidence chips for `r` and paired days, a compact same/opposite/unclear legend, and an `r` helper for non-technical readers. Raw column pairs such as `Water_ml ↔ Load_Score` remain visible as technical evidence. The meaning layer uses the deterministic NuTuenSai Meaning Voice Matrix: pair, direction, strength, and paired-row count choose the voice, not LLM generation. It uses minimum-n rules before showing `r`, does not map category fields yet, and always frames correlation as not causation, diagnosis, or medical advice.
 
 The cards are descriptive pattern summaries. Missing data means not recorded, not failure. Numeric fields keep their workbook boundaries: for example, `Water_ml` is plain water in milliliters, not money or expense data.
 
@@ -247,7 +248,7 @@ Thai documentation, field notes, and original design context remain available in
 ## Version History / Design Trace
 
 - **MHB 2.0 Field Review UI v2 — Guided Field Rooms Workspace**: Replaces the visible six-card grid with a guided room selector and active room workspace using locked chat-style bubbles. Suggested next room is navigation only, while the content remains deterministic, source-bound, non-LLM, non-chatbot, and non-correlation.
-- **MHB 2.0 Field Review Visual Slice 1**: Begins the NuTuenSai Field Reflection Studio shell with a warm hero, segmented timeframe pill, overview chips, CSS-only rhythm dots, and softer review cards while keeping Field Review rule-based, source-bound, non-LLM, non-chatbot, and non-correlation.
+- **MHB 2.0 Field Review Visual Slice 1**: Evolves the NuTuenSai Field Reflection Studio into a compact Daily_Log context header with segmented timeframe controls, overview chips, and softer review cards while keeping Field Review rule-based, source-bound, non-LLM, non-chatbot, and non-correlation.
 - **MHB 2.0 Slice A — Rule-based Field Review**: Added Field Review / ประมวลข้อมูล tab, timeframe selector, deterministic NuTuenSai-style review cards from `Daily_Log`, and documented Signal Relationships / Correlation Review as future Slice A+/B backlog only.
 - **v1.9.9 — Mindful Practice Context and User-Owned Field Memory Refinement**: adds Practice Context, `Practice_Note`, honest data copy, source-aware safe merge, three-layer save status, ordered mind scale, NuTuenSai voice cadence, low-data micro-continuity, and Reflection anti-repetition.
 - **v1.9.8c — Reflection Sentence Smoothing**: reduces repeated connectors and uses short paragraphs so input-grounded reflection reads more naturally.

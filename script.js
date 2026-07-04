@@ -60,8 +60,8 @@ const translations = {
     eyebrow: "Personal mindful dashboard",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.9 — Mindful Practice Context",
-    subtitle: "ค่อย ๆ เห็นสมดุลของน้ำ การพัก การใช้พลัง และใจในแต่ละวัน",
+    version: "v2.0 — Field Review & Signal Engine",
+    subtitle: "แอปบันทึกจังหวะชีวิตแบบ local-first พร้อม Field Review และ Signal Engine",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
     tabReflection: "Reflection/NuTuenSai",
@@ -128,19 +128,19 @@ const translations = {
     logViewTitle: "Log & Export",
     logViewHelper: "ดูบันทึกย้อนหลังและจัดการไฟล์ backup ของระบบ",
     logControlsTitle: "Backup Controls",
-    fieldReviewViewTitle: "สตูดิโอประมวลจังหวะที่พี่บันทึกไว้",
-    fieldReviewViewHelper: "หนูตื่นสายอ่าน pattern จาก Daily Log ที่พี่บันทึกไว้ แบบไม่วินิจฉัย ไม่ตัดสิน และไม่เดาเกินข้อมูล",
+    fieldReviewViewTitle: "ประมวลจังหวะจาก Daily_Log",
+    fieldReviewViewHelper: "หนูตื่นสายอ่านข้อมูลที่พี่บันทึกไว้ในช่วงที่เลือก เพื่อช่วยเห็น pattern อย่างมีขอบเขต",
     fieldReviewBoundaryKicker: "LOCAL FIELD REVIEW",
     fieldReviewControlsTitle: "เลือกจังหวะที่จะอ่าน",
-    fieldReviewSafetyCopy: "การประมวลนี้เป็นการอ่าน pattern จากข้อมูลที่พี่บันทึกไว้ ไม่ใช่การวินิจฉัย ไม่ใช่คำแนะนำทางการแพทย์ และไม่ตัดสินว่าทำดีหรือไม่ดี",
+    fieldReviewSafetyCopy: "ไม่ใช่การวินิจฉัย ไม่ใช่คำแนะนำทางการแพทย์ และไม่สรุปว่าอะไรเป็นเหตุของอะไร",
     fieldReviewTimeframeLabel: "ช่วงข้อมูล",
     fieldReviewTimeframe7: "7 วัน",
     fieldReviewTimeframe14: "14 วัน",
     fieldReviewTimeframe30: "30 วัน",
     fieldReviewTimeframeAll: "ทั้งหมดที่มี",
-    fieldReviewStatusKicker: "อ่านจาก Daily_Log",
-    fieldReviewStatusTitle: "จังหวะข้อมูลที่เลือก",
-    fieldReviewSourceNote: "Field Review อ่าน Daily_Log ที่บันทึกไว้ใน browser นี้ ถ้าต้องการ review workbook ให้ import Master Excel จากหน้า Log ก่อน",
+    fieldReviewStatusKicker: "Daily_Log summary",
+    fieldReviewStatusTitle: "สรุป Daily_Log ที่เลือก",
+    fieldReviewSourceNote: "อ่านจาก Daily_Log ใน browser นี้ หากต้องการอ่าน workbook ให้ import Master Excel ก่อน",
     fieldReviewEmptyState: "ยังไม่มี Daily Log ให้ประมวล",
     fieldReviewThinState: "ข้อมูลยังบางมาก จึงอ่านได้แค่สัญญาณเบื้องต้น",
     fieldReviewNoDataStatus: "ยังไม่มีข้อมูลให้ประมวล",
@@ -190,9 +190,6 @@ const translations = {
     fieldReviewOverviewDrinkLoad: "วันมีเครื่องดื่มเด่น",
     fieldReviewOverviewMindNote: "วันมี Mind Note",
     fieldReviewOverviewNoValue: "ยังว่าง",
-    fieldRhythmKicker: "Rhythm field",
-    fieldRhythmTitle: "จังหวะข้อมูลที่เลือก",
-    fieldRhythmPlaceholder: "ยังไม่มีจังหวะข้อมูลให้แสดง",
     fieldReviewEvidenceLabel: "หลักฐานจาก Daily_Log",
     fieldReviewReadingLabel: "หนูตื่นสายอ่านว่า",
     fieldReviewNextAttentionLabel: "รอบถัดไปลองสังเกต",
@@ -308,8 +305,8 @@ const translations = {
     themeDark: "มืด",
     themeStatusLight: "ตอนนี้ใช้โหมดสว่างตามเวลาบนเครื่อง",
     themeStatusDark: "ตอนนี้ใช้โหมดมืดตามเวลาบนเครื่อง",
-    noticeTitle: "Self-care reflection tool",
-    noticeText: "แอปนี้ช่วยดู pattern และ balance recovery เท่านั้น ไม่ใช่เครื่องมือวินิจฉัย และไม่ใช้แทนแพทย์หรือการติดตามตามนัด",
+    noticeTitle: "Boundary-aware field review",
+    noticeText: "อ่าน pattern และสัญญาณที่เคลื่อนไหวร่วมกันจากข้อมูลที่บันทึกไว้ ไม่ใช่การวินิจฉัย คำแนะนำทางการแพทย์ หรือเหตุและผล",
     todayState: "Today State",
     todayStateHeading: "วันนี้ร่างกายกับใจเป็นอย่างไร",
     todayStateCue: "สังเกตเร็ว ๆ ของวันนี้",
@@ -982,8 +979,8 @@ const translations = {
     eyebrow: "Personal mindful dashboard",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.9 — Mindful Practice Context",
-    subtitle: "Gently notice the balance of hydration, recovery, daily load, and mind state.",
+    version: "v2.0 — Field Review & Signal Engine",
+    subtitle: "A local-first reflective health log with Field Review and Signal Engine.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
     tabReflection: "Reflection/NuTuenSai",
@@ -1050,19 +1047,19 @@ const translations = {
     logViewTitle: "Log & Export",
     logViewHelper: "Review saved logs and manage your backup files.",
     logControlsTitle: "Backup Controls",
-    fieldReviewViewTitle: "NuTuenSai Field Reflection Studio",
-    fieldReviewViewHelper: "NuTuenSai reads patterns from saved Daily Log data without diagnosis, judgment, or guessing beyond the record.",
+    fieldReviewViewTitle: "Read rhythm from Daily_Log",
+    fieldReviewViewHelper: "NuTuenSai reads the selected saved data to surface patterns within clear boundaries.",
     fieldReviewBoundaryKicker: "LOCAL FIELD REVIEW",
     fieldReviewControlsTitle: "Choose the rhythm to read",
-    fieldReviewSafetyCopy: "This review reads patterns from saved data. It is not diagnosis, medical advice, or a judgment of good or bad performance.",
+    fieldReviewSafetyCopy: "Not diagnosis, not medical advice, and not cause-and-effect.",
     fieldReviewTimeframeLabel: "Timeframe",
     fieldReviewTimeframe7: "7 days",
     fieldReviewTimeframe14: "14 days",
     fieldReviewTimeframe30: "30 days",
     fieldReviewTimeframeAll: "All",
-    fieldReviewStatusKicker: "Daily_Log source",
-    fieldReviewStatusTitle: "Selected rhythm",
-    fieldReviewSourceNote: "Field Review reads saved Daily_Log rows in this browser. Import a Master Excel file from Log first if you want to review that workbook.",
+    fieldReviewStatusKicker: "Daily_Log summary",
+    fieldReviewStatusTitle: "Selected Daily_Log summary",
+    fieldReviewSourceNote: "Reads Daily_Log in this browser. Import Master Excel first to review a workbook.",
     fieldReviewEmptyState: "No Daily Log data available for review yet.",
     fieldReviewThinState: "The data is still thin, so this review only shows early signals.",
     fieldReviewNoDataStatus: "No data available for review yet",
@@ -1112,9 +1109,6 @@ const translations = {
     fieldReviewOverviewDrinkLoad: "Drink-context days",
     fieldReviewOverviewMindNote: "Mind Note days",
     fieldReviewOverviewNoValue: "Not yet",
-    fieldRhythmKicker: "Rhythm field",
-    fieldRhythmTitle: "Selected rhythm",
-    fieldRhythmPlaceholder: "No selected rhythm to show yet.",
     fieldReviewEvidenceLabel: "Evidence from Daily_Log",
     fieldReviewReadingLabel: "NuTuenSai reads",
     fieldReviewNextAttentionLabel: "Next gentle attention",
@@ -1230,8 +1224,8 @@ const translations = {
     themeDark: "Dark",
     themeStatusLight: "Currently using Light mode based on local time.",
     themeStatusDark: "Currently using Dark mode based on local time.",
-    noticeTitle: "Self-care reflection tool",
-    noticeText: "This app helps you notice patterns and balance recovery only. It is not a diagnosis tool and does not replace medical care or follow-up appointments.",
+    noticeTitle: "Boundary-aware field review",
+    noticeText: "Reads patterns and co-moving signals from saved data. It is not diagnosis, medical advice, or cause and effect.",
     todayState: "Today State",
     todayStateHeading: "How are your body and mind today?",
     todayStateCue: "Quick observation for today",
@@ -1904,8 +1898,8 @@ const translations = {
     eyebrow: "个人正念健康仪表板",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v1.9.9 — Mindful Practice Context",
-    subtitle: "温和地观察补水、恢复、每日负荷与内在状态的平衡。",
+    version: "v2.0 — Field Review & Signal Engine",
+    subtitle: "本地优先的反思型健康记录，包含 Field Review 与 Signal Engine。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
     tabReflection: "反思/NuTuenSai",
@@ -1972,19 +1966,19 @@ const translations = {
     logViewTitle: "记录与导出",
     logViewHelper: "查看已保存的记录，并管理备份文件。",
     logControlsTitle: "备份控制",
-    fieldReviewViewTitle: "NuTuenSai 场域回顾工作室",
-    fieldReviewViewHelper: "NuTuenSai 温柔读取已保存 Daily Log 的 pattern，不诊断、不评判，也不超出记录去猜测。",
+    fieldReviewViewTitle: "从 Daily_Log 读取节奏",
+    fieldReviewViewHelper: "NuTuenSai 读取所选保存数据，帮助在清楚边界内看见 pattern。",
     fieldReviewBoundaryKicker: "LOCAL FIELD REVIEW",
     fieldReviewControlsTitle: "选择要读取的节奏",
-    fieldReviewSafetyCopy: "这个回顾只读取已保存数据里的 pattern，不是诊断、医疗建议，也不是对表现好坏的判断。",
+    fieldReviewSafetyCopy: "不是诊断，不是医疗建议，也不把关系说成因果。",
     fieldReviewTimeframeLabel: "时间范围",
     fieldReviewTimeframe7: "7 天",
     fieldReviewTimeframe14: "14 天",
     fieldReviewTimeframe30: "30 天",
     fieldReviewTimeframeAll: "全部",
-    fieldReviewStatusKicker: "读取 Daily_Log",
-    fieldReviewStatusTitle: "所选节奏",
-    fieldReviewSourceNote: "Field Review 读取本浏览器中保存的 Daily_Log。如果想回顾某个 workbook，请先在 Log 页面导入 Master Excel。",
+    fieldReviewStatusKicker: "Daily_Log summary",
+    fieldReviewStatusTitle: "所选 Daily_Log 摘要",
+    fieldReviewSourceNote: "读取本浏览器中的 Daily_Log。如需读取 workbook，请先导入 Master Excel。",
     fieldReviewEmptyState: "目前还没有 Daily Log 可以回顾。",
     fieldReviewThinState: "数据仍然很薄，所以这里只显示早期信号。",
     fieldReviewNoDataStatus: "目前没有可回顾的数据",
@@ -2034,9 +2028,6 @@ const translations = {
     fieldReviewOverviewDrinkLoad: "饮品背景日",
     fieldReviewOverviewMindNote: "Mind Note 日",
     fieldReviewOverviewNoValue: "尚未记录",
-    fieldRhythmKicker: "Rhythm field",
-    fieldRhythmTitle: "所选节奏",
-    fieldRhythmPlaceholder: "还没有可显示的数据节奏。",
     fieldReviewEvidenceLabel: "来自 Daily_Log 的依据",
     fieldReviewReadingLabel: "NuTuenSai 读取为",
     fieldReviewNextAttentionLabel: "下次温柔留意",
@@ -2152,8 +2143,8 @@ const translations = {
     themeDark: "深色",
     themeStatusLight: "当前根据本地时间使用浅色模式。",
     themeStatusDark: "当前根据本地时间使用深色模式。",
-    noticeTitle: "自我照顾反思工具",
-    noticeText: "这个应用只帮助你观察 pattern 和 balance recovery，不是诊断工具，也不能替代医生或复诊。",
+    noticeTitle: "有边界的场域回顾",
+    noticeText: "从已保存数据读取 pattern 和共同移动的信号；不是诊断、医疗建议，也不是因果。",
     todayState: "今日状态",
     todayStateHeading: "今天身体和心的状态如何？",
     todayStateCue: "今天的快速观察",
@@ -7973,7 +7964,7 @@ const COLUMN_SEMANTIC_GUIDE = {
   "Daily_Log.Practice_Context_JSON": {
     unit: "JSON",
     dataType: "json/text",
-    allowed: "Structured optional practice context for future Field Review",
+    allowed: "Structured optional practice context for Field Review",
     forbidden: "spiritual score, diagnosis, self-worth judgment"
   },
   "Daily_Log.Practice_Root": {
@@ -8296,7 +8287,7 @@ function buildColumnGuideRows() {
       thai: "รากฐานภาวนา",
       english: "Practice root",
       meaning: "หมวด practice context แบบ 4 ฐานที่เข้าใจง่าย เช่น กาย เวทนา จิต/คิด หรือธรรม",
-      aiNote: "Stored for future Field Review context. Excluded from daily Reflection/NuTuenSai in v1.9.9; do not score or judge practice quality.",
+      aiNote: "Stored for Field Review context. Excluded from daily Reflection/NuTuenSai; do not score or judge practice quality.",
       example: "mind_thought"
     }),
     row({
@@ -8323,7 +8314,7 @@ function buildColumnGuideRows() {
       thai: "บริบทการภาวนาแบบ JSON",
       english: "Practice context JSON",
       meaning: "JSON compact สำหรับ root, type, minutes, note, source และ reflectDaily=false",
-      aiNote: "Future field-review context only. reflectDaily=false means daily Reflection should intentionally ignore this field in v1.9.9.",
+      aiNote: "Field Review context only. reflectDaily=false means daily Reflection should intentionally ignore this field.",
       example: "{\"root\":\"mind_thought\",\"type\":\"observe_mind\",\"minutes\":15,\"note\":\"ไปให้อาหารปลาที่วัด\",\"source\":\"four_bases_daily_context\",\"reflectDaily\":false}"
     }),
     row({
@@ -8332,7 +8323,7 @@ function buildColumnGuideRows() {
       thai: "หมายเหตุภาวนา / สิ่งดีที่ได้ทำ",
       english: "Practice note / good action",
       meaning: "หมายเหตุสั้น ๆ เกี่ยวกับบริบทการภาวนา สิ่งดีที่ได้ทำ หรือบริบทกุศลกรรมที่ผู้ใช้อยากจำไว้",
-      aiNote: "Qualitative field memory for future Field Review only. Not a merit score, spiritual assessment, diagnosis, or daily Reflection input by default.",
+      aiNote: "Qualitative field memory for Field Review only. Not a merit score, spiritual assessment, diagnosis, or daily Reflection input by default.",
       example: "ไปให้อาหารปลาที่วัด"
     }),
     row({
@@ -9194,6 +9185,33 @@ const SIGNAL_RELATIONSHIP_LABELS = {
   }
 };
 
+const SIGNAL_RELATIONSHIP_PAIR_META = {
+  "Water_ml|Load_Score": {
+    icon: "💧",
+    accentClass: "signal-pair-water-load"
+  },
+  "Sleep_Hours|Caffeine_Score": {
+    icon: "🌙",
+    accentClass: "signal-pair-sleep-caffeine"
+  },
+  "Sugar_Score|Sleep_Hours": {
+    icon: "🍯",
+    accentClass: "signal-pair-sugar-sleep"
+  },
+  "Caffeine_Score|Load_Score": {
+    icon: "☕",
+    accentClass: "signal-pair-caffeine-load"
+  },
+  "Sleep_Hours|Load_Score": {
+    icon: "🛌",
+    accentClass: "signal-pair-sleep-load"
+  },
+  "Practice_Minutes|Sleep_Hours": {
+    icon: "🌿",
+    accentClass: "signal-pair-practice-sleep"
+  }
+};
+
 const SIGNAL_RELATIONSHIP_MEANING_TEMPLATES = {
   "Water_ml|Load_Score": {
     positive: {
@@ -9409,6 +9427,16 @@ function formatSignalPairRaw(xColumn, yColumn) {
   return `${xColumn} ↔ ${yColumn}`;
 }
 
+function getSignalRelationshipPairMeta(pairKey = "") {
+  if (SIGNAL_RELATIONSHIP_PAIR_META[pairKey]) return SIGNAL_RELATIONSHIP_PAIR_META[pairKey];
+  const [xColumn, yColumn] = String(pairKey).split("|");
+  const reversedKey = [yColumn, xColumn].filter(Boolean).join("|");
+  return SIGNAL_RELATIONSHIP_PAIR_META[reversedKey] || {
+    icon: "∿",
+    accentClass: "signal-pair-generic"
+  };
+}
+
 function isFiniteNumber(value) {
   return typeof value === "number" && Number.isFinite(value);
 }
@@ -9503,6 +9531,8 @@ function buildSignalRelationshipCards(rows = []) {
     const pairs = getPairedNumericRows(rows, pair.x, pair.y);
     const n = pairs.length;
     const r = n >= 10 ? calculatePearsonCorrelation(pairs) : null;
+    const voiceKey = `${pair.x}|${pair.y}`;
+    const pairMeta = getSignalRelationshipPairMeta(voiceKey);
     const interpretation = n >= 10
       ? interpretCorrelationCoefficient(r, n)
       : {
@@ -9515,7 +9545,8 @@ function buildSignalRelationshipCards(rows = []) {
 
     return {
       pairKey: `${pair.x}__${pair.y}`,
-      voiceKey: `${pair.x}|${pair.y}`,
+      voiceKey,
+      pairMeta,
       pairName: formatSignalPairLabel(pair.x, pair.y),
       displayPairName: formatSignalPairLabel(pair.x, pair.y),
       rawPairName: formatSignalPairRaw(pair.x, pair.y),
@@ -9587,12 +9618,23 @@ function renderSignalRelationshipEvidenceChips(card) {
   `;
 }
 
+function renderSignalRelationshipTitle(card) {
+  const meta = card.pairMeta || getSignalRelationshipPairMeta(card.voiceKey);
+  return `
+    <span class="signal-pair-title">
+      <span class="signal-pair-icon" aria-hidden="true">${escapeHtml(meta.icon)}</span>
+      <span>${escapeHtml(card.displayPairName)}</span>
+    </span>
+  `;
+}
+
 function renderSignalRelationshipRow(card, selectedPairKey) {
   const isActive = card.pairKey === selectedPairKey;
+  const accentClass = card.pairMeta?.accentClass || getSignalRelationshipPairMeta(card.voiceKey).accentClass;
   return `
-    <button type="button" class="signal-relationship-row ${isActive ? "signal-relationship-row-active" : ""}" data-signal-relationship-target="${escapeHtml(card.pairKey)}" aria-pressed="${String(isActive)}">
+    <button type="button" class="signal-relationship-row ${escapeHtml(accentClass)} ${isActive ? "signal-relationship-row-active" : ""}" data-signal-relationship-target="${escapeHtml(card.pairKey)}" aria-pressed="${String(isActive)}">
       <span class="signal-relationship-summary">
-        <strong>${escapeHtml(card.displayPairName)}</strong>
+        <strong>${renderSignalRelationshipTitle(card)}</strong>
       </span>
       <span class="signal-relationship-plain-summary">${escapeHtml(getSignalRelationshipSummaryText(card))}</span>
       ${renderSignalRelationshipEvidenceChips(card)}
@@ -9602,10 +9644,11 @@ function renderSignalRelationshipRow(card, selectedPairKey) {
 }
 
 function renderSignalRelationshipDetail(card) {
+  const accentClass = card.pairMeta?.accentClass || getSignalRelationshipPairMeta(card.voiceKey).accentClass;
   return `
-    <article class="signal-relationship-detail" aria-live="polite">
+    <article class="signal-relationship-detail ${escapeHtml(accentClass)}" aria-live="polite">
       <p class="section-kicker">${escapeHtml(t("signalEngineMeaningLabel"))}</p>
-      <h4>${escapeHtml(card.displayPairName)}</h4>
+      <h4>${renderSignalRelationshipTitle(card)}</h4>
       <p class="signal-relationship-plain-summary signal-relationship-detail-summary">${escapeHtml(getSignalRelationshipSummaryText(card))}</p>
       <div class="signal-relationship-evidence-block">
         <p class="signal-relationship-evidence-label">${escapeHtml(t("signalEngineEvidenceLabel"))}</p>
@@ -9928,46 +9971,6 @@ function renderFieldReviewOverview(rows = [], allRows = []) {
   `).join("");
 }
 
-function getRhythmDotMeta(row) {
-  const normalizedRow = normalizeLogRow(row);
-  const water = Number(normalizedRow.Water_ml) || 0;
-  const hasWater = water > 0;
-  const hasLoad = isHighLoadRow(normalizedRow);
-  const hasNote = Boolean(String(normalizedRow.Mind_Note_Text || "").trim());
-  const signalCount = [hasWater, hasLoad, hasNote].filter(Boolean).length;
-  return {
-    className: [
-      hasWater ? "has-water" : "",
-      hasLoad ? "has-load" : "",
-      hasNote ? "has-note" : "",
-      signalCount ? "" : "is-quiet"
-    ].filter(Boolean).join(" "),
-    size: 8 + signalCount * 3,
-    alpha: signalCount ? Math.min(0.96, 0.45 + signalCount * 0.16) : 0.28
-  };
-}
-
-function renderFieldRhythmMoment(rows = []) {
-  const line = document.querySelector("#fieldRhythmDotLine");
-  const placeholder = document.querySelector("#fieldRhythmPlaceholder");
-  if (!line || !placeholder) return;
-
-  const visibleRows = rows.slice(-30);
-  const hasRows = visibleRows.length > 0;
-  placeholder.classList.toggle("is-hidden", hasRows);
-  line.classList.toggle("is-empty", !hasRows);
-
-  if (!hasRows) {
-    line.innerHTML = "";
-    return;
-  }
-
-  line.innerHTML = visibleRows.map((row) => {
-    const meta = getRhythmDotMeta(row);
-    return `<span class="rhythm-dot ${meta.className}" style="--dot-size: ${meta.size}px; --dot-alpha: ${meta.alpha};"></span>`;
-  }).join("");
-}
-
 function renderFieldReview() {
   const container = document.querySelector("#fieldReviewCards");
   const status = document.querySelector("#fieldReviewDataStatus");
@@ -9984,7 +9987,6 @@ function renderFieldReview() {
 
   updateFieldReviewTimeframeSegments(timeframe);
   renderFieldReviewOverview(rows, allRows);
-  renderFieldRhythmMoment(rows);
 
   status.textContent = hasRows
     ? timeframe === "all"
