@@ -675,3 +675,29 @@ This design note does not:
 - add diagnosis or advice
 
 It is a source-of-truth draft for future implementation slices only.
+
+## Slice B Implementation Note - Internal Helper Only
+
+Slice B adds the internal `REFLECTION_ROOT_MATRIX` runtime helper layer in `script.js`.
+
+What Slice B adds:
+
+- `REFLECTION_ROOT_MATRIX` with all seven roots: `hydration`, `sleep_recovery`, `load_activity`, `drinks_caffeine_sweetness`, `mind_state`, `practice_context`, and `auto`
+- localized root labels and stored root declarations for future composer slices
+- `primary`, `supporting`, `background`, and `lowWeight` signal groups for each root
+- boundary tags per root
+- helper functions to read root config, labels, declarations, signal groups, category-name weights, and boundary tags
+
+What Slice B intentionally does not add:
+
+- no Reflection output change
+- no root picker
+- no visible weight or score
+- no numeric weight shown to users
+- no Field Review or Signal Engine wiring
+- no auto root selection
+- no LLM behavior
+
+The helper returns category names such as `primary`, `supporting`, `background`, and `lowWeight`, not numeric values such as `1.0`, `0.6`, `0.3`, or `0.1`.
+
+`auto` remains `future_policy_only`. It is present so future code can safely ask for an auto config, but Slice B does not choose a root automatically and must not summarize every field.
