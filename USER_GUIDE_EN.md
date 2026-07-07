@@ -340,6 +340,14 @@ During generation, a short zen listening moment appears. After a reflection exis
 
 Newly generated reflections end with one blue heart, `🩵`, as a light NuTuenSai signature. It is not a score or assessment.
 
+Reflection Root lets you choose the gentle focus for that Reflection, such as hydration, sleep/recovery, load/activity, drinks, mind state, or practice context. When a non-auto root is selected, the generated Reflection uses concise root-specific NuTuenSai segments; Auto stays close to the existing rule-based composer. It is not a score, medical advice, or diagnosis.
+
+Each root shapes the reflection slightly differently. For example, the hydration root gives more space to water and relevant context, while the mind root gives more space to Mind Note and user-owned meaning. Other data remains supporting context instead of being narrated equally.
+
+Reflection brings back only 1-2 concrete details that fit the selected root, such as water amount, sleep hours, activity labels, drink names, Mind Note, or practice note. This keeps the reading grounded in the real day without returning to a data dump.
+
+When you click `Save Today’s Reflection`, the app stores Reflection Root metadata such as `Reflection_Root`, `Reflection_Root_Label`, `Reflection_Root_Source`, and `Reflection_Root_Declaration`, so export/Excel can show the user-selected intention for that Reflection. These fields are reading context, not an AI-selected conclusion or importance score.
+
 ## 17. Save To Daily Log
 
 Click `Save to Daily Log` from Today’s Signals 1/2 when you only want to record water, drinks, sleep, activity, and load signals without going to Reflection.
@@ -348,7 +356,7 @@ Click `Save to Daily Log` from Mind Note 2/2 when you want to save the current d
 
 Click `Save Today’s Reflection` from Reflection/NuTuenSai when you want to save today’s data with the generated or edited Reflection.
 
-The saved row comes from the current app state, including Energy, Mind, Sleep, Sleep Hours, water, drinks, activities, Run Detail, load, Tomorrow Focus, NuTuenSai Reminder, Practice Context, Mind Note, and Reflection when present.
+The saved row comes from the current app state, including Energy, Mind, Sleep, Sleep Hours, water, drinks, activities, Run Detail, load, Tomorrow Focus, NuTuenSai Reminder, Practice Context, Mind Note, Reflection, and Reflection Root metadata when saved from the Reflection page.
 
 If the same date already exists, the app asks before updating this section and keeps other saved sections.
 
@@ -394,7 +402,7 @@ Use this file as a master backup or open it in Excel when you want to review a l
 
 `AI_Context` is a workbook-level guide for AI/LLM readers. It states that this is a self-care reflection workbook, not a finance, expense, accounting, trading, or spending workbook. For example, `Water_ml` means milliliters of water, not money or expenses.
 
-Starting in v1.9.3, `Daily_Log` includes two optional columns: `Sleep_Hours` and `Run_Detail_JSON`. The existing `Sleep` and `Activities` fields remain, and older workbooks without these two columns still import normally.
+`Daily_Log` includes optional columns added over time, such as `Sleep_Hours`, `Run_Detail_JSON`, and Reflection Root metadata (`Reflection_Root`, `Reflection_Root_Label`, `Reflection_Root_Source`, `Reflection_Root_Declaration`). Existing fields remain, and older workbooks without these columns still import normally.
 
 Starting in v1.9, `Field_Context` explains that the workbook is a local-first self-care log owned by the user. If the user chooses to share it with an AI/LLM, the AI should read it for pattern reflection only, not for diagnosis or medical advice.
 

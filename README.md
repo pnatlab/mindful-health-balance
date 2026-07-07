@@ -73,9 +73,9 @@ The exported workbook is not just a spreadsheet dump. It is a portable field mem
 
 Workbook layers include:
 
-- `Daily_Log`: structured daily signals and optional practice/Mind Note/Reflection fields
+- `Daily_Log`: structured daily signals and optional practice/Mind Note/Reflection Root fields
 - JSON fields such as `Drink_Profile_JSON`, `Run_Detail_JSON`, and `Practice_Context_JSON`: portable context bundles
-- `Reflections`: generated companion text, separate from raw input
+- `Reflections`: generated companion text plus user-selected Reflection Root metadata, separate from raw input
 - `Summary`: static export summary, not Excel formulas and not AI analysis
 - `Field_Context`: guardrails for human/AI readers
 - `Field_Review`: lightweight pattern review
@@ -135,6 +135,10 @@ Current reflection behavior:
 - uses a short low-data branch when today has little new input
 - applies NuTuenSai voice cadence in Thai with sparse `หนู`, `ค่ะ`, and `นะคะ`
 - reduces repeated themes through an anti-repetition layer
+- supports a manual Reflection Root picker so the user can choose a gentle reading focus, such as hydration, sleep/recovery, load/activity, drinks, mind state, or practice context
+- when a non-auto root is selected, generated Reflection uses concise root-specific NuTuenSai segments; `auto` stays close to the existing rule-based composer
+- each non-auto root restores 1-2 relevant concrete detail anchors, such as water amount, sleep hours, activity labels, drink names, Mind Note, or practice note, without returning to a data dump
+- saves `Reflection_Root` metadata as user-selected intention context for export/audit; it is not a score, diagnosis, or AI recommendation
 - keeps medical, therapy, diet, training, spiritual, and productivity claims out of scope
 
 Reflection output is companion text, not raw evidence. It is optional and is saved only when the user chooses to save today’s Reflection.

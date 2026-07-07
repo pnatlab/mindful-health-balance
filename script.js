@@ -33,7 +33,11 @@ const DAILY_LOG_COLUMNS = [
   "Practice_Note",
   "Mind_Note_Text",
   "Mind_Note_Feeling",
-  "Mind_Note_Support"
+  "Mind_Note_Support",
+  "Reflection_Root",
+  "Reflection_Root_Label",
+  "Reflection_Root_Source",
+  "Reflection_Root_Declaration"
 ];
 const COLUMN_GUIDE_HEADERS = [
   "Sheet",
@@ -346,9 +350,22 @@ const translations = {
     reflectionRootPreviewHydration: "รอบนี้หนูจะอ่านผ่านแกน ‘น้ำ’ เป็นหลัก แล้วใช้กิจกรรม เครื่องดื่ม และบริบทของวันเป็นฉากประกอบค่ะ",
     reflectionRootPreviewSleep: "รอบนี้หนูจะอ่านผ่านแกน ‘การพัก/การนอน’ เป็นหลัก แล้วอ่านคาเฟอีน โหลดของวัน และพลังงานเป็นบริบทประกอบค่ะ",
     reflectionRootPreviewLoad: "รอบนี้หนูจะอ่านผ่านแกน ‘กิจกรรม/ภาระของวัน’ เป็นหลัก แล้วดูว่าน้ำ การพัก และพลังงานอยู่รอบ ๆ จังหวะนั้นอย่างไรค่ะ",
-    reflectionRootPreviewDrinks: "รอบนี้หนูจะอ่านผ่านแกน ‘เครื่องดื่ม/คาเฟอีน/ความหวาน’ เป็นหลัก โดยไม่ตัดสิน ไม่คิดเป็นแคลอรี่ และไม่สรุปเป็นคำแนะนำค่ะ",
+    reflectionRootPreviewDrinks: "รอบนี้หนูจะอ่านผ่านแกน ‘เครื่องดื่ม/คาเฟอีน/ความหวาน’ เป็นหลัก โดยไม่ตัดสินเครื่องดื่ม สุขภาพ หรือทางเลือกของพี่ค่ะ",
     reflectionRootPreviewMind: "รอบนี้หนูจะให้พื้นที่กับ ‘บริบทใจ’ ที่พี่บันทึกไว้เป็นหลัก โดยไม่สรุปใจแทนพี่ค่ะ",
     reflectionRootPreviewPractice: "รอบนี้หนูจะอ่าน ‘การภาวนา/การดูแลใจ’ เป็นบริบทของวัน ไม่ใช่คะแนน ไม่ใช่ถูกหรือผิดค่ะ",
+    reflectionRootOpeningHydration: "รอบนี้หนูขออ่านผ่านแกน ‘น้ำ’ เป็นหลักนะคะ",
+    reflectionRootOpeningSleep: "รอบนี้หนูขออ่านผ่านแกน ‘การพัก/การนอน’ เป็นหลักนะคะ",
+    reflectionRootOpeningLoad: "รอบนี้หนูขออ่านผ่านแกน ‘กิจกรรม/ภาระของวัน’ เป็นหลักนะคะ",
+    reflectionRootOpeningDrinks: "รอบนี้หนูขออ่านผ่านแกน ‘เครื่องดื่ม/คาเฟอีน/ความหวาน’ เป็นหลักนะคะ",
+    reflectionRootOpeningMind: "รอบนี้หนูขอให้พื้นที่กับ ‘บริบทใจ’ ที่พี่บันทึกไว้เป็นหลักนะคะ",
+    reflectionRootOpeningPractice: "รอบนี้หนูขออ่าน ‘การภาวนา/การดูแลใจ’ เป็นบริบทหลักของวันนะคะ",
+    reflectionRootHintHydration: "ปริมาณน้ำที่พี่บันทึกไว้เป็นจุดตั้งต้นของรอบนี้ ส่วนกิจกรรม เครื่องดื่ม และบริบทของวันจะถูกอ่านเป็นฉากประกอบค่ะ",
+    reflectionRootHintSleep: "ชั่วโมงนอนและสัญญาณการพักเป็นจุดตั้งต้น ส่วนคาเฟอีน load ของวัน และพลังงานจะถูกอ่านเป็นบริบทประกอบค่ะ",
+    reflectionRootHintLoad: "กิจกรรม งาน หรือแรงใช้ของวันจะมาก่อน แล้วหนูค่อยดูว่าน้ำ การพัก และพลังงานอยู่รอบ ๆ จังหวะนั้นอย่างไรค่ะ",
+    reflectionRootHintDrinks: "เครื่องดื่ม คาเฟอีน และบริบทความหวานจะเป็นแกนหลักของรอบนี้ โดยอ่านร่วมกับการนอน load และพลังงานแบบไม่ตัดสินค่ะ",
+    reflectionRootHintMind: "Mind Note และบริบทใจที่พี่บันทึกไว้จะเป็นแกนหลัก หนูจะช่วยสะท้อนโดยไม่สรุปใจแทนพี่ค่ะ",
+    reflectionRootHintPractice: "เวลาภาวนาและบันทึกการดูแลใจจะถูกอ่านเป็นบริบทของวัน ไม่ใช่คะแนนหรือการวัดความสำเร็จค่ะ",
+    reflectionRootHintThin: "แกนนี้ยังมีข้อมูลไม่มากนัก หนูเลยจะอ่านแบบเบา ๆ และไม่สรุปเกินสิ่งที่พี่บันทึกไว้ค่ะ",
     todayInputShortcutsAria: "Today input shortcuts",
     backToSignalCockpit: "กลับไปแผงสัญญาณ",
     backToTodayStepOne: "กลับ Today 1/2",
@@ -1288,9 +1305,22 @@ const translations = {
     reflectionRootPreviewHydration: "This round will read mainly through water, with activity, drinks, and daily context as the surrounding scene.",
     reflectionRootPreviewSleep: "This round will read mainly through sleep and recovery, with caffeine, daily load, and energy as supporting context.",
     reflectionRootPreviewLoad: "This round will read mainly through activity and daily load, while noticing how water, rest, and energy sit around that rhythm.",
-    reflectionRootPreviewDrinks: "This round will read mainly through drinks, caffeine, and sweetness without judging calories, health, or choices.",
+    reflectionRootPreviewDrinks: "This round will read mainly through drinks, caffeine, and sweetness without judging drink choices or health.",
     reflectionRootPreviewMind: "This round will give space to the mind context you recorded, without defining your inner state for you.",
     reflectionRootPreviewPractice: "This round will read practice and self-care context as part of the day, not as a score or right/wrong measure.",
+    reflectionRootOpeningHydration: "This round, NuTuenSai will read mainly through the hydration root.",
+    reflectionRootOpeningSleep: "This round, NuTuenSai will read mainly through the sleep and recovery root.",
+    reflectionRootOpeningLoad: "This round, NuTuenSai will read mainly through the daily activity and load root.",
+    reflectionRootOpeningDrinks: "This round, NuTuenSai will read mainly through the drinks, caffeine, and sweetness root.",
+    reflectionRootOpeningMind: "This round, NuTuenSai will give space to the mind context you recorded.",
+    reflectionRootOpeningPractice: "This round, NuTuenSai will read practice and self-care context as part of the day.",
+    reflectionRootHintHydration: "Recorded water intake is the starting point here, with activity, drinks, and daily context held as the surrounding scene.",
+    reflectionRootHintSleep: "Sleep hours and recovery signals come first, while caffeine, daily load, and energy stay as surrounding context.",
+    reflectionRootHintLoad: "Daily activity, work, or body-use load comes first, then water, rest, and energy are read around that rhythm.",
+    reflectionRootHintDrinks: "Drinks, caffeine, and sweetness context lead this round, with sleep, load, and energy read gently around them.",
+    reflectionRootHintMind: "Mind Note and recorded mind context lead this round. NuTuenSai reflects them without defining your inner state for you.",
+    reflectionRootHintPractice: "Practice time and self-care notes are read as daily context, not as a score or measure of success.",
+    reflectionRootHintThin: "This root has only a little recorded data today, so NuTuenSai will read it lightly and stay close to what was saved.",
     todayInputShortcutsAria: "Today input shortcuts",
     backToSignalCockpit: "Back to cockpit",
     backToTodayStepOne: "Back to Today 1/2",
@@ -2230,9 +2260,22 @@ const translations = {
     reflectionRootPreviewHydration: "这一轮会先从“饮水”来读，并把活动、饮品和当天背景作为辅助。",
     reflectionRootPreviewSleep: "这一轮会先从“睡眠/恢复”来读，并把咖啡因、负荷和能量作为背景。",
     reflectionRootPreviewLoad: "这一轮会先从“活动/负荷”来读，并观察饮水、休息和能量如何围绕它出现。",
-    reflectionRootPreviewDrinks: "这一轮会先从“饮品/咖啡因/甜度”来读，不评价热量、健康或选择。",
+    reflectionRootPreviewDrinks: "这一轮会先从“饮品/咖啡因/甜度”来读，不评价饮品选择或健康。",
     reflectionRootPreviewMind: "这一轮会给你记录的心的背景更多空间，但不替你定义内在状态。",
     reflectionRootPreviewPractice: "这一轮会把练习/自我照顾读作当天背景，不是分数，也不是对错。",
+    reflectionRootOpeningHydration: "这一轮 NuTuenSai 会先从“饮水”这个主轴来读。",
+    reflectionRootOpeningSleep: "这一轮 NuTuenSai 会先从“睡眠/恢复”这个主轴来读。",
+    reflectionRootOpeningLoad: "这一轮 NuTuenSai 会先从“活动/负荷”这个主轴来读。",
+    reflectionRootOpeningDrinks: "这一轮 NuTuenSai 会先从“饮品/咖啡因/甜度”这个主轴来读。",
+    reflectionRootOpeningMind: "这一轮 NuTuenSai 会给你记录的心的背景更多空间。",
+    reflectionRootOpeningPractice: "这一轮 NuTuenSai 会把练习/自我照顾读作当天背景。",
+    reflectionRootHintHydration: "记录的饮水量会作为起点，活动、饮品和当天背景会作为周围的背景来读。",
+    reflectionRootHintSleep: "睡眠时长和恢复信号会先被看见，咖啡因、当天负荷和能量作为背景。",
+    reflectionRootHintLoad: "活动、工作或身体使用的负荷会先被看见，再轻轻观察饮水、休息和能量如何围绕它出现。",
+    reflectionRootHintDrinks: "饮品、咖啡因和甜度背景会作为这一轮的主轴，同时轻轻看睡眠、负荷和能量。",
+    reflectionRootHintMind: "Mind Note 和心的背景会作为主轴。NuTuenSai 只帮助反映，不替你定义。",
+    reflectionRootHintPractice: "练习时间和自我照顾记录会被读作当天背景，不是分数，也不是成功衡量。",
+    reflectionRootHintThin: "这个主轴今天记录的数据还不多，所以 NuTuenSai 会轻轻阅读，并贴近已保存的内容。",
     todayInputShortcutsAria: "Today 输入快捷键",
     backToSignalCockpit: "返回信号面板",
     backToTodayStepOne: "返回 Today 1/2",
@@ -3412,6 +3455,59 @@ const REFLECTION_ROOT_PREVIEW_KEYS = {
   mind_state: "reflectionRootPreviewMind",
   practice_context: "reflectionRootPreviewPractice"
 };
+const REFLECTION_ROOT_OPENING_KEYS = {
+  hydration: "reflectionRootOpeningHydration",
+  sleep_recovery: "reflectionRootOpeningSleep",
+  load_activity: "reflectionRootOpeningLoad",
+  drinks_caffeine_sweetness: "reflectionRootOpeningDrinks",
+  mind_state: "reflectionRootOpeningMind",
+  practice_context: "reflectionRootOpeningPractice"
+};
+const REFLECTION_ROOT_HINT_KEYS = {
+  hydration: "reflectionRootHintHydration",
+  sleep_recovery: "reflectionRootHintSleep",
+  load_activity: "reflectionRootHintLoad",
+  drinks_caffeine_sweetness: "reflectionRootHintDrinks",
+  mind_state: "reflectionRootHintMind",
+  practice_context: "reflectionRootHintPractice"
+};
+const REFLECTION_ROOT_ATTENTION_POLICY = {
+  hydration: {
+    emphasize: ["Water_ml", "Hydration_Status"],
+    context: ["Load_Score", "Caffeine_Score", "Activities", "Run_Detail_JSON", "Sleep_Hours"],
+    reduce: ["Mind_Note_Text", "Practice_Minutes"]
+  },
+  sleep_recovery: {
+    emphasize: ["Sleep_Hours", "Sleep", "Energy"],
+    context: ["Load_Score", "Caffeine_Score", "Water_ml"],
+    reduce: ["Sugar_Score", "Practice_Minutes"]
+  },
+  load_activity: {
+    emphasize: ["Load_Score", "Activities", "Run_Detail_JSON"],
+    context: ["Water_ml", "Sleep_Hours", "Energy", "Caffeine_Score"],
+    reduce: ["Mind_Note_Text", "Practice_Minutes", "Sugar_Score"]
+  },
+  drinks_caffeine_sweetness: {
+    emphasize: ["Caffeine_Score", "Sugar_Score", "Drink_Profile_JSON"],
+    context: ["Sleep_Hours", "Load_Score", "Energy", "Water_ml"],
+    reduce: ["Mind_Note_Text", "Practice_Minutes"]
+  },
+  mind_state: {
+    emphasize: ["Mind", "Mind_Note_Text", "Mind_Note_Feeling", "Mind_Note_Support"],
+    context: ["Sleep_Hours", "Load_Score", "Practice_Minutes", "Energy"],
+    reduce: ["Water_ml", "Caffeine_Score", "Sugar_Score"]
+  },
+  practice_context: {
+    emphasize: ["Practice_Minutes", "Practice_Note", "Practice_Context_JSON"],
+    context: ["Mind", "Sleep_Hours", "Load_Score"],
+    reduce: ["Water_ml", "Caffeine_Score", "Sugar_Score"]
+  },
+  auto: {
+    emphasize: [],
+    context: [],
+    reduce: []
+  }
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   applyThemePreference(currentThemePreference);
@@ -3510,6 +3606,552 @@ function getReflectionRootBoundaryCopy(root) {
   if (root === "practice_context") return t("reflectionRootBoundaryPractice");
   if (root === "drinks_caffeine_sweetness") return t("reflectionRootBoundaryDrinks");
   return t("reflectionRootBoundaryDefault");
+}
+
+function getSelectedReflectionRootKey(root = selectedReflectionRoot) {
+  return isSupportedReflectionRoot(root) ? normalizeReflectionRoot(root) : "auto";
+}
+
+function getRootAwareReflectionOpening(root) {
+  const rootKey = getSelectedReflectionRootKey(root);
+  const openingKey = REFLECTION_ROOT_OPENING_KEYS[rootKey];
+  return openingKey ? t(openingKey) : "";
+}
+
+function hasRootSpecificReflectionData(root, signals = buildSignals()) {
+  const rootKey = getSelectedReflectionRootKey(root);
+  if (rootKey === "hydration") return Number(signals.hydration?.waterMl || 0) > 0;
+  if (rootKey === "sleep_recovery") return Boolean(signals.sleepDetail?.hasHours || appState.selectedState.sleep);
+  if (rootKey === "load_activity") return Boolean((signals.recoveryLoad?.activities || []).length || Number(signals.recoveryLoad?.loadScore || 0) > 0);
+  if (rootKey === "drinks_caffeine_sweetness") return Boolean((signals.drinkLoad?.profiles || []).length || signals.drinkLoad?.hasCaffeine || signals.drinkLoad?.sweetDrinksCount);
+  if (rootKey === "mind_state") return Boolean((signals.mindNote?.text || "").trim() || signals.mindNote?.mind || signals.mindNote?.feeling || signals.mindNote?.support);
+  if (rootKey === "practice_context") return hasPracticeContextInput(appState);
+  return false;
+}
+
+function getRootAwareSupportingHint(root, signals = buildSignals()) {
+  const rootKey = getSelectedReflectionRootKey(root);
+  if (rootKey === "auto") return "";
+  if (!hasRootSpecificReflectionData(rootKey, signals)) return t("reflectionRootHintThin");
+  const hintKey = REFLECTION_ROOT_HINT_KEYS[rootKey];
+  return hintKey ? t(hintKey) : "";
+}
+
+function getRootReflectionAttentionPolicy(root) {
+  const rootKey = getSelectedReflectionRootKey(root);
+  const policy = REFLECTION_ROOT_ATTENTION_POLICY[rootKey] || REFLECTION_ROOT_ATTENTION_POLICY.auto;
+  return {
+    emphasize: [...(policy.emphasize || [])],
+    context: [...(policy.context || [])],
+    reduce: [...(policy.reduce || [])]
+  };
+}
+
+function formatRootWaterValue(signals) {
+  const water = Number(signals.hydration?.waterMl || 0);
+  return water > 0 ? `${formatNumberForLocale(water)} ml` : "";
+}
+
+function getRootLoadContextLabel(signals) {
+  if (signals.recoveryLoad?.high) {
+    if (currentLanguage === "en") return "a high-load day";
+    if (currentLanguage === "zh") return "今天的负荷偏高";
+    return "load ของวันค่อนข้างสูง";
+  }
+  if (signals.recoveryLoad?.medium) {
+    if (currentLanguage === "en") return "a steady-load day";
+    if (currentLanguage === "zh") return "今天有一定负荷";
+    return "มี load ของวันอยู่พอสมควร";
+  }
+  if ((signals.recoveryLoad?.activities || []).length) {
+    if (currentLanguage === "en") return "some activity context";
+    if (currentLanguage === "zh") return "有一些活动背景";
+    return "มีบริบทกิจกรรมอยู่บ้าง";
+  }
+  return "";
+}
+
+function getRootDrinkContextLabel(signals) {
+  const hasCaffeine = Boolean(signals.drinkLoad?.hasCaffeine || signals.drinkLoad?.caffeineHigh);
+  const hasSweetness = Boolean(signals.drinkLoad?.sweetDrinksCount || signals.drinkLoad?.sugarHigh);
+  if (hasCaffeine && hasSweetness) {
+    if (currentLanguage === "en") return "caffeine and sweetness";
+    if (currentLanguage === "zh") return "咖啡因和甜度";
+    return "คาเฟอีนและบริบทความหวาน";
+  }
+  if (hasCaffeine) {
+    if (currentLanguage === "en") return "caffeine";
+    if (currentLanguage === "zh") return "咖啡因";
+    return "คาเฟอีน";
+  }
+  if (hasSweetness) {
+    if (currentLanguage === "en") return "sweetness context";
+    if (currentLanguage === "zh") return "甜度背景";
+    return "บริบทความหวาน";
+  }
+  return "";
+}
+
+function getRootSleepContextLabel(signals) {
+  if (signals.sleepDetail?.hasHours) {
+    const hours = `${formatNumberForLocale(signals.sleepDetail.hours)} ${currentLanguage === "en" ? "hours" : currentLanguage === "zh" ? "小时" : "ชั่วโมง"}`;
+    if (currentLanguage === "en") return `sleep was about ${hours}`;
+    if (currentLanguage === "zh") return `睡眠约 ${hours}`;
+    return `นอนประมาณ ${hours}`;
+  }
+  if (signals.energySleep?.sleepLow || signals.sleepDetail?.low) {
+    if (currentLanguage === "en") return "sleep/recovery looked thin";
+    if (currentLanguage === "zh") return "睡眠/恢复有些薄";
+    return "sleep/recovery ยังบาง";
+  }
+  return "";
+}
+
+function getRootPracticeContextLabel() {
+  const practiceContext = buildPracticeContextObject();
+  const hasMinutes = normalizePracticeMinutes(appState.practiceMinutes) !== "";
+  const note = String(appState.practiceNote || "").trim();
+  if (note) return truncateText(note, 64);
+  if (hasMinutes && practiceContext?.minutes !== "") {
+    if (currentLanguage === "en") return `about ${formatNumberForLocale(practiceContext.minutes)} practice minutes`;
+    if (currentLanguage === "zh") return `约 ${formatNumberForLocale(practiceContext.minutes)} 分钟练习`;
+    return `ภาวนาประมาณ ${formatNumberForLocale(practiceContext.minutes)} นาที`;
+  }
+  if (practiceContext?.root || practiceContext?.type) {
+    if (currentLanguage === "en") return "a recorded practice context";
+    if (currentLanguage === "zh") return "有一段练习背景";
+    return "มีบริบทการภาวนาที่บันทึกไว้";
+  }
+  return "";
+}
+
+function formatRootDetailQuote(value) {
+  const text = String(value || "").trim();
+  return text ? `“${text}”` : "";
+}
+
+function getRootActivityDetailLabels(limit = 2) {
+  return (appState.activities || [])
+    .map((activity) => {
+      const option = getActivityOptionByValue(activity);
+      return option ? t(`options.activities.${option.key}`) : String(activity || "").trim();
+    })
+    .filter(Boolean)
+    .slice(0, limit);
+}
+
+function getRootDrinkDetailLabels(limit = 2) {
+  return (appState.drinkProfiles || [])
+    .map(normalizeDrinkProfile)
+    .map((profile) => {
+      const meta = getDrinkMetaByType(profile.type);
+      return t(`options.drinks.${meta?.key || "other"}`);
+    })
+    .filter(Boolean)
+    .slice(0, limit);
+}
+
+function getRootCaffeinatedDrinkLabels(limit = 2) {
+  return (appState.drinkProfiles || [])
+    .map(normalizeDrinkProfile)
+    .filter((profile) => profile.caffeine && profile.caffeine !== "none")
+    .map((profile) => {
+      const meta = getDrinkMetaByType(profile.type);
+      return t(`options.drinks.${meta?.key || "other"}`);
+    })
+    .filter(Boolean)
+    .slice(0, limit);
+}
+
+function getRootSweetDrinkLabels(limit = 2) {
+  return (appState.drinkProfiles || [])
+    .map(normalizeDrinkProfile)
+    .filter((profile) => (sweetnessScores[profile.sweetness] || 0) >= 2)
+    .map((profile) => {
+      const meta = getDrinkMetaByType(profile.type);
+      return t(`options.drinks.${meta?.key || "other"}`);
+    })
+    .filter(Boolean)
+    .slice(0, limit);
+}
+
+function formatRootDetailList(items = []) {
+  return joinListNaturally(items.map(formatRootDetailQuote).filter(Boolean));
+}
+
+function buildRootSpecificDetailAnchors(root, signals = buildSignals()) {
+  const rootKey = getSelectedReflectionRootKey(root);
+  const builders = {
+    hydration: buildHydrationDetailAnchors,
+    sleep_recovery: buildSleepDetailAnchors,
+    load_activity: buildLoadDetailAnchors,
+    drinks_caffeine_sweetness: buildDrinksDetailAnchors,
+    mind_state: buildMindDetailAnchors,
+    practice_context: buildPracticeDetailAnchors
+  };
+  const builder = builders[rootKey];
+  return builder ? builder(signals).filter(Boolean).slice(0, 2) : [];
+}
+
+function buildHydrationDetailAnchors(signals) {
+  const water = formatRootWaterValue(signals);
+  const anchors = [];
+  if (water) {
+    if (currentLanguage === "en") {
+      anchors.push(`Water today was about ${water}${signals.hydration?.low || signals.hydration?.rising ? ", still gently returning to base." : ", giving the day a steadier base."}`);
+    } else if (currentLanguage === "zh") {
+      anchors.push(`今天饮水约 ${water}${signals.hydration?.low || signals.hydration?.rising ? "，还在慢慢回到基础。" : "，可以作为今天比较稳定的基础。"}`);
+    } else {
+      anchors.push(`วันนี้น้ำประมาณ ${water}${signals.hydration?.low || signals.hydration?.rising ? " และยังค่อย ๆ กลับฐานอยู่" : " และพอเป็นฐานให้ประคองวันได้"}`);
+    }
+  }
+  const caffeineLabels = getRootCaffeinatedDrinkLabels(1);
+  const activityLabels = getRootActivityDetailLabels(1);
+  if (caffeineLabels.length) {
+    if (currentLanguage === "en") anchors.push(`There is caffeine context from ${formatRootDetailList(caffeineLabels)} beside the water signal.`);
+    else if (currentLanguage === "zh") anchors.push(`${formatRootDetailList(caffeineLabels)}带来一些咖啡因背景，放在饮水信号旁边看。`);
+    else anchors.push(`มีคาเฟอีนจาก${formatRootDetailList(caffeineLabels)}อยู่ข้างสัญญาณน้ำด้วยค่ะ`);
+  } else if (activityLabels.length) {
+    if (currentLanguage === "en") anchors.push(`${formatRootDetailList(activityLabels)} is the activity context around hydration today.`);
+    else if (currentLanguage === "zh") anchors.push(`${formatRootDetailList(activityLabels)}是今天饮水旁边的活动背景。`);
+    else anchors.push(`${formatRootDetailList(activityLabels)}เป็นบริบทกิจกรรมที่อยู่ข้างน้ำวันนี้`);
+  }
+  return anchors.length ? anchors : [getRootAwareSupportingHint("hydration", signals)];
+}
+
+function buildSleepDetailAnchors(signals) {
+  const anchors = [];
+  const sleepContext = getRootSleepContextLabel(signals);
+  if (sleepContext) {
+    if (currentLanguage === "en") anchors.push(`The saved sleep detail says ${sleepContext}.`);
+    else if (currentLanguage === "zh") anchors.push(`已记录的睡眠细节是：${sleepContext}。`);
+    else anchors.push(`ข้อมูลที่บันทึกไว้บอกว่า${sleepContext}`);
+  }
+  const caffeineLabels = getRootCaffeinatedDrinkLabels(1);
+  const loadContext = getRootLoadContextLabel(signals);
+  if (caffeineLabels.length) {
+    if (currentLanguage === "en") anchors.push(`${formatRootDetailList(caffeineLabels)} gives the day a caffeine context, held beside recovery.`);
+    else if (currentLanguage === "zh") anchors.push(`${formatRootDetailList(caffeineLabels)}给今天带来咖啡因背景，放在恢复旁边看。`);
+    else anchors.push(`${formatRootDetailList(caffeineLabels)}เป็นบริบทคาเฟอีนที่วางข้างการพักวันนี้`);
+  } else if (loadContext) {
+    if (currentLanguage === "en") anchors.push(`The day also has ${loadContext}, so recovery is read with that load nearby.`);
+    else if (currentLanguage === "zh") anchors.push(`今天也有${loadContext}，所以恢复会放在这个负荷旁边读。`);
+    else anchors.push(`วันนี้${loadContext} จึงอ่านการพักโดยมี load นี้อยู่ข้าง ๆ`);
+  }
+  return anchors.length ? anchors : [getRootAwareSupportingHint("sleep_recovery", signals)];
+}
+
+function buildLoadDetailAnchors(signals) {
+  const anchors = [];
+  const activityLabels = getRootActivityDetailLabels(2);
+  const loadScore = Number(signals.recoveryLoad?.loadScore || 0);
+  const loadLevel = localizeLoadLevel(appState.loadLevel || getLoadLevel(loadScore));
+  if (activityLabels.length) {
+    if (currentLanguage === "en") anchors.push(`Today has ${formatRootDetailList(activityLabels)} as the visible activity/load context.`);
+    else if (currentLanguage === "zh") anchors.push(`今天可见的活动/负荷背景是${formatRootDetailList(activityLabels)}。`);
+    else anchors.push(`วันนี้มี${formatRootDetailList(activityLabels)}เป็น load ของวัน`);
+  } else if (loadScore > 0 || loadLevel) {
+    if (currentLanguage === "en") anchors.push(`The saved load level is ${loadLevel}.`);
+    else if (currentLanguage === "zh") anchors.push(`已记录的负荷层级是 ${loadLevel}。`);
+    else anchors.push(`ข้อมูล load วันนี้อยู่ที่ ${loadLevel}`);
+  }
+  const sleepContext = getRootSleepContextLabel(signals);
+  const water = formatRootWaterValue(signals);
+  if (sleepContext) {
+    if (currentLanguage === "en") anchors.push(`Placed beside ${sleepContext}, this load asks to be read with recovery nearby.`);
+    else if (currentLanguage === "zh") anchors.push(`放在${sleepContext}旁边看，这个负荷适合和恢复一起读。`);
+    else anchors.push(`เมื่อวางคู่กับ${sleepContext} หนูอ่าน load นี้พร้อมพื้นที่ recovery ค่ะ`);
+  } else if (water) {
+    if (currentLanguage === "en") anchors.push(`Water is about ${water}, so it stays as support context around the load.`);
+    else if (currentLanguage === "zh") anchors.push(`饮水约 ${water}，作为负荷周围的支持背景。`);
+    else anchors.push(`น้ำประมาณ ${water} อยู่เป็นบริบทพยุงรอบ load นี้`);
+  }
+  return anchors.length ? anchors : [getRootAwareSupportingHint("load_activity", signals)];
+}
+
+function buildDrinksDetailAnchors(signals) {
+  const anchors = [];
+  const drinkLabels = getRootDrinkDetailLabels(2);
+  const caffeineLabels = getRootCaffeinatedDrinkLabels(2);
+  const sweetLabels = getRootSweetDrinkLabels(2);
+  if (caffeineLabels.length) {
+    if (currentLanguage === "en") anchors.push(`Caffeine appears through ${formatRootDetailList(caffeineLabels)} in today's drink context.`);
+    else if (currentLanguage === "zh") anchors.push(`今天的咖啡因背景来自${formatRootDetailList(caffeineLabels)}。`);
+    else anchors.push(`วันนี้มีคาเฟอีนจาก${formatRootDetailList(caffeineLabels)}เป็นส่วนหนึ่งของบริบท`);
+  } else if (drinkLabels.length) {
+    if (currentLanguage === "en") anchors.push(`Today's drink context includes ${formatRootDetailList(drinkLabels)}.`);
+    else if (currentLanguage === "zh") anchors.push(`今天的饮品背景包括${formatRootDetailList(drinkLabels)}。`);
+    else anchors.push(`บริบทเครื่องดื่มวันนี้มี${formatRootDetailList(drinkLabels)}`);
+  }
+  if (sweetLabels.length) {
+    if (currentLanguage === "en") anchors.push(`${formatRootDetailList(sweetLabels)} carries visible sweetness context in the saved data.`);
+    else if (currentLanguage === "zh") anchors.push(`${formatRootDetailList(sweetLabels)}在记录中带有甜度背景。`);
+    else anchors.push(`${formatRootDetailList(sweetLabels)}มีบริบทความหวานอยู่ในข้อมูลที่บันทึกไว้`);
+  } else {
+    const water = formatRootWaterValue(signals);
+    if (water) {
+      if (currentLanguage === "en") anchors.push(`Water is about ${water}, so it can remain the base around these drinks.`);
+      else if (currentLanguage === "zh") anchors.push(`饮水约 ${water}，可以继续作为这些饮品旁边的基础。`);
+      else anchors.push(`น้ำประมาณ ${water} ยังกลับมาเป็นฐานข้างเครื่องดื่มเหล่านี้ได้ค่ะ`);
+    }
+  }
+  return anchors.length ? anchors : [getRootAwareSupportingHint("drinks_caffeine_sweetness", signals)];
+}
+
+function buildMindDetailAnchors(signals) {
+  const anchors = [];
+  const note = truncateText(signals.mindNote?.text || "", 90);
+  if (note) {
+    if (currentLanguage === "en") anchors.push(`Mind Note today says ${formatRootDetailQuote(note)}.`);
+    else if (currentLanguage === "zh") anchors.push(`今天的 Mind Note 是${formatRootDetailQuote(note)}。`);
+    else anchors.push(`Mind Note ที่พี่วางไว้วันนี้คือ ${formatRootDetailQuote(note)}`);
+  } else if (signals.mindNote?.mind) {
+    if (currentLanguage === "en") anchors.push(`The selected mind state is ${localizeStateValue("Mind", signals.mindNote.mind)}.`);
+    else if (currentLanguage === "zh") anchors.push(`今天选择的心的状态是 ${localizeStateValue("Mind", signals.mindNote.mind)}。`);
+    else anchors.push(`วันนี้ state ใจที่เลือกไว้คือ ${localizeStateValue("Mind", signals.mindNote.mind)}`);
+  }
+  if (signals.mindNote?.support) {
+    const support = localizeMindNoteValue("Mind_Note_Support", signals.mindNote.support);
+    if (currentLanguage === "en") anchors.push(`The selected support cue is ${support}.`);
+    else if (currentLanguage === "zh") anchors.push(`已选择的支持提示是 ${support}。`);
+    else anchors.push(`support need วันนี้อยู่ที่ ${support}`);
+  } else {
+    const loadContext = getRootLoadContextLabel(signals);
+    if (loadContext) {
+      if (currentLanguage === "en") anchors.push(`${loadContext} stays as background around the mind note.`);
+      else if (currentLanguage === "zh") anchors.push(`${loadContext}先留在心的背景周围。`);
+      else anchors.push(`${loadContext}อยู่เป็นฉากรอบ ๆ บริบทใจ`);
+    }
+  }
+  return anchors.length ? anchors : [getRootAwareSupportingHint("mind_state", signals)];
+}
+
+function buildPracticeDetailAnchors() {
+  const anchors = [];
+  const practiceContext = buildPracticeContextObject();
+  const typeLabel = practiceContext?.type ? t(`options.practiceTypes.${practiceContext.type}`) : "";
+  const minutes = practiceContext?.minutes !== "" && practiceContext?.minutes !== undefined
+    ? formatNumberForLocale(practiceContext.minutes)
+    : "";
+  const note = truncateText(practiceContext?.note || "", 90);
+  if (typeLabel || minutes) {
+    if (currentLanguage === "en") anchors.push(`Practice context today includes ${typeLabel || "practice"}${minutes ? ` for about ${minutes} minutes` : ""}.`);
+    else if (currentLanguage === "zh") anchors.push(`今天的练习背景包括 ${typeLabel || "练习"}${minutes ? `，约 ${minutes} 分钟` : ""}。`);
+    else anchors.push(`วันนี้มี${typeLabel || "การภาวนา"}${minutes ? `ประมาณ ${minutes} นาที` : ""}เป็นบริบทของวัน`);
+  }
+  if (note) {
+    if (currentLanguage === "en") anchors.push(`The practice note says ${formatRootDetailQuote(note)}.`);
+    else if (currentLanguage === "zh") anchors.push(`Practice note 是${formatRootDetailQuote(note)}。`);
+    else anchors.push(`สิ่งที่พี่บันทึกไว้ใน practice note คือ ${formatRootDetailQuote(note)}`);
+  }
+  return anchors.length ? anchors : [getRootAwareSupportingHint("practice_context", buildSignals())];
+}
+
+function buildRootAwareReflectionSegments(root, signals = buildSignals()) {
+  const rootKey = getSelectedReflectionRootKey(root);
+  const opening = getRootAwareReflectionOpening(rootKey);
+  const builders = {
+    hydration: buildHydrationRootReflectionSegments,
+    sleep_recovery: buildSleepRootReflectionSegments,
+    load_activity: buildLoadRootReflectionSegments,
+    drinks_caffeine_sweetness: buildDrinksRootReflectionSegments,
+    mind_state: buildMindRootReflectionSegments,
+    practice_context: buildPracticeRootReflectionSegments
+  };
+  const builder = builders[rootKey];
+  if (!builder) return [];
+  return dedupeReflectionLines([opening, ...builder(signals)]);
+}
+
+function buildHydrationRootReflectionSegments(signals) {
+  const detailAnchors = buildRootSpecificDetailAnchors("hydration", signals);
+  const loadContext = getRootLoadContextLabel(signals);
+  const drinkContext = getRootDrinkContextLabel(signals);
+  const contexts = [loadContext, drinkContext].filter(Boolean);
+
+  if (currentLanguage === "en") {
+    const contextLine = contexts.length
+      ? `Placed beside ${joinListNaturally(contexts)}, this reads more like returning to a basic care rhythm than rushing to compensate.`
+      : "This reads as a simple care base rather than a large conclusion.";
+    return [...detailAnchors, contextLine, "For the next loop, letting water and short pauses come back in gently is enough."];
+  }
+
+  if (currentLanguage === "zh") {
+    const contextLine = contexts.length
+      ? `放在${joinListNaturally(contexts)}旁边看，它更像是回到基础照顾的节奏，而不是急着补偿。`
+      : "这里更像是一个基础照顾的提示，不是大的结论。";
+    return [...detailAnchors, contextLine, "下一小段，让饮水和短暂停顿轻轻回到节奏里就好。"];
+  }
+
+  const contextLine = contexts.length
+    ? `เมื่อวางคู่กับ${joinListNaturally(contexts)} หนูอ่านเป็นจังหวะกลับมาดูแลพื้นฐาน มากกว่าการเร่งชดเชยทันที`
+    : "หนูอ่านเป็นฐานดูแลตัวเองเล็ก ๆ มากกว่าข้อสรุปใหญ่ของวัน";
+  return [...detailAnchors, contextLine, "รอบถัดไปแค่ค่อย ๆ ปิด loop ด้วยน้ำและพักเป็นช่วง ๆ ก็พอค่ะ"];
+}
+
+function buildSleepRootReflectionSegments(signals) {
+  const detailAnchors = buildRootSpecificDetailAnchors("sleep_recovery", signals);
+  const loadContext = getRootLoadContextLabel(signals);
+  const drinkContext = getRootDrinkContextLabel(signals);
+  const contexts = [loadContext, drinkContext].filter(Boolean);
+
+  if (currentLanguage === "en") {
+    const contextLine = contexts.length
+      ? `${joinListNaturally(contexts)} stays as surrounding context, not as proof.`
+      : "Other signals stay in the background instead of taking over the reading.";
+    return [...detailAnchors, contextLine, "If the body still feels underfilled, recovery can lead the next rhythm before adding more."];
+  }
+
+  if (currentLanguage === "zh") {
+    const contextLine = contexts.length
+      ? `${joinListNaturally(contexts)}只是周围背景，不读成原因。`
+      : "其他信号先留在背景里，不抢走这个主轴。";
+    return [...detailAnchors, contextLine, "如果身体还没满，下一段先让恢复走在前面就好。"];
+  }
+
+  const contextLine = contexts.length
+    ? `${joinListNaturally(contexts)}เป็นเพียงบริบทที่อยู่รอบการพัก ไม่ใช่เหตุและผลค่ะ`
+    : "สัญญาณอื่นขออยู่เป็นฉากหลัง เพื่อให้การพักมีพื้นที่ในรอบนี้ค่ะ";
+  return [...detailAnchors, contextLine, "ถ้าร่างกายยังไม่เต็ม รอบถัดไปให้ recovery เดินนำหนึ่งจังหวะก่อนก็พอค่ะ"];
+}
+
+function buildLoadRootReflectionSegments(signals) {
+  const detailAnchors = buildRootSpecificDetailAnchors("load_activity", signals);
+
+  if (currentLanguage === "en") {
+    return [...detailAnchors, "The question is not whether the day performed well, but whether recovery has room to follow."];
+  }
+
+  if (currentLanguage === "zh") {
+    return [...detailAnchors, "重点不是表现好不好，而是恢复有没有空间跟上。"];
+  }
+
+  return [...detailAnchors, "ภาพรวมไม่ใช่เรื่อง performance ดีหรือไม่ดี แต่เป็นการดูว่า recovery มีพื้นที่ตามจังหวะที่ใช้แรงไปไหม"];
+}
+
+function buildDrinksRootReflectionSegments(signals) {
+  const detailAnchors = buildRootSpecificDetailAnchors("drinks_caffeine_sweetness", signals);
+  const loadContext = getRootLoadContextLabel(signals);
+  const sleepContext = getRootSleepContextLabel(signals);
+  const water = formatRootWaterValue(signals);
+  const contexts = [loadContext, sleepContext, water ? (currentLanguage === "en" ? `${water} water` : currentLanguage === "zh" ? `${water} 饮水` : `น้ำ ${water}`) : ""].filter(Boolean);
+
+  if (currentLanguage === "en") {
+    const contextLine = contexts.length
+      ? `Placed beside ${joinListNaturally(contexts)}, drinks read as rhythm information rather than something to judge.`
+      : "Drinks read here as rhythm information, not something to judge or correct immediately.";
+    return [...detailAnchors, contextLine, "Letting the next cup or next pause bring plain water back as a base is enough."];
+  }
+
+  if (currentLanguage === "zh") {
+    const contextLine = contexts.length
+      ? `放在${joinListNaturally(contexts)}旁边看，饮品更像节奏资料，不是用来评价的东西。`
+      : "这里把饮品读作一天的节奏资料，不急着评价或修正。";
+    return [...detailAnchors, contextLine, "下一杯或下一小段让清水慢慢回到基础就好。"];
+  }
+
+  const contextLine = contexts.length
+    ? `เมื่อวางข้าง${joinListNaturally(contexts)} หนูอ่านเครื่องดื่มเป็นข้อมูลของจังหวะวัน ไม่ใช่เรื่องให้ดุหรือรีบแก้ทันที`
+    : "หนูอ่านเครื่องดื่มเป็นข้อมูลของจังหวะวัน ไม่ใช่เรื่องให้ดุหรือรีบแก้ทันที";
+  return [...detailAnchors, contextLine, "แค่ให้แก้วถัดไปหรือช่วงถัดไปพาน้ำเปล่ากลับมาเป็นฐาน ก็พอค่ะ"];
+}
+
+function buildMindRootReflectionSegments(signals) {
+  const detailAnchors = buildRootSpecificDetailAnchors("mind_state", signals);
+  const loadContext = getRootLoadContextLabel(signals);
+  const sleepContext = getRootSleepContextLabel(signals);
+  const contexts = [loadContext, sleepContext, getRootPracticeContextLabel()].filter(Boolean);
+
+  if (currentLanguage === "en") {
+    const contextLine = contexts.length && detailAnchors.length < 2
+      ? `${joinListNaturally(contexts)} stays as surrounding context, not the main meaning.`
+      : "";
+    return [...detailAnchors, contextLine, "The final meaning still belongs to you. NuTuenSai is only holding a small light beside it."];
+  }
+
+  if (currentLanguage === "zh") {
+    const contextLine = contexts.length && detailAnchors.length < 2
+      ? `${joinListNaturally(contexts)}只是周围背景，不是主要意义。`
+      : "";
+    return [...detailAnchors, contextLine, "最后的意义仍然属于你。NuTuenSai 只是轻轻帮你照亮这一块。"];
+  }
+
+  const contextLine = contexts.length && detailAnchors.length < 2
+    ? `${joinListNaturally(contexts)}เป็นเพียงฉากรอบ ๆ ไม่ใช่ความหมายหลักค่ะ`
+    : "";
+  return [...detailAnchors, contextLine, "ความหมายสุดท้ายยังอยู่กับพี่นะคะ หนูแค่ช่วยถือไฟฉายเบา ๆ ให้เห็นพื้นที่นั้นชัดขึ้น"];
+}
+
+function buildPracticeRootReflectionSegments(signals) {
+  const detailAnchors = buildRootSpecificDetailAnchors("practice_context", signals);
+  const mindContext = signals.mindNote?.mind || signals.mindNote?.text ? (currentLanguage === "en" ? "mind context" : currentLanguage === "zh" ? "心的背景" : "บริบทใจ") : "";
+  const sleepContext = getRootSleepContextLabel(signals);
+  const loadContext = getRootLoadContextLabel(signals);
+  const contexts = [mindContext, sleepContext, loadContext].filter(Boolean);
+
+  if (currentLanguage === "en") {
+    const contextLine = contexts.length
+      ? `${joinListNaturally(contexts)} can sit beside it as context, without turning practice into a measure.`
+      : "It stays as a small trace of returning to yourself, not a measure.";
+    return [...detailAnchors, contextLine, "Practice does not need to become performance here; noticing that there is a place to return is enough."];
+  }
+
+  if (currentLanguage === "zh") {
+    const contextLine = contexts.length
+      ? `${joinListNaturally(contexts)}可以放在旁边作为背景，但不把练习变成衡量。`
+      : "它只是一个回到自己的小痕迹，不是衡量。";
+    return [...detailAnchors, contextLine, "这里不需要把练习变成表现；看见还有一个可以回来的空间就好。"];
+  }
+
+  const contextLine = contexts.length
+    ? `${joinListNaturally(contexts)}อยู่ข้าง ๆ เป็นบริบทได้ โดยให้การภาวนาอยู่เป็นพื้นที่ดูแลใจ ไม่ใช่การวัดผล`
+    : "มันเป็นร่องรอยเล็ก ๆ ของการกลับมาดูแลตัวเอง ไม่ใช่การวัดผลค่ะ";
+  return [...detailAnchors, contextLine, "การภาวนาไม่ใช่ performance นะคะ แค่เห็นว่ามีพื้นที่ให้กลับมาก็พอ"];
+}
+
+function normalizeReflectionLineForDedupe(line) {
+  return String(line || "")
+    .toLowerCase()
+    .replace(/[“”"'.。,，、!！?？:：;；()[\]{}]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function dedupeReflectionLines(lines = []) {
+  const seen = new Set();
+  return lines
+    .map((line) => String(line || "").trim())
+    .filter(Boolean)
+    .filter((line) => {
+      const key = normalizeReflectionLineForDedupe(line);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+function composeRootAwareReflection(baseReflection, root = selectedReflectionRoot, signals = buildSignals()) {
+  const rootKey = getSelectedReflectionRootKey(root);
+  const cleanBase = String(baseReflection || "").trim();
+  if (rootKey === "auto") return cleanBase;
+
+  const rootAwareBlocks = buildRootAwareReflectionSegments(rootKey, signals);
+  if (!rootAwareBlocks.length) return cleanBase;
+
+  return rootAwareBlocks.join("\n\n");
+}
+
+function getReflectionRootMetadata(root = selectedReflectionRoot, lang = currentLanguage) {
+  const rootKey = getSelectedReflectionRootKey(root);
+  const label = getReflectionRootLabel(rootKey, lang);
+  return {
+    root: rootKey,
+    label,
+    source: "manual_picker",
+    declaration: rootKey === "auto"
+      ? getReflectionRootPreviewCopy(rootKey)
+      : getRootAwareReflectionOpening(rootKey)
+  };
 }
 
 function setSelectedReflectionRoot(root) {
@@ -6904,11 +7546,21 @@ function getReflectionGenerationDelay() {
 }
 
 function buildReflection() {
-  return sanitizeReflectionOutputText(buildReflectionFromSignals(buildSignals()));
+  const signals = buildSignals();
+  return sanitizeReflectionOutputText(composeRootAwareReflection(
+    buildReflectionFromSignals(signals),
+    selectedReflectionRoot,
+    signals
+  ));
 }
 
 function buildReflectionDisplay() {
-  return sanitizeReflectionOutputText(buildReflectionDisplayFromSignals(buildSignals()));
+  const signals = buildSignals();
+  return sanitizeReflectionOutputText(composeRootAwareReflection(
+    buildReflectionDisplayFromSignals(signals),
+    selectedReflectionRoot,
+    signals
+  ));
 }
 
 function buildReflectionDisplayFromSignals(signals) {
@@ -7410,10 +8062,11 @@ function getTomorrowFocus(signals = buildSignals()) {
   return t("tomorrowFocus.steady");
 }
 
-function buildDailyLogRow({ generateReflection = true } = {}) {
+function buildDailyLogRow({ generateReflection = true, includeReflectionRoot = false } = {}) {
   const reflection = generateReflection
     ? ensureReflectionSignature(appState.generatedReflection || buildReflection())
     : ensureReflectionSignature(appState.generatedReflection || "");
+  const reflectionRootMetadata = includeReflectionRoot ? getReflectionRootMetadata() : null;
   const tomorrowFocus = getTomorrowFocus();
   const reminder = getMindfulReminder();
   const drinkScores = getDrinkScores();
@@ -7453,6 +8106,10 @@ function buildDailyLogRow({ generateReflection = true } = {}) {
     Mind_Note_Text: appState.mindNoteText || "",
     Mind_Note_Feeling: appState.mindNoteFeeling || "",
     Mind_Note_Support: appState.mindNoteSupport || "",
+    Reflection_Root: reflectionRootMetadata?.root || "",
+    Reflection_Root_Label: reflectionRootMetadata?.label || "",
+    Reflection_Root_Source: reflectionRootMetadata?.source || "",
+    Reflection_Root_Declaration: reflectionRootMetadata?.declaration || "",
     Reflection_Text: reflection
   };
 }
@@ -7491,6 +8148,10 @@ const mindNoteLogFields = [
 ];
 
 const reflectionLogFields = [
+  "Reflection_Root",
+  "Reflection_Root_Label",
+  "Reflection_Root_Source",
+  "Reflection_Root_Declaration",
   "Reflection_Text",
   "Tomorrow_Focus",
   "NuTuenSai_Reminder"
@@ -7829,6 +8490,7 @@ function buildStateFromDailyLogRow(row) {
 
 function loadDailyLogRowIntoCurrentState(row) {
   appState = buildStateFromDailyLogRow(row);
+  selectedReflectionRoot = normalizeReflectionRootMetadataValue(row?.Reflection_Root) || "auto";
   isEditingReflection = false;
 }
 
@@ -7872,6 +8534,10 @@ const legacyTextLikeFields = new Set([
   "Mind_Note_Text",
   "Mind_Note_Feeling",
   "Mind_Note_Support",
+  "Reflection_Root",
+  "Reflection_Root_Label",
+  "Reflection_Root_Source",
+  "Reflection_Root_Declaration",
   "Support_Need",
   "Reflection_Text",
   "Reflection"
@@ -7896,6 +8562,11 @@ function isLegacyArtifactValue(value, fieldName) {
 function cleanLegacyTextValue(value, fieldName) {
   if (isLegacyArtifactValue(value, fieldName)) return "";
   return String(value).trim();
+}
+
+function normalizeReflectionRootMetadataValue(value) {
+  const rootKey = String(value || "").trim();
+  return rootKey && isSupportedReflectionRoot(rootKey) ? rootKey : "";
 }
 
 function normalizeLogRow(row) {
@@ -7942,6 +8613,10 @@ function normalizeLogRow(row) {
       : normalized.Practice_Minutes;
     normalized.Practice_Note = normalized.Practice_Note || cleanLegacyTextValue(practiceContext.note || "", "Practice_Note");
   }
+  normalized.Reflection_Root = normalizeReflectionRootMetadataValue(normalized.Reflection_Root);
+  normalized.Reflection_Root_Label = cleanLegacyTextValue(normalized.Reflection_Root_Label, "Reflection_Root_Label");
+  normalized.Reflection_Root_Source = cleanLegacyTextValue(normalized.Reflection_Root_Source, "Reflection_Root_Source");
+  normalized.Reflection_Root_Declaration = cleanLegacyTextValue(normalized.Reflection_Root_Declaration, "Reflection_Root_Declaration");
   normalized.Reflection_Text = cleanLegacyTextValue(row.Reflection_Text ?? row.Reflection ?? "", "Reflection_Text");
   return normalized;
 }
@@ -7978,7 +8653,10 @@ function saveCurrentDailyLog({ generateReflection = true, saveSource = "reflecti
     appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
   }
 
-  const row = buildDailyLogRow({ generateReflection });
+  const row = buildDailyLogRow({
+    generateReflection,
+    includeReflectionRoot: saveSource === "reflection"
+  });
   const rows = getDailyLog();
   const existingIndex = rows.findIndex((item) => item.Date === row.Date);
 
@@ -8057,6 +8735,10 @@ function exportMasterExcel() {
   const dailyRows = rows.map((row) => pickColumns(row, DAILY_LOG_COLUMNS));
   const reflectionRows = rows.map((row) => ({
     Date: row.Date,
+    Reflection_Root: row.Reflection_Root || "",
+    Reflection_Root_Label: row.Reflection_Root_Label || "",
+    Reflection_Root_Source: row.Reflection_Root_Source || "",
+    Reflection_Root_Declaration: row.Reflection_Root_Declaration || "",
     Mind_Note_Text: row.Mind_Note_Text || "",
     Mind_Note_Feeling: row.Mind_Note_Feeling || "",
     Mind_Note_Support: row.Mind_Note_Support || "",
@@ -8065,7 +8747,17 @@ function exportMasterExcel() {
   const dailySheet = XLSX.utils.json_to_sheet(dailyRows, { header: DAILY_LOG_COLUMNS });
   const summarySheet = XLSX.utils.json_to_sheet([buildMasterSummary(rows)]);
   const reflectionSheet = XLSX.utils.json_to_sheet(reflectionRows, {
-    header: ["Date", "Mind_Note_Text", "Mind_Note_Feeling", "Mind_Note_Support", "Reflection_Text"]
+    header: [
+      "Date",
+      "Reflection_Root",
+      "Reflection_Root_Label",
+      "Reflection_Root_Source",
+      "Reflection_Root_Declaration",
+      "Mind_Note_Text",
+      "Mind_Note_Feeling",
+      "Mind_Note_Support",
+      "Reflection_Text"
+    ]
   });
   const fieldContextSheet = XLSX.utils.json_to_sheet(buildFieldContextRows(), {
     header: ["Section", "Value"]
@@ -8078,9 +8770,9 @@ function exportMasterExcel() {
     header: AI_CONTEXT_HEADERS
   });
 
-  applySheetReadability(dailySheet, [14, 12, 16, 12, 14, 14, 28, 18, 34, 14, 16, 18, 22, 28, 34, 28, 12, 14, 28, 28, 30, 24, 24, 24]);
+  applySheetReadability(dailySheet, getDailyLogExportColumnWidths());
   applySheetReadability(summarySheet, [14, 14, 18, 16, 16, 18, 20, 72]);
-  applySheetReadability(reflectionSheet, [14, 30, 22, 22, 72]);
+  applySheetReadability(reflectionSheet, [14, 24, 26, 24, 46, 30, 22, 22, 72]);
   applySheetReadability(fieldContextSheet, [28, 90]);
   applySheetReadability(fieldReviewSheet, [20, 20, 14, 18, 18, 18, 16, 22, 22, 22, 22, 22, 18, 18, 18, 24, 36, 92, 92, 92]);
   applySheetReadability(columnGuideSheet, [18, 28, 58, 18, 18, 64, 72, 78, 28, 28, 78, 28, 14]);
@@ -8095,6 +8787,45 @@ function exportMasterExcel() {
   XLSX.utils.book_append_sheet(workbook, aiContextSheet, "AI_Context");
   XLSX.writeFile(workbook, "Mindful_Health_Balance_Master.xlsx");
   document.querySelector("#saveStatus").textContent = t("exportedMaster");
+}
+
+function getDailyLogExportColumnWidths() {
+  const widthByColumn = {
+    Date: 14,
+    Energy: 12,
+    Mind: 16,
+    Sleep: 12,
+    Sleep_Hours: 14,
+    Water_ml: 14,
+    Drinks: 28,
+    Sweet_Drinks_Count: 18,
+    Drink_Profile_JSON: 34,
+    Sugar_Score: 14,
+    Caffeine_Score: 16,
+    Milk_Drink_Count: 18,
+    Hydration_Support_Count: 22,
+    Activities: 28,
+    Run_Detail_JSON: 34,
+    Energy_Causes: 28,
+    Load_Score: 12,
+    Load_Level: 14,
+    Hydration_Status: 28,
+    Tomorrow_Focus: 28,
+    NuTuenSai_Reminder: 30,
+    Practice_Root: 24,
+    Practice_Type: 24,
+    Practice_Minutes: 18,
+    Practice_Context_JSON: 34,
+    Practice_Note: 30,
+    Mind_Note_Text: 34,
+    Mind_Note_Feeling: 24,
+    Mind_Note_Support: 24,
+    Reflection_Root: 22,
+    Reflection_Root_Label: 26,
+    Reflection_Root_Source: 24,
+    Reflection_Root_Declaration: 46
+  };
+  return DAILY_LOG_COLUMNS.map((column) => widthByColumn[column] || 18);
 }
 
 function applySheetReadability(sheet, widths = []) {
@@ -8183,6 +8914,10 @@ function buildAIContextRows() {
       Value: "Practice fields are optional context. Practice_Minutes is duration in minutes, not a spiritual score or merit score."
     },
     {
+      Key: "Reflection_Root",
+      Value: "Reflection_Root is a user-selected reflection focus/intention from the manual picker. It is not diagnosis, medical advice, an AI recommendation, an importance score, or a causal claim."
+    },
+    {
       Key: "Medical_Boundary",
       Value: "Do not diagnose, prescribe, or replace professional medical advice."
     },
@@ -8264,6 +8999,30 @@ const COLUMN_SEMANTIC_GUIDE = {
     dataType: "text",
     allowed: "Gentle hydration self-care cue derived from logged water/drink context",
     forbidden: "medical treatment, diagnosis, command, money"
+  },
+  "Daily_Log.Reflection_Root": {
+    unit: "none",
+    dataType: "categorical key",
+    allowed: "User-selected root/focus for the generated Reflection",
+    forbidden: "diagnosis, medical advice, AI recommendation, importance score"
+  },
+  "Daily_Log.Reflection_Root_Label": {
+    unit: "none",
+    dataType: "text",
+    allowed: "Localized display label for the user-selected Reflection Root",
+    forbidden: "diagnosis, medical advice, score, ranking"
+  },
+  "Daily_Log.Reflection_Root_Source": {
+    unit: "none",
+    dataType: "text",
+    allowed: "Source of Reflection Root selection, currently manual_picker",
+    forbidden: "auto diagnosis, hidden AI-chosen conclusion, medical recommendation"
+  },
+  "Daily_Log.Reflection_Root_Declaration": {
+    unit: "text",
+    dataType: "text",
+    allowed: "NuTuenSai root opening/declaration shown for this reflection",
+    forbidden: "medical conclusion, causal claim, diagnosis, importance score"
   },
   "Daily_Log.Sugar_Score": {
     unit: "descriptive score",
@@ -8366,6 +9125,30 @@ const COLUMN_SEMANTIC_GUIDE = {
     dataType: "text",
     allowed: "User-selected support need for the note",
     forbidden: "clinical recommendation, diagnosis, dependency assessment"
+  },
+  "Reflections.Reflection_Root": {
+    unit: "none",
+    dataType: "categorical key",
+    allowed: "User-selected root/focus for the generated Reflection",
+    forbidden: "diagnosis, medical advice, AI recommendation, importance score"
+  },
+  "Reflections.Reflection_Root_Label": {
+    unit: "none",
+    dataType: "text",
+    allowed: "Localized display label for the user-selected Reflection Root",
+    forbidden: "diagnosis, medical advice, score, ranking"
+  },
+  "Reflections.Reflection_Root_Source": {
+    unit: "none",
+    dataType: "text",
+    allowed: "Source of Reflection Root selection, currently manual_picker",
+    forbidden: "auto diagnosis, hidden AI-chosen conclusion, medical recommendation"
+  },
+  "Reflections.Reflection_Root_Declaration": {
+    unit: "text",
+    dataType: "text",
+    allowed: "NuTuenSai root opening/declaration shown for this reflection",
+    forbidden: "medical conclusion, causal claim, diagnosis, importance score"
   },
   "Reflections.Reflection_Text": {
     unit: "text",
@@ -8718,6 +9501,42 @@ function buildColumnGuideRows() {
       example: "rest_first"
     }),
     row({
+      sheet: "Daily_Log",
+      column: "Reflection_Root",
+      thai: "แกน Reflection",
+      english: "Reflection root",
+      meaning: "คีย์ของแกนที่ผู้ใช้เลือกให้ NuTuenSai ใช้เป็นจุดตั้งต้นของ Reflection รอบนั้น",
+      aiNote: "User-selected reflection intention only. Not an AI recommendation, diagnosis, or importance score.",
+      example: "hydration"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Reflection_Root_Label",
+      thai: "ชื่อแกน Reflection",
+      english: "Reflection root label",
+      meaning: "ชื่อแสดงผลของแกน Reflection ตามภาษาที่ผู้ใช้ใช้ตอนบันทึก",
+      aiNote: "Display label only. Join with Reflection_Root for audit if needed.",
+      example: "น้ำ"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Reflection_Root_Source",
+      thai: "แหล่งที่มาของแกน Reflection",
+      english: "Reflection root source",
+      meaning: "บอกว่าแกน Reflection มาจาก manual picker ของผู้ใช้",
+      aiNote: "manual_picker means user-selected. Do not treat as auto-selected conclusion.",
+      example: "manual_picker"
+    }),
+    row({
+      sheet: "Daily_Log",
+      column: "Reflection_Root_Declaration",
+      thai: "ประโยคเปิดแกน Reflection",
+      english: "Reflection root declaration",
+      meaning: "ประโยคเปิดของ NuTuenSai ที่อธิบายว่าจะอ่านผ่านแกนใด",
+      aiNote: "Framing copy for Reflection. Not a medical conclusion or causal claim.",
+      example: "รอบนี้หนูขออ่านผ่านแกน ‘น้ำ’ เป็นหลักนะคะ"
+    }),
+    row({
       sheet: "Summary",
       column: "Total_Logs",
       thai: "จำนวน log ทั้งหมด",
@@ -8797,6 +9616,42 @@ function buildColumnGuideRows() {
       meaning: "วันที่ของ reflection row",
       aiNote: "Join with Daily_Log by Date when needed.",
       example: "2026-06-03"
+    }),
+    row({
+      sheet: "Reflections",
+      column: "Reflection_Root",
+      thai: "แกน Reflection",
+      english: "Reflection root",
+      meaning: "คีย์ของแกนที่ผู้ใช้เลือกให้ NuTuenSai ใช้เป็นจุดตั้งต้นของ Reflection รอบนั้น",
+      aiNote: "User-selected reflection intention only. Not an AI recommendation, diagnosis, or importance score.",
+      example: "sleep_recovery"
+    }),
+    row({
+      sheet: "Reflections",
+      column: "Reflection_Root_Label",
+      thai: "ชื่อแกน Reflection",
+      english: "Reflection root label",
+      meaning: "ชื่อแสดงผลของแกน Reflection ตามภาษาที่ผู้ใช้ใช้ตอนบันทึก",
+      aiNote: "Display label only. Keep raw root key visible for audit.",
+      example: "การพัก / การนอน"
+    }),
+    row({
+      sheet: "Reflections",
+      column: "Reflection_Root_Source",
+      thai: "แหล่งที่มาของแกน Reflection",
+      english: "Reflection root source",
+      meaning: "บอกว่าแกน Reflection มาจาก manual picker ของผู้ใช้",
+      aiNote: "manual_picker means user-selected. Do not treat as auto-selected conclusion.",
+      example: "manual_picker"
+    }),
+    row({
+      sheet: "Reflections",
+      column: "Reflection_Root_Declaration",
+      thai: "ประโยคเปิดแกน Reflection",
+      english: "Reflection root declaration",
+      meaning: "ประโยคเปิดของ NuTuenSai ที่อธิบายว่าจะอ่านผ่านแกนใด",
+      aiNote: "Framing copy for Reflection. Not a medical conclusion or causal claim.",
+      example: "รอบนี้หนูขออ่านผ่านแกน ‘การพัก/การนอน’ เป็นหลักนะคะ"
     }),
     row({
       sheet: "Reflections",
@@ -10529,10 +11384,17 @@ function importMasterExcel(event) {
 
       const importedRows = XLSX.utils.sheet_to_json(dailySheet, { defval: "" }).map(normalizeLogRow);
       const reflectionMap = readReflectionMap(workbook);
-      const rowsWithReflections = importedRows.map((row) => ({
-        ...row,
-        Reflection_Text: cleanLegacyTextValue(reflectionMap[row.Date] || row.Reflection_Text || "", "Reflection_Text")
-      }));
+      const rowsWithReflections = importedRows.map((row) => {
+        const reflectionRecord = reflectionMap[row.Date] || {};
+        return normalizeLogRow({
+          ...row,
+          Reflection_Root: reflectionRecord.Reflection_Root || row.Reflection_Root || "",
+          Reflection_Root_Label: reflectionRecord.Reflection_Root_Label || row.Reflection_Root_Label || "",
+          Reflection_Root_Source: reflectionRecord.Reflection_Root_Source || row.Reflection_Root_Source || "",
+          Reflection_Root_Declaration: reflectionRecord.Reflection_Root_Declaration || row.Reflection_Root_Declaration || "",
+          Reflection_Text: cleanLegacyTextValue(reflectionRecord.Reflection_Text || row.Reflection_Text || "", "Reflection_Text")
+        });
+      });
 
       setDailyLog(rowsWithReflections);
       document.querySelector("#saveStatus").textContent = t("importDone", { count: rowsWithReflections.length });
@@ -10549,7 +11411,15 @@ function readReflectionMap(workbook) {
 
   return XLSX.utils.sheet_to_json(sheet, { defval: "" }).reduce((acc, row) => {
     const date = normalizeExcelDate(row.Date);
-    if (date) acc[date] = cleanLegacyTextValue(row.Reflection_Text || "", "Reflection_Text");
+    if (date) {
+      acc[date] = {
+        Reflection_Root: normalizeReflectionRootMetadataValue(row.Reflection_Root),
+        Reflection_Root_Label: cleanLegacyTextValue(row.Reflection_Root_Label || "", "Reflection_Root_Label"),
+        Reflection_Root_Source: cleanLegacyTextValue(row.Reflection_Root_Source || "", "Reflection_Root_Source"),
+        Reflection_Root_Declaration: cleanLegacyTextValue(row.Reflection_Root_Declaration || "", "Reflection_Root_Declaration"),
+        Reflection_Text: cleanLegacyTextValue(row.Reflection_Text || "", "Reflection_Text")
+      };
+    }
     return acc;
   }, {});
 }
@@ -10563,6 +11433,7 @@ function localizeLogCell(column, value) {
   if (column === "Practice_Root") return t(`options.practiceRoots.${value}`);
   if (column === "Practice_Type") return t(`options.practiceTypes.${value}`);
   if (column === "Practice_Context_JSON") return localizePracticeContextJson(value);
+  if (column === "Reflection_Root") return value ? getReflectionRootLabel(value, currentLanguage) : "";
   if (column === "Activities") return localizeJoinedValues(value, activityOptions, "activities");
   if (column === "Energy_Causes") return localizeEnergyCauses(value);
   if (column === "Load_Level") return localizeLoadLevel(value);

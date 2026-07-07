@@ -729,3 +729,92 @@ What Slice C intentionally does not add:
 The picker is agency-first. It lets the user tell NuTuenSai which observation root feels relevant for this Reflection round. It is not an AI recommendation, diagnosis, or analysis mode selector.
 
 `auto` in Slice C means a manually selected lightweight auto mode only. It still does not choose a root algorithmically, and it must not summarize every field.
+
+## Slice D-lite Implementation Note - Root-Aware Reflection + Persisted Root Metadata
+
+Slice D-lite starts using the manually selected Reflection Root in the generated Reflection, but only conservatively.
+
+What Slice D-lite adds:
+
+- selected non-`auto` roots prepend a short NuTuenSai root opening to generated Reflection output
+- selected non-`auto` roots add one gentle root-aware supporting sentence when matching current-day evidence exists
+- if matching evidence is thin, the generated text says the root is being read lightly and stays close to saved input
+- `auto` remains a manually selected lightweight mode and does not choose a root algorithmically
+- root signal groups from `REFLECTION_ROOT_MATRIX` remain internal guidance; the UI does not show `primary`, `supporting`, `background`, `lowWeight`, numeric weights, or scores
+
+Persisted metadata:
+
+- saving from Reflection now stores `Reflection_Root`, `Reflection_Root_Label`, `Reflection_Root_Source`, and `Reflection_Root_Declaration`
+- `Reflection_Root_Source` is `manual_picker`, including when the selected value is `auto`
+- the export includes the same metadata in `Daily_Log` and the `Reflections` sheet where appropriate
+- `Column_Guide` and `AI_Context` describe these fields as user-selected reflection intention metadata
+
+What Slice D-lite intentionally does not add:
+
+- no full Reflection composer overhaul
+- no automatic root selection
+- no Field Review or Signal Engine wiring
+- no LLM behavior
+- no medical advice, diagnosis, causal claim, productivity score, or spiritual score
+
+Reflection Root is now treated as user-selected intention metadata: "which root the user asked NuTuenSai to read through for this Reflection." It is not an AI recommendation, diagnosis, or hidden importance score.
+
+## Slice D.1 Implementation Note - Root-Aware De-dup and Attention Policy
+
+Slice D.1 refines the generated Reflection after Slice D-lite.
+
+What Slice D.1 adds:
+
+- an internal root attention policy for each supported manual root
+- root-specific Reflection segments so each root speaks about its own primary context first
+- simple line-level de-duplication for root-aware generated Reflection blocks
+- less repetition between root opening, root hint, and the old base composer anchors
+- moderate-length output: usually root opening, root-specific reading, supporting context, and one gentle next line
+
+Root behavior:
+
+- `hydration` focuses on water/hydration first, then load/activity/caffeine only as context
+- `sleep_recovery` focuses on sleep/recovery first, then load/caffeine/energy as context
+- `load_activity` focuses on activity/load first, with water/sleep/energy around it as support
+- `drinks_caffeine_sweetness` focuses on drink context without diet, calorie, medical, or expense judgment
+- `mind_state` gives priority to Mind Note, feeling, support need, and user-owned meaning
+- `practice_context` treats practice as self-care context, not a score or success/failure measure
+- `auto` remains close to the pre-root composer and still does not choose a root automatically
+
+What Slice D.1 intentionally does not add:
+
+- no schema or export change beyond the Slice D-lite metadata already added
+- no automatic root selection
+- no Signal Engine or Field Review wiring
+- no visible weight, score, or ranking
+- no diagnosis, advice, causation, performance judgment, or spiritual score
+
+This is still conservative. It is not a full Reflection composer rewrite; it is a root-aware attention and de-dup layer that helps NuTuenSai speak to the selected root and stay quieter around unrelated fields.
+
+## Slice D.2 Implementation Note - Root-Specific Detail Anchors
+
+Slice D.2 restores concrete daily details to root-aware Reflection without returning to a data dump.
+
+What Slice D.2 adds:
+
+- root-specific detail anchor helpers that pull only 1-2 relevant details for the selected root
+- hydration pulls water amount and nearby caffeine/activity context when present
+- sleep/recovery pulls sleep hours/category and nearby caffeine/load context when present
+- load/activity pulls translated activity labels, load level, and one recovery/hydration context when present
+- drinks pulls drink profile names, caffeine/sweetness context, and water as support when present
+- mind pulls Mind Note text, feeling/support, or mind state before body metrics
+- practice pulls practice type, minutes, and note when present
+
+The composition goal is now:
+
+1. root opening
+2. concrete detail anchor(s)
+3. root meaning sentence
+4. gentle next observation / closing
+
+This keeps the Reflection grounded in the real saved day while avoiding both extremes:
+
+- not a raw data dump
+- not an overly generic root summary
+
+Slice D.2 does not add schema/export changes, automatic root selection, visible weights, scores, diagnosis, medical advice, or Signal Engine / Field Review wiring.

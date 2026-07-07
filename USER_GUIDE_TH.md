@@ -314,6 +314,14 @@ Mind Note เป็นช่องบันทึกใจแบบบาง ๆ
 
 Reflection ที่สร้างใหม่จะมีหัวใจฟ้า `🩵` ท้ายข้อความหนึ่งครั้ง เป็นลายเซ็น NuTuenSai แบบเบา ๆ ไม่ใช่คะแนนหรือการประเมิน
 
+Reflection Root ให้พี่เลือกแกนสังเกตของรอบนั้น เช่น น้ำ การพัก กิจกรรม เครื่องดื่ม ใจ หรือการภาวนา ถ้าเลือกแกนที่ไม่ใช่ Auto ข้อความ Reflection จะใช้ประโยค NuTuenSai แบบสั้นที่เหมาะกับแกนนั้น ส่วน Auto ยังอยู่ใกล้ composer เดิม ไม่ใช่คะแนน ไม่ใช่คำแนะนำทางการแพทย์ และไม่ใช่การวินิจฉัย
+
+แต่ละแกนจะจัดน้ำหนักการพูดต่างกันเล็กน้อย เช่น แกนน้ำจะให้พื้นที่กับน้ำและบริบทที่เกี่ยวข้อง ส่วนแกนใจจะให้พื้นที่กับ Mind Note และความหมายที่ผู้ใช้บันทึกไว้ ข้อมูลอื่นยังอยู่เป็นบริบทประกอบ ไม่ใช่ทุกช่องจะมีพื้นที่เท่ากัน
+
+Reflection จะดึงรายละเอียดจริงที่เกี่ยวกับแกนนั้นกลับมาเพียง 1-2 จุด เช่น ปริมาณน้ำ ชั่วโมงนอน ชื่อกิจกรรม ชื่อเครื่องดื่ม Mind Note หรือ practice note เพื่อให้ยังเห็นข้อมูลของวันจริงโดยไม่กลายเป็น data dump
+
+เมื่อกด `บันทึก Reflection วันนี้` แอปจะเก็บ metadata ของ Reflection Root เช่น `Reflection_Root`, `Reflection_Root_Label`, `Reflection_Root_Source`, และ `Reflection_Root_Declaration` เพื่อให้ export/Excel รู้ว่า Reflection รอบนั้นถูกอ่านผ่านเจตนาใดของผู้ใช้ ค่าเหล่านี้เป็นบริบทการอ่าน ไม่ใช่ AI เลือกแทนพี่หรือสรุปความสำคัญของชีวิต
+
 ## 4. การบันทึกข้อมูล
 
 ### Save to Daily Log
@@ -324,7 +332,7 @@ Reflection ที่สร้างใหม่จะมีหัวใจฟ้
 
 กด `บันทึก Reflection วันนี้` จากหน้า Reflection/NuTuenSai เมื่อต้องการบันทึกข้อมูลวันนี้พร้อม generated/edited Reflection
 
-ข้อมูลที่บันทึกจะมาจาก state ปัจจุบันของหน้าเว็บ เช่น Energy, Mind, Sleep, Sleep Hours, น้ำ, เครื่องดื่ม, activities, Run Detail, load, reminder, Practice Context, Mind Note และ Reflection ถ้ามี
+ข้อมูลที่บันทึกจะมาจาก state ปัจจุบันของหน้าเว็บ เช่น Energy, Mind, Sleep, Sleep Hours, น้ำ, เครื่องดื่ม, activities, Run Detail, load, reminder, Practice Context, Mind Note, Reflection และ Reflection Root metadata ถ้ามีการบันทึกจากหน้า Reflection
 
 ถ้าวันเดิมมีข้อมูลอยู่แล้ว แอปจะถามก่อนอัปเดตข้อมูลจากหน้านั้น และจะเก็บข้อมูลเดิมส่วนอื่นไว้
 
@@ -370,7 +378,7 @@ Mindful_Health_Balance_Master.xlsx
 
 `AI_Context` เป็น sheet บริบทระดับ workbook สำหรับ AI/LLM โดยระบุชัดว่าไฟล์นี้เป็น self-care reflection workbook ไม่ใช่ finance/expense/accounting/trading/spending workbook เช่น `Water_ml` คือปริมาณน้ำหน่วยมิลลิลิตร ไม่ใช่เงินหรือค่าใช้จ่าย
 
-ตั้งแต่ v1.9.3 `Daily_Log` มี optional columns ใหม่คือ `Sleep_Hours` และ `Run_Detail_JSON` โดยยังเก็บ `Sleep` และ `Activities` เดิมไว้ครบ ไฟล์เก่าที่ไม่มีสองคอลัมน์นี้ยัง import ได้ตามปกติ
+`Daily_Log` มี optional columns เพิ่มตามพัฒนาการของระบบ เช่น `Sleep_Hours`, `Run_Detail_JSON`, และ Reflection Root metadata (`Reflection_Root`, `Reflection_Root_Label`, `Reflection_Root_Source`, `Reflection_Root_Declaration`) โดยยังเก็บ field เดิมไว้ครบ ไฟล์เก่าที่ไม่มีคอลัมน์เหล่านี้ยัง import ได้ตามปกติ
 
 ตั้งแต่ v1.9 เป็นต้นไป `Field_Context` จะอธิบายว่าไฟล์นี้เป็น local-first self-care log ที่ผู้ใช้เป็นเจ้าของเอง และถ้าผู้ใช้เลือกนำไปให้ AI/LLM อ่าน ควรอ่านเพื่อ pattern reflection เท่านั้น ไม่ใช่ diagnosis หรือ medical advice
 

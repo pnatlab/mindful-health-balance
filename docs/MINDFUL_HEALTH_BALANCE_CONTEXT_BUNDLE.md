@@ -457,6 +457,15 @@ The guide includes key columns from:
 
 The workbook also includes `AI_Context`, a workbook-level semantic guard sheet with key/value rows. It tells AI/LLM readers that the workbook is a self-care reflection log, not a finance, expense, accounting, trading, or spending workbook. It explicitly notes that `Water_ml` means milliliters of water, not money or baht.
 
+Current MHB 2.0 exports can include Reflection Root metadata:
+
+- `Reflection_Root`
+- `Reflection_Root_Label`
+- `Reflection_Root_Source`
+- `Reflection_Root_Declaration`
+
+These fields describe the user-selected intention for a generated Reflection, such as reading through hydration, sleep/recovery, load/activity, drinks, mind state, or practice context. `Reflection_Root_Source` is `manual_picker`; even `auto` is a manually selected lightweight mode, not hidden automatic root selection. These fields are not diagnosis, medical advice, AI recommendation, cause, score, or ranking.
+
 Since v1.9.3, `Column_Guide` also documents optional structured fields:
 
 - `Sleep_Hours`: self-reported sleep duration used to derive the existing `Sleep` category gently.
