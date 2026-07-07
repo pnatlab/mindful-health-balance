@@ -659,9 +659,9 @@ Forbidden wording:
 - `failure`
 - any shame-based copy
 
-## Runtime Non-Goals for This Note
+## Original Design Note Runtime Non-Goals
 
-This design note does not:
+The original Slice A design/test note did not by itself:
 
 - change `script.js`
 - change `style.css`
@@ -701,3 +701,31 @@ What Slice B intentionally does not add:
 The helper returns category names such as `primary`, `supporting`, `background`, and `lowWeight`, not numeric values such as `1.0`, `0.6`, `0.3`, or `0.1`.
 
 `auto` remains `future_policy_only`. It is present so future code can safely ask for an auto config, but Slice B does not choose a root automatically and must not summarize every field.
+
+## Slice C Implementation Note - Manual Root Picker / UI Preview
+
+Slice C adds a manual Reflection Root picker to the Reflection page.
+
+What Slice C adds:
+
+- a soft NuTuenSai-style root picker near the Reflection Generator
+- root options for `auto`, `hydration`, `sleep_recovery`, `load_activity`, `drinks_caffeine_sweetness`, `mind_state`, and `practice_context`
+- default selected root: `auto`
+- a UI-only root preview with root label, NuTuenSai declaration-style copy, and boundary line
+- localized TH / EN / ZH picker and preview copy
+- button-based selection with visible active state and no visible weights
+
+What Slice C intentionally does not add:
+
+- no Reflection composer weighting behavior
+- no generated Reflection output change
+- no root selection saved to `Daily_Log`
+- no Excel/schema/export change
+- no Field Review or Signal Engine wiring
+- no automatic root selection for `auto`
+- no visible score, numeric weight, or importance ranking
+- no LLM behavior
+
+The picker is agency-first. It lets the user tell NuTuenSai which observation root feels relevant for this Reflection round. It is not an AI recommendation, diagnosis, or analysis mode selector.
+
+`auto` in Slice C means a manually selected lightweight auto mode only. It still does not choose a root algorithmically, and it must not summarize every field.

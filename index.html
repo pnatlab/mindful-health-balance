@@ -508,6 +508,21 @@
             <p class="section-kicker" data-i18n="reflectionGenerator">Reflection Generator</p>
           </div>
         </div>
+        <div class="reflection-root-picker" aria-labelledby="reflectionRootPickerTitle">
+          <div class="reflection-root-picker-header">
+            <div>
+              <p class="section-kicker" data-i18n="reflectionRootPickerKicker">Reflection Root</p>
+              <h3 id="reflectionRootPickerTitle" data-i18n="reflectionRootPickerTitle">วันนี้อยากให้หนูอ่านผ่านแกนไหนเป็นหลักนะคะ</h3>
+              <p class="section-helper" data-i18n="reflectionRootPickerHelper">เลือกแกนสังเกตเบา ๆ ให้ NuTuenSai ใช้เป็นจุดตั้งต้นของ Reflection รอบนี้ ข้อมูลอื่นจะยังเป็นเพียงบริบทประกอบค่ะ</p>
+            </div>
+          </div>
+          <div class="reflection-root-options" id="reflectionRootOptions" role="group" aria-labelledby="reflectionRootPickerTitle"></div>
+          <div class="reflection-root-preview" id="reflectionRootPreview" aria-live="polite">
+            <p class="reflection-root-preview-title" id="reflectionRootPreviewTitle"></p>
+            <p class="reflection-root-preview-copy" id="reflectionRootPreviewCopy"></p>
+            <p class="reflection-root-boundary" id="reflectionRootBoundary"></p>
+          </div>
+        </div>
         <div class="reflection-preview" id="reflectionPreview" aria-live="polite">
           <div class="reflection-generation-state is-hidden" id="reflectionGenerationState" aria-hidden="true">
             <span data-i18n="reflectionGenerating">กำลังฟัง pattern ของวันนี้…</span>

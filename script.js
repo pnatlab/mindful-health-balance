@@ -327,6 +327,28 @@ const translations = {
     reflectionViewHelper: "ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม",
     reflectionGeneratorHelper: "กดสรุปวันนี้เพื่อให้ระบบสะท้อน pattern จากข้อมูลวันนี้ และยังแก้ไขเล็กน้อยก่อนบันทึกได้",
     reflectionActionsKicker: "Ready to save",
+    reflectionRootPickerKicker: "Reflection Root",
+    reflectionRootPickerTitle: "วันนี้อยากให้หนูอ่านผ่านแกนไหนเป็นหลักนะคะ",
+    reflectionRootPickerHelper: "เลือกแกนสังเกตเบา ๆ ให้ NuTuenSai ใช้เป็นจุดตั้งต้นของ Reflection รอบนี้ ข้อมูลอื่นจะยังเป็นเพียงบริบทประกอบค่ะ",
+    reflectionRootSelectedLabel: "แกนที่เลือก: {root}",
+    reflectionRootBoundaryDefault: "ยังไม่ใช่ข้อสรุป และไม่ใช่คำแนะนำทางการแพทย์นะคะ เป็นเพียงจุดตั้งต้นของการสังเกต",
+    reflectionRootBoundaryMind: "บริบทใจยังเป็นความหมายที่พี่เป็นเจ้าของเอง หนูจะช่วยสะท้อน ไม่สรุปแทนค่ะ",
+    reflectionRootBoundaryPractice: "การภาวนาเป็นบริบทของการดูแลใจ ไม่ใช่คะแนนหรือการวัดความสำเร็จค่ะ",
+    reflectionRootBoundaryDrinks: "อ่านเป็นบริบทของวัน ไม่ใช่การตัดสินอาหาร เครื่องดื่ม หรือสุขภาพค่ะ",
+    reflectionRootOptionAuto: "Auto",
+    reflectionRootOptionHydration: "น้ำ",
+    reflectionRootOptionSleep: "การพัก",
+    reflectionRootOptionLoad: "กิจกรรม",
+    reflectionRootOptionDrinks: "เครื่องดื่ม",
+    reflectionRootOptionMind: "ใจ",
+    reflectionRootOptionPractice: "การภาวนา",
+    reflectionRootPreviewAuto: "ให้หนูวางแกนแบบเบา ๆ จากข้อมูลที่พี่บันทึกไว้ โดยยังไม่สรุปแทนพี่นะคะ",
+    reflectionRootPreviewHydration: "รอบนี้หนูจะอ่านผ่านแกน ‘น้ำ’ เป็นหลัก แล้วใช้กิจกรรม เครื่องดื่ม และบริบทของวันเป็นฉากประกอบค่ะ",
+    reflectionRootPreviewSleep: "รอบนี้หนูจะอ่านผ่านแกน ‘การพัก/การนอน’ เป็นหลัก แล้วอ่านคาเฟอีน โหลดของวัน และพลังงานเป็นบริบทประกอบค่ะ",
+    reflectionRootPreviewLoad: "รอบนี้หนูจะอ่านผ่านแกน ‘กิจกรรม/ภาระของวัน’ เป็นหลัก แล้วดูว่าน้ำ การพัก และพลังงานอยู่รอบ ๆ จังหวะนั้นอย่างไรค่ะ",
+    reflectionRootPreviewDrinks: "รอบนี้หนูจะอ่านผ่านแกน ‘เครื่องดื่ม/คาเฟอีน/ความหวาน’ เป็นหลัก โดยไม่ตัดสิน ไม่คิดเป็นแคลอรี่ และไม่สรุปเป็นคำแนะนำค่ะ",
+    reflectionRootPreviewMind: "รอบนี้หนูจะให้พื้นที่กับ ‘บริบทใจ’ ที่พี่บันทึกไว้เป็นหลัก โดยไม่สรุปใจแทนพี่ค่ะ",
+    reflectionRootPreviewPractice: "รอบนี้หนูจะอ่าน ‘การภาวนา/การดูแลใจ’ เป็นบริบทของวัน ไม่ใช่คะแนน ไม่ใช่ถูกหรือผิดค่ะ",
     todayInputShortcutsAria: "Today input shortcuts",
     backToSignalCockpit: "กลับไปแผงสัญญาณ",
     backToTodayStepOne: "กลับ Today 1/2",
@@ -1247,6 +1269,28 @@ const translations = {
     reflectionViewHelper: "Review today’s reflection, then save it to the Daily Log when ready.",
     reflectionGeneratorHelper: "Reflect creates a reflection from today's signals. You can still edit it lightly before saving.",
     reflectionActionsKicker: "Ready to save",
+    reflectionRootPickerKicker: "Reflection Root",
+    reflectionRootPickerTitle: "Which root should NuTuenSai read through today?",
+    reflectionRootPickerHelper: "Choose a gentle starting point for this Reflection. Other signals stay as supporting context.",
+    reflectionRootSelectedLabel: "Selected root: {root}",
+    reflectionRootBoundaryDefault: "This is not a conclusion or medical advice. It is only a gentle starting point for noticing.",
+    reflectionRootBoundaryMind: "Mind context remains user-owned meaning. NuTuenSai can reflect it, not define it for you.",
+    reflectionRootBoundaryPractice: "Practice is self-care context, not a score or measure of success.",
+    reflectionRootBoundaryDrinks: "This reads drink context, not diet judgment, drink judgment, or medical advice.",
+    reflectionRootOptionAuto: "Auto",
+    reflectionRootOptionHydration: "Water",
+    reflectionRootOptionSleep: "Rest",
+    reflectionRootOptionLoad: "Activity",
+    reflectionRootOptionDrinks: "Drinks",
+    reflectionRootOptionMind: "Mind",
+    reflectionRootOptionPractice: "Practice",
+    reflectionRootPreviewAuto: "Let NuTuenSai hold the root lightly from the data you recorded, without deciding the meaning for you.",
+    reflectionRootPreviewHydration: "This round will read mainly through water, with activity, drinks, and daily context as the surrounding scene.",
+    reflectionRootPreviewSleep: "This round will read mainly through sleep and recovery, with caffeine, daily load, and energy as supporting context.",
+    reflectionRootPreviewLoad: "This round will read mainly through activity and daily load, while noticing how water, rest, and energy sit around that rhythm.",
+    reflectionRootPreviewDrinks: "This round will read mainly through drinks, caffeine, and sweetness without judging calories, health, or choices.",
+    reflectionRootPreviewMind: "This round will give space to the mind context you recorded, without defining your inner state for you.",
+    reflectionRootPreviewPractice: "This round will read practice and self-care context as part of the day, not as a score or right/wrong measure.",
     todayInputShortcutsAria: "Today input shortcuts",
     backToSignalCockpit: "Back to cockpit",
     backToTodayStepOne: "Back to Today 1/2",
@@ -2167,6 +2211,28 @@ const translations = {
     reflectionViewHelper: "查看今天的反思内容，准备好后再保存到每日记录。",
     reflectionGeneratorHelper: "点击回顾会根据今天的信号生成回顾，保存前仍可轻微编辑。",
     reflectionActionsKicker: "准备保存",
+    reflectionRootPickerKicker: "Reflection Root",
+    reflectionRootPickerTitle: "今天想让 NuTuenSai 先从哪个主轴来读？",
+    reflectionRootPickerHelper: "轻轻选择一个观察起点。其他信号仍只是辅助背景。",
+    reflectionRootSelectedLabel: "已选主轴：{root}",
+    reflectionRootBoundaryDefault: "这不是结论，也不是医疗建议，只是温柔观察的起点。",
+    reflectionRootBoundaryMind: "心的背景仍由你拥有其意义。NuTuenSai 只帮助反映，不替你定义。",
+    reflectionRootBoundaryPractice: "练习是自我照顾的背景，不是分数，也不是成功或失败。",
+    reflectionRootBoundaryDrinks: "这里只读一天中的饮品背景，不评价饮食、饮品或健康。",
+    reflectionRootOptionAuto: "自动",
+    reflectionRootOptionHydration: "饮水",
+    reflectionRootOptionSleep: "休息",
+    reflectionRootOptionLoad: "活动",
+    reflectionRootOptionDrinks: "饮品",
+    reflectionRootOptionMind: "心",
+    reflectionRootOptionPractice: "练习",
+    reflectionRootPreviewAuto: "让 NuTuenSai 从已记录的数据中轻轻放置主轴，但不替你下结论。",
+    reflectionRootPreviewHydration: "这一轮会先从“饮水”来读，并把活动、饮品和当天背景作为辅助。",
+    reflectionRootPreviewSleep: "这一轮会先从“睡眠/恢复”来读，并把咖啡因、负荷和能量作为背景。",
+    reflectionRootPreviewLoad: "这一轮会先从“活动/负荷”来读，并观察饮水、休息和能量如何围绕它出现。",
+    reflectionRootPreviewDrinks: "这一轮会先从“饮品/咖啡因/甜度”来读，不评价热量、健康或选择。",
+    reflectionRootPreviewMind: "这一轮会给你记录的心的背景更多空间，但不替你定义内在状态。",
+    reflectionRootPreviewPractice: "这一轮会把练习/自我照顾读作当天背景，不是分数，也不是对错。",
     todayInputShortcutsAria: "Today 输入快捷键",
     backToSignalCockpit: "返回信号面板",
     backToTodayStepOne: "返回 Today 1/2",
@@ -3312,12 +3378,40 @@ let activeTodaySignal = "hydration";
 let activeFieldReviewRoom = "hydration";
 let activeFieldReviewFocus = "overview";
 let activeSignalRelationshipPair = "";
+let selectedReflectionRoot = "auto";
 let isEditingReflection = false;
 let isGeneratingReflection = false;
 let reflectionGenerationTimerId;
 const REFLECTION_GENERATION_DELAY_MS = 850;
 const REFLECTION_SIGNATURE = "🩵";
 const FIELD_REVIEW_DEFAULT_TIMEFRAME = "30";
+const REFLECTION_ROOT_OPTIONS = [
+  "auto",
+  "hydration",
+  "sleep_recovery",
+  "load_activity",
+  "drinks_caffeine_sweetness",
+  "mind_state",
+  "practice_context"
+];
+const REFLECTION_ROOT_OPTION_LABEL_KEYS = {
+  auto: "reflectionRootOptionAuto",
+  hydration: "reflectionRootOptionHydration",
+  sleep_recovery: "reflectionRootOptionSleep",
+  load_activity: "reflectionRootOptionLoad",
+  drinks_caffeine_sweetness: "reflectionRootOptionDrinks",
+  mind_state: "reflectionRootOptionMind",
+  practice_context: "reflectionRootOptionPractice"
+};
+const REFLECTION_ROOT_PREVIEW_KEYS = {
+  auto: "reflectionRootPreviewAuto",
+  hydration: "reflectionRootPreviewHydration",
+  sleep_recovery: "reflectionRootPreviewSleep",
+  load_activity: "reflectionRootPreviewLoad",
+  drinks_caffeine_sweetness: "reflectionRootPreviewDrinks",
+  mind_state: "reflectionRootPreviewMind",
+  practice_context: "reflectionRootPreviewPractice"
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   applyThemePreference(currentThemePreference);
@@ -3398,6 +3492,62 @@ function applyTranslations() {
   updateViewPanels();
   updateTodayInputStepUI();
   updateTodaySignalCockpitUI();
+  renderReflectionRootPicker();
+}
+
+function getReflectionRootOptionLabel(root) {
+  const key = REFLECTION_ROOT_OPTION_LABEL_KEYS[root];
+  return key ? t(key) : getReflectionRootLabel(root, currentLanguage);
+}
+
+function getReflectionRootPreviewCopy(root) {
+  const key = REFLECTION_ROOT_PREVIEW_KEYS[root] || REFLECTION_ROOT_PREVIEW_KEYS.auto;
+  return t(key);
+}
+
+function getReflectionRootBoundaryCopy(root) {
+  if (root === "mind_state") return t("reflectionRootBoundaryMind");
+  if (root === "practice_context") return t("reflectionRootBoundaryPractice");
+  if (root === "drinks_caffeine_sweetness") return t("reflectionRootBoundaryDrinks");
+  return t("reflectionRootBoundaryDefault");
+}
+
+function setSelectedReflectionRoot(root) {
+  const nextRoot = isSupportedReflectionRoot(root) ? root : "auto";
+  selectedReflectionRoot = nextRoot;
+  renderReflectionRootPicker();
+}
+
+function renderReflectionRootPicker() {
+  const options = document.querySelector("#reflectionRootOptions");
+  const preview = document.querySelector("#reflectionRootPreview");
+  const previewTitle = document.querySelector("#reflectionRootPreviewTitle");
+  const previewCopy = document.querySelector("#reflectionRootPreviewCopy");
+  const boundary = document.querySelector("#reflectionRootBoundary");
+  if (!options || !preview || !previewTitle || !previewCopy || !boundary) return;
+
+  const activeRoot = isSupportedReflectionRoot(selectedReflectionRoot) ? selectedReflectionRoot : "auto";
+  selectedReflectionRoot = activeRoot;
+
+  options.innerHTML = REFLECTION_ROOT_OPTIONS.map((root) => {
+    const isActive = root === activeRoot;
+    return `
+      <button
+        type="button"
+        class="reflection-root-option${isActive ? " active" : ""}"
+        data-reflection-root="${escapeHtml(root)}"
+        aria-pressed="${isActive ? "true" : "false"}"
+      >
+        ${escapeHtml(getReflectionRootOptionLabel(root))}
+      </button>
+    `;
+  }).join("");
+
+  const rootLabel = getReflectionRootLabel(activeRoot, currentLanguage);
+  preview.dataset.reflectionRoot = activeRoot;
+  previewTitle.textContent = t("reflectionRootSelectedLabel", { root: rootLabel });
+  previewCopy.textContent = getReflectionRootPreviewCopy(activeRoot);
+  boundary.textContent = getReflectionRootBoundaryCopy(activeRoot);
 }
 
 function applyThemePreference(preference = currentThemePreference) {
@@ -3718,6 +3868,11 @@ function bindEvents() {
 
   document.querySelector("#generateReflection").addEventListener("click", generateReflectionWithPulse);
   document.querySelector("#clearReflection").addEventListener("click", clearGeneratedReflection);
+  document.querySelector("#reflectionRootOptions")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-reflection-root]");
+    if (!button) return;
+    setSelectedReflectionRoot(button.dataset.reflectionRoot);
+  });
 
   document.querySelector("#reflectionOutput").addEventListener("input", (event) => {
     appState.generatedReflection = event.target.value;
