@@ -257,6 +257,16 @@ Reason:
 - Matrix logic is mostly config plus pure helper behavior.
 - Helps future Slice D/E work without editing the whole runtime file.
 
+Implementation note, 2026-07-08:
+
+- Reflection Root Matrix and pure root helpers were extracted to `js/config/reflectionRootMatrix.js`.
+- The app still uses no-build script loading for GitHub Pages compatibility.
+- `index.html` loads `js/config/reflectionRootMatrix.js` after workbook schema config and before `script.js`.
+- Root constants and helpers remain globally available through `window.*` and are rebound in `script.js` for backward-compatible call sites.
+- Root keys, labels, declarations, signal groups, and boundary tags are preserved.
+- `auto` remains `future_policy_only` and does not perform automatic root selection.
+- No runtime behavior change is intended.
+
 ### Slice M3 - Extract Signal Engine config/helpers
 
 Extract:
