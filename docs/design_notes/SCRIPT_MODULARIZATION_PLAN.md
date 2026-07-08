@@ -233,6 +233,16 @@ Reason:
 - Low runtime behavior risk.
 - Makes export/import and docs easier to audit.
 
+Implementation note, 2026-07-08:
+
+- Workbook schema/config was extracted to `js/config/workbookSchema.js`.
+- The app still uses a no-build script loading strategy for GitHub Pages compatibility.
+- `index.html` loads `js/config/workbookSchema.js` before `script.js`.
+- `script.js` binds the same public constant names from `window` for backward-compatible call sites.
+- Daily_Log column order is preserved.
+- Reflection root metadata fields remain present: `Reflection_Root`, `Reflection_Root_Label`, `Reflection_Root_Source`, and `Reflection_Root_Declaration`.
+- No runtime behavior change is intended.
+
 ### Slice M2 - Extract Reflection Root Matrix
 
 Extract:

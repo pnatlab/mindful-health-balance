@@ -4,57 +4,9 @@ const LANGUAGE_KEY = "mindfulHealthLanguage";
 const WELCOME_KEY_PREFIX = "mindfulHealthWelcomeSeen";
 const THEME_KEY = "mindfulHealthTheme";
 const CURRENT_FORM_CLEARED_PREFIX = "mindfulHealthCurrentFormCleared";
-const DAILY_LOG_COLUMNS = [
-  "Date",
-  "Energy",
-  "Mind",
-  "Sleep",
-  "Sleep_Hours",
-  "Water_ml",
-  "Drinks",
-  "Sweet_Drinks_Count",
-  "Drink_Profile_JSON",
-  "Sugar_Score",
-  "Caffeine_Score",
-  "Milk_Drink_Count",
-  "Hydration_Support_Count",
-  "Activities",
-  "Run_Detail_JSON",
-  "Energy_Causes",
-  "Load_Score",
-  "Load_Level",
-  "Hydration_Status",
-  "Tomorrow_Focus",
-  "NuTuenSai_Reminder",
-  "Practice_Root",
-  "Practice_Type",
-  "Practice_Minutes",
-  "Practice_Context_JSON",
-  "Practice_Note",
-  "Mind_Note_Text",
-  "Mind_Note_Feeling",
-  "Mind_Note_Support",
-  "Reflection_Root",
-  "Reflection_Root_Label",
-  "Reflection_Root_Source",
-  "Reflection_Root_Declaration"
-];
-const COLUMN_GUIDE_HEADERS = [
-  "Sheet",
-  "Column",
-  "Meaning",
-  "Unit",
-  "Data_Type",
-  "Allowed_Interpretation",
-  "Forbidden_Interpretation",
-  "AI_Read_Note",
-  "Thai_Label",
-  "English_Label",
-  "AI_Reading_Note",
-  "Example_Value",
-  "Is_Canonical"
-];
-const AI_CONTEXT_HEADERS = ["Key", "Value"];
+const DAILY_LOG_COLUMNS = window.DAILY_LOG_COLUMNS;
+const COLUMN_GUIDE_HEADERS = window.COLUMN_GUIDE_HEADERS;
+const AI_CONTEXT_HEADERS = window.AI_CONTEXT_HEADERS;
 
 const REFLECTION_ROOT_MATRIX = {
   hydration: {
