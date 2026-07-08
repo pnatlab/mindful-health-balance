@@ -64,6 +64,12 @@ Field Review Slice A, future Field Review Companion, timeframe-aware review, v2 
 - [FIELD_REVIEW_TIMEFRAME_LAYER_V2.md](FIELD_REVIEW_TIMEFRAME_LAYER_V2.md) - Roadmap for choosing day/week/month/long-term review frames honestly.
 - [NAVIGATION_ARCHITECTURE_V2.md](NAVIGATION_ARCHITECTURE_V2.md) - Proposed v2 navigation structure including Field Review.
 
+## 05 Architecture / Implementation Planning
+
+Runtime architecture, modularization planning, and implementation-safety notes for future MHB refactors.
+
+- [SCRIPT_MODULARIZATION_PLAN.md](SCRIPT_MODULARIZATION_PLAN.md) - Audits the current monolithic `script.js` responsibilities and proposes a conservative GitHub Pages-compatible modularization path.
+
 ## 99 Stabilization
 
 Pre-v2 stability checklist for v1.9.x.
