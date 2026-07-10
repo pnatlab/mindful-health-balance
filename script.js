@@ -3383,7 +3383,7 @@ function hasRootSpecificReflectionData(root, signals = buildSignals()) {
   if (rootKey === "load_activity") return Boolean((signals.recoveryLoad?.activities || []).length || Number(signals.recoveryLoad?.loadScore || 0) > 0);
   if (rootKey === "drinks_caffeine_sweetness") return Boolean((signals.drinkLoad?.profiles || []).length || signals.drinkLoad?.hasCaffeine || signals.drinkLoad?.sweetDrinksCount);
   if (rootKey === "mind_state") return Boolean((signals.mindNote?.text || "").trim() || signals.mindNote?.mind || signals.mindNote?.feeling || signals.mindNote?.support);
-  if (rootKey === "practice_context") return hasPracticeContextInput(appState);
+  if (rootKey === "practice_context") return buildTodayPracticeContext(appState).hasPracticeEvidence;
   return false;
 }
 
@@ -3685,13 +3685,17 @@ function buildMindDetailAnchors(signals) {
 }
 
 function buildPracticeDetailAnchors() {
+  const todayPractice = buildTodayPracticeContext(appState);
+  if (!todayPractice.hasPracticeEvidence) return [];
+
   const anchors = [];
-  const practiceContext = buildPracticeContextObject();
-  const typeLabel = practiceContext?.type ? t(`options.practiceTypes.${practiceContext.type}`) : "";
-  const minutes = practiceContext?.minutes !== "" && practiceContext?.minutes !== undefined
-    ? formatNumberForLocale(practiceContext.minutes)
+  const typeLabel = todayPractice.practiceType && todayPractice.practiceType !== "none"
+    ? t(`options.practiceTypes.${todayPractice.practiceType}`)
     : "";
-  const note = truncateText(practiceContext?.note || "", 90);
+  const minutes = todayPractice.hasPracticeMinutes
+    ? formatNumberForLocale(todayPractice.practiceMinutes)
+    : "";
+  const note = truncateText(todayPractice.practiceNote, 90);
   if (typeLabel || minutes) {
     if (currentLanguage === "en") anchors.push(`Practice context today includes ${typeLabel || "practice"}${minutes ? ` for about ${minutes} minutes` : ""}.`);
     else if (currentLanguage === "zh") anchors.push(`今天的练习背景包括 ${typeLabel || "练习"}${minutes ? `，约 ${minutes} 分钟` : ""}。`);
@@ -3702,7 +3706,7 @@ function buildPracticeDetailAnchors() {
     else if (currentLanguage === "zh") anchors.push(`Practice note 是${formatRootDetailQuote(note)}。`);
     else anchors.push(`สิ่งที่พี่บันทึกไว้ใน practice note คือ ${formatRootDetailQuote(note)}`);
   }
-  return anchors.length ? anchors : [getRootAwareSupportingHint("practice_context", buildSignals())];
+  return anchors.slice(0, 2);
 }
 
 function buildRootAwareReflectionSegments(root, signals = buildSignals()) {
@@ -3841,30 +3845,63 @@ function buildMindRootReflectionSegments(signals) {
 }
 
 function buildPracticeRootReflectionSegments(signals) {
+  const todayPractice = buildTodayPracticeContext(appState);
   const detailAnchors = buildRootSpecificDetailAnchors("practice_context", signals);
-  const mindContext = signals.mindNote?.mind || signals.mindNote?.text ? (currentLanguage === "en" ? "mind context" : currentLanguage === "zh" ? "心的背景" : "บริบทใจ") : "";
+  const mindContext = signals.mindNote?.mind || signals.mindNote?.text
+    ? (currentLanguage === "en" ? "mind context" : currentLanguage === "zh" ? "心的背景" : "บริบทใจ")
+    : "";
   const sleepContext = getRootSleepContextLabel(signals);
   const loadContext = getRootLoadContextLabel(signals);
-  const contexts = [mindContext, sleepContext, loadContext].filter(Boolean);
+  const contextLabel = [mindContext, sleepContext, loadContext].find(Boolean) || "";
 
-  if (currentLanguage === "en") {
-    const contextLine = contexts.length
-      ? `${joinListNaturally(contexts)} can sit beside it as context, without turning practice into a measure.`
-      : "It stays as a small trace of returning to yourself, not a measure.";
-    return [...detailAnchors, contextLine, "Practice does not need to become performance here; noticing that there is a place to return is enough."];
+  if (!todayPractice.hasPracticeEvidence) {
+    if (currentLanguage === "en") {
+      return [
+        "I do not see practice data recorded for today, so I will not define the day for you.",
+        "If you would like to return, a short moment when you are ready is enough; it does not need to be complete."
+      ];
+    }
+    if (currentLanguage === "zh") {
+      return [
+        "今天还没有看到练习记录，所以不替你定义今天是什么样子。",
+        "如果想回来看看，准备好时从一小段开始就好，不需要做到完整。"
+      ];
+    }
+    return [
+      "วันนี้หนูยังไม่เห็นข้อมูลการภาวนาที่บันทึกไว้ จึงขอไม่สรุปแทนพี่นะคะ",
+      "ถ้าพี่อยากกลับมา เมื่อพร้อมอาจเริ่มจากช่วงสั้น ๆ ที่พอวางลงได้ ไม่ต้องทำให้สมบูรณ์ค่ะ"
+    ];
   }
 
-  if (currentLanguage === "zh") {
-    const contextLine = contexts.length
-      ? `${joinListNaturally(contexts)}可以放在旁边作为背景，但不把练习变成衡量。`
-      : "它只是一个回到自己的小痕迹，不是衡量。";
-    return [...detailAnchors, contextLine, "这里不需要把练习变成表现；看见还有一个可以回来的空间就好。"];
+  let meaningLine;
+  if (todayPractice.practiceIntensityBand === "short") {
+    if (currentLanguage === "en") meaningLine = "This short record is a small place to return to self-care today, not something to measure or increase.";
+    else if (currentLanguage === "zh") meaningLine = "这段短短的记录，是今天回到自我照顾的一小块空间，不是需要衡量或增加的东西。";
+    else meaningLine = "เวลาสั้น ๆ ที่พี่บันทึกไว้เป็นพื้นที่เล็ก ๆ ของการกลับมาดูแลใจในวันนี้ ไม่ใช่สิ่งที่เอาไปวัดหรือเร่งเพิ่มค่ะ";
+  } else if (todayPractice.practiceIntensityBand === "longer") {
+    if (currentLanguage === "en") meaningLine = "There is a recorded space for self-care today; it can stay light and steady rather than becoming a performance.";
+    else if (currentLanguage === "zh") meaningLine = "今天记录里有一段自我照顾的空间，可以保持轻盈和稳定，不需要变成表现。";
+    else meaningLine = "วันนี้มีพื้นที่ของการกลับมาดูแลใจที่บันทึกไว้ หนูขออ่านเป็นจังหวะที่ค่อย ๆ ดูแล ไม่ใช่ผลงานที่เอาไปวัดหรือเปรียบเทียบค่ะ";
+  } else {
+    if (currentLanguage === "en") meaningLine = "The practice recorded today can be held as a gentle self-care context, without judging its length or quality.";
+    else if (currentLanguage === "zh") meaningLine = "今天记录的练习可以作为温和的自我照顾背景，不评价时长或质量。";
+    else meaningLine = "การภาวนาที่บันทึกไว้วันนี้อยู่เป็นบริบทการดูแลใจได้ โดยไม่ต้องตัดสินระยะเวลาหรือคุณภาพค่ะ";
   }
 
-  const contextLine = contexts.length
-    ? `${joinListNaturally(contexts)}อยู่ข้าง ๆ เป็นบริบทได้ โดยให้การภาวนาอยู่เป็นพื้นที่ดูแลใจ ไม่ใช่การวัดผล`
-    : "มันเป็นร่องรอยเล็ก ๆ ของการกลับมาดูแลตัวเอง ไม่ใช่การวัดผลค่ะ";
-  return [...detailAnchors, contextLine, "การภาวนาไม่ใช่ performance นะคะ แค่เห็นว่ามีพื้นที่ให้กลับมาก็พอ"];
+  const contextLine = contextLabel
+    ? currentLanguage === "en"
+      ? `${contextLabel} can sit beside this practice as today's context, without turning either one into a conclusion.`
+      : currentLanguage === "zh"
+        ? `${contextLabel}可以放在练习旁边作为今天的背景，不把任何一项读成结论。`
+        : `${contextLabel}อยู่ข้างการภาวนาเป็นบริบทของวันได้ โดยไม่เปลี่ยนสิ่งใดให้เป็นข้อสรุปค่ะ`
+    : "";
+  const closingLine = currentLanguage === "en"
+    ? "When ready, returning gently is enough; the meaning of this practice remains yours."
+    : currentLanguage === "zh"
+      ? "准备好时，轻轻回来就好；这段练习的意义仍然属于你。"
+      : "เมื่อพร้อมค่อยกลับมาอย่างเบา ๆ ก็พอค่ะ ความหมายของการภาวนายังเป็นของพี่เอง";
+
+  return [...detailAnchors, meaningLine, contextLine, closingLine].filter(Boolean).slice(0, 5);
 }
 
 function normalizeReflectionLineForDedupe(line) {
@@ -5294,6 +5331,42 @@ function buildPracticeContextObject(state = appState) {
     note,
     source: practiceSourceKey,
     reflectDaily: false
+  };
+}
+
+function buildTodayPracticeContext(state = appState) {
+  const practiceContext = buildPracticeContextObject(state);
+  const practiceType = practiceContext?.type || "";
+  const practiceMinutes = practiceContext?.minutes === "" || practiceContext?.minutes === undefined
+    ? ""
+    : Number(practiceContext.minutes);
+  const hasPracticeType = Boolean(practiceType && practiceType !== "none");
+  const hasPracticeMinutes = Number.isFinite(practiceMinutes) && practiceMinutes > 0;
+  const practiceNote = String(practiceContext?.note || "").trim();
+  const hasPracticeEvidence = hasPracticeType || hasPracticeMinutes || Boolean(practiceNote);
+  const practiceIntensityBand = !hasPracticeEvidence
+    ? "none"
+    : hasPracticeMinutes && practiceMinutes <= 10
+      ? "short"
+      : hasPracticeMinutes && practiceMinutes >= 15
+        ? "longer"
+        : "present";
+
+  return {
+    hasPracticeEvidence,
+    hasPracticeMinutes,
+    practiceMinutes: hasPracticeMinutes ? practiceMinutes : "",
+    practiceType,
+    practiceNote,
+    practiceRoot: practiceContext?.root || "",
+    practiceIntensityBand,
+    dataThin: !hasPracticeType && !hasPracticeMinutes && !practiceNote,
+    boundaryTags: [
+      "no_spiritual_score",
+      "no_success_failure_judgment",
+      "no_causation",
+      "preserve_user_owned_meaning"
+    ]
   };
 }
 
