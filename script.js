@@ -3377,6 +3377,80 @@ function applyTranslations() {
   updateTodayInputStepUI();
   updateTodaySignalCockpitUI();
   renderReflectionRootPicker();
+  renderIntentionProfileScaffold();
+}
+
+function getIntentionProfileAddressPreview() {
+  const displayName = document.querySelector("#intentionDisplayName")?.value.trim() || "";
+  if (!displayName) return "ตัวอย่าง: พี่อยากให้หนูอ่านจังหวะน้ำจากมุมไหนคะ";
+
+  const style = document.querySelector("#intentionAddressStyle")?.value || "sibling";
+  const customTemplate = document.querySelector("#intentionCustomAddress")?.value.trim() || "";
+  const addressByStyle = {
+    sibling: `พี่ ${displayName}`,
+    formal: `คุณ ${displayName}`,
+    name: displayName,
+    custom: customTemplate.includes("{name}")
+      ? customTemplate.replaceAll("{name}", displayName)
+      : `พี่ ${displayName}`
+  };
+
+  return `ตัวอย่าง: ${addressByStyle[style] || `พี่ ${displayName}`} อยากให้หนูอ่านจังหวะน้ำจากมุมไหนคะ`;
+}
+
+function renderIntentionBirthPickerOptions() {
+  const daySelect = document.querySelector("#intentionBirthDay");
+  const monthSelect = document.querySelector("#intentionBirthMonth");
+  const yearSelect = document.querySelector("#intentionBirthYear");
+  if (!daySelect || !monthSelect || !yearSelect) return;
+
+  const currentValues = {
+    day: daySelect.value,
+    month: monthSelect.value,
+    year: yearSelect.value
+  };
+  const option = (value, label) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`;
+
+  daySelect.innerHTML = option("", "วัน · ไม่ระบุ") + Array.from({ length: 31 }, (_, index) => option(String(index + 1), String(index + 1))).join("");
+  monthSelect.innerHTML = option("", "เดือน · ไม่ระบุ") + Array.from({ length: 12 }, (_, index) => option(String(index + 1), String(index + 1))).join("");
+  yearSelect.innerHTML = option("", "ปี · ไม่ระบุ") + Array.from({ length: 110 }, (_, index) => {
+    const year = new Date().getFullYear() - index;
+    return option(String(year), String(year));
+  }).join("");
+
+  daySelect.value = currentValues.day;
+  monthSelect.value = currentValues.month;
+  yearSelect.value = currentValues.year;
+}
+
+function renderIntentionProfileScaffold() {
+  const customAddressField = document.querySelector(".intention-custom-address");
+  const addressStyle = document.querySelector("#intentionAddressStyle");
+  const preview = document.querySelector("#intentionAddressPreview");
+  if (!customAddressField || !addressStyle || !preview) return;
+
+  renderIntentionBirthPickerOptions();
+  customAddressField.classList.toggle("is-hidden", addressStyle.value !== "custom");
+  preview.textContent = getIntentionProfileAddressPreview();
+}
+
+function clearIntentionProfileScaffold() {
+  document.querySelector(".intention-profile-view")?.querySelectorAll("input, textarea, select").forEach((field) => {
+    if (field.id === "intentionAddressStyle") {
+      field.value = "sibling";
+      return;
+    }
+    field.value = "";
+  });
+  renderIntentionProfileScaffold();
+  const status = document.querySelector("#intentionProfileStatus");
+  if (status) status.textContent = "ล้างเฉพาะค่าที่กรอกในหน้านี้แล้ว ยังไม่ได้แตะข้อมูลที่บันทึกไว้ค่ะ";
+}
+
+function openIntentionProfileScaffold() {
+  hideWelcome();
+  setActiveView("intention-profile");
+  renderIntentionProfileScaffold();
 }
 
 function getReflectionRootOptionLabel(root) {
@@ -4219,6 +4293,20 @@ function renderPracticeTypeOptions() {
 function bindEvents() {
   document.querySelector("#beginWelcome").addEventListener("click", hideWelcome);
   document.querySelector("#openWelcome").addEventListener("click", () => showWelcome({ remember: false }));
+  document.querySelector("#openIntentionProfile")?.addEventListener("click", openIntentionProfileScaffold);
+  document.querySelector("#intentionDisplayName")?.addEventListener("input", renderIntentionProfileScaffold);
+  document.querySelector("#intentionCustomAddress")?.addEventListener("input", renderIntentionProfileScaffold);
+  document.querySelector("#intentionAddressStyle")?.addEventListener("change", renderIntentionProfileScaffold);
+  document.querySelector("#saveIntentionProfile")?.addEventListener("click", () => {
+    const status = document.querySelector("#intentionProfileStatus");
+    if (status) status.textContent = "รอบนี้เป็นหน้าเตรียมโครง ยังไม่ได้บันทึกข้อมูลจริงค่ะ";
+  });
+  document.querySelector("#skipIntentionProfile")?.addEventListener("click", () => setActiveView("today"));
+  document.querySelector("#clearIntentionProfile")?.addEventListener("click", clearIntentionProfileScaffold);
+  document.querySelector("#backToWelcomeFromProfile")?.addEventListener("click", () => {
+    setActiveView("today");
+    showWelcome({ remember: false });
+  });
 
   document.querySelector(".view-tabs").addEventListener("click", (event) => {
     const button = event.target.closest("[data-view]");
@@ -4526,7 +4614,7 @@ function hideWelcome({ remember = true, instant = false } = {}) {
 }
 
 	function setActiveView(view) {
-	  if (!["today", "reflection", "field-review", "log"].includes(view)) return;
+	  if (!["today", "intention-profile", "reflection", "field-review", "log"].includes(view)) return;
 	  if (view === "today") {
 	    prepareTodayStepForOpen();
 	  }

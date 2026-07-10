@@ -26,6 +26,7 @@
       <blockquote data-i18n="welcomeQuote">สมดุลเริ่มจากการเห็น ไม่ใช่การฝืน</blockquote>
       <div class="welcome-actions">
         <button type="button" class="primary-button" id="beginWelcome" data-i18n="welcomeBegin">เริ่มวันนี้</button>
+        <button type="button" class="ghost-button welcome-intention-button" id="openIntentionProfile">ทำความรู้จักกันก่อน</button>
       </div>
     </div>
   </section>
@@ -43,6 +44,7 @@
       <button type="button" data-view="reflection" data-i18n="tabReflection">Reflection/NuTuenSai</button>
       <button type="button" data-view="field-review" data-i18n="tabFieldReview">ประมวลข้อมูล</button>
       <button type="button" data-view="log" data-i18n="tabLog">Log</button>
+      <button type="button" data-view="intention-profile">Intention Profile</button>
     </nav>
     <div class="daily-save-status is-empty" id="dailySaveStatus" aria-live="polite">
       <span class="daily-save-status-dot" aria-hidden="true"></span>
@@ -466,6 +468,110 @@
           <button type="button" class="primary-button" id="goReflectionFromToday" data-i18n="todayStepReflection">ไป Reflection/NuTuenSai</button>
         </div>
       </section>
+    </section>
+
+    <section class="view-panel intention-profile-view" data-view-panel="intention-profile" aria-labelledby="intentionProfileTitle">
+      <div class="view-heading">
+        <p class="section-kicker">USER-OWNED CONTEXT</p>
+        <h2 id="intentionProfileTitle">ทำความรู้จักกันก่อน</h2>
+        <p class="section-helper">ข้อมูลที่พี่เลือกบอกระบบเป็น optional และแก้ไขได้เสมอ</p>
+      </div>
+
+      <div class="intention-profile-stack">
+        <article class="glass-card intention-profile-card intention-profile-intro">
+          <p class="section-kicker">MHB · NuTuenSai</p>
+          <h3>ทำความรู้จักกันก่อน</h3>
+          <p>แอปนี้ช่วยจัดข้อมูลของพี่ให้ AI อ่านได้ปลอดภัยขึ้น โดยยังให้ข้อมูลและความหมายสุดท้ายเป็นของพี่เสมอ</p>
+          <p>NuTuenSai จะอ่านเฉพาะข้อมูลที่พี่บันทึกไว้ ไม่เดาใจ ไม่วินิจฉัย ไม่ให้คะแนน และไม่สรุปแทนพี่</p>
+          <p>พี่จะบอกชื่อ โทนที่ชอบ หรือสิ่งที่ไม่อยากให้ระบบสรุปแทนก็ได้<br>ทุกอย่างเป็น optional และแก้ไขได้เสมอ 🩵</p>
+        </article>
+
+        <article class="glass-card intention-profile-card">
+          <div class="card-heading">
+            <div>
+              <p class="section-kicker">NAME AND ADDRESS</p>
+              <h3>ชื่อและคำเรียก</h3>
+              <p class="section-helper">เลือกเฉพาะที่พี่อยากให้เห็นในข้อความของแอปก็พอค่ะ</p>
+            </div>
+          </div>
+          <div class="intention-profile-grid">
+            <label class="field-label" for="intentionDisplayName">ชื่อที่อยากให้เรียก
+              <input id="intentionDisplayName" type="text" autocomplete="off" placeholder="เช่น pnat">
+            </label>
+            <label class="field-label" for="intentionAddressStyle">รูปแบบคำเรียก
+              <select id="intentionAddressStyle">
+                <option value="sibling">พี่ {name}</option>
+                <option value="formal">คุณ {name}</option>
+                <option value="name">{name}</option>
+                <option value="custom">กำหนดเอง</option>
+              </select>
+            </label>
+            <label class="field-label intention-custom-address is-hidden" for="intentionCustomAddress">กำหนดคำเรียกเอง
+              <input id="intentionCustomAddress" type="text" autocomplete="off" placeholder="เช่น เพื่อน {name}">
+            </label>
+          </div>
+          <p class="intention-preview" id="intentionAddressPreview" aria-live="polite">ตัวอย่าง: พี่อยากให้หนูอ่านจังหวะน้ำจากมุมไหนคะ</p>
+        </article>
+
+        <article class="glass-card intention-profile-card">
+          <div class="card-heading">
+            <div>
+              <p class="section-kicker">OPTIONAL PERSONAL CONTEXT</p>
+              <h3>บริบทส่วนตัวที่อยากบอกไว้</h3>
+              <p class="section-helper">วันเกิดหรือปีเกิดไม่จำเป็นต้องกรอก และจะยังไม่ถูกใช้คำนวณหรือสรุปอะไรค่ะ</p>
+            </div>
+          </div>
+          <div class="intention-profile-grid">
+            <div class="field-label">
+              <span>วันเกิด / ปีเกิด ถ้าอยากให้บันทึกไว้</span>
+              <div class="intention-date-picker" role="group" aria-label="วันเกิดหรือปีเกิด">
+                <select id="intentionBirthDay" aria-label="วัน"></select>
+                <select id="intentionBirthMonth" aria-label="เดือน"></select>
+                <select id="intentionBirthYear" aria-label="ปี"></select>
+              </div>
+            </div>
+            <label class="field-label" for="intentionPreferredTone">โทนที่ชอบ
+              <select id="intentionPreferredTone">
+                <option value="">ไม่ระบุ</option>
+                <option value="gentle">อ่อนโยน</option>
+                <option value="concise">กระชับ</option>
+                <option value="evidence">เชิงข้อมูล</option>
+                <option value="companion">เป็นเพื่อน</option>
+                <option value="practice_gentle">ภาวนาเบา ๆ</option>
+              </select>
+            </label>
+          </div>
+        </article>
+
+        <article class="glass-card intention-profile-card">
+          <p class="section-kicker">NU TUEN SAI CONTEXT</p>
+          <h3>สิ่งที่อยากให้ระบบรับรู้</h3>
+          <label class="sr-only" for="intentionContextNote">สิ่งที่อยากให้ระบบรับรู้</label>
+          <textarea id="intentionContextNote" rows="4" placeholder="เช่น สิ่งที่อยากให้ NuTuenSai คำนึงถึงเวลาอ่านข้อมูลของพี่"></textarea>
+        </article>
+
+        <article class="glass-card intention-profile-card">
+          <p class="section-kicker">USER-OWNED BOUNDARY</p>
+          <h3>สิ่งที่ไม่อยากให้ระบบสรุปแทน</h3>
+          <label class="sr-only" for="intentionDoNotAssume">สิ่งที่ไม่อยากให้ระบบสรุปแทน</label>
+          <textarea id="intentionDoNotAssume" rows="4" placeholder="เช่น ไม่ต้องสรุปว่าพี่ผิด ไม่ต้องให้คะแนน หรือไม่ต้องเดาใจแทนพี่"></textarea>
+        </article>
+
+        <section class="control-panel intention-profile-actions" aria-labelledby="intentionProfileActionTitle">
+          <div>
+            <p class="section-kicker">OPTIONAL SCAFFOLD</p>
+            <h3 id="intentionProfileActionTitle">เลือกเมื่อพร้อม</h3>
+            <p>รอบนี้เป็นหน้าเตรียมโครง ยังไม่ได้บันทึกข้อมูลจริงค่ะ</p>
+          </div>
+          <div class="control-buttons">
+            <button type="button" class="action-button" id="saveIntentionProfile">บันทึกข้อมูลนี้</button>
+            <button type="button" class="ghost-button" id="skipIntentionProfile">ข้ามก่อน</button>
+            <button type="button" class="ghost-button" id="clearIntentionProfile">ล้างข้อมูลนี้</button>
+            <button type="button" class="ghost-button" id="backToWelcomeFromProfile">กลับหน้าเริ่มต้น</button>
+          </div>
+          <p class="save-status" id="intentionProfileStatus" aria-live="polite"></p>
+        </section>
+      </div>
     </section>
 
     <section class="view-panel" data-view-panel="reflection" aria-labelledby="reflectionViewTitle">
