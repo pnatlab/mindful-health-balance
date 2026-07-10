@@ -14,6 +14,7 @@ Core identity, public definition, portable field memory, local-first behavior, a
 - [PORTABLE_FIELD_MEMORY_DESIGN.md](PORTABLE_FIELD_MEMORY_DESIGN.md) - Foundation for the exported workbook as portable, user-owned field memory.
 - [USER_INTENTION_PROFILE_LAYER.md](USER_INTENTION_PROFILE_LAYER.md) - Defines the optional, user-owned intention profile layer for safe personalization without changing user data ownership.
 - [USER_INTENTION_PROFILE_SCHEMA_UI_PROPOSAL.md](USER_INTENTION_PROFILE_SCHEMA_UI_PROPOSAL.md) - Locks the future optional profile sheet contract, UI structure, and backward-compatible import/export policy before runtime work.
+- [USER_INTENTION_ALIGNMENT_BRIDGE.md](USER_INTENTION_ALIGNMENT_BRIDGE.md) - Defines the user-owned alignment contract that bridges profile intention, rule-based reflection, Excel field memory, future local LLM drafts, and human audit.
 
 ## 01 Excel Export / Portable Workbook
 
