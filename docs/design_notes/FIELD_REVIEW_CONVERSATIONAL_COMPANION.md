@@ -35,7 +35,8 @@ Conversational Companion ต้องไม่เป็น:
 ### Primary flow
 
 ```text
-NuTuenSai Question Card
+Room Welcome Card
+  -> NuTuenSai Question Card
   -> Choice Cards attached to the question
   -> Deterministic Answer Card
   -> Next Choice Cards attached below that answer
@@ -47,6 +48,7 @@ NuTuenSai Question Card
 
 | Component | Role | Placement rule |
 |---|---|---|
+| Room Welcome Card | รับผู้ใช้ บอกว่าห้องนี้อ่านอะไร และตั้ง boundary สั้น ๆ | ก่อน Question Card เมื่อ enter/change active room |
 | Question Card | ถามหนึ่งคำถามที่มีขอบเขตตาม active room | เริ่มต้นของแต่ละ step |
 | Choice Cards | ให้ผู้ใช้เลือก perspective ที่ระบบรองรับ | ติดใต้คำถามนั้นโดยตรง |
 | Answer Card | แสดง evidence และ deterministic NuTuenSai reading | ต่อจาก choice ที่เลือก |
@@ -59,15 +61,77 @@ Initial choices may sit between question and answer because they answer that spe
 ### Conversation rhythm
 
 1. User enters a room or selects a Signal Engine row.
-2. NuTuenSai asks one predefined room-aware question.
-3. User chooses one locked perspective.
-4. Runtime selects a matching authored answer from the already available evidence.
-5. User may choose one next perspective, open a related room, or end.
-6. Exit ends the local conversation state; it does not erase the selected timeframe, active room, or source data.
+2. Room Welcome Card receives the user and names the room boundary.
+3. NuTuenSai asks one predefined room-aware question.
+4. User chooses one locked perspective.
+5. Runtime selects a matching authored answer from the already available evidence.
+6. User may choose one next perspective, open a related room, or end.
+7. Exit ends the local conversation state; it does not erase the selected timeframe, active room, or source data.
 
 The conversation is a short branching reader, not an infinite chat transcript.
 
-## 4. Conversation State
+## 4. Room Welcome / Greeting Card Policy
+
+Every active room should receive the user with a concise Room Welcome Card before the first Question Card. The welcome establishes what the room reads and its boundary; the question then asks which perspective the user wants to explore.
+
+```text
+Room Welcome Card
+  -> NuTuenSai Question Card
+  -> Choice Cards
+  -> Answer Card
+  -> Next Choice Cards
+  -> Exit
+  -> Closing Note
+```
+
+### Welcome and question have different jobs
+
+| Layer | Job | Must not become |
+|---|---|---|
+| Room Welcome Card | รับผู้ใช้ บอก scope ของห้อง และตั้ง boundary แบบสั้น | คำเตือนยาว ๆ หรือคำตอบแทนข้อมูล |
+| Question Card | ถามว่าผู้ใช้อยากอ่านจากมุมใด | คำอธิบาย scope ซ้ำหรือ filter ที่ไร้บริบท |
+
+Welcome copy should be one or two short sentences. It should not repeat the global Field Review boundary in full, use clinical warning tone, or add a new task for the user. Its purpose is to make entering a room feel received and understandable before the user chooses a perspective.
+
+### Room welcome examples
+
+#### Hydration / ห้องน้ำ
+
+> ห้องนี้หนูจะช่วยพี่อ่านจังหวะน้ำเท่าที่ข้อมูลบันทึกไว้ค่ะ เป็นบริบทของวัน ไม่ใช่การวินิจฉัยเรื่องน้ำในร่างกายหรือคะแนนการดูแลตัวเองนะคะ
+
+#### Recovery / ห้องพัก
+
+> ห้องนี้หนูจะช่วยอ่านการพักและการฟื้นตัวจากข้อมูลที่พี่บันทึกไว้แบบเบา ๆ ค่ะ ไม่ใช่การวินิจฉัยเรื่องการนอนหรือการวัดว่าพักได้ดีแค่ไหน
+
+#### Load / ห้องภาระ
+
+> ห้องนี้หนูจะช่วยมองแรงและภาระของวันตามที่บันทึกไว้ ไม่ใช่คะแนนผลงานหรือการตัดสินว่าวันนี้พี่ทำได้มากหรือน้อยนะคะ
+
+#### Drinks / ห้องเครื่องดื่ม
+
+> ห้องนี้หนูจะอ่านเครื่องดื่มเป็นบริบทหนึ่งของวันเท่าที่พี่บันทึกไว้ค่ะ ไม่ตัดสินกาแฟ น้ำหวาน หรือความชอบของพี่
+
+#### Mind Note / ห้อง Mind Note
+
+> ห้องนี้หนูจะอยู่กับสิ่งที่พี่บันทึกไว้เกี่ยวกับใจ และช่วยสะท้อนอย่างระมัดระวังค่ะ ความหมายสุดท้ายยังอยู่กับพี่ หนูจะไม่สรุปใจแทน
+
+#### Missing Data / ห้องช่องว่างข้อมูล
+
+> ห้องนี้หนูจะช่วยดูส่วนที่ยังไม่ได้บันทึก เพื่อให้เห็นว่าข้อมูลตรงไหนยังบางค่ะ ช่องว่างไม่ใช่ความผิด และไม่จำเป็นต้องเติมให้ครบทุกช่อง
+
+#### Signal Engine
+
+> ตรงนี้หนูจะช่วยอ่านหลักฐานการเคลื่อนไหวร่วมกันของคู่สัญญาณจากข้อมูลที่เลือกค่ะ เป็น co-movement ไม่ใช่เหตุและผล และยังไม่ใช่ข้อสรุปแทนบริบทของวัน
+
+### Welcome rendering rules
+
+- Render once when entering or changing `activeRoom`; do not repeat it before every answer.
+- Preserve the selected timeframe and name it only when helpful to honesty, for example when data is thin or historical.
+- Keep the card visually lighter than evidence/answer content so it receives rather than dominates.
+- Signal Engine welcome must preserve its existing `r`, paired-day, raw audit line, and no-causation boundaries in the detail flow; the greeting does not replace evidence.
+- If a room has no usable data, welcome still appears, but Question Card must offer a thin-data reading and exit without implying failure.
+
+## 5. Conversation State
 
 Future runtime may hold a small explicit UI state object. This is design-only and does not prescribe storage yet.
 
@@ -91,7 +155,7 @@ State principles:
 - `closingNoteShown` prevents duplicate closings after exit or repeated render.
 - no free-text prompt, hidden model state, or autonomous follow-up is introduced.
 
-## 5. Choice Types
+## 6. Choice Types
 
 The following choice types form the initial reusable vocabulary. A room may expose only the choices it can answer honestly from its available evidence.
 
@@ -106,7 +170,7 @@ The following choice types form the initial reusable vocabulary. A room may expo
 
 Room-specific choices can be more concrete, but must map back to an authored perspective and must never omit `exit`.
 
-## 6. Exit / Closing Rule
+## 7. Exit / Closing Rule
 
 When the user selects `พอแล้ว / จบบทสนทนา`:
 
@@ -122,7 +186,7 @@ Suggested Thai closing note:
 
 Closing copy should be localized for EN/ZH with the same meaning: it is okay to stop; no conclusion is required.
 
-## 7. Room-specific Conversation Examples
+## 8. Room-specific Conversation Examples
 
 Examples below are authored interaction shapes. They are not runtime copy requirements and must only render claims supported by selected `Daily_Log` rows.
 
@@ -198,10 +262,16 @@ Signal Engine remains a pair-level evidence reader, not a Field Room that invent
 
 The answer must preserve visible `r`, paired-day count, raw audit line, correlation boundary, and the existing Meaning Voice Matrix. `exit` closes only the conversational layer, not the selected relationship detail.
 
-## 8. Wording Rules
+## 9. Wording Rules
 
 ### Allowed wording
 
+- “ห้องนี้หนูจะช่วยพี่อ่าน...”
+- “เท่าที่ข้อมูลบันทึกไว้”
+- “อ่านเบา ๆ”
+- “ไม่ใช่คะแนน”
+- “ไม่ใช่การวินิจฉัย”
+- “ความหมายสุดท้ายยังอยู่กับพี่”
 - “พี่อยากให้หนูอ่านจากมุมไหนคะ”
 - “ถ้าพี่อยากดูต่อ”
 - “รอบถัดไปอาจลองสังเกต”
@@ -212,9 +282,12 @@ The answer must preserve visible `r`, paired-day count, raw audit line, correlat
 
 ### Forbidden wording in UI output
 
+- “ระบบพบว่า”
 - “ต้อง”
+- “ต้องแก้”
 - “ควรทำทันที”
 - “ผิดปกติ”
+- “ภาวะ”, “โรค”, หรือ “ความผิดปกติ” ในเชิงสรุปผู้ใช้
 - “แย่”
 - “ขาดวินัย”
 - “สาเหตุคือ”
@@ -224,7 +297,7 @@ The answer must preserve visible `r`, paired-day count, raw audit line, correlat
 
 The source-bound answer may be concise. Warmth should come from clarity, permission to stop, and respect for uncertainty, not from adding speculative text.
 
-## 9. Implementation Plan
+## 10. Implementation Plan
 
 ### C0 — Docs-only design note
 
@@ -250,9 +323,10 @@ Add Recovery, Load, Drinks, Mind Note, Missing Data, then Signal Engine only aft
 
 Run Field Review, Guided Rooms, Signal Engine, timeframe, language, mobile, and source-bound wording checks before expansion or refactor.
 
-## 10. QA Checklist
+## 11. QA Checklist
 
 - Field Review loads with no runtime error.
+- Every active room has one concise Room Welcome Card before its first Question Card.
 - Hydration room conversation starts from a bounded Question Card.
 - Choice cards appear adjacent to the question or answer they continue.
 - Selecting a choice updates only the authored answer for that perspective.
