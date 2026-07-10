@@ -36,6 +36,7 @@ Today and Reflection page hierarchy, preview synthesis, NuTuenSai note strip, ze
 - [REFLECTION_BREATHING_MARKERS_V1_9_8B.md](REFLECTION_BREATHING_MARKERS_V1_9_8B.md) - Defines the v1.9.8b soft emoji breathing markers for reflection readability without section headings.
 - [REFLECTION_SENTENCE_SMOOTHING_V1_9_8C.md](REFLECTION_SENTENCE_SMOOTHING_V1_9_8C.md) - Defines the v1.9.8c connector hygiene layer that splits rich anchor context into more natural sentences.
 - [ROOT_BASED_REFLECTION_WEIGHTING.md](ROOT_BASED_REFLECTION_WEIGHTING.md) - Defines the future Root-Based Reflection Composer / NuTuenSai Attention Weighting Layer without runtime changes.
+- [PRACTICE_REFLECTION_LAYER_RESEARCH.md](PRACTICE_REFLECTION_LAYER_RESEARCH.md) - Defines the research boundary and future two-layer practice reflection model for today context and 7-day continuity without runtime changes.
 - [MINDFUL_PRACTICE_CONTEXT_V1_9_9.md](MINDFUL_PRACTICE_CONTEXT_V1_9_9.md) - Defines the v1.9.9 optional practice context and Practice_Note layer before Mind Note, stored for Field Review context and excluded from daily Reflection.
 - [COMPACT_SIGNAL_COCKPIT_LAYOUT_V1_9_6.md](COMPACT_SIGNAL_COCKPIT_LAYOUT_V1_9_6.md) - Defines the v1.9.6 two-card Today Input 1/2 cockpit layout experiment.
 - [SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md](SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md) - Defines the v1.9.7 symbolic constellation polish for the Today cockpit.
