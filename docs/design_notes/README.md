@@ -12,6 +12,7 @@ Core identity, public definition, portable field memory, local-first behavior, a
 
 - [AI_READY_REFLECTION_SYSTEM_DEFINITION.md](AI_READY_REFLECTION_SYSTEM_DEFINITION.md) - Public-facing definition of the app as an AI-ready, local-first self-care reflection system.
 - [PORTABLE_FIELD_MEMORY_DESIGN.md](PORTABLE_FIELD_MEMORY_DESIGN.md) - Foundation for the exported workbook as portable, user-owned field memory.
+- [USER_INTENTION_PROFILE_LAYER.md](USER_INTENTION_PROFILE_LAYER.md) - Defines the optional, user-owned intention profile layer for safe personalization without changing user data ownership.
 
 ## 01 Excel Export / Portable Workbook
 
