@@ -500,9 +500,9 @@
             </label>
             <label class="field-label" for="intentionAddressStyle">รูปแบบคำเรียก
               <select id="intentionAddressStyle">
-                <option value="sibling">พี่ {name}</option>
-                <option value="formal">คุณ {name}</option>
-                <option value="name">{name}</option>
+                <option value="senior_name">พี่ {name}</option>
+                <option value="polite_name">คุณ {name}</option>
+                <option value="name_only">{name}</option>
                 <option value="custom">กำหนดเอง</option>
               </select>
             </label>
@@ -529,15 +529,16 @@
                 <select id="intentionBirthMonth" aria-label="เดือน"></select>
                 <select id="intentionBirthYear" aria-label="ปี"></select>
               </div>
+              <span class="intention-field-note" id="intentionDateStatus" aria-live="polite"></span>
             </div>
             <label class="field-label" for="intentionPreferredTone">โทนที่ชอบ
               <select id="intentionPreferredTone">
                 <option value="">ไม่ระบุ</option>
                 <option value="gentle">อ่อนโยน</option>
                 <option value="concise">กระชับ</option>
-                <option value="evidence">เชิงข้อมูล</option>
-                <option value="companion">เป็นเพื่อน</option>
-                <option value="practice_gentle">ภาวนาเบา ๆ</option>
+                <option value="data_first">เชิงข้อมูล</option>
+                <option value="friendly">เป็นเพื่อน</option>
+                <option value="mindful">ภาวนาเบา ๆ</option>
               </select>
             </label>
           </div>
@@ -561,7 +562,7 @@
           <div>
             <p class="section-kicker">OPTIONAL SCAFFOLD</p>
             <h3 id="intentionProfileActionTitle">เลือกเมื่อพร้อม</h3>
-            <p>รอบนี้เป็นหน้าเตรียมโครง ยังไม่ได้บันทึกข้อมูลจริงค่ะ</p>
+            <p>ข้อมูลนี้เก็บไว้ใน browser นี้ และยังเป็นของพี่ค่ะ</p>
           </div>
           <div class="control-buttons">
             <button type="button" class="action-button" id="saveIntentionProfile">บันทึกข้อมูลนี้</button>

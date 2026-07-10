@@ -680,6 +680,13 @@ body[data-theme="dark"] .daily-save-status {
   font-weight: 800;
 }
 
+.intention-field-note {
+  min-height: 18px;
+  color: var(--text-soft);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
 .intention-profile-card textarea {
   min-height: 118px;
 }

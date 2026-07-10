@@ -4,6 +4,8 @@ const LANGUAGE_KEY = "mindfulHealthLanguage";
 const WELCOME_KEY_PREFIX = "mindfulHealthWelcomeSeen";
 const THEME_KEY = "mindfulHealthTheme";
 const CURRENT_FORM_CLEARED_PREFIX = "mindfulHealthCurrentFormCleared";
+const USER_INTENTION_PROFILE_KEY = "mhb_user_intention_profile_v1";
+const USER_INTENTION_PROFILE_SCHEMA_VERSION = "1.0";
 const DAILY_LOG_COLUMNS = window.DAILY_LOG_COLUMNS;
 const COLUMN_GUIDE_HEADERS = window.COLUMN_GUIDE_HEADERS;
 const AI_CONTEXT_HEADERS = window.AI_CONTEXT_HEADERS;
@@ -3306,6 +3308,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderEnergyCauseOptions();
   renderPracticeOptions();
   bindEvents();
+  loadUserIntentionProfileIntoForm();
   initWelcome();
   startThemeAutoRefresh();
   updateTodayStateOrb();
@@ -3384,18 +3387,272 @@ function getIntentionProfileAddressPreview() {
   const displayName = document.querySelector("#intentionDisplayName")?.value.trim() || "";
   if (!displayName) return "ตัวอย่าง: พี่อยากให้หนูอ่านจังหวะน้ำจากมุมไหนคะ";
 
-  const style = document.querySelector("#intentionAddressStyle")?.value || "sibling";
+  const style = normalizeUserIntentionAddressStyle(document.querySelector("#intentionAddressStyle")?.value || "senior_name");
   const customTemplate = document.querySelector("#intentionCustomAddress")?.value.trim() || "";
   const addressByStyle = {
-    sibling: `พี่ ${displayName}`,
-    formal: `คุณ ${displayName}`,
-    name: displayName,
+    senior_name: `พี่ ${displayName}`,
+    polite_name: `คุณ ${displayName}`,
+    name_only: displayName,
     custom: customTemplate.includes("{name}")
       ? customTemplate.replaceAll("{name}", displayName)
       : `พี่ ${displayName}`
   };
 
   return `ตัวอย่าง: ${addressByStyle[style] || `พี่ ${displayName}`} อยากให้หนูอ่านจังหวะน้ำจากมุมไหนคะ`;
+}
+
+function getDefaultUserIntentionProfile() {
+  return {
+    schemaVersion: USER_INTENTION_PROFILE_SCHEMA_VERSION,
+    displayName: "",
+    addressStyle: "senior_name",
+    customAddressStyle: "",
+    birthDate: "",
+    birthYear: "",
+    preferredTone: "",
+    userContextNote: "",
+    doNotAssumeNote: "",
+    updatedAt: ""
+  };
+}
+
+function normalizeUserIntentionAddressStyle(value) {
+  const legacyMap = {
+    sibling: "senior_name",
+    formal: "polite_name",
+    name: "name_only"
+  };
+  const normalized = legacyMap[value] || value;
+  return ["senior_name", "polite_name", "name_only", "custom"].includes(normalized) ? normalized : "senior_name";
+}
+
+function normalizeUserIntentionTone(value) {
+  const legacyMap = {
+    evidence: "data_first",
+    companion: "friendly",
+    practice_gentle: "mindful"
+  };
+  const normalized = legacyMap[value] || value;
+  return ["", "gentle", "concise", "data_first", "friendly", "mindful"].includes(normalized) ? normalized : "";
+}
+
+function normalizeProfileText(value) {
+  return String(value ?? "").trim();
+}
+
+function normalizeUserIntentionProfile(raw = {}) {
+  const source = raw && typeof raw === "object" ? raw : {};
+  return {
+    ...getDefaultUserIntentionProfile(),
+    displayName: normalizeProfileText(source.displayName),
+    addressStyle: normalizeUserIntentionAddressStyle(source.addressStyle),
+    customAddressStyle: normalizeProfileText(source.customAddressStyle),
+    birthDate: isValidIsoDate(source.birthDate) ? source.birthDate : "",
+    birthYear: isValidBirthYear(source.birthYear) ? String(source.birthYear) : "",
+    preferredTone: normalizeUserIntentionTone(source.preferredTone),
+    userContextNote: normalizeProfileText(source.userContextNote),
+    doNotAssumeNote: normalizeProfileText(source.doNotAssumeNote),
+    updatedAt: normalizeProfileText(source.updatedAt)
+  };
+}
+
+function validateUserIntentionProfile(profile) {
+  const errors = [];
+  if (profile.birthDate && !isValidIsoDate(profile.birthDate)) {
+    errors.push("วันเกิดที่บันทึกไว้ยังไม่ถูกต้องค่ะ");
+  }
+  if (profile.birthYear && !isValidBirthYear(profile.birthYear)) {
+    errors.push("ปีเกิดที่บันทึกไว้ยังไม่ถูกต้องค่ะ");
+  }
+  if (profile.addressStyle === "custom" && profile.customAddressStyle && !profile.customAddressStyle.includes("{name}")) {
+    // Keep this non-blocking: malformed custom templates fall back in preview instead of becoming source truth.
+  }
+  return {
+    ok: errors.length === 0,
+    errors
+  };
+}
+
+function readStoredUserIntentionProfile() {
+  try {
+    const stored = localStorage.getItem(USER_INTENTION_PROFILE_KEY);
+    if (!stored) return { profile: getDefaultUserIntentionProfile(), malformed: false, exists: false };
+    return {
+      profile: normalizeUserIntentionProfile(JSON.parse(stored)),
+      malformed: false,
+      exists: true
+    };
+  } catch {
+    return { profile: getDefaultUserIntentionProfile(), malformed: true, exists: true };
+  }
+}
+
+function loadUserIntentionProfile() {
+  return readStoredUserIntentionProfile().profile;
+}
+
+function saveUserIntentionProfile(profile) {
+  const normalized = normalizeUserIntentionProfile({
+    ...profile,
+    updatedAt: new Date().toISOString()
+  });
+  const validation = validateUserIntentionProfile(normalized);
+  if (!validation.ok) return { ok: false, errors: validation.errors, profile: normalized };
+  try {
+    localStorage.setItem(USER_INTENTION_PROFILE_KEY, JSON.stringify(normalized));
+  } catch {
+    return { ok: false, errors: ["ยังบันทึกใน browser นี้ไม่ได้ค่ะ"], profile: normalized };
+  }
+  return { ok: true, errors: [], profile: normalized };
+}
+
+function clearUserIntentionProfile() {
+  try {
+    localStorage.removeItem(USER_INTENTION_PROFILE_KEY);
+  } catch {
+    // Clearing the profile is best-effort and must never touch Daily_Log or app settings.
+  }
+}
+
+function isValidBirthYear(value) {
+  const year = Number(value);
+  const currentYear = new Date().getFullYear();
+  return Number.isInteger(year) && year >= currentYear - 110 && year <= currentYear;
+}
+
+function isLeapYear(year) {
+  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+}
+
+function getDaysInMonth(year, month) {
+  if (month === 2) return isLeapYear(year) ? 29 : 28;
+  return [4, 6, 9, 11].includes(month) ? 30 : 31;
+}
+
+function isValidBirthDateParts(day, month, year) {
+  if (!isValidBirthYear(year)) return false;
+  const dayNumber = Number(day);
+  const monthNumber = Number(month);
+  const yearNumber = Number(year);
+  if (!Number.isInteger(monthNumber) || monthNumber < 1 || monthNumber > 12) return false;
+  if (!Number.isInteger(dayNumber) || dayNumber < 1) return false;
+  return dayNumber <= getDaysInMonth(yearNumber, monthNumber);
+}
+
+function toIsoBirthDate(day, month, year) {
+  const pad = (value) => String(value).padStart(2, "0");
+  return `${year}-${pad(month)}-${pad(day)}`;
+}
+
+function isValidIsoDate(value) {
+  const match = String(value || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return false;
+  const [, year, month, day] = match;
+  return isValidBirthDateParts(Number(day), Number(month), Number(year));
+}
+
+function readProfileForm() {
+  setIntentionDateStatus("");
+  const displayName = document.querySelector("#intentionDisplayName")?.value || "";
+  const addressStyle = document.querySelector("#intentionAddressStyle")?.value || "senior_name";
+  const customAddressStyle = document.querySelector("#intentionCustomAddress")?.value || "";
+  const birthDay = document.querySelector("#intentionBirthDay")?.value || "";
+  const birthMonth = document.querySelector("#intentionBirthMonth")?.value || "";
+  const birthYear = document.querySelector("#intentionBirthYear")?.value || "";
+  const preferredTone = document.querySelector("#intentionPreferredTone")?.value || "";
+  const errors = [];
+  let normalizedBirthDate = "";
+  let normalizedBirthYear = "";
+
+  if (birthDay && birthMonth && birthYear) {
+    if (isValidBirthDateParts(Number(birthDay), Number(birthMonth), Number(birthYear))) {
+      normalizedBirthDate = toIsoBirthDate(birthDay, birthMonth, birthYear);
+    } else {
+      errors.push("วันที่ที่เลือกยังไม่ตรงกับปฏิทินค่ะ ลองตรวจวัน เดือน ปีอีกครั้งนะคะ");
+    }
+  } else if (!birthDay && !birthMonth && birthYear && isValidBirthYear(birthYear)) {
+    normalizedBirthYear = String(birthYear);
+  }
+
+  return {
+    profile: normalizeUserIntentionProfile({
+      displayName,
+      addressStyle,
+      customAddressStyle,
+      birthDate: normalizedBirthDate,
+      birthYear: normalizedBirthYear,
+      preferredTone,
+      userContextNote: document.querySelector("#intentionContextNote")?.value || "",
+      doNotAssumeNote: document.querySelector("#intentionDoNotAssume")?.value || "",
+      updatedAt: ""
+    }),
+    errors
+  };
+}
+
+function setIntentionDateStatus(message = "") {
+  const status = document.querySelector("#intentionDateStatus");
+  if (status) status.textContent = message;
+}
+
+function writeProfileForm(profile = getDefaultUserIntentionProfile()) {
+  const normalized = normalizeUserIntentionProfile(profile);
+  const setValue = (selector, value) => {
+    const field = document.querySelector(selector);
+    if (field) field.value = value;
+  };
+  setValue("#intentionDisplayName", normalized.displayName);
+  setValue("#intentionAddressStyle", normalized.addressStyle);
+  setValue("#intentionCustomAddress", normalized.customAddressStyle);
+  setValue("#intentionPreferredTone", normalized.preferredTone);
+  setValue("#intentionContextNote", normalized.userContextNote);
+  setValue("#intentionDoNotAssume", normalized.doNotAssumeNote);
+
+  const birthParts = normalized.birthDate.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  setValue("#intentionBirthDay", birthParts ? String(Number(birthParts[3])) : "");
+  setValue("#intentionBirthMonth", birthParts ? String(Number(birthParts[2])) : "");
+  setValue("#intentionBirthYear", birthParts ? birthParts[1] : normalized.birthYear);
+  updateProfilePreview();
+}
+
+function updateProfilePreview() {
+  renderIntentionProfileScaffold();
+}
+
+function saveUserIntentionProfileFromForm() {
+  const status = document.querySelector("#intentionProfileStatus");
+  const { profile, errors } = readProfileForm();
+  if (errors.length) {
+    setIntentionDateStatus(errors[0]);
+    if (status) status.textContent = errors[0];
+    return;
+  }
+  const result = saveUserIntentionProfile(profile);
+  if (!result.ok) {
+    if (status) status.textContent = result.errors[0] || "ยังบันทึกข้อมูลนี้ไม่ได้ค่ะ";
+    return;
+  }
+  writeProfileForm(result.profile);
+  setIntentionDateStatus("");
+  if (status) status.textContent = "บันทึกข้อมูลที่พี่เลือกให้ระบบรู้จักไว้ใน browser นี้แล้วค่ะ";
+}
+
+function loadUserIntentionProfileIntoForm({ showMalformedNotice = false } = {}) {
+  const result = readStoredUserIntentionProfile();
+  writeProfileForm(result.profile);
+  if (showMalformedNotice && result.malformed) {
+    const status = document.querySelector("#intentionProfileStatus");
+    if (status) status.textContent = "ข้อมูลเดิมอ่านไม่ได้ครบค่ะ หนูเลยเปิดหน้าแบบว่างให้ก่อน โดยยังไม่ลบข้อมูลอื่นของพี่";
+  }
+}
+
+function clearSavedUserIntentionProfileFromForm() {
+  if (!confirm("ล้างเฉพาะข้อมูลที่ใช้ทำความรู้จักกันใน browser นี้ไหม? Daily Log และ Reflection จะไม่ถูกลบค่ะ")) return;
+  clearUserIntentionProfile();
+  writeProfileForm(getDefaultUserIntentionProfile());
+  setIntentionDateStatus("");
+  const status = document.querySelector("#intentionProfileStatus");
+  if (status) status.textContent = "ล้างเฉพาะข้อมูลที่ใช้ทำความรู้จักกันแล้วค่ะ Daily Log และ Reflection ยังอยู่เหมือนเดิม";
 }
 
 function renderIntentionBirthPickerOptions() {
@@ -3437,7 +3694,7 @@ function renderIntentionProfileScaffold() {
 function clearIntentionProfileScaffold() {
   document.querySelector(".intention-profile-view")?.querySelectorAll("input, textarea, select").forEach((field) => {
     if (field.id === "intentionAddressStyle") {
-      field.value = "sibling";
+      field.value = "senior_name";
       return;
     }
     field.value = "";
@@ -3450,7 +3707,6 @@ function clearIntentionProfileScaffold() {
 function openIntentionProfileScaffold() {
   hideWelcome();
   setActiveView("intention-profile");
-  renderIntentionProfileScaffold();
 }
 
 function getReflectionRootOptionLabel(root) {
@@ -4297,12 +4553,9 @@ function bindEvents() {
   document.querySelector("#intentionDisplayName")?.addEventListener("input", renderIntentionProfileScaffold);
   document.querySelector("#intentionCustomAddress")?.addEventListener("input", renderIntentionProfileScaffold);
   document.querySelector("#intentionAddressStyle")?.addEventListener("change", renderIntentionProfileScaffold);
-  document.querySelector("#saveIntentionProfile")?.addEventListener("click", () => {
-    const status = document.querySelector("#intentionProfileStatus");
-    if (status) status.textContent = "รอบนี้เป็นหน้าเตรียมโครง ยังไม่ได้บันทึกข้อมูลจริงค่ะ";
-  });
+  document.querySelector("#saveIntentionProfile")?.addEventListener("click", saveUserIntentionProfileFromForm);
   document.querySelector("#skipIntentionProfile")?.addEventListener("click", () => setActiveView("today"));
-  document.querySelector("#clearIntentionProfile")?.addEventListener("click", clearIntentionProfileScaffold);
+  document.querySelector("#clearIntentionProfile")?.addEventListener("click", clearSavedUserIntentionProfileFromForm);
   document.querySelector("#backToWelcomeFromProfile")?.addEventListener("click", () => {
     setActiveView("today");
     showWelcome({ remember: false });
@@ -4620,6 +4873,9 @@ function hideWelcome({ remember = true, instant = false } = {}) {
 	  }
 	  currentView = view;
 	  updateViewPanels();
+	  if (view === "intention-profile") {
+	    loadUserIntentionProfileIntoForm({ showMalformedNotice: true });
+	  }
 	  if (view === "field-review") {
 	    renderFieldReview();
 	  }
