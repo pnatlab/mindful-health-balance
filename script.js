@@ -215,6 +215,15 @@ const translations = {
     fieldRoomQuestionDrinks: "พี่อยากดูบริบทเครื่องดื่มจากมุมไหนคะ",
     fieldRoomQuestionMindNote: "พี่อยากให้หนูอ่านพื้นที่ Mind Note จากมุมไหนคะ",
     fieldRoomQuestionMissing: "พี่อยากดูช่องว่างข้อมูลจากมุมไหนคะ",
+    fieldRoomWelcomeLabel: "หนูตื่นสายต้อนรับ",
+    fieldRoomHydrationWelcome: "ห้องนี้หนูจะช่วยพี่อ่านจังหวะน้ำเท่าที่ข้อมูลบันทึกไว้ค่ะ เป็นบริบทของวัน ไม่ใช่การวินิจฉัยเรื่องน้ำในร่างกายหรือคะแนนการดูแลตัวเองนะคะ",
+    fieldRoomHydrationSpeakerLabel: "NuTuenSai",
+    fieldRoomHydrationUserSpeakerLabel: "พี่",
+    fieldRoomHydrationChoicePrompt: "เลือกคำตอบที่ตรงกับมุมที่พี่อยากดูได้เลยค่ะ",
+    fieldRoomHydrationContinuePrompt: "ถ้าพี่อยากดูต่อ เลือกอีกมุมได้ค่ะ",
+    fieldRoomConversationExit: "พอแค่นี้ก่อน",
+    fieldRoomHydrationRestart: "เลือกมุมใหม่",
+    fieldRoomConversationClosing: "พอแค่นี้ก่อนก็ได้ค่ะพี่ วันนี้เราไม่ได้ต้องสรุปทุกอย่าง แค่เห็นจังหวะหนึ่งของร่างกายและใจให้ชัดขึ้นก็พอแล้ว 🩵",
     fieldRoomActionLabel: "เลือกมุมที่จะอ่านต่อ",
     fieldRoomFocusOverview: "ภาพรวม",
     fieldRoomFocusEvidence: "หลักฐานจากข้อมูล",
@@ -1170,6 +1179,15 @@ const translations = {
     fieldRoomQuestionDrinks: "Which drinks context angle would you like to view?",
     fieldRoomQuestionMindNote: "Which Mind Note angle would you like NuTuenSai to read?",
     fieldRoomQuestionMissing: "Which blank-data angle would you like to view?",
+    fieldRoomWelcomeLabel: "NuTuenSai welcomes you",
+    fieldRoomHydrationWelcome: "Here, NuTuenSai will read the water rhythm only as far as the saved data allows. It is daily context, not a hydration diagnosis or a self-care score.",
+    fieldRoomHydrationSpeakerLabel: "NuTuenSai",
+    fieldRoomHydrationUserSpeakerLabel: "You",
+    fieldRoomHydrationChoicePrompt: "Choose the response that matches the angle you would like to explore.",
+    fieldRoomHydrationContinuePrompt: "If you would like to continue, you can choose another angle.",
+    fieldRoomConversationExit: "Enough for now",
+    fieldRoomHydrationRestart: "Choose a new angle",
+    fieldRoomConversationClosing: "It is okay to stop here. We do not need to conclude everything today; seeing one rhythm of body and mind more clearly is enough. 🩵",
     fieldRoomActionLabel: "Choose what to read next",
     fieldRoomFocusOverview: "Overview",
     fieldRoomFocusEvidence: "Evidence from data",
@@ -2125,6 +2143,15 @@ const translations = {
     fieldRoomQuestionDrinks: "你想从哪个角度看饮品情境？",
     fieldRoomQuestionMindNote: "你想让 NuTuenSai 从哪个角度读取 Mind Note 空间？",
     fieldRoomQuestionMissing: "你想从哪个角度看空白数据？",
+    fieldRoomWelcomeLabel: "NuTuenSai 轻轻欢迎你",
+    fieldRoomHydrationWelcome: "这里 NuTuenSai 会按已记录的数据轻轻读取饮水节奏。这是当天背景，不是饮水诊断，也不是自我照顾评分。",
+    fieldRoomHydrationSpeakerLabel: "NuTuenSai",
+    fieldRoomHydrationUserSpeakerLabel: "你",
+    fieldRoomHydrationChoicePrompt: "请选择符合你想阅读角度的回答。",
+    fieldRoomHydrationContinuePrompt: "如果想继续，可以选择另一个角度。",
+    fieldRoomConversationExit: "先到这里",
+    fieldRoomHydrationRestart: "选择新的角度",
+    fieldRoomConversationClosing: "先到这里也可以。今天不需要得出所有结论；更清楚地看见一个身心节奏就够了。🩵",
     fieldRoomActionLabel: "选择接下来要读取的角度",
     fieldRoomFocusOverview: "概览",
     fieldRoomFocusEvidence: "数据依据",
@@ -3179,6 +3206,9 @@ let activeTodaySignal = "hydration";
 let activeFieldReviewRoom = "hydration";
 let activeFieldReviewFocus = "overview";
 let activeSignalRelationshipPair = "";
+let activeHydrationConversationChoice = "";
+let hydrationConversationEnded = false;
+let hydrationConversationTimeframe = "";
 let selectedReflectionRoot = "auto";
 let isEditingReflection = false;
 let isGeneratingReflection = false;
@@ -4406,7 +4436,11 @@ function bindEvents() {
   document.querySelector("#fieldReviewCards")?.addEventListener("click", (event) => {
     const roomButton = event.target.closest("[data-field-room-target]");
     if (roomButton) {
-      activeFieldReviewRoom = normalizeFieldReviewRoom(roomButton.dataset.fieldRoomTarget);
+      const nextRoom = normalizeFieldReviewRoom(roomButton.dataset.fieldRoomTarget);
+      if (nextRoom !== activeFieldReviewRoom) {
+        resetHydrationConversation(document.querySelector("#fieldReviewTimeframe")?.value || "");
+      }
+      activeFieldReviewRoom = nextRoom;
       activeFieldReviewFocus = "overview";
       renderFieldReview();
       return;
@@ -4415,6 +4449,30 @@ function bindEvents() {
     const relationshipButton = event.target.closest("[data-signal-relationship-target]");
     if (relationshipButton) {
       activeSignalRelationshipPair = relationshipButton.dataset.signalRelationshipTarget || "";
+      renderFieldReview();
+      return;
+    }
+
+    const hydrationRestartButton = event.target.closest("[data-hydration-conversation-restart]");
+    if (hydrationRestartButton) {
+      resetHydrationConversation(document.querySelector("#fieldReviewTimeframe")?.value || "");
+      renderFieldReview();
+      return;
+    }
+
+    const hydrationExitButton = event.target.closest("[data-hydration-conversation-exit]");
+    if (hydrationExitButton) {
+      hydrationConversationEnded = true;
+      renderFieldReview();
+      return;
+    }
+
+    const hydrationChoiceButton = event.target.closest("[data-hydration-conversation-choice]");
+    if (hydrationChoiceButton) {
+      activeHydrationConversationChoice = normalizeHydrationConversationChoice(
+        hydrationChoiceButton.dataset.hydrationConversationChoice
+      );
+      hydrationConversationEnded = false;
       renderFieldReview();
       return;
     }
@@ -10025,6 +10083,17 @@ function normalizeFieldReviewFocus(focusType) {
   return FIELD_REVIEW_FOCUS_ORDER.some((focus) => focus.type === focusType) ? focusType : "overview";
 }
 
+function normalizeHydrationConversationChoice(choiceType) {
+  if (!choiceType) return "";
+  return FIELD_REVIEW_FOCUS_ORDER.some((focus) => focus.type === choiceType) ? choiceType : "overview";
+}
+
+function resetHydrationConversation(timeframe = "") {
+  activeHydrationConversationChoice = "";
+  hydrationConversationEnded = false;
+  hydrationConversationTimeframe = timeframe;
+}
+
 function getFieldReviewRoomLabel(roomType) {
   const room = FIELD_REVIEW_ROOM_ORDER.find((entry) => entry.type === roomType) || FIELD_REVIEW_ROOM_ORDER[0];
   return t(room.labelKey);
@@ -11007,7 +11076,125 @@ function renderFieldRoomNextActions(activeRoomType) {
   `;
 }
 
+function renderHydrationConversationChoices({ continuation = false } = {}) {
+  const choices = continuation
+    ? FIELD_REVIEW_FOCUS_ORDER.filter((choice) => choice.type !== activeHydrationConversationChoice)
+    : FIELD_REVIEW_FOCUS_ORDER;
+
+  return `
+    <div class="field-room-choice-stack">
+      <p class="field-room-action-label">${escapeHtml(t(continuation ? "fieldRoomHydrationContinuePrompt" : "fieldRoomHydrationChoicePrompt"))}</p>
+      <div class="field-room-focus-chips" role="group" aria-label="${escapeHtml(t("fieldRoomHydrationChoicePrompt"))}">
+        ${choices.map((choice) => `
+          <button type="button" class="field-room-focus-chip ${choice.type === activeHydrationConversationChoice ? "is-active" : ""}" data-hydration-conversation-choice="${escapeHtml(choice.type)}" aria-pressed="${String(choice.type === activeHydrationConversationChoice)}">
+            ${escapeHtml(t(choice.labelKey))}
+          </button>
+        `).join("")}
+        <button type="button" class="field-room-focus-chip" data-hydration-conversation-exit="true">
+          ${escapeHtml(t("fieldRoomConversationExit"))}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderHydrationSelectedChoice(choiceType) {
+  const choice = FIELD_REVIEW_FOCUS_ORDER.find((entry) => entry.type === choiceType);
+  if (!choice) return "";
+
+  return renderFieldRoomBubble({
+    focusType: "user-choice",
+    className: "field-chat-bubble-next field-chat-bubble-speaker is-active",
+    label: t("fieldRoomHydrationUserSpeakerLabel"),
+    text: t(choice.labelKey)
+  });
+}
+
+function renderHydrationConversationRestart() {
+  return `
+    <div class="field-room-choice-stack">
+      <div class="field-room-focus-chips" role="group" aria-label="${escapeHtml(t("fieldRoomHydrationRestart"))}">
+        <button type="button" class="field-room-focus-chip is-active" data-hydration-conversation-restart="true">
+          ${escapeHtml(t("fieldRoomHydrationRestart"))}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderHydrationConversation(activeCard) {
+  const choice = normalizeHydrationConversationChoice(activeHydrationConversationChoice);
+  const welcomeBubble = renderFieldRoomBubble({
+    focusType: "welcome",
+    className: "field-chat-bubble-source field-chat-bubble-speaker",
+    label: t("fieldRoomHydrationSpeakerLabel"),
+    text: t("fieldRoomHydrationWelcome")
+  });
+  const questionBubble = renderFieldRoomBubble({
+    focusType: "question",
+    className: "field-chat-bubble-question field-chat-bubble-speaker",
+    label: t("fieldRoomHydrationSpeakerLabel"),
+    text: getFieldRoomQuestion("hydration")
+  });
+
+  const evidenceBubble = renderFieldRoomBubble({
+    focusType: "evidence",
+    className: "field-chat-bubble-evidence field-chat-bubble-speaker",
+    label: t("fieldRoomHydrationSpeakerLabel"),
+    text: activeCard.evidence
+  });
+  const readingBubble = renderFieldRoomBubble({
+    focusType: "overview",
+    className: "field-chat-bubble-reading field-chat-bubble-speaker",
+    label: t("fieldRoomHydrationSpeakerLabel"),
+    text: activeCard.reading
+  });
+  const nextBubble = renderFieldRoomBubble({
+    focusType: "next",
+    className: "field-chat-bubble-next field-chat-bubble-speaker",
+    label: t("fieldRoomHydrationSpeakerLabel"),
+    text: activeCard.nextAttention
+  });
+  const answerBubblesByChoice = {
+    overview: [readingBubble],
+    evidence: [evidenceBubble],
+    next: [nextBubble],
+    all: [evidenceBubble, readingBubble, nextBubble]
+  };
+  const selectedAnswerBubbles = choice ? answerBubblesByChoice[choice] || answerBubblesByChoice.overview : [];
+  const selectedChoiceBubble = renderHydrationSelectedChoice(choice);
+  const closingBubble = renderFieldRoomBubble({
+    focusType: "closing",
+    className: "field-chat-bubble-reading field-chat-bubble-speaker",
+    label: t("fieldRoomHydrationSpeakerLabel"),
+    text: t("fieldRoomConversationClosing")
+  });
+
+  return `
+    <div class="field-room-chat" aria-live="polite">
+      ${welcomeBubble}
+      ${questionBubble}
+      ${!choice && !hydrationConversationEnded ? renderHydrationConversationChoices() : ""}
+      ${selectedChoiceBubble}
+      ${selectedAnswerBubbles.length ? `
+        <div class="field-room-response-stack">
+          ${selectedAnswerBubbles.join("")}
+        </div>
+      ` : ""}
+      ${choice && !hydrationConversationEnded ? renderHydrationConversationChoices({ continuation: true }) : ""}
+      ${hydrationConversationEnded ? `
+        <div class="field-room-response-stack">${closingBubble}</div>
+        ${renderHydrationConversationRestart()}
+      ` : ""}
+    </div>
+  `;
+}
+
 function renderFieldRoomConversation(activeCard, timeframe = "7") {
+  if (activeCard.roomType === "hydration") {
+    return renderHydrationConversation(activeCard);
+  }
+
   const timeframeLabel = getFieldReviewTimeframeLabel(timeframe);
   const sourceText = t("fieldRoomSourceBubble", { timeframe: timeframeLabel });
   const focus = normalizeFieldReviewFocus(activeFieldReviewFocus);
@@ -11169,6 +11356,9 @@ function renderFieldReview() {
   if (!container || !status || !emptyState || !thinState) return;
 
   const timeframe = timeframeSelect?.value || FIELD_REVIEW_DEFAULT_TIMEFRAME;
+  if (hydrationConversationTimeframe !== timeframe) {
+    resetHydrationConversation(timeframe);
+  }
   const allRows = getAllFieldReviewRows();
   const rows = getFieldReviewRows(timeframe);
   const hasRows = rows.length > 0;

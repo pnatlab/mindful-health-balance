@@ -3879,6 +3879,11 @@ body[data-theme="dark"] .field-room-action-area {
   text-transform: uppercase;
 }
 
+.field-chat-bubble-speaker .field-chat-bubble-label {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
 .field-chat-bubble-question {
   max-width: 78%;
   color: var(--text-main);
