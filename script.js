@@ -491,6 +491,10 @@ const translations = {
     importCancelled: "ยังไม่ import ทับ Daily Log เดิม",
     missingDailySheet: "ไม่พบ Sheet Daily_Log ในไฟล์นี้",
     importDone: "Import Master Excel แล้ว ({count} rows)",
+    importProfileImported: "นำเข้า Intention Profile แล้ว หลังพี่ยืนยัน",
+    importProfileCancelled: "ยังไม่เปลี่ยน Intention Profile เดิม",
+    importProfileEmpty: "ไม่พบ profile สำหรับ import ใน sheet นี้",
+    importProfileRejected: "ข้าม Intention Profile เพราะข้อมูลไม่ผ่าน validation: {reason}",
     importFailed: "อ่านไฟล์ Excel ไม่สำเร็จ ลองตรวจไฟล์อีกครั้ง",
     overallMessage: "ข้อมูลนี้ช่วยดู pattern และ balance recovery ไม่ใช่การตัดสินสุขภาพจากวันใดวันหนึ่ง",
     reflection: {
@@ -1455,6 +1459,10 @@ const translations = {
     importCancelled: "Import cancelled. Existing Daily Log was not overwritten.",
     missingDailySheet: "No Daily_Log sheet was found in this file.",
     importDone: "Master Excel imported ({count} rows).",
+    importProfileImported: "Intention Profile imported after confirmation.",
+    importProfileCancelled: "Existing Intention Profile was not changed.",
+    importProfileEmpty: "No profile was available to import in that sheet.",
+    importProfileRejected: "Intention Profile skipped because it did not pass validation: {reason}",
     importFailed: "Could not read the Excel file. Please check the file and try again.",
     overallMessage: "This data helps notice patterns and balance recovery. It is not a judgment from any single day.",
     reflection: {
@@ -2419,6 +2427,10 @@ const translations = {
     importCancelled: "已取消导入，没有覆盖原本的 Daily Log。",
     missingDailySheet: "这个文件里找不到 Daily_Log sheet。",
     importDone: "Master Excel 已导入（{count} rows）。",
+    importProfileImported: "确认后已导入 Intention Profile。",
+    importProfileCancelled: "原本的 Intention Profile 没有改变。",
+    importProfileEmpty: "这个 sheet 中没有可导入的 profile。",
+    importProfileRejected: "已跳过 Intention Profile，因为资料未通过 validation：{reason}",
     importFailed: "无法读取这个 Excel 文件。请检查文件后再试。",
     overallMessage: "这些数据帮助观察 pattern 和 balance recovery，不是用某一天来判断健康。",
     reflection: {
@@ -3544,6 +3556,171 @@ function appendUserIntentionProfileSheetIfAvailable(workbook) {
   );
   applySheetReadability(profileSheet, [22, 20, 18, 18, 34, 34, 16, 14, 28]);
   XLSX.utils.book_append_sheet(workbook, profileSheet, USER_INTENTION_PROFILE_SHEET_NAME);
+}
+
+function getWorkbookCellText(value) {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) return value.toISOString();
+  return String(value ?? "").trim();
+}
+
+function getWorkbookProfileCell(row, headerIndexByColumn, column) {
+  const index = headerIndexByColumn[column];
+  if (index === undefined || index < 0) return "";
+  return getWorkbookCellText(row[index]);
+}
+
+function normalizeImportedUpdatedAt(value, warnings) {
+  const text = getWorkbookCellText(value);
+  if (!text) return "";
+  const dateValue = value instanceof Date ? value : new Date(text);
+  if (Number.isNaN(dateValue.getTime())) {
+    warnings.push("Updated_At ไม่อยู่ในรูปแบบ timestamp ที่อ่านได้ จึงข้ามค่านี้");
+    return "";
+  }
+  return value instanceof Date ? dateValue.toISOString() : text;
+}
+
+function parseUserIntentionProfileSheet(workbook) {
+  const sheet = workbook.Sheets[USER_INTENTION_PROFILE_SHEET_NAME];
+  if (!sheet) return { status: "missing", profile: null, warnings: [], errors: [] };
+
+  const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: "" });
+  const headerRow = rows[0] || [];
+  const headers = headerRow.map(getWorkbookCellText);
+  const dataRows = rows.slice(1).filter((row) => row.some((cell) => getWorkbookCellText(cell) !== ""));
+  const warnings = [];
+  const errors = [];
+
+  if (!headers.some(Boolean) || dataRows.length === 0) {
+    return { status: "empty", profile: null, warnings, errors };
+  }
+
+  const unknownColumns = headers.filter((header) => header && !USER_INTENTION_PROFILE_EXPORT_COLUMNS.includes(header));
+  if (unknownColumns.length) {
+    warnings.push(`พบ column ที่ยังไม่รองรับและจะข้าม: ${unknownColumns.join(", ")}`);
+  }
+
+  if (dataRows.length > 1) {
+    return {
+      status: "invalid",
+      profile: null,
+      warnings,
+      errors: ["User_Intention_Profile มีมากกว่า 1 profile row"]
+    };
+  }
+
+  const headerIndexByColumn = USER_INTENTION_PROFILE_EXPORT_COLUMNS.reduce((acc, column) => {
+    acc[column] = headers.indexOf(column);
+    return acc;
+  }, {});
+  const row = dataRows[0];
+  const schemaVersion = getWorkbookProfileCell(row, headerIndexByColumn, "Profile_Schema_Version");
+  const displayName = getWorkbookProfileCell(row, headerIndexByColumn, "Display_Name");
+  let addressStyle = getWorkbookProfileCell(row, headerIndexByColumn, "Address_Style");
+  const preferredTone = getWorkbookProfileCell(row, headerIndexByColumn, "Preferred_Tone");
+  const birthDate = getWorkbookProfileCell(row, headerIndexByColumn, "Birth_Date");
+  const birthYear = getWorkbookProfileCell(row, headerIndexByColumn, "Birth_Year");
+  const updatedAtRaw = row[headerIndexByColumn.Updated_At];
+  const updatedAt = normalizeImportedUpdatedAt(updatedAtRaw, warnings);
+
+  if (!["1", USER_INTENTION_PROFILE_SCHEMA_VERSION].includes(schemaVersion)) {
+    errors.push("Profile_Schema_Version ไม่รองรับ");
+  }
+
+  if (addressStyle === "custom") {
+    addressStyle = "senior_name";
+    warnings.push("Address_Style แบบ custom เป็น legacy value จึง normalize เป็น senior_name");
+  } else if (addressStyle && !["senior_name", "polite_name", "name_only"].includes(addressStyle)) {
+    errors.push("Address_Style ไม่รองรับ");
+  }
+
+  if (preferredTone && !["gentle", "concise", "data_first", "friendly", "mindful"].includes(preferredTone)) {
+    errors.push("Preferred_Tone ไม่รองรับ");
+  }
+
+  if (birthDate && !isValidIsoDate(birthDate)) {
+    errors.push("Birth_Date ต้องเป็น YYYY-MM-DD ที่ตรงกับปฏิทิน");
+  }
+
+  if (birthYear && !isValidBirthYear(birthYear)) {
+    errors.push("Birth_Year ไม่อยู่ในช่วงที่รองรับ");
+  }
+
+  if (errors.length) {
+    return { status: "invalid", profile: null, warnings, errors };
+  }
+
+  return {
+    status: "valid",
+    profile: normalizeUserIntentionProfile({
+      schemaVersion: USER_INTENTION_PROFILE_SCHEMA_VERSION,
+      displayName,
+      addressStyle: addressStyle || "senior_name",
+      preferredTone,
+      userContextNote: getWorkbookProfileCell(row, headerIndexByColumn, "User_Context_Note"),
+      doNotAssumeNote: getWorkbookProfileCell(row, headerIndexByColumn, "Do_Not_Assume_Note"),
+      birthDate,
+      birthYear,
+      updatedAt
+    }),
+    warnings,
+    errors: []
+  };
+}
+
+function buildUserIntentionProfileImportPreview(profile, warnings = []) {
+  const normalized = normalizeUserIntentionProfile(profile);
+  const valueOrBlank = (value) => value || "ไม่ระบุ";
+  const noteValue = (value) => value ? value : "ไม่ระบุ";
+  return [
+    "พบ User_Intention_Profile ใน workbook",
+    "",
+    "การ import นี้จะแทนที่ Intention Profile ที่บันทึกไว้ใน browser นี้ หลังจากพี่ยืนยันเท่านั้น",
+    "",
+    `Display name: ${valueOrBlank(normalized.displayName)}`,
+    `Address style: ${normalized.addressStyle}`,
+    `Preferred tone: ${valueOrBlank(normalized.preferredTone)}`,
+    `User context note: ${noteValue(normalized.userContextNote)}`,
+    `Do-not-assume note: ${noteValue(normalized.doNotAssumeNote)}`,
+    `Birth date: ${valueOrBlank(normalized.birthDate)}`,
+    `Birth year: ${valueOrBlank(normalized.birthYear)}`,
+    `Updated at: ${valueOrBlank(normalized.updatedAt)}`,
+    ...(warnings.length ? ["", `Warnings: ${warnings.join(" | ")}`] : []),
+    "",
+    "ต้องการ replace local profile ด้วยข้อมูลนี้ไหม?"
+  ].join("\n");
+}
+
+function replaceUserIntentionProfileFromImport(profile) {
+  const normalized = normalizeUserIntentionProfile(profile);
+  const validation = validateUserIntentionProfile(normalized);
+  if (!validation.ok) return { ok: false, errors: validation.errors, profile: normalized };
+  try {
+    localStorage.setItem(USER_INTENTION_PROFILE_KEY, JSON.stringify(normalized));
+  } catch {
+    return { ok: false, errors: ["ยังบันทึก Intention Profile จาก workbook ใน browser นี้ไม่ได้ค่ะ"], profile: normalized };
+  }
+  return { ok: true, errors: [], profile: normalized };
+}
+
+function confirmAndReplaceUserIntentionProfile(profileImport) {
+  if (profileImport.status === "missing") return { status: "missing", message: "" };
+  if (profileImport.status === "empty") return { status: "empty", message: t("importProfileEmpty") };
+  if (profileImport.status === "invalid") {
+    const reason = profileImport.errors.join("; ") || "unknown";
+    return { status: "invalid", message: t("importProfileRejected", { reason }) };
+  }
+
+  if (!confirm(buildUserIntentionProfileImportPreview(profileImport.profile, profileImport.warnings))) {
+    return { status: "cancelled", message: t("importProfileCancelled") };
+  }
+
+  const result = replaceUserIntentionProfileFromImport(profileImport.profile);
+  if (!result.ok) {
+    return { status: "invalid", message: t("importProfileRejected", { reason: result.errors.join("; ") }) };
+  }
+  writeProfileForm(result.profile);
+  return { status: "imported", message: t("importProfileImported") };
 }
 
 function getUserIntentionProfileForReflection() {
@@ -11980,6 +12157,7 @@ function importMasterExcel(event) {
 
       const importedRows = XLSX.utils.sheet_to_json(dailySheet, { defval: "" }).map(normalizeLogRow);
       const reflectionMap = readReflectionMap(workbook);
+      const profileImport = parseUserIntentionProfileSheet(workbook);
       const rowsWithReflections = importedRows.map((row) => {
         const reflectionRecord = reflectionMap[row.Date] || {};
         return normalizeLogRow({
@@ -11993,7 +12171,11 @@ function importMasterExcel(event) {
       });
 
       setDailyLog(rowsWithReflections);
-      document.querySelector("#saveStatus").textContent = t("importDone", { count: rowsWithReflections.length });
+      const profileImportResult = confirmAndReplaceUserIntentionProfile(profileImport);
+      document.querySelector("#saveStatus").textContent = [
+        t("importDone", { count: rowsWithReflections.length }),
+        profileImportResult.message
+      ].filter(Boolean).join(" ");
     } catch (error) {
       alert(t("importFailed"));
     }
