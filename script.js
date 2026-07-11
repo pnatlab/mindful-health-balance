@@ -6,6 +6,18 @@ const THEME_KEY = "mindfulHealthTheme";
 const CURRENT_FORM_CLEARED_PREFIX = "mindfulHealthCurrentFormCleared";
 const USER_INTENTION_PROFILE_KEY = "mhb_user_intention_profile_v1";
 const USER_INTENTION_PROFILE_SCHEMA_VERSION = "1.0";
+const USER_INTENTION_PROFILE_SHEET_NAME = "User_Intention_Profile";
+const USER_INTENTION_PROFILE_EXPORT_COLUMNS = [
+  "Profile_Schema_Version",
+  "Display_Name",
+  "Address_Style",
+  "Preferred_Tone",
+  "User_Context_Note",
+  "Do_Not_Assume_Note",
+  "Birth_Date",
+  "Birth_Year",
+  "Updated_At"
+];
 const DAILY_LOG_COLUMNS = window.DAILY_LOG_COLUMNS;
 const COLUMN_GUIDE_HEADERS = window.COLUMN_GUIDE_HEADERS;
 const AI_CONTEXT_HEADERS = window.AI_CONTEXT_HEADERS;
@@ -3483,6 +3495,55 @@ function readStoredUserIntentionProfile() {
 
 function loadUserIntentionProfile() {
   return readStoredUserIntentionProfile().profile;
+}
+
+function getSavedUserIntentionProfileForExport() {
+  try {
+    const stored = localStorage.getItem(USER_INTENTION_PROFILE_KEY);
+    if (!stored) return { profile: null, malformed: false, exists: false };
+    const parsed = JSON.parse(stored);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return { profile: null, malformed: true, exists: true };
+    }
+    return {
+      profile: normalizeUserIntentionProfile(parsed),
+      malformed: false,
+      exists: true
+    };
+  } catch {
+    return { profile: null, malformed: true, exists: true };
+  }
+}
+
+function buildUserIntentionProfileExportRow(profile) {
+  const normalized = normalizeUserIntentionProfile(profile);
+  return {
+    Profile_Schema_Version: normalized.schemaVersion,
+    Display_Name: normalized.displayName,
+    Address_Style: normalized.addressStyle,
+    Preferred_Tone: normalized.preferredTone,
+    User_Context_Note: normalized.userContextNote,
+    Do_Not_Assume_Note: normalized.doNotAssumeNote,
+    Birth_Date: normalized.birthDate,
+    Birth_Year: normalized.birthYear,
+    Updated_At: normalized.updatedAt
+  };
+}
+
+function appendUserIntentionProfileSheetIfAvailable(workbook) {
+  const savedProfile = getSavedUserIntentionProfileForExport();
+  if (savedProfile.malformed) {
+    console.warn("User Intention Profile export skipped: saved profile is malformed.");
+    return;
+  }
+  if (!savedProfile.profile) return;
+
+  const profileSheet = XLSX.utils.json_to_sheet(
+    [buildUserIntentionProfileExportRow(savedProfile.profile)],
+    { header: USER_INTENTION_PROFILE_EXPORT_COLUMNS }
+  );
+  applySheetReadability(profileSheet, [22, 20, 18, 18, 34, 34, 16, 14, 28]);
+  XLSX.utils.book_append_sheet(workbook, profileSheet, USER_INTENTION_PROFILE_SHEET_NAME);
 }
 
 function getUserIntentionProfileForReflection() {
@@ -9187,6 +9248,7 @@ function exportMasterExcel() {
   XLSX.utils.book_append_sheet(workbook, fieldReviewSheet, "Field_Review");
   XLSX.utils.book_append_sheet(workbook, columnGuideSheet, "Column_Guide");
   XLSX.utils.book_append_sheet(workbook, aiContextSheet, "AI_Context");
+  appendUserIntentionProfileSheetIfAvailable(workbook);
   XLSX.writeFile(workbook, "Mindful_Health_Balance_Master.xlsx");
   document.querySelector("#saveStatus").textContent = t("exportedMaster");
 }
