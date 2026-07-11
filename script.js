@@ -3491,6 +3491,94 @@ function loadUserIntentionProfile() {
   return readStoredUserIntentionProfile().profile;
 }
 
+function getUserIntentionProfileForReflection() {
+  return normalizeUserIntentionProfile(loadUserIntentionProfile());
+}
+
+function formatUserAddress(profile = getDefaultUserIntentionProfile()) {
+  const normalized = normalizeUserIntentionProfile(profile);
+  const name = normalized.displayName.trim();
+  if (!name) return "พี่";
+  if (normalized.addressStyle === "polite_name") return `คุณ ${name}`;
+  if (normalized.addressStyle === "name_only") return name;
+  if (normalized.addressStyle === "custom") {
+    return normalized.customAddressStyle.includes("{name}")
+      ? normalized.customAddressStyle.replaceAll("{name}", name)
+      : `พี่ ${name}`;
+  }
+  return `พี่ ${name}`;
+}
+
+function getReflectionTonePreference(profile = getDefaultUserIntentionProfile()) {
+  return normalizeUserIntentionTone(profile.preferredTone);
+}
+
+function buildPersonalizedReflectionOpening(profile, { root = selectedReflectionRoot } = {}) {
+  const normalized = normalizeUserIntentionProfile(profile);
+  if (currentLanguage !== "th" || !normalized.displayName) return "";
+  const address = formatUserAddress(normalized);
+  const rootKey = getSelectedReflectionRootKey(root);
+  if (rootKey !== "auto") return `${address} `;
+  return `สวัสดีค่ะ${address} วันนี้หนูจะอ่านเท่าที่พี่บันทึกไว้แบบเบา ๆ นะคะ`;
+}
+
+function buildPersonalizedReflectionClosing(profile, { addressUsed = false } = {}) {
+  const normalized = normalizeUserIntentionProfile(profile);
+  if (currentLanguage !== "th") return "";
+  const tone = getReflectionTonePreference(normalized);
+  if (!tone) return "";
+  const address = !addressUsed && normalized.displayName ? formatUserAddress(normalized) : "";
+  const addressSuffix = address ? `${address} ` : "";
+  const softGap = addressSuffix || " ";
+  const closings = {
+    gentle: `พอเห็นจังหวะวันนี้เท่านี้ก็ได้ค่ะ${softGap}ค่อย ๆ กลับมาดูแลตัวเองทีละช่วงนะคะ 🩵`,
+    concise: `วันนี้อ่านได้เท่านี้พอค่ะ${addressSuffix}🩵`,
+    data_first: "จากข้อมูลที่พี่บันทึกไว้ วันนี้อ่านได้ประมาณนี้ค่ะ",
+    friendly: `วันนี้อ่านด้วยกันได้เท่านี้ก่อนก็พอค่ะ${softGap}ไม่ต้องรีบสรุปทุกอย่างในรอบเดียวนะคะ 🩵`,
+    mindful: "วันนี้เห็นจังหวะหนึ่งได้เท่านี้ก็พอค่ะ ความหมายสุดท้ายยังอยู่กับพี่เสมอ 🩵"
+  };
+  return closings[tone] || "";
+}
+
+function personalizeReflectionOutput(text, { root = selectedReflectionRoot } = {}) {
+  const cleanText = String(text || "").trim();
+  if (!cleanText || currentLanguage !== "th") return cleanText;
+
+  const profile = getUserIntentionProfileForReflection();
+  const hasDisplayName = Boolean(profile.displayName);
+  const tone = getReflectionTonePreference(profile);
+  if (!hasDisplayName && !tone) return cleanText;
+
+  const separator = cleanText.includes("\n\n") ? "\n\n" : "\n";
+  const blocks = cleanText.split(/\n+/).map((line) => line.trim()).filter(Boolean);
+  if (!blocks.length) return cleanText;
+
+  let addressUsed = false;
+  if (hasDisplayName) {
+    const rootKey = getSelectedReflectionRootKey(root);
+    const addressPrefix = buildPersonalizedReflectionOpening(profile, { root });
+    if (rootKey !== "auto" && addressPrefix && !blocks[0].startsWith(addressPrefix)) {
+      blocks[0] = `${addressPrefix}${blocks[0]}`;
+      addressUsed = true;
+    } else if (rootKey === "auto") {
+      const opening = buildPersonalizedReflectionOpening(profile, { root });
+      if (blocks[0].startsWith("สวัสดีค่ะ")) {
+        blocks[0] = blocks[0].replace(/^สวัสดีค่ะ\s*/, `สวัสดีค่ะ${formatUserAddress(profile)} `);
+      } else if (opening && !blocks.includes(opening)) {
+        blocks.unshift(opening);
+      }
+      addressUsed = true;
+    }
+  }
+
+  const closing = buildPersonalizedReflectionClosing(profile, { addressUsed });
+  if (closing && !blocks.some((line) => line === closing)) {
+    blocks.push(closing);
+  }
+
+  return dedupeReflectionLines(blocks).join(separator);
+}
+
 function saveUserIntentionProfile(profile) {
   const normalized = normalizeUserIntentionProfile({
     ...profile,
@@ -7780,20 +7868,20 @@ function getReflectionGenerationDelay() {
 
 function buildReflection() {
   const signals = buildSignals();
-  return sanitizeReflectionOutputText(composeRootAwareReflection(
+  return sanitizeReflectionOutputText(personalizeReflectionOutput(composeRootAwareReflection(
     buildReflectionFromSignals(signals),
     selectedReflectionRoot,
     signals
-  ));
+  ), { root: selectedReflectionRoot }));
 }
 
 function buildReflectionDisplay() {
   const signals = buildSignals();
-  return sanitizeReflectionOutputText(composeRootAwareReflection(
+  return sanitizeReflectionOutputText(personalizeReflectionOutput(composeRootAwareReflection(
     buildReflectionDisplayFromSignals(signals),
     selectedReflectionRoot,
     signals
-  ));
+  ), { root: selectedReflectionRoot }));
 }
 
 function buildReflectionDisplayFromSignals(signals) {
