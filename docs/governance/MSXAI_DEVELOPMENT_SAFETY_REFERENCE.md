@@ -37,7 +37,19 @@ Mindful Health Balance uses these project-specific development defaults:
 
 Thai note: งานพัฒนา MHB ต้องเริ่มจากเจตนามนุษย์และการวิเคราะห์ระบบก่อนลงมือแก้โค้ด
 
-## 4. Protected Local Resources
+## 4. Risk-Proportionate Development Detail
+
+Prompt detail, verification depth, and QA effort should be proportionate to the risk and scope of the task.
+
+- High-risk runtime or data-contract changes require detailed boundaries, stronger verification, and broader regression review.
+- Medium-risk changes require a clear bounded scope and proportionate verification.
+- Low-risk or docs-only changes should use concise prompts, minimal verification, and avoid unnecessary over-design.
+
+The goal is not maximum detail in every task. The goal is sufficient safety and clarity while respecting time, available budget, Codex usage limits, and the need to support multiple applications across the MSxAI ecosystem.
+
+Thai note: ใช้ความละเอียดเท่าที่จำเป็นต่อระดับความเสี่ยงของงาน ไม่ใช่ละเอียดที่สุดเสมอไป
+
+## 5. Protected Local Resources
 
 The following local resources are protected by default:
 
@@ -52,7 +64,7 @@ Protected local resources must not be opened or edited unless clearly necessary 
 
 If these files appear in `git status`, treat them as local artifacts until a human explicitly authorizes otherwise.
 
-## 5. Change and Commit Boundary
+## 6. Change and Commit Boundary
 
 Codex may edit project files within the requested scope and report the result. Codex must not commit or push.
 
@@ -60,10 +72,10 @@ The human reviews the diff and QA results before publication. The human performs
 
 Git staging must name exact files. Unexpected files in the diff require stopping and reporting before continuing.
 
-## 6. Relationship to the Canonical Protocol
+## 7. Relationship to the Canonical Protocol
 
 This MHB document extends the canonical MSxAI protocol with project-specific constraints. It does not override the canonical principles of human agency, bounded implementation, minimal change, source-bound development, and human publication.
 
-## 7. Closing Note
+## 8. Closing Note
 
 This reference exists to reduce context loss and help future humans or agents continue MHB work consistently. It does not introduce a new workflow.
