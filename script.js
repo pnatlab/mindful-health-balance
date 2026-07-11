@@ -3388,14 +3388,10 @@ function getIntentionProfileAddressPreview() {
   if (!displayName) return "ตัวอย่าง: พี่อยากให้หนูอ่านจังหวะน้ำจากมุมไหนคะ";
 
   const style = normalizeUserIntentionAddressStyle(document.querySelector("#intentionAddressStyle")?.value || "senior_name");
-  const customTemplate = document.querySelector("#intentionCustomAddress")?.value.trim() || "";
   const addressByStyle = {
     senior_name: `พี่ ${displayName}`,
     polite_name: `คุณ ${displayName}`,
-    name_only: displayName,
-    custom: customTemplate.includes("{name}")
-      ? customTemplate.replaceAll("{name}", displayName)
-      : `พี่ ${displayName}`
+    name_only: displayName
   };
 
   return `ตัวอย่าง: ${addressByStyle[style] || `พี่ ${displayName}`} อยากให้หนูอ่านจังหวะน้ำจากมุมไหนคะ`;
@@ -3420,10 +3416,11 @@ function normalizeUserIntentionAddressStyle(value) {
   const legacyMap = {
     sibling: "senior_name",
     formal: "polite_name",
-    name: "name_only"
+    name: "name_only",
+    custom: "senior_name"
   };
   const normalized = legacyMap[value] || value;
-  return ["senior_name", "polite_name", "name_only", "custom"].includes(normalized) ? normalized : "senior_name";
+  return ["senior_name", "polite_name", "name_only"].includes(normalized) ? normalized : "senior_name";
 }
 
 function normalizeUserIntentionTone(value) {
@@ -3464,9 +3461,6 @@ function validateUserIntentionProfile(profile) {
   if (profile.birthYear && !isValidBirthYear(profile.birthYear)) {
     errors.push("ปีเกิดที่บันทึกไว้ยังไม่ถูกต้องค่ะ");
   }
-  if (profile.addressStyle === "custom" && profile.customAddressStyle && !profile.customAddressStyle.includes("{name}")) {
-    // Keep this non-blocking: malformed custom templates fall back in preview instead of becoming source truth.
-  }
   return {
     ok: errors.length === 0,
     errors
@@ -3501,12 +3495,98 @@ function formatUserAddress(profile = getDefaultUserIntentionProfile()) {
   if (!name) return "พี่";
   if (normalized.addressStyle === "polite_name") return `คุณ ${name}`;
   if (normalized.addressStyle === "name_only") return name;
-  if (normalized.addressStyle === "custom") {
-    return normalized.customAddressStyle.includes("{name}")
-      ? normalized.customAddressStyle.replaceAll("{name}", name)
-      : `พี่ ${name}`;
-  }
   return `พี่ ${name}`;
+}
+
+function getReflectionAddressContext(profile = getDefaultUserIntentionProfile()) {
+  const normalized = normalizeUserIntentionProfile(profile);
+  const name = normalized.displayName.trim();
+  if (!name) {
+    return {
+      hasDisplayName: false,
+      fullAddress: "พี่",
+      shortAddress: "พี่",
+      usesNeutralBody: false
+    };
+  }
+
+  if (normalized.addressStyle === "polite_name") {
+    return { hasDisplayName: true, fullAddress: `คุณ ${name}`, shortAddress: "คุณ", usesNeutralBody: false };
+  }
+  if (normalized.addressStyle === "name_only") {
+    return { hasDisplayName: true, fullAddress: name, shortAddress: "", usesNeutralBody: true };
+  }
+  return { hasDisplayName: true, fullAddress: `พี่ ${name}`, shortAddress: "พี่", usesNeutralBody: false };
+}
+
+function buildNeutralUserReference() {
+  return "ข้อมูลที่บันทึกไว้";
+}
+
+function protectReflectionSourceText(text) {
+  const protectedValues = [
+    appState.mindNoteText,
+    appState.practiceNote
+  ]
+    .map((value) => String(value || "").trim())
+    .filter(Boolean)
+    .flatMap((value) => [value, truncateText(value, 80), truncateText(value, 90)])
+    .filter(Boolean)
+    .sort((a, b) => b.length - a.length);
+  const protectedParts = [];
+  let protectedText = String(text || "");
+  const protect = (value) => {
+    const token = `__MHB_REFLECTION_SOURCE_${protectedParts.length}__`;
+    protectedParts.push(value);
+    return token;
+  };
+
+  protectedText = protectedText.replace(/“[^”]*”/g, (quote) => protect(quote));
+  protectedValues.forEach((value) => {
+    if (protectedText.includes(value)) protectedText = protectedText.replaceAll(value, protect(value));
+  });
+  return {
+    text: protectedText,
+    restore: (value) => protectedParts.reduce(
+      (restored, source, index) => restored.replaceAll(`__MHB_REFLECTION_SOURCE_${index}__`, source),
+      value
+    )
+  };
+}
+
+function applyReflectionAddressTokens(text, addressContext) {
+  if (!addressContext?.hasDisplayName || currentLanguage !== "th") return String(text || "");
+  const protectedText = protectReflectionSourceText(text);
+  let normalizedText = protectedText.text;
+
+  if (addressContext.shortAddress) {
+    normalizedText = normalizedText.replaceAll("พี่", addressContext.shortAddress);
+  } else {
+    const neutralReplacements = [
+      ["ข้อมูลของพี่", buildNeutralUserReference()],
+      ["ข้อมูลที่พี่บันทึกไว้", buildNeutralUserReference()],
+      ["สิ่งที่พี่บันทึกไว้", "สิ่งที่บันทึกไว้"],
+      ["เวลาสั้น ๆ ที่พี่บันทึกไว้", "เวลาสั้น ๆ ที่บันทึกไว้"],
+      ["พี่บันทึกไว้", "บันทึกไว้"],
+      ["ที่พี่บันทึกไว้", "ที่บันทึกไว้"],
+      ["ไม่สรุปแทนพี่", "ไม่สรุปแทน"],
+      ["ความหมายสุดท้ายยังอยู่กับพี่", "ความหมายสุดท้ายยังอยู่กับผู้บันทึก"],
+      ["ของพี่เอง", "ของผู้บันทึกเอง"],
+      ["ถ้าพี่อยาก", "ถ้าอยาก"],
+      ["พี่อาจลอง", "อาจลอง"],
+      ["พี่ค่อย ๆ", "ค่อย ๆ"],
+      ["วันนี้พี่", "วันนี้"],
+      ["พี่ลอง", "ลอง"],
+      ["ให้พี่", "ให้"],
+      ["กับพี่", "ในรอบนี้"]
+    ];
+    neutralReplacements.forEach(([from, to]) => {
+      normalizedText = normalizedText.replaceAll(from, to);
+    });
+    normalizedText = normalizedText.replaceAll("พี่", "").replace(/[ \t]{2,}/g, " ");
+  }
+
+  return protectedText.restore(normalizedText);
 }
 
 function getReflectionTonePreference(profile = getDefaultUserIntentionProfile()) {
@@ -3517,9 +3597,10 @@ function buildPersonalizedReflectionOpening(profile, { root = selectedReflection
   const normalized = normalizeUserIntentionProfile(profile);
   if (currentLanguage !== "th" || !normalized.displayName) return "";
   const address = formatUserAddress(normalized);
+  const addressGap = normalized.addressStyle === "name_only" ? " " : "";
   const rootKey = getSelectedReflectionRootKey(root);
   if (rootKey !== "auto") return `${address} `;
-  return `สวัสดีค่ะ${address} วันนี้หนูจะอ่านเท่าที่พี่บันทึกไว้แบบเบา ๆ นะคะ`;
+  return `สวัสดีค่ะ${addressGap}${address} วันนี้หนูจะอ่านเท่าที่บันทึกไว้แบบเบา ๆ นะคะ`;
 }
 
 function buildPersonalizedReflectionClosing(profile, { addressUsed = false } = {}) {
@@ -3533,9 +3614,9 @@ function buildPersonalizedReflectionClosing(profile, { addressUsed = false } = {
   const closings = {
     gentle: `พอเห็นจังหวะวันนี้เท่านี้ก็ได้ค่ะ${softGap}ค่อย ๆ กลับมาดูแลตัวเองทีละช่วงนะคะ 🩵`,
     concise: `วันนี้อ่านได้เท่านี้พอค่ะ${addressSuffix}🩵`,
-    data_first: "จากข้อมูลที่พี่บันทึกไว้ วันนี้อ่านได้ประมาณนี้ค่ะ",
+    data_first: "จากข้อมูลที่บันทึกไว้ วันนี้อ่านได้ประมาณนี้ค่ะ",
     friendly: `วันนี้อ่านด้วยกันได้เท่านี้ก่อนก็พอค่ะ${softGap}ไม่ต้องรีบสรุปทุกอย่างในรอบเดียวนะคะ 🩵`,
-    mindful: "วันนี้เห็นจังหวะหนึ่งได้เท่านี้ก็พอค่ะ ความหมายสุดท้ายยังอยู่กับพี่เสมอ 🩵"
+    mindful: "วันนี้เห็นจังหวะหนึ่งได้เท่านี้ก็พอค่ะ ความหมายสุดท้ายยังอยู่กับผู้บันทึกเสมอ 🩵"
   };
   return closings[tone] || "";
 }
@@ -3545,13 +3626,18 @@ function personalizeReflectionOutput(text, { root = selectedReflectionRoot } = {
   if (!cleanText || currentLanguage !== "th") return cleanText;
 
   const profile = getUserIntentionProfileForReflection();
-  const hasDisplayName = Boolean(profile.displayName);
+  const addressContext = getReflectionAddressContext(profile);
+  const hasDisplayName = addressContext.hasDisplayName;
   const tone = getReflectionTonePreference(profile);
   if (!hasDisplayName && !tone) return cleanText;
 
   const separator = cleanText.includes("\n\n") ? "\n\n" : "\n";
   const blocks = cleanText.split(/\n+/).map((line) => line.trim()).filter(Boolean);
   if (!blocks.length) return cleanText;
+
+  if (hasDisplayName) {
+    blocks.splice(0, blocks.length, ...blocks.map((line) => applyReflectionAddressTokens(line, addressContext)));
+  }
 
   let addressUsed = false;
   if (hasDisplayName) {
@@ -3563,7 +3649,8 @@ function personalizeReflectionOutput(text, { root = selectedReflectionRoot } = {
     } else if (rootKey === "auto") {
       const opening = buildPersonalizedReflectionOpening(profile, { root });
       if (blocks[0].startsWith("สวัสดีค่ะ")) {
-        blocks[0] = blocks[0].replace(/^สวัสดีค่ะ\s*/, `สวัสดีค่ะ${formatUserAddress(profile)} `);
+        const greetingGap = addressContext.usesNeutralBody ? " " : "";
+        blocks[0] = blocks[0].replace(/^สวัสดีค่ะ\s*/, `สวัสดีค่ะ${greetingGap}${addressContext.fullAddress} `);
       } else if (opening && !blocks.includes(opening)) {
         blocks.unshift(opening);
       }
@@ -3643,7 +3730,6 @@ function readProfileForm() {
   setIntentionDateStatus("");
   const displayName = document.querySelector("#intentionDisplayName")?.value || "";
   const addressStyle = document.querySelector("#intentionAddressStyle")?.value || "senior_name";
-  const customAddressStyle = document.querySelector("#intentionCustomAddress")?.value || "";
   const birthDay = document.querySelector("#intentionBirthDay")?.value || "";
   const birthMonth = document.querySelector("#intentionBirthMonth")?.value || "";
   const birthYear = document.querySelector("#intentionBirthYear")?.value || "";
@@ -3666,7 +3752,6 @@ function readProfileForm() {
     profile: normalizeUserIntentionProfile({
       displayName,
       addressStyle,
-      customAddressStyle,
       birthDate: normalizedBirthDate,
       birthYear: normalizedBirthYear,
       preferredTone,
@@ -3691,7 +3776,6 @@ function writeProfileForm(profile = getDefaultUserIntentionProfile()) {
   };
   setValue("#intentionDisplayName", normalized.displayName);
   setValue("#intentionAddressStyle", normalized.addressStyle);
-  setValue("#intentionCustomAddress", normalized.customAddressStyle);
   setValue("#intentionPreferredTone", normalized.preferredTone);
   setValue("#intentionContextNote", normalized.userContextNote);
   setValue("#intentionDoNotAssume", normalized.doNotAssumeNote);
@@ -3769,13 +3853,11 @@ function renderIntentionBirthPickerOptions() {
 }
 
 function renderIntentionProfileScaffold() {
-  const customAddressField = document.querySelector(".intention-custom-address");
   const addressStyle = document.querySelector("#intentionAddressStyle");
   const preview = document.querySelector("#intentionAddressPreview");
-  if (!customAddressField || !addressStyle || !preview) return;
+  if (!addressStyle || !preview) return;
 
   renderIntentionBirthPickerOptions();
-  customAddressField.classList.toggle("is-hidden", addressStyle.value !== "custom");
   preview.textContent = getIntentionProfileAddressPreview();
 }
 
@@ -4639,7 +4721,6 @@ function bindEvents() {
   document.querySelector("#openWelcome").addEventListener("click", () => showWelcome({ remember: false }));
   document.querySelector("#openIntentionProfile")?.addEventListener("click", openIntentionProfileScaffold);
   document.querySelector("#intentionDisplayName")?.addEventListener("input", renderIntentionProfileScaffold);
-  document.querySelector("#intentionCustomAddress")?.addEventListener("input", renderIntentionProfileScaffold);
   document.querySelector("#intentionAddressStyle")?.addEventListener("change", renderIntentionProfileScaffold);
   document.querySelector("#saveIntentionProfile")?.addEventListener("click", saveUserIntentionProfileFromForm);
   document.querySelector("#skipIntentionProfile")?.addEventListener("click", () => setActiveView("today"));
