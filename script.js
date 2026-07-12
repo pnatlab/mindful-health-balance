@@ -12112,14 +12112,14 @@ function renderGuidedReadingCard(activeCard) {
         </button>
       </div>
       <div class="guided-reading-nav-right">
+        <button type="button" class="ghost-button guided-nav-button guided-nav-exit" data-guided-reading-exit="${escapeHtml(activeCard.roomType)}">
+          ${escapeHtml(t("fieldRoomConversationExit"))}
+        </button>
         ${nextChoice ? `
           <button type="button" class="ghost-button guided-nav-button guided-nav-next" data-guided-reading-choice="${escapeHtml(nextChoice.type)}" data-guided-reading-room="${escapeHtml(activeCard.roomType)}">
             ${escapeHtml(t("fieldRoomHydrationNextAngle"))}
           </button>
         ` : ""}
-        <button type="button" class="ghost-button guided-nav-button guided-nav-exit" data-guided-reading-exit="${escapeHtml(activeCard.roomType)}">
-          ${escapeHtml(t("fieldRoomConversationExit"))}
-        </button>
       </div>
     </div>
     ${renderFieldRoomNextActions(activeCard.roomType)}
