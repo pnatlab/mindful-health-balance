@@ -1287,6 +1287,36 @@ body[data-theme="dark"] .today-hydration-hero {
   gap: 18px;
 }
 
+.today-hydration-welcome {
+  max-width: 440px;
+  margin: 0 0 2px;
+  padding: 0 0 18px;
+  border-bottom: 1px solid rgba(111, 167, 232, 0.16);
+}
+
+.today-hydration-welcome-main,
+.today-hydration-welcome-sub {
+  margin: 0;
+}
+
+.today-hydration-welcome-main {
+  color: var(--text-main);
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.today-hydration-welcome-sub {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+body[data-theme="dark"] .today-hydration-welcome {
+  border-bottom-color: rgba(142, 167, 255, 0.16);
+}
+
 .today-hydration-hero .button-row {
   gap: 12px;
 }

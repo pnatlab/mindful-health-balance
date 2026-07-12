@@ -3405,6 +3405,7 @@ function applyTranslations() {
   updateTodaySignalCockpitUI();
   renderReflectionRootPicker();
   renderIntentionProfileScaffold();
+  renderTodayHydrationWelcome();
 }
 
 function getIntentionProfileAddressPreview() {
@@ -3736,6 +3737,22 @@ function formatUserAddress(profile = getDefaultUserIntentionProfile()) {
   return `พี่ ${name}`;
 }
 
+function getTodayHydrationWelcomeAddress() {
+  const storedProfile = readStoredUserIntentionProfile();
+  const name = storedProfile.profile.displayName.trim();
+  if (!storedProfile.exists || storedProfile.malformed || !name) return "";
+  return formatUserAddress(storedProfile.profile);
+}
+
+function renderTodayHydrationWelcome() {
+  const main = document.querySelector("#todayHydrationWelcomeMain");
+  const sub = document.querySelector("#todayHydrationWelcomeSub");
+  if (!main || !sub) return;
+  const address = getTodayHydrationWelcomeAddress();
+  main.textContent = address ? `สวัสดีค่ะ ${address} 🩵` : "สวัสดีค่ะ 🩵";
+  sub.textContent = "วันนี้ค่อย ๆ กลับมาดูแลจังหวะน้ำของตัวเองกันนะคะ";
+}
+
 function getReflectionAddressContext(profile = getDefaultUserIntentionProfile()) {
   const normalized = normalizeUserIntentionProfile(profile);
   const name = normalized.displayName.trim();
@@ -4023,6 +4040,7 @@ function writeProfileForm(profile = getDefaultUserIntentionProfile()) {
   setValue("#intentionBirthMonth", birthParts ? String(Number(birthParts[2])) : "");
   setValue("#intentionBirthYear", birthParts ? birthParts[1] : normalized.birthYear);
   updateProfilePreview();
+  renderTodayHydrationWelcome();
 }
 
 function updateProfilePreview() {
@@ -5318,6 +5336,7 @@ function syncUI() {
   document.querySelector("#waterMl").textContent = appState.waterMl.toLocaleString(translations[currentLanguage].locale);
   document.querySelector("#hydrationFeedback").textContent = appState.hydrationStatus;
   document.querySelector("#hydrationGuidance").textContent = getHydrationGuidanceText();
+  renderTodayHydrationWelcome();
   updateHydrationVisual();
   document.querySelector("#loadScore").textContent = appState.loadScore;
   document.querySelector("#loadLevel").textContent = appState.loadLevel;
