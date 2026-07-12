@@ -12102,21 +12102,25 @@ function renderGuidedReadingCard(activeCard) {
       <p class="section-kicker">${escapeHtml(readingCard.title)}</p>
       <p>${escapeHtml(readingCard.text)}</p>
     </article>
-    <div class="hydration-reading-actions">
-      <button type="button" class="ghost-button guided-nav-button guided-nav-back" data-guided-reading-back="${escapeHtml(activeCard.roomType)}" ${state.history.length <= 1 ? "disabled" : ""}>
-        ${escapeHtml(t("fieldRoomHydrationBack"))}
-      </button>
-      ${nextChoice ? `
-        <button type="button" class="ghost-button guided-nav-button guided-nav-next" data-guided-reading-choice="${escapeHtml(nextChoice.type)}" data-guided-reading-room="${escapeHtml(activeCard.roomType)}">
-          ${escapeHtml(t("fieldRoomHydrationNextAngle"))}
+    <div class="hydration-reading-actions guided-reading-nav">
+      <div class="guided-reading-nav-left">
+        <button type="button" class="ghost-button guided-nav-button guided-nav-back" data-guided-reading-back="${escapeHtml(activeCard.roomType)}" ${state.history.length <= 1 ? "disabled" : ""}>
+          ${escapeHtml(t("fieldRoomHydrationBack"))}
         </button>
-      ` : ""}
-      <button type="button" class="ghost-button guided-nav-button guided-nav-menu" data-guided-reading-choose="${escapeHtml(activeCard.roomType)}">
-        ${escapeHtml(t("fieldRoomHydrationChooseAgain"))}
-      </button>
-      <button type="button" class="ghost-button guided-nav-button guided-nav-exit" data-guided-reading-exit="${escapeHtml(activeCard.roomType)}">
-        ${escapeHtml(t("fieldRoomConversationExit"))}
-      </button>
+        <button type="button" class="ghost-button guided-nav-button guided-nav-menu" data-guided-reading-choose="${escapeHtml(activeCard.roomType)}">
+          ${escapeHtml(t("fieldRoomHydrationChooseAgain"))}
+        </button>
+      </div>
+      <div class="guided-reading-nav-right">
+        ${nextChoice ? `
+          <button type="button" class="ghost-button guided-nav-button guided-nav-next" data-guided-reading-choice="${escapeHtml(nextChoice.type)}" data-guided-reading-room="${escapeHtml(activeCard.roomType)}">
+            ${escapeHtml(t("fieldRoomHydrationNextAngle"))}
+          </button>
+        ` : ""}
+        <button type="button" class="ghost-button guided-nav-button guided-nav-exit" data-guided-reading-exit="${escapeHtml(activeCard.roomType)}">
+          ${escapeHtml(t("fieldRoomConversationExit"))}
+        </button>
+      </div>
     </div>
     ${renderFieldRoomNextActions(activeCard.roomType)}
   `;

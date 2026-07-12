@@ -4061,6 +4061,30 @@ body[data-theme="dark"] .field-room-action-area {
   max-width: 720px;
 }
 
+.guided-reading-nav {
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 24px;
+  row-gap: 10px;
+}
+
+.guided-reading-nav-left,
+.guided-reading-nav-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  align-items: center;
+}
+
+.guided-reading-nav-left {
+  justify-content: flex-start;
+}
+
+.guided-reading-nav-right {
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
 .guided-nav-button,
 .field-room-focus-chip.guided-nav-next,
 .field-room-focus-chip.guided-nav-menu,
@@ -5628,6 +5652,18 @@ td:nth-child(10) {
   .hydration-reading-question .field-room-focus-chips {
     display: grid;
     align-items: stretch;
+  }
+
+  .guided-reading-nav {
+    row-gap: 9px;
+  }
+
+  .guided-reading-nav-left,
+  .guided-reading-nav-right {
+    display: grid;
+    gap: 8px;
+    margin-left: 0;
+    justify-content: stretch;
   }
 
   .hydration-reading-actions .ghost-button,

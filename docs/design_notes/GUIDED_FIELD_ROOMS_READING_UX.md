@@ -48,6 +48,8 @@ Guided room controls use semantic visual roles so users can read direction at a 
 
 Related-room buttons stay separate from reading navigation because they move to another room rather than within the current reading flow.
 
+Reading controls are grouped by direction: back and choose-angle actions sit on the left, while next-angle and end-reading actions sit on the right. This creates a consistent navigation grammar where left means returning to an earlier point and right means continuing or gently ending the reading.
+
 ## Orientation Polish
 
 When a reading angle is open, the room shows a small current-reading indicator above the answer card. The angle selector becomes a compact orientation control in reading state, while the answer card remains the primary focus and reading navigation remains the next action.
