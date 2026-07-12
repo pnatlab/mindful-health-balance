@@ -49,7 +49,27 @@ The goal is not maximum detail in every task. The goal is sufficient safety and 
 
 Thai note: ใช้ความละเอียดเท่าที่จำเป็นต่อระดับความเสี่ยงของงาน ไม่ใช่ละเอียดที่สุดเสมอไป
 
-## 5. Protected Local Resources
+## 5. Documentation Alignment
+
+Every meaningful implementation must include a documentation impact check before completion.
+
+- User-visible behavior changes should update the relevant README and user guide.
+- Architecture, schema, data-boundary, or significant UX-direction changes should update the relevant design note.
+- Small visual or maintenance patches that do not change behavior may report that no documentation update is required.
+- Current documentation must describe the current runtime clearly; historical design traces must not be presented as current behavior.
+- Before a release is locked, `README.md`, `USER_GUIDE_TH.md`, and `USER_GUIDE_EN.md` should be reviewed against the current runtime.
+
+Documentation effort should remain proportional to the risk and significance of the change. This policy requires checking documentation impact, not automatic documentation expansion for every small patch.
+
+Default implementation prompts for MHB should include this documentation impact checklist:
+
+- Check whether the change affects `README.md`, `USER_GUIDE_TH.md`, `USER_GUIDE_EN.md`, or a relevant design note.
+- If documentation is affected, update only the related files within the same task scope.
+- If documentation is not affected, briefly state why in the implementation report.
+
+Thai note: ทุก implementation ต้องตรวจผลกระทบต่อเอกสาร แต่แก้เฉพาะเอกสารที่เกี่ยวข้องเมื่อมีผลกระทบจริง
+
+## 6. Protected Local Resources
 
 The following local resources are protected by default:
 
@@ -64,7 +84,7 @@ Protected local resources must not be opened or edited unless clearly necessary 
 
 If these files appear in `git status`, treat them as local artifacts until a human explicitly authorizes otherwise.
 
-## 6. Change and Commit Boundary
+## 7. Change and Commit Boundary
 
 Codex may edit project files within the requested scope and report the result. Codex must not commit or push.
 
@@ -72,10 +92,10 @@ The human reviews the diff and QA results before publication. The human performs
 
 Git staging must name exact files. Unexpected files in the diff require stopping and reporting before continuing.
 
-## 7. Relationship to the Canonical Protocol
+## 8. Relationship to the Canonical Protocol
 
 This MHB document extends the canonical MSxAI protocol with project-specific constraints. It does not override the canonical principles of human agency, bounded implementation, minimal change, source-bound development, and human publication.
 
-## 8. Closing Note
+## 9. Closing Note
 
 This reference exists to reduce context loss and help future humans or agents continue MHB work consistently. It does not introduce a new workflow.
