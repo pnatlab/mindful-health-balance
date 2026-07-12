@@ -36,18 +36,21 @@ The fact that it is not SaaS is intentional. Its value is in the design of a use
 
 ## Current Version
 
-**MHB 2.0 — Field Review & Signal Engine**
+**MHB 2.0 — Field Review, Signal Engine & User Intention Profile**
 
 Latest refinements include:
 
 - Mindful Practice Context before Mind Note using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma
+- five main views: Today, Reflection/NuTuenSai, Field Review / ประมวลข้อมูล, Log, and Intention Profile
 - Field Review / ประมวลข้อมูล tab for deterministic multi-day review from saved `Daily_Log`
 - timeframe selector for 7 days, 14 days, 30 days, or all available saved rows
-- compact Field Review context header with selected `Daily_Log` summary chips and no separate rhythm strip
-- rule-based review cards for hydration, sleep/recovery, load/recovery, drinks, Mind Note/support, and missing data
-- NuTuenSai-style deterministic card voice with evidence, source-bound reading, and gentle next attention
+- Guided Field Rooms for hydration, recovery, load, drinks, Mind Note, and missing data, using one-card-at-a-time Guided Reading rather than chat simulation
+- current-reading indicator, light read progress, left/right navigation grammar, and related-room transition cards for Guided Field Rooms
 - Field Review remains local-first, read-only, non-medical, non-chatbot, and non-LLM
 - Signal Engine for bounded numeric-to-numeric relationship review from `Daily_Log`, now shown as top relationship rows with semantic pair accents, a deterministic NuTuenSai Meaning Dictionary, raw column audit lines, pair-specific `MHB · NuTuenSai` meaning details, and a Gentle Next Observation layer, with no LLM, chart, matrix, or category mapping
+- User Intention Profile for optional display name, addressing style, preferred tone, user context note, do-not-assume boundary, and optional birth date/year
+- profile-aware Today/Hydration welcome text that uses only saved display name and address style
+- optional `User_Intention_Profile` workbook sheet, exported only when a saved profile exists and imported only after preview + human confirmation
 - `Practice_Note` for a short practice note, good action, or wholesome context, stored in `Daily_Log` and duplicated in `Practice_Context_JSON.note`
 - Source-aware same-day save merge, so saving Today’s Signals does not erase saved Mind Note, Practice Context, or Reflection
 - Daily Save Status Bar showing the three saved layers: Today’s Signals, Mind Note, and Reflection
@@ -57,9 +60,19 @@ Latest refinements include:
 - NuTuenSai voice cadence in Thai Reflection without turning the app into a chatbot
 - Low-data micro-continuity that may use one previous-log cue as background only
 - Input-grounded Reflection composer that remains deterministic, rule-based, and local-first
-- Practice Context and Practice Note stored for Field Review context, not daily Reflection interpretation
+- Practice Context and Practice Note stored for Field Review context and bounded `practice_context` Reflection, never as spiritual scoring
 
-MHB 2.0 starts conservatively with rule-based Field Review. It is not an AI companion, not free-form Ask My Log, not a medical review layer, not causation analysis, and not a production SaaS release.
+MHB 2.0 locks the current app as a local-first, deterministic Field Review + Signal Engine + User Intention Profile release. It is not an AI companion, not free-form Ask My Log, not a medical review layer, not causation analysis, and not a production SaaS release. Future feature work after this documentation lock should begin from MHB 2.1.
+
+## Main Navigation
+
+The app currently has five main views:
+
+- `Today`: current-day signals, hydration, drinks, load/recovery, Practice Context, and Mind Note
+- `Reflection/NuTuenSai`: deterministic Reflection generation, review, editing, and save
+- `Field Review / ประมวลข้อมูล`: Guided Field Rooms and Signal Engine over saved `Daily_Log`
+- `Log`: Daily Log Table, Export Master Excel, Import Master Excel, and Clear Daily Log
+- `Intention Profile`: optional local profile for display name, addressing, tone, user context, and do-not-assume boundaries
 
 ## Core Principle
 
@@ -81,6 +94,7 @@ Workbook layers include:
 - `Field_Review`: lightweight pattern review
 - `Column_Guide`: AI-readable explanation of workbook columns, units, allowed interpretation, and forbidden interpretation
 - `AI_Context`: workbook-level semantic guardrails, including that this is self-care data and not finance/expense data
+- `User_Intention_Profile`: optional single-row profile sheet when the user has saved an Intention Profile
 
 AI can only read the workbook when the user intentionally exports and shares it. There is no backend, account system, automatic upload, or hidden sync.
 
@@ -122,7 +136,7 @@ Practice fields:
 
 `Practice_Note` can store a short note such as “fed fish at the temple,” “recollected a good action,” “chose not to react,” or “used a gentle phrase.” It is context, not a merit score or spiritual assessment.
 
-Practice Context and Practice Note are stored for future weekly/monthly Field Review. Daily Reflection/NuTuenSai intentionally does not interpret them yet.
+Practice Context and Practice Note are stored for Field Review and for bounded `practice_context` Reflection when that root is selected. The app reads them as gentle context only, never as merit, spiritual progress, discipline, or practice quality.
 
 ## Reflection/NuTuenSai
 
@@ -143,6 +157,21 @@ Current reflection behavior:
 
 Reflection output is companion text, not raw evidence. It is optional and is saved only when the user chooses to save today’s Reflection.
 
+## User Intention Profile
+
+Intention Profile is an optional local profile layer for how the app addresses the user and frames deterministic wording. It can store:
+
+- display name
+- address style: `senior_name`, `polite_name`, or `name_only`
+- preferred tone
+- optional birth date or birth year
+- User Context Note
+- Do Not Assume Note
+
+The profile is stored in this browser first. It can change greeting/addressing and limited Reflection wording, but it must not change source facts, calculations, Field Review evidence, Reflection Root selection, Signal Engine results, or safety boundaries. User notes are plain user-owned context; they are not hidden system instructions and are not parsed as commands. Custom addressing has been removed from the visible UI; legacy custom profiles normalize safely to `senior_name`.
+
+The Today/Hydration area can show a profile-aware welcome such as `สวัสดีค่ะ พี่ pnat 🩵`. This uses only display name and address style. It is not personality analysis.
+
 ## Features
 
 - Local-first daily log stored in the browser
@@ -159,6 +188,7 @@ Reflection output is companion text, not raw evidence. It is optional and is sav
 - Optional Mind Note, feeling, and support need
 - Rule-based NuTuenSai Reflection
 - Rule-based Field Review from saved `Daily_Log`
+- User Intention Profile for optional addressing, tone, user context, and do-not-assume boundaries
 - Excel export/import for a user-owned portable workbook
 - Thai / English / Chinese UI
 - Light / dark / auto theme
@@ -186,7 +216,8 @@ If the app folder or browser origin changes, existing browser storage may not fo
 5. Optionally open Reflection/NuTuenSai, review or edit the generated Reflection, and click `Save Today’s Reflection`.
 6. If the current form is cleared by mistake, use `Restore Today’s Log` to load today’s saved row back into the form. If there is no row for today, the app asks before loading the latest saved row.
 7. Open Field Review to review saved `Daily_Log` patterns across 7, 14, 30, or all available days.
-8. Export or import the Excel workbook when needed.
+8. Optionally open Intention Profile to save local addressing and communication preferences.
+9. Export or import the Excel workbook when needed.
 
 No backend, server, build step, or framework is required for normal use.
 
@@ -207,12 +238,17 @@ The workbook currently includes:
 - `Field_Review`
 - `Column_Guide`
 - `AI_Context`
+- `User_Intention_Profile` (optional; only when a saved profile exists)
 
 `Daily_Log` keeps canonical English headers for machine readability. `Column_Guide` explains key columns in Thai and English, including units and forbidden interpretations, without changing the canonical headers. `AI_Context` tells AI readers that the workbook is a self-care reflection log, not a finance, expense, accounting, trading, or spending workbook.
 
+`User_Intention_Profile` is not exported as an empty sheet. It appears only when the user has saved an Intention Profile. It is a portable user-owned context sheet, not an account, identity verification sheet, medical profile, or AI instruction engine. The protected `.xltx` template is not the current master data file; normal user backup/export uses `Mindful_Health_Balance_Master.xlsx`.
+
+Workbook import keeps existing Daily Log behavior and adds a human-reviewed profile bridge: if the workbook has a valid `User_Intention_Profile` sheet, the app previews the candidate profile and asks before replacing the local profile. Cancel leaves the local profile unchanged. Confirm replaces the profile as a whole snapshot; v1 does not merge field-by-field. Workbooks without the profile sheet keep the local profile unchanged, and invalid profile candidates do not need to break the rest of workbook import.
+
 ## Field Review
 
-The Field Review tab is the first MHB 2.0 slice. It reads saved `Daily_Log` rows from localStorage and shows rule-based review cards only. Each card keeps numeric evidence visible, then adds a deterministic NuTuenSai-style reading and a gentle next attention. The default timeframe is now 30 days so Field Review and Signal Engine have a better chance of enough paired data; users can still switch to 7 days, 14 days, or all available data. The selected timeframe changes the reading tone lightly: 7 days is an early signal, 14 days is an emerging rhythm, 30 days is a month-level rhythm, and all available data is a long-view reflection.
+The Field Review tab is part of the locked MHB 2.0 release. It reads saved `Daily_Log` rows from localStorage and shows deterministic Guided Field Rooms for hydration, recovery, load, drinks, Mind Note, and missing/blank data. The default timeframe is 30 days so Field Review and Signal Engine have a better chance of enough paired data; users can still switch to 7 days, 14 days, or all available data. The selected timeframe changes the reading tone lightly: 7 days is an early signal, 14 days is an emerging rhythm, 30 days is a month-level rhythm, and all available data is a long-view reflection.
 
 Field Review does not call an LLM, does not provide a free-form question box, and does not change export/import/save/restore behavior.
 
@@ -220,13 +256,7 @@ The Field Review header is now a compact Daily_Log context block: it keeps the `
 
 Field Review cards also use NuTuenSai Field Room background images for hydration, sleep/recovery, load/recovery, drinks context, Mind Note, and missing/blank data. These images are presentation assets only; they do not change review logic, source boundaries, or workbook data.
 
-Field Review UI v2 presents those six cards as guided Field Rooms. The page opens one room at a time, with a room selector, locked chat-style bubbles for source, evidence, NuTuenSai reading, and next gentle attention, plus a suggested next-room navigation button. It looks conversational, but it is still deterministic and has no text input, LLM, or free-form ask; the six reflection rooms do not perform relationship calculation themselves.
-
-Field Review UI v2.1 turns those bubbles into a locked guided conversation flow: NuTuenSai asks a predefined focus question, the user chooses a predefined focus chip, and the visible response changes between overview, evidence, next attention, or show all. Suggested next/related rooms are navigation only, not AI recommendations.
-
-Field Review UI v2.2 refines the active room into a conversation stack: question bubble, locked choices, source-bound response bubbles, then next-room continuation. The stack keeps the chat-like feeling without adding text input, LLM generation, free-form ask, or new analysis.
-
-Field Review UI v2.3 moves locked focus choices into a normal bottom action area below the response, together with next-room navigation. The chat body now reads as question, source context, and response first; the buttons remain deterministic controls outside the answer flow.
+Guided Field Rooms now use a Guided Reading flow rather than a chat simulation. The user chooses a reading angle: overview, evidence, next gentle attention, or show all. The room shows one reading card at a time, a current-reading indicator, light read progress with `✓ / ○`, compact angle chips, and deterministic controls for back, choose angle, end reading, and next angle. The navigation grammar is simple: left means going back, right means ending or continuing. Related-room cards are transitions to other rooms, not AI recommendations. Reading state is session-only.
 
 The sidebar separates the six Guided Field Rooms from the English-only `Signal Engine` entry so the relationship engine reads as a special module, not a seventh reflection room.
 
@@ -251,9 +281,8 @@ Thai documentation, field notes, and original design context remain available in
 
 ## Version History / Design Trace
 
-- **MHB 2.0 Field Review UI v2 — Guided Field Rooms Workspace**: Replaces the visible six-card grid with a guided room selector and active room workspace using locked chat-style bubbles. Suggested next room is navigation only, while the content remains deterministic, source-bound, non-LLM, non-chatbot, and non-correlation.
-- **MHB 2.0 Field Review Visual Slice 1**: Evolves the NuTuenSai Field Reflection Studio into a compact Daily_Log context header with segmented timeframe controls, overview chips, and softer review cards while keeping Field Review rule-based, source-bound, non-LLM, non-chatbot, and non-correlation.
-- **MHB 2.0 Slice A — Rule-based Field Review**: Added Field Review / ประมวลข้อมูล tab, timeframe selector, deterministic NuTuenSai-style review cards from `Daily_Log`, and documented Signal Relationships / Correlation Review as future Slice A+/B backlog only.
+- **MHB 2.0 — Current locked release**: Field Review, Guided Field Rooms, Signal Engine, User Intention Profile, Excel profile bridge, and profile-aware Today welcome are treated as the current release baseline. Future feature development should begin from MHB 2.1.
+- **MHB 2.0 design trace**: Earlier internal slices such as Field Review Slice A, Field Review UI v2/v2.1/v2.2/v2.3, Guided Reading, and User Intention Profile U0-U4 are historical implementation steps inside the MHB 2.0 release, not separate current versions.
 - **v1.9.9 — Mindful Practice Context and User-Owned Field Memory Refinement**: adds Practice Context, `Practice_Note`, honest data copy, source-aware safe merge, three-layer save status, ordered mind scale, NuTuenSai voice cadence, low-data micro-continuity, and Reflection anti-repetition.
 - **v1.9.8c — Reflection Sentence Smoothing**: reduces repeated connectors and uses short paragraphs so input-grounded reflection reads more naturally.
 - **v1.9.8b — Reflection Breathing Markers**: adds minimal emoji pause markers to improve reflection readability without creating emoji headings or new signal categories.

@@ -14,6 +14,8 @@ Mindful Health Balance by MSxAI เป็น local-first personal rhythm researc
 
 แอปนี้ไม่ใช่เครื่องมือวินิจฉัยโรค และไม่ใช้แทนแพทย์หรือการติดตามตามนัด
 
+คู่มือนี้ล็อกสถานะปัจจุบันเป็น **MHB 2.0 — Field Review, Signal Engine & User Intention Profile** ฟีเจอร์ใหม่หลังจากนี้ควรเริ่มนับจาก MHB 2.1
+
 คุณค่าของแอปไม่ได้อยู่ที่การเป็น production SaaS แต่คือการออกแบบชั้นข้อมูลส่วนตัวที่ผู้ใช้เป็นเจ้าของ export ได้ อ่านได้ และสามารถตั้งใจนำไปให้ AI ช่วยสะท้อนภายหลังโดยไม่ให้ระบบยึดความหมายของชีวิตผู้ใช้
 
 ## 2. ใช้ตอนไหน
@@ -65,16 +67,34 @@ TH | EN | 中文
 
 ถ้าเลือก `สว่าง` หรือ `มืด` เอง ระบบจะคงค่าที่เลือกไว้ และจะไม่เปลี่ยนตามเวลา จนกว่าจะกลับมาเลือก `อัตโนมัติ` อีกครั้ง
 
-## 2.5 โครงหน้าแบบ 4 ชั้น
+## 2.5 โครงหน้าหลัก
 
-หลังผ่านหน้ากระจกต้อนรับ แอปจะแบ่งเป็น 4 view:
+หลังผ่านหน้ากระจกต้อนรับ แอปจะแบ่งเป็น 5 view หลัก:
 
 - `วันนี้` สำหรับเติมสัญญาณวันนี้แบบ 2 จังหวะ: `สัญญาณวันนี้ 1/2` คือ Energy, Mind, Sleep Hours/Sleep, น้ำ, Drink Profile และ Load & Recovery; `ภาวะใจวันนี้ 2/2` คือ Practice Context, Mind Note และทางลัดไป Reflection/NuTuenSai
 - `Reflection` สำหรับดู NuTuenSai note แบบแถบสั้น ๆ, generate/review/edit reflection และ `บันทึก Reflection วันนี้`
 - `ประมวลข้อมูล` สำหรับ Field Review แบบ rule-based จาก Daily_Log ที่บันทึกไว้ เลือกช่วง 7 / 14 / 30 วัน หรือทั้งหมดที่มี
 - `Log` สำหรับดู Daily Log Table, Export Master Excel, Import Master Excel และ Clear Daily Log
+- `Intention Profile` สำหรับบันทึกข้อมูลที่ผู้ใช้เลือกบอกระบบ เช่น ชื่อ คำเรียก โทนที่ชอบ และ boundary ที่ไม่อยากให้ระบบสรุปแทน
 
 การเปลี่ยน view ไม่ลบข้อมูลที่กรอกอยู่ และไม่ลบ Daily Log เดิม
+
+### Intention Profile
+
+`Intention Profile` เป็นข้อมูล optional ที่เก็บใน browser นี้ เพื่อช่วยให้แอปเรียกผู้ใช้และปรับถ้อยคำ deterministic ได้อ่อนโยนขึ้น เช่น:
+
+- ชื่อที่อยากให้เรียก
+- รูปแบบคำเรียก: `senior_name`, `polite_name`, หรือ `name_only`
+- preferred tone แบบ optional
+- วันเกิดหรือปีเกิดแบบ optional
+- User Context Note
+- Do Not Assume Note
+
+ข้อมูลนี้เปลี่ยนได้ ล้างได้ และข้ามได้เสมอ Profile มีไว้ช่วยเรื่องคำทักทาย/addressing และถ้อยคำบางส่วนเท่านั้น ไม่เปลี่ยนข้อเท็จจริงจากข้อมูล ไม่เปลี่ยน calculation ไม่เปลี่ยน evidence ไม่เปลี่ยน Signal Engine และไม่ทำให้ note กลายเป็นคำสั่งลับของระบบ
+
+custom addressing ถูกถอดจาก UI แล้ว ถ้า profile เก่าเคยมี `custom` ระบบจะ fallback อย่างปลอดภัยเป็น `senior_name`
+
+หน้า Today/Hydration อาจทักทายตามชื่อและคำเรียกที่บันทึกไว้ เช่น `สวัสดีค่ะ พี่ pnat 🩵` โดยใช้เฉพาะ display name และ address style ไม่ใช่การวิเคราะห์บุคลิกหรือสุขภาพ
 
 ตั้งแต่ v1.9.2 — Today Input Step Flow ปุ่ม `เคลียร์หน้าปัจจุบัน` อยู่เฉพาะ `สัญญาณวันนี้ 1/2` ส่วน `สัญญาณวันนี้ 1/2` และ `ภาวะใจวันนี้ 2/2` มีปุ่ม `บันทึกเข้า Daily Log` เพื่อบันทึก Daily Log ได้ทันที การไป Reflection/NuTuenSai เป็นการนำทางเท่านั้น ไม่ใช่การบันทึกข้อมูล
 
@@ -106,9 +126,9 @@ TH | EN | 中文
 
 ตั้งแต่ v1.9.8c — Reflection Sentence Smoothing input-grounded overview จะลดการใช้คำเชื่อมซ้ำ เช่น `ร่วมกับ` และอาจแยก rich input เป็นย่อหน้าสั้น ๆ ก่อนประโยคอ่านวันแบบนุ่ม ๆ โดยยังใช้ anchor และ intent เดิม ไม่ได้เพิ่มความหมายใหม่
 
-ตั้งแต่ v1.9.9 — Mindful Practice Context หน้า `ภาวะใจวันนี้ 2/2` เพิ่มการ์ด `ภาวนาก่อนวางใจ` ก่อน Mind Note เพื่อบันทึกฐานภาวนาแบบ optional ด้วย 4 ฐานที่เข้าใจง่าย: กาย เวทนา จิต/คิด และธรรม รวมถึงไม่ได้ภาวนา/อื่น ๆ พร้อมระยะเวลาโดยประมาณและ `Practice_Note` สำหรับหมายเหตุการภาวนา/สิ่งดีที่ได้ทำ ข้อมูลนี้ถูกเก็บใน Daily Log/Excel เพื่อเป็นบริบทของ Field Review แต่ Reflection/NuTuenSai รายวันยังไม่ตีความ ไม่ให้คะแนน และไม่ตัดสินการภาวนา
+ตั้งแต่ v1.9.9 — Mindful Practice Context หน้า `ภาวะใจวันนี้ 2/2` เพิ่มการ์ด `ภาวนาก่อนวางใจ` ก่อน Mind Note เพื่อบันทึกฐานภาวนาแบบ optional ด้วย 4 ฐานที่เข้าใจง่าย: กาย เวทนา จิต/คิด และธรรม รวมถึงไม่ได้ภาวนา/อื่น ๆ พร้อมระยะเวลาโดยประมาณและ `Practice_Note` สำหรับหมายเหตุการภาวนา/สิ่งดีที่ได้ทำ ข้อมูลนี้ถูกเก็บใน Daily Log/Excel เพื่อเป็นบริบทของ Field Review และอาจถูกอ่านใน Reflection เฉพาะเมื่อเลือก root `practice_context` โดยอ่านเป็นบริบทอ่อนโยน ไม่ให้คะแนน และไม่ตัดสินการภาวนา
 
-ตั้งแต่ MHB 2.0 Slice A — หน้า `ประมวลข้อมูล` เริ่ม Field Review แบบ conservative โดยอ่านจาก `Daily_Log` ใน localStorage เท่านั้น แสดงการ์ด hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support และ missing/blank data แบบ deterministic การ์ดแต่ละใบมีหลักฐานจากข้อมูลจริง เสียงหนูตื่นสายแบบ rule-based และสิ่งที่ชวนสังเกตรอบถัดไป ไม่มี free-form ask ไม่มี LLM call ส่วน Signal Engine แสดงแถวความสัมพันธ์จาก Pearson เฉพาะ numeric-to-numeric ด้วย NuTuenSai Meaning Dictionary, raw column เป็นหลักฐานรอง, ชั้นความหมาย `MHB · NuTuenSai` แบบ pair-specific และชั้น `ลองสังเกตต่อ` โดยยังไม่มี chart, matrix หรือ category mapping
+ใน MHB 2.0 — Field Review, Signal Engine & User Intention Profile หน้า `ประมวลข้อมูล` อ่าน `Daily_Log` ใน localStorage แบบ conservative ผ่าน Guided Field Rooms และ Signal Engine โดยยังไม่มี free-form ask และไม่มี LLM call Signal Engine แสดงแถวความสัมพันธ์จาก Pearson เฉพาะ numeric-to-numeric ด้วย NuTuenSai Meaning Dictionary, raw column เป็นหลักฐานรอง, ชั้นความหมาย `MHB · NuTuenSai` แบบ pair-specific และชั้น `ลองสังเกตต่อ` โดยยังไม่มี chart, matrix หรือ category mapping
 
 Reflection ล่าสุดมี NuTuenSai voice cadence ในภาษาไทย, low-data micro-continuity ที่ใช้ log ก่อนหน้าเป็นฉากหลังเท่านั้น และ anti-repetition layer แบบ rule-based เพื่อลดการพูดวนเมื่อหลายสัญญาณชี้เรื่อง recovery/load/sleep/support ไปทางเดียวกัน
 
@@ -120,7 +140,7 @@ Reflection ล่าสุดมี NuTuenSai voice cadence ในภาษา�
 
 ### ประมวลข้อมูล / Field Review
 
-หน้า `ประมวลข้อมูล` เป็น MHB 2.0 Slice A แบบ rule-based เท่านั้น ใช้สำหรับอ่าน pattern จาก `Daily_Log` ที่บันทึกไว้ใน browser นี้ ค่าเริ่มต้นเป็น 30 วันเพื่อให้ Signal Engine มีโอกาสเจอ paired rows มากขึ้น ผู้ใช้ยังเลือกกลับเป็น 7 วัน, 14 วัน หรือทั้งหมดที่มีได้เหมือนเดิม
+หน้า `ประมวลข้อมูล` เป็นส่วนหนึ่งของ MHB 2.0 แบบ rule-based เท่านั้น ใช้สำหรับอ่าน pattern จาก `Daily_Log` ที่บันทึกไว้ใน browser นี้ ค่าเริ่มต้นเป็น 30 วันเพื่อให้ Signal Engine มีโอกาสเจอ paired rows มากขึ้น ผู้ใช้ยังเลือกกลับเป็น 7 วัน, 14 วัน หรือทั้งหมดที่มีได้เหมือนเดิม
 
 การ์ด review จะสรุป hydration, sleep/recovery, load/recovery, drinks/caffeine/sweetness, Mind Note/support need และช่องที่ยังเว้นว่าง โดยอิงข้อมูลที่มีจริง แต่ละการ์ดแยกเป็น 3 ชั้น: หลักฐานจาก `Daily_Log`, `หนูตื่นสายอ่านว่า`, และ `รอบถัดไปลองสังเกต` ถ้าข้อมูลน้อยกว่า 3 rows ระบบจะแสดงว่าข้อมูลยังบางและอ่านได้แค่สัญญาณเบื้องต้น
 
@@ -130,13 +150,16 @@ Reflection ล่าสุดมี NuTuenSai voice cadence ในภาษา�
 
 การ์ดทั้ง 6 ใบมีภาพพื้นหลัง NuTuenSai Field Rooms ตามหมวด hydration, sleep/recovery, load/recovery, drinks context, Mind Note และ missing/blank data ภาพเหล่านี้เป็น presentation layer เท่านั้น ไม่เปลี่ยน logic การอ่านข้อมูลและไม่เพิ่ม LLM/free-form/correlation
 
-Field Review UI v2 เปลี่ยนจากการเห็นการ์ดทั้งหมดพร้อมกันเป็น workspace แบบเลือกห้องข้อมูลทีละห้อง มี room selector, bubble แบบ locked conversation สำหรับ source, หลักฐาน, หนูตื่นสายอ่านว่า และรอบถัดไปลองสังเกต รวมถึงปุ่มไปห้องถัดไป ปุ่มนี้เป็น navigation เท่านั้น ไม่ใช่คำแนะนำจาก AI
+ปัจจุบัน Field Review ใช้ `Guided Field Rooms` แบบ Guided Reading ไม่ใช่ chat simulation ผู้ใช้เลือกห้องข้อมูล แล้วเลือกมุมอ่าน เช่น:
 
-Field Review UI v2.1 ทำให้แต่ละห้องรู้สึกเป็นบทสนทนานำทางแบบล็อกคำถามมากขึ้น หนูตื่นสายจะถาม focus ที่กำหนดไว้ล่วงหน้า แล้วผู้ใช้เลือก chip เช่น ภาพรวม, หลักฐานจากข้อมูล, รอบถัดไปลองสังเกต หรือดูทั้งหมด คำตอบยังมาจาก card data ของ `Daily_Log` แบบ deterministic ไม่ใช่การ generate สด
+- ภาพรวม
+- หลักฐานจากข้อมูล
+- รอบถัดไปลองสังเกต
+- ดูทั้งหมด
 
-Field Review UI v2.2 จัด flow นี้ให้เป็น conversation stack มากขึ้น: คำถามของหนูตื่นสาย, choice chips ที่ล็อกไว้ใต้คำถาม, คำตอบที่อิงข้อมูลจริง และปุ่มไปห้องถัดไปด้านล่าง คำถามจึงไม่ดูเป็นเมนูด้านบน แต่เป็นบทสนทนานำทาง
+แต่ละห้องแสดงคำตอบทีละ reading card มีตัวบอกมุมที่กำลังอ่าน, progress แบบ `✓ / ○` ที่ไม่ใช่คะแนน, chip มุมอ่านแบบเบา ๆ, และปุ่มนำทางสำหรับย้อนกลับ เลือกมุมใหม่ พอแค่นี้ก่อน หรืออ่านมุมถัดไป การอ่านนี้เป็น session-only ไม่บันทึก progress ลง Daily Log หรือ workbook
 
-Field Review UI v2.3 ย้าย choice chips ที่ล็อกไว้ไปอยู่ใน bottom action area ใต้คำตอบ พร้อมปุ่มไปห้องถัดไป ทำให้ตัวบทสนทนาอ่านเป็นคำถาม, source/context จาก Daily_Log, และคำตอบก่อน ส่วนปุ่มยังเป็น control ที่แยกจากคำตอบอย่างชัดเจน
+Navigation grammar ของห้องอ่านคือ ซ้าย = ย้อนกลับหรือกลับไปเลือกมุม, ขวา = จบบทอ่านหรือเดินต่อ Related-room cards เป็นเส้นทางไปห้องข้อมูลอื่น ไม่ใช่คำแนะนำจาก AI
 
 ใน sidebar ระบบแยกห้องข้อมูลทั้ง 6 ออกจากปุ่ม `Signal Engine` ภาษาอังกฤษล้วน เพื่อให้เห็นว่าเป็น engine พิเศษ ไม่ใช่ห้องสะท้อนข้อมูลลำดับที่ 7
 
@@ -287,7 +310,7 @@ Mind Note เป็นช่องบันทึกใจแบบบาง ๆ
 
 ก่อน Mind Note จะมีการ์ด `ภาวนาก่อนวางใจ` สำหรับเลือกฐานภาวนาของวันนี้ถ้ามี เช่น กาย เวทนา จิต/คิด ธรรม หรือไม่ได้ภาวนา/อื่น ๆ แล้วกรอกชั่วโมง/นาทีแบบคร่าว ๆ ระบบจะเก็บเป็น `Practice_Root`, `Practice_Type`, `Practice_Minutes`, `Practice_Context_JSON` และ `Practice_Note` โดยไม่ใช้ตัดสินคุณภาพการปฏิบัติ ตัวเลือกย่อยถูกเขียนเป็นคำชวนทำเล็ก ๆ เช่น รู้ท่ายืน คิดถึงความขอบคุณ หรือคิดแล้วเห็นความอยาก ไม่ใช่คะแนนหรือการชวนจับทุกข์ตรง ๆ
 
-`Practice_Note` เป็นช่อง optional สำหรับหมายเหตุสั้น ๆ เช่น สิ่งดีที่ได้ทำ บริบทการภาวนา หรือบริบทกุศลกรรมที่อยากจำไว้ เช่น ไปให้อาหารปลาที่วัด ทำบุญ ช่วยคน หรือวางใจไม่ตอบโต้ ช่องนี้เป็น field memory สำหรับ Field Review ในอนาคต ไม่ใช่คะแนนบุญ ไม่ใช่การประเมินตัวเอง และ daily Reflection/NuTuenSai ยังไม่ตีความช่องนี้
+`Practice_Note` เป็นช่อง optional สำหรับหมายเหตุสั้น ๆ เช่น สิ่งดีที่ได้ทำ บริบทการภาวนา หรือบริบทกุศลกรรมที่อยากจำไว้ เช่น ไปให้อาหารปลาที่วัด ทำบุญ ช่วยคน หรือวางใจไม่ตอบโต้ ช่องนี้เป็น field memory สำหรับ Field Review และ bounded `practice_context` Reflection ไม่ใช่คะแนนบุญ ไม่ใช่การประเมินตัวเอง และไม่ใช่การวัดความก้าวหน้าทางธรรม
 
 วิธีใช้สั้น ๆ:
 
@@ -358,7 +381,7 @@ Daily Log Table คือตารางดูย้อนหลังในห�
 Mindful_Health_Balance_Master.xlsx
 ```
 
-ไฟล์นี้มี 7 sheets:
+ไฟล์นี้มี sheets หลักเหล่านี้:
 
 - Daily_Log
 - Summary
@@ -367,6 +390,7 @@ Mindful_Health_Balance_Master.xlsx
 - Field_Review
 - Column_Guide
 - AI_Context
+- User_Intention_Profile (optional)
 
 ใช้ไฟล์นี้เป็น master backup หรือเปิดดูใน Excel ได้เมื่ออยากเห็นภาพรวมหลายวัน
 
@@ -386,11 +410,23 @@ Mindful_Health_Balance_Master.xlsx
 
 `Field_Review` เป็น summary เบา ๆ ของข้อมูลที่มีอยู่ เช่น ช่วงวันที่ ค่าเฉลี่ยน้ำ วันที่ load สูง mind/support ที่พบบ่อย drink-load summary และจำนวนวันที่มี Mind Note หรือ Reflection ข้อมูลนี้ใช้เพื่อช่วยเห็น pattern อย่างอ่อนโยน ไม่ใช่การวินิจฉัยโรคหรือการประเมินความเสี่ยงสุขภาพ
 
+`User_Intention_Profile` จะถูก export เฉพาะเมื่อมี saved profile จริงใน browser เท่านั้น ถ้าไม่มี profile ระบบจะไม่สร้าง sheet ว่าง Profile sheet เก็บชื่อ คำเรียก tone note และ boundary ที่ผู้ใช้เลือกบอกระบบไว้ เป็นข้อมูลของผู้ใช้ ไม่ใช่ account ไม่ใช่ identity verification ไม่ใช่ medical profile และไม่ใช่คำสั่งลับให้ AI ทำตาม
+
+ไฟล์ master data ปัจจุบันคือ `Mindful_Health_Balance_Master.xlsx` ส่วน `.xltx` เป็น template/local artifact ไม่ใช่ไฟล์ master data ที่ใช้ backup ประจำ
+
 ### Import Master Excel
 
 กด `Import Master Excel` เพื่อโหลดไฟล์ master กลับเข้าแอป
 
 แอปจะอ่านข้อมูลจาก Sheet `Daily_Log` แล้วนำกลับเข้า Daily Log Table ถ้ามีข้อมูลเก่าอยู่แล้ว แอปจะถามก่อน overwrite
+
+ถ้า workbook มี `User_Intention_Profile` ที่ valid แอปจะแสดง preview และถามก่อนแทนที่ Intention Profile ใน browser นี้:
+
+- กด Cancel: profile เดิมยังอยู่
+- กด Confirm: replace profile ทั้งชุดตาม workbook
+- v1 ไม่ merge field-by-field
+- workbook ไม่มี profile sheet: local profile เดิมไม่เปลี่ยน
+- profile candidate ที่ invalid จะถูกข้าม โดยไม่ควรทำให้การ import ส่วนอื่นของ workbook ล้ม
 
 ข้อมูลหลักอยู่ใน browser/localStorage ไม่ได้ส่งขึ้น cloud และไม่มีการ auto-upload ไปที่ใด
 
