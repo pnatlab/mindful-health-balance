@@ -221,7 +221,7 @@ const translations = {
     fieldRoomSignalEngineLabel: "ความสัมพันธ์",
     fieldRoomSourceLabel: "จังหวะที่เลือก",
     fieldRoomSourceBubble: "หนูตื่นสายกำลังอ่าน Daily_Log ในช่วง {timeframe} ที่พี่เลือกอยู่ค่ะ",
-    fieldRoomFlowModeLabel: "แชทนำทางแบบเลือกคำถาม · ไม่ใช่ LLM",
+    fieldRoomFlowModeLabel: "แขนงทางแบบเลือกคำถาม · ไม่ใช่ LLM",
     fieldRoomHydrationFlowModeLabel: "แขนงทางแบบเลือกคำถาม · ไม่ใช่ LLM",
     fieldRoomQuestionLabel: "หนูตื่นสายถาม",
     fieldRoomQuestionHydration: "พี่อยากให้หนูอ่านจังหวะน้ำจากมุมไหนคะ",
@@ -1195,7 +1195,7 @@ const translations = {
     fieldRoomSignalEngineLabel: "Signal Engine",
     fieldRoomSourceLabel: "Selected window",
     fieldRoomSourceBubble: "NuTuenSai is reading the selected Daily_Log window: {timeframe}.",
-    fieldRoomFlowModeLabel: "Guided review · No free-form LLM chat",
+    fieldRoomFlowModeLabel: "Guided question branches · Not an LLM",
     fieldRoomHydrationFlowModeLabel: "Guided question branches · Not an LLM",
     fieldRoomQuestionLabel: "NuTuenSai asks",
     fieldRoomQuestionHydration: "Which hydration angle would you like NuTuenSai to read?",
@@ -2169,7 +2169,7 @@ const translations = {
     fieldRoomSignalEngineLabel: "信号关系",
     fieldRoomSourceLabel: "所选时间窗",
     fieldRoomSourceBubble: "NuTuenSai 正在温柔读取所选 Daily_Log 时间窗：{timeframe}。",
-    fieldRoomFlowModeLabel: "引导式回顾 · 不是自由 LLM 聊天",
+    fieldRoomFlowModeLabel: "选择式问题分支 · 不是 LLM",
     fieldRoomHydrationFlowModeLabel: "选择式问题分支 · 不是 LLM",
     fieldRoomQuestionLabel: "NuTuenSai 轻轻问",
     fieldRoomQuestionHydration: "你想让 NuTuenSai 从哪个角度读取饮水节奏？",
@@ -3250,12 +3250,8 @@ let activeTodaySignal = "hydration";
 let activeFieldReviewRoom = "hydration";
 let activeFieldReviewFocus = "overview";
 let activeSignalRelationshipPair = "";
-let activeHydrationConversationChoice = "";
-let hydrationConversationEnded = false;
-let hydrationConversationTimeframe = "";
-let hydrationReadingHistory = [];
-let hydrationReadingBeforeEnd = "";
-let hydrationReadChoices = new Set();
+const guidedReadingStateByRoom = {};
+let guidedReadingTimeframe = "";
 let selectedReflectionRoot = "auto";
 let isEditingReflection = false;
 let isGeneratingReflection = false;
@@ -5210,7 +5206,10 @@ function bindEvents() {
 	    document.querySelector("#importExcelFile").click();
 	  });
 	  document.querySelector("#importExcelFile").addEventListener("change", importMasterExcel);
-	  document.querySelector("#fieldReviewTimeframe")?.addEventListener("change", renderFieldReview);
+	  document.querySelector("#fieldReviewTimeframe")?.addEventListener("change", () => {
+	    resetAllGuidedReading();
+	    renderFieldReview();
+	  });
   document.querySelector(".timeframe-segments")?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-field-review-timeframe]");
     if (!button) return;
@@ -5218,15 +5217,13 @@ function bindEvents() {
     if (timeframeSelect) {
       timeframeSelect.value = button.dataset.fieldReviewTimeframe;
     }
+    resetAllGuidedReading();
     renderFieldReview();
   });
   document.querySelector("#fieldReviewCards")?.addEventListener("click", (event) => {
     const roomButton = event.target.closest("[data-field-room-target]");
     if (roomButton) {
       const nextRoom = normalizeFieldReviewRoom(roomButton.dataset.fieldRoomTarget);
-      if (nextRoom !== activeFieldReviewRoom) {
-        resetHydrationConversation(document.querySelector("#fieldReviewTimeframe")?.value || "");
-      }
       activeFieldReviewRoom = nextRoom;
       activeFieldReviewFocus = "overview";
       renderFieldReview();
@@ -5240,58 +5237,64 @@ function bindEvents() {
       return;
     }
 
-    const hydrationRestartButton = event.target.closest("[data-hydration-conversation-restart]");
-    if (hydrationRestartButton) {
-      resetHydrationConversation(document.querySelector("#fieldReviewTimeframe")?.value || "");
+    const guidedRestartButton = event.target.closest("[data-guided-reading-restart]");
+    if (guidedRestartButton) {
+      resetGuidedReadingState(guidedRestartButton.dataset.guidedReadingRestart || activeFieldReviewRoom);
       renderFieldReview();
       return;
     }
 
-    const hydrationResumeButton = event.target.closest("[data-hydration-reading-resume]");
-    if (hydrationResumeButton) {
-      hydrationConversationEnded = false;
-      activeHydrationConversationChoice = hydrationReadingBeforeEnd || activeHydrationConversationChoice || "";
+    const guidedResumeButton = event.target.closest("[data-guided-reading-resume]");
+    if (guidedResumeButton) {
+      const state = getGuidedReadingState(guidedResumeButton.dataset.guidedReadingResume || activeFieldReviewRoom);
+      state.ended = false;
+      state.choice = state.beforeEnd || state.choice || "";
       renderFieldReview();
       return;
     }
 
-    const hydrationBackButton = event.target.closest("[data-hydration-reading-back]");
-    if (hydrationBackButton) {
-      hydrationConversationEnded = false;
-      hydrationReadingHistory.pop();
-      activeHydrationConversationChoice = hydrationReadingHistory[hydrationReadingHistory.length - 1] || "";
+    const guidedBackButton = event.target.closest("[data-guided-reading-back]");
+    if (guidedBackButton) {
+      const state = getGuidedReadingState(guidedBackButton.dataset.guidedReadingBack || activeFieldReviewRoom);
+      state.ended = false;
+      state.history.pop();
+      state.choice = state.history[state.history.length - 1] || "";
       renderFieldReview();
       return;
     }
 
-    const hydrationChooseButton = event.target.closest("[data-hydration-reading-choose]");
-    if (hydrationChooseButton) {
-      activeHydrationConversationChoice = "";
-      hydrationConversationEnded = false;
+    const guidedChooseButton = event.target.closest("[data-guided-reading-choose]");
+    if (guidedChooseButton) {
+      const state = getGuidedReadingState(guidedChooseButton.dataset.guidedReadingChoose || activeFieldReviewRoom);
+      state.choice = "";
+      state.ended = false;
       renderFieldReview();
       return;
     }
 
-    const hydrationExitButton = event.target.closest("[data-hydration-conversation-exit]");
-    if (hydrationExitButton) {
-      hydrationReadingBeforeEnd = activeHydrationConversationChoice;
-      hydrationConversationEnded = true;
+    const guidedExitButton = event.target.closest("[data-guided-reading-exit]");
+    if (guidedExitButton) {
+      const state = getGuidedReadingState(guidedExitButton.dataset.guidedReadingExit || activeFieldReviewRoom);
+      state.beforeEnd = state.choice;
+      state.ended = true;
       renderFieldReview();
       return;
     }
 
-    const hydrationChoiceButton = event.target.closest("[data-hydration-conversation-choice]");
-    if (hydrationChoiceButton) {
+    const guidedChoiceButton = event.target.closest("[data-guided-reading-choice]");
+    if (guidedChoiceButton) {
+      const roomType = guidedChoiceButton.dataset.guidedReadingRoom || activeFieldReviewRoom;
+      const state = getGuidedReadingState(roomType);
       const nextChoice = normalizeHydrationConversationChoice(
-        hydrationChoiceButton.dataset.hydrationConversationChoice
+        guidedChoiceButton.dataset.guidedReadingChoice
       );
-      activeHydrationConversationChoice = nextChoice;
-      hydrationReadingHistory = [
-        ...hydrationReadingHistory.filter((choiceType) => choiceType !== nextChoice),
+      state.choice = nextChoice;
+      state.history = [
+        ...state.history.filter((choiceType) => choiceType !== nextChoice),
         nextChoice
       ];
-      hydrationReadChoices.add(nextChoice);
-      hydrationConversationEnded = false;
+      state.readChoices.add(nextChoice);
+      state.ended = false;
       renderFieldReview();
       return;
     }
@@ -10898,7 +10901,7 @@ const FIELD_REVIEW_FOCUS_ORDER = [
   { type: "next", labelKey: "fieldRoomFocusNext", bubbleType: "next" },
   { type: "all", labelKey: "fieldRoomFocusAll", bubbleType: "all" }
 ];
-const HYDRATION_GUIDED_READING_CHOICES = FIELD_REVIEW_FOCUS_ORDER.filter((choice) => choice.type !== "all");
+const GUIDED_READING_CHOICES = FIELD_REVIEW_FOCUS_ORDER;
 
 function normalizeFieldReviewRoom(roomType) {
   return FIELD_REVIEW_ROOM_ORDER.some((room) => room.type === roomType) ? roomType : "hydration";
@@ -10908,18 +10911,41 @@ function normalizeFieldReviewFocus(focusType) {
   return FIELD_REVIEW_FOCUS_ORDER.some((focus) => focus.type === focusType) ? focusType : "overview";
 }
 
-function normalizeHydrationConversationChoice(choiceType) {
+function normalizeGuidedReadingChoice(choiceType) {
   if (!choiceType) return "";
   return FIELD_REVIEW_FOCUS_ORDER.some((focus) => focus.type === choiceType) ? choiceType : "overview";
 }
 
-function resetHydrationConversation(timeframe = "") {
-  activeHydrationConversationChoice = "";
-  hydrationConversationEnded = false;
-  hydrationConversationTimeframe = timeframe;
-  hydrationReadingHistory = [];
-  hydrationReadingBeforeEnd = "";
-  hydrationReadChoices = new Set();
+function normalizeHydrationConversationChoice(choiceType) {
+  return normalizeGuidedReadingChoice(choiceType);
+}
+
+function createGuidedReadingState() {
+  return {
+    choice: "",
+    ended: false,
+    history: [],
+    beforeEnd: "",
+    readChoices: new Set()
+  };
+}
+
+function getGuidedReadingState(roomType = activeFieldReviewRoom) {
+  const normalizedRoom = normalizeFieldReviewRoom(roomType);
+  if (!guidedReadingStateByRoom[normalizedRoom]) {
+    guidedReadingStateByRoom[normalizedRoom] = createGuidedReadingState();
+  }
+  return guidedReadingStateByRoom[normalizedRoom];
+}
+
+function resetGuidedReadingState(roomType = activeFieldReviewRoom) {
+  guidedReadingStateByRoom[normalizeFieldReviewRoom(roomType)] = createGuidedReadingState();
+}
+
+function resetAllGuidedReading() {
+  Object.keys(guidedReadingStateByRoom).forEach((roomType) => {
+    guidedReadingStateByRoom[roomType] = createGuidedReadingState();
+  });
 }
 
 function getFieldReviewRoomLabel(roomType) {
@@ -11904,19 +11930,20 @@ function renderFieldRoomNextActions(activeRoomType) {
   `;
 }
 
-function renderHydrationConversationChoices({ continuation = false } = {}) {
-  const choices = HYDRATION_GUIDED_READING_CHOICES;
+function renderGuidedReadingChoices(activeCard, { continuation = false } = {}) {
+  const state = getGuidedReadingState(activeCard.roomType);
+  const choices = GUIDED_READING_CHOICES;
 
   return `
     <div class="field-room-choice-stack">
       <p class="field-room-action-label">${escapeHtml(t(continuation ? "fieldRoomHydrationContinuePrompt" : "fieldRoomHydrationChoicePrompt"))}</p>
       <div class="field-room-focus-chips" role="group" aria-label="${escapeHtml(t("fieldRoomHydrationChoicePrompt"))}">
         ${choices.map((choice) => `
-          <button type="button" class="field-room-focus-chip ${choice.type === activeHydrationConversationChoice ? "is-active" : ""}" data-hydration-conversation-choice="${escapeHtml(choice.type)}" aria-pressed="${String(choice.type === activeHydrationConversationChoice)}">
+          <button type="button" class="field-room-focus-chip ${choice.type === state.choice ? "is-active" : ""}" data-guided-reading-choice="${escapeHtml(choice.type)}" data-guided-reading-room="${escapeHtml(activeCard.roomType)}" aria-pressed="${String(choice.type === state.choice)}">
             ${escapeHtml(t(choice.labelKey))}
           </button>
         `).join("")}
-        <button type="button" class="field-room-focus-chip" data-hydration-conversation-exit="true">
+        <button type="button" class="field-room-focus-chip" data-guided-reading-exit="${escapeHtml(activeCard.roomType)}">
           ${escapeHtml(t("fieldRoomConversationExit"))}
         </button>
       </div>
@@ -11924,14 +11951,14 @@ function renderHydrationConversationChoices({ continuation = false } = {}) {
   `;
 }
 
-function renderHydrationConversationRestart() {
+function renderGuidedReadingRestart(activeCard) {
   return `
     <div class="hydration-reading-actions hydration-reading-actions-closing">
       <div class="field-room-focus-chips" role="group" aria-label="${escapeHtml(t("fieldRoomHydrationRestart"))}">
-        <button type="button" class="field-room-focus-chip" data-hydration-reading-resume="true">
+        <button type="button" class="field-room-focus-chip" data-guided-reading-resume="${escapeHtml(activeCard.roomType)}">
           ${escapeHtml(t("fieldRoomHydrationResume"))}
         </button>
-        <button type="button" class="field-room-focus-chip is-active" data-hydration-conversation-restart="true">
+        <button type="button" class="field-room-focus-chip is-active" data-guided-reading-restart="${escapeHtml(activeCard.roomType)}">
           ${escapeHtml(t("fieldRoomHydrationRestart"))}
         </button>
       </div>
@@ -11939,8 +11966,8 @@ function renderHydrationConversationRestart() {
   `;
 }
 
-function getHydrationReadingCardByChoice(activeCard, choiceType) {
-  const choice = normalizeHydrationConversationChoice(choiceType);
+function getGuidedReadingCardByChoice(activeCard, choiceType) {
+  const choice = normalizeGuidedReadingChoice(choiceType);
   const cardsByChoice = {
     overview: {
       title: t("fieldRoomFocusOverview"),
@@ -11956,26 +11983,28 @@ function getHydrationReadingCardByChoice(activeCard, choiceType) {
     },
     all: {
       title: t("fieldRoomFocusAll"),
-      text: [activeCard.reading, activeCard.evidence, activeCard.nextAttention].filter(Boolean).join(" ")
+      text: [activeCard.evidence, activeCard.reading, activeCard.nextAttention].filter(Boolean).join(" ")
     }
   };
   return cardsByChoice[choice] || cardsByChoice.overview;
 }
 
-function getNextHydrationReadingChoice() {
-  const currentIndex = HYDRATION_GUIDED_READING_CHOICES.findIndex((choice) => choice.type === activeHydrationConversationChoice);
-  const nextChoice = HYDRATION_GUIDED_READING_CHOICES
+function getNextGuidedReadingChoice(activeCard) {
+  const state = getGuidedReadingState(activeCard.roomType);
+  const currentIndex = GUIDED_READING_CHOICES.findIndex((choice) => choice.type === state.choice);
+  const nextChoice = GUIDED_READING_CHOICES
     .slice(currentIndex + 1)
     .find(Boolean);
-  return nextChoice || HYDRATION_GUIDED_READING_CHOICES.find((choice) => choice.type !== activeHydrationConversationChoice);
+  return nextChoice || GUIDED_READING_CHOICES.find((choice) => choice.type !== state.choice);
 }
 
-function renderHydrationReadingProgress() {
-  const choices = HYDRATION_GUIDED_READING_CHOICES;
+function renderGuidedReadingProgress(activeCard) {
+  const state = getGuidedReadingState(activeCard.roomType);
+  const choices = GUIDED_READING_CHOICES;
   return `
     <div class="hydration-reading-progress" aria-label="${escapeHtml(t("fieldRoomHydrationProgressLabel"))}">
       ${choices.map((choice) => {
-        const wasRead = hydrationReadChoices.has(choice.type);
+        const wasRead = state.readChoices.has(choice.type);
         return `
           <span class="hydration-reading-progress-item ${wasRead ? "is-read" : ""}">
             <span>${escapeHtml(t(choice.labelKey))}</span>
@@ -11987,124 +12016,70 @@ function renderHydrationReadingProgress() {
   `;
 }
 
-function renderHydrationReadingCard(activeCard) {
-  if (!activeHydrationConversationChoice) return "";
-  const readingCard = getHydrationReadingCardByChoice(activeCard, activeHydrationConversationChoice);
-  const nextChoice = getNextHydrationReadingChoice();
+function renderGuidedReadingCard(activeCard) {
+  const state = getGuidedReadingState(activeCard.roomType);
+  if (!state.choice) return "";
+  const readingCard = getGuidedReadingCardByChoice(activeCard, state.choice);
+  const nextChoice = getNextGuidedReadingChoice(activeCard);
   return `
     <article class="hydration-reading-card" aria-live="polite">
       <p class="section-kicker">${escapeHtml(readingCard.title)}</p>
       <p>${escapeHtml(readingCard.text)}</p>
     </article>
     <div class="hydration-reading-actions">
-      <button type="button" class="ghost-button" data-hydration-reading-back="true" ${hydrationReadingHistory.length <= 1 ? "disabled" : ""}>
+      <button type="button" class="ghost-button" data-guided-reading-back="${escapeHtml(activeCard.roomType)}" ${state.history.length <= 1 ? "disabled" : ""}>
         ${escapeHtml(t("fieldRoomHydrationBack"))}
       </button>
       ${nextChoice ? `
-        <button type="button" class="ghost-button" data-hydration-conversation-choice="${escapeHtml(nextChoice.type)}">
+        <button type="button" class="ghost-button" data-guided-reading-choice="${escapeHtml(nextChoice.type)}" data-guided-reading-room="${escapeHtml(activeCard.roomType)}">
           ${escapeHtml(t("fieldRoomHydrationNextAngle"))}
         </button>
       ` : ""}
-      <button type="button" class="ghost-button" data-hydration-reading-choose="true">
+      <button type="button" class="ghost-button" data-guided-reading-choose="${escapeHtml(activeCard.roomType)}">
         ${escapeHtml(t("fieldRoomHydrationChooseAgain"))}
       </button>
-      <button type="button" class="ghost-button" data-hydration-conversation-exit="true">
+      <button type="button" class="ghost-button" data-guided-reading-exit="${escapeHtml(activeCard.roomType)}">
         ${escapeHtml(t("fieldRoomConversationExit"))}
       </button>
     </div>
+    ${renderFieldRoomNextActions(activeCard.roomType)}
   `;
 }
 
-function renderHydrationConversation(activeCard) {
-  const choice = normalizeHydrationConversationChoice(activeHydrationConversationChoice);
+function getGuidedReadingIntroText(activeCard, timeframe = "7") {
+  if (activeCard.roomType === "hydration") return t("fieldRoomHydrationWelcome");
+  return t("fieldRoomSourceBubble", { timeframe: getFieldReviewTimeframeLabel(timeframe) });
+}
+
+function renderGuidedReadingRoom(activeCard, timeframe = "7") {
+  const state = getGuidedReadingState(activeCard.roomType);
+  const choice = normalizeGuidedReadingChoice(state.choice);
 
   return `
     <div class="hydration-guided-reading" aria-live="polite">
       <article class="hydration-reading-intro">
-        <p>${escapeHtml(t("fieldRoomHydrationWelcome"))}</p>
+        <p>${escapeHtml(getGuidedReadingIntroText(activeCard, timeframe))}</p>
       </article>
-      ${renderHydrationReadingProgress()}
-      ${hydrationConversationEnded ? `
+      ${renderGuidedReadingProgress(activeCard)}
+      ${state.ended ? `
         <article class="hydration-reading-card hydration-reading-closing">
           <p>${escapeHtml(t("fieldRoomConversationClosing"))}</p>
         </article>
-        ${renderHydrationConversationRestart()}
+        ${renderGuidedReadingRestart(activeCard)}
       ` : ""}
-      ${!choice && !hydrationConversationEnded ? `
+      ${!choice && !state.ended ? `
         <article class="hydration-reading-question">
-          <p>${escapeHtml(getFieldRoomQuestion("hydration"))}</p>
-          ${renderHydrationConversationChoices()}
+          <p>${escapeHtml(getFieldRoomQuestion(activeCard.roomType))}</p>
+          ${renderGuidedReadingChoices(activeCard)}
         </article>
       ` : ""}
-      ${choice && !hydrationConversationEnded ? renderHydrationReadingCard(activeCard) : ""}
+      ${choice && !state.ended ? renderGuidedReadingCard(activeCard) : ""}
     </div>
   `;
 }
 
 function renderFieldRoomConversation(activeCard, timeframe = "7") {
-  if (activeCard.roomType === "hydration") {
-    return renderHydrationConversation(activeCard);
-  }
-
-  const timeframeLabel = getFieldReviewTimeframeLabel(timeframe);
-  const sourceText = t("fieldRoomSourceBubble", { timeframe: timeframeLabel });
-  const focus = normalizeFieldReviewFocus(activeFieldReviewFocus);
-  const questionBubble = renderFieldRoomBubble({
-    focusType: "question",
-    className: "field-chat-bubble-question",
-    label: t("fieldRoomQuestionLabel"),
-    text: getFieldRoomQuestion(activeCard.roomType)
-  });
-  const sourceBubble = renderFieldRoomBubble({
-    focusType: "source",
-    className: "field-chat-bubble-source",
-    label: t("fieldRoomSourceLabel"),
-    text: sourceText
-  });
-  const evidenceBubble = renderFieldRoomBubble({
-    focusType: "evidence",
-    className: "field-chat-bubble-evidence",
-    label: t("fieldReviewEvidenceLabel"),
-    text: activeCard.evidence
-  });
-  const readingBubble = renderFieldRoomBubble({
-    focusType: "reading",
-    className: "field-chat-bubble-reading",
-    label: t("fieldReviewReadingLabel"),
-    text: activeCard.reading
-  });
-  const nextBubble = renderFieldRoomBubble({
-    focusType: "next",
-    className: "field-chat-bubble-next",
-    label: t("fieldReviewNextAttentionLabel"),
-    text: activeCard.nextAttention
-  });
-  const bubblesByFocus = {
-    overview: [readingBubble],
-    evidence: [evidenceBubble],
-    next: [nextBubble],
-    all: [evidenceBubble, readingBubble, nextBubble]
-  };
-  const selectedResponseBubbles = bubblesByFocus[focus] || bubblesByFocus.overview;
-
-  return `
-    <div class="field-room-chat" aria-live="polite">
-      ${questionBubble}
-      ${sourceBubble}
-      <div class="field-room-response-stack">
-        ${selectedResponseBubbles.join("")}
-      </div>
-    </div>
-    <div class="field-room-action-area">
-      <div class="field-room-choice-stack">
-        <p class="field-room-action-label">${escapeHtml(t("fieldRoomActionLabel"))}</p>
-        <div class="field-room-focus-chips" role="group" aria-label="${escapeHtml(t("fieldRoomQuestionLabel"))}">
-          ${renderFieldRoomFocusChips()}
-        </div>
-      </div>
-      ${renderFieldRoomNextActions(activeCard.roomType)}
-    </div>
-  `;
+  return renderGuidedReadingRoom(activeCard, timeframe);
 }
 
 function renderFieldRoomWorkspace(cards = [], timeframe = "7", rows = []) {
@@ -12138,7 +12113,7 @@ function renderFieldRoomWorkspace(cards = [], timeframe = "7", rows = []) {
               <div>
                 <p class="section-kicker">${escapeHtml(getFieldReviewRoomLabel(activeCard.roomType))}</p>
                 <h3>${escapeHtml(activeCard.title)}</h3>
-                <p class="field-room-flow-label">${escapeHtml(t(activeCard.roomType === "hydration" ? "fieldRoomHydrationFlowModeLabel" : "fieldRoomFlowModeLabel"))}</p>
+                <p class="field-room-flow-label">${escapeHtml(t("fieldRoomFlowModeLabel"))}</p>
               </div>
             </div>
 
@@ -12207,8 +12182,9 @@ function renderFieldReview() {
   if (!container || !status || !emptyState || !thinState) return;
 
   const timeframe = timeframeSelect?.value || FIELD_REVIEW_DEFAULT_TIMEFRAME;
-  if (hydrationConversationTimeframe !== timeframe) {
-    resetHydrationConversation(timeframe);
+  if (guidedReadingTimeframe !== timeframe) {
+    resetAllGuidedReading();
+    guidedReadingTimeframe = timeframe;
   }
   const allRows = getAllFieldReviewRows();
   const rows = getFieldReviewRows(timeframe);
