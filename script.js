@@ -222,6 +222,7 @@ const translations = {
     fieldRoomSourceLabel: "จังหวะที่เลือก",
     fieldRoomSourceBubble: "หนูตื่นสายกำลังอ่าน Daily_Log ในช่วง {timeframe} ที่พี่เลือกอยู่ค่ะ",
     fieldRoomFlowModeLabel: "แชทนำทางแบบเลือกคำถาม · ไม่ใช่ LLM",
+    fieldRoomHydrationFlowModeLabel: "แขนงทางแบบเลือกคำถาม · ไม่ใช่ LLM",
     fieldRoomQuestionLabel: "หนูตื่นสายถาม",
     fieldRoomQuestionHydration: "พี่อยากให้หนูอ่านจังหวะน้ำจากมุมไหนคะ",
     fieldRoomQuestionSleepRecovery: "พี่อยากให้หนูอ่าน sleep/recovery จากมุมไหนคะ",
@@ -237,6 +238,11 @@ const translations = {
     fieldRoomHydrationContinuePrompt: "ถ้าพี่อยากดูต่อ เลือกอีกมุมได้ค่ะ",
     fieldRoomConversationExit: "พอแค่นี้ก่อน",
     fieldRoomHydrationRestart: "เลือกมุมใหม่",
+    fieldRoomHydrationResume: "กลับไปอ่าน",
+    fieldRoomHydrationBack: "ย้อนกลับ",
+    fieldRoomHydrationNextAngle: "อ่านมุมถัดไป",
+    fieldRoomHydrationChooseAgain: "กลับไปเลือกมุม",
+    fieldRoomHydrationProgressLabel: "ความคืบหน้าการอ่านจังหวะน้ำ",
     fieldRoomConversationClosing: "พอแค่นี้ก่อนก็ได้ค่ะพี่ วันนี้เราไม่ได้ต้องสรุปทุกอย่าง แค่เห็นจังหวะหนึ่งของร่างกายและใจให้ชัดขึ้นก็พอแล้ว 🩵",
     fieldRoomActionLabel: "เลือกมุมที่จะอ่านต่อ",
     fieldRoomFocusOverview: "ภาพรวม",
@@ -1190,6 +1196,7 @@ const translations = {
     fieldRoomSourceLabel: "Selected window",
     fieldRoomSourceBubble: "NuTuenSai is reading the selected Daily_Log window: {timeframe}.",
     fieldRoomFlowModeLabel: "Guided review · No free-form LLM chat",
+    fieldRoomHydrationFlowModeLabel: "Guided question branches · Not an LLM",
     fieldRoomQuestionLabel: "NuTuenSai asks",
     fieldRoomQuestionHydration: "Which hydration angle would you like NuTuenSai to read?",
     fieldRoomQuestionSleepRecovery: "Which sleep/recovery angle would you like NuTuenSai to read?",
@@ -1205,6 +1212,11 @@ const translations = {
     fieldRoomHydrationContinuePrompt: "If you would like to continue, you can choose another angle.",
     fieldRoomConversationExit: "Enough for now",
     fieldRoomHydrationRestart: "Choose a new angle",
+    fieldRoomHydrationResume: "Return to reading",
+    fieldRoomHydrationBack: "Back",
+    fieldRoomHydrationNextAngle: "Read next angle",
+    fieldRoomHydrationChooseAgain: "Choose an angle",
+    fieldRoomHydrationProgressLabel: "Hydration reading progress",
     fieldRoomConversationClosing: "It is okay to stop here. We do not need to conclude everything today; seeing one rhythm of body and mind more clearly is enough. 🩵",
     fieldRoomActionLabel: "Choose what to read next",
     fieldRoomFocusOverview: "Overview",
@@ -2158,6 +2170,7 @@ const translations = {
     fieldRoomSourceLabel: "所选时间窗",
     fieldRoomSourceBubble: "NuTuenSai 正在温柔读取所选 Daily_Log 时间窗：{timeframe}。",
     fieldRoomFlowModeLabel: "引导式回顾 · 不是自由 LLM 聊天",
+    fieldRoomHydrationFlowModeLabel: "选择式问题分支 · 不是 LLM",
     fieldRoomQuestionLabel: "NuTuenSai 轻轻问",
     fieldRoomQuestionHydration: "你想让 NuTuenSai 从哪个角度读取饮水节奏？",
     fieldRoomQuestionSleepRecovery: "你想让 NuTuenSai 从哪个角度读取睡眠/恢复？",
@@ -2173,6 +2186,11 @@ const translations = {
     fieldRoomHydrationContinuePrompt: "如果想继续，可以选择另一个角度。",
     fieldRoomConversationExit: "先到这里",
     fieldRoomHydrationRestart: "选择新的角度",
+    fieldRoomHydrationResume: "回到阅读",
+    fieldRoomHydrationBack: "返回",
+    fieldRoomHydrationNextAngle: "阅读下一个角度",
+    fieldRoomHydrationChooseAgain: "重新选择角度",
+    fieldRoomHydrationProgressLabel: "饮水阅读进度",
     fieldRoomConversationClosing: "先到这里也可以。今天不需要得出所有结论；更清楚地看见一个身心节奏就够了。🩵",
     fieldRoomActionLabel: "选择接下来要读取的角度",
     fieldRoomFocusOverview: "概览",
@@ -3235,6 +3253,9 @@ let activeSignalRelationshipPair = "";
 let activeHydrationConversationChoice = "";
 let hydrationConversationEnded = false;
 let hydrationConversationTimeframe = "";
+let hydrationReadingHistory = [];
+let hydrationReadingBeforeEnd = "";
+let hydrationReadChoices = new Set();
 let selectedReflectionRoot = "auto";
 let isEditingReflection = false;
 let isGeneratingReflection = false;
@@ -5226,8 +5247,34 @@ function bindEvents() {
       return;
     }
 
+    const hydrationResumeButton = event.target.closest("[data-hydration-reading-resume]");
+    if (hydrationResumeButton) {
+      hydrationConversationEnded = false;
+      activeHydrationConversationChoice = hydrationReadingBeforeEnd || activeHydrationConversationChoice || "";
+      renderFieldReview();
+      return;
+    }
+
+    const hydrationBackButton = event.target.closest("[data-hydration-reading-back]");
+    if (hydrationBackButton) {
+      hydrationConversationEnded = false;
+      hydrationReadingHistory.pop();
+      activeHydrationConversationChoice = hydrationReadingHistory[hydrationReadingHistory.length - 1] || "";
+      renderFieldReview();
+      return;
+    }
+
+    const hydrationChooseButton = event.target.closest("[data-hydration-reading-choose]");
+    if (hydrationChooseButton) {
+      activeHydrationConversationChoice = "";
+      hydrationConversationEnded = false;
+      renderFieldReview();
+      return;
+    }
+
     const hydrationExitButton = event.target.closest("[data-hydration-conversation-exit]");
     if (hydrationExitButton) {
+      hydrationReadingBeforeEnd = activeHydrationConversationChoice;
       hydrationConversationEnded = true;
       renderFieldReview();
       return;
@@ -5235,9 +5282,15 @@ function bindEvents() {
 
     const hydrationChoiceButton = event.target.closest("[data-hydration-conversation-choice]");
     if (hydrationChoiceButton) {
-      activeHydrationConversationChoice = normalizeHydrationConversationChoice(
+      const nextChoice = normalizeHydrationConversationChoice(
         hydrationChoiceButton.dataset.hydrationConversationChoice
       );
+      activeHydrationConversationChoice = nextChoice;
+      hydrationReadingHistory = [
+        ...hydrationReadingHistory.filter((choiceType) => choiceType !== nextChoice),
+        nextChoice
+      ];
+      hydrationReadChoices.add(nextChoice);
       hydrationConversationEnded = false;
       renderFieldReview();
       return;
@@ -10845,6 +10898,7 @@ const FIELD_REVIEW_FOCUS_ORDER = [
   { type: "next", labelKey: "fieldRoomFocusNext", bubbleType: "next" },
   { type: "all", labelKey: "fieldRoomFocusAll", bubbleType: "all" }
 ];
+const HYDRATION_GUIDED_READING_CHOICES = FIELD_REVIEW_FOCUS_ORDER.filter((choice) => choice.type !== "all");
 
 function normalizeFieldReviewRoom(roomType) {
   return FIELD_REVIEW_ROOM_ORDER.some((room) => room.type === roomType) ? roomType : "hydration";
@@ -10863,6 +10917,9 @@ function resetHydrationConversation(timeframe = "") {
   activeHydrationConversationChoice = "";
   hydrationConversationEnded = false;
   hydrationConversationTimeframe = timeframe;
+  hydrationReadingHistory = [];
+  hydrationReadingBeforeEnd = "";
+  hydrationReadChoices = new Set();
 }
 
 function getFieldReviewRoomLabel(roomType) {
@@ -11848,9 +11905,7 @@ function renderFieldRoomNextActions(activeRoomType) {
 }
 
 function renderHydrationConversationChoices({ continuation = false } = {}) {
-  const choices = continuation
-    ? FIELD_REVIEW_FOCUS_ORDER.filter((choice) => choice.type !== activeHydrationConversationChoice)
-    : FIELD_REVIEW_FOCUS_ORDER;
+  const choices = HYDRATION_GUIDED_READING_CHOICES;
 
   return `
     <div class="field-room-choice-stack">
@@ -11869,22 +11924,13 @@ function renderHydrationConversationChoices({ continuation = false } = {}) {
   `;
 }
 
-function renderHydrationSelectedChoice(choiceType) {
-  const choice = FIELD_REVIEW_FOCUS_ORDER.find((entry) => entry.type === choiceType);
-  if (!choice) return "";
-
-  return renderFieldRoomBubble({
-    focusType: "user-choice",
-    className: "field-chat-bubble-next field-chat-bubble-speaker is-active",
-    label: t("fieldRoomHydrationUserSpeakerLabel"),
-    text: t(choice.labelKey)
-  });
-}
-
 function renderHydrationConversationRestart() {
   return `
-    <div class="field-room-choice-stack">
+    <div class="hydration-reading-actions hydration-reading-actions-closing">
       <div class="field-room-focus-chips" role="group" aria-label="${escapeHtml(t("fieldRoomHydrationRestart"))}">
+        <button type="button" class="field-room-focus-chip" data-hydration-reading-resume="true">
+          ${escapeHtml(t("fieldRoomHydrationResume"))}
+        </button>
         <button type="button" class="field-room-focus-chip is-active" data-hydration-conversation-restart="true">
           ${escapeHtml(t("fieldRoomHydrationRestart"))}
         </button>
@@ -11893,70 +11939,104 @@ function renderHydrationConversationRestart() {
   `;
 }
 
+function getHydrationReadingCardByChoice(activeCard, choiceType) {
+  const choice = normalizeHydrationConversationChoice(choiceType);
+  const cardsByChoice = {
+    overview: {
+      title: t("fieldRoomFocusOverview"),
+      text: activeCard.reading
+    },
+    evidence: {
+      title: t("fieldRoomFocusEvidence"),
+      text: activeCard.evidence
+    },
+    next: {
+      title: t("fieldRoomFocusNext"),
+      text: activeCard.nextAttention
+    },
+    all: {
+      title: t("fieldRoomFocusAll"),
+      text: [activeCard.reading, activeCard.evidence, activeCard.nextAttention].filter(Boolean).join(" ")
+    }
+  };
+  return cardsByChoice[choice] || cardsByChoice.overview;
+}
+
+function getNextHydrationReadingChoice() {
+  const currentIndex = HYDRATION_GUIDED_READING_CHOICES.findIndex((choice) => choice.type === activeHydrationConversationChoice);
+  const nextChoice = HYDRATION_GUIDED_READING_CHOICES
+    .slice(currentIndex + 1)
+    .find(Boolean);
+  return nextChoice || HYDRATION_GUIDED_READING_CHOICES.find((choice) => choice.type !== activeHydrationConversationChoice);
+}
+
+function renderHydrationReadingProgress() {
+  const choices = HYDRATION_GUIDED_READING_CHOICES;
+  return `
+    <div class="hydration-reading-progress" aria-label="${escapeHtml(t("fieldRoomHydrationProgressLabel"))}">
+      ${choices.map((choice) => {
+        const wasRead = hydrationReadChoices.has(choice.type);
+        return `
+          <span class="hydration-reading-progress-item ${wasRead ? "is-read" : ""}">
+            <span>${escapeHtml(t(choice.labelKey))}</span>
+            <strong aria-hidden="true">${wasRead ? "✓" : "○"}</strong>
+          </span>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+function renderHydrationReadingCard(activeCard) {
+  if (!activeHydrationConversationChoice) return "";
+  const readingCard = getHydrationReadingCardByChoice(activeCard, activeHydrationConversationChoice);
+  const nextChoice = getNextHydrationReadingChoice();
+  return `
+    <article class="hydration-reading-card" aria-live="polite">
+      <p class="section-kicker">${escapeHtml(readingCard.title)}</p>
+      <p>${escapeHtml(readingCard.text)}</p>
+    </article>
+    <div class="hydration-reading-actions">
+      <button type="button" class="ghost-button" data-hydration-reading-back="true" ${hydrationReadingHistory.length <= 1 ? "disabled" : ""}>
+        ${escapeHtml(t("fieldRoomHydrationBack"))}
+      </button>
+      ${nextChoice ? `
+        <button type="button" class="ghost-button" data-hydration-conversation-choice="${escapeHtml(nextChoice.type)}">
+          ${escapeHtml(t("fieldRoomHydrationNextAngle"))}
+        </button>
+      ` : ""}
+      <button type="button" class="ghost-button" data-hydration-reading-choose="true">
+        ${escapeHtml(t("fieldRoomHydrationChooseAgain"))}
+      </button>
+      <button type="button" class="ghost-button" data-hydration-conversation-exit="true">
+        ${escapeHtml(t("fieldRoomConversationExit"))}
+      </button>
+    </div>
+  `;
+}
+
 function renderHydrationConversation(activeCard) {
   const choice = normalizeHydrationConversationChoice(activeHydrationConversationChoice);
-  const welcomeBubble = renderFieldRoomBubble({
-    focusType: "welcome",
-    className: "field-chat-bubble-source field-chat-bubble-speaker",
-    label: t("fieldRoomHydrationSpeakerLabel"),
-    text: t("fieldRoomHydrationWelcome")
-  });
-  const questionBubble = renderFieldRoomBubble({
-    focusType: "question",
-    className: "field-chat-bubble-question field-chat-bubble-speaker",
-    label: t("fieldRoomHydrationSpeakerLabel"),
-    text: getFieldRoomQuestion("hydration")
-  });
-
-  const evidenceBubble = renderFieldRoomBubble({
-    focusType: "evidence",
-    className: "field-chat-bubble-evidence field-chat-bubble-speaker",
-    label: t("fieldRoomHydrationSpeakerLabel"),
-    text: activeCard.evidence
-  });
-  const readingBubble = renderFieldRoomBubble({
-    focusType: "overview",
-    className: "field-chat-bubble-reading field-chat-bubble-speaker",
-    label: t("fieldRoomHydrationSpeakerLabel"),
-    text: activeCard.reading
-  });
-  const nextBubble = renderFieldRoomBubble({
-    focusType: "next",
-    className: "field-chat-bubble-next field-chat-bubble-speaker",
-    label: t("fieldRoomHydrationSpeakerLabel"),
-    text: activeCard.nextAttention
-  });
-  const answerBubblesByChoice = {
-    overview: [readingBubble],
-    evidence: [evidenceBubble],
-    next: [nextBubble],
-    all: [evidenceBubble, readingBubble, nextBubble]
-  };
-  const selectedAnswerBubbles = choice ? answerBubblesByChoice[choice] || answerBubblesByChoice.overview : [];
-  const selectedChoiceBubble = renderHydrationSelectedChoice(choice);
-  const closingBubble = renderFieldRoomBubble({
-    focusType: "closing",
-    className: "field-chat-bubble-reading field-chat-bubble-speaker",
-    label: t("fieldRoomHydrationSpeakerLabel"),
-    text: t("fieldRoomConversationClosing")
-  });
 
   return `
-    <div class="field-room-chat" aria-live="polite">
-      ${welcomeBubble}
-      ${questionBubble}
-      ${!choice && !hydrationConversationEnded ? renderHydrationConversationChoices() : ""}
-      ${selectedChoiceBubble}
-      ${selectedAnswerBubbles.length ? `
-        <div class="field-room-response-stack">
-          ${selectedAnswerBubbles.join("")}
-        </div>
-      ` : ""}
-      ${choice && !hydrationConversationEnded ? renderHydrationConversationChoices({ continuation: true }) : ""}
+    <div class="hydration-guided-reading" aria-live="polite">
+      <article class="hydration-reading-intro">
+        <p>${escapeHtml(t("fieldRoomHydrationWelcome"))}</p>
+      </article>
+      ${renderHydrationReadingProgress()}
       ${hydrationConversationEnded ? `
-        <div class="field-room-response-stack">${closingBubble}</div>
+        <article class="hydration-reading-card hydration-reading-closing">
+          <p>${escapeHtml(t("fieldRoomConversationClosing"))}</p>
+        </article>
         ${renderHydrationConversationRestart()}
       ` : ""}
+      ${!choice && !hydrationConversationEnded ? `
+        <article class="hydration-reading-question">
+          <p>${escapeHtml(getFieldRoomQuestion("hydration"))}</p>
+          ${renderHydrationConversationChoices()}
+        </article>
+      ` : ""}
+      ${choice && !hydrationConversationEnded ? renderHydrationReadingCard(activeCard) : ""}
     </div>
   `;
 }
@@ -12058,7 +12138,7 @@ function renderFieldRoomWorkspace(cards = [], timeframe = "7", rows = []) {
               <div>
                 <p class="section-kicker">${escapeHtml(getFieldReviewRoomLabel(activeCard.roomType))}</p>
                 <h3>${escapeHtml(activeCard.title)}</h3>
-                <p class="field-room-flow-label">${escapeHtml(t("fieldRoomFlowModeLabel"))}</p>
+                <p class="field-room-flow-label">${escapeHtml(t(activeCard.roomType === "hydration" ? "fieldRoomHydrationFlowModeLabel" : "fieldRoomFlowModeLabel"))}</p>
               </div>
             </div>
 
