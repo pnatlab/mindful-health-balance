@@ -236,12 +236,12 @@ const translations = {
     fieldRoomHydrationUserSpeakerLabel: "พี่",
     fieldRoomHydrationChoicePrompt: "เลือกคำตอบที่ตรงกับมุมที่พี่อยากดูได้เลยค่ะ",
     fieldRoomHydrationContinuePrompt: "ถ้าพี่อยากดูต่อ เลือกอีกมุมได้ค่ะ",
-    fieldRoomConversationExit: "พอแค่นี้ก่อน",
-    fieldRoomHydrationRestart: "เลือกมุมใหม่",
-    fieldRoomHydrationResume: "กลับไปอ่าน",
-    fieldRoomHydrationBack: "ย้อนกลับ",
-    fieldRoomHydrationNextAngle: "อ่านมุมถัดไป",
-    fieldRoomHydrationChooseAgain: "กลับไปเลือกมุม",
+    fieldRoomConversationExit: "🚪 พอแค่นี้ก่อน",
+    fieldRoomHydrationRestart: "⌂ เลือกมุมใหม่",
+    fieldRoomHydrationResume: "↩ กลับไปอ่าน",
+    fieldRoomHydrationBack: "← ย้อนกลับ",
+    fieldRoomHydrationNextAngle: "อ่านมุมถัดไป →",
+    fieldRoomHydrationChooseAgain: "⌂ กลับไปเลือกมุม",
     fieldRoomHydrationProgressLabel: "ความคืบหน้าการอ่านจังหวะน้ำ",
     fieldRoomConversationClosing: "พอแค่นี้ก่อนก็ได้ค่ะพี่ วันนี้เราไม่ได้ต้องสรุปทุกอย่าง แค่เห็นจังหวะหนึ่งของร่างกายและใจให้ชัดขึ้นก็พอแล้ว 🩵",
     fieldRoomActionLabel: "เลือกมุมที่จะอ่านต่อ",
@@ -250,10 +250,10 @@ const translations = {
     fieldRoomFocusNext: "รอบถัดไปลองสังเกต",
     fieldRoomFocusAll: "ดูทั้งหมด",
     fieldRoomNextButton: "ดูห้องถัดไป",
-    fieldRoomNextRoomButton: "ดู {room} ต่อ",
-    fieldRoomNextPrompt: "ต่อไปพี่อยากให้หนูเปิดห้องไหนต่อคะ",
+    fieldRoomNextRoomButton: "เดินต่อไปห้อง{room}",
+    fieldRoomNextPrompt: "เดินต่อไปยังห้องที่เกี่ยวข้อง",
     fieldRoomNextHelper: "หนูพาไปดูห้องถัดไปได้ค่ะ",
-    fieldRoomRelatedButton: "เปิด {room} ที่เกี่ยวข้อง",
+    fieldRoomRelatedButton: "เดินต่อไปห้อง{room}",
     signalEngineTitle: "เครื่องอ่านความสัมพันธ์ของสัญญาณ",
     signalEngineKicker: "Signal Relationship Engine",
     signalEngineSubtitle: "หน้านี้อ่านว่าสัญญาณใดเคลื่อนไหวร่วมกันใน Daily_Log ไม่ใช่เหตุและผล ไม่ใช่การวินิจฉัย",
@@ -1210,12 +1210,12 @@ const translations = {
     fieldRoomHydrationUserSpeakerLabel: "You",
     fieldRoomHydrationChoicePrompt: "Choose the response that matches the angle you would like to explore.",
     fieldRoomHydrationContinuePrompt: "If you would like to continue, you can choose another angle.",
-    fieldRoomConversationExit: "Enough for now",
-    fieldRoomHydrationRestart: "Choose a new angle",
-    fieldRoomHydrationResume: "Return to reading",
-    fieldRoomHydrationBack: "Back",
-    fieldRoomHydrationNextAngle: "Read next angle",
-    fieldRoomHydrationChooseAgain: "Choose an angle",
+    fieldRoomConversationExit: "🚪 Enough for now",
+    fieldRoomHydrationRestart: "⌂ Choose a new angle",
+    fieldRoomHydrationResume: "↩ Return to reading",
+    fieldRoomHydrationBack: "← Back",
+    fieldRoomHydrationNextAngle: "Read next angle →",
+    fieldRoomHydrationChooseAgain: "⌂ Choose an angle",
     fieldRoomHydrationProgressLabel: "Hydration reading progress",
     fieldRoomConversationClosing: "It is okay to stop here. We do not need to conclude everything today; seeing one rhythm of body and mind more clearly is enough. 🩵",
     fieldRoomActionLabel: "Choose what to read next",
@@ -1225,9 +1225,9 @@ const translations = {
     fieldRoomFocusAll: "Show all",
     fieldRoomNextButton: "View next room",
     fieldRoomNextRoomButton: "Continue to {room}",
-    fieldRoomNextPrompt: "Which room would you like NuTuenSai to open next?",
+    fieldRoomNextPrompt: "Continue to a related room",
     fieldRoomNextHelper: "NuTuenSai can open the next room.",
-    fieldRoomRelatedButton: "Open related {room}",
+    fieldRoomRelatedButton: "Continue to {room}",
     signalEngineTitle: "Signal Relationship Engine",
     signalEngineKicker: "Signals moving together",
     signalEngineSubtitle: "This page reads which saved signals move together in Daily_Log. It is not causation, diagnosis, or medical advice.",
@@ -2184,12 +2184,12 @@ const translations = {
     fieldRoomHydrationUserSpeakerLabel: "你",
     fieldRoomHydrationChoicePrompt: "请选择符合你想阅读角度的回答。",
     fieldRoomHydrationContinuePrompt: "如果想继续，可以选择另一个角度。",
-    fieldRoomConversationExit: "先到这里",
-    fieldRoomHydrationRestart: "选择新的角度",
-    fieldRoomHydrationResume: "回到阅读",
-    fieldRoomHydrationBack: "返回",
-    fieldRoomHydrationNextAngle: "阅读下一个角度",
-    fieldRoomHydrationChooseAgain: "重新选择角度",
+    fieldRoomConversationExit: "🚪 先到这里",
+    fieldRoomHydrationRestart: "⌂ 选择新的角度",
+    fieldRoomHydrationResume: "↩ 回到阅读",
+    fieldRoomHydrationBack: "← 返回",
+    fieldRoomHydrationNextAngle: "阅读下一个角度 →",
+    fieldRoomHydrationChooseAgain: "⌂ 重新选择角度",
     fieldRoomHydrationProgressLabel: "饮水阅读进度",
     fieldRoomConversationClosing: "先到这里也可以。今天不需要得出所有结论；更清楚地看见一个身心节奏就够了。🩵",
     fieldRoomActionLabel: "选择接下来要读取的角度",
@@ -2198,10 +2198,10 @@ const translations = {
     fieldRoomFocusNext: "下次轻观察",
     fieldRoomFocusAll: "全部显示",
     fieldRoomNextButton: "查看下一个房间",
-    fieldRoomNextRoomButton: "继续看 {room}",
-    fieldRoomNextPrompt: "接下来想让 NuTuenSai 打开哪个房间？",
+    fieldRoomNextRoomButton: "继续到 {room}",
+    fieldRoomNextPrompt: "继续到相关房间",
     fieldRoomNextHelper: "NuTuenSai 可以打开下一个房间。",
-    fieldRoomRelatedButton: "打开相关的 {room}",
+    fieldRoomRelatedButton: "继续到 {room}",
     signalEngineTitle: "信号关系引擎",
     signalEngineKicker: "一起移动的信号",
     signalEngineSubtitle: "这里读取 Daily_Log 中哪些已保存信号一起移动。它不是因果、诊断或医疗建议。",
@@ -10953,6 +10953,19 @@ function getFieldReviewRoomLabel(roomType) {
   return t(room.labelKey);
 }
 
+function getFieldReviewRoomNavIcon(roomType) {
+  const iconByRoom = {
+    hydration: "💧",
+    sleepRecovery: "🌙",
+    loadRecovery: "〰",
+    drinks: "☕",
+    mindNote: "🩵",
+    missing: "◌",
+    signalEngine: "∿"
+  };
+  return iconByRoom[roomType] || "⌂";
+}
+
 function getFieldReviewNextRoomType(roomType) {
   const index = FIELD_REVIEW_ROOM_ORDER.findIndex((entry) => entry.type === roomType);
   const nextIndex = index >= 0 ? (index + 1) % FIELD_REVIEW_ROOM_ORDER.length : 1;
@@ -11911,6 +11924,8 @@ function renderFieldRoomNextActions(activeRoomType) {
   const nextRoomLabel = getFieldReviewRoomLabel(nextRoomType);
   const relatedRoomLabel = getFieldReviewRoomLabel(relatedRoomType);
   const showRelated = relatedRoomType && relatedRoomType !== nextRoomType;
+  const nextRoomIcon = getFieldReviewRoomNavIcon(nextRoomType);
+  const relatedRoomIcon = getFieldReviewRoomNavIcon(relatedRoomType);
 
   return `
     <div class="field-room-next-actions">
@@ -11918,14 +11933,18 @@ function renderFieldRoomNextActions(activeRoomType) {
         <p>${escapeHtml(t("fieldRoomNextPrompt"))}</p>
         <span>${escapeHtml(t("fieldRoomNextHelper"))}</span>
       </div>
-      <button type="button" class="ghost-button field-room-next-button" data-field-room-target="${escapeHtml(nextRoomType)}">
-        ${escapeHtml(t("fieldRoomNextRoomButton", { room: nextRoomLabel }))}
-      </button>
+      <div class="field-room-next-action-buttons">
+        <button type="button" class="ghost-button field-room-next-button guided-nav-room" data-field-room-target="${escapeHtml(nextRoomType)}">
+          <span aria-hidden="true">${escapeHtml(nextRoomIcon)}</span>
+          <span>${escapeHtml(t("fieldRoomNextRoomButton", { room: nextRoomLabel }))}</span>
+        </button>
       ${showRelated ? `
-        <button type="button" class="ghost-button field-room-next-button" data-field-room-target="${escapeHtml(relatedRoomType)}">
-          ${escapeHtml(t("fieldRoomRelatedButton", { room: relatedRoomLabel }))}
+        <button type="button" class="ghost-button field-room-next-button guided-nav-room" data-field-room-target="${escapeHtml(relatedRoomType)}">
+          <span aria-hidden="true">${escapeHtml(relatedRoomIcon)}</span>
+          <span>${escapeHtml(t("fieldRoomRelatedButton", { room: relatedRoomLabel }))}</span>
         </button>
       ` : ""}
+      </div>
     </div>
   `;
 }
@@ -11943,7 +11962,7 @@ function renderGuidedReadingChoices(activeCard, { continuation = false } = {}) {
             ${escapeHtml(t(choice.labelKey))}
           </button>
         `).join("")}
-        <button type="button" class="field-room-focus-chip" data-guided-reading-exit="${escapeHtml(activeCard.roomType)}">
+        <button type="button" class="field-room-focus-chip guided-nav-exit" data-guided-reading-exit="${escapeHtml(activeCard.roomType)}">
           ${escapeHtml(t("fieldRoomConversationExit"))}
         </button>
       </div>
@@ -11955,10 +11974,10 @@ function renderGuidedReadingRestart(activeCard) {
   return `
     <div class="hydration-reading-actions hydration-reading-actions-closing">
       <div class="field-room-focus-chips" role="group" aria-label="${escapeHtml(t("fieldRoomHydrationRestart"))}">
-        <button type="button" class="field-room-focus-chip" data-guided-reading-resume="${escapeHtml(activeCard.roomType)}">
+        <button type="button" class="field-room-focus-chip guided-nav-next" data-guided-reading-resume="${escapeHtml(activeCard.roomType)}">
           ${escapeHtml(t("fieldRoomHydrationResume"))}
         </button>
-        <button type="button" class="field-room-focus-chip is-active" data-guided-reading-restart="${escapeHtml(activeCard.roomType)}">
+        <button type="button" class="field-room-focus-chip guided-nav-menu is-active" data-guided-reading-restart="${escapeHtml(activeCard.roomType)}">
           ${escapeHtml(t("fieldRoomHydrationRestart"))}
         </button>
       </div>
@@ -12027,18 +12046,18 @@ function renderGuidedReadingCard(activeCard) {
       <p>${escapeHtml(readingCard.text)}</p>
     </article>
     <div class="hydration-reading-actions">
-      <button type="button" class="ghost-button" data-guided-reading-back="${escapeHtml(activeCard.roomType)}" ${state.history.length <= 1 ? "disabled" : ""}>
+      <button type="button" class="ghost-button guided-nav-button guided-nav-back" data-guided-reading-back="${escapeHtml(activeCard.roomType)}" ${state.history.length <= 1 ? "disabled" : ""}>
         ${escapeHtml(t("fieldRoomHydrationBack"))}
       </button>
       ${nextChoice ? `
-        <button type="button" class="ghost-button" data-guided-reading-choice="${escapeHtml(nextChoice.type)}" data-guided-reading-room="${escapeHtml(activeCard.roomType)}">
+        <button type="button" class="ghost-button guided-nav-button guided-nav-next" data-guided-reading-choice="${escapeHtml(nextChoice.type)}" data-guided-reading-room="${escapeHtml(activeCard.roomType)}">
           ${escapeHtml(t("fieldRoomHydrationNextAngle"))}
         </button>
       ` : ""}
-      <button type="button" class="ghost-button" data-guided-reading-choose="${escapeHtml(activeCard.roomType)}">
+      <button type="button" class="ghost-button guided-nav-button guided-nav-menu" data-guided-reading-choose="${escapeHtml(activeCard.roomType)}">
         ${escapeHtml(t("fieldRoomHydrationChooseAgain"))}
       </button>
-      <button type="button" class="ghost-button" data-guided-reading-exit="${escapeHtml(activeCard.roomType)}">
+      <button type="button" class="ghost-button guided-nav-button guided-nav-exit" data-guided-reading-exit="${escapeHtml(activeCard.roomType)}">
         ${escapeHtml(t("fieldRoomConversationExit"))}
       </button>
     </div>

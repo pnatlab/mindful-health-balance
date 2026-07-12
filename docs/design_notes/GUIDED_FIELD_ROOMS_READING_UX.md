@@ -36,6 +36,18 @@ Each guided room follows the same session-only flow:
 
 Read progress uses light check marks only to show what has been opened. It is not a score.
 
+## Navigation Hierarchy
+
+Guided room controls use semantic visual roles so users can read direction at a glance:
+
+- Back: neutral, one-step return within the current reading flow.
+- Next angle: primary blue action for moving forward in the current room.
+- Choose angle: mint/teal action for returning to the angle menu.
+- End reading: muted lavender/blue-gray exit action, never danger styling.
+- Related rooms: separate section with room identity icons and cross-room labels.
+
+Related-room buttons stay separate from reading navigation because they move to another room rather than within the current reading flow.
+
 ## Preserved Boundaries
 
 This rollout does not change:
