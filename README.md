@@ -277,6 +277,7 @@ The cards are descriptive pattern summaries. Missing data means not recorded, no
 
 - [English User Guide](USER_GUIDE_EN.md)
 - [Thai User Guide / คู่มือภาษาไทย](USER_GUIDE_TH.md)
+- [🇨🇳 简体中文用户指南](USER_GUIDE_ZH.md)
 - [Context Bundle](docs/MINDFUL_HEALTH_BALANCE_CONTEXT_BUNDLE.md)
 - [Design Notes Index](docs/design_notes/README.md)
 - [AI-Ready Reflection System Definition](docs/design_notes/AI_READY_REFLECTION_SYSTEM_DEFINITION.md)
