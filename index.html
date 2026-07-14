@@ -350,10 +350,10 @@
         <div class="card-heading">
           <div>
             <p class="section-kicker" data-i18n="practiceKicker">Practice context — ถ้ามี</p>
-            <h2 data-i18n="practiceTitle">ภาวนาก่อนวางใจ</h2>
+            <h2 data-i18n="practiceTitle">วันนี้ใจพักอยู่กับอะไรได้บ้าง</h2>
           </div>
         </div>
-        <p class="mind-note-subtitle" data-i18n="practiceSubtitle">เลือกฐานสั้น ๆ แล้วค่อยวางใจหนึ่งบรรทัด</p>
+        <p class="mind-note-subtitle" data-i18n="practiceSubtitle">เลือกเท่าที่เหมาะกับวันนี้ หรือเว้นไว้ได้เสมอ</p>
 
         <div class="practice-visual-anchor" aria-live="polite">
           <div class="practice-visual-orb" aria-hidden="true">
@@ -405,40 +405,64 @@
       <article class="glass-card mind-note-card" data-today-step="2" hidden>
         <div class="card-heading">
           <div>
-            <p class="section-kicker" data-i18n="mindNoteKicker">Mind Note — วางใจหนึ่งบรรทัด</p>
+            <p class="section-kicker" data-i18n="mindNoteKicker">Mind Note — สิ่งเล็ก ๆ ของวันนี้</p>
             <h2 data-i18n="mindNoteTitle">Mind Note</h2>
           </div>
         </div>
-        <p class="mind-note-subtitle" data-i18n="mindNoteSubtitle">วางสิ่งที่ใจถืออยู่เบา ๆ โดยไม่ต้องรีบแก้</p>
-        <p class="micro-cue micro-cue--note" data-i18n="mindNoteCue">โน้ตสะท้อนเฉพาะบันทึกนี้</p>
+        <p class="mind-note-subtitle" data-i18n="mindNoteSubtitle">วางสิ่งที่อยากเก็บไว้กับวันนี้</p>
+        <p class="micro-cue micro-cue--note" data-i18n="mindNoteCue">จะเป็นเรื่องดี ความรู้สึก สิ่งที่กำลังเรียนรู้ หรือสิ่งที่อยากวางไว้เบา ๆ ก็ได้</p>
 
         <label class="mind-note-field" for="mindNoteText">
-          <span class="choice-label" data-i18n="mindNoteTextLabel">วันนี้ใจถืออะไรอยู่</span>
-          <textarea id="mindNoteText" rows="3" data-i18n-placeholder="mindNotePlaceholder" placeholder="เช่น อยากให้เลขดีขึ้นเร็ว แต่ก็ไม่อยากกดดันตัวเอง"></textarea>
+          <span class="choice-label" data-i18n="mindNoteTextLabel">วันนี้มีอะไรที่อยากเก็บไว้กับวันนี้บ้าง</span>
+          <textarea id="mindNoteText" rows="5" data-i18n-placeholder="mindNotePlaceholder" placeholder="เช่น วันนี้วิ่งแล้วรู้สึกสบาย · วันนี้ได้คุยกับคนที่คิดถึง · วันนี้ยังไม่แน่ใจหลายเรื่อง · วันนี้อยากขอบคุณตัวเอง · วันนี้ไม่รู้จะเขียนอะไร ก็ไม่เป็นไร"></textarea>
         </label>
 
-        <div class="choice-group">
+        <div class="choice-group mind-note-choice-section">
           <span class="choice-label" data-i18n="mindNoteFeelingLabel">Mind Note Feeling</span>
-          <div class="segmented wrap" role="group" aria-label="Mind Note Feeling" id="mindNoteFeelingGroup">
-            <button type="button" data-mind-note-field="mindNoteFeeling" data-value="calm" data-mind-note-option="feeling.calm">เฉย ๆ</button>
-            <button type="button" data-mind-note-field="mindNoteFeeling" data-value="uneasy" data-mind-note-option="feeling.uneasy">ไม่สบายใจ</button>
-            <button type="button" data-mind-note-field="mindNoteFeeling" data-value="worried" data-mind-note-option="feeling.worried">กังวล</button>
-            <button type="button" data-mind-note-field="mindNoteFeeling" data-value="pressured" data-mind-note-option="feeling.pressured">กดดัน</button>
-            <button type="button" data-mind-note-field="mindNoteFeeling" data-value="tired" data-mind-note-option="feeling.tired">ล้า</button>
-            <button type="button" data-mind-note-field="mindNoteFeeling" data-value="scattered" data-mind-note-option="feeling.scattered">ฟุ้ง</button>
-            <button type="button" data-mind-note-field="mindNoteFeeling" data-value="feeling_good" data-mind-note-option="feeling.feeling_good">รู้สึกดี</button>
-            <button type="button" data-mind-note-field="mindNoteFeeling" data-value="grateful" data-mind-note-option="feeling.grateful">ขอบคุณ</button>
+          <p class="field-helper mind-note-choice-helper" data-i18n="mindNoteFeelingHelper">เลือกคำที่ใกล้กับบันทึกนี้ได้เท่าที่พอดี ทุกแบบของวันมีที่อยู่ตรงนี้</p>
+          <div class="mind-note-feeling-groups" id="mindNoteFeelingGroup">
+            <div class="mind-note-feeling-cluster mind-note-feeling-cluster--gentle" role="group" aria-labelledby="mindNoteFeelingGentleLabel">
+              <span class="mind-note-group-label" id="mindNoteFeelingGentleLabel" data-i18n="mindNoteFeelingGentleLabel">อ่อนโยน / เกื้อกูลใจ</span>
+              <div class="segmented wrap mind-note-option-list">
+                <button type="button" data-mind-note-field="mindNoteFeeling" data-value="feeling_good" data-mind-note-option="feeling.feeling_good">🩵 อิ่มใจ</button>
+                <button type="button" data-mind-note-field="mindNoteFeeling" data-value="grateful" data-mind-note-option="feeling.grateful">😊 ขอบคุณ</button>
+                <button type="button" data-mind-note-field="mindNoteFeeling" data-value="peaceful" data-mind-note-option="feeling.peaceful">🌿 สงบ</button>
+                <button type="button" data-mind-note-field="mindNoteFeeling" data-value="proud" data-mind-note-option="feeling.proud">✨ ภูมิใจ</button>
+              </div>
+            </div>
+            <div class="mind-note-feeling-cluster mind-note-feeling-cluster--neutral" role="group" aria-labelledby="mindNoteFeelingNeutralLabel">
+              <span class="mind-note-group-label" id="mindNoteFeelingNeutralLabel" data-i18n="mindNoteFeelingNeutralLabel">เป็นกลาง / กำลังเห็น</span>
+              <div class="segmented wrap mind-note-option-list">
+                <button type="button" data-mind-note-field="mindNoteFeeling" data-value="calm" data-mind-note-option="feeling.calm">เฉย ๆ</button>
+                <button type="button" data-mind-note-field="mindNoteFeeling" data-value="learning" data-mind-note-option="feeling.learning">กำลังเรียนรู้</button>
+                <button type="button" data-mind-note-field="mindNoteFeeling" data-value="thinking" data-mind-note-option="feeling.thinking">กำลังคิด</button>
+              </div>
+            </div>
+            <div class="mind-note-feeling-cluster mind-note-feeling-cluster--heavy" role="group" aria-labelledby="mindNoteFeelingHeavyLabel">
+              <span class="mind-note-group-label" id="mindNoteFeelingHeavyLabel" data-i18n="mindNoteFeelingHeavyLabel">หนัก / อยากให้มีพื้นที่</span>
+              <div class="segmented wrap mind-note-option-list">
+                <button type="button" data-mind-note-field="mindNoteFeeling" data-value="uneasy" data-mind-note-option="feeling.uneasy">ไม่สบายใจ</button>
+                <button type="button" data-mind-note-field="mindNoteFeeling" data-value="worried" data-mind-note-option="feeling.worried">กังวล</button>
+                <button type="button" data-mind-note-field="mindNoteFeeling" data-value="tired" data-mind-note-option="feeling.tired">ล้า</button>
+                <button type="button" data-mind-note-field="mindNoteFeeling" data-value="scattered" data-mind-note-option="feeling.scattered">ฟุ้ง</button>
+                <button type="button" data-mind-note-field="mindNoteFeeling" data-value="pressured" data-mind-note-option="feeling.pressured">กดดัน</button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="choice-group">
-          <span class="choice-label" data-i18n="mindNoteSupportLabel">Support Need</span>
-          <div class="segmented wrap" role="group" aria-label="Support Need" id="mindNoteSupportGroup">
+        <div class="choice-group mind-note-choice-section mind-note-support-section">
+          <span class="choice-label" data-i18n="mindNoteSupportLabel">วันนี้ใจอยากได้อะไร</span>
+          <p class="field-helper mind-note-choice-helper" data-i18n="mindNoteSupportHelper">เลือกได้ถ้ามีสิ่งเล็ก ๆ ที่น่าจะช่วยวันนี้ หรือเว้นไว้ก็ได้</p>
+          <div class="segmented wrap mind-note-support-options" role="group" aria-label="สิ่งที่น่าจะช่วยวันนี้" data-i18n-aria-label="mindNoteSupportAria" id="mindNoteSupportGroup">
             <button type="button" data-mind-note-field="mindNoteSupport" data-value="rest_first" data-mind-note-option="support.rest_first">พักก่อน</button>
             <button type="button" data-mind-note-field="mindNoteSupport" data-value="see_pattern" data-mind-note-option="support.see_pattern">เห็น pattern</button>
             <button type="button" data-mind-note-field="mindNoteSupport" data-value="reduce_pressure" data-mind-note-option="support.reduce_pressure">ลดความกดดัน</button>
             <button type="button" data-mind-note-field="mindNoteSupport" data-value="hydrate_gently" data-mind-note-option="support.hydrate_gently">จิบน้ำเบา ๆ</button>
             <button type="button" data-mind-note-field="mindNoteSupport" data-value="set_down" data-mind-note-option="support.set_down">วางไว้ก่อน</button>
+            <button type="button" data-mind-note-field="mindNoteSupport" data-value="walk_gently" data-mind-note-option="support.walk_gently">เดินต่อเบา ๆ</button>
+            <button type="button" data-mind-note-field="mindNoteSupport" data-value="thank_self" data-mind-note-option="support.thank_self">ขอบคุณตัวเอง</button>
+            <button type="button" data-mind-note-field="mindNoteSupport" data-value="stay_present" data-mind-note-option="support.stay_present">อยู่กับปัจจุบัน</button>
           </div>
         </div>
       </article>
@@ -783,7 +807,7 @@
       <div class="app-info-copy">
         <p class="eyebrow" data-i18n="eyebrow">Personal mindful dashboard</p>
         <h2 id="appInfoTitle" data-i18n="title">Mindful Health Balance by MSxAI</h2>
-        <p class="version" data-i18n="version">v2.0 — Field Review & Signal Engine</p>
+        <p class="version" data-i18n="version">v2.1 — Gentle Mind Note</p>
         <p class="subtitle" data-i18n="subtitle">แอปบันทึกจังหวะชีวิตแบบ local-first พร้อม Field Review และ Signal Engine</p>
         <p class="app-info-note">
           <strong data-i18n="noticeTitle">Boundary-aware field review</strong>

@@ -36,10 +36,11 @@ The fact that it is not SaaS is intentional. Its value is in the design of a use
 
 ## Current Version
 
-**MHB 2.0 — Field Review, Signal Engine & User Intention Profile**
+**MHB 2.1 — Gentle Mind Note**
 
 Latest refinements include:
 
+- Gentle Mind Note with an Observe → Keep → Release writing invitation, balanced feeling groups, and softer support/practice wording without changing stored columns or historical compatibility
 - Mindful Practice Context before Mind Note using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma
 - five main views: Today, Reflection/NuTuenSai, Field Review / ประมวลข้อมูล, Log, and Intention Profile
 - Field Review / ประมวลข้อมูล tab for deterministic multi-day review from saved `Daily_Log`
@@ -62,7 +63,7 @@ Latest refinements include:
 - Input-grounded Reflection composer that remains deterministic, rule-based, and local-first
 - Practice Context and Practice Note stored for Field Review context and bounded `practice_context` Reflection, never as spiritual scoring
 
-MHB 2.0 locks the current app as a local-first, deterministic Field Review + Signal Engine + User Intention Profile release. It is not an AI companion, not free-form Ask My Log, not a medical review layer, not causation analysis, and not a production SaaS release. Future feature work after this documentation lock should begin from MHB 2.1.
+MHB 2.1 keeps the locked MHB 2.0 Field Review, Signal Engine, User Intention Profile, and portable workbook foundation unchanged while refreshing Mind Note as a calmer place for joyful, ordinary, uncertain, meaningful, or difficult moments. It is not an AI companion, free-form Ask My Log, medical review layer, causation analysis, or production SaaS release.
 
 ## Main Navigation
 
@@ -138,6 +139,14 @@ Practice fields:
 
 Practice Context and Practice Note are stored for Field Review and for bounded `practice_context` Reflection when that root is selected. The app reads them as gentle context only, never as merit, spiritual progress, discipline, or practice quality.
 
+## Gentle Mind Note
+
+MHB 2.1 reframes Mind Note around **Observe → Keep → Release**. The page asks what the user may want to keep with today rather than asking them to find a problem. Positive, neutral, learning, uncertain, and difficult moments receive equal permission.
+
+Feeling choices are presented in three light groups: gentle/supportive, neutral/noticing, and heavy/needs space. Existing stored values remain compatible, while optional labels such as peaceful, proud, learning, and thinking broaden what can be recorded. `วันนี้ใจอยากได้อะไร` / `What might support the mind today?` replaces the problem-oriented Support Need heading and adds gentle options without changing the `Mind_Note_Support` column.
+
+This is a UX, copy, and presentation change only. `Daily_Log`, workbook export/import, Reflection, Signal Engine, Field Review, and historical rows keep their existing contracts.
+
 ## Reflection/NuTuenSai
 
 Reflection/NuTuenSai is deterministic and rule-based. It may reference current-day signals such as water, sleep hours, drink context, load/activity, run detail, Mind Note, and light continuity context from previous logs.
@@ -185,7 +194,7 @@ The Today/Hydration area can show a profile-aware welcome such as `สวัส�
 - Activity and recovery load presets, including work, sport, light recovery, and AI-assisted coding context
 - Optional sleep hours and run detail JSON
 - Optional Practice Context and Practice Note before Mind Note
-- Optional Mind Note, feeling, and support need
+- Optional Gentle Mind Note, balanced feeling choices, and softly worded support options
 - Rule-based NuTuenSai Reflection
 - Rule-based Field Review from saved `Daily_Log`
 - User Intention Profile for optional addressing, tone, user context, and do-not-assume boundaries
@@ -274,6 +283,7 @@ The cards are descriptive pattern summaries. Missing data means not recorded, no
 - [Portable Field Memory Design](docs/design_notes/PORTABLE_FIELD_MEMORY_DESIGN.md)
 - [Input-grounded Reflection Composer v1.9.8](docs/design_notes/INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md)
 - [Mindful Practice Context v1.9.9](docs/design_notes/MINDFUL_PRACTICE_CONTEXT_V1_9_9.md)
+- [Gentle Mind Note UX](docs/design_notes/GENTLE_MIND_NOTE_UX.md)
 - [Field Review Slice A — Rule-Based Daily Log Review](docs/design_notes/FIELD_REVIEW_SLICE_A_RULE_BASED.md)
 - [Symbolic Signal Cockpit Polish v1.9.7](docs/design_notes/SYMBOLIC_SIGNAL_COCKPIT_POLISH_V1_9_7.md)
 
@@ -281,7 +291,8 @@ Thai documentation, field notes, and original design context remain available in
 
 ## Version History / Design Trace
 
-- **MHB 2.0 — Current locked release**: Field Review, Guided Field Rooms, Signal Engine, User Intention Profile, Excel profile bridge, and profile-aware Today welcome are treated as the current release baseline. Future feature development should begin from MHB 2.1.
+- **MHB 2.1 — Current release / Gentle Mind Note**: refreshes Mind Note around Observe → Keep → Release, balanced feeling groups, and gentler support/practice wording without changing schema, export/import, Reflection, or historical data compatibility.
+- **MHB 2.0 — Locked foundation**: Field Review, Guided Field Rooms, Signal Engine, User Intention Profile, Excel profile bridge, and profile-aware Today welcome remain the release baseline under MHB 2.1.
 - **MHB 2.0 design trace**: Earlier internal slices such as Field Review Slice A, Field Review UI v2/v2.1/v2.2/v2.3, Guided Reading, and User Intention Profile U0-U4 are historical implementation steps inside the MHB 2.0 release, not separate current versions.
 - **v1.9.9 — Mindful Practice Context and User-Owned Field Memory Refinement**: adds Practice Context, `Practice_Note`, honest data copy, source-aware safe merge, three-layer save status, ordered mind scale, NuTuenSai voice cadence, low-data micro-continuity, and Reflection anti-repetition.
 - **v1.9.8c — Reflection Sentence Smoothing**: reduces repeated connectors and uses short paragraphs so input-grounded reflection reads more naturally.

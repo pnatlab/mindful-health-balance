@@ -14,7 +14,7 @@ The app helps you record honest daily signals as structured local data across:
 
 This app is not a medical tool, not a diagnosis system, and not a replacement for professional care or medical follow-up.
 
-This guide locks the current app as **MHB 2.0 — Field Review, Signal Engine & User Intention Profile**. New feature development after this point should begin from MHB 2.1.
+This guide describes the current **MHB 2.1 — Gentle Mind Note** release, built on the locked MHB 2.0 Field Review, Signal Engine, and User Intention Profile foundation without changing schema or historical data.
 
 Its value is not in being a production SaaS platform. Its value is in a portable, user-owned data layer that can later be reviewed by the user or intentionally shared with AI without handing agency to the system.
 
@@ -134,7 +134,7 @@ Cockpit statuses such as `Empty`, `Started`, and `Readable` are visual feedback 
 
 Starting in v1.9.7 — Symbolic Signal Cockpit Polish, the cockpit becomes more like a signal constellation, with four nodes around a central `Daily Balance Orb`. The orb and signal dots show how much of today is readable in a gentle way, not as a KPI, score, or judgment.
 
-Starting in v1.9.9 — Mindful Practice Context, Mind Note 2/2 adds a small `Practice before Mind Note` card. It can record an optional practice root/type, rough duration, and `Practice_Note` using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma, plus No practice / Other. This data is stored in Daily Log/Excel for Field Review context and may be read in Reflection only when the `practice_context` root is selected. It is gentle context, not a practice score or judgment of practice quality.
+Starting in v1.9.9 — Mindful Practice Context, Mind Note 2/2 includes an optional Practice Context card. In MHB 2.1 it uses the invitation `What could the mind rest with today?` while retaining the same optional practice root/type, rough duration, and `Practice_Note` across four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma, plus No practice / Other. This data is stored in Daily Log/Excel for Field Review context and may be read in Reflection only when the `practice_context` root is selected. It is gentle context, not a practice score or judgment of practice quality.
 
 In MHB 2.0 — Field Review, Signal Engine & User Intention Profile, the `Field Review` tab reads `Daily_Log` in localStorage through Guided Field Rooms and Signal Engine. It has no free-form ask and no LLM call. The Signal Engine shows bounded numeric-to-numeric Pearson relationship rows with a NuTuenSai Meaning Dictionary, raw column audit lines, pair-specific deterministic `MHB · NuTuenSai` meaning detail, and Gentle Next Observation prompts, without charts, matrices, or category mapping.
 
@@ -330,19 +330,21 @@ When the day has very little data, the app should greet gently or invite a littl
 
 ## 15. Mind Note
 
-Mind Note is a small space for one line of inner context. It is not a therapy tool, not crisis support, and not a medical tool.
+Mind Note is a quiet place to leave something from today: joyful, ordinary, uncertain, meaningful, difficult, or still unfolding. It does not ask you to search for a problem. It is not a therapy tool, crisis support, or a medical tool.
 
-Before Mind Note, the `Practice before Mind Note` card can record a light practice context if there was one today. The app stores this as `Practice_Root`, `Practice_Type`, `Practice_Minutes`, `Practice_Context_JSON`, and `Practice_Note`. It is optional and is not used to judge practice, spiritual progress, or daily reflection meaning. Type chips are written as small actions, such as noticing standing, recollecting gratitude, or thinking and noticing wanting, not as scores or direct fixation on distress.
+Before Mind Note, the `What could the mind rest with today?` card can record a light Practice Context if there was one today. The app stores this as `Practice_Root`, `Practice_Type`, `Practice_Minutes`, `Practice_Context_JSON`, and `Practice_Note`. It is optional and is not used to judge practice, spiritual progress, or daily reflection meaning. Type chips remain small invitations, not scores or requirements to choose correctly.
 
 `Practice_Note` is an optional short note for a practice situation, good action, or wholesome context the user wants to remember, such as feeding fish at a temple, helping someone, recollecting a good action, or choosing not to react. It is field memory for Field Review and may be read only in a bounded `practice_context` Reflection when that root is explicitly selected. It is not a merit score, self-assessment, or measure of spiritual progress.
 
 Use it lightly:
 
-- Write one short line about what your mind is holding today
-- Choose `Feeling in this note`, such as neutral, uneasy, worried, pressured, tired, scattered, feeling good, or grateful
-- Choose a support need, such as rest first, see the pattern, reduce pressure, hydrate gently, or leave it for now
+- Write something you want to keep with today, such as gratitude, an ordinary moment, something you are learning, uncertainty, or something you want to set down gently
+- Choose `Feeling in this note` from the gentle/supportive, neutral/noticing, or heavy/needs-space group
+- Choose `What might support the mind today?`, such as rest first, see the pattern, hydrate gently, continue gently, thank myself, or stay present
 - Keep it short if that feels right
 - Use it to notice patterns between mind state, hydration, load, recovery, and sleep
+
+MHB 2.1 changes only Mind Note wording, grouping, and visual breathing room. Existing values remain available and compatible. `Daily_Log`, Excel, Reflection, Field Review, and Signal Engine contracts are unchanged.
 
 ## 16. Reflection Generator
 

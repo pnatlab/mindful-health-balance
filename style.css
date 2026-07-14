@@ -3034,9 +3034,16 @@ body[data-theme="dark"] .reflection-root-preview {
 }
 
 .mind-note-subtitle {
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   color: var(--text-soft);
   line-height: 1.65;
+}
+
+.mind-note-card .micro-cue--note {
+  max-width: 72ch;
+  margin-bottom: 22px;
+  color: var(--text-soft);
+  line-height: 1.7;
 }
 
 .mind-note-field {
@@ -3045,7 +3052,7 @@ body[data-theme="dark"] .reflection-root-preview {
 }
 
 .mind-note-field textarea {
-  min-height: 118px;
+  min-height: 150px;
   border-color: rgba(217, 137, 184, 0.16);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 252, 246, 0.54)),
@@ -3058,7 +3065,64 @@ body[data-theme="dark"] .reflection-root-preview {
 }
 
 [data-view-panel="today"][data-today-input-step="2"] .mind-note-card .mind-note-field textarea {
-  min-height: 220px;
+  min-height: 248px;
+}
+
+.mind-note-choice-section {
+  margin-top: 26px;
+}
+
+.mind-note-choice-helper {
+  margin: 6px 0 14px;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+.mind-note-feeling-groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.mind-note-feeling-cluster {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding-top: 11px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.mind-note-feeling-cluster--gentle {
+  border-top-color: rgba(83, 180, 162, 0.34);
+}
+
+.mind-note-feeling-cluster--neutral {
+  border-top-color: rgba(115, 151, 186, 0.28);
+}
+
+.mind-note-feeling-cluster--heavy {
+  border-top-color: rgba(151, 132, 184, 0.26);
+}
+
+.mind-note-group-label {
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.mind-note-option-list,
+.mind-note-support-options {
+  align-items: flex-start;
+}
+
+.mind-note-option-list button,
+.mind-note-support-options button {
+  min-height: 40px;
+}
+
+.mind-note-support-section {
+  padding-top: 4px;
 }
 
 body[data-theme="dark"] .mind-note-card {
@@ -3072,6 +3136,24 @@ body[data-theme="dark"] .mind-note-field textarea {
   background:
     linear-gradient(180deg, rgba(24, 20, 42, 0.8), rgba(33, 23, 44, 0.48)),
     var(--textarea-bg);
+}
+
+body[data-theme="dark"] .mind-note-group-label,
+body[data-theme="dark"] .mind-note-choice-helper,
+body[data-theme="dark"] .mind-note-card .micro-cue--note {
+  color: rgba(226, 229, 244, 0.72);
+}
+
+body[data-theme="dark"] .mind-note-feeling-cluster--gentle {
+  border-top-color: rgba(116, 214, 187, 0.28);
+}
+
+body[data-theme="dark"] .mind-note-feeling-cluster--neutral {
+  border-top-color: rgba(139, 183, 224, 0.24);
+}
+
+body[data-theme="dark"] .mind-note-feeling-cluster--heavy {
+  border-top-color: rgba(194, 164, 226, 0.22);
 }
 
 textarea {
@@ -5298,6 +5380,15 @@ td:nth-child(10) {
 
   [data-view-panel="today"][data-today-input-step="2"] .mind-note-card .mind-note-field textarea {
     min-height: 150px;
+  }
+
+  .mind-note-feeling-groups {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .mind-note-feeling-cluster {
+    padding-top: 10px;
   }
 
   .daily-signal-cockpit,
