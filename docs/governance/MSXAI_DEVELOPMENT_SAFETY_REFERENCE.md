@@ -2,9 +2,9 @@
 
 ## 1. Purpose
 
-This document is an MHB-specific reference to the MSxAI canonical development safety protocol.
+This document is an MHB-specific reference to the MSxAI canonical development protocol.
 
-This document does not duplicate or replace the canonical MSxAI Development Safety Protocol. It records only the project-specific safety and workflow extensions used by Mindful Health Balance.
+This document does not duplicate or replace the canonical MSxAI Development Protocol. It records only the project-specific safety and workflow extensions used by Mindful Health Balance.
 
 Thai note: เอกสารนี้เป็นเพียง reference เฉพาะโปรเจกต์ MHB ไม่ใช่ protocol ฉบับใหม่
 
@@ -12,7 +12,7 @@ Thai note: เอกสารนี้เป็นเพียง reference เ�
 
 Canonical local path:
 
-`~/Desktop/MindfulSystem_xAi/docs/governance/CODEX_DEVELOPMENT_SAFETY_PROTOCOL.md`
+`~/Desktop/MindfulSystem_xAi/docs/governance/MSXAI_DEVELOPMENT_PROTOCOL.md`
 
 This path is pnat's local workspace path. External GitHub clones may not contain this file or parent workspace structure.
 
