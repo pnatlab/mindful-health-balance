@@ -5,7 +5,7 @@
 - Patch: Hydration guided reading pilot
 - Scope: Field Review Hydration room only
 - Runtime state: session-only
-- Content/calculation changes: none
+- Content/calculation changes: hydration adequacy reading only
 
 ## Purpose
 
@@ -24,15 +24,23 @@ The Hydration room keeps its existing introduction and boundary copy, then shows
 
 Read progress is shown lightly to help the user see which angles have already been opened. This progress is not a score.
 
+## Copy Responsibilities
+
+- Overview: names the adequacy level and the number of recorded days within their context-aware reference ranges. It does not repeat average/min/max values.
+- Evidence: shows average, min, max, and below/in-range/above day counts as compact audit data.
+- Next observation: offers one sentence inviting the user to read out-of-range days with load, sleep, and activity, without expecting identical intake every day.
+- Show all: combines the adequacy level, evidence, and next observation without repeating the in-range count from the overview.
+
 ## Boundaries
 
-This pilot changes presentation and session navigation only. It does not change:
+The guided-reading pilot originally changed presentation and session navigation only. The current Hydration room now also reads adequacy against the existing context-aware hydration ranges. Average intake and the number of recorded days within their reference ranges lead the overview; min/max remain evidence and are not used to infer instability.
 
-- Hydration statistics
-- Average/min/max values
-- Low/high water day counts
-- Evidence text
-- Next-observation text
+This does not change:
+
+- Daily hydration guidance ranges
+- Source Water_ml values
+- Average/min/max calculations
+- Load, sleep, activity, or recovery calculations
 - Daily_Log schema
 - Reflection
 - Signal Engine

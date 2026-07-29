@@ -166,9 +166,7 @@ const translations = {
     fieldReviewRowsEvidence: "{count} วันในช่วงที่เลือก",
     fieldReviewHydrationTitle: "Hydration pattern",
     fieldReviewHydrationEmpty: "ยังไม่มีข้อมูลน้ำดื่มในช่วงที่เลือก จึงอ่าน hydration ได้อย่างจำกัด",
-    fieldReviewHydrationSteady: "ช่วงนี้น้ำดื่มดูค่อนข้างนิ่งในข้อมูลที่บันทึกไว้ อ่านเป็นฐาน self-care ได้แบบเบา ๆ",
-    fieldReviewHydrationVaries: "ช่วงนี้น้ำดื่มมีความแกว่งระหว่างวันที่บันทึกต่ำกับวันที่บันทึกสูง",
-    fieldReviewHydrationEvidence: "เฉลี่ย {average} ml · ต่ำสุด {min} ml · สูงสุด {max} ml · วันน้ำน้อย {low} · วันน้ำสูง {high}",
+    fieldReviewHydrationEvidence: "เฉลี่ย {average} ml · ต่ำสุด {min} ml · สูงสุด {max} ml · อยู่ในช่วงอ้างอิง {inRange}/{recorded} วัน · ต่ำกว่าช่วง {below} · สูงกว่าช่วง {above}",
     fieldReviewHydrationNote: "ควรอ่านร่วมกับ load, sleep และกิจกรรม ไม่ใช่ดูตัวเลขวันเดียว และ Water_ml คือมิลลิลิตรของน้ำเปล่า ไม่ใช่เงินหรือค่าใช้จ่าย",
     fieldReviewSleepTitle: "Sleep / recovery pattern",
     fieldReviewSleepSummary: "มีสัญญาณ sleep/recovery ที่ควรอ่านอย่างอ่อนโยนในช่วงที่เลือก",
@@ -311,10 +309,13 @@ const translations = {
     fieldReviewWindowVoice30: "ในช่วง 30 วันนี้ ภาพรวมเริ่มพอใช้ดูจังหวะของเดือนนี้ได้ค่ะ",
     fieldReviewWindowVoiceAll: "เมื่อดูข้อมูลทั้งหมด หนูอ่านเป็นภาพรวมระยะยาว แต่ยังควรจำไว้ว่าบริบทของแต่ละวันไม่เหมือนกันค่ะ",
     fieldReviewHydrationReadingEmpty: "หนูยังอ่าน hydration ได้เบามาก เพราะช่วงนี้ไม่มี Water_ml ที่บันทึกไว้ชัดค่ะ",
-    fieldReviewHydrationReadingVaries: "หนูอ่านว่าน้ำดื่มในช่วงนี้มีความแกว่ง ควรดูคู่กับ load, sleep และกิจกรรม ไม่ใช่ดูตัวเลขวันเดียวค่ะ",
-    fieldReviewHydrationReadingSteady: "หนูอ่านว่าน้ำดื่มช่วงนี้ค่อนข้างมีฐานที่เห็นได้ แต่ยังควรดูร่วมกับบริบทของแต่ละวันค่ะ",
-    fieldReviewHydrationNextLowLoad: "ลองดูวันที่ load สูงแต่น้ำต่ำเป็นพิเศษ โดยอ่านเป็นสัญญาณดูแล ไม่ใช่ความผิดนะคะ",
-    fieldReviewHydrationNextDefault: "ลองสังเกตว่าวันที่น้ำสูงหรือต่ำมากมีบริบทของ sleep, load หรือกิจกรรมแบบไหนค่ะ",
+    fieldReviewHydrationReadingBelow: "ค่าเฉลี่ยการดื่มน้ำอยู่ต่ำกว่าช่วงอ้างอิงตามบริบทค่ะ",
+    fieldReviewHydrationReadingNearLower: "ค่าเฉลี่ยการดื่มน้ำอยู่ใกล้ขอบล่างของช่วงอ้างอิงตามบริบทค่ะ",
+    fieldReviewHydrationReadingInRange: "ค่าเฉลี่ยการดื่มน้ำอยู่ในช่วงอ้างอิงตามบริบทค่ะ",
+    fieldReviewHydrationReadingAbove: "ค่าเฉลี่ยการดื่มน้ำอยู่สูงกว่าช่วงอ้างอิงตามบริบทค่ะ",
+    fieldReviewHydrationReadingCount: "มี {inRange} จาก {recorded} วันที่อยู่ในช่วงนั้น",
+    fieldReviewHydrationNextLowLoad: "รอบถัดไปลองดูวันที่น้ำต่ำกว่าช่วงอ้างอิงร่วมกับ load, sleep และกิจกรรมของวันนั้นค่ะ",
+    fieldReviewHydrationNextDefault: "รอบถัดไปลองดูวันที่น้ำต่ำหรือสูงกว่าช่วงอ้างอิงร่วมกับ load, sleep และกิจกรรม โดยไม่ต้องให้ทุกวันเท่ากันค่ะ",
     fieldReviewSleepReadingSignal: "หนูอ่านว่าสัญญาณ sleep/recovery ยังควรได้รับพื้นที่อ่อนโยน โดยเฉพาะวันที่พลังงานต่ำหรือภาระเยอะค่ะ",
     fieldReviewSleepReadingLight: "หนูอ่านว่า sleep/recovery ในช่วงนี้ยังไม่ชี้สัญญาณหนักจากข้อมูลที่มีค่ะ",
     fieldReviewSleepNextSignal: "ลองสังเกตวันที่ sleep/recovery ต่ำว่ามี load, caffeine หรือ Mind Note อะไรอยู่ข้าง ๆ บ้างนะคะ",
@@ -1161,9 +1162,7 @@ const translations = {
     fieldReviewRowsEvidence: "{count} selected days",
     fieldReviewHydrationTitle: "Hydration pattern",
     fieldReviewHydrationEmpty: "There is no water amount recorded in the selected range, so hydration can only be read lightly.",
-    fieldReviewHydrationSteady: "Hydration appears relatively steady in the selected saved data and can be read as a gentle self-care base.",
-    fieldReviewHydrationVaries: "Hydration varies across the selected days between lower and higher recorded water days.",
-    fieldReviewHydrationEvidence: "Average {average} ml · min {min} ml · max {max} ml · low-water days {low} · high-water days {high}",
+    fieldReviewHydrationEvidence: "Average {average} ml · min {min} ml · max {max} ml · within the reference range {inRange}/{recorded} days · below {below} · above {above}",
     fieldReviewHydrationNote: "Read this together with load, sleep, and activity, not as a single-day judgment. Water_ml means milliliters of plain water, not money or expense.",
     fieldReviewSleepTitle: "Sleep / recovery pattern",
     fieldReviewSleepSummary: "Sleep/recovery signals appear in the selected range and can be read gently.",
@@ -1306,10 +1305,13 @@ const translations = {
     fieldReviewWindowVoice30: "Across 30 days, the data starts to show a month-level rhythm.",
     fieldReviewWindowVoiceAll: "Across all available data, this becomes a long-view reflection, while each day still has its own context.",
     fieldReviewHydrationReadingEmpty: "NuTuenSai can only read hydration lightly here because no clear Water_ml values are recorded in this window.",
-    fieldReviewHydrationReadingVaries: "NuTuenSai reads hydration as variable across this window. View it together with load, sleep, and activity, not as a single-day judgment.",
-    fieldReviewHydrationReadingSteady: "NuTuenSai reads hydration as having a visible base in this window, while each day still deserves its own context.",
-    fieldReviewHydrationNextLowLoad: "Gently notice days where load is high but water is low, as a care signal rather than a mistake.",
-    fieldReviewHydrationNextDefault: "Gently notice what sleep, load, or activity context appears beside especially low or high water days.",
+    fieldReviewHydrationReadingBelow: "Average hydration is below the context-aware reference range.",
+    fieldReviewHydrationReadingNearLower: "Average hydration is near the lower edge of the context-aware reference range.",
+    fieldReviewHydrationReadingInRange: "Average hydration is within the context-aware reference range.",
+    fieldReviewHydrationReadingAbove: "Average hydration is above the context-aware reference range.",
+    fieldReviewHydrationReadingCount: "{inRange} of {recorded} recorded days are within that range.",
+    fieldReviewHydrationNextLowLoad: "Next time, review days below their reference range together with load, sleep, and activity.",
+    fieldReviewHydrationNextDefault: "Next time, review days below or above their reference range with load, sleep, and activity, without expecting identical intake every day.",
     fieldReviewSleepReadingSignal: "NuTuenSai reads these as sleep/recovery signals that deserve gentle space, especially near low-energy or high-load days.",
     fieldReviewSleepReadingLight: "NuTuenSai does not read a heavy sleep/recovery pattern from the selected saved data.",
     fieldReviewSleepNextSignal: "Gently notice what load, caffeine, or Mind Note context sits beside lower sleep/recovery days.",
@@ -2156,9 +2158,7 @@ const translations = {
     fieldReviewRowsEvidence: "已选择 {count} 天",
     fieldReviewHydrationTitle: "补水 pattern",
     fieldReviewHydrationEmpty: "所选范围内还没有饮水量记录，所以只能轻轻阅读补水信号。",
-    fieldReviewHydrationSteady: "所选记录里的饮水看起来相对稳定，可以作为温和的自我照顾基础来阅读。",
-    fieldReviewHydrationVaries: "所选日期中的饮水量有高低变化。",
-    fieldReviewHydrationEvidence: "平均 {average} ml · 最低 {min} ml · 最高 {max} ml · 低饮水日 {low} · 高饮水日 {high}",
+    fieldReviewHydrationEvidence: "平均 {average} ml · 最低 {min} ml · 最高 {max} ml · 在参考区间内 {inRange}/{recorded} 天 · 低于区间 {below} 天 · 高于区间 {above} 天",
     fieldReviewHydrationNote: "请和 load、sleep、activity 一起阅读，不用用单日数字判断。Water_ml 是白水毫升数，不是金钱或支出。",
     fieldReviewSleepTitle: "睡眠 / 恢复 pattern",
     fieldReviewSleepSummary: "所选范围中出现 sleep/recovery 信号，可以温和阅读。",
@@ -2301,10 +2301,13 @@ const translations = {
     fieldReviewWindowVoice30: "在 30 天里，数据开始呈现这个月的节奏。",
     fieldReviewWindowVoiceAll: "看全部可用数据时，这是长期视角的回顾，但每一天仍有自己的背景。",
     fieldReviewHydrationReadingEmpty: "这里还没有清楚记录 Water_ml，所以 NuTuenSai 只能很轻地阅读补水信号。",
-    fieldReviewHydrationReadingVaries: "NuTuenSai 读取到这段时间的饮水有起伏，适合和 load、sleep、activity 一起看，而不是用单日数字判断。",
-    fieldReviewHydrationReadingSteady: "NuTuenSai 读取到这段时间有可见的饮水基础，同时每一天仍需要放回自己的背景里看。",
-    fieldReviewHydrationNextLowLoad: "下次可以轻轻留意 load 高但水较低的日子，把它看作照顾信号，不是错误。",
-    fieldReviewHydrationNextDefault: "下次可以留意特别低或高的饮水日旁边，有什么 sleep、load 或 activity 背景。",
+    fieldReviewHydrationReadingBelow: "平均饮水量低于按当天背景计算的参考区间。",
+    fieldReviewHydrationReadingNearLower: "平均饮水量接近按当天背景计算的参考区间下缘。",
+    fieldReviewHydrationReadingInRange: "平均饮水量位于按当天背景计算的参考区间内。",
+    fieldReviewHydrationReadingAbove: "平均饮水量高于按当天背景计算的参考区间。",
+    fieldReviewHydrationReadingCount: "{inRange}/{recorded} 个记录日在这个区间内。",
+    fieldReviewHydrationNextLowLoad: "下次可以把低于参考区间的日子和 load、sleep、activity 一起看。",
+    fieldReviewHydrationNextDefault: "下次可以把低于或高于参考区间的日子和 load、sleep、activity 一起看，不需要期待每天喝到相同数字。",
     fieldReviewSleepReadingSignal: "NuTuenSai 把这些读作 sleep/recovery 信号，尤其在低能量或高 load 附近，需要温柔地留出空间。",
     fieldReviewSleepReadingLight: "从已保存的数据来看，NuTuenSai 没有读到很重的 sleep/recovery pattern。",
     fieldReviewSleepNextSignal: "下次可以轻轻留意 sleep/recovery 较低的日子旁边，有什么 load、咖啡因或 Mind Note 背景。",
@@ -10834,11 +10837,31 @@ function hasLowSleepRecoverySignal(row) {
   return rowHasLowSleepSignal(row) || (sleepHours !== "" && sleepHours < 6);
 }
 
+function getHydrationReferenceForLogRow(row = {}) {
+  return getHydrationTierFromActivity({
+    activities: splitLogValues(row.Activities),
+    loadScore: Number(row.Load_Score) || 0,
+    energy: isLowEnergyValue(row.Energy) ? "ต่ำ" : row.Energy,
+    mind: row.Mind,
+    sleepLow: hasLowSleepRecoverySignal(row)
+  });
+}
+
 function getFieldReviewStats(rows = [], totalRows = rows.length) {
   const selectedRows = rows.map(normalizeLogRow);
-  const waterValues = selectedRows
-    .map((row) => Number(row.Water_ml) || 0)
-    .filter((value) => value > 0);
+  const hydrationDays = selectedRows
+    .map((row) => ({
+      row,
+      water: Number(row.Water_ml) || 0,
+      reference: getHydrationReferenceForLogRow(row)
+    }))
+    .filter((day) => day.water > 0);
+  const waterValues = hydrationDays.map((day) => day.water);
+  const hydrationDaysInRange = hydrationDays.filter((day) => (
+    day.water >= day.reference.rangeMin && day.water <= day.reference.rangeMax
+  ));
+  const hydrationDaysBelowRange = hydrationDays.filter((day) => day.water < day.reference.rangeMin);
+  const hydrationDaysAboveRange = hydrationDays.filter((day) => day.water > day.reference.rangeMax);
   const highLoadRows = selectedRows.filter(isHighLoadRow);
   const lowSleepRows = selectedRows.filter(hasLowSleepRecoverySignal);
   const lowEnergyRows = selectedRows.filter((row) => isLowEnergyValue(row.Energy));
@@ -10852,17 +10875,23 @@ function getFieldReviewStats(rows = [], totalRows = rows.length) {
     averageWater: waterValues.length
       ? Math.round(waterValues.reduce((sum, value) => sum + value, 0) / waterValues.length)
       : 0,
+    averageHydrationRangeMin: hydrationDays.length
+      ? Math.round(hydrationDays.reduce((sum, day) => sum + day.reference.rangeMin, 0) / hydrationDays.length)
+      : 0,
+    averageHydrationRangeMax: hydrationDays.length
+      ? Math.round(hydrationDays.reduce((sum, day) => sum + day.reference.rangeMax, 0) / hydrationDays.length)
+      : 0,
     minWater: waterValues.length ? Math.min(...waterValues) : 0,
     maxWater: waterValues.length ? Math.max(...waterValues) : 0,
-    lowWaterDays: waterValues.filter((value) => value < 1500).length,
-    highWaterDays: waterValues.filter((value) => value > 3000).length,
+    hydrationDaysInRange,
+    hydrationDaysBelowRange,
+    hydrationDaysAboveRange,
     lowSleepRows,
     lowEnergyRows,
     highLoadRows,
-    highLoadLowWaterRows: highLoadRows.filter((row) => {
-      const water = Number(row.Water_ml) || 0;
-      return water > 0 && water < 1500;
-    }),
+    highLoadLowWaterRows: hydrationDaysBelowRange
+      .filter((day) => isHighLoadRow(day.row))
+      .map((day) => day.row),
     highLoadLowSleepRows: highLoadRows.filter(hasLowSleepRecoverySignal),
     highLoadLowEnergyRows: highLoadRows.filter((row) => isLowEnergyValue(row.Energy)),
     caffeineDays: selectedRows.filter((row) => Number(row.Caffeine_Score) > 0).length,
@@ -10886,14 +10915,33 @@ function getFieldReviewWindowVoice(timeframe = "7") {
   return t("fieldReviewWindowVoice7");
 }
 
+function getHydrationAdequacyReadingKey(stats) {
+  if (!stats.waterValues.length) return "fieldReviewHydrationReadingEmpty";
+  const nearLowerMargin = Math.max(250, Math.round(stats.averageHydrationRangeMin * 0.1));
+  if (stats.averageWater < stats.averageHydrationRangeMin - nearLowerMargin) {
+    return "fieldReviewHydrationReadingBelow";
+  }
+  if (stats.averageWater < stats.averageHydrationRangeMin) {
+    return "fieldReviewHydrationReadingNearLower";
+  }
+  if (stats.averageWater <= stats.averageHydrationRangeMax) {
+    return "fieldReviewHydrationReadingInRange";
+  }
+  return "fieldReviewHydrationReadingAbove";
+}
+
 function buildNuTuenSaiCardReading(cardType, stats, timeframe = "7") {
+  if (cardType === "hydration") {
+    const hydrationKey = getHydrationAdequacyReadingKey(stats);
+    if (!stats.waterValues.length) return t(hydrationKey);
+    return `${t(hydrationKey)} ${t("fieldReviewHydrationReadingCount", {
+      inRange: formatReviewNumber(stats.hydrationDaysInRange.length),
+      recorded: formatReviewNumber(stats.waterValues.length)
+    })}`;
+  }
+
   const windowVoice = getFieldReviewWindowVoice(timeframe);
   const keyByType = {
-    hydration: stats.waterValues.length === 0
-      ? "fieldReviewHydrationReadingEmpty"
-      : stats.maxWater - stats.minWater > 1200
-        ? "fieldReviewHydrationReadingVaries"
-        : "fieldReviewHydrationReadingSteady",
     sleep: stats.lowSleepRows.length > 0 || stats.lowEnergyRows.length > 0
       ? "fieldReviewSleepReadingSignal"
       : "fieldReviewSleepReadingLight",
@@ -11100,19 +11148,27 @@ function buildHydrationReviewCard(rows = [], timeframe = "7") {
       average: formatReviewNumber(stats.averageWater),
       min: formatReviewNumber(stats.minWater),
       max: formatReviewNumber(stats.maxWater),
-      low: formatReviewNumber(stats.lowWaterDays),
-      high: formatReviewNumber(stats.highWaterDays)
+      inRange: formatReviewNumber(stats.hydrationDaysInRange.length),
+      recorded: formatReviewNumber(stats.waterValues.length),
+      below: formatReviewNumber(stats.hydrationDaysBelowRange.length),
+      above: formatReviewNumber(stats.hydrationDaysAboveRange.length)
     })
     : t("fieldReviewRowsEvidence", { count: formatReviewNumber(rows.length) });
 
-  return createFieldReviewCard(
+  const reading = buildNuTuenSaiCardReading("hydration", stats, timeframe);
+  const nextAttention = buildNuTuenSaiNextAttention("hydration", stats);
+  const card = createFieldReviewCard(
     "fieldReviewHydrationTitle",
     evidence,
-    buildNuTuenSaiCardReading("hydration", stats, timeframe),
-    buildNuTuenSaiNextAttention("hydration", stats),
+    reading,
+    nextAttention,
     "💧",
     "hydration"
   );
+  card.allReading = hasWater
+    ? `${t(getHydrationAdequacyReadingKey(stats))} ${evidence} · ${nextAttention}`
+    : [reading, evidence, nextAttention].filter(Boolean).join(" · ");
+  return card;
 }
 
 function buildSleepRecoveryReviewCard(rows = [], timeframe = "7") {
@@ -12088,7 +12144,8 @@ function getGuidedReadingCardByChoice(activeCard, choiceType) {
     },
     all: {
       title: t("fieldRoomFocusAll"),
-      text: [activeCard.evidence, activeCard.reading, activeCard.nextAttention].filter(Boolean).join(" ")
+      text: activeCard.allReading
+        || [activeCard.evidence, activeCard.reading, activeCard.nextAttention].filter(Boolean).join(" ")
     }
   };
   return cardsByChoice[choice] || cardsByChoice.overview;
