@@ -344,7 +344,7 @@ Use it lightly:
 - Keep it short if that feels right
 - Use it to notice patterns between mind state, hydration, load, recovery, and sleep
 
-MHB 2.1 changed only Mind Note wording, grouping, and visual breathing room. MHB 2.2 adds runtime-only awareness of time between saved `Daily_Log` dates. Existing values remain compatible, and Excel, current Reflection output, Field Review, and Signal Engine contracts are unchanged.
+MHB 2.1 changed only Mind Note wording, grouping, and visual breathing room. MHB 2.2 adds runtime-only awareness of time between saved `Daily_Log` dates and uses it only to shape the Reflection opening. Existing values remain compatible, and Excel, Reflection interpretation, Field Review, and Signal Engine contracts are unchanged.
 
 ## 16. Reflection Generator
 
@@ -356,6 +356,8 @@ The reflection includes:
 - One gentle adjustment
 - A short Tomorrow Focus
 - A compact Mind Note line when available
+
+The opening gently distinguishes a first record, a return from yesterday, or a return after some time without a saved entry. It mentions this at most once, then returns attention to what is recorded today. Time without a saved entry is not failure, does not require backfilling, and does not change facts or the selected Reflection Root.
 
 The preview intentionally shows a synthesis instead of every detected field. This keeps it distinct from the NuTuenSai note strip above it and avoids a raw data dump. Details such as Recovery Note, Hydration Note, NuTuenSai Reminder, Mind Note, and Tomorrow Focus still remain in Daily Log / Reflections / Excel.
 

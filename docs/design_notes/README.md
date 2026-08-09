@@ -37,6 +37,7 @@ Today and Reflection page hierarchy, preview synthesis, NuTuenSai note strip, ze
 - [LLI_CONTINUITY_REFLECTION_LAYER_V1_9_5.md](LLI_CONTINUITY_REFLECTION_LAYER_V1_9_5.md) - Defines the v1.9.5 Previous Log Context / LLI continuity layer for reading the latest 1-3 prior logs as supportive context.
 - [INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md](INPUT_GROUNDED_REFLECTION_COMPOSER_V1_9_8.md) - Defines the v1.9.8 rule-based composer, NuTuenSai voice cadence, low-data micro-continuity, and anti-repetition layer.
 - [DAILY_LOG_GAP_AWARENESS.md](DAILY_LOG_GAP_AWARENESS.md) - Defines MHB 2.2 runtime-only awareness of time between saved Daily_Log dates without streaks, rewards, penalties, or schema changes.
+- [REFLECTION_RHYTHM_PASS.md](REFLECTION_RHYTHM_PASS.md) - Defines the MHB 2.2B five-state Reflection opening cadence, with one-time return acknowledgment and no change to interpretation.
 - [REFLECTION_BREATHING_MARKERS_V1_9_8B.md](REFLECTION_BREATHING_MARKERS_V1_9_8B.md) - Defines the v1.9.8b soft emoji breathing markers for reflection readability without section headings.
 - [REFLECTION_SENTENCE_SMOOTHING_V1_9_8C.md](REFLECTION_SENTENCE_SMOOTHING_V1_9_8C.md) - Defines the v1.9.8c connector hygiene layer that splits rich anchor context into more natural sentences.
 - [ROOT_BASED_REFLECTION_WEIGHTING.md](ROOT_BASED_REFLECTION_WEIGHTING.md) - Defines the future Root-Based Reflection Composer / NuTuenSai Attention Weighting Layer without runtime changes.

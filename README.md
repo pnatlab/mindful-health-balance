@@ -40,7 +40,7 @@ The fact that it is not SaaS is intentional. Its value is in the design of a use
 
 Latest refinements include:
 
-- runtime-only awareness of the time since the latest earlier `Daily_Log` date, derived without schema changes, saved counters, streaks, rewards, or penalties
+- runtime-only awareness of the time since the latest earlier `Daily_Log` date, used once in the Reflection opening without schema changes, saved counters, streaks, rewards, or penalties
 - Gentle Mind Note with an Observe → Keep → Release writing invitation, balanced feeling groups, and softer support/practice wording without changing stored columns or historical compatibility
 - Mindful Practice Context before Mind Note using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma
 - five main views: Today, Reflection/NuTuenSai, Field Review / ประมวลข้อมูล, Log, and Intention Profile
@@ -293,7 +293,7 @@ Thai documentation, field notes, and original design context remain available in
 
 ## Version History / Design Trace
 
-- **MHB 2.2 — Current release / Daily Log Gap Awareness**: derives the latest earlier log date and the time between saved dates at runtime, without adding schema fields, persistence, streaks, rewards, or penalties. The result is exposed for bounded welcome/Reflection wording in later patches; current Reflection output is unchanged.
+- **MHB 2.2 — Current release / Daily Log Gap Awareness**: derives the latest earlier log date and the time between saved dates at runtime, then uses a five-state rhythm only to shape one gentle Reflection opening. It does not add schema fields, persistence, streaks, rewards, penalties, or new interpretation.
 - **MHB 2.1 — Gentle Mind Note**: refreshed Mind Note around Observe → Keep → Release, balanced feeling groups, and gentler support/practice wording without changing schema, export/import, Reflection, or historical data compatibility.
 - **MHB 2.0 — Locked foundation**: Field Review, Guided Field Rooms, Signal Engine, User Intention Profile, Excel profile bridge, and profile-aware Today welcome remain the release baseline under MHB 2.2.
 - **MHB 2.0 design trace**: Earlier internal slices such as Field Review Slice A, Field Review UI v2/v2.1/v2.2/v2.3, Guided Reading, and User Intention Profile U0-U4 are historical implementation steps inside the MHB 2.0 release, not separate current versions.

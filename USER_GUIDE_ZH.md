@@ -296,7 +296,7 @@ Mind Note 之前的邀请“今天，心可以轻轻安住在哪里？”用于�
 - 一句话就够了，也可以留空
 - 用它观察心境与 hydration、recovery、load、sleep 之间的节律，而不是评价人格
 
-MHB 2.1 只改变了 Mind Note 的措辞、分组与视觉呼吸空间。MHB 2.2 仅在运行时感知 `Daily_Log` 已保存日期之间的时间。既有值仍兼容；Excel、当前 Reflection 输出、Field Review 与 Signal Engine contract 不变。
+MHB 2.1 只改变了 Mind Note 的措辞、分组与视觉呼吸空间。MHB 2.2 在运行时感知 `Daily_Log` 已保存日期之间的时间，并只用它调整 Reflection 的开场节奏。既有值仍兼容；Excel、Reflection 的解释、Field Review 与 Signal Engine contract 不变。
 
 ### Reflection Generator
 
@@ -306,6 +306,8 @@ MHB 2.1 只改变了 Mind Note 的措辞、分组与视觉呼吸空间。MHB 2.2
 - 一个可轻轻调整的方向
 - 简短 Tomorrow Focus
 - 有数据时的 compact Mind Note
+
+开场会温和区分第一次记录、接着昨天继续，或在一段没有保存记录的时间后再次回来。它默认只提到一次，然后把注意力放回今天记录的内容。没有保存记录的日子不是失败，不需要补写，也不会改变事实或用户选择的 Reflection Root。
 
 Preview 是 synthesis，不会列出系统检查到的所有字段，以免与上方 NuTuenSai note 重复或变成 raw data dump。Recovery Note、Hydration Note、NuTuenSai Reminder、Mind Note 与 Tomorrow Focus 仍会保存在 Daily Log / Reflections / Excel。
 

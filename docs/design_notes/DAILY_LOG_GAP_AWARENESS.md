@@ -2,11 +2,11 @@
 
 ## Status
 
-Implemented as MHB 2.2A. Runtime-derived only; no schema, workbook, or persistence change.
+Implemented across MHB 2.2A and MHB 2.2B. Runtime-derived only; no schema, workbook, or persistence change.
 
 ## Purpose
 
-Daily Log Gap Awareness lets MHB notice the time between the current date and the latest earlier saved `Daily_Log.Date`. It exists so later Today or Reflection wording can welcome a returning user at an appropriate pace.
+Daily Log Gap Awareness lets MHB notice the time between the current date and the latest earlier saved `Daily_Log.Date`. Reflection may use that result to welcome a returning user at an appropriate pace.
 
 The gap is time context only. It is not evidence about motivation, discipline, health, or the meaning of time away from the app.
 
@@ -20,7 +20,7 @@ The gap is time context only. It is not evidence about motivation, discipline, h
 - calendar days between that date and today
 - whether at least one calendar day sits between the two saved dates
 
-The result is exposed in the Reflection signal context for bounded future wording. MHB 2.2A does not change the current Reflection text.
+The result is exposed in the Reflection signal context. MHB 2.2B maps it to a deterministic rhythm state and uses it once in the Reflection opening; the remaining Reflection logic is unchanged.
 
 ## Boundaries
 
@@ -41,6 +41,6 @@ For a current date of `2026-08-09` and latest earlier log date of `2026-08-06`:
 
 This does not imply that the user should have logged on the two dates in between.
 
-## Future Use
+## Reflection Use
 
-A later bounded patch may use this context for gentle welcome or Reflection framing such as "Welcome back" or "Start with what is true today." Any future wording must remain optional in tone, source-bound, and free from guilt.
+Reflection may say "Welcome back" or "Start with what is true today" once before returning attention to today's recorded data. This changes cadence only. It does not change root selection, facts, evidence, interpretation, or the meaning of missing dates.

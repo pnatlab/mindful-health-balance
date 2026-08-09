@@ -428,6 +428,11 @@ const translations = {
     reflectionEmptyTitle: "ยังไม่มี Reflection",
     reflectionEmptyText: "กดสรุปวันนี้ เพื่อค่อย ๆ อ่านสิ่งที่บันทึกไว้",
     reflectionGenerating: "กำลังค่อย ๆ อ่านวันนี้…",
+    reflectionRhythmFirstRecord: "สวัสดีค่ะ{address} วันนี้เราค่อย ๆ เริ่มอ่านจากสิ่งที่บันทึกไว้วันนี้ก่อนนะคะ",
+    reflectionRhythmContinuous: "สวัสดีค่ะ{address} วันนี้เรากลับมาอ่านต่อจากเมื่อวานได้เลยค่ะ",
+    reflectionRhythmShortReturn: "กลับมาแล้วนะคะ{address} 🩵 ครั้งล่าสุดที่บันทึกไว้คือ {days} วันก่อนค่ะ วันนี้ค่อย ๆ เริ่มจากสิ่งที่มีอยู่ตอนนี้ได้เลย",
+    reflectionRhythmReturning: "กลับมาแล้วนะคะ{address} มีช่วงว่างเล็ก ๆ จากบันทึกครั้งก่อน วันนี้หนูจะเริ่มจากสิ่งที่บันทึกไว้ตอนนี้ก่อนค่ะ",
+    reflectionRhythmLongReturn: "กลับมาเจอกันอีกครั้งนะคะ{address} 🩵 ครั้งล่าสุดที่มีบันทึกไว้ผ่านมาสักพักแล้ว วันนี้เราเริ่มจากวันนี้ก่อนก็พอค่ะ",
     reflectionStateLabel: "Reflection",
     reflectToday: "สรุปวันนี้",
     reflectAgain: "สรุปใหม่",
@@ -1424,6 +1429,11 @@ const translations = {
     reflectionEmptyTitle: "No reflection yet",
     reflectionEmptyText: "Reflect today to gently read what you recorded.",
     reflectionGenerating: "Gently reading today…",
+    reflectionRhythmFirstRecord: "Hello. We can begin gently with what you recorded today.",
+    reflectionRhythmContinuous: "Welcome back. We can continue from yesterday and begin with what is here today.",
+    reflectionRhythmShortReturn: "Welcome back 🩵 The last saved entry was {days} days ago. We can begin gently with what is here today.",
+    reflectionRhythmReturning: "Welcome back. There has been a little space since the last saved entry. We can begin with what is here today.",
+    reflectionRhythmLongReturn: "Welcome back 🩵 It has been a while since the last saved entry. Beginning with today is enough.",
     reflectionStateLabel: "Reflection",
     reflectToday: "Reflect",
     reflectAgain: "Reflect Again",
@@ -2420,6 +2430,11 @@ const translations = {
     reflectionEmptyTitle: "还没有回顾",
     reflectionEmptyText: "点击今日回顾，轻轻读一读今天记录的内容。",
     reflectionGenerating: "正在轻轻阅读今天…",
+    reflectionRhythmFirstRecord: "你好。今天可以先从现在记录的内容慢慢读起。",
+    reflectionRhythmContinuous: "欢迎回来。我们可以接着昨天，从今天记录的内容继续读。",
+    reflectionRhythmShortReturn: "欢迎回来 🩵 上一次保存记录是在 {days} 天前。今天可以从现在已有的内容慢慢读起。",
+    reflectionRhythmReturning: "欢迎回来。距离上一次记录有一小段空白，今天从现在已有的内容开始就好。",
+    reflectionRhythmLongReturn: "又见面了 🩵 距离上一次记录已经有一段时间。今天从今天开始就够了。",
     reflectionStateLabel: "回顾",
     reflectToday: "今日回顾",
     reflectAgain: "重新回顾",
@@ -3959,7 +3974,35 @@ function buildPersonalizedReflectionClosing(profile, { addressUsed = false } = {
   return closings[tone] || "";
 }
 
-function personalizeReflectionOutput(text, { root = selectedReflectionRoot } = {}) {
+function buildReflectionRhythmOpening(signals = {}) {
+  const gapContext = signals.dailyLogGap || {};
+  const rhythmState = getReflectionRhythmState(gapContext);
+  const keyByState = {
+    first_record: "reflectionRhythmFirstRecord",
+    continuous: "reflectionRhythmContinuous",
+    short_return: "reflectionRhythmShortReturn",
+    returning: "reflectionRhythmReturning",
+    long_return: "reflectionRhythmLongReturn"
+  };
+  const replacements = { days: gapContext.daysSinceLastLog ?? "" };
+  if (currentLanguage === "th") {
+    const addressContext = getReflectionAddressContext(getUserIntentionProfileForReflection());
+    const address = addressContext.hasDisplayName ? addressContext.fullAddress : "พี่";
+    replacements.address = addressContext.usesNeutralBody ? ` ${address}` : address;
+  }
+  return t(keyByState[rhythmState], replacements);
+}
+
+function applyReflectionRhythmOpening(text, signals = {}) {
+  const opening = buildReflectionRhythmOpening(signals);
+  let reflectionText = String(text || "").trim();
+  if (currentLanguage === "th") {
+    reflectionText = reflectionText.replace(/^สวัสดีค่ะ\s*/, "");
+  }
+  return [opening, reflectionText].filter(Boolean).join("\n\n");
+}
+
+function personalizeReflectionOutput(text, { root = selectedReflectionRoot, rhythmApplied = false } = {}) {
   const cleanText = String(text || "").trim();
   if (!cleanText || currentLanguage !== "th") return cleanText;
 
@@ -3977,8 +4020,8 @@ function personalizeReflectionOutput(text, { root = selectedReflectionRoot } = {
     blocks.splice(0, blocks.length, ...blocks.map((line) => applyReflectionAddressTokens(line, addressContext)));
   }
 
-  let addressUsed = false;
-  if (hasDisplayName) {
+  let addressUsed = rhythmApplied && hasDisplayName;
+  if (hasDisplayName && !rhythmApplied) {
     const rootKey = getSelectedReflectionRootKey(root);
     const addressPrefix = buildPersonalizedReflectionOpening(profile, { root });
     if (rootKey !== "auto" && addressPrefix && !blocks[0].startsWith(addressPrefix)) {
@@ -6984,6 +7027,16 @@ function getNormalizedDailyLogDayNumber(value) {
   return Math.floor(timestamp / 86400000);
 }
 
+function getReflectionRhythmState(gapContext = {}) {
+  if (!gapContext.hasPreviousLog) return "first_record";
+  const daysSinceLastLog = Number(gapContext.daysSinceLastLog);
+  if (daysSinceLastLog === 1) return "continuous";
+  if (daysSinceLastLog >= 2 && daysSinceLastLog <= 3) return "short_return";
+  if (daysSinceLastLog >= 4 && daysSinceLastLog <= 7) return "returning";
+  if (daysSinceLastLog > 7) return "long_return";
+  return "first_record";
+}
+
 function buildContinuitySignals(currentSignals, previousRows = []) {
   const rows = (previousRows || []).map(normalizeLogRow).filter((row) => row.Date);
   if (!rows.length) {
@@ -8381,20 +8434,28 @@ function getReflectionGenerationDelay() {
 
 function buildReflection() {
   const signals = buildSignals();
-  return sanitizeReflectionOutputText(personalizeReflectionOutput(composeRootAwareReflection(
+  const reflection = composeRootAwareReflection(
     buildReflectionFromSignals(signals),
     selectedReflectionRoot,
     signals
-  ), { root: selectedReflectionRoot }));
+  );
+  return sanitizeReflectionOutputText(personalizeReflectionOutput(
+    applyReflectionRhythmOpening(reflection, signals),
+    { root: selectedReflectionRoot, rhythmApplied: true }
+  ));
 }
 
 function buildReflectionDisplay() {
   const signals = buildSignals();
-  return sanitizeReflectionOutputText(personalizeReflectionOutput(composeRootAwareReflection(
+  const reflection = composeRootAwareReflection(
     buildReflectionDisplayFromSignals(signals),
     selectedReflectionRoot,
     signals
-  ), { root: selectedReflectionRoot }));
+  );
+  return sanitizeReflectionOutputText(personalizeReflectionOutput(
+    applyReflectionRhythmOpening(reflection, signals),
+    { root: selectedReflectionRoot, rhythmApplied: true }
+  ));
 }
 
 function buildReflectionDisplayFromSignals(signals) {
