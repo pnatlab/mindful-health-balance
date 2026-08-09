@@ -100,17 +100,17 @@ const translations = {
     cockpitBalanceReadable: "วันนี้พออ่าน pattern ได้",
     cockpitBalanceReady: "พร้อมพาไป Reflection",
     reflectionViewTitle: "Reflection",
-    reflectionViewHelper: "ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม",
-    reflectionGeneratorHelper: "กดสรุปวันนี้เพื่อให้ระบบสะท้อน pattern จากข้อมูลวันนี้ และยังแก้ไขเล็กน้อยก่อนบันทึกได้",
+    reflectionViewHelper: "ค่อย ๆ อ่านสิ่งที่บันทึกไว้วันนี้ แล้วบันทึกลง Daily Log เมื่อพร้อม",
+    reflectionGeneratorHelper: "กดสรุปวันนี้เพื่อเรียบเรียงสิ่งที่บันทึกไว้ และยังแก้ไขเล็กน้อยก่อนบันทึกได้",
     reflectionActionsKicker: "Ready to save",
-    reflectionRootPickerKicker: "Reflection Root",
-    reflectionRootPickerTitle: "วันนี้อยากให้หนูอ่านผ่านแกนไหนเป็นหลักนะคะ",
-    reflectionRootPickerHelper: "เลือกแกนสังเกตเบา ๆ ให้ NuTuenSai ใช้เป็นจุดตั้งต้นของ Reflection รอบนี้ ข้อมูลอื่นจะยังเป็นเพียงบริบทประกอบค่ะ",
-    reflectionRootSelectedLabel: "แกนที่เลือก: {root}",
+    reflectionRootPickerKicker: "มุมอ่านวันนี้",
+    reflectionRootPickerTitle: "วันนี้อยากให้หนูเริ่มอ่านจากเรื่องไหนคะ",
+    reflectionRootPickerHelper: "เลือกเรื่องที่อยากให้หนูเริ่มก่อน ส่วนสิ่งอื่นที่บันทึกไว้จะค่อย ๆ วางอยู่ข้างกันค่ะ",
+    reflectionRootSelectedLabel: "เริ่มอ่านจาก: {root}",
     reflectionRootBoundaryDefault: "ยังไม่ใช่ข้อสรุป และไม่ใช่คำแนะนำทางการแพทย์นะคะ เป็นเพียงจุดตั้งต้นของการสังเกต",
-    reflectionRootBoundaryMind: "บริบทใจยังเป็นความหมายที่พี่เป็นเจ้าของเอง หนูจะช่วยสะท้อน ไม่สรุปแทนค่ะ",
-    reflectionRootBoundaryPractice: "การภาวนาเป็นบริบทของการดูแลใจ ไม่ใช่คะแนนหรือการวัดความสำเร็จค่ะ",
-    reflectionRootBoundaryDrinks: "อ่านเป็นบริบทของวัน ไม่ใช่การตัดสินอาหาร เครื่องดื่ม หรือสุขภาพค่ะ",
+    reflectionRootBoundaryMind: "สิ่งที่พี่บันทึกเกี่ยวกับใจยังมีความหมายตามที่พี่ให้ไว้ หนูจะช่วยสะท้อน ไม่สรุปแทนค่ะ",
+    reflectionRootBoundaryPractice: "การภาวนาเป็นส่วนหนึ่งของการดูแลใจ ไม่ใช่คะแนนหรือการวัดความสำเร็จค่ะ",
+    reflectionRootBoundaryDrinks: "หนูจะอ่านเครื่องดื่มเป็นส่วนหนึ่งของวันนี้ ไม่ตัดสินอาหาร เครื่องดื่ม หรือสุขภาพค่ะ",
     reflectionRootOptionAuto: "Auto",
     reflectionRootOptionHydration: "น้ำ",
     reflectionRootOptionSleep: "การพัก",
@@ -118,26 +118,26 @@ const translations = {
     reflectionRootOptionDrinks: "เครื่องดื่ม",
     reflectionRootOptionMind: "ใจ",
     reflectionRootOptionPractice: "การภาวนา",
-    reflectionRootPreviewAuto: "ให้หนูวางแกนแบบเบา ๆ จากข้อมูลที่พี่บันทึกไว้ โดยยังไม่สรุปแทนพี่นะคะ",
-    reflectionRootPreviewHydration: "รอบนี้หนูจะอ่านผ่านแกน ‘น้ำ’ เป็นหลัก แล้วใช้กิจกรรม เครื่องดื่ม และบริบทของวันเป็นฉากประกอบค่ะ",
-    reflectionRootPreviewSleep: "รอบนี้หนูจะอ่านผ่านแกน ‘การพัก/การนอน’ เป็นหลัก แล้วอ่านคาเฟอีน โหลดของวัน และพลังงานเป็นบริบทประกอบค่ะ",
-    reflectionRootPreviewLoad: "รอบนี้หนูจะอ่านผ่านแกน ‘กิจกรรม/ภาระของวัน’ เป็นหลัก แล้วดูว่าน้ำ การพัก และพลังงานอยู่รอบ ๆ จังหวะนั้นอย่างไรค่ะ",
-    reflectionRootPreviewDrinks: "รอบนี้หนูจะอ่านผ่านแกน ‘เครื่องดื่ม/คาเฟอีน/ความหวาน’ เป็นหลัก โดยไม่ตัดสินเครื่องดื่ม สุขภาพ หรือทางเลือกของพี่ค่ะ",
-    reflectionRootPreviewMind: "รอบนี้หนูจะให้พื้นที่กับ ‘บริบทใจ’ ที่พี่บันทึกไว้เป็นหลัก โดยไม่สรุปใจแทนพี่ค่ะ",
-    reflectionRootPreviewPractice: "รอบนี้หนูจะอ่าน ‘การภาวนา/การดูแลใจ’ เป็นบริบทของวัน ไม่ใช่คะแนน ไม่ใช่ถูกหรือผิดค่ะ",
-    reflectionRootOpeningHydration: "รอบนี้หนูขออ่านผ่านแกน ‘น้ำ’ เป็นหลักนะคะ",
-    reflectionRootOpeningSleep: "รอบนี้หนูขออ่านผ่านแกน ‘การพัก/การนอน’ เป็นหลักนะคะ",
-    reflectionRootOpeningLoad: "รอบนี้หนูขออ่านผ่านแกน ‘กิจกรรม/ภาระของวัน’ เป็นหลักนะคะ",
-    reflectionRootOpeningDrinks: "รอบนี้หนูขออ่านผ่านแกน ‘เครื่องดื่ม/คาเฟอีน/ความหวาน’ เป็นหลักนะคะ",
-    reflectionRootOpeningMind: "รอบนี้หนูขอให้พื้นที่กับ ‘บริบทใจ’ ที่พี่บันทึกไว้เป็นหลักนะคะ",
-    reflectionRootOpeningPractice: "รอบนี้หนูขออ่าน ‘การภาวนา/การดูแลใจ’ เป็นบริบทหลักของวันนะคะ",
-    reflectionRootHintHydration: "ปริมาณน้ำที่พี่บันทึกไว้เป็นจุดตั้งต้นของรอบนี้ ส่วนกิจกรรม เครื่องดื่ม และบริบทของวันจะถูกอ่านเป็นฉากประกอบค่ะ",
-    reflectionRootHintSleep: "ชั่วโมงนอนและสัญญาณการพักเป็นจุดตั้งต้น ส่วนคาเฟอีน load ของวัน และพลังงานจะถูกอ่านเป็นบริบทประกอบค่ะ",
+    reflectionRootPreviewAuto: "ให้หนูเริ่มจากสิ่งที่เห็นชัดในข้อมูลวันนี้ โดยยังไม่สรุปความหมายแทนพี่นะคะ",
+    reflectionRootPreviewHydration: "รอบนี้หนูจะเริ่มจากน้ำ แล้วค่อยดูว่ากิจกรรมและเครื่องดื่มอยู่ข้าง ๆ วันนี้อย่างไรค่ะ",
+    reflectionRootPreviewSleep: "รอบนี้หนูจะเริ่มจากการพักและการนอน แล้วค่อยวางคาเฟอีน ภาระของวัน และพลังงานไว้ข้างกันค่ะ",
+    reflectionRootPreviewLoad: "รอบนี้หนูจะเริ่มจากกิจกรรมและแรงที่ใช้ไป แล้วค่อยดูน้ำ การพัก และพลังงานของวันนี้ค่ะ",
+    reflectionRootPreviewDrinks: "รอบนี้หนูจะเริ่มจากเครื่องดื่ม คาเฟอีน และความหวาน โดยไม่ตัดสินเครื่องดื่ม สุขภาพ หรือทางเลือกของพี่ค่ะ",
+    reflectionRootPreviewMind: "รอบนี้หนูจะให้พื้นที่กับสิ่งที่พี่บันทึกเกี่ยวกับใจ โดยไม่สรุปใจแทนพี่ค่ะ",
+    reflectionRootPreviewPractice: "รอบนี้หนูจะเริ่มจากการภาวนาและการดูแลใจ โดยไม่อ่านเป็นคะแนนหรือถูกผิดค่ะ",
+    reflectionRootOpeningHydration: "รอบนี้หนูขอเริ่มอ่านจากเรื่องน้ำนะคะ",
+    reflectionRootOpeningSleep: "รอบนี้หนูขอเริ่มอ่านจากการพักและการนอนนะคะ",
+    reflectionRootOpeningLoad: "รอบนี้หนูขอเริ่มอ่านจากกิจกรรมและแรงที่ใช้ไปนะคะ",
+    reflectionRootOpeningDrinks: "รอบนี้หนูขอเริ่มอ่านจากเครื่องดื่ม คาเฟอีน และความหวานนะคะ",
+    reflectionRootOpeningMind: "รอบนี้หนูขอเริ่มจากสิ่งที่พี่บันทึกเกี่ยวกับใจนะคะ",
+    reflectionRootOpeningPractice: "รอบนี้หนูขอเริ่มจากการภาวนาและการดูแลใจนะคะ",
+    reflectionRootHintHydration: "หนูจะเริ่มจากปริมาณน้ำที่บันทึกไว้ แล้วค่อยดูสิ่งที่เกิดขึ้นรอบ ๆ วันนั้นค่ะ",
+    reflectionRootHintSleep: "หนูจะเริ่มจากชั่วโมงนอนและการพัก แล้วค่อยดูคาเฟอีน ภาระของวัน และพลังงานค่ะ",
     reflectionRootHintLoad: "กิจกรรม งาน หรือแรงใช้ของวันจะมาก่อน แล้วหนูค่อยดูว่าน้ำ การพัก และพลังงานอยู่รอบ ๆ จังหวะนั้นอย่างไรค่ะ",
-    reflectionRootHintDrinks: "เครื่องดื่ม คาเฟอีน และบริบทความหวานจะเป็นแกนหลักของรอบนี้ โดยอ่านร่วมกับการนอน load และพลังงานแบบไม่ตัดสินค่ะ",
-    reflectionRootHintMind: "Mind Note และบริบทใจที่พี่บันทึกไว้จะเป็นแกนหลัก หนูจะช่วยสะท้อนโดยไม่สรุปใจแทนพี่ค่ะ",
-    reflectionRootHintPractice: "เวลาภาวนาและบันทึกการดูแลใจจะถูกอ่านเป็นบริบทของวัน ไม่ใช่คะแนนหรือการวัดความสำเร็จค่ะ",
-    reflectionRootHintThin: "แกนนี้ยังมีข้อมูลไม่มากนัก หนูเลยจะอ่านแบบเบา ๆ และไม่สรุปเกินสิ่งที่พี่บันทึกไว้ค่ะ",
+    reflectionRootHintDrinks: "หนูจะเริ่มจากเครื่องดื่ม คาเฟอีน และความหวาน แล้วค่อยดูการนอน ภาระของวัน และพลังงานแบบไม่ตัดสินค่ะ",
+    reflectionRootHintMind: "หนูจะเริ่มจาก Mind Note และสิ่งที่พี่เลือกบันทึกเกี่ยวกับใจ โดยไม่สรุปความหมายแทนค่ะ",
+    reflectionRootHintPractice: "หนูจะเริ่มจากเวลาภาวนาและบันทึกการดูแลใจ โดยไม่อ่านเป็นคะแนนหรือความสำเร็จค่ะ",
+    reflectionRootHintThin: "เรื่องนี้ยังมีข้อมูลไม่มาก หนูจะอ่านเท่าที่บันทึกไว้และไม่รีบสรุปค่ะ",
     todayInputShortcutsAria: "Today input shortcuts",
     backToSignalCockpit: "กลับไปแผงสัญญาณ",
     backToTodayStepOne: "กลับ Today 1/2",
@@ -421,13 +421,13 @@ const translations = {
     runPaceBadge: "Pace เฉลี่ย {pace}",
     mindfulReminder: "Mindful Reminder",
     nuTuenSaiNote: "NuTuenSai note",
-    nuTuenSaiRole: "NuTuenSai เป็นชั้นสะท้อน pattern อย่างอ่อนโยน ไม่ใช่เครื่องมือวินิจฉัยหรือคำแนะนำแทนแพทย์",
-    nuTuenSaiEmptyReminder: "สวัสดีค่ะ วันนี้ยังไม่มีข้อมูลให้ระบบอ่านมากนัก ลองเติมสัญญาณวันนี้สักเล็กน้อยก่อน แล้วค่อยกลับมาทบทวนกันนะคะ",
+    nuTuenSaiRole: "NuTuenSai ช่วยค่อย ๆ อ่านสิ่งที่พี่บันทึกไว้ ไม่ใช่เครื่องมือวินิจฉัยหรือคำแนะนำแทนแพทย์",
+    nuTuenSaiEmptyReminder: "สวัสดีค่ะ วันนี้ยังมีข้อมูลไม่มาก ลองบันทึกสิ่งที่เกิดขึ้นจริงสักเล็กน้อย แล้วค่อยกลับมาอ่านวันนี้ด้วยกันนะคะ",
     reflectionGenerator: "Reflection Generator",
     endReflection: "End-of-Day Reflection",
     reflectionEmptyTitle: "ยังไม่มี Reflection",
-    reflectionEmptyText: "กดสรุปวันนี้ เพื่อให้ระบบฟัง pattern ของวันเบา ๆ",
-    reflectionGenerating: "กำลังฟัง pattern ของวันนี้…",
+    reflectionEmptyText: "กดสรุปวันนี้ เพื่อค่อย ๆ อ่านสิ่งที่บันทึกไว้",
+    reflectionGenerating: "กำลังค่อย ๆ อ่านวันนี้…",
     reflectionStateLabel: "Reflection",
     reflectToday: "สรุปวันนี้",
     reflectAgain: "สรุปใหม่",
@@ -531,75 +531,75 @@ const translations = {
       waterSeen: "เห็นภาพน้ำวันนี้แล้ว ({water} ml)",
       plainWaterBase: "มีน้ำเปล่าเป็นฐานของวัน",
       checkedState: "เช็ก state ตัวเองก่อนรีบสรุป",
-      openedPattern: "เริ่มเปิดพื้นที่ให้ตัวเองสังเกต pattern",
+      openedPattern: "เริ่มเปิดพื้นที่ให้ตัวเองสังเกตสิ่งที่เกิดขึ้น",
       reduceSweet: "ลดแก้วหวานถัดไปหนึ่งจุดก็พอ ไม่ต้องหักดิบ",
       addSips: "ค่อย ๆ เพิ่มการจิบน้ำระหว่างวัน โดยไม่ต้องอัดทีเดียว",
       stopPush: "หยุด push เพิ่ม แล้ววาง recovery เป็นงานหลัก",
       keepBalance: "รักษาจังหวะที่พอดี และไม่ต้องเพิ่มอะไรเกินจำเป็น",
-      closing1: "วันนี้ไม่ต้องแก้ทุกอย่าง แค่เห็น pattern ชัดขึ้นก็ถือว่าระบบทำงานแล้ว",
+      closing1: "วันนี้ไม่ต้องแก้ทุกอย่าง แค่เห็นสิ่งที่เกิดขึ้นชัดขึ้นก็พอแล้วค่ะ",
       closing2: "เป้าหมายไม่ใช่เลขดีเร็ว แต่คือระบบที่ไม่พังซ้ำเพราะการรีบแก้"
     },
     reflectionDisplay: {
-      overviewEnergyLayered: "วันนี้พลังงานกับเหตุที่เลือกเหมือนกำลังบอกคนละชั้นของระบบ ทั้งสองอย่างอยู่ร่วมกันได้ โดยไม่ต้องให้สัญญาณหนึ่งลบอีกสัญญาณ",
+      overviewEnergyLayered: "วันนี้ระดับพลังงานกับเหตุที่พี่เลือกอาจกำลังบอกคนละด้านของวัน ทั้งสองอย่างอยู่ด้วยกันได้โดยไม่ต้องหักล้างกันค่ะ",
       overviewRecoveryHydratedRest: "วันนี้ภาพรวมเหมือนเป็นวันที่ร่างกายต้องการ recovery มากกว่าการเพิ่มอะไรใหม่ น้ำพอเป็นฐานได้แล้ว และการเลือกพักก่อนถือว่าเข้ากับพลังงานของวัน",
       overviewRecoveryHydrated: "วันนี้เหมือนร่างกายต้องการจังหวะฟื้นตัวมากกว่าการเพิ่มอะไรใหม่ น้ำพอเป็นฐานได้แล้ว และไม่ต้องรีบสรุปตัวเองจากวันเดียว",
       overviewRecovery: "วันนี้เหมือนร่างกายขอจังหวะ recovery มากกว่าการเพิ่มอะไรใหม่ ค่อย ๆ วางน้ำ การพัก และใจให้กลับมาเป็นฐานเดียวกันก็พอ",
-      overviewActivityHydrated: "วันนี้มีการใช้พลังงานมากกว่าวันพัก น้ำพอเป็นฐานได้แล้ว และ recovery ควรเดินไปด้วยกันกับ load ของวัน",
-      overviewActivity: "วันนี้มีการใช้พลังงานมากกว่าวันพัก ถ้ามีเหงื่อหรือกิจกรรมต่อเนื่อง น้ำกับ recovery ค่อย ๆ เดินตามร่างกายให้ทันก็พอ",
-      overviewPositiveMindActivity: "วันนี้มีการใช้พลังงานอยู่ แต่ใจโดยรวมดูเป็นแรงหนุนได้เล็กน้อย ใช้จังหวะนี้แบบพอดีและยังให้ recovery เดินไปด้วยกัน",
-      overviewPositiveMindRecovery: "วันนี้ใจโดยรวมดูเป็นแรงหนุนได้ แต่ร่างกายยังอาจต้องการ recovery อยู่ ทั้งสองสัญญาณอยู่ร่วมกันได้โดยไม่ต้องรีบสรุปว่าวันนี้ดีทั้งหมด",
-      overviewPositiveMindSupport: "วันนี้ใจโดยรวมดูมีโทนที่ดีขึ้น เป็นสัญญาณสนับสนุนให้การดูแลตัวเองไม่ต้องมาจากแรงกดดันมากนัก",
-      overviewMindNoteFeelingGoodActivity: "บันทึกนี้มีโทนที่รู้สึกดีอยู่ ขณะเดียวกันวันนี้มีการใช้พลังงานจริง ให้โทนดีเป็นสัญญาณสนับสนุนเล็ก ๆ และยังให้ recovery เดินตาม",
-      overviewMindNoteFeelingGoodRecovery: "บันทึกนี้มีโทนที่รู้สึกดีอยู่ แต่ร่างกายยังอาจต้องการ recovery ทั้งสองสัญญาณอยู่ร่วมกันได้โดยไม่ต้องสรุปว่าวันนี้สมบูรณ์แบบ",
-      overviewMindNoteFeelingGoodSupport: "บันทึกนี้มีโทนที่รู้สึกดีอยู่ เป็นสัญญาณเล็ก ๆ ว่ามีบางส่วนที่ใจรับรู้ได้อย่างอ่อนโยน โดยไม่ต้องสรุปว่าวันนี้สมบูรณ์แบบ",
+      overviewActivityHydrated: "วันนี้ใช้พลังงานมากกว่าวันพัก น้ำพอเป็นฐานได้แล้ว และการพักควรค่อย ๆ ตามแรงที่ใช้ไปค่ะ",
+      overviewActivity: "วันนี้ใช้พลังงานมากกว่าวันพัก ถ้ามีเหงื่อหรือกิจกรรมต่อเนื่อง ค่อย ๆ ให้น้ำและการพักตามร่างกายให้ทันก็พอค่ะ",
+      overviewPositiveMindActivity: "วันนี้มีการใช้พลังงานอยู่ ขณะเดียวกันใจก็พอเป็นแรงหนุนได้ ใช้แรงนี้อย่างพอดีและเว้นที่ให้การพักด้วยนะคะ",
+      overviewPositiveMindRecovery: "วันนี้ใจพอเป็นแรงหนุนได้ แต่ร่างกายยังอาจอยากพัก ทั้งสองอย่างอยู่ด้วยกันได้โดยไม่ต้องรีบสรุปว่าวันนี้ดีทั้งหมดค่ะ",
+      overviewPositiveMindSupport: "วันนี้ใจโดยรวมดูเบาขึ้นเล็กน้อย จึงดูแลตัวเองต่อได้โดยไม่ต้องอาศัยแรงกดดันมากนักค่ะ",
+      overviewMindNoteFeelingGoodActivity: "บันทึกนี้มีความรู้สึกดีอยู่ ขณะเดียวกันวันนี้ก็ใช้พลังงานจริง เก็บความรู้สึกนั้นไว้เป็นแรงหนุนเล็ก ๆ และเว้นที่ให้การพักด้วยค่ะ",
+      overviewMindNoteFeelingGoodRecovery: "บันทึกนี้มีความรู้สึกดีอยู่ แต่ร่างกายยังอาจอยากพัก ทั้งสองอย่างอยู่ด้วยกันได้โดยไม่ต้องทำให้วันนี้สมบูรณ์แบบค่ะ",
+      overviewMindNoteFeelingGoodSupport: "บันทึกนี้มีความรู้สึกดีอยู่ เก็บไว้เป็นสิ่งเล็ก ๆ ที่ใจรับรู้ได้ โดยไม่ต้องสรุปว่าวันนี้สมบูรณ์แบบค่ะ",
       overviewCaffeine: "วันนี้คาเฟอีนอาจช่วยให้ตื่นหรือพยุงจังหวะของวันได้ แค่ให้น้ำเปล่ากลับมาเป็นฐานโดยไม่ต้องดุกาแฟก็พอ",
       overviewSteadyHydration: "วันนี้น้ำพอเป็นฐานของวันแล้ว ภาพรวมจึงเหมาะกับการรักษาความสม่ำเสมอมากกว่าการเติมอะไรเกินจำเป็น",
-      overviewBase: "วันนี้เป็นวันที่เหมาะกับการสังเกต pattern แบบเบา ๆ น้ำ การพัก และใจยังค่อย ๆ กลับมาอยู่ในจังหวะที่พอดีได้",
+      overviewBase: "จากสิ่งที่พี่บันทึกไว้ วันนี้ยังค่อย ๆ ดูน้ำ การพัก และใจไปทีละอย่างได้ โดยไม่ต้องรีบสรุปค่ะ",
       adjustRecovery: "ถ้าจะปรับเล็ก ๆ วันนี้ แค่ให้การพักกับน้ำเดินไปด้วยกัน โดยไม่ต้องรีบแก้ทุกอย่างในวันเดียวก็พอ",
-      adjustActivity: "ถ้าจะปรับเล็ก ๆ วันนี้ ให้มองน้ำเป็นส่วนหนึ่งของ recovery หลัง load ไม่ใช่ตัวเลขที่ต้องรีบทำให้ครบ",
+      adjustActivity: "ถ้าจะปรับเล็ก ๆ วันนี้ ให้น้ำเป็นส่วนหนึ่งของการพักหลังใช้แรง ไม่ใช่ตัวเลขที่ต้องรีบทำให้ครบค่ะ",
       adjustCaffeine: "ถ้าจะปรับเล็ก ๆ วันนี้ แค่คืนพื้นที่ให้น้ำเปล่าระหว่างคาเฟอีนกับการพักก็พอ",
       adjustWater: "ถ้าจะปรับเล็ก ๆ วันนี้ ลองวางจุดจิบน้ำให้กระจายขึ้น โดยไม่ต้องอัดทีเดียว",
       adjustSteady: "ถ้าจะปรับเล็ก ๆ วันนี้ คือรักษาจังหวะที่พอดีไว้ โดยไม่ต้องเพิ่มอะไรเกินจำเป็น",
-      adjustEnergyLayered: "ถ้าจะปรับเล็ก ๆ วันนี้ ลองฟังทั้งสัญญาณกายและใจคนละชั้น โดยไม่ต้องรีบตัดสินว่าวันนี้ดีหรือแย่",
-      tomorrowRecovery: "พรุ่งนี้ให้ recovery มาก่อน แล้วค่อยกลับมาดู pattern ต่อแบบไม่เร่งตัวเอง",
-      tomorrowActivity: "พรุ่งนี้ให้ recovery กับน้ำเดินไปด้วยกัน แล้วค่อยดูว่าร่างกายพร้อมเพิ่มอะไรไหม",
+      adjustEnergyLayered: "ถ้าจะปรับเล็ก ๆ วันนี้ ลองฟังกายกับใจแยกกันก่อน โดยไม่ต้องรีบตัดสินว่าวันนี้ดีหรือแย่ค่ะ",
+      tomorrowRecovery: "พรุ่งนี้ให้การพักมาก่อน แล้วค่อยดูวันต่อไปโดยไม่เร่งตัวเองค่ะ",
+      tomorrowActivity: "พรุ่งนี้ให้น้ำกับการพักเดินไปด้วยกัน แล้วค่อยดูว่าร่างกายพร้อมเพิ่มอะไรไหมค่ะ",
       tomorrowCaffeine: "พรุ่งนี้ลดคาเฟอีนลงหนึ่งจังหวะ แล้วให้น้ำเปล่ากลับมาเป็นฐาน",
-      tomorrowEnergyLayered: "พรุ่งนี้ดูสัญญาณกายกับใจแยกชั้นกัน แล้วค่อยเลือกจังหวะที่พอดี",
-      tomorrowPositiveMind: "พรุ่งนี้รักษาใจที่พออยู่ได้ แล้วกลับมาดู pattern แบบไม่เร่งตัวเอง",
-      tomorrowSteady: "พรุ่งนี้รักษาจังหวะที่พอดี แล้วกลับมาดู pattern แบบไม่เร่งตัวเอง",
+      tomorrowEnergyLayered: "พรุ่งนี้ลองดูกายกับใจแยกกัน แล้วค่อยเลือกจังหวะที่พอดีค่ะ",
+      tomorrowPositiveMind: "พรุ่งนี้เก็บใจที่พออยู่ได้ไว้ แล้วค่อย ๆ เดินต่อโดยไม่เร่งตัวเองค่ะ",
+      tomorrowSteady: "พรุ่งนี้รักษาจังหวะที่พอดีไว้ แล้วค่อย ๆ เดินต่อโดยไม่เร่งตัวเองค่ะ",
       mindNote: "Mind Note: {note}"
     },
     inputGroundedComposer: {
       waterLow: "น้ำวันนี้ประมาณ {water} ml และยังค่อย ๆ กลับฐานอยู่",
       waterBase: "น้ำวันนี้ประมาณ {water} ml และเริ่มเป็นฐานของวันได้",
       sleepHours: "นอนประมาณ {hours} ชั่วโมง",
-      drinkCaffeine: "มีคาเฟอีนเป็นส่วนหนึ่งของบริบท",
-      drinkSweetness: "มีความหวานในเครื่องดื่มเป็นสัญญาณหนึ่งของวัน",
-      drinkContext: "มีคาเฟอีนหรือความหวานเป็นส่วนหนึ่งของบริบท",
-      activity: "มี {activity} เป็น load ของวัน",
-      run: "มี {run} เป็นบริบทของ load และ recovery",
+      drinkCaffeine: "วันนี้มีคาเฟอีนอยู่ด้วย",
+      drinkSweetness: "วันนี้มีความหวานจากเครื่องดื่มอยู่ด้วย",
+      drinkContext: "วันนี้มีคาเฟอีนหรือความหวานจากเครื่องดื่มอยู่ด้วย",
+      activity: "วันนี้มี {activity} และใช้พลังงานไปส่วนหนึ่ง",
+      run: "วันนี้มี {run} จึงควรวางคู่กับน้ำและการพัก",
       mindFeeling: "Mind Note มีโทน {feeling}",
-      mindSupport: "support need คือ {support}",
+      mindSupport: "วันนี้ใจอยากได้ {support}",
       mindText: "มี Mind Note ว่า “{note}”",
-      continuity: "ต่อจาก log ก่อนหน้า มีสัญญาณความต่อเนื่องอยู่เล็กน้อย",
+      continuity: "เมื่อดูต่อจากวันที่บันทึกไว้ก่อนหน้า ยังมีบางอย่างที่ค่อย ๆ ต่อเนื่องมาถึงวันนี้",
       restore_baseline: "จาก {anchors} วันนี้อาจอ่านได้ว่าเป็นวันที่ค่อย ๆ กลับมาดูแลจังหวะพื้นฐาน มากกว่าการเร่งชดเชยอะไรทันที",
-      reduce_guilt: "จาก {anchors} วันนี้อาจอ่านได้ว่าไม่ใช่วันที่ต้องโทษตัวเอง แต่เป็นวันที่เห็น pattern แล้วค่อย ๆ กลับมาดูแลฐานเดิม",
-      notice_pattern: "จาก {anchors} วันนี้อาจอ่านได้ว่าเป็น pattern เล็ก ๆ ให้สังเกต ไม่ใช่ข้อสรุปใหญ่เกี่ยวกับตัวเอง",
-      protect_agency: "จาก {anchors} วันนี้อาจอ่านได้ว่าเป็นข้อมูลให้เลือกจังหวะที่พอดี โดยผู้ใช้ยังเป็นคนตัดสินความหมายของวัน",
-      pause_not_push: "จาก {anchors} วันนี้อาจอ่านได้ว่า recovery และการไม่เร่งเพิ่มคือจังหวะที่เหมาะกว่า push ต่อ",
+      reduce_guilt: "จาก {anchors} วันนี้ไม่จำเป็นต้องกลายเป็นเรื่องให้โทษตัวเอง แค่ค่อย ๆ กลับมาดูแลสิ่งพื้นฐานก็พอ",
+      notice_pattern: "จาก {anchors} วันนี้มีบางอย่างให้สังเกตเล็กน้อย แต่ยังไม่ใช่ข้อสรุปใหญ่เกี่ยวกับตัวเอง",
+      protect_agency: "จาก {anchors} ข้อมูลเหล่านี้ช่วยให้เลือกจังหวะที่พอดีได้ ส่วนความหมายของวันนี้ยังเป็นของพี่ค่ะ",
+      pause_not_push: "จาก {anchors} วันนี้การพักและไม่เร่งเพิ่มอาจเหมาะกว่าการฝืนทำต่อ",
       soft_continue: "จาก {anchors} วันนี้อาจอ่านได้ว่าเป็นจังหวะที่ค่อย ๆ ต่อเนื่องได้ โดยไม่ต้องทำให้ทุกอย่างสมบูรณ์แบบ",
-      fallback: "จากสัญญาณที่กรอกวันนี้ ระบบอ่านเป็นจุดเริ่มต้นเบา ๆ สำหรับดู pattern โดยไม่ต้องรีบสรุป"
+      fallback: "จากสิ่งที่บันทึกไว้วันนี้ หนูขอเริ่มอ่านแบบเบา ๆ โดยยังไม่รีบสรุปนะคะ"
     },
     lowDataReflection: {
-      noData: "สวัสดีค่ะ วันนี้ข้อมูลยังบางมาก หนูขอชวนเติมสัญญาณวันนี้เล็กน้อยก่อน แล้วค่อยกลับมาสะท้อนกันนะคะ",
+      noData: "สวัสดีค่ะ วันนี้ยังมีข้อมูลไม่มาก ลองเติมสิ่งที่จำได้จริงเพียงเล็กน้อย แล้วค่อยกลับมาอ่านวันนี้ด้วยกันนะคะ",
       previousOnly: "สวัสดีค่ะ วันนี้ยังไม่มีข้อมูลใหม่มากนัก หนูพอเห็น log ก่อนหน้าเป็นฉากหลังได้เล็กน้อย แต่ยังไม่อยากสรุปวันนี้แทนข้อมูลจริงนะคะ เติมเท่าที่จำได้จริงสักนิดก็พอค่ะ",
-      previousLoad: "สวัสดีค่ะ วันนี้ข้อมูลใหม่ยังบางอยู่ แต่ถ้าใช้ log ก่อนหน้าเป็นฉากหลังเบา ๆ หนูเห็นว่าร่างกายอาจยังเหมาะกับการเริ่มจาก recovery มากกว่าการเร่งเพิ่มงานนะคะ เติมสัญญาณวันนี้สักนิด เช่น น้ำ การพัก หรือภาวะใจ แล้วค่อยกลับมาสะท้อนกันก็พอค่ะ",
+      previousLoad: "สวัสดีค่ะ วันนี้ยังมีข้อมูลใหม่ไม่มาก จากวันที่บันทึกไว้ก่อนหน้า ร่างกายอาจยังเหมาะกับการเริ่มจากการพักมากกว่าการเร่งเพิ่มงาน ลองเติมน้ำ การพัก หรือภาวะใจของวันนี้เท่าที่จริงก็พอค่ะ",
       previousWater: "สวัสดีค่ะ วันนี้ยังไม่มีข้อมูลใหม่มากนัก แต่จาก log ก่อนหน้า หนูขอชวนวางน้ำเป็นฐานเล็ก ๆ ก่อนนะคะ แค่เติมเท่าที่จริงวันนี้ เช่น น้ำแก้วแรกหรือภาวะใจตอนนี้ ก็พอให้ระบบอ่านต่อได้แล้วค่ะ",
-      previousSleep: "สวัสดีค่ะ วันนี้ข้อมูลยังบาง แต่ log ก่อนหน้าพอชี้ว่า recovery อาจยังเป็นฐานสำคัญอยู่ หนูอยากให้เริ่มวันนี้แบบไม่กดดันตัวเองมากนัก แล้วค่อยเติมสัญญาณที่จำได้จริงก็พอค่ะ",
-      previousMind: "สวัสดีค่ะ วันนี้ข้อมูลใหม่ยังน้อย แต่จาก Mind Note ก่อนหน้า หนูเห็นว่าความกดดันอาจเป็นสิ่งที่ควรวางเบา ๆ ก่อนนะคะ วันนี้ยังไม่ต้องสรุปอะไรไกล เติมแค่สัญญาณจริงเล็ก ๆ ก็พอค่ะ",
-      previousDrink: "สวัสดีค่ะ วันนี้ข้อมูลใหม่ยังบาง แต่จาก log ก่อนหน้า หนูขอวางเรื่องน้ำกับจังหวะพลังงานเป็นฉากหลังเบา ๆ ก่อนนะคะ เติมสัญญาณจริงวันนี้สัก 1–2 อย่าง แล้วค่อยกลับมาสะท้อนกันก็พอค่ะ",
-      previousGeneric: "สวัสดีค่ะ วันนี้ข้อมูลใหม่ยังบางอยู่ หนูพอใช้ log ก่อนหน้าเป็นฉากหลังได้เล็กน้อย แต่ยังไม่อยากสรุปวันนี้แทนข้อมูลจริงนะคะ ลองเติมสัญญาณวันนี้สัก 1–2 อย่าง แล้วค่อยกลับมาสะท้อนกันก็พอค่ะ",
-      thinData: "วันนี้มีสัญญาณใหม่บางส่วนแล้วค่ะ หนูอ่านได้แค่เบา ๆ ว่าเริ่มมีฐานให้ดู pattern แต่ยังไม่ต้องรีบสรุปมากกว่านี้ เติมส่วนที่จริงพอก็พอค่ะ"
+      previousSleep: "สวัสดีค่ะ วันนี้ข้อมูลยังไม่มาก และวันที่บันทึกไว้ก่อนหน้าชวนให้นึกถึงการพัก ลองเริ่มวันนี้โดยไม่กดดันตัวเอง แล้วเติมเท่าที่จำได้จริงก็พอค่ะ",
+      previousMind: "สวัสดีค่ะ วันนี้ข้อมูลใหม่ยังน้อย จาก Mind Note ก่อนหน้า ความกดดันอาจเป็นสิ่งที่วางเบา ๆ ไว้ก่อนได้ วันนี้ยังไม่ต้องสรุปไกล เติมเพียงสิ่งที่รู้จริงตอนนี้ก็พอค่ะ",
+      previousDrink: "สวัสดีค่ะ วันนี้ข้อมูลใหม่ยังไม่มาก จากวันที่บันทึกไว้ก่อนหน้า ลองเก็บเรื่องน้ำกับพลังงานไว้ข้าง ๆ ก่อน แล้วเติมสิ่งที่จริงของวันนี้สัก 1–2 อย่างก็พอค่ะ",
+      previousGeneric: "สวัสดีค่ะ วันนี้ข้อมูลใหม่ยังไม่มาก วันที่บันทึกไว้ก่อนหน้าช่วยเตือนได้เพียงเล็กน้อย แต่ยังพูดแทนวันนี้ไม่ได้ ลองเติมสิ่งที่จริงของวันนี้สัก 1–2 อย่างก็พอค่ะ",
+      thinData: "วันนี้เริ่มมีสิ่งที่บันทึกไว้บ้างแล้วค่ะ หนูจะอ่านเท่าที่มี และยังไม่รีบสรุปเกินกว่านั้นนะคะ"
     },
     reflectionInputIntegration: {
       sleepLowHours: "วันนี้นอนประมาณ {hours} ชั่วโมง สัญญาณพลังงานจึงควรถูกอ่านอย่างอ่อนโยนขึ้น และควรเผื่อพื้นที่ให้ recovery",
@@ -655,10 +655,10 @@ const translations = {
     drinkReflection: {
       sugar: "เครื่องดื่มหวานวันนี้เริ่มสะสม แต่ไม่ต้องแก้ด้วยการหักดิบ แค่ลดแก้วถัดไป",
       caffeine: "คาเฟอีนวันนี้เริ่มสูง ให้มันเป็นข้อมูล ไม่ใช่สิ่งที่มาแทนการพัก",
-      context: "เครื่องดื่มวันนี้มีคาเฟอีนหรือความหวานเป็นส่วนหนึ่งของบริบท พอเห็นแล้วไม่ต้องโทษตัวเอง แค่ค่อย ๆ เติมน้ำหรือพักให้ร่างกายกลับฐาน",
+      context: "วันนี้มีคาเฟอีนหรือความหวานจากเครื่องดื่มอยู่ด้วย พอเห็นแล้วไม่ต้องโทษตัวเอง แค่ค่อย ๆ เติมน้ำหรือพักให้ร่างกายกลับฐาน",
       hydrationCaffeine: "ถ้าน้ำยังไม่มากและมีคาเฟอีนร่วมด้วย วันนี้ควรอ่านผ่านการกลับมาดูแลจังหวะพื้นฐาน มากกว่าการเร่งชดเชย",
-      sweetSignal: "เครื่องดื่มหวานวันนี้เป็นเพียงสัญญาณหนึ่ง ไม่ใช่ความผิด แค่ช่วยให้เห็น pattern ของพลังงานและการพัก",
-      balanced: "วันนี้มีเครื่องดื่มอยู่ในบริบท แต่ฐานน้ำเริ่มพอช่วยประคองได้แล้ว แค่เห็น pattern โดยไม่ต้องดุแก้วไหนก็พอ",
+      sweetSignal: "วันนี้มีเครื่องดื่มหวานอยู่ด้วย ไม่ใช่ความผิด แค่ลองวางไว้ข้างพลังงานและการพักของวันนี้ค่ะ",
+      balanced: "วันนี้มีเครื่องดื่มอยู่ด้วย และน้ำเริ่มพอช่วยประคองได้แล้ว เห็นเท่านี้โดยไม่ต้องดุแก้วไหนก็พอค่ะ",
       energyCauses: "วันนี้พลังงานอาจถูกกระทบจาก {causes} มากกว่าความผิดพลาดของตัวเอง",
       energyCause: {
         enough_sleep: "วันนี้พลังงานดูเหมือนมีฐานจากการพักที่พอขึ้น รักษาจังหวะนี้ไว้แบบไม่ต้องเร่งเพิ่มอะไรเกินจำเป็น",
@@ -1096,17 +1096,17 @@ const translations = {
     cockpitBalanceReadable: "Today is readable enough",
     cockpitBalanceReady: "Ready for Reflection",
     reflectionViewTitle: "Reflection",
-    reflectionViewHelper: "Review today’s reflection, then save it to the Daily Log when ready.",
-    reflectionGeneratorHelper: "Reflect creates a reflection from today's signals. You can still edit it lightly before saving.",
+    reflectionViewHelper: "Read through what you recorded today, then save it to the Daily Log when ready.",
+    reflectionGeneratorHelper: "Reflect will gently arrange what you recorded. You can still edit it lightly before saving.",
     reflectionActionsKicker: "Ready to save",
-    reflectionRootPickerKicker: "Reflection Root",
-    reflectionRootPickerTitle: "Which root should NuTuenSai read through today?",
-    reflectionRootPickerHelper: "Choose a gentle starting point for this Reflection. Other signals stay as supporting context.",
-    reflectionRootSelectedLabel: "Selected root: {root}",
+    reflectionRootPickerKicker: "Today’s reading focus",
+    reflectionRootPickerTitle: "Where would you like NuTuenSai to begin today?",
+    reflectionRootPickerHelper: "Choose what you would like to notice first. Everything else you recorded can remain alongside it.",
+    reflectionRootSelectedLabel: "Starting with: {root}",
     reflectionRootBoundaryDefault: "This is not a conclusion or medical advice. It is only a gentle starting point for noticing.",
-    reflectionRootBoundaryMind: "Mind context remains user-owned meaning. NuTuenSai can reflect it, not define it for you.",
-    reflectionRootBoundaryPractice: "Practice is self-care context, not a score or measure of success.",
-    reflectionRootBoundaryDrinks: "This reads drink context, not diet judgment, drink judgment, or medical advice.",
+    reflectionRootBoundaryMind: "What you recorded about your inner state keeps the meaning you gave it. NuTuenSai can reflect it, not define it for you.",
+    reflectionRootBoundaryPractice: "Practice is part of caring for yourself, not a score or measure of success.",
+    reflectionRootBoundaryDrinks: "Drinks are read as part of the day, not as judgment about diet, choices, or health.",
     reflectionRootOptionAuto: "Auto",
     reflectionRootOptionHydration: "Water",
     reflectionRootOptionSleep: "Rest",
@@ -1114,26 +1114,26 @@ const translations = {
     reflectionRootOptionDrinks: "Drinks",
     reflectionRootOptionMind: "Mind",
     reflectionRootOptionPractice: "Practice",
-    reflectionRootPreviewAuto: "Let NuTuenSai hold the root lightly from the data you recorded, without deciding the meaning for you.",
-    reflectionRootPreviewHydration: "This round will read mainly through water, with activity, drinks, and daily context as the surrounding scene.",
-    reflectionRootPreviewSleep: "This round will read mainly through sleep and recovery, with caffeine, daily load, and energy as supporting context.",
-    reflectionRootPreviewLoad: "This round will read mainly through activity and daily load, while noticing how water, rest, and energy sit around that rhythm.",
-    reflectionRootPreviewDrinks: "This round will read mainly through drinks, caffeine, and sweetness without judging drink choices or health.",
-    reflectionRootPreviewMind: "This round will give space to the mind context you recorded, without defining your inner state for you.",
-    reflectionRootPreviewPractice: "This round will read practice and self-care context as part of the day, not as a score or right/wrong measure.",
-    reflectionRootOpeningHydration: "This round, NuTuenSai will read mainly through the hydration root.",
-    reflectionRootOpeningSleep: "This round, NuTuenSai will read mainly through the sleep and recovery root.",
-    reflectionRootOpeningLoad: "This round, NuTuenSai will read mainly through the daily activity and load root.",
-    reflectionRootOpeningDrinks: "This round, NuTuenSai will read mainly through the drinks, caffeine, and sweetness root.",
-    reflectionRootOpeningMind: "This round, NuTuenSai will give space to the mind context you recorded.",
-    reflectionRootOpeningPractice: "This round, NuTuenSai will read practice and self-care context as part of the day.",
-    reflectionRootHintHydration: "Recorded water intake is the starting point here, with activity, drinks, and daily context held as the surrounding scene.",
-    reflectionRootHintSleep: "Sleep hours and recovery signals come first, while caffeine, daily load, and energy stay as surrounding context.",
+    reflectionRootPreviewAuto: "Let NuTuenSai begin with what stands out in today’s saved data, without deciding its meaning for you.",
+    reflectionRootPreviewHydration: "This round begins with water, then gently notices the activity and drinks beside it.",
+    reflectionRootPreviewSleep: "This round begins with sleep and rest, with caffeine, the day’s demands, and energy held alongside them.",
+    reflectionRootPreviewLoad: "This round begins with activity and the energy used today, then notices water, rest, and energy beside it.",
+    reflectionRootPreviewDrinks: "This round begins with drinks, caffeine, and sweetness without judging drink choices or health.",
+    reflectionRootPreviewMind: "This round gives more space to what you recorded about your inner state, without defining it for you.",
+    reflectionRootPreviewPractice: "This round begins with practice and self-care, without treating either as a score or right/wrong measure.",
+    reflectionRootOpeningHydration: "This round, NuTuenSai will begin with water.",
+    reflectionRootOpeningSleep: "This round, NuTuenSai will begin with sleep and rest.",
+    reflectionRootOpeningLoad: "This round, NuTuenSai will begin with activity and the energy used today.",
+    reflectionRootOpeningDrinks: "This round, NuTuenSai will begin with drinks, caffeine, and sweetness.",
+    reflectionRootOpeningMind: "This round, NuTuenSai will begin with what you recorded about your inner state.",
+    reflectionRootOpeningPractice: "This round, NuTuenSai will begin with practice and self-care.",
+    reflectionRootHintHydration: "NuTuenSai will begin with the saved water amount, then notice what was happening around that day.",
+    reflectionRootHintSleep: "NuTuenSai will begin with sleep and rest, then notice caffeine, the day’s demands, and energy.",
     reflectionRootHintLoad: "Daily activity, work, or body-use load comes first, then water, rest, and energy are read around that rhythm.",
-    reflectionRootHintDrinks: "Drinks, caffeine, and sweetness context lead this round, with sleep, load, and energy read gently around them.",
-    reflectionRootHintMind: "Mind Note and recorded mind context lead this round. NuTuenSai reflects them without defining your inner state for you.",
-    reflectionRootHintPractice: "Practice time and self-care notes are read as daily context, not as a score or measure of success.",
-    reflectionRootHintThin: "This root has only a little recorded data today, so NuTuenSai will read it lightly and stay close to what was saved.",
+    reflectionRootHintDrinks: "NuTuenSai will begin with drinks, caffeine, and sweetness, then notice sleep, the day’s demands, and energy without judgment.",
+    reflectionRootHintMind: "NuTuenSai will begin with the Mind Note and what you chose to record, without defining its meaning for you.",
+    reflectionRootHintPractice: "NuTuenSai will begin with practice time and self-care notes, without reading them as a score or success measure.",
+    reflectionRootHintThin: "There is only a little recorded here today, so NuTuenSai will stay close to what was saved and avoid a larger conclusion.",
     todayInputShortcutsAria: "Today input shortcuts",
     backToSignalCockpit: "Back to cockpit",
     backToTodayStepOne: "Back to Today 1/2",
@@ -1417,13 +1417,13 @@ const translations = {
     runPaceBadge: "Avg pace {pace}",
     mindfulReminder: "Mindful Reminder",
     nuTuenSaiNote: "NuTuenSai note",
-    nuTuenSaiRole: "NuTuenSai is a gentle reflection layer for noticing patterns, not a diagnosis tool or medical advice.",
-    nuTuenSaiEmptyReminder: "Welcome back. There isn’t much for NuTuenSai to read yet today. Add a little Today’s Signals first, then come back for a gentle reflection.",
+    nuTuenSaiRole: "NuTuenSai gently reads what you recorded. It is not a diagnostic tool or medical advice.",
+    nuTuenSaiEmptyReminder: "Welcome back. There is not much recorded for today yet. Add only what feels true enough, then return when ready.",
     reflectionGenerator: "Reflection Generator",
     endReflection: "End-of-Day Reflection",
     reflectionEmptyTitle: "No reflection yet",
-    reflectionEmptyText: "Reflect today to let the system listen to the day’s pattern softly.",
-    reflectionGenerating: "Listening to today’s pattern…",
+    reflectionEmptyText: "Reflect today to gently read what you recorded.",
+    reflectionGenerating: "Gently reading today…",
     reflectionStateLabel: "Reflection",
     reflectToday: "Reflect",
     reflectAgain: "Reflect Again",
@@ -1527,42 +1527,42 @@ const translations = {
       waterSeen: "You saw today's water picture ({water} ml)",
       plainWaterBase: "Plain water was part of today's base",
       checkedState: "You checked your state before rushing to conclusions",
-      openedPattern: "You made space to notice a pattern",
+      openedPattern: "You made space to notice what happened today",
       reduceSweet: "Reduce the next sweet drink by one step. No need to go extreme.",
       addSips: "Add small sips across the day without forcing it all at once.",
       stopPush: "Stop pushing more today and make recovery the main task.",
       keepBalance: "Keep the balanced rhythm. There is no need to add more than the day asks for.",
-      closing1: "You do not have to fix everything today. Seeing the pattern more clearly is already enough for today.",
+      closing1: "You do not have to fix everything today. Seeing what happened more clearly is already enough.",
       closing2: "The goal is not a better number quickly. The goal is a system that does not break from rushing."
     },
     reflectionDisplay: {
-      overviewEnergyLayered: "Today, the energy level and its causes may be describing different layers of the day. Both can be true without one signal canceling the other.",
+      overviewEnergyLayered: "Today, the energy level and what may have shaped it are showing different parts of the day. Both can be true at the same time.",
       overviewRecoveryHydratedRest: "Today looks like a day where recovery mattered more than adding more effort. Hydration was enough to serve as a base, and choosing rest first matched the day's energy.",
-      overviewRecoveryHydrated: "Today looks like a day where the body needed recovery more than adding anything new. Hydration was enough to serve as a base, and the day does not need to be judged from one signal.",
+      overviewRecoveryHydrated: "Today looks like a day where the body needed recovery more than adding anything new. Hydration was enough to serve as a base, and one detail does not need to define the whole day.",
       overviewRecovery: "Today seems to ask for recovery more than adding anything new. Let hydration, rest, and mind state return to a steady base gradually.",
       overviewActivityHydrated: "Today had more activity load than a rest day. Hydration was enough to serve as a base, and recovery can move together with the day's load.",
       overviewActivity: "Today had more activity load than a rest day. If sweat or sustained effort was part of it, hydration and recovery can gradually catch up with the body.",
-      overviewPositiveMindActivity: "Today includes real energy use, while the overall mind state seems supportive. Use that support gently and let recovery move with the load.",
-      overviewPositiveMindRecovery: "Today the mind seems supportive, while the body may still be asking for recovery. Both signals can coexist without making the whole day automatically fine.",
+      overviewPositiveMindActivity: "Today included real energy use, while the overall mind state seems supportive. Let that support stay gentle, with recovery following the effort.",
+      overviewPositiveMindRecovery: "Today the mind seems supportive, while the body may still be asking for recovery. Both can be true without making the whole day automatically fine.",
       overviewPositiveMindSupport: "Today's overall mind state seems more positive, which may support self-care without needing to push harder.",
-      overviewMindNoteFeelingGoodActivity: "This note carries a good feeling, while today still included real energy use. Treat it as a small supportive signal and let recovery move with the load.",
-      overviewMindNoteFeelingGoodRecovery: "This note carries a good feeling, while the body may still be asking for recovery. Both signals can coexist without making the whole day perfect.",
-      overviewMindNoteFeelingGoodSupport: "This note carries a good feeling. It can be read as a small supportive signal, not as a claim that the whole day was perfect.",
+      overviewMindNoteFeelingGoodActivity: "This note carries a good feeling, while today still included real energy use. Let it offer a little support, with recovery following the effort.",
+      overviewMindNoteFeelingGoodRecovery: "This note carries a good feeling, while the body may still be asking for recovery. Both can be true without making the whole day perfect.",
+      overviewMindNoteFeelingGoodSupport: "This note carries a good feeling. It can offer a little support without needing the whole day to be perfect.",
       overviewCaffeine: "Today, caffeine may have supported alertness or rhythm. Plain water can return as the base without making coffee something to feel bad about.",
       overviewSteadyHydration: "Hydration was enough to serve as a base today, so the picture is more about keeping consistency than adding more.",
-      overviewBase: "Today is a day for noticing the pattern gently. Hydration, rest, and mind state can keep returning to a workable rhythm.",
+      overviewBase: "Today can be read gently through hydration, rest, and mind state. Each can return to a workable rhythm in its own time.",
       adjustRecovery: "If there is one gentle adjustment, it may be to let rest and hydration move together without trying to fix the whole day at once.",
-      adjustActivity: "If there is one gentle adjustment, treat hydration as part of recovery after load, not as a number to rush.",
+      adjustActivity: "If there is one gentle adjustment, let hydration support recovery after today’s effort rather than becoming a number to chase.",
       adjustCaffeine: "If there is one gentle adjustment, give plain water some space between caffeine and rest.",
       adjustWater: "If there is one gentle adjustment, place small water moments across the day without forcing them all at once.",
       adjustSteady: "If there is one gentle adjustment, keep the rhythm that already feels workable without adding more than needed.",
-      adjustEnergyLayered: "If there is one gentle adjustment, listen to body and mind as layered signals without deciding that the day must be good or bad.",
-      tomorrowRecovery: "Tomorrow, let recovery come first, then return to the pattern without rushing yourself.",
+      adjustEnergyLayered: "If there is one gentle adjustment, listen to body and mind separately without deciding that the day must be good or bad.",
+      tomorrowRecovery: "Tomorrow, let recovery come first, then see how the day unfolds without rushing yourself.",
       tomorrowActivity: "Tomorrow, let recovery and hydration move together, then see what the body is ready to add.",
       tomorrowCaffeine: "Tomorrow, lower caffeine by one step and let plain water return as the base.",
-      tomorrowEnergyLayered: "Tomorrow, notice body and mind as layered signals, then choose a rhythm that fits.",
-      tomorrowPositiveMind: "Tomorrow, keep the mind state that feels workable, then return to the pattern without rushing yourself.",
-      tomorrowSteady: "Tomorrow, keep the workable rhythm and return to the pattern without rushing yourself.",
+      tomorrowEnergyLayered: "Tomorrow, notice body and mind separately, then choose a rhythm that fits.",
+      tomorrowPositiveMind: "Tomorrow, keep the mind state that feels workable and continue without rushing yourself.",
+      tomorrowSteady: "Tomorrow, keep the workable rhythm and continue without rushing yourself.",
       mindNote: "Mind Note: {note}"
     },
     inputGroundedComposer: {
@@ -1570,32 +1570,32 @@ const translations = {
       waterBase: "water is around {water} ml and can already serve as a base",
       sleepHours: "sleep was about {hours} hours",
       drinkCaffeine: "caffeine was present today",
-      drinkSweetness: "sweetness in drinks was one signal today",
-      drinkContext: "caffeine or sweet drinks were present today",
-      activity: "{activity} was part of today's load",
-      run: "{run} was part of the load and recovery context",
+      drinkSweetness: "sweetness was recorded in today’s drinks",
+      drinkContext: "caffeine or sweet drinks were part of today",
+      activity: "{activity} used some of today’s energy",
+      run: "{run} used energy and may need recovery beside it",
       mindFeeling: "the Mind Note carried a {feeling} tone",
-      mindSupport: "the support need was {support}",
+      mindSupport: "what may help today is {support}",
       mindText: "there was a Mind Note: “{note}”",
-      continuity: "recent logs add a little continuity context",
+      continuity: "recent logs add a little continuity",
       restore_baseline: "With {anchors}, today may be better read as a gentle return-to-baseline day rather than something to quickly correct.",
-      reduce_guilt: "With {anchors}, today does not need to become self-blame. It can simply be a pattern to notice and return from gently.",
-      notice_pattern: "With {anchors}, today may be read as a small pattern signal, not a large conclusion about yourself.",
+      reduce_guilt: "With {anchors}, today does not need to become self-blame. These are simply things to notice and meet gently.",
+      notice_pattern: "With {anchors}, there is something small to notice today, not a large conclusion about yourself.",
       protect_agency: "With {anchors}, the data can support a clearer choice of rhythm while the meaning of the day stays with you.",
-      pause_not_push: "With {anchors}, recovery and not pushing more may fit the day better than adding output.",
-      soft_continue: "With {anchors}, today can continue gently without needing every signal to be perfect.",
-      fallback: "From the signals entered today, this can be a gentle starting point for noticing patterns without rushing to conclude."
+      pause_not_push: "With {anchors}, rest and not pushing more may fit the day better than adding more.",
+      soft_continue: "With {anchors}, today can continue gently without needing everything to be perfect.",
+      fallback: "From what was recorded today, this can be a gentle place to begin without rushing to a conclusion."
     },
     lowDataReflection: {
-      noData: "There is not much new data for today yet. You can add a few true signals first, then return to reflection.",
+      noData: "There is not much recorded for today yet. Add only what feels true enough, then return when ready.",
       previousOnly: "There is not much new data for today yet. Previous logs can be light background, but they should not speak for today. Add only what feels true enough when ready.",
-      previousLoad: "There is not much new data for today yet. From the previous log, recovery may be a gentle background cue, but it should not replace today’s truth. Add water, rest, or an inner-state signal when ready.",
-      previousWater: "There is not much new data for today yet. The previous log can lightly point back to water as a simple base. Add one true signal, such as the first glass of water or current inner state, when ready.",
+      previousLoad: "There is not much recorded for today yet. The previous log can gently remind us to leave room for recovery, but it cannot speak for today. Add water, rest, or an inner state when ready.",
+      previousWater: "There is not much recorded for today yet. The previous log can lightly point back to water as a simple base. Add one true detail, such as the first glass of water or current inner state, when ready.",
       previousSleep: "There is not much new data for today yet. The previous log can lightly suggest a gentler recovery rhythm, but it should not define today. Add only what feels true enough.",
-      previousMind: "There is not much new data for today yet. The previous Mind Note can be light background for reducing pressure, not a conclusion about today. Add one small true signal when ready.",
-      previousDrink: "There is not much new data for today yet. Previous drinks can be light background for returning to water or a steadier energy base. Add one or two true signals when ready.",
-      previousGeneric: "There is not much new data for today yet. Previous logs can be light background, but they should not speak for today. Add one or two true signals when ready.",
-      thinData: "There are a few new signals today. This is enough for a light starting point, but there is no need to conclude more than the data can hold."
+      previousMind: "There is not much recorded for today yet. The previous Mind Note can gently remind us to reduce pressure, not define today. Add one small true detail when ready.",
+      previousDrink: "There is not much recorded for today yet. Previous drinks can gently point back to water or a steadier energy base. Add one or two true details when ready.",
+      previousGeneric: "There is not much recorded for today yet. Previous logs can sit quietly nearby, but they should not speak for today. Add one or two true details when ready.",
+      thinData: "There are a few details recorded today. That is enough for a light beginning, with no need to conclude more than they can hold."
     },
     reflectionInputIntegration: {
       sleepLowHours: "Today had about {hours} hours of sleep, so energy signals deserve to be read more gently with recovery space.",
@@ -1651,10 +1651,10 @@ const translations = {
     drinkReflection: {
       sugar: "Sugary drinks are adding up today, but no need to go extreme. Reducing the next one is enough.",
       caffeine: "Caffeine is getting high today. Let it be information, not a replacement for rest.",
-      context: "Drinks were part of today’s context, especially caffeine or sweetness. This is not a mistake to fix, just a pattern to notice and gently balance with water or rest.",
+      context: "Caffeine or sweetness was part of today’s drinks. This is not a mistake to fix; it can simply sit beside water and rest.",
       hydrationCaffeine: "When water is still low and caffeine is present, today may be better read as a return-to-baseline day rather than a day for forcing correction.",
-      sweetSignal: "Sweet drinks today are one signal, not a mistake. They simply help show the pattern of energy and rest.",
-      balanced: "Drinks were part of today’s context, while water is already a useful base. Notice the pattern without judging any drink.",
+      sweetSignal: "Sweet drinks were part of today, not a mistake. They can simply be read beside energy and rest.",
+      balanced: "Drinks were part of today, while water is already a useful base. Notice that without judging any drink.",
       energyCauses: "Today's energy may be affected by {causes} more than by any personal mistake.",
       energyCause: {
         enough_sleep: "Today's energy seems supported by enough rest. Keeping this rhythm may be enough without adding too much.",
@@ -2092,17 +2092,17 @@ const translations = {
     cockpitBalanceReadable: "今天已经可以阅读",
     cockpitBalanceReady: "可以前往 Reflection",
     reflectionViewTitle: "反思",
-    reflectionViewHelper: "查看今天的反思内容，准备好后再保存到每日记录。",
-    reflectionGeneratorHelper: "点击回顾会根据今天的信号生成回顾，保存前仍可轻微编辑。",
+    reflectionViewHelper: "慢慢读一读今天记录的内容，准备好后再保存到每日记录。",
+    reflectionGeneratorHelper: "点击回顾会温和整理今天记录的内容，保存前仍可轻微编辑。",
     reflectionActionsKicker: "准备保存",
-    reflectionRootPickerKicker: "Reflection Root",
-    reflectionRootPickerTitle: "今天想让 NuTuenSai 先从哪个主轴来读？",
-    reflectionRootPickerHelper: "轻轻选择一个观察起点。其他信号仍只是辅助背景。",
-    reflectionRootSelectedLabel: "已选主轴：{root}",
+    reflectionRootPickerKicker: "今天的阅读角度",
+    reflectionRootPickerTitle: "今天想让 NuTuenSai 先从哪里开始读？",
+    reflectionRootPickerHelper: "选择今天想先看见的部分，其他记录会轻轻放在旁边。",
+    reflectionRootSelectedLabel: "先从这里开始：{root}",
     reflectionRootBoundaryDefault: "这不是结论，也不是医疗建议，只是温柔观察的起点。",
-    reflectionRootBoundaryMind: "心的背景仍由你拥有其意义。NuTuenSai 只帮助反映，不替你定义。",
-    reflectionRootBoundaryPractice: "练习是自我照顾的背景，不是分数，也不是成功或失败。",
-    reflectionRootBoundaryDrinks: "这里只读一天中的饮品背景，不评价饮食、饮品或健康。",
+    reflectionRootBoundaryMind: "你记录的心情仍保留你赋予它的意义。NuTuenSai 只帮助映照，不替你定义。",
+    reflectionRootBoundaryPractice: "练习是照顾自己的一部分，不是分数，也不是成功或失败。",
+    reflectionRootBoundaryDrinks: "饮品只是今天的一部分，不评价饮食、选择或健康。",
     reflectionRootOptionAuto: "自动",
     reflectionRootOptionHydration: "饮水",
     reflectionRootOptionSleep: "休息",
@@ -2110,26 +2110,26 @@ const translations = {
     reflectionRootOptionDrinks: "饮品",
     reflectionRootOptionMind: "心",
     reflectionRootOptionPractice: "练习",
-    reflectionRootPreviewAuto: "让 NuTuenSai 从已记录的数据中轻轻放置主轴，但不替你下结论。",
-    reflectionRootPreviewHydration: "这一轮会先从“饮水”来读，并把活动、饮品和当天背景作为辅助。",
-    reflectionRootPreviewSleep: "这一轮会先从“睡眠/恢复”来读，并把咖啡因、负荷和能量作为背景。",
-    reflectionRootPreviewLoad: "这一轮会先从“活动/负荷”来读，并观察饮水、休息和能量如何围绕它出现。",
-    reflectionRootPreviewDrinks: "这一轮会先从“饮品/咖啡因/甜度”来读，不评价饮品选择或健康。",
-    reflectionRootPreviewMind: "这一轮会给你记录的心的背景更多空间，但不替你定义内在状态。",
-    reflectionRootPreviewPractice: "这一轮会把练习/自我照顾读作当天背景，不是分数，也不是对错。",
-    reflectionRootOpeningHydration: "这一轮 NuTuenSai 会先从“饮水”这个主轴来读。",
-    reflectionRootOpeningSleep: "这一轮 NuTuenSai 会先从“睡眠/恢复”这个主轴来读。",
-    reflectionRootOpeningLoad: "这一轮 NuTuenSai 会先从“活动/负荷”这个主轴来读。",
-    reflectionRootOpeningDrinks: "这一轮 NuTuenSai 会先从“饮品/咖啡因/甜度”这个主轴来读。",
-    reflectionRootOpeningMind: "这一轮 NuTuenSai 会给你记录的心的背景更多空间。",
-    reflectionRootOpeningPractice: "这一轮 NuTuenSai 会把练习/自我照顾读作当天背景。",
-    reflectionRootHintHydration: "记录的饮水量会作为起点，活动、饮品和当天背景会作为周围的背景来读。",
-    reflectionRootHintSleep: "睡眠时长和恢复信号会先被看见，咖啡因、当天负荷和能量作为背景。",
-    reflectionRootHintLoad: "活动、工作或身体使用的负荷会先被看见，再轻轻观察饮水、休息和能量如何围绕它出现。",
-    reflectionRootHintDrinks: "饮品、咖啡因和甜度背景会作为这一轮的主轴，同时轻轻看睡眠、负荷和能量。",
-    reflectionRootHintMind: "Mind Note 和心的背景会作为主轴。NuTuenSai 只帮助反映，不替你定义。",
-    reflectionRootHintPractice: "练习时间和自我照顾记录会被读作当天背景，不是分数，也不是成功衡量。",
-    reflectionRootHintThin: "这个主轴今天记录的数据还不多，所以 NuTuenSai 会轻轻阅读，并贴近已保存的内容。",
+    reflectionRootPreviewAuto: "让 NuTuenSai 从今天记录里较清楚的部分开始，但不替你决定意义。",
+    reflectionRootPreviewHydration: "这一轮先从饮水开始，再轻轻看看旁边的活动和饮品。",
+    reflectionRootPreviewSleep: "这一轮先从睡眠和休息开始，再把咖啡因、当天的消耗和能量放在一起看。",
+    reflectionRootPreviewLoad: "这一轮先从活动和今天用掉的力气开始，再看看饮水、休息和能量。",
+    reflectionRootPreviewDrinks: "这一轮先从饮品、咖啡因和甜度开始，不评价饮品选择或健康。",
+    reflectionRootPreviewMind: "这一轮会给你记录的心情更多空间，但不替你定义内在状态。",
+    reflectionRootPreviewPractice: "这一轮先从练习和自我照顾开始，不把它们读成分数或对错。",
+    reflectionRootOpeningHydration: "这一轮 NuTuenSai 会先从饮水开始。",
+    reflectionRootOpeningSleep: "这一轮 NuTuenSai 会先从睡眠和休息开始。",
+    reflectionRootOpeningLoad: "这一轮 NuTuenSai 会先从活动和今天用掉的力气开始。",
+    reflectionRootOpeningDrinks: "这一轮 NuTuenSai 会先从饮品、咖啡因和甜度开始。",
+    reflectionRootOpeningMind: "这一轮 NuTuenSai 会先从你记录的心情开始。",
+    reflectionRootOpeningPractice: "这一轮 NuTuenSai 会先从练习和自我照顾开始。",
+    reflectionRootHintHydration: "NuTuenSai 会先看记录的饮水量，再看看那一天还发生了什么。",
+    reflectionRootHintSleep: "NuTuenSai 会先看睡眠和休息，再看看咖啡因、当天的消耗和能量。",
+    reflectionRootHintLoad: "先看活动、工作或身体用去的力气，再轻轻看看饮水、休息和能量。",
+    reflectionRootHintDrinks: "NuTuenSai 会先看饮品、咖啡因和甜度，再温和地看看睡眠、当天的消耗和能量。",
+    reflectionRootHintMind: "NuTuenSai 会先看 Mind Note 和你选择记录的心情，不替你决定它的意义。",
+    reflectionRootHintPractice: "NuTuenSai 会先看练习时间和自我照顾记录，不把它们读成分数或成功衡量。",
+    reflectionRootHintThin: "今天这部分记录还不多，所以 NuTuenSai 会贴近已有内容，不急着做更大的总结。",
     todayInputShortcutsAria: "Today 输入快捷键",
     backToSignalCockpit: "返回信号面板",
     backToTodayStepOne: "返回 Today 1/2",
@@ -2413,13 +2413,13 @@ const translations = {
     runPaceBadge: "平均配速 {pace}",
     mindfulReminder: "正念提醒",
     nuTuenSaiNote: "NuTuenSai 提醒",
-    nuTuenSaiRole: "NuTuenSai 是一个温和的反思层，用来观察模式，并不是诊断工具或医疗建议。",
-    nuTuenSaiEmptyReminder: "欢迎回来。今天还没有太多资料可以阅读，可以先补充一点今日信号，再回来做轻柔的回顾。",
+    nuTuenSaiRole: "NuTuenSai 会轻轻阅读你记录的内容，并不是诊断工具或医疗建议。",
+    nuTuenSaiEmptyReminder: "欢迎回来。今天记录的内容还不多，可以先写下一点真实确定的事情，准备好时再回来看看。",
     reflectionGenerator: "反思生成器",
     endReflection: "每日结束反思",
     reflectionEmptyTitle: "还没有回顾",
-    reflectionEmptyText: "点击今日回顾，让系统轻轻倾听今天的模式。",
-    reflectionGenerating: "正在倾听今天的模式…",
+    reflectionEmptyText: "点击今日回顾，轻轻读一读今天记录的内容。",
+    reflectionGenerating: "正在轻轻阅读今天…",
     reflectionStateLabel: "回顾",
     reflectToday: "今日回顾",
     reflectAgain: "重新回顾",
@@ -2523,75 +2523,75 @@ const translations = {
       waterSeen: "今天已经看见饮水情况（{water} ml）",
       plainWaterBase: "今天有白水作为基础",
       checkedState: "在急着下结论前，先看见了自己的状态",
-      openedPattern: "给自己留了空间去观察 pattern",
+      openedPattern: "给自己留了空间去看看今天发生了什么",
       reduceSweet: "下一杯甜饮少一点就够了，不需要极端。",
       addSips: "把小口喝水分散到一天里，不要一次硬灌。",
       stopPush: "今天不要再 push，把 recovery 当成主要任务。",
       keepBalance: "维持刚刚好的节奏，不需要增加超过今天所需的东西。",
-      closing1: "今天不需要把所有事都修好。能更清楚看见 pattern，就说明系统已经在运作。",
+      closing1: "今天不需要把所有事都修好。能更清楚地看见发生了什么，就已经足够。",
       closing2: "目标不是数字很快变好，而是建立一个不会因为急着修正而反复崩掉的系统。"
     },
     reflectionDisplay: {
-      overviewEnergyLayered: "今天的能量状态和原因，可能在描述系统的不同层次。两种信号可以同时成立，不代表资料有问题。",
+      overviewEnergyLayered: "今天的能量状态和可能影响它的事情，呈现了这一天不同的部分。两者可以同时成立。",
       overviewRecoveryHydratedRest: "今天整体像是 recovery 比增加更多事情更重要。饮水已经可以作为基础，先休息也符合今天的能量。",
       overviewRecoveryHydrated: "今天像是身体更需要恢复节奏，而不是增加新的负荷。饮水已经可以作为基础，也不需要用单一天来判断自己。",
       overviewRecovery: "今天像是在提醒 recovery 比增加更多事情更重要。让补水、休息和心里的状态慢慢回到一个稳定基础就好。",
       overviewActivityHydrated: "今天有比休息日更多的活动消耗。饮水已经可以作为基础，recovery 可以和今天的 load 一起往前走。",
       overviewActivity: "今天有比休息日更多的活动消耗。如果有出汗或持续用力，补水和 recovery 慢慢跟上身体就好。",
-      overviewPositiveMindActivity: "今天有真实的能量消耗，同时整体心境也像是一个支持。温和使用这个支持，也让 recovery 跟着 load 一起走。",
-      overviewPositiveMindRecovery: "今天心境像是有支持感，但身体可能仍然需要 recovery。两个信号可以同时存在，不代表整天都一定没事。",
+      overviewPositiveMindActivity: "今天确实用了一些力，同时整体心境也带着支持感。让这份支持轻轻留着，也给身体留出恢复的空间。",
+      overviewPositiveMindRecovery: "今天的心境像是有支持感，但身体可能仍然需要恢复。两者可以同时存在，不代表整天都一定没事。",
       overviewPositiveMindSupport: "今天整体心境较好，可以成为一种支持，不需要额外用力。",
-      overviewMindNoteFeelingGoodActivity: "这条记录里有一种不错的感觉，同时今天也有真实的能量消耗。可以把它当作小小的支持信号，也让 recovery 跟着 load 一起走。",
-      overviewMindNoteFeelingGoodRecovery: "这条记录里有一种不错的感觉，但身体可能仍然需要 recovery。两个信号可以同时存在，不代表整天都必须完美。",
-      overviewMindNoteFeelingGoodSupport: "这条记录里有一种不错的感觉，可以作为一个小小的支持信号，不代表整天都必须是完美的。",
+      overviewMindNoteFeelingGoodActivity: "这条记录里有一种不错的感觉，同时今天也确实用了一些力。让它带来一点支持，也给身体留出恢复的空间。",
+      overviewMindNoteFeelingGoodRecovery: "这条记录里有一种不错的感觉，但身体可能仍然需要恢复。两者可以同时存在，不代表整天都必须完美。",
+      overviewMindNoteFeelingGoodSupport: "这条记录里有一种不错的感觉，可以带来一点支持，不需要整天都是完美的。",
       overviewCaffeine: "今天咖啡因可能帮助清醒或维持节奏。让白水回到基础就好，不需要因此责备咖啡。",
       overviewSteadyHydration: "今天饮水已经可以作为基础，整体更适合维持稳定，而不是增加超过需要的东西。",
-      overviewBase: "今天适合温和地观察 pattern。补水、休息和心里的状态都可以慢慢回到可持续的节奏。",
+      overviewBase: "今天可以从补水、休息和心里的状态慢慢读起，让它们各自回到可持续的节奏。",
       adjustRecovery: "如果要轻轻调整一点，可以让休息和补水一起走，不需要一天内修好全部。",
-      adjustActivity: "如果要轻轻调整一点，可以把补水看作 load 后 recovery 的一部分，而不是急着追数字。",
+      adjustActivity: "如果要轻轻调整一点，可以让补水陪着今天的用力慢慢恢复，而不是急着追数字。",
       adjustCaffeine: "如果要轻轻调整一点，可以在咖啡因和休息之间，把空间还给白水。",
       adjustWater: "如果要轻轻调整一点，把小口喝水分散到一天里，不需要一次喝完。",
       adjustSteady: "如果要轻轻调整一点，就是维持已经可行的节奏，不增加超过需要的东西。",
-      adjustEnergyLayered: "如果要轻轻调整一点，可以把身体和心的信号分层听，不急着判断今天是好或不好。",
-      tomorrowRecovery: "明天先让 recovery 在前面，再不急地回来观察 pattern。",
+      adjustEnergyLayered: "如果要轻轻调整一点，可以分别听听身体和心，不急着判断今天是好或不好。",
+      tomorrowRecovery: "明天先把恢复放在前面，再不着急地看看一天如何展开。",
       tomorrowActivity: "明天让 recovery 和补水一起走，再看身体准备好增加什么。",
       tomorrowCaffeine: "明天把咖啡因降一个节奏，让白水回到基础。",
-      tomorrowEnergyLayered: "明天把身体和心的信号分层看，再选择合适的节奏。",
-      tomorrowPositiveMind: "明天保留这种比较能待住的心境，再不急地回来观察 pattern。",
-      tomorrowSteady: "明天维持可持续的节奏，再不急地回来观察 pattern。",
+      tomorrowEnergyLayered: "明天分别看看身体和心，再选择合适的节奏。",
+      tomorrowPositiveMind: "明天保留这种比较能待住的心境，不着急地继续就好。",
+      tomorrowSteady: "明天维持可持续的节奏，不着急地继续就好。",
       mindNote: "Mind Note: {note}"
     },
     inputGroundedComposer: {
       waterLow: "今天饮水约 {water} ml，还在慢慢回到基础",
       waterBase: "今天饮水约 {water} ml，已经可以作为基础",
       sleepHours: "今天大约睡了 {hours} 小时",
-      drinkCaffeine: "咖啡因是今天 context 的一部分",
-      drinkSweetness: "饮品甜度是今天的一个信号",
-      drinkContext: "咖啡因或甜度是今天饮品 context 的一部分",
-      activity: "今天有 {activity} 作为 load 的一部分",
-      run: "今天有 {run} 作为 load 和 recovery 的 context",
+      drinkCaffeine: "今天记录了咖啡因",
+      drinkSweetness: "今天的饮品记录了甜度",
+      drinkContext: "今天有咖啡因或甜饮",
+      activity: "今天的 {activity} 用去了一些力",
+      run: "今天的 {run} 用去了一些力，也需要留出恢复空间",
       mindFeeling: "Mind Note 带着 {feeling} 的语气",
-      mindSupport: "support need 是 {support}",
+      mindSupport: "今天心里想要的是 {support}",
       mindText: "今天有 Mind Note：“{note}”",
-      continuity: "前几条 log 也提供了一点连续性的 context",
+      continuity: "前几条记录也带来了一点连续性",
       restore_baseline: "从 {anchors} 来看，今天更适合慢慢回到基础节奏，而不是急着修正。",
-      reduce_guilt: "从 {anchors} 来看，今天不需要变成自责，只是一个可以看见并温和回来的 pattern。",
-      notice_pattern: "从 {anchors} 来看，今天更像一个小小的 pattern 信号，不是关于自己的大结论。",
+      reduce_guilt: "从 {anchors} 来看，今天不需要变成自责，只是一些可以看见并温柔对待的事情。",
+      notice_pattern: "从 {anchors} 来看，今天有一件小事值得留意，不是关于自己的大结论。",
       protect_agency: "从 {anchors} 来看，这些资料可以帮助选择合适节奏，但今天的意义仍然由你来决定。",
-      pause_not_push: "从 {anchors} 来看，recovery 和不继续 push 可能比增加 output 更适合今天。",
-      soft_continue: "从 {anchors} 来看，今天可以温和地继续，不需要每个信号都完美。",
-      fallback: "从今天填写的信号来看，系统会先把它当作温和观察 pattern 的起点，不急着下结论。"
+      pause_not_push: "从 {anchors} 来看，休息和不再勉强自己，可能比继续增加事情更适合今天。",
+      soft_continue: "从 {anchors} 来看，今天可以温和地继续，不需要每件事都完美。",
+      fallback: "从今天记录的内容来看，可以先从这里温和地读起，不急着下结论。"
     },
     lowDataReflection: {
-      noData: "今天的新数据还很少。可以先填写一些真实把握的信号，再回来做 reflection。",
+      noData: "今天记录的内容还很少。可以先写下一点真实确定的事情，准备好时再回来看看。",
       previousOnly: "今天的新数据还很少。之前的 log 只能作为轻轻的背景，不能替今天下结论。准备好时，填写真实把握的一点就可以。",
-      previousLoad: "今天的新数据还很少。之前的 log 可以轻轻提醒 recovery 这个背景，但不能代替今天的真实情况。准备好时，先填写饮水、休息或内在状态的一点就可以。",
-      previousWater: "今天的新数据还很少。之前的 log 可以轻轻把饮水作为一个基础提醒。先填写一个真实信号，比如第一杯水或此刻状态，就够了。",
+      previousLoad: "今天记录的内容还很少。之前的记录可以轻轻提醒我们为恢复留一点空间，但不能代替今天。准备好时，先写下饮水、休息或内在状态的一点就可以。",
+      previousWater: "今天记录的内容还很少。之前的记录可以轻轻提醒我们把饮水放回基础。先写下一件真实的事，比如第一杯水或此刻状态，就够了。",
       previousSleep: "今天的新数据还很少。之前的 log 可以轻轻提示恢复节奏，但不能定义今天。准备好时，填写真实把握的一点就可以。",
-      previousMind: "今天的新数据还很少。之前的 Mind Note 只能作为减少压力的轻微背景，不是今天的结论。先填写一个真实小信号就可以。",
-      previousDrink: "今天的新数据还很少。之前的饮品 context 可以轻轻提醒回到饮水或稳定能量基础。准备好时，填写一两个真实信号就可以。",
-      previousGeneric: "今天的新数据还很少。之前的 log 只能作为轻轻的背景，不能替今天下结论。可以先填写一两个真实信号。",
-      thinData: "今天已经有一点新的信号，可以作为温和的起点，但不需要超过数据本身去下结论。"
+      previousMind: "今天记录的内容还很少。之前的 Mind Note 只能轻轻提醒我们减少压力，不能替今天下结论。先写下一件真实的小事就可以。",
+      previousDrink: "今天记录的内容还很少。之前的饮品记录可以轻轻提醒我们回到饮水或稳定的能量基础。准备好时，写下一两件真实的事就可以。",
+      previousGeneric: "今天记录的内容还很少。之前的记录可以轻轻放在旁边，但不能替今天下结论。可以先写下一两件真实的事。",
+      thinData: "今天已经记录了一点内容，可以从这里温和地开始，不需要作出超过这些内容的结论。"
     },
     reflectionInputIntegration: {
       sleepLowHours: "今天大约睡了 {hours} 小时，所以能量信号可以更温和地阅读，并给 recovery 留空间。",
@@ -2647,10 +2647,10 @@ const translations = {
     drinkReflection: {
       sugar: "今天甜饮开始累积，但不需要极端调整，下一杯少一点就够了。",
       caffeine: "今天咖啡因偏高，把它当作信息，不要让它取代休息。",
-      context: "今天的饮品也是一个 context，尤其是咖啡因或甜度。这不是错误，只是一个可以被看见的 pattern，再慢慢回到喝水或休息。",
+      context: "今天的饮品里有咖啡因或甜度。这不是需要修正的错误，可以轻轻放在饮水和休息旁边看。",
       hydrationCaffeine: "如果水还不多，同时有咖啡因，今天更适合慢慢回到基础节奏，而不是急着补偿。",
-      sweetSignal: "今天的甜饮只是一个信号，不是错误。它可以帮助看见能量和休息的 pattern。",
-      balanced: "今天有饮品作为 context，同时白水已经能作为基础。看见 pattern 就好，不需要评价哪一杯。",
+      sweetSignal: "今天有甜饮，不是错误。可以把它轻轻放在能量和休息旁边看。",
+      balanced: "今天有其他饮品，同时白水已经能作为基础。看见这些就好，不需要评价哪一杯。",
       energyCauses: "今天的能量可能更多受到 {causes} 影响，而不是自己的错误。",
       energyCause: {
         enough_sleep: "今天的能量看起来有一部分来自比较足够的休息。保持这个节奏就好，不需要再额外加很多。",
@@ -4304,7 +4304,7 @@ function getRootDrinkContextLabel(signals) {
   if (hasCaffeine && hasSweetness) {
     if (currentLanguage === "en") return "caffeine and sweetness";
     if (currentLanguage === "zh") return "咖啡因和甜度";
-    return "คาเฟอีนและบริบทความหวาน";
+    return "คาเฟอีนและความหวาน";
   }
   if (hasCaffeine) {
     if (currentLanguage === "en") return "caffeine";
@@ -4312,9 +4312,9 @@ function getRootDrinkContextLabel(signals) {
     return "คาเฟอีน";
   }
   if (hasSweetness) {
-    if (currentLanguage === "en") return "sweetness context";
-    if (currentLanguage === "zh") return "甜度背景";
-    return "บริบทความหวาน";
+    if (currentLanguage === "en") return "sweetness";
+    if (currentLanguage === "zh") return "甜度";
+    return "ความหวาน";
   }
   return "";
 }
@@ -4345,9 +4345,9 @@ function getRootPracticeContextLabel() {
     return `ภาวนาประมาณ ${formatNumberForLocale(practiceContext.minutes)} นาที`;
   }
   if (practiceContext?.root || practiceContext?.type) {
-    if (currentLanguage === "en") return "a recorded practice context";
-    if (currentLanguage === "zh") return "有一段练习背景";
-    return "มีบริบทการภาวนาที่บันทึกไว้";
+    if (currentLanguage === "en") return "a recorded practice";
+    if (currentLanguage === "zh") return "有一段练习记录";
+    return "มีการภาวนาที่บันทึกไว้";
   }
   return "";
 }
@@ -4435,13 +4435,13 @@ function buildHydrationDetailAnchors(signals) {
   const caffeineLabels = getRootCaffeinatedDrinkLabels(1);
   const activityLabels = getRootActivityDetailLabels(1);
   if (caffeineLabels.length) {
-    if (currentLanguage === "en") anchors.push(`There is caffeine context from ${formatRootDetailList(caffeineLabels)} beside the water signal.`);
-    else if (currentLanguage === "zh") anchors.push(`${formatRootDetailList(caffeineLabels)}带来一些咖啡因背景，放在饮水信号旁边看。`);
-    else anchors.push(`มีคาเฟอีนจาก${formatRootDetailList(caffeineLabels)}อยู่ข้างสัญญาณน้ำด้วยค่ะ`);
+    if (currentLanguage === "en") anchors.push(`${formatRootDetailList(caffeineLabels)} also brought caffeine into the day.`);
+    else if (currentLanguage === "zh") anchors.push(`${formatRootDetailList(caffeineLabels)}也让今天有了咖啡因。`);
+    else anchors.push(`วันนี้ยังมีคาเฟอีนจาก${formatRootDetailList(caffeineLabels)}ด้วยค่ะ`);
   } else if (activityLabels.length) {
-    if (currentLanguage === "en") anchors.push(`${formatRootDetailList(activityLabels)} is the activity context around hydration today.`);
-    else if (currentLanguage === "zh") anchors.push(`${formatRootDetailList(activityLabels)}是今天饮水旁边的活动背景。`);
-    else anchors.push(`${formatRootDetailList(activityLabels)}เป็นบริบทกิจกรรมที่อยู่ข้างน้ำวันนี้`);
+    if (currentLanguage === "en") anchors.push(`${formatRootDetailList(activityLabels)} was also part of today, so water can be read beside that effort.`);
+    else if (currentLanguage === "zh") anchors.push(`今天也有${formatRootDetailList(activityLabels)}，饮水可以和这份用力放在一起看。`);
+    else anchors.push(`วันนี้ยังมี${formatRootDetailList(activityLabels)} จึงลองวางเรื่องน้ำไว้ข้างกิจกรรมนั้นค่ะ`);
   }
   return anchors.length ? anchors : [getRootAwareSupportingHint("hydration", signals)];
 }
@@ -4457,9 +4457,9 @@ function buildSleepDetailAnchors(signals) {
   const caffeineLabels = getRootCaffeinatedDrinkLabels(1);
   const loadContext = getRootLoadContextLabel(signals);
   if (caffeineLabels.length) {
-    if (currentLanguage === "en") anchors.push(`${formatRootDetailList(caffeineLabels)} gives the day a caffeine context, held beside recovery.`);
-    else if (currentLanguage === "zh") anchors.push(`${formatRootDetailList(caffeineLabels)}给今天带来咖啡因背景，放在恢复旁边看。`);
-    else anchors.push(`${formatRootDetailList(caffeineLabels)}เป็นบริบทคาเฟอีนที่วางข้างการพักวันนี้`);
+    if (currentLanguage === "en") anchors.push(`${formatRootDetailList(caffeineLabels)} also brought caffeine into the day, so it can sit beside the sleep reading.`);
+    else if (currentLanguage === "zh") anchors.push(`${formatRootDetailList(caffeineLabels)}也让今天有了咖啡因，可以和睡眠放在一起看。`);
+    else anchors.push(`วันนี้ยังมีคาเฟอีนจาก${formatRootDetailList(caffeineLabels)} จึงลองวางไว้ข้างเรื่องการพักค่ะ`);
   } else if (loadContext) {
     if (currentLanguage === "en") anchors.push(`The day also has ${loadContext}, so recovery is read with that load nearby.`);
     else if (currentLanguage === "zh") anchors.push(`今天也有${loadContext}，所以恢复会放在这个负荷旁边读。`);
@@ -4474,9 +4474,9 @@ function buildLoadDetailAnchors(signals) {
   const loadScore = Number(signals.recoveryLoad?.loadScore || 0);
   const loadLevel = localizeLoadLevel(appState.loadLevel || getLoadLevel(loadScore));
   if (activityLabels.length) {
-    if (currentLanguage === "en") anchors.push(`Today has ${formatRootDetailList(activityLabels)} as the visible activity/load context.`);
-    else if (currentLanguage === "zh") anchors.push(`今天可见的活动/负荷背景是${formatRootDetailList(activityLabels)}。`);
-    else anchors.push(`วันนี้มี${formatRootDetailList(activityLabels)}เป็น load ของวัน`);
+    if (currentLanguage === "en") anchors.push(`Today included ${formatRootDetailList(activityLabels)}, which used some of the day’s energy.`);
+    else if (currentLanguage === "zh") anchors.push(`今天有${formatRootDetailList(activityLabels)}，也用去了一些力。`);
+    else anchors.push(`วันนี้มี${formatRootDetailList(activityLabels)} และใช้แรงไปส่วนหนึ่ง`);
   } else if (loadScore > 0 || loadLevel) {
     if (currentLanguage === "en") anchors.push(`The saved load level is ${loadLevel}.`);
     else if (currentLanguage === "zh") anchors.push(`已记录的负荷层级是 ${loadLevel}。`);
@@ -4489,9 +4489,9 @@ function buildLoadDetailAnchors(signals) {
     else if (currentLanguage === "zh") anchors.push(`放在${sleepContext}旁边看，这个负荷适合和恢复一起读。`);
     else anchors.push(`เมื่อวางคู่กับ${sleepContext} หนูอ่าน load นี้พร้อมพื้นที่ recovery ค่ะ`);
   } else if (water) {
-    if (currentLanguage === "en") anchors.push(`Water is about ${water}, so it stays as support context around the load.`);
-    else if (currentLanguage === "zh") anchors.push(`饮水约 ${water}，作为负荷周围的支持背景。`);
-    else anchors.push(`น้ำประมาณ ${water} อยู่เป็นบริบทพยุงรอบ load นี้`);
+    if (currentLanguage === "en") anchors.push(`Water is about ${water}, so it can help support the body after that effort.`);
+    else if (currentLanguage === "zh") anchors.push(`饮水约 ${water}，可以在这份用力之后支持身体。`);
+    else anchors.push(`น้ำประมาณ ${water} พอช่วยพยุงร่างกายหลังใช้แรงได้ค่ะ`);
   }
   return anchors.length ? anchors : [getRootAwareSupportingHint("load_activity", signals)];
 }
@@ -4502,18 +4502,18 @@ function buildDrinksDetailAnchors(signals) {
   const caffeineLabels = getRootCaffeinatedDrinkLabels(2);
   const sweetLabels = getRootSweetDrinkLabels(2);
   if (caffeineLabels.length) {
-    if (currentLanguage === "en") anchors.push(`Caffeine appears through ${formatRootDetailList(caffeineLabels)} in today's drink context.`);
-    else if (currentLanguage === "zh") anchors.push(`今天的咖啡因背景来自${formatRootDetailList(caffeineLabels)}。`);
-    else anchors.push(`วันนี้มีคาเฟอีนจาก${formatRootDetailList(caffeineLabels)}เป็นส่วนหนึ่งของบริบท`);
+    if (currentLanguage === "en") anchors.push(`Today’s caffeine came from ${formatRootDetailList(caffeineLabels)}.`);
+    else if (currentLanguage === "zh") anchors.push(`今天的咖啡因来自${formatRootDetailList(caffeineLabels)}。`);
+    else anchors.push(`วันนี้มีคาเฟอีนจาก${formatRootDetailList(caffeineLabels)}`);
   } else if (drinkLabels.length) {
-    if (currentLanguage === "en") anchors.push(`Today's drink context includes ${formatRootDetailList(drinkLabels)}.`);
-    else if (currentLanguage === "zh") anchors.push(`今天的饮品背景包括${formatRootDetailList(drinkLabels)}。`);
-    else anchors.push(`บริบทเครื่องดื่มวันนี้มี${formatRootDetailList(drinkLabels)}`);
+    if (currentLanguage === "en") anchors.push(`Today’s drinks included ${formatRootDetailList(drinkLabels)}.`);
+    else if (currentLanguage === "zh") anchors.push(`今天的饮品包括${formatRootDetailList(drinkLabels)}。`);
+    else anchors.push(`เครื่องดื่มวันนี้มี${formatRootDetailList(drinkLabels)}`);
   }
   if (sweetLabels.length) {
-    if (currentLanguage === "en") anchors.push(`${formatRootDetailList(sweetLabels)} carries visible sweetness context in the saved data.`);
-    else if (currentLanguage === "zh") anchors.push(`${formatRootDetailList(sweetLabels)}在记录中带有甜度背景。`);
-    else anchors.push(`${formatRootDetailList(sweetLabels)}มีบริบทความหวานอยู่ในข้อมูลที่บันทึกไว้`);
+    if (currentLanguage === "en") anchors.push(`${formatRootDetailList(sweetLabels)} was recorded with sweetness.`);
+    else if (currentLanguage === "zh") anchors.push(`${formatRootDetailList(sweetLabels)}记录了甜度。`);
+    else anchors.push(`${formatRootDetailList(sweetLabels)}มีความหวานตามที่บันทึกไว้`);
   } else {
     const water = formatRootWaterValue(signals);
     if (water) {
@@ -4541,13 +4541,13 @@ function buildMindDetailAnchors(signals) {
     const support = localizeMindNoteValue("Mind_Note_Support", signals.mindNote.support);
     if (currentLanguage === "en") anchors.push(`The selected support cue is ${support}.`);
     else if (currentLanguage === "zh") anchors.push(`已选择的支持提示是 ${support}。`);
-    else anchors.push(`support need วันนี้อยู่ที่ ${support}`);
+    else anchors.push(`วันนี้ใจอยากได้ ${support}`);
   } else {
     const loadContext = getRootLoadContextLabel(signals);
     if (loadContext) {
-      if (currentLanguage === "en") anchors.push(`${loadContext} stays as background around the mind note.`);
-      else if (currentLanguage === "zh") anchors.push(`${loadContext}先留在心的背景周围。`);
-      else anchors.push(`${loadContext}อยู่เป็นฉากรอบ ๆ บริบทใจ`);
+      if (currentLanguage === "en") anchors.push(`${loadContext} can stay beside the Mind Note without deciding its meaning.`);
+      else if (currentLanguage === "zh") anchors.push(`${loadContext}可以放在 Mind Note 旁边，但不替它决定意义。`);
+      else anchors.push(`${loadContext}อยู่ข้าง Mind Note ได้ โดยไม่ต้องสรุปความหมายแทนค่ะ`);
     }
   }
   return anchors.length ? anchors : [getRootAwareSupportingHint("mind_state", signals)];
@@ -4566,9 +4566,9 @@ function buildPracticeDetailAnchors() {
     : "";
   const note = truncateText(todayPractice.practiceNote, 90);
   if (typeLabel || minutes) {
-    if (currentLanguage === "en") anchors.push(`Practice context today includes ${typeLabel || "practice"}${minutes ? ` for about ${minutes} minutes` : ""}.`);
-    else if (currentLanguage === "zh") anchors.push(`今天的练习背景包括 ${typeLabel || "练习"}${minutes ? `，约 ${minutes} 分钟` : ""}。`);
-    else anchors.push(`วันนี้มี${typeLabel || "การภาวนา"}${minutes ? `ประมาณ ${minutes} นาที` : ""}เป็นบริบทของวัน`);
+    if (currentLanguage === "en") anchors.push(`Today included ${typeLabel || "practice"}${minutes ? ` for about ${minutes} minutes` : ""}.`);
+    else if (currentLanguage === "zh") anchors.push(`今天有${typeLabel || "练习"}${minutes ? `，约 ${minutes} 分钟` : ""}。`);
+    else anchors.push(`วันนี้มี${typeLabel || "การภาวนา"}${minutes ? `ประมาณ ${minutes} นาที` : ""}`);
   }
   if (note) {
     if (currentLanguage === "en") anchors.push(`The practice note says ${formatRootDetailQuote(note)}.`);
@@ -4628,21 +4628,21 @@ function buildSleepRootReflectionSegments(signals) {
 
   if (currentLanguage === "en") {
     const contextLine = contexts.length
-      ? `${joinListNaturally(contexts)} stays as surrounding context, not as proof.`
-      : "Other signals stay in the background instead of taking over the reading.";
+      ? `${joinListNaturally(contexts)} can sit beside the sleep reading, but does not prove a cause.`
+      : "Other details can stay quietly nearby without taking over this reading.";
     return [...detailAnchors, contextLine, "If the body still feels underfilled, recovery can lead the next rhythm before adding more."];
   }
 
   if (currentLanguage === "zh") {
     const contextLine = contexts.length
-      ? `${joinListNaturally(contexts)}只是周围背景，不读成原因。`
-      : "其他信号先留在背景里，不抢走这个主轴。";
+      ? `${joinListNaturally(contexts)}可以和睡眠放在一起看，但不能证明原因。`
+      : "其他细节可以轻轻放在旁边，不需要盖过这次阅读。";
     return [...detailAnchors, contextLine, "如果身体还没满，下一段先让恢复走在前面就好。"];
   }
 
   const contextLine = contexts.length
-    ? `${joinListNaturally(contexts)}เป็นเพียงบริบทที่อยู่รอบการพัก ไม่ใช่เหตุและผลค่ะ`
-    : "สัญญาณอื่นขออยู่เป็นฉากหลัง เพื่อให้การพักมีพื้นที่ในรอบนี้ค่ะ";
+    ? `${joinListNaturally(contexts)}วางไว้ข้างเรื่องการพักได้ แต่ยังไม่ใช่เหตุและผลค่ะ`
+    : "รายละเอียดอื่นขอวางไว้ข้าง ๆ เพื่อให้เรื่องการพักมีพื้นที่ในรอบนี้ค่ะ";
   return [...detailAnchors, contextLine, "ถ้าร่างกายยังไม่เต็ม รอบถัดไปให้ recovery เดินนำหนึ่งจังหวะก่อนก็พอค่ะ"];
 }
 
@@ -4695,20 +4695,20 @@ function buildMindRootReflectionSegments(signals) {
 
   if (currentLanguage === "en") {
     const contextLine = contexts.length && detailAnchors.length < 2
-      ? `${joinListNaturally(contexts)} stays as surrounding context, not the main meaning.`
+      ? `${joinListNaturally(contexts)} can stay nearby without deciding the main meaning.`
       : "";
     return [...detailAnchors, contextLine, "The final meaning still belongs to you. NuTuenSai is only holding a small light beside it."];
   }
 
   if (currentLanguage === "zh") {
     const contextLine = contexts.length && detailAnchors.length < 2
-      ? `${joinListNaturally(contexts)}只是周围背景，不是主要意义。`
+      ? `${joinListNaturally(contexts)}可以放在旁边，但不替你决定主要意义。`
       : "";
     return [...detailAnchors, contextLine, "最后的意义仍然属于你。NuTuenSai 只是轻轻帮你照亮这一块。"];
   }
 
   const contextLine = contexts.length && detailAnchors.length < 2
-    ? `${joinListNaturally(contexts)}เป็นเพียงฉากรอบ ๆ ไม่ใช่ความหมายหลักค่ะ`
+    ? `${joinListNaturally(contexts)}อยู่ข้าง ๆ ได้ โดยไม่ต้องกลายเป็นความหมายหลักค่ะ`
     : "";
   return [...detailAnchors, contextLine, "ความหมายสุดท้ายยังอยู่กับพี่นะคะ หนูแค่ช่วยถือไฟฉายเบา ๆ ให้เห็นพื้นที่นั้นชัดขึ้น"];
 }
@@ -4717,7 +4717,7 @@ function buildPracticeRootReflectionSegments(signals) {
   const todayPractice = buildTodayPracticeContext(appState);
   const detailAnchors = buildRootSpecificDetailAnchors("practice_context", signals);
   const mindContext = signals.mindNote?.mind || signals.mindNote?.text
-    ? (currentLanguage === "en" ? "mind context" : currentLanguage === "zh" ? "心的背景" : "บริบทใจ")
+    ? (currentLanguage === "en" ? "what was recorded in the Mind Note" : currentLanguage === "zh" ? "Mind Note 中记录的内容" : "สิ่งที่บันทึกไว้ใน Mind Note")
     : "";
   const sleepContext = getRootSleepContextLabel(signals);
   const loadContext = getRootLoadContextLabel(signals);
@@ -4752,17 +4752,17 @@ function buildPracticeRootReflectionSegments(signals) {
     else if (currentLanguage === "zh") meaningLine = "今天记录里有一段自我照顾的空间，可以保持轻盈和稳定，不需要变成表现。";
     else meaningLine = "วันนี้มีพื้นที่ของการกลับมาดูแลใจที่บันทึกไว้ หนูขออ่านเป็นจังหวะที่ค่อย ๆ ดูแล ไม่ใช่ผลงานที่เอาไปวัดหรือเปรียบเทียบค่ะ";
   } else {
-    if (currentLanguage === "en") meaningLine = "The practice recorded today can be held as a gentle self-care context, without judging its length or quality.";
-    else if (currentLanguage === "zh") meaningLine = "今天记录的练习可以作为温和的自我照顾背景，不评价时长或质量。";
-    else meaningLine = "การภาวนาที่บันทึกไว้วันนี้อยู่เป็นบริบทการดูแลใจได้ โดยไม่ต้องตัดสินระยะเวลาหรือคุณภาพค่ะ";
+    if (currentLanguage === "en") meaningLine = "The practice recorded today can stay as a gentle part of self-care, without judging its length or quality.";
+    else if (currentLanguage === "zh") meaningLine = "今天记录的练习可以温和地成为自我照顾的一部分，不评价时长或质量。";
+    else meaningLine = "การภาวนาที่บันทึกไว้วันนี้เป็นส่วนหนึ่งของการดูแลใจได้ โดยไม่ต้องตัดสินระยะเวลาหรือคุณภาพค่ะ";
   }
 
   const contextLine = contextLabel
     ? currentLanguage === "en"
-      ? `${contextLabel} can sit beside this practice as today's context, without turning either one into a conclusion.`
+      ? `${contextLabel} can sit beside this practice without turning either one into a conclusion.`
       : currentLanguage === "zh"
-        ? `${contextLabel}可以放在练习旁边作为今天的背景，不把任何一项读成结论。`
-        : `${contextLabel}อยู่ข้างการภาวนาเป็นบริบทของวันได้ โดยไม่เปลี่ยนสิ่งใดให้เป็นข้อสรุปค่ะ`
+        ? `${contextLabel}可以放在练习旁边，不把任何一项读成结论。`
+        : `${contextLabel}อยู่ข้างการภาวนาได้ โดยไม่เปลี่ยนสิ่งใดให้เป็นข้อสรุปค่ะ`
     : "";
   const closingLine = currentLanguage === "en"
     ? "When ready, returning gently is enough; the meaning of this practice remains yours."
@@ -7604,11 +7604,10 @@ function applyNuTuenSaiOverviewVoice(text, context = {}) {
   const variant = getNuTuenSaiVoiceVariant(context, 2);
   const replacement = variant === 0
     ? "วันนี้หนูอ่านได้ว่า"
-    : "จากสัญญาณวันนี้ หนูอ่านได้ว่า";
+    : "จากสิ่งที่บันทึกไว้วันนี้ หนูอ่านได้ว่า";
 
   return String(text)
-    .replace("วันนี้จึงอาจอ่านได้ว่า", replacement)
-    .replace("จากสัญญาณที่กรอกวันนี้ ระบบอ่านเป็น", "จากสัญญาณที่กรอกวันนี้ หนูอ่านเป็น");
+    .replace("วันนี้จึงอาจอ่านได้ว่า", replacement);
 }
 
 function applyNuTuenSaiReflectionVoice(blocks = [], context = {}) {
@@ -7655,8 +7654,8 @@ function softenNuTuenSaiReportLanguage(text, role = "") {
     .replace(/ระบบอ่านเป็นจุดเริ่มต้นเบา ๆ/g, "ยังเป็นจุดเริ่มต้นเล็ก ๆ")
     .replace(/ระบบอ่านเป็น/g, "วันนี้อ่านเป็น")
     .replace(/ควรถูกอ่านผ่าน/g, "อาจเหมาะกับการมองผ่าน")
-    .replace(/support signal/g, "สัญญาณพยุงเล็ก ๆ")
-    .replace(/context ต่อเนื่อง/g, "การคุมบริบทต่อเนื่อง")
+    .replace(/support signal/g, "สิ่งเล็ก ๆ ที่ช่วยพยุงวันนี้")
+    .replace(/context ต่อเนื่อง/g, "สิ่งที่ต่อเนื่องจากวันก่อน")
     .replace(/เพิ่ม output/g, "เร่งผลลัพธ์")
     .replace(/การเพิ่ม output/g, "การเร่งผลลัพธ์")
     .replace(/ output/g, " ผลลัพธ์");
@@ -7751,7 +7750,7 @@ function joinThaiReflectionAnchors(phrases) {
   }
   return [
     `จากวันนี้${leadPhrases[0]} และ${leadPhrases[1]}`,
-    `อีกบริบทหนึ่งคือ${secondaryPhrases[2]} ส่วน${secondaryPhrases[3]}`
+    `วันนี้ยังมี${secondaryPhrases[2]} ส่วน${secondaryPhrases[3]}`
   ].join("\n\n");
 }
 
@@ -7761,12 +7760,12 @@ function joinEnglishReflectionAnchors(phrases) {
   if (phrases.length === 3) {
     return [
       `Today includes ${cleanPhrases[0]} and ${cleanPhrases[1]}.`,
-      `Another signal is ${cleanPhrases[2]}.`
+      `Today also includes ${cleanPhrases[2]}.`
     ].join("\n\n");
   }
   return [
     `Today includes ${cleanPhrases[0]} and ${cleanPhrases[1]}.`,
-    `Other signals include ${cleanPhrases[2]} and ${cleanPhrases[3]}.`
+    `Also recorded today: ${cleanPhrases[2]} and ${cleanPhrases[3]}.`
   ].join("\n\n");
 }
 
@@ -7776,12 +7775,12 @@ function joinChineseReflectionAnchors(phrases) {
   if (phrases.length === 3) {
     return [
       `今天可以先看见：${cleanPhrases[0]}，也有${cleanPhrases[1]}。`,
-      `${cleanPhrases[2]}也是今天的一个 context。`
+      `今天还记录了${cleanPhrases[2]}。`
     ].join("\n\n");
   }
   return [
     `今天可以先看见：${cleanPhrases[0]}，也有${cleanPhrases[1]}。`,
-    `${cleanPhrases[2]}也是一个 context；同时${cleanPhrases[3]}。`
+    `今天还记录了${cleanPhrases[2]}，同时也有${cleanPhrases[3]}。`
   ].join("\n\n");
 }
 
@@ -7789,27 +7788,27 @@ function getInputGroundedReadingSentence(intentKey) {
   const readingSentences = {
     th: {
       restore_baseline: "วันนี้จึงอาจอ่านได้ว่าเป็นวันที่ค่อย ๆ กลับมาดูแลจังหวะพื้นฐาน มากกว่าต้องเร่งชดเชยอะไรทันที",
-      reduce_guilt: "วันนี้จึงอาจอ่านได้ว่าไม่ใช่วันที่ต้องโทษตัวเอง แต่เป็นวันที่เห็น pattern แล้วค่อย ๆ กลับมาดูแลฐานเดิม",
-      notice_pattern: "วันนี้จึงอาจอ่านได้ว่าเป็น pattern เล็ก ๆ ให้สังเกต ไม่ใช่ข้อสรุปใหญ่เกี่ยวกับตัวเอง",
-      protect_agency: "วันนี้จึงอาจอ่านได้ว่าเป็นข้อมูลให้เลือกจังหวะที่พอดี โดยผู้ใช้ยังเป็นคนตัดสินความหมายของวัน",
-      pause_not_push: "วันนี้จึงอาจอ่านได้ว่า recovery และการไม่เร่งเพิ่มคือจังหวะที่เหมาะกว่า push ต่อ",
+      reduce_guilt: "วันนี้ไม่จำเป็นต้องกลายเป็นเรื่องให้โทษตัวเอง แค่เห็นสิ่งที่เกิดขึ้นแล้วค่อย ๆ กลับมาดูแลก็พอ",
+      notice_pattern: "วันนี้มีเรื่องเล็ก ๆ ให้สังเกต โดยยังไม่ต้องรีบสรุปอะไรเกี่ยวกับตัวเอง",
+      protect_agency: "ข้อมูลวันนี้ช่วยให้เลือกจังหวะที่พอดีได้ ส่วนความหมายของวันยังอยู่กับพี่เสมอ",
+      pause_not_push: "วันนี้การพักและไม่เร่งเพิ่ม อาจพอดีกับร่างกายมากกว่าฝืนเดินต่อ",
       soft_continue: "วันนี้จึงอาจอ่านได้ว่าเป็นจังหวะที่ค่อย ๆ ต่อเนื่องได้ โดยไม่ต้องทำให้ทุกอย่างสมบูรณ์แบบ"
     },
     en: {
       restore_baseline: "Today may be better read as a gentle return-to-baseline day rather than something to quickly correct.",
-      reduce_guilt: "Today does not need to become self-blame; it can simply be a pattern to notice and return from gently.",
-      notice_pattern: "Today may be read as a small pattern signal, not a large conclusion about yourself.",
+      reduce_guilt: "Today does not need to become self-blame. It is enough to notice what happened and meet it gently.",
+      notice_pattern: "There is something small to notice today, not a large conclusion about yourself.",
       protect_agency: "The data can support a clearer choice of rhythm while the meaning of the day stays with you.",
-      pause_not_push: "Recovery and not pushing more may fit the day better than adding output.",
-      soft_continue: "Today can continue gently without needing every signal to be perfect."
+      pause_not_push: "Rest and not pushing more may fit the day better than adding more.",
+      soft_continue: "Today can continue gently without needing everything to be perfect."
     },
     zh: {
       restore_baseline: "今天更适合慢慢回到基础节奏，而不是急着修正。",
-      reduce_guilt: "今天不需要变成自责，只是一个可以看见并温和回来的 pattern。",
-      notice_pattern: "今天更像一个小小的 pattern 信号，不是关于自己的大结论。",
+      reduce_guilt: "今天不需要变成自责。看见发生了什么，再温柔地回应就够了。",
+      notice_pattern: "今天有一件小事值得留意，不是关于自己的大结论。",
       protect_agency: "这些资料可以帮助选择合适节奏，但今天的意义仍然由你来决定。",
-      pause_not_push: "recovery 和不继续 push 可能比增加 output 更适合今天。",
-      soft_continue: "今天可以温和地继续，不需要每个信号都完美。"
+      pause_not_push: "休息和不再勉强自己，可能比继续增加事情更适合今天。",
+      soft_continue: "今天可以温和地继续，不需要每件事都完美。"
     }
   };
   return readingSentences[currentLanguage]?.[intentKey] || readingSentences[currentLanguage]?.notice_pattern || "";
@@ -8485,7 +8484,7 @@ function getMergedRecoveryReflectionCue(signals = {}) {
     else if (cues.includes("load")) parts.push("today's load");
     if (cues.includes("rest")) parts.push("a rest-first support need");
     if (!parts.length) return "";
-    return "Recovery may fit the day better than adding more output.";
+    return "Rest may fit today better than asking the body to do more.";
   }
 
   if (currentLanguage === "zh") {
@@ -8495,7 +8494,7 @@ function getMergedRecoveryReflectionCue(signals = {}) {
     else if (cues.includes("load")) parts.push("今天的 load");
     if (cues.includes("rest")) parts.push("Mind Note 指向先休息");
     if (!parts.length) return "";
-    return `今天有${parts.join("、")}一起指向 recovery。把它当成一个清楚的提示就好，不需要继续加压。`;
+    return `今天有${parts.join("、")}同时出现。可以先让恢复走在前面，不需要继续加压。`;
   }
 
   const parts = [];
@@ -8505,7 +8504,7 @@ function getMergedRecoveryReflectionCue(signals = {}) {
   if (cues.includes("rest")) parts.push("Mind Note ชี้ไปทางพักก่อน");
   if (cues.includes("mind") && !cues.includes("rest")) parts.push("ภาวะใจมีแรงกด");
   if (!parts.length) return "";
-  return `วันนี้มี${joinListNaturally(parts)}อยู่ในภาพเดียวกัน หนูอ่านเป็นสัญญาณให้ recovery นำก่อนการเร่งเพิ่มนะคะ`;
+  return `วันนี้มี${joinListNaturally(parts)}อยู่ด้วยกัน หนูขอชวนให้การพักนำก่อน โดยยังไม่ต้องเร่งเพิ่มนะคะ`;
 }
 
 function joinListNaturally(items = []) {
