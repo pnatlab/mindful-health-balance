@@ -42,7 +42,7 @@ const translations = {
     eyebrow: "Personal mindful dashboard",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v2.1 — Gentle Mind Note",
+    version: "v2.2 — Daily Log Gap Awareness",
     subtitle: "แอปบันทึกจังหวะชีวิตแบบ local-first พร้อม Field Review และ Signal Engine",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
@@ -1038,7 +1038,7 @@ const translations = {
     eyebrow: "Personal mindful dashboard",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v2.1 — Gentle Mind Note",
+    version: "v2.2 — Daily Log Gap Awareness",
     subtitle: "A local-first reflective health log with Field Review and Signal Engine.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
@@ -2034,7 +2034,7 @@ const translations = {
     eyebrow: "个人正念健康仪表板",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v2.1 — Gentle Mind Note",
+    version: "v2.2 — Daily Log Gap Awareness",
     subtitle: "本地优先的反思型健康记录，包含 Field Review 与 Signal Engine。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
@@ -6915,7 +6915,8 @@ function buildSignals() {
     drinkLoad: getDrinkLoadSignal(drinkScores),
     recoveryLoad: getRecoveryLoadSignal(loadScore),
     energySleep: getEnergySleepSignal(loadScore, sleepDetail),
-    mindNote: getMindNoteSignal()
+    mindNote: getMindNoteSignal(),
+    dailyLogGap: getDailyLogGapContext(todayIso)
   };
   signals.continuity = buildContinuitySignals(signals, getPreviousLogContext(todayIso));
   return signals;
@@ -6928,6 +6929,59 @@ function getPreviousLogContext(currentDate = todayIso, dailyLogs = getDailyLog()
     .filter((row) => row.Date && (!current || row.Date < current))
     .sort((a, b) => String(b.Date).localeCompare(String(a.Date)))
     .slice(0, limit);
+}
+
+function getDailyLogGapContext(currentDate = todayIso, dailyLogs = getDailyLog()) {
+  const currentDayNumber = getNormalizedDailyLogDayNumber(currentDate);
+  const emptyContext = {
+    hasPreviousLog: false,
+    lastLoggedDate: "",
+    daysSinceLastLog: null,
+    missedDays: 0,
+    isReturningAfterGap: false
+  };
+  if (currentDayNumber === null) return emptyContext;
+
+  const previousDates = (dailyLogs || [])
+    .map(normalizeLogRow)
+    .map((row) => ({
+      date: row.Date,
+      dayNumber: getNormalizedDailyLogDayNumber(row.Date)
+    }))
+    .filter(({ dayNumber }) => dayNumber !== null && dayNumber < currentDayNumber)
+    .sort((a, b) => b.dayNumber - a.dayNumber);
+
+  const latest = previousDates[0];
+  if (!latest) return emptyContext;
+
+  const daysSinceLastLog = currentDayNumber - latest.dayNumber;
+  const missedDays = Math.max(0, daysSinceLastLog - 1);
+  return {
+    hasPreviousLog: true,
+    lastLoggedDate: latest.date,
+    daysSinceLastLog,
+    missedDays,
+    isReturningAfterGap: missedDays > 0
+  };
+}
+
+function getNormalizedDailyLogDayNumber(value) {
+  const normalized = normalizeExcelDate(value);
+  const match = normalized.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return null;
+
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const timestamp = Date.UTC(year, month - 1, day);
+  const parsed = new Date(timestamp);
+  if (
+    parsed.getUTCFullYear() !== year
+    || parsed.getUTCMonth() !== month - 1
+    || parsed.getUTCDate() !== day
+  ) return null;
+
+  return Math.floor(timestamp / 86400000);
 }
 
 function buildContinuitySignals(currentSignals, previousRows = []) {

@@ -14,7 +14,7 @@ Mindful Health Balance by MSxAI 是一款本地优先的个人节律观察原型
 
 它不是医疗诊断工具，也不能代替医生、专业照护或既定的医疗随访。
 
-本指南说明当前的 **MHB 2.1 — Gentle Mind Note**。它建立在 MHB 2.0 的 Field Review、Signal Engine 与 User Intention Profile 基础之上，不改变 schema，也不迁移历史数据。
+本指南说明当前的 **MHB 2.2 — Daily Log Gap Awareness**。它建立在 MHB 2.1 Gentle Mind Note 与 MHB 2.0 的 Field Review、Signal Engine、User Intention Profile 基础之上，不改变 schema，也不迁移历史数据。
 
 应用的价值不在于成为生产级 SaaS，而在于提供一个由用户拥有、可以导出、可以检查，并能由用户主动交给 AI 协助反思的个人数据层。数据的最终意义仍由用户决定。
 
@@ -296,7 +296,7 @@ Mind Note 之前的邀请“今天，心可以轻轻安住在哪里？”用于�
 - 一句话就够了，也可以留空
 - 用它观察心境与 hydration、recovery、load、sleep 之间的节律，而不是评价人格
 
-MHB 2.1 只改变 Mind Note 的措辞、分组与视觉呼吸空间。既有值仍兼容；`Daily_Log`、Excel、Reflection、Field Review 与 Signal Engine contract 不变。
+MHB 2.1 只改变了 Mind Note 的措辞、分组与视觉呼吸空间。MHB 2.2 仅在运行时感知 `Daily_Log` 已保存日期之间的时间。既有值仍兼容；Excel、当前 Reflection 输出、Field Review 与 Signal Engine contract 不变。
 
 ### Reflection Generator
 
@@ -332,6 +332,8 @@ Reflection Root 由用户选择本次观察轴，例如饮水、休息、活动�
 ### Daily Log Table
 
 Daily Log Table 用于回看多天节律，例如哪些日子 load 较高、睡得少、饮水少，或心境开始有压力。
+
+MHB 2.2 可以在运行时从 `Daily_Log.Date` 推导最近一次较早的记录日期，以及两次记录之间相隔的日历天数。它不会保存新的计数器，不建立 streak，不提供奖励或惩罚，也不会把暂时没有记录理解为失败。
 
 它不是健康评分表，只是一面帮助观察生活节律的镜子。
 

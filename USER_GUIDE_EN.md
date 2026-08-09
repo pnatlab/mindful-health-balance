@@ -14,7 +14,7 @@ The app helps you record honest daily signals as structured local data across:
 
 This app is not a medical tool, not a diagnosis system, and not a replacement for professional care or medical follow-up.
 
-This guide describes the current **MHB 2.1 — Gentle Mind Note** release, built on the locked MHB 2.0 Field Review, Signal Engine, and User Intention Profile foundation without changing schema or historical data.
+This guide describes the current **MHB 2.2 — Daily Log Gap Awareness** release, built on MHB 2.1 Gentle Mind Note and the locked MHB 2.0 Field Review, Signal Engine, and User Intention Profile foundation without changing schema or historical data.
 
 Its value is not in being a production SaaS platform. Its value is in a portable, user-owned data layer that can later be reviewed by the user or intentionally shared with AI without handing agency to the system.
 
@@ -344,7 +344,7 @@ Use it lightly:
 - Keep it short if that feels right
 - Use it to notice patterns between mind state, hydration, load, recovery, and sleep
 
-MHB 2.1 changes only Mind Note wording, grouping, and visual breathing room. Existing values remain available and compatible. `Daily_Log`, Excel, Reflection, Field Review, and Signal Engine contracts are unchanged.
+MHB 2.1 changed only Mind Note wording, grouping, and visual breathing room. MHB 2.2 adds runtime-only awareness of time between saved `Daily_Log` dates. Existing values remain compatible, and Excel, current Reflection output, Field Review, and Signal Engine contracts are unchanged.
 
 ## 16. Reflection Generator
 
@@ -388,6 +388,8 @@ If the same date already exists, the app asks before updating this section and k
 ## 18. Daily Log Table
 
 The Daily Log Table shows saved days in the browser. It helps you review patterns across multiple days, such as high-load days, low-sleep days, low-water days, or pressured-mind days.
+
+MHB 2.2 can derive the latest earlier log date and the number of calendar days between saved entries from `Daily_Log.Date` at runtime. It does not save another counter, create a streak, offer rewards or penalties, or treat time away from logging as failure.
 
 This table is not a judgment table. It is a local mirror for seeing life rhythm over time.
 
