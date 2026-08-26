@@ -7,6 +7,8 @@ const CURRENT_FORM_CLEARED_PREFIX = "mindfulHealthCurrentFormCleared";
 const USER_INTENTION_PROFILE_KEY = "mhb_user_intention_profile_v1";
 const USER_INTENTION_PROFILE_SCHEMA_VERSION = "1.0";
 const USER_INTENTION_PROFILE_SHEET_NAME = "User_Intention_Profile";
+const MEAL_COMPOSITION_RUNTIME = window.MHBMealRuntime;
+const MEAL_RECORDS_KEY = MEAL_COMPOSITION_RUNTIME?.MEAL_RECORDS_KEY || "mhb_meal_records_v1";
 const USER_INTENTION_PROFILE_EXPORT_COLUMNS = [
   "Profile_Schema_Version",
   "Display_Name",
@@ -9542,6 +9544,139 @@ function normalizeExcelDate(value) {
   }
   return String(value || "").trim();
 }
+
+function normalizeMealDate(value) {
+  return normalizeExcelDate(value);
+}
+
+function getMealCompositionStore() {
+  if (!MEAL_COMPOSITION_RUNTIME) return null;
+  return MEAL_COMPOSITION_RUNTIME.createMealStore(localStorage, {
+    normalizeDate: normalizeMealDate,
+    language: currentLanguage,
+    warn: (message, error) => console.warn(`[MHB Meal] ${message}`, error || "")
+  });
+}
+
+function getFoodReferenceLibrary() {
+  return MEAL_COMPOSITION_RUNTIME?.getFoodReferenceLibrary() || [];
+}
+
+function getFoodReferenceById(foodId) {
+  return MEAL_COMPOSITION_RUNTIME?.getFoodReferenceById(foodId) || null;
+}
+
+function getMealRecords() {
+  return getMealCompositionStore()?.getMealRecords() || [];
+}
+
+function setMealRecords(records) {
+  return getMealCompositionStore()?.setMealRecords(records) || [];
+}
+
+function getMealsForDate(date) {
+  return getMealCompositionStore()?.getMealsForDate(date) || [];
+}
+
+function createMeal(input) {
+  return getMealCompositionStore()?.createMeal(input) || null;
+}
+
+function updateMeal(mealId, updates) {
+  return getMealCompositionStore()?.updateMeal(mealId, updates) || null;
+}
+
+function deleteMeal(mealId) {
+  return getMealCompositionStore()?.deleteMeal(mealId) || false;
+}
+
+function createMealItem(input) {
+  return getMealCompositionStore()?.createMealItem(input) || null;
+}
+
+function addMealItem(mealId, input) {
+  return getMealCompositionStore()?.addMealItem(mealId, input) || null;
+}
+
+function updateMealItem(mealId, mealItemId, updates) {
+  return getMealCompositionStore()?.updateMealItem(mealId, mealItemId, updates) || null;
+}
+
+function deleteMealItem(mealId, mealItemId) {
+  return getMealCompositionStore()?.deleteMealItem(mealId, mealItemId) || null;
+}
+
+function deriveMealEstimate(meal) {
+  return MEAL_COMPOSITION_RUNTIME?.deriveMealEstimate(meal) || {
+    estimated_sodium_min_mg: null,
+    estimated_sodium_max_mg: null,
+    sodium_estimate_coverage: "unknown",
+    estimate_confidence: "unknown",
+    known_item_count: 0,
+    unknown_item_count: 0
+  };
+}
+
+function deriveDailyMealSummary(date = todayIso) {
+  const normalizedDate = normalizeMealDate(date);
+  return MEAL_COMPOSITION_RUNTIME?.deriveDailyMealSummary(normalizedDate, getMealRecords(), getFoodReferenceLibrary()) || {
+    date: normalizedDate,
+    recorded_meal_count: 0,
+    estimated_sodium_min_mg: null,
+    estimated_sodium_max_mg: null,
+    sodium_estimate_coverage: "unknown",
+    estimate_confidence: "unknown",
+    animal_protein_meals: 0,
+    plant_protein_meals: 0,
+    vegetable_present_meals: 0,
+    fried_food_meals: 0,
+    processed_food_meals: 0,
+    meals_with_recorded_condiments: 0,
+    recorded_protein_categories: [],
+    unknown_estimate_item_count: 0
+  };
+}
+
+function buildMealReflectionContext(date = todayIso) {
+  const normalizedDate = normalizeMealDate(date);
+  return MEAL_COMPOSITION_RUNTIME?.buildMealReflectionContext(normalizedDate, getMealRecords(), getFoodReferenceLibrary()) || {
+    date: normalizedDate,
+    hasMealData: false,
+    recordedMealCount: 0,
+    sodiumRange: { minMg: null, maxMg: null, coverage: "unknown" },
+    estimateConfidence: "unknown",
+    proteinCategories: [],
+    vegetablePresentMeals: 0,
+    friedFoodMeals: 0,
+    processedFoodMeals: 0,
+    mealsWithRecordedCondiments: 0,
+    hasUnknownEstimateCoverage: false
+  };
+}
+
+function getDailyMealViewModel(date = todayIso) {
+  return deriveDailyMealSummary(date);
+}
+
+Object.assign(window, {
+  MEAL_RECORDS_KEY,
+  getFoodReferenceLibrary,
+  getFoodReferenceById,
+  getMealRecords,
+  setMealRecords,
+  getMealsForDate,
+  createMeal,
+  updateMeal,
+  deleteMeal,
+  createMealItem,
+  addMealItem,
+  updateMealItem,
+  deleteMealItem,
+  deriveMealEstimate,
+  deriveDailyMealSummary,
+  buildMealReflectionContext,
+  getDailyMealViewModel
+});
 
 function saveCurrentDailyLog({ generateReflection = true, saveSource = "reflection" } = {}) {
   if (generateReflection) {
