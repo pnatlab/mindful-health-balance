@@ -76,6 +76,7 @@ Field Review Slice A, future Field Review Companion, timeframe-aware review, v2 
 Runtime architecture, modularization planning, and implementation-safety notes for future MHB refactors.
 
 - [SCRIPT_MODULARIZATION_PLAN.md](SCRIPT_MODULARIZATION_PLAN.md) - Audits the current monolithic `script.js` responsibilities and proposes a conservative GitHub Pages-compatible modularization path.
+- [MEAL_COMPOSITION_DATA_CONTRACT.md](MEAL_COMPOSITION_DATA_CONTRACT.md) - Proposes the MHB 2.3 Gentle Meal Composition data layers, uncertainty-aware sodium ranges, meal ownership, and workbook options for human review before runtime work.
 
 ## 99 Stabilization
 
