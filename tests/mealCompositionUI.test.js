@@ -33,6 +33,12 @@ function run() {
     "ถ้าอยากเก็บภาพคร่าว ๆ ของมื้อไหนไว้ เริ่มจากตรงนี้ได้เลย"
   ]);
 
+  assert.equal(model.getDraft().mealType, "unspecified");
+  assert.equal(model.getDraft().condimentKnowledge, "");
+  model.setDraftMeta({ mealType: "stir_fried", condimentKnowledge: "unknown" });
+  assert.equal(model.getDraft().mealType, "stir_fried");
+  assert.equal(model.getDraft().condimentKnowledge, "unknown");
+
   const egg = model.addFood("egg");
   const rice = model.addFood("rice");
   const fishSauce = model.addFood("fish_sauce");
@@ -54,6 +60,8 @@ function run() {
   assert.equal(firstSave.wasEditing, false);
   assert.equal(model.getMeals().length, 1);
   assert.equal(model.getMeals()[0].meal_id, firstSave.meal.meal_id);
+  assert.equal(firstSave.meal.meal_type, "stir_fried");
+  assert.equal(firstSave.meal.condiment_knowledge, "unknown");
   assert.equal(model.getDailySummary().recorded_meal_count, 1);
   assert.equal(model.getDailySummary().sodium_estimate_coverage, "partial");
   assert.match(mealUI.buildDailyReflectionLines(model.getDailySummary(), "th").join(" "), /1 มื้อที่บันทึกไว้/);
@@ -73,11 +81,16 @@ function run() {
   const firstId = firstSave.meal.meal_id;
   model.editMeal(firstId);
   assert.equal(model.getDraft().mealId, firstId);
+  assert.equal(model.getDraft().mealType, "stir_fried");
+  assert.equal(model.getDraft().condimentKnowledge, "unknown");
+  model.setDraftMeta({ mealType: "broth_based", condimentKnowledge: "" });
   const itemCountBeforeEdit = model.getDraft().items.length;
   model.addFood("mixed_vegetables");
   const editSave = model.saveDraft();
   assert.equal(editSave.wasEditing, true);
   assert.equal(editSave.meal.meal_id, firstId);
+  assert.equal(editSave.meal.meal_type, "broth_based");
+  assert.equal(editSave.meal.condiment_knowledge, "");
   assert.equal(model.getMeals().length, 2);
   assert.equal(editSave.meal.items.length, itemCountBeforeEdit + 1);
   assert.equal(model.getDailySummary().vegetable_present_meals, 1);
@@ -86,6 +99,29 @@ function run() {
   assert.equal(model.getMeals().length, 1);
   assert.equal(model.getMeals()[0].meal_id, firstId);
   assert.ok(storage.snapshot(mealRuntime.MEAL_RECORDS_KEY));
+
+  const noCondimentStorage = createMemoryStorage();
+  const noCondimentModel = mealUI.createMealComposerModel({
+    runtime: mealRuntime,
+    storage: noCondimentStorage,
+    date: TEST_DATE,
+    language: "th",
+    normalizeDate: (value) => String(value || "").trim(),
+    now: () => "2026-08-26T13:00:00.000Z",
+    createId: (prefix) => `${prefix}_no_condiment`,
+    warn: () => {}
+  });
+  noCondimentModel.setDraftMeta({ mealType: "curry" });
+  noCondimentModel.addFood("egg");
+  noCondimentModel.addFood("rice");
+  const noCondimentSave = noCondimentModel.saveDraft();
+  assert.equal(noCondimentSave.meal.condiment_knowledge, "");
+  assert.equal(noCondimentSave.meal.items.some((item) => item.food_id === "fish_sauce"), false);
+  assert.deepEqual([
+    noCondimentModel.getDailySummary().estimated_sodium_min_mg,
+    noCondimentModel.getDailySummary().estimated_sodium_max_mg,
+    noCondimentModel.getDailySummary().sodium_estimate_coverage
+  ], [60, 62, "partial"]);
 
   const evidenceReferences = ["egg", "fish_sauce", "soy_sauce", "oyster_sauce"]
     .map((foodId) => mealRuntime.getFoodReferenceById(foodId));
@@ -100,7 +136,9 @@ function run() {
     "title",
     "intro",
     "open",
+    "mealType",
     "chooseFood",
+    "condimentUnknown",
     "currentMeal",
     "save",
     "savedMeals",
@@ -113,6 +151,7 @@ function run() {
     ["grain", "animal_protein", "plant_protein", "egg", "vegetable", "soup", "condiment"].forEach((key) => {
       assert.ok(mealUI.TEXT[language].categories[key]);
     });
+    ["unspecified", "stir_fried", "curry", "broth_based"].forEach((key) => assert.ok(mealUI.TEXT[language].mealTypes[key]));
   });
 
   const allUserCopy = mealUI.SUPPORTED_LANGUAGES.flatMap((language) => [
@@ -123,6 +162,7 @@ function run() {
   assert.doesNotMatch(allUserCopy, /meal score|diet score|health score|medical target|calorie|good meal|bad meal/i);
   assert.doesNotMatch(allUserCopy, /วันนี้กิน\s*\d|today you ate\s*\d|今天吃了\s*\d/iu);
   assert.equal(Object.keys(model.getDailySummary()).some((key) => /score|medical|target/i.test(key)), false);
+  assert.equal(Object.keys(model.getMeals()[0]).some((key) => /daily_log|medical|target|score/i.test(key)), false);
 }
 
 run();

@@ -16,7 +16,8 @@ Meal Composer is a quiet place to assemble a rough record of one meal. It is not
 The interaction model is:
 
 ```text
-Choose food
+Choose meal type
+  -> choose known meal components
   -> assemble one meal
   -> adjust approximate portion or optional preparation
   -> keep the meal
@@ -29,19 +30,22 @@ One meal is information, not a score.
 
 The entry point is a summary-first card below the existing Today signal cards. It remains collapsed until the user chooses to open the workspace, so Today keeps its existing role and does not become a food dashboard.
 
-The workspace contains three light regions:
+The workspace contains four light regions:
 
-1. category-led food discovery with optional search;
-2. the current unsaved meal draft;
-3. compact saved meals for the selected date.
+1. Meal Type first: a broad, observable description such as stir-fried, curry, or broth-based;
+2. category-led Meal Components discovery with optional search;
+3. the current unsaved meal draft;
+4. compact saved meals for the selected date.
 
 The Dynamic Daily Meal Reflection Panel stays visible at the bottom. It is visually separate from the draft because it describes saved Meal records only.
 
 ## Interaction Contract
 
-- Food discovery starts with one compact category rather than exposing the full pilot as a large inventory grid.
+- Meal Type is the first interaction. It is optional, persists as `meal_type`, and defaults safely to `unspecified` for legacy records.
+- Meal Components are secondary. The user selects only what they saw or remember; they never need to reconstruct a recipe.
+- Food discovery starts with one compact component category rather than exposing the full pilot as a large inventory grid.
 - Search can find references across categories.
-- Condiments are selected exactly like other Food References.
+- Condiments are selected exactly like other Food References, but are never required. An explicit `condiment_knowledge: "unknown"` statement is distinct from not recording a condiment and does not create an ingredient or sodium inference.
 - Portion uses the runtime hybrid labels `small`, `regular`, `large`, and `custom`.
 - Preparation remains optional; blank and explicit `unknown` retain different meanings.
 - Saving creates a Meal Instance and resets only the composer draft.
@@ -62,6 +66,12 @@ The draft summary uses `deriveMealEstimate()`. The daily panel uses `deriveDaily
 - unknown: no supported range is available.
 
 Unknown is never rendered as `0 mg`. No score, traffic-light state, medical sodium target, or food-quality label is introduced.
+
+## Meal Type and Condiment Boundaries
+
+`meal_type` describes only the broad form the user recognizes. It does not supply hidden recipe details, estimate sodium, select a Reflection Root, or create a food-quality conclusion. The Meal Type taxonomy stays intentionally small: unspecified, stir-fried, boiled, curry, fried, grilled, steamed, broth-based, minimally prepared, and other.
+
+The optional unknown-condiment control preserves a user statement of uncertainty. A meal with no condiment item means only that none was recorded. Meal-Type-aware sodium estimation, restaurant-food assumptions, and any unknown-condiment estimate logic are intentionally deferred to **MHB 2.3F**.
 
 ## Daily Meal Reflection Panel
 

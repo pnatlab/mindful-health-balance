@@ -21,13 +21,17 @@
       open: "เปิดประกอบมื้อ",
       close: "เก็บพื้นที่ประกอบมื้อ",
       recordedCount: (count) => `${count} มื้อที่บันทึกไว้`,
-      chooseFood: "เลือกสิ่งที่อยู่ในมื้อนี้",
-      chooseFoodHelper: "ค้นหาหรือเลือกตามหมวด แล้วค่อยปรับรายละเอียดเท่าที่จำได้",
+      mealType: "มื้อนี้เป็นอาหารแบบไหน",
+      mealTypeHelper: "เลือกตามสิ่งที่เห็นหรือจำได้ ไม่ต้องเดาสูตรหรือเครื่องปรุง",
+      chooseFood: "มีอะไรอยู่ในมื้อนี้บ้าง",
+      chooseFoodHelper: "เลือกเท่าที่รู้ ไม่จำเป็นต้องครบทุกอย่าง",
       searchLabel: "ค้นหาอาหารหรือเครื่องปรุง",
       searchPlaceholder: "ค้นหา เช่น ไข่ ผัก น้ำปลา",
       allCategories: "ทั้งหมด",
       addFood: (name) => `เพิ่ม ${name} ลงมื้อนี้`,
       noFoodFound: "ยังไม่พบรายการที่ตรงกับคำค้นนี้",
+      condimentUnknown: "ไม่ทราบเครื่องปรุงทั้งหมด",
+      condimentUnknownHelper: "ยังเก็บมื้อนี้ได้ตามปกติ",
       currentMeal: "มื้อนี้กำลังประกอบอยู่",
       draftKicker: "มื้อที่กำลังประกอบ",
       currentMealEmpty: "เลือกอาหารหรือเครื่องปรุงด้านบนเพื่อเริ่มประกอบมื้อนี้",
@@ -80,6 +84,18 @@
         late_meal: "มื้อดึก",
         unnamed: "ไม่ระบุ"
       },
+      mealTypes: {
+        unspecified: "ไม่แน่ใจ / ยังไม่ระบุ",
+        stir_fried: "ผัด",
+        boiled: "ต้ม",
+        curry: "แกง",
+        fried: "ทอด",
+        grilled: "ย่าง",
+        steamed: "นึ่ง",
+        broth_based: "อาหารน้ำ",
+        minimally_prepared: "สด / เตรียมน้อย",
+        other: "อื่น ๆ"
+      },
       portions: { small: "น้อย", regular: "ปกติ", large: "เยอะ", custom: "กำหนดเอง" },
       preparations: {
         "": "ยังไม่ระบุ",
@@ -114,13 +130,17 @@
       open: "Open meal composer",
       close: "Close meal composer",
       recordedCount: (count) => `${count} recorded ${count === 1 ? "meal" : "meals"}`,
-      chooseFood: "Choose what was in this meal",
-      chooseFoodHelper: "Search or browse by category, then adjust only what you remember.",
+      mealType: "What kind of meal is this?",
+      mealTypeHelper: "Choose what you noticed or remember. You do not need to reconstruct the recipe or condiments.",
+      chooseFood: "What was in this meal?",
+      chooseFoodHelper: "Choose what you know. It does not need to be complete.",
       searchLabel: "Search foods or condiments",
       searchPlaceholder: "Search, for example egg, vegetables, fish sauce",
       allCategories: "All",
       addFood: (name) => `Add ${name} to this meal`,
       noFoodFound: "No reference item matches this search yet.",
+      condimentUnknown: "I do not know all condiments",
+      condimentUnknownHelper: "You can still keep this meal as it is.",
       currentMeal: "This meal is taking shape",
       draftKicker: "MEAL IN PROGRESS",
       currentMealEmpty: "Choose a food or condiment above to begin this meal.",
@@ -173,6 +193,18 @@
         late_meal: "Late meal",
         unnamed: "Unspecified"
       },
+      mealTypes: {
+        unspecified: "Not sure / unspecified",
+        stir_fried: "Stir-fried",
+        boiled: "Boiled",
+        curry: "Curry",
+        fried: "Fried",
+        grilled: "Grilled",
+        steamed: "Steamed",
+        broth_based: "Broth-based",
+        minimally_prepared: "Fresh / minimally prepared",
+        other: "Other"
+      },
       portions: { small: "Small", regular: "Regular", large: "Large", custom: "Custom" },
       preparations: {
         "": "Not recorded",
@@ -207,13 +239,17 @@
       open: "打开餐食组合区",
       close: "收起餐食组合区",
       recordedCount: (count) => `已记录 ${count} 餐`,
-      chooseFood: "选择这一餐里记录的食物",
-      chooseFoodHelper: "可以搜索或按类别浏览，只调整自己还记得的部分。",
+      mealType: "这一餐是什么类型？",
+      mealTypeHelper: "按看见或记得的样子选择，不需要猜食谱或调味品。",
+      chooseFood: "这一餐里有什么？",
+      chooseFoodHelper: "按知道的部分选择，不需要记全。",
       searchLabel: "搜索食物或调味品",
       searchPlaceholder: "例如：鸡蛋、蔬菜、鱼露",
       allCategories: "全部",
       addFood: (name) => `把${name}加入这一餐`,
       noFoodFound: "暂时没有符合这次搜索的参考条目。",
+      condimentUnknown: "不清楚全部调味品",
+      condimentUnknownHelper: "这样也可以留下这一餐。",
       currentMeal: "正在轻轻拼出这一餐",
       draftKicker: "正在组合",
       currentMealEmpty: "从上方选择一种食物或调味品，就可以开始记录这一餐。",
@@ -265,6 +301,18 @@
         snack: "点心",
         late_meal: "较晚的一餐",
         unnamed: "不注明"
+      },
+      mealTypes: {
+        unspecified: "不确定 / 未注明",
+        stir_fried: "炒",
+        boiled: "煮",
+        curry: "咖喱",
+        fried: "炸",
+        grilled: "烤",
+        steamed: "蒸",
+        broth_based: "汤类餐食",
+        minimally_prepared: "新鲜 / 少加工",
+        other: "其他"
       },
       portions: { small: "少量", regular: "一般", large: "较多", custom: "自定义" },
       preparations: {
@@ -380,6 +428,8 @@
     return {
       mealId: "",
       mealLabel: "unnamed",
+      mealType: "unspecified",
+      condimentKnowledge: "",
       time: "",
       items: []
     };
@@ -459,6 +509,12 @@
           ? updates.mealLabel
           : "unnamed";
       }
+      if (Object.prototype.hasOwnProperty.call(updates, "mealType")) {
+        draft.mealType = runtime.MEAL_TYPES?.has(updates.mealType) ? updates.mealType : "unspecified";
+      }
+      if (Object.prototype.hasOwnProperty.call(updates, "condimentKnowledge")) {
+        draft.condimentKnowledge = updates.condimentKnowledge === "unknown" ? "unknown" : "";
+      }
       if (Object.prototype.hasOwnProperty.call(updates, "time")) draft.time = String(updates.time || "").trim();
       return getDraft();
     }
@@ -469,6 +525,8 @@
         date,
         time: draft.time,
         meal_label: draft.mealLabel,
+        meal_type: draft.mealType,
+        condiment_knowledge: draft.condimentKnowledge,
         items: draft.items.map(cloneItem),
         meal_note: ""
       };
@@ -485,6 +543,8 @@
       draft = {
         mealId: meal.meal_id,
         mealLabel: meal.meal_label,
+        mealType: meal.meal_type || "unspecified",
+        condimentKnowledge: meal.condiment_knowledge || "",
         time: meal.time,
         items: meal.items.map(cloneItem)
       };
@@ -588,6 +648,26 @@
       workspace.hidden = !isOpen;
     }
 
+    function renderMealType() {
+      const copy = getText(language);
+      const draft = model.getDraft();
+      const mealTypes = Object.keys(copy.mealTypes);
+      const choices = mealTypes.map((type) => `
+        <button type="button" class="meal-type-choice${draft.mealType === type ? " is-active" : ""}" data-meal-type-choice="${escapeHtml(type)}" aria-pressed="${draft.mealType === type}">${escapeHtml(copy.mealTypes[type])}</button>
+      `).join("");
+      return `
+        <section class="meal-type-picker" aria-labelledby="mealTypeTitle">
+          <div class="meal-section-heading">
+            <div>
+              <h3 id="mealTypeTitle">${escapeHtml(copy.mealType)}</h3>
+              <p>${escapeHtml(copy.mealTypeHelper)}</p>
+            </div>
+          </div>
+          <div class="meal-type-choice-list" role="group" aria-label="${escapeHtml(copy.mealType)}">${choices}</div>
+        </section>
+      `;
+    }
+
     function renderFoodPicker() {
       const copy = getText(language);
       const library = model.getLibrary();
@@ -632,6 +712,10 @@
           </div>
           <div class="meal-category-list" role="group" aria-label="${escapeHtml(copy.chooseFood)}">${categoryButtons}</div>
           <div class="meal-food-grid">${foodButtons || `<p class="meal-inline-empty">${escapeHtml(copy.noFoodFound)}</p>`}</div>
+          <label class="meal-condiment-knowledge">
+            <input type="checkbox" data-meal-condiment-unknown${model.getDraft().condimentKnowledge === "unknown" ? " checked" : ""}>
+            <span><strong>${escapeHtml(copy.condimentUnknown)}</strong><small>${escapeHtml(copy.condimentUnknownHelper)}</small></span>
+          </label>
         </section>
       `;
     }
@@ -720,10 +804,12 @@
       const meals = model.getMeals();
       const cards = meals.length ? meals.map((meal) => {
         const names = meal.items.map((item) => foodName(runtime.getFoodReferenceById(item.food_id)) || item.display_name_snapshot);
+        const type = copy.mealTypes[meal.meal_type] || copy.mealTypes.unspecified;
+        const unknownCondiments = meal.condiment_knowledge === "unknown" ? ` · ${copy.condimentUnknown}` : "";
         return `
           <article class="meal-saved-item">
             <div>
-              <p class="meal-saved-meta">${escapeHtml(meal.time || "·")} · ${escapeHtml(copy.labels[meal.meal_label] || copy.labels.unnamed)}</p>
+              <p class="meal-saved-meta">${escapeHtml(meal.time || "·")} · ${escapeHtml(copy.labels[meal.meal_label] || copy.labels.unnamed)} · ${escapeHtml(type)}${escapeHtml(unknownCondiments)}</p>
               <h4>${escapeHtml(names.join(" · "))}</h4>
             </div>
             <div class="meal-saved-actions">
@@ -753,7 +839,7 @@
 
     function render() {
       renderHeader();
-      if (isOpen) content.innerHTML = `${renderFoodPicker()}${renderDraft()}${renderSavedMeals()}`;
+      if (isOpen) content.innerHTML = `${renderMealType()}${renderFoodPicker()}${renderDraft()}${renderSavedMeals()}`;
       renderReflection();
       statusNode.textContent = status;
     }
@@ -769,6 +855,11 @@
       }
       if (action.dataset.mealCategory) {
         category = action.dataset.mealCategory;
+        render();
+        return;
+      }
+      if (action.dataset.mealTypeChoice) {
+        model.setDraftMeta({ mealType: action.dataset.mealTypeChoice });
         render();
         return;
       }
@@ -825,6 +916,9 @@
     root.addEventListener("change", (event) => {
       if (event.target.matches("[data-meal-label]")) model.setDraftMeta({ mealLabel: event.target.value });
       if (event.target.matches("[data-meal-time]")) model.setDraftMeta({ time: event.target.value });
+      if (event.target.matches("[data-meal-condiment-unknown]")) {
+        model.setDraftMeta({ condimentKnowledge: event.target.checked ? "unknown" : "" });
+      }
       if (event.target.matches("[data-meal-portion]")) {
         const itemId = event.target.dataset.mealPortion;
         const portionLabel = event.target.value;

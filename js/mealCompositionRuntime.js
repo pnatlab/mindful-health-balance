@@ -2,6 +2,8 @@
   const MEAL_RECORDS_KEY = "mhb_meal_records_v1";
   const MEAL_SCHEMA_VERSION = "1";
   const MEAL_LABELS = new Set(["breakfast", "lunch", "dinner", "snack", "late_meal", "custom", "unnamed"]);
+  const MEAL_TYPES = new Set(["unspecified", "stir_fried", "boiled", "curry", "fried", "grilled", "steamed", "broth_based", "minimally_prepared", "other"]);
+  const CONDIMENT_KNOWLEDGE = new Set(["", "unknown"]);
   const PORTION_LABELS = new Set(["small", "regular", "large", "custom"]);
   const PREPARATIONS = new Set(["boiled", "steamed", "grilled", "stir_fried", "fried", "roasted", "raw", "soup", "unknown"]);
   const CONFIDENCE_LEVELS = new Set(["high", "medium", "low", "unknown"]);
@@ -267,6 +269,8 @@
     const mealId = asTrimmedText(meal.meal_id);
     const date = asTrimmedText(normalizeDate(meal.date));
     const label = MEAL_LABELS.has(meal.meal_label) ? meal.meal_label : "unnamed";
+    const mealType = MEAL_TYPES.has(meal.meal_type) ? meal.meal_type : "unspecified";
+    const condimentKnowledge = CONDIMENT_KNOWLEDGE.has(meal.condiment_knowledge) ? meal.condiment_knowledge : "";
     const items = Array.isArray(meal.items) ? meal.items.map(normalizeMealItem).filter(Boolean) : [];
 
     if (!mealId || !date || !items.length) return null;
@@ -277,6 +281,9 @@
       time: asTrimmedText(meal.time),
       meal_label: label,
       custom_meal_label: label === "custom" ? asTrimmedText(meal.custom_meal_label) : "",
+      // These fields only preserve what the user chose to describe. They never estimate ingredients or sodium.
+      meal_type: mealType,
+      condiment_knowledge: condimentKnowledge,
       items,
       meal_note: asTrimmedText(meal.meal_note),
       created_at: asTrimmedText(meal.created_at),
@@ -557,6 +564,7 @@
   const api = Object.freeze({
     MEAL_RECORDS_KEY,
     MEAL_SCHEMA_VERSION,
+    MEAL_TYPES,
     PORTION_MULTIPLIERS,
     getFoodReferenceLibrary,
     getFoodReferenceById,

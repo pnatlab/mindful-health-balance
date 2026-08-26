@@ -59,7 +59,7 @@ A Meal Item Instance is a user-owned occurrence of a Food Reference in one meal.
 
 ### Meal Instance
 
-A Meal Instance is one completed composition at one date, with optional time, label, note, and one or more Meal Item Instances. Multiple Meal Instances may share a date.
+A Meal Instance is one completed composition at one date, with optional time, label, broad meal type, note, and one or more Meal Item Instances. Multiple Meal Instances may share a date.
 
 ### Derived Daily Meal Summary
 
@@ -162,6 +162,8 @@ This is required because seasoning, broth, and dipping sauces may contribute mor
 | `time` | Optional local time. |
 | `meal_label` | `breakfast`, `lunch`, `dinner`, `snack`, `late_meal`, `custom`, or `unnamed`. |
 | `custom_meal_label` | Optional display label when `meal_label` is `custom`. |
+| `meal_type` | Optional broad observed description: `unspecified`, `stir_fried`, `boiled`, `curry`, `fried`, `grilled`, `steamed`, `broth_based`, `minimally_prepared`, or `other`. It records the meal form the user recognizes; it must not infer ingredients, sodium, or health meaning. Missing legacy data normalizes to `unspecified`. |
+| `condiment_knowledge` | Optional explicit statement of `unknown` when the user does not know all condiments. Blank means no such statement was recorded; it never means no condiment was used. Recorded condiment Meal Items remain separate, inspectable facts. |
 | `items` | One or more Meal Item Instances. |
 | `meal_note` | Optional user-owned text; never executable instruction. |
 | `estimated_sodium_min_mg` | Derived from item estimates or retained as an auditable snapshot only after a later implementation decision. |

@@ -165,6 +165,7 @@
   gap: 16px;
 }
 
+.meal-type-picker,
 .meal-picker,
 .meal-draft,
 .meal-saved {
@@ -231,6 +232,32 @@
   overflow-x: auto;
   padding: 1px 1px 5px;
   scrollbar-width: thin;
+}
+
+.meal-type-choice-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.meal-type-choice {
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  color: var(--text-soft);
+  background: var(--button-bg);
+  font-size: 0.84rem;
+  font-weight: 700;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.meal-type-choice:hover,
+.meal-type-choice:focus-visible,
+.meal-type-choice.is-active {
+  color: var(--active-text);
+  border-color: var(--accent);
+  background: var(--active-bg);
 }
 
 .meal-category-chip {
@@ -317,6 +344,40 @@
   color: var(--accent);
   font-size: 1.2rem;
   font-weight: 700;
+}
+
+.meal-condiment-knowledge {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 2px;
+  padding-top: 4px;
+  color: var(--text-soft);
+  cursor: pointer;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.meal-condiment-knowledge input {
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  accent-color: var(--accent);
+}
+
+.meal-condiment-knowledge span {
+  display: grid;
+  gap: 1px;
+}
+
+.meal-condiment-knowledge strong {
+  color: var(--text-main);
+  font-size: 0.84rem;
+}
+
+.meal-condiment-knowledge small {
+  color: var(--text-soft);
+  font-size: 0.76rem;
 }
 
 .meal-meta-controls {
@@ -533,6 +594,7 @@ body[data-theme="dark"] .meal-daily-reflection {
 
 @media (max-width: 520px) {
   .meal-composer-card,
+  .meal-type-picker,
   .meal-picker,
   .meal-draft,
   .meal-saved,
@@ -574,12 +636,15 @@ body[data-theme="dark"] .meal-daily-reflection {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .meal-food-option {
+  .meal-food-option,
+  .meal-type-choice {
     transition: none;
   }
 
   .meal-food-option:hover,
-  .meal-food-option:focus-visible {
+  .meal-food-option:focus-visible,
+  .meal-type-choice:hover,
+  .meal-type-choice:focus-visible {
     transform: none;
   }
 }

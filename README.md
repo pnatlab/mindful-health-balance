@@ -154,7 +154,7 @@ This is a UX, copy, and presentation change only. `Daily_Log`, workbook export/i
 
 ## Gentle Meal Composition
 
-MHB 2.3 adds a compact Meal Composer inside Today. The user can choose from the small Food Reference pilot, assemble one meal, adjust an approximate portion or optional preparation, save multiple meals for the same day, and later edit or remove a targeted meal. Condiments remain first-class items rather than hidden note text.
+MHB 2.3 adds a compact Meal Composer inside Today. It begins with the broad kind of meal the user recognizes, then lets them record only the visible or remembered components. A user does not need to reconstruct a recipe or know every condiment. They can adjust an approximate portion or optional preparation, save multiple meals for the same day, and later edit or remove a targeted meal. Condiments remain first-class optional items rather than hidden note text; an explicit “condiments unknown” note is distinct from simply not recording one.
 
 Meal records are stored locally under a separate versioned source and do not become columns in `Daily_Log`. Sodium appears only as an evidence-backed range. Items without supported evidence remain unknown, and a meal with mixed known and unknown items is shown as partial rather than as a complete total.
 

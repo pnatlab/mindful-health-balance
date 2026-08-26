@@ -165,15 +165,37 @@ function run() {
   assert.equal(store.createMealItem({ food_id: animal.food_id, portion_label: "custom", serving_multiplier: 0 }), null);
 
   const firstMeal = store.createMeal({ date: TEST_DATE, meal_label: "lunch", items: [regularItem] });
-  const secondMeal = store.createMeal({ date: TEST_DATE, meal_label: "dinner", items: [largeItem] });
+  const secondMeal = store.createMeal({
+    date: TEST_DATE,
+    meal_label: "dinner",
+    meal_type: "stir_fried",
+    condiment_knowledge: "unknown",
+    items: [largeItem]
+  });
   const otherDateMeal = store.createMeal({ date: OTHER_DATE, meal_label: "unnamed", items: [smallItem] });
   assert.equal(store.getMealRecords().length, 3);
   assert.equal(store.getMealsForDate(TEST_DATE).length, 2);
   assert.equal(store.getMealsForDate(OTHER_DATE).length, 1);
+  assert.equal(firstMeal.meal_type, "unspecified");
+  assert.equal(firstMeal.condiment_knowledge, "");
+  assert.equal(secondMeal.meal_type, "stir_fried");
+  assert.equal(secondMeal.condiment_knowledge, "unknown");
 
-  const updatedMeal = store.updateMeal(firstMeal.meal_id, { meal_note: "kept as plain text" });
+  const legacyMeal = mealRuntime.normalizeMealRecord({
+    meal_id: "legacy_meal",
+    date: TEST_DATE,
+    meal_label: "unnamed",
+    items: [regularItem],
+    created_at: "2026-08-26T06:00:00.000Z",
+    updated_at: "2026-08-26T06:00:00.000Z"
+  });
+  assert.equal(legacyMeal.meal_type, "unspecified");
+  assert.equal(legacyMeal.condiment_knowledge, "");
+
+  const updatedMeal = store.updateMeal(firstMeal.meal_id, { meal_note: "kept as plain text", meal_type: "broth_based" });
   assert.equal(updatedMeal.meal_id, firstMeal.meal_id);
   assert.equal(updatedMeal.meal_note, "kept as plain text");
+  assert.equal(updatedMeal.meal_type, "broth_based");
   assert.equal(store.deleteMeal(otherDateMeal.meal_id), true);
   assert.deepEqual(store.getMealRecords().map((meal) => meal.meal_id), [firstMeal.meal_id, secondMeal.meal_id]);
 
@@ -236,6 +258,8 @@ function run() {
   storage.setItem(mealRuntime.MEAL_RECORDS_KEY, JSON.stringify([secondWithItems]));
   const reloadedStore = createStore(storage, library, []);
   assert.equal(reloadedStore.getMealRecords()[0].meal_id, secondMeal.meal_id);
+  assert.equal(reloadedStore.getMealRecords()[0].meal_type, "stir_fried");
+  assert.equal(reloadedStore.getMealRecords()[0].condiment_knowledge, "unknown");
   assert.equal(Object.isFrozen(mealRuntime.getFoodReferenceById("rice")), true);
   assert.equal(Object.isFrozen(fishSauceReference), true);
   assert.equal(mealRuntime.getFoodReferenceById("rice").sodium_estimate_min_mg, null);
