@@ -78,7 +78,7 @@ Runtime architecture, modularization planning, and implementation-safety notes f
 - [SCRIPT_MODULARIZATION_PLAN.md](SCRIPT_MODULARIZATION_PLAN.md) - Audits the current monolithic `script.js` responsibilities and proposes a conservative GitHub Pages-compatible modularization path.
 - [MEAL_COMPOSITION_DATA_CONTRACT.md](MEAL_COMPOSITION_DATA_CONTRACT.md) - Locked MHB 2.3 Meal Composition contract: separate meal ownership, uncertainty-aware sodium ranges, relational workbook direction, and implementation pending.
 - [MEAL_COMPOSITION_RUNTIME_DATA_LAYER.md](MEAL_COMPOSITION_RUNTIME_DATA_LAYER.md) - Records the non-user-facing MHB 2.3B meal storage, immutable unknown-value pilot, derived summary, and bounded Reflection context foundation.
-- [MEAL_COMPOSITION_FOOD_REFERENCE_EVIDENCE_AUDIT.md](MEAL_COMPOSITION_FOOD_REFERENCE_EVIDENCE_AUDIT.md) - Audits serving, sodium, provenance, uncertainty, and implementation readiness for all 26 pilot Food References without changing runtime values.
+- [MEAL_COMPOSITION_FOOD_REFERENCE_EVIDENCE_AUDIT.md](MEAL_COMPOSITION_FOOD_REFERENCE_EVIDENCE_AUDIT.md) - Audits all 26 pilot Food References; four human-approved references are implemented with traceable sodium evidence while the remaining 22 stay unknown.
 
 ## 99 Stabilization
 

@@ -45,9 +45,81 @@ function createStore(storage, library, warnings) {
 }
 
 function run() {
-  assert.equal(mealRuntime.getFoodReferenceLibrary().length, 26);
-  assert.equal(mealRuntime.getFoodReferenceById("fish_sauce").is_condiment, true);
-  assert.equal(mealRuntime.getFoodReferenceById("rice").sodium_estimate_min_mg, null);
+  const productionLibrary = mealRuntime.getFoodReferenceLibrary();
+  const evidenceIds = new Set(["egg", "fish_sauce", "soy_sauce", "oyster_sauce"]);
+  const eggReference = mealRuntime.getFoodReferenceById("egg");
+  const fishSauceReference = mealRuntime.getFoodReferenceById("fish_sauce");
+  const soySauceReference = mealRuntime.getFoodReferenceById("soy_sauce");
+  const oysterSauceReference = mealRuntime.getFoodReferenceById("oyster_sauce");
+
+  assert.equal(productionLibrary.length, 26);
+  assert.deepEqual(productionLibrary.filter((reference) => reference.sodium_estimate_min_mg !== null).map((reference) => reference.food_id), ["egg", "fish_sauce", "soy_sauce", "oyster_sauce"]);
+  assert.deepEqual([eggReference.sodium_estimate_min_mg, eggReference.sodium_estimate_max_mg, eggReference.sodium_confidence], [60, 62, "high"]);
+  assert.deepEqual([eggReference.default_serving_label, eggReference.default_serving_amount, eggReference.default_serving_unit, eggReference.preparation_default], ["1 large boiled egg", 1, "egg", "boiled"]);
+  assert.match(eggReference.source_reference, /USDA FoodData Central FDC 173424/);
+  assert.match(eggReference.source_reference, /Ramathibodi\/Mahidol 2025/);
+  assert.deepEqual([fishSauceReference.sodium_estimate_min_mg, fishSauceReference.sodium_estimate_max_mg, fishSauceReference.sodium_confidence], [1410, 1480, "medium"]);
+  assert.deepEqual([fishSauceReference.default_serving_label, fishSauceReference.default_serving_amount, fishSauceReference.default_serving_unit], ["1 tbsp", 1, "tbsp"]);
+  assert.match(fishSauceReference.source_reference, /USDA FoodData Central FDC 174531/);
+  assert.match(fishSauceReference.source_reference, /Thai Kitchen Premium Fish Sauce/);
+  assert.deepEqual([soySauceReference.sodium_estimate_min_mg, soySauceReference.sodium_estimate_max_mg, soySauceReference.sodium_confidence], [879, 920, "medium"]);
+  assert.deepEqual([soySauceReference.default_serving_label, soySauceReference.default_serving_amount, soySauceReference.default_serving_unit], ["1 tbsp", 1, "tbsp"]);
+  assert.match(soySauceReference.source_reference, /USDA FoodData Central FDC 174277/);
+  assert.match(soySauceReference.source_reference, /Kikkoman regular soy sauce/);
+  assert.deepEqual([oysterSauceReference.sodium_estimate_min_mg, oysterSauceReference.sodium_estimate_max_mg, oysterSauceReference.sodium_confidence], [490, 870, "low"]);
+  assert.deepEqual([oysterSauceReference.default_serving_label, oysterSauceReference.default_serving_amount, oysterSauceReference.default_serving_unit], ["1 tbsp", 1, "tbsp"]);
+  assert.match(oysterSauceReference.source_reference, /USDA FoodData Central FDC 174529/);
+  assert.match(oysterSauceReference.source_reference, /Lee Kum Kee Panda Oyster Sauce specification/);
+  [eggReference, fishSauceReference, soySauceReference, oysterSauceReference].forEach((reference) => {
+    assert.equal(reference.source_type, "reference_database");
+  });
+  productionLibrary.filter((reference) => !evidenceIds.has(reference.food_id)).forEach((reference) => {
+    assert.deepEqual([reference.sodium_estimate_min_mg, reference.sodium_estimate_max_mg, reference.sodium_confidence, reference.source_type, reference.source_reference], [null, null, "unknown", "unknown", ""]);
+  });
+  productionLibrary.forEach((reference) => {
+    assert.equal(Object.keys(reference).some((key) => /score|good|bad|healthy|cheat|medical|target/i.test(key)), false);
+    assert.equal(Object.hasOwn(reference, "sodium_daily_limit_mg"), false);
+  });
+
+  const eggItem = mealRuntime.createMealItem({ food_id: "egg", portion_label: "regular" });
+  const fishSauceHalfItem = mealRuntime.createMealItem({ food_id: "fish_sauce", portion_label: "small" });
+  const fishSauceItem = mealRuntime.createMealItem({ food_id: "fish_sauce", portion_label: "regular" });
+  const fishSauceLargeItem = mealRuntime.createMealItem({ food_id: "fish_sauce", portion_label: "large" });
+  const soySauceItem = mealRuntime.createMealItem({ food_id: "soy_sauce", portion_label: "regular" });
+  const oysterSauceItem = mealRuntime.createMealItem({ food_id: "oyster_sauce", portion_label: "regular" });
+  const riceUnknownItem = mealRuntime.createMealItem({ food_id: "rice", portion_label: "regular" });
+  assert.deepEqual([fishSauceHalfItem.sodium_estimate_min_mg, fishSauceHalfItem.sodium_estimate_max_mg], [705, 740]);
+  assert.deepEqual([fishSauceLargeItem.sodium_estimate_min_mg, fishSauceLargeItem.sodium_estimate_max_mg], [2115, 2220]);
+  assert.equal(mealRuntime.deriveMealEstimate({ items: [eggItem] }).sodium_estimate_coverage, "complete");
+  assert.equal(mealRuntime.deriveMealEstimate({ items: [eggItem] }).estimate_confidence, "high");
+  assert.equal(mealRuntime.deriveMealEstimate({ items: [soySauceItem] }).estimate_confidence, "medium");
+  assert.equal(mealRuntime.deriveMealEstimate({ items: [oysterSauceItem] }).estimate_confidence, "low");
+  assert.equal(mealRuntime.deriveMealEstimate({ items: [eggItem, soySauceItem] }).estimate_confidence, "medium");
+  assert.equal(mealRuntime.deriveMealEstimate({ items: [eggItem, oysterSauceItem] }).estimate_confidence, "low");
+  assert.equal(mealRuntime.deriveMealEstimate({ items: [eggItem, riceUnknownItem] }).sodium_estimate_coverage, "partial");
+  assert.equal(mealRuntime.deriveMealEstimate({ items: [eggItem, riceUnknownItem] }).estimate_confidence, "unknown");
+  assert.equal(mealRuntime.deriveMealEstimate({ items: [riceUnknownItem] }).sodium_estimate_coverage, "unknown");
+  assert.deepEqual(mealRuntime.deriveMealEstimate({ items: [fishSauceItem, soySauceItem] }), {
+    estimated_sodium_min_mg: 2289,
+    estimated_sodium_max_mg: 2400,
+    sodium_estimate_coverage: "complete",
+    estimate_confidence: "medium",
+    known_item_count: 2,
+    unknown_item_count: 0
+  });
+  const productionStore = createStore(createMemoryStorage(), productionLibrary, []);
+  const immutableMeal = productionStore.createMeal({ date: TEST_DATE, meal_label: "lunch", items: [productionStore.createMealItem({ food_id: "fish_sauce" })] });
+  const immutableItem = immutableMeal.items[0];
+  const immutableUpdatedMeal = productionStore.updateMealItem(immutableMeal.meal_id, immutableItem.meal_item_id, { portion_label: "small", preparation: "soup" });
+  assert.deepEqual([immutableUpdatedMeal.items[0].sodium_estimate_min_mg, immutableUpdatedMeal.items[0].sodium_estimate_max_mg], [705, 740]);
+  assert.deepEqual([fishSauceReference.sodium_estimate_min_mg, fishSauceReference.sodium_estimate_max_mg, fishSauceReference.source_reference], [1410, 1480, "USDA FoodData Central FDC 174531; Thai Kitchen Premium Fish Sauce (McCormick)."]);
+  const evidenceDailySummary = mealRuntime.deriveDailyMealSummary(TEST_DATE, [
+    { meal_id: "evidence_egg", date: TEST_DATE, meal_label: "breakfast", items: [eggItem], created_at: "2026-08-26T07:00:00.000Z", updated_at: "2026-08-26T07:00:00.000Z" },
+    { meal_id: "evidence_condiments", date: TEST_DATE, meal_label: "lunch", items: [fishSauceHalfItem, soySauceItem], created_at: "2026-08-26T12:00:00.000Z", updated_at: "2026-08-26T12:00:00.000Z" },
+    { meal_id: "evidence_partial", date: TEST_DATE, meal_label: "dinner", items: [oysterSauceItem, riceUnknownItem], created_at: "2026-08-26T18:00:00.000Z", updated_at: "2026-08-26T18:00:00.000Z" }
+  ]);
+  assert.deepEqual([evidenceDailySummary.estimated_sodium_min_mg, evidenceDailySummary.estimated_sodium_max_mg, evidenceDailySummary.sodium_estimate_coverage, evidenceDailySummary.estimate_confidence], [2134, 2592, "partial", "unknown"]);
+
   const animal = createReference();
   const vegetable = createReference({
     food_id: "vegetable_test_food",
@@ -165,6 +237,7 @@ function run() {
   const reloadedStore = createStore(storage, library, []);
   assert.equal(reloadedStore.getMealRecords()[0].meal_id, secondMeal.meal_id);
   assert.equal(Object.isFrozen(mealRuntime.getFoodReferenceById("rice")), true);
+  assert.equal(Object.isFrozen(fishSauceReference), true);
   assert.equal(mealRuntime.getFoodReferenceById("rice").sodium_estimate_min_mg, null);
 }
 

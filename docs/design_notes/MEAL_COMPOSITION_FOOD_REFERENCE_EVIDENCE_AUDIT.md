@@ -2,7 +2,7 @@
 
 ## 1. Research Scope
 
-- Status: **Research complete; human approval required before evidence implementation**
+- Status: **Research complete; four approved references implemented in MHB 2.3C-I**
 - Runtime source audited: `js/mealCompositionRuntime.js`
 - Pilot size at audit time: **26 Food References**
 - Scope: sodium evidence, serving basis, provenance, uncertainty, and implementation readiness
@@ -14,6 +14,10 @@ This audit does not attempt to fill every blank. A blank remains preferable when
 > The goal is not to know every food. The goal is to know exactly how much MHB is justified in claiming about each food.
 
 MHB 2.2 remains the current runtime. MHB 2.3 is not yet the current release.
+
+### Implementation Addendum - MHB 2.3C-I
+
+Human review approved implementation only for `egg`, `fish_sauce`, `soy_sauce`, and `oyster_sauce`. Runtime now uses the ranges, confidence, serving basis, and provenance recorded in this audit for those four references only. The remaining 22 pilot references remain sodium-unknown. This addendum does not change the audit's proposed future subset, unknown, deferred, or human-review findings.
 
 ## 2. Research Strategy and Source Policy
 

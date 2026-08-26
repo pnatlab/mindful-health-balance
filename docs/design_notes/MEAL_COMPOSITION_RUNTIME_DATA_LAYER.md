@@ -32,7 +32,9 @@ Static Food Reference pilot
 
 The pilot contains 26 immutable static Food References across grain, animal protein, egg, plant protein, vegetable, fruit, soup, condiment, processed food, and dessert categories. Condiments are first-class references.
 
-No sodium values are included in the pilot because this repository does not contain approved nutrition evidence for those values. Each pilot item deliberately uses unknown sodium range/confidence/source until a separate Food Reference Evidence Pass approves supported values. This keeps `unknown ≠ zero` true in runtime data.
+After Human Evidence Review, exactly four references carry evidence-backed sodium ranges: one large boiled `egg` (60-62 mg, high confidence), regular `fish_sauce` (1,410-1,480 mg/tbsp, medium), regular `soy_sauce` (879-920 mg/tbsp, medium), and `oyster_sauce` (490-870 mg/tbsp, low). The singular `source_type` remains `reference_database` as the primary evidence class, while `source_reference` records the institutional or manufacturer cross-check used for the human-reviewed range. The other 22 references deliberately remain sodium-unknown. This preserves `unknown ≠ zero` and does not turn broad categories into confident-looking estimates.
+
+The evidence-backed condiment references use `1 tbsp`, replacing the prior ambiguous `1 spoon`. A future package-specific label may override a generic estimate only on a Meal Item Instance; it must never overwrite the canonical Food Reference.
 
 ## Portion and Preparation
 

@@ -33,6 +33,13 @@
     };
   }
 
+  function createEvidenceBackedFoodReference(foodId, names, category, servingLabel, evidence) {
+    return {
+      ...createUnknownFoodReference(foodId, names, category, servingLabel),
+      ...evidence
+    };
+  }
+
   const FOOD_REFERENCE_PILOT = [
     createUnknownFoodReference("rice", { th: "ข้าว", en: "Rice", zh: "米饭" }, "grain", "1 bowl"),
     createUnknownFoodReference("brown_rice", { th: "ข้าวกล้อง", en: "Brown rice", zh: "糙米饭" }, "grain", "1 bowl"),
@@ -44,16 +51,53 @@
     createUnknownFoodReference("fish", { th: "ปลา", en: "Fish", zh: "鱼" }, "animal_protein", "1 serving"),
     createUnknownFoodReference("shrimp", { th: "กุ้ง", en: "Shrimp", zh: "虾" }, "animal_protein", "1 serving"),
     createUnknownFoodReference("squid", { th: "ปลาหมึก", en: "Squid", zh: "鱿鱼" }, "animal_protein", "1 serving"),
-    createUnknownFoodReference("egg", { th: "ไข่", en: "Egg", zh: "鸡蛋" }, "egg", "1 egg"),
+    createEvidenceBackedFoodReference("egg", { th: "ไข่", en: "Egg", zh: "鸡蛋" }, "egg", "1 large boiled egg", {
+      default_serving_amount: 1,
+      default_serving_unit: "egg",
+      sodium_estimate_min_mg: 60,
+      sodium_estimate_max_mg: 62,
+      sodium_confidence: "high",
+      source_type: "reference_database",
+      source_reference: "USDA FoodData Central FDC 173424; Ramathibodi/Mahidol 2025 Thai FCD cross-check.",
+      preparation_default: "boiled",
+      notes: "Evidence range applies to one large boiled egg; sauces and seasoning are separate Meal Items."
+    }),
     createUnknownFoodReference("tofu", { th: "เต้าหู้", en: "Tofu", zh: "豆腐" }, "plant_protein", "1 serving"),
     createUnknownFoodReference("tempeh", { th: "เทมเป้", en: "Tempeh", zh: "天贝" }, "plant_protein", "1 serving"),
     createUnknownFoodReference("mixed_vegetables", { th: "ผักรวม", en: "Mixed vegetables", zh: "混合蔬菜" }, "vegetable", "1 serving"),
     createUnknownFoodReference("leafy_vegetables", { th: "ผักใบ", en: "Leafy vegetables", zh: "叶菜" }, "vegetable", "1 serving"),
     createUnknownFoodReference("fruit", { th: "ผลไม้", en: "Fruit", zh: "水果" }, "fruit", "1 serving"),
     createUnknownFoodReference("clear_soup", { th: "ซุปใส", en: "Clear soup", zh: "清汤" }, "soup", "1 bowl"),
-    createUnknownFoodReference("fish_sauce", { th: "น้ำปลา", en: "Fish sauce", zh: "鱼露" }, "condiment", "1 spoon"),
-    createUnknownFoodReference("soy_sauce", { th: "ซีอิ๊ว", en: "Soy sauce", zh: "酱油" }, "condiment", "1 spoon"),
-    createUnknownFoodReference("oyster_sauce", { th: "ซอสหอยนางรม", en: "Oyster sauce", zh: "蚝油" }, "condiment", "1 spoon"),
+    createEvidenceBackedFoodReference("fish_sauce", { th: "น้ำปลา", en: "Fish sauce", zh: "鱼露" }, "condiment", "1 tbsp", {
+      default_serving_amount: 1,
+      default_serving_unit: "tbsp",
+      sodium_estimate_min_mg: 1410,
+      sodium_estimate_max_mg: 1480,
+      sodium_confidence: "medium",
+      source_type: "reference_database",
+      source_reference: "USDA FoodData Central FDC 174531; Thai Kitchen Premium Fish Sauce (McCormick).",
+      notes: "Evidence range applies to regular fish sauce. Reduced-sodium products require a future Meal Item package-label override."
+    }),
+    createEvidenceBackedFoodReference("soy_sauce", { th: "ซีอิ๊ว", en: "Soy sauce", zh: "酱油" }, "condiment", "1 tbsp", {
+      default_serving_amount: 1,
+      default_serving_unit: "tbsp",
+      sodium_estimate_min_mg: 879,
+      sodium_estimate_max_mg: 920,
+      sodium_confidence: "medium",
+      source_type: "reference_database",
+      source_reference: "USDA FoodData Central FDC 174277; Kikkoman regular soy sauce sodium comparison.",
+      notes: "Evidence range applies to regular soy sauce. Reduced-sodium products require a future Meal Item package-label override."
+    }),
+    createEvidenceBackedFoodReference("oyster_sauce", { th: "ซอสหอยนางรม", en: "Oyster sauce", zh: "蚝油" }, "condiment", "1 tbsp", {
+      default_serving_amount: 1,
+      default_serving_unit: "tbsp",
+      sodium_estimate_min_mg: 490,
+      sodium_estimate_max_mg: 870,
+      sodium_confidence: "low",
+      source_type: "reference_database",
+      source_reference: "USDA FoodData Central FDC 174529; Lee Kum Kee Panda Oyster Sauce specification (2020-07-15).",
+      notes: "Evidence range preserves visible formulation variation. A future Meal Item package-label override must not overwrite this canonical Food Reference."
+    }),
     createUnknownFoodReference("seasoning_powder", { th: "ผงปรุงรส", en: "Seasoning powder", zh: "调味粉" }, "condiment", "1 spoon"),
     createUnknownFoodReference("soup_base", { th: "น้ำซุป", en: "Soup base", zh: "汤底" }, "condiment", "1 serving"),
     createUnknownFoodReference("dipping_sauce", { th: "น้ำจิ้ม", en: "Dipping sauce", zh: "蘸酱" }, "condiment", "1 spoon"),
