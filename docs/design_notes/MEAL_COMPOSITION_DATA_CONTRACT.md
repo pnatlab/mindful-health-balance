@@ -1,223 +1,126 @@
-# MHB 2.3A - Meal Composition Data Contract
+# MHB 2.3 - Meal Composition Data Contract
 
 ## 1. Status
 
-- Phase: MHB 2.3A
-- Patch type: docs-only architecture and data-contract design
-- Status: Draft for Human Review
-- Runtime implementation: none
-- UI implementation: none
-- Daily_Log or workbook change: none
+- Phase: MHB 2.3
+- Patch type: docs-only contract lock
+- Status: **Contract Locked for MHB 2.3 Implementation**
+- Runtime implementation: none in this patch
+- UI implementation: none in this patch
+- Daily_Log, workbook, export/import, and schema change: none in this patch
 
-**MHB 2.3 - Gentle Meal Composition is a planned candidate direction, not the current runtime. The current app version remains MHB 2.2.**
+**MHB 2.3 Meal Composition contract is locked for implementation, but MHB 2.3 is not yet the current runtime. MHB 2.2 remains the current runtime.**
 
-## 2. Purpose
+This note records the human-approved architectural decisions for Meal Composition. Exact implementation names, local storage keys, workbook columns, validation details, and UI layout remain implementation work, not unresolved product direction.
 
-Meal Composition should let a user assemble a rough picture of one meal from food items and ingredients, save more than one meal in a day, and later review a daily or multi-day food picture without turning food into a score.
+## 2. Purpose and Product Boundary
 
-The design priority is honest uncertainty before visual richness:
+Meal Composition lets a user assemble a rough picture of one meal from food items and ingredients, save multiple optional meals in a day, and later read only what has been recorded.
 
 > One meal is information, not a score.
 
-The feature may help a user notice meal composition, food variety, preparation, approximate sodium distribution, and meal timing. It must not become a calorie tracker, macro tracker, diet score, sodium score, medical nutrition planner, weight-loss coach, or food-compliance system.
-
-The intended flow is:
-
-```text
-Food Reference
-    -> choose food and condiment items
-    -> Meal Item Instances
-    -> Meal Instance
-    -> optional additional meals
-    -> derived Daily Meal Summary
-    -> bounded future Reflection / Field Review
-```
+The feature supports gentle, source-bound observation of recorded meal composition, food variety, preparation, approximate sodium distribution, and meal rhythm. It is not a calorie tracker, macro tracker, diet score, sodium score, medical nutrition planner, weight-loss coach, food-compliance system, or adherence tracker.
 
 Meal logging remains optional. A day without meal records means only that no meal data was recorded.
 
-## 3. Design Principles
+## 3. Locked Decisions
 
-The contract should remain:
+| Decision | Locked contract |
+| --- | --- |
+| Meal data ownership | Meal records separate from Daily_Log: a canonical source outside `Daily_Log`. |
+| Portion | Hybrid portion: user-facing `small`, `regular`, `large`, or `custom`, backed by a portable `serving_multiplier`. |
+| Sodium | Sodium range + confidence + provenance; the visible range is primary and a midpoint is never a substitute. |
+| Workbook | Relational workbook canonical direction: `Food_Reference`, `Meals`, and `Meal_Items` sheets. |
+| Daily summary | Derived from that date's Meal Instances and not persisted by default. |
+| Condiments | First-class Food References and Meal Items, never free-text only. |
+| Daily meal panel | A Dynamic Daily Meal Reflection Panel re-renders from the current derived summary after meal changes. |
+| Daily Reflection | A bounded adapter provides derived meal facts to the existing daily Reflection without changing its root or health interpretation. |
 
-- local-first and user-owned
-- source-bound and inspectable
-- approximate where the source is approximate
-- multilingual at the display layer
-- readable by humans, Excel, parsers, and a user-chosen Local LLM workflow
-- backward-compatible with workbooks that contain no meal sheets
-- non-scoring, non-diagnostic, and free from guilt
+## 4. Canonical Data Ownership
 
-The contract must not silently turn:
-
-- unknown into zero
-- a blank condiment list into "no condiment"
-- a sodium estimate into a medical recommendation
-- a larger portion into a moral judgment
-- a preparation method into a healthy/unhealthy label
-- an absent meal record into fasting, restriction, or skipped eating
-
-## 4. Data Layers
-
-The proposed model has three ownership layers.
-
-### Layer A - Food Item / Ingredient Reference
-
-A reusable reference describes what an item generally is and what evidence supports its estimate. It is not a record of what the user ate in a particular meal.
-
-Examples include rice, chicken breast, egg, fish, tofu, vegetables, soup, fish sauce, soy sauce, fried food, and dessert. Condiments are first-class food references.
-
-### Layer B - Meal Instance
-
-A meal instance records one composition at one date/time. It contains meal item instances with the user's selected portion and preparation for that meal.
-
-The same food reference may appear in many meals without being overwritten.
-
-### Layer C - Daily Meal Summary
-
-A daily summary is derived from meal instances for one date. It provides a compact reading surface for future Today, Reflection, Field Review, or workbook summary use.
-
-The default direction is to derive this layer rather than persist it. Persistence should be introduced only if a later implementation proves that performance, auditability, or workbook use requires a snapshot.
-
-## 5. Food Reference Candidate Contract
-
-### 5.1 Required candidates for an initial contract
-
-| Field | Type | Purpose |
-| --- | --- | --- |
-| `food_id` | stable string ID | Canonical identity used by meal item instances. Must not depend on a translated display name. |
-| `display_name_th` | text | Thai display name. Blank is allowed only if the initial library explicitly chooses another canonical display language. |
-| `display_name_en` | text | English display name and portable fallback for parsers/Excel. |
-| `category` | enum | Broad descriptive class such as grain, animal_protein, plant_protein, vegetable, fruit, soup, condiment, processed_food, dessert, or other. |
-| `default_serving_label` | text | Human-readable unit such as bowl, piece, spoon, cup, or serving. |
-| `default_serving_amount` | number | Amount represented by one reference serving. |
-| `default_serving_unit` | enum/text | Unit that gives `default_serving_amount` meaning. |
-| `sodium_estimate_min_mg` | number or blank | Lower supported estimate for the reference serving. Blank means unavailable, not zero. |
-| `sodium_estimate_max_mg` | number or blank | Upper supported estimate for the reference serving. Blank means unavailable, not zero. |
-| `sodium_confidence` | enum | `high`, `medium`, `low`, or `unknown`. |
-| `source_type` | enum | Provenance class defined in Section 12. |
-| `schema_version` | version string/integer | Version of the food-reference contract, independent from Daily_Log and profile schema versions. |
-
-These fields form the smallest useful contract because identity, serving meaning, uncertainty, provenance class, and version must survive export/import.
-
-### 5.2 Optional candidates for an initial contract
-
-| Field | Type | Purpose |
-| --- | --- | --- |
-| `display_name_zh` | text | Simplified Chinese display name. Recommended when the first library is localized in parallel. |
-| `source_reference` | text | Human-readable database name, package label note, restaurant reference, or URL/reference identifier. |
-| `preparation_default` | enum | Default preparation when it is part of the reference estimate. |
-| `is_processed` | boolean or blank | Descriptive flag; blank means not classified. Must not become a score. |
-| `is_condiment` | boolean | Makes condiment discovery and summaries explicit. |
-| `is_plant_protein` | boolean or blank | Descriptive grouping for later review. |
-| `is_animal_protein` | boolean or blank | Descriptive grouping for later review. |
-| `notes` | text | Human-readable estimate boundary or serving clarification; never executable instructions. |
-
-Category may make some boolean flags redundant. The implementation contract should decide whether flags improve querying enough to justify duplication.
-
-### 5.3 Future candidates
-
-These should not be required in the first implementation:
-
-- `source_name`
-- `source_url_or_reference` as a separate structured field
-- `source_updated_at`
-- brand or restaurant identity
-- region/cuisine tags
-- multiple serving definitions per food
-- preparation-specific estimate variants
-- user-created aliases
-- superseded/deprecated reference links
-
-They may improve auditability later, but requiring them now would make the first library and import flow larger than necessary.
-
-## 6. Sodium Estimation Contract
-
-### 6.1 Representation
-
-The preferred representation is a range plus confidence and provenance:
+The data flow is:
 
 ```text
-sodium_estimate_min_mg
-sodium_estimate_max_mg
-sodium_confidence
-source_type
-source_reference (optional)
+Food Reference
+    -> Meal Item Instances
+    -> Meal Instances
+    -> Derived Daily Meal Summary
+    -> Dynamic Daily Meal Reflection Panel
+    -> Bounded Daily Reflection context
 ```
 
-A single exact-looking value must not be generated from weak support. For example, a restaurant mixed dish should not be presented as `1,327 mg` unless a reliable declared source actually provides that value for the selected serving.
+### Food Reference
 
-### 6.2 Confidence semantics
+A Food Reference is reusable canonical reference data. It describes an item generally, its reference serving, and the evidence supporting any estimate.
 
-| Confidence | Meaning |
+### Meal Item Instance
+
+A Meal Item Instance is a user-owned occurrence of a Food Reference in one meal. Portion, preparation, sauce, and user adjustment belong here. Editing an instance must never overwrite its Food Reference.
+
+### Meal Instance
+
+A Meal Instance is one completed composition at one date, with optional time, label, note, and one or more Meal Item Instances. Multiple Meal Instances may share a date.
+
+### Derived Daily Meal Summary
+
+A Daily Meal Summary is derived from the Meal Instances recorded for one local date. It is an adapter/read surface, not an additional source of truth.
+
+### `Daily_Log` boundary
+
+Meal records are separate from `Daily_Log`. `Daily_Log` does not own Meal Items or Meal Instances, and multiple meals must not be forced into a single Daily_Log row. Daily_Log, Reflection, and future Field Review read meal information only through derived summary or bounded adapter layers.
+
+This preserves multiple meals per day, avoids schema growth and stale duplicate summaries, keeps existing workbooks backward-compatible, and retains provenance and uncertainty at the item level.
+
+## 5. Food Reference Contract
+
+### Required fields
+
+| Field | Purpose |
 | --- | --- |
-| `high` | The estimate closely matches the selected item and serving, such as a current package label or restaurant-declared value. It is still not a clinical measurement. |
-| `medium` | A reasonably matched reference exists, but brand, preparation, or serving variation remains. |
-| `low` | A broad estimate is available for a mixed dish, restaurant item, or uncertain portion. The range should remain visibly wide enough to express that uncertainty. |
-| `unknown` | There is not enough support to provide a range. Both estimate values should remain blank. |
+| `food_id` | Stable canonical identity. It must not depend on a translated display name. |
+| `display_name_th` | Thai display name. |
+| `display_name_en` | English display name and portable fallback. |
+| `category` | Broad descriptive category, such as grain, animal_protein, plant_protein, vegetable, fruit, soup, condiment, processed_food, dessert, or other. |
+| `default_serving_label` | Human-readable reference unit such as bowl, piece, spoon, cup, or serving. |
+| `default_serving_amount` | Amount represented by one reference serving. |
+| `default_serving_unit` | Unit giving the serving amount meaning. |
+| `sodium_estimate_min_mg` | Lower supported estimate for one reference serving, or blank when unknown. |
+| `sodium_estimate_max_mg` | Upper supported estimate for one reference serving, or blank when unknown. |
+| `sodium_confidence` | `high`, `medium`, `low`, or `unknown`. |
+| `source_type` | Minimum provenance class defined in Section 10. |
+| `schema_version` | Version of the Food Reference contract, independent from Daily_Log and profile schemas. |
 
-### 6.3 Source-dependent behavior
+### Optional fields
 
-- A package label may support higher confidence when the serving and product match.
-- A single ingredient may have a more stable reference estimate, while preparation still matters.
-- Restaurant and mixed dishes commonly need lower confidence and wider ranges.
-- Condiments, dipping sauces, seasoning powder, and soup base can shift the meal estimate substantially.
-- User-selected portion and preparation may widen or scale the range.
-- A package or restaurant declaration may be exact in its source but still depend on the declared serving.
-
-### 6.4 Range rules
-
-- Both bounds blank means unknown.
-- One bound without the other is invalid for a complete range and requires normalization or rejection in a future import contract.
-- `min` must be less than or equal to `max`.
-- Zero is valid only when a source supports zero for the stated serving; it is not the fallback for blank.
-- Summing meal ranges means summing known lower bounds and known upper bounds separately.
-- If one or more materially relevant items are unknown, the meal estimate must disclose incomplete coverage rather than imply a complete total.
-- A midpoint may be derived for internal display convenience only after human approval. It must not replace the visible range or be stored as a more authoritative value.
-
-No medical sodium target, daily limit, diagnosis, or clinical recommendation belongs in MHB 2.3A.
-
-## 7. Portion Model
-
-### Option A - Qualitative size
-
-Values: `small`, `regular`, `large`.
-
-| Dimension | Assessment |
+| Field | Purpose |
 | --- | --- |
-| Ease of use | Highest |
-| Estimate quality | Low to medium; mapping differs by item |
-| Portability | Good if size semantics are documented |
-| UI complexity | Low |
-| False precision risk | Low, but hidden size-to-number assumptions can be unclear |
+| `display_name_zh` | Simplified Chinese display name. |
+| `source_reference` | Human-readable database, package label, restaurant declaration, or other reference. |
+| `preparation_default` | Default preparation only when it is part of the estimate. |
+| `is_processed` | Descriptive classification, never a score. |
+| `is_condiment` | Explicit condiment discovery and summary support. |
+| `is_plant_protein` | Descriptive grouping for derived facts. |
+| `is_animal_protein` | Descriptive grouping for derived facts. |
+| `notes` | Human-readable serving or estimate boundary; never executable instruction. |
 
-### Option B - Serving multiplier
+Future Food Reference expansion, such as brands, restaurant identity, regional tags, multiple serving definitions, aliases, and source update management, is outside the first MHB 2.3 implementation.
 
-Values such as `0.5`, `1`, `1.5`, or `2` servings.
+## 6. Portion Contract
 
-| Dimension | Assessment |
-| --- | --- |
-| Ease of use | Medium |
-| Estimate quality | Medium when the reference serving is clear |
-| Portability | High |
-| UI complexity | Low to medium |
-| False precision risk | Medium if users interpret the multiplier as measured intake |
-
-### Option C - Hybrid model (preferred direction)
-
-Store a serving multiplier as the portable value and offer simple UI choices mapped to documented multipliers. An optional explicit amount may be deferred.
-
-Candidate item fields:
+The portion model is locked as hybrid:
 
 ```text
 portion_label: small | regular | large | custom
-serving_multiplier: 0.5 | 1 | 1.5 | 2 | other positive number
+serving_multiplier: portable positive multiplier
 ```
 
-The display label supports low-friction entry; the multiplier supports export and estimate scaling. A future UI must make clear that these are rough portions, not weighed measurements. The exact mapping remains a human-review decision because `small` and `large` may need category-specific defaults.
+`portion_label` makes entry quick and non-technical. `serving_multiplier` supports estimate scaling, local storage, and workbook transport. It represents a rough reference-serving relationship, not a weighed measurement.
 
-## 8. Preparation Contract
+The exact multiplier mapping by food category and the exact allowed custom input shape are implementation-specific decisions. The UI must not require grams and must not imply measured precision.
 
-Candidate enum:
+## 7. Preparation Contract
+
+The initial preparation vocabulary may use:
 
 ```text
 boiled
@@ -231,77 +134,77 @@ soup
 unknown
 ```
 
-Preparation is descriptive. It may affect sodium estimates when seasoning, broth, batter, or sauce is part of the preparation, and it may support future reflection about meal composition. It must not be converted into a moral score.
+Preparation is descriptive. It may affect an estimate when broth, batter, sauce, or seasoning is relevant, and may later support source-bound reflection. It must not become a moral score. `unknown` is an explicit state; blank means not recorded. Preparation alone does not establish sodium level.
 
-`unknown` is a valid explicit state. A blank value means preparation was not recorded. A future normalizer may distinguish blank from explicit unknown if that difference is useful.
+## 8. Condiments Are First-Class
 
-Preparation alone cannot safely determine sodium. For example, `grilled` does not mean low sodium, and `soup` does not establish a fixed sodium amount.
+Condiments are Food References and Meal Item Instances in their own right. Initial references may include:
 
-## 9. Condiments as First-Class Items
+```text
+fish_sauce
+soy_sauce
+oyster_sauce
+seasoning_powder
+soup_base
+dipping_sauce
+```
 
-Condiments must be selectable food references rather than hidden only in meal free text. Candidate items include:
+This is required because seasoning, broth, and dipping sauces may contribute more supported sodium estimate than the main protein. Free-text notes may supplement a meal, but they must not silently generate a numeric estimate. Meal presets may include inspectable, editable condiment items in a later UI specification.
 
-- fish sauce
-- soy sauce
-- oyster sauce
-- seasoning powder
-- soup base
-- dipping sauce
+## 9. Meal and Meal Item Instance Contract
 
-This matters because a meal's sodium estimate may depend more on seasoning and broth than on its main protein. Treating condiments as item instances also preserves provenance, portion, uncertainty, and import/export visibility.
+### Meal Instance
 
-Free-text meal notes may still describe an unknown sauce, but that note must not silently generate a sodium estimate. A future UI may offer meal presets that include condiment defaults, provided the user can inspect and adjust them.
+| Field | Purpose |
+| --- | --- |
+| `meal_id` | Stable local identifier that can survive export/import. |
+| `date` | Required local calendar date using MHB's canonical date normalization. |
+| `time` | Optional local time. |
+| `meal_label` | `breakfast`, `lunch`, `dinner`, `snack`, `late_meal`, `custom`, or `unnamed`. |
+| `custom_meal_label` | Optional display label when `meal_label` is `custom`. |
+| `items` | One or more Meal Item Instances. |
+| `meal_note` | Optional user-owned text; never executable instruction. |
+| `estimated_sodium_min_mg` | Derived from item estimates or retained as an auditable snapshot only after a later implementation decision. |
+| `estimated_sodium_max_mg` | Derived from item estimates or retained as an auditable snapshot only after a later implementation decision. |
+| `estimate_confidence` | Conservative derived confidence. |
+| `created_at` | System-managed audit timestamp. |
+| `updated_at` | System-managed audit timestamp for explicit edits. |
 
-## 10. Meal Instance Contract
+`unnamed` allows a user to record a meal without imposing breakfast/lunch/dinner structure.
 
-Candidate structure for one completed composition:
+### Meal Item Instance
 
-| Field | Requirement | Purpose |
-| --- | --- | --- |
-| `meal_id` | Required | Stable local identifier; must survive export/import. |
-| `date` | Required | Local calendar date in the same canonical date style used by MHB. |
-| `time` | Optional | Local time if the user records it; blank must remain valid. |
-| `meal_label` | Required enum | `breakfast`, `lunch`, `dinner`, `snack`, `late_meal`, `custom`, or `unnamed`. |
-| `custom_meal_label` | Conditional optional | Display text used only when `meal_label` is `custom`. |
-| `items` | Required collection | One or more meal item instances for a saved composition. |
-| `meal_note` | Optional | User-owned plain text; never parsed as executable instruction. |
-| `estimated_sodium_min_mg` | Derived or snapshot candidate | Sum of supported item lower bounds, with incomplete-coverage status when needed. |
-| `estimated_sodium_max_mg` | Derived or snapshot candidate | Sum of supported item upper bounds, with incomplete-coverage status when needed. |
-| `estimate_confidence` | Derived candidate | Conservative meal-level confidence, never higher than materially important low-confidence components. |
-| `created_at` | System-managed | Audit timestamp. |
-| `updated_at` | System-managed | Audit timestamp for explicit edits. |
+| Field | Purpose |
+| --- | --- |
+| `meal_item_id` | Stable identity within a meal. |
+| `meal_id` | Parent relationship in tabular storage. |
+| `food_id` | Link to the Food Reference. |
+| `display_name_snapshot` | Optional display snapshot if a reference name later changes. |
+| `portion_label` | User-facing rough portion. |
+| `serving_multiplier` | Portable estimate multiplier. |
+| `preparation` | Preparation selected for this occurrence. |
+| `user_adjustment` | Optional bounded note such as less sauce; no automatic numeric inference. |
+| `sodium_estimate_min_mg` | Instance estimate after supported portion/preparation adjustment, or blank. |
+| `sodium_estimate_max_mg` | Instance estimate after supported portion/preparation adjustment, or blank. |
+| `confidence` | Instance confidence. |
+| `source_type` | Provenance snapshot used for the instance estimate. |
+| `source_reference` | Optional auditable source snapshot. |
 
-The first implementation should decide whether meal-level sodium totals are derived on read or saved as an auditable snapshot. If saved, the underlying item ranges and provenance remain authoritative and must travel with the meal.
+## 10. Sodium Estimate and Provenance Contract
 
-An `unnamed` meal supports users who do not organize eating into breakfast/lunch/dinner. Multiple meal instances per date are allowed, and meal logging may remain blank for the entire day.
+The canonical sodium representation is:
 
-## 11. Meal Item Instance Contract
+```text
+sodium_estimate_min_mg
+sodium_estimate_max_mg
+sodium_confidence
+source_type
+source_reference
+```
 
-Food Reference and Meal Item Instance have different ownership.
+Visible sodium uses the range as primary. A future midpoint may be a clearly secondary derived convenience value, but may never replace the displayed range or be stored as more authoritative evidence.
 
-| Field | Requirement | Purpose |
-| --- | --- | --- |
-| `meal_item_id` | Required | Stable identity within a meal. |
-| `meal_id` | Required in tabular storage | Parent relationship. |
-| `food_id` | Required for reference-backed item | Links to Food Reference without copying ownership. |
-| `display_name_snapshot` | Optional candidate | Preserves what the user saw if a reference name later changes. |
-| `portion_label` | Optional | Human-facing rough size. |
-| `serving_multiplier` | Required for estimated reference item | Scales the documented serving. |
-| `preparation` | Optional enum | Actual preparation selected for this meal. |
-| `user_adjustment` | Optional plain text | A bounded note such as less sauce; it must not become automatic numeric inference. |
-| `sodium_estimate_min_mg` | number or blank | Item estimate after portion/preparation adjustment, if supported. |
-| `sodium_estimate_max_mg` | number or blank | Item estimate after portion/preparation adjustment, if supported. |
-| `confidence` | enum | Confidence for this item instance. |
-| `source_type` | Recommended snapshot | Provenance used for this estimate. |
-| `source_reference` | Optional snapshot | Human-auditable source reference. |
-
-Changing an item instance must never overwrite the Food Reference. A user selecting `large`, adding sauce, or choosing `fried` changes only that meal item instance.
-
-A future custom-food flow may allow an instance without a canonical `food_id`, but that policy should be decided before implementation. If allowed, custom identity and provenance must remain explicit.
-
-## 12. Source and Provenance
-
-Candidate `source_type` enum:
+Allowed candidate `source_type` values are:
 
 ```text
 reference_database
@@ -312,94 +215,107 @@ system_default
 unknown
 ```
 
-Minimum viable provenance is `source_type` plus one optional human-readable `source_reference` field. This answers two practical questions without over-design:
+- Package labels may have higher confidence when the product and serving match.
+- A single ingredient may have a more stable reference estimate, while portion and preparation still matter.
+- Restaurant and mixed dishes commonly need wider, lower-confidence ranges.
+- `user_entered` is not automatically invalid; confidence depends on its evidence.
+- `system_default` must remain identifiable as a system estimate, not measured truth.
 
-1. Where did this estimate come from?
-2. How much confidence should a reader place in it?
+There is no medical sodium target, daily limit, diagnosis, or clinical recommendation in MHB 2.3.
 
-Future structured provenance may add `source_name`, `source_url_or_reference`, and `source_updated_at`. Those fields should remain optional until the reference-library ownership and update process are approved.
+### Mandatory estimate rules
 
-`user_entered` is not inherently less valid than a system default; confidence depends on what the user entered and its source. `system_default` must identify itself and must not appear as measured truth.
+- `unknown` is not zero.
+- Both bounds blank mean the estimate is unknown.
+- One bound without the other is structurally incomplete and needs explicit normalization or rejection in the future implementation contract.
+- `min` must be less than or equal to `max`.
+- Zero is valid only when supported for the stated serving.
+- Derived meal/day ranges sum known lower and upper bounds separately.
+- A materially unknown item makes coverage partial or unknown; it must not be presented as a complete total.
+- Wider supported ranges are more honest than false precision.
 
-## 13. Daily Meal Summary
+## 11. Derived Daily Meal Summary
 
-The preferred direction is a derived summary from all meal instances on one date.
+The Daily Meal Summary is derived, not persisted by default. It re-computes from Meal Instances for the selected date, so it cannot become a second stale truth.
 
-### Meaningful initial candidates
+Candidate derived facts are:
 
-| Field | Assessment |
+| Field | Meaning |
 | --- | --- |
-| `meal_count` | Useful count of recorded meal instances; must be described as recorded meals, not meals actually eaten. |
-| `estimated_sodium_min_mg` | Useful only with coverage disclosure. |
-| `estimated_sodium_max_mg` | Useful only with coverage disclosure. |
-| `sodium_estimate_coverage` | Recommended derived metadata such as complete, partial, or unknown. |
-| `animal_protein_meals` | Potentially useful descriptive presence count. |
-| `plant_protein_meals` | Potentially useful descriptive presence count. |
-| `vegetable_present_meals` | Potentially useful if based on explicit item categories. |
-| `fried_food_meals` | Descriptive preparation count; must not become judgment. |
-| `processed_food_meals` | Potentially useful but depends on clear classification ownership. |
+| `recorded_meal_count` | Count of Meal Instances recorded for that date. |
+| `estimated_sodium_min_mg` | Lower bound from supported recorded items, with coverage context. |
+| `estimated_sodium_max_mg` | Upper bound from supported recorded items, with coverage context. |
+| `sodium_estimate_coverage` | `complete`, `partial`, or `unknown` coverage of recorded items. |
+| `animal_protein_meals` | Recorded meals containing explicitly classified animal-protein items. |
+| `plant_protein_meals` | Recorded meals containing explicitly classified plant-protein items. |
+| `vegetable_present_meals` | Recorded meals containing explicitly classified vegetable items. |
+| `fried_food_meals` | Recorded meals containing items recorded with fried preparation. |
+| `processed_food_meals` | Recorded meals containing explicitly classified processed-food items. |
+| `meals_with_recorded_condiments` | Recorded meals containing condiment items. |
 
-### Candidates to defer or clarify
+Each field describes recorded data only. For example, zero `vegetable_present_meals` means no vegetable item was recorded among recorded meals; it does not prove that no vegetables were eaten.
 
-| Field | Concern |
-| --- | --- |
-| `sweet_drink_meals` | May duplicate the existing Drinks contract and create ownership ambiguity. Prefer linking by date/time only after a clear rule exists. |
-| `condiment_heavy_meals` | `heavy` is judgment-prone and requires an unapproved threshold. Prefer `meals_with_recorded_condiments` or defer. |
+Forbidden fields include `meal_score`, `health_score`, `diet_score`, `sodium_score`, `good_meal_count`, and `bad_meal_count`.
 
-Forbidden summary fields include `meal_score`, `health_score`, `diet_score`, `sodium_score`, `good_meal_count`, and `bad_meal_count`.
+## 12. Dynamic Daily Meal Reflection Panel
 
-Daily summary values must distinguish recorded presence from actual absence. For example, zero vegetable-present meals among two recorded meals means no vegetable item was recorded in those meal records; it does not prove the user ate no vegetables that day.
+The future Meal Composer workspace includes a Dynamic Daily Meal Reflection Panel beneath the composition area.
 
-## 14. Relationship to Daily_Log
+Whenever the user adds, edits, or deletes a meal; changes portion or preparation; or adds/removes a condiment, the system must derive that day's Daily Meal Summary again and re-render the panel. The summary remains derived and is not duplicated into persistent storage by default.
 
-The current `Daily_Log` contract is one row per date. Meal Composition supports multiple meal instances and multiple item instances per date.
+The panel is a daily reflection surface. It is not a score, diet dashboard, or medical warning panel.
 
-### Option A - Store meal summary fields in Daily_Log
+It may state bounded facts such as:
 
-Possible examples: meal count and daily sodium range.
+- how many meals are recorded today
+- recorded protein categories or vegetables
+- whether supported sodium estimates are partly associated with recorded soup or condiment items
+- whether some recorded items do not have enough estimate support
 
-Advantages:
+It must not say that a day or meal was good/bad, that sodium was bad, that a diet failed, or that a health score changed.
 
-- simple access for existing Reflection and Field Review paths
-- one-row daily export remains convenient
-- Local LLM can see a compact daily picture
+## 13. Daily Reflection Integration
 
-Risks:
+Meal Composition has a bounded adapter responsibility:
 
-- expands a stable schema
-- loses meal/item detail unless another source also exists
-- creates duplication when detailed meal records are stored elsewhere
-- requires summary refresh whenever a meal changes
-- makes import conflict and backward compatibility more complex
+```text
+Meal Records
+    -> derive Daily Meal Summary
+    -> build bounded meal reflection context for a date
+    -> existing Daily Reflection
+```
 
-### Option B - Keep meal records separate and derive daily information (preferred ownership model)
+The eventual adapter provides only derived facts needed for language, including:
 
-Meal and item records are the source of truth. Daily_Log may query or reference a derived summary without owning meal data.
+- recorded meal count
+- sodium estimate range and coverage
+- recorded protein categories and vegetable presence
+- recorded fried/processed presence
+- recorded condiment/soup contribution
+- optional meal timing when recorded
+- unknown and confidence flags
 
-Advantages:
+Raw Meal objects, free-text notes, and unsupported inferences must not be passed wholesale into Reflection. Meal data must not override the user-selected Reflection Root, change deterministic health interpretation, or override safety/source-data authority.
 
-- naturally supports multiple meals and items per day
-- keeps Daily_Log backward-compatible
-- preserves item provenance and uncertainty
-- avoids stale duplicated summaries
-- provides clearer workbook and Local LLM audit paths
-- allows future Field Review to select meal-specific or daily views
+Reflection language remains factual, gentle, concise, non-scoring, non-diagnostic, free from guilt, and visibly uncertain where coverage is incomplete.
 
-Risks:
+### Source-bound language rules
 
-- requires joins by date or meal ID
-- import/export validation becomes relational
-- current Reflection code would need a bounded adapter later
+- Say: “There are 2 meals recorded today.” Do not say: “You ate 2 meals today.”
+- Say: “Among the meals recorded, no vegetable item appears yet.” Do not say: “You did not eat vegetables today.”
+- Do not infer no condiments from missing condiment records.
+- Do not infer low sodium from unknown sodium.
+- Return attention to the day’s recorded information; do not imply a requirement to log all meals.
 
-Preferred direction: Option B. Do not add Daily_Log meal columns in the first implementation unless a later human-approved contract identifies a minimal, non-duplicative reference field. Daily summaries should initially be derived from the separate meal source.
+## 14. Future Field Review Boundary
 
-## 15. Workbook Shape Options
+Future Field Review may describe selected-window recorded facts, for example meal-record count, plant-protein appearance, or the supported share of sodium estimate associated with recorded soup/condiment items.
 
-No workbook shape is final in MHB 2.3A.
+It must retain recorded-data qualifiers and estimate uncertainty. It must not score, rank, make causal or disease inferences, or use moral judgment. Field Review integration is deferred until bounded Daily Reflection integration is implemented and evaluated.
 
-### Option 1 - Relational sheets
+## 15. Workbook Direction
 
-Candidate sheets:
+Relational sheets are the canonical workbook direction:
 
 ```text
 Food_Reference
@@ -407,177 +323,92 @@ Meals
 Meal_Items
 ```
 
-Advantages:
+These sheets preserve canonical reference ownership, user-owned occurrences, relationships, provenance, and uncertainty. Meal sheets are optional additions; existing workbooks without them remain valid and current profile/Daily_Log behavior remains unchanged.
 
-- strongest separation of canonical reference and user-owned instances
-- avoids repeating full food metadata for every meal item
-- clear provenance and update boundaries
-- supports multiple meals/items naturally
-- good parser and Local LLM contract when relationships are documented
+A flattened `Meal_Log` may be added later only as a derived, read-only convenience view. It is not a canonical source and must not become an alternate import authority.
 
-Trade-offs:
+Exact relational column order, export timing, import validation/conflict behavior, referenced-library export policy, and workbook schema versioning belong to the next implementation contract.
 
-- requires joins across sheets
-- less immediately readable for casual Excel users
-- import must validate IDs, parent relationships, duplicates, and missing references
-- Food Reference export policy must decide whether to include the whole library or only referenced items
+## 16. Missing and Unknown Rules
 
-### Option 2 - Flattened `Meal_Log`
+The following are mandatory:
 
-One row per meal item, with repeated meal fields:
+- unknown ≠ zero
+- blank is not healthy, low, or absent
+- blank condiment is not no condiment
+- unknown sodium is not low sodium
+- unrecorded ≠ not eaten or skipped
+- an absent food category is not proof it was not eaten
+- partial estimate coverage must be disclosed
+- unsupported values must not silently receive invented defaults
+- free-text notes must not become hidden numeric or AI inference
 
-```text
-Meal_ID
-Date
-Time
-Meal_Label
-Meal_Item_ID
-Food_ID
-Food_Name
-Portion_Label
-Serving_Multiplier
-Preparation
-Sodium_Min_mg
-Sodium_Max_mg
-Confidence
-Source_Type
-Source_Reference
-```
+## 17. MHB 2.3 Intended Scope
 
-Advantages:
+The intended bounded MHB 2.3 implementation includes:
 
-- easy to filter and inspect in one Excel sheet
-- one row is independently useful to many parsers and Local LLMs
-- simpler export surface
+- a small static Food Reference pilot
+- first-class condiments
+- local Meal Instance storage with multiple meals per day
+- hybrid portion handling
+- sodium range, confidence, and provenance
+- a 2D Meal Composer launched from Today
+- a Dynamic Daily Meal Reflection Panel
+- derived Daily Meal Summary
+- bounded Daily Reflection integration
+- optional relational workbook export/import after the runtime contract is stable
 
-Trade-offs:
+Meal Composition belongs under Today as a daily input flow alongside Water, Drinks, Activity, and Mind Note. It does not add a top-level navigation tab in the first implementation.
 
-- repeats meal and food display data
-- weaker canonical-reference ownership
-- edits can create inconsistent duplicate meal metadata
-- import needs grouping and conflict rules
-- source updates are difficult to distinguish from meal-time snapshots
+## 18. Deferred Features and Implementation Questions
 
-Provisional preference: relational sheets better preserve source-bound ownership, while a flattened export is easier for humans. Human review should decide whether v1 prioritizes canonical clarity or single-sheet portability. A later contract may also consider relational canonical sheets plus a derived, read-only flattened view, but that may be too large for MHB 2.3.
+### Deferred to MHB 2.4+ or later backlog
 
-Old workbooks without meal sheets must remain valid. Meal sheets, if implemented, must be optional and must not alter existing Daily_Log/profile import behavior.
-
-## 16. Missing and Unknown Values
-
-The following rules are mandatory for any later implementation:
-
-- Unknown is not zero.
-- Blank is not healthy, low, or absent.
-- Missing condiment data does not mean no condiment was used.
-- Unknown sodium does not mean low sodium.
-- An unrecorded meal does not mean a skipped meal.
-- An absent food category does not prove it was not eaten.
-- A partial meal estimate must disclose partial coverage.
-- Unsupported values must not be silently replaced with invented defaults.
-- A broad, low-confidence range is preferable to false precision when some support exists.
-- Explicit `unknown` is preferable when support is insufficient.
-
-Future import should reject structurally impossible ranges and preserve valid partial records without inventing missing estimates.
-
-## 17. Future Reflection Boundary
-
-Meal Composition may later support Reflection wording about:
-
-- recorded meal composition
-- food variety visible in the records
-- approximate sodium distribution and its uncertainty
-- preparation methods
-- meal timing or rhythm
-
-Reflection must remain source-bound and may say that the data is incomplete. It must not label food or meals as healthy/unhealthy, good/bad, clean/cheat, failed diet, sodium failure, kidney-safe, or medically appropriate.
-
-Raw meal notes must remain user-owned text and must not become executable prompt instructions. Meal data must not change Reflection Root or override health and safety boundaries without a separate human-approved contract.
-
-## 18. Future Field Review Boundary
-
-A future Field Review may describe observations such as:
-
-- 12 meal records were saved in the selected seven-day window
-- much of the supported sodium estimate came from recorded soup or condiment items
-- plant-protein items appeared in three recorded meals
-
-Every statement must retain the recorded-data qualifier and estimate uncertainty. Field Review must not add scoring, ranking, shame language, disease inference, medical claims, or causal claims.
-
-Timeframes such as 7, 14, or 30 days should operate on recorded meal instances, not imply complete dietary coverage.
-
-## 19. Conceptual UI Direction
-
-This note does not define UI. A later design phase may explore:
-
-- entry from Today into a Meal Composer workspace
-- 2D composition before any more complex visual form
-- selecting or placing food and condiment items
-- one completed composition becoming one meal instance
-- optional, effectively unbounded meal count per day within practical local storage limits
-- leaving all meal fields blank without penalty
-
-There is no 3D requirement. No HTML, CSS, JavaScript, visual component, or interaction contract is implemented by MHB 2.3A.
-
-## 20. Non-Goals
-
-MHB 2.3A does not define or implement:
-
+- package barcode scanning
+- restaurant search or API integration
+- large/cloud nutrition databases
+- automatic photo food recognition
 - calorie or macro tracking
-- medical sodium targets
-- weight-loss plans
-- food compliance or adherence
-- meal, diet, health, or sodium scores
-- final food database contents
-- final workbook schema
-- runtime storage keys
-- Daily_Log columns
-- export/import behavior
-- Reflection or Field Review logic
-- a custom-food editor
-- package scanning
-- restaurant search
-- cloud sync or account identity
+- medical sodium targets or kidney-specific prescription
+- long-range advanced food analytics
+- AI-generated food inference
+- automatic condiment guessing
+- flattened `Meal_Log` as a canonical source
+- 3D Meal Composer
 
-## 21. Suggested Implementation Slices After Approval
+### Remaining implementation-specific questions
 
-A bounded sequence could be:
+- exact enum and workbook column naming
+- first Food Reference pilot item list
+- category-specific portion multiplier mapping
+- local storage key and storage version
+- custom-food editor timing and bounded contract, if included
+- relational workbook column order and referenced-library export policy
+- import validation, conflict, preview, and confirmation behavior
+- exact visual layout and interaction details of the Meal Composer and panel
+- exact Daily Reflection wording and localization
 
-1. Approve reference, meal, and item ownership plus portion/sodium semantics.
-2. Lock local runtime storage and normalization contract without UI polish.
-3. Build a small static Food Reference pilot including first-class condiments.
-4. Build a 2D Meal Composer and multiple-meal Today flow.
-5. Add optional workbook export, then separately design import confirmation/conflict behavior.
-6. Add bounded Daily Meal Summary.
-7. Evaluate Reflection and Field Review only after real user-entered meal data exists.
+These questions must not reopen the locked ownership, portion, sodium, workbook, daily-summary, condiment, panel, or bounded-adapter decisions above.
 
-Items such as custom foods, large reference-library management, package/restaurant integrations, advanced provenance, and long-range food review may be better deferred to MHB 2.4.
+## 19. Non-Goals
 
-## 22. Human Review Questions
+MHB 2.3 does not implement a calorie/macro tracker, medical recommendation engine, diet compliance system, food score, hidden food inference, automatic synchronization, or user obligation to log every meal.
 
-1. Should meal records remain a separate source from Daily_Log, with Daily_Log reading only derived information?
-2. Should the first portion model use qualitative sizes, serving multipliers, or the proposed hybrid?
-3. Should sodium display use range only, or range plus a visibly secondary derived midpoint?
-4. Should Food Reference live in repo-managed static JSON, an optional workbook sheet, or both with explicit ownership?
-5. Should users be able to create custom food items in the first runtime version?
-6. May a package-label value override a system estimate when serving and product match, and how should that override be audited?
-7. How wide or explicit should low-confidence ranges be for restaurant and mixed dishes?
-8. Must users select condiments each time, or may inspectable meal presets include editable condiment items?
-9. Should Daily Meal Summary always be derived, or should export preserve a dated summary snapshot?
-10. How much sodium language belongs in daily Reflection before it becomes too numeric or clinical?
-11. How should 7/14/30-day Field Review describe recorded food patterns while making incomplete logging visible?
-12. Which capabilities should move to MHB 2.4 so MHB 2.3 remains a bounded Meal Composer rather than a nutrition platform?
+This contract does not itself change runtime storage, Daily_Log, workbook schema, export/import, Reflection logic, Field Review, Signal Engine, User Intention Profile, UI, or current-version label.
 
-## 23. Decision Summary
+## 20. Implementation Acceptance Direction
 
-The strongest provisional direction is:
+The implementation is aligned with this contract only when:
 
-- separate Food Reference from user-owned Meal Item Instances
-- treat condiments as first-class items
-- represent sodium as range + confidence + provenance
-- use a low-friction hybrid portion model
-- keep Meal Instances separate from Daily_Log
-- derive Daily Meal Summary initially
-- preserve unknown and partial coverage explicitly
-- defer final workbook shape and advanced food-library ownership to human review
+- Meal records remain separate from `Daily_Log`.
+- The hybrid portion model retains both simple labels and portable multipliers without false precision.
+- Sodium remains range + confidence + provenance, with partial coverage visible.
+- Condiments are selectable first-class items.
+- Daily summary and the daily panel derive from current Meal Instances rather than create duplicated persistent facts.
+- Daily Reflection receives only bounded derived context and preserves its existing root/safety authority.
+- Workbook canonical ownership remains relational.
+- User-facing text never converts unrecorded data into claims about what was eaten or omitted.
 
-These are design recommendations, not current runtime facts or an approved implementation contract.
+## 21. Documentation Impact
+
+Runtime documentation update not required; design contract only. README and user guides continue to describe the current MHB 2.2 runtime. The design-notes index identifies this file as a locked MHB 2.3 candidate with implementation pending.
