@@ -79,7 +79,7 @@ Runtime architecture, modularization planning, and implementation-safety notes f
 - [MEAL_COMPOSITION_DATA_CONTRACT.md](MEAL_COMPOSITION_DATA_CONTRACT.md) - Locked MHB 2.3 Meal Composition contract: separate meal ownership, optional Meal Type descriptors, uncertainty-aware sodium ranges, and relational workbook direction.
 - [MEAL_COMPOSITION_RUNTIME_DATA_LAYER.md](MEAL_COMPOSITION_RUNTIME_DATA_LAYER.md) - Records the MHB 2.3B meal storage, immutable Food Reference pilot, derived summary, and bounded Reflection context foundation now used by the UI.
 - [MEAL_COMPOSITION_FOOD_REFERENCE_EVIDENCE_AUDIT.md](MEAL_COMPOSITION_FOOD_REFERENCE_EVIDENCE_AUDIT.md) - Audits all 26 pilot Food References; four human-approved references are implemented with traceable sodium evidence while the remaining 22 stay unknown.
-- [MEAL_COMPOSER_UI.md](MEAL_COMPOSER_UI.md) - Defines the MHB 2.3 Today workspace, illustrated Meal Type cards, progressive component discovery and draft selection feedback, dynamic recorded-meal panel, responsive presentation, and deferred Reflection/workbook boundaries.
+- [MEAL_COMPOSER_UI.md](MEAL_COMPOSER_UI.md) - Defines the MHB 2.3 Today workspace, illustrated Meal Type cards, progressive component discovery, symbolic draft/saved-meal presence, dynamic recorded-meal panel, responsive presentation, and deferred Reflection/workbook boundaries.
 
 ## 99 Stabilization
 

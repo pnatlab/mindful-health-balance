@@ -1,6 +1,7 @@
 (function initializeMealCompositionUI(globalScope) {
   const SUPPORTED_LANGUAGES = ["th", "en", "zh"];
   const DEFAULT_COMPONENT_RESULT_LIMIT = 8;
+  const MAX_MEAL_VISUAL_TOKENS = 6;
   const CATEGORY_ORDER = [
     "grain",
     "animal_protein",
@@ -47,9 +48,12 @@
       remove: "เอาออก",
       save: "เก็บมื้อนี้",
       saveChanges: "เก็บการแก้ไข",
+      saving: "กำลังเก็บมื้อนี้…",
       cancelEdit: "ยกเลิกการแก้ไข",
       saved: "เก็บมื้อนี้ไว้แล้วค่ะ",
       updated: "อัปเดตมื้อนี้แล้วค่ะ",
+      savedConfirmationHelper: "มื้อนี้อยู่ในบันทึกของวันนี้แล้ว",
+      visualItemCount: (count) => `${count} รายการในมื้อนี้`,
       deleted: "เอามื้อนี้ออกจากบันทึกแล้วค่ะ",
       saveNeedsItem: "เลือกอย่างน้อยหนึ่งรายการก่อนเก็บมื้อนี้นะคะ",
       invalidCustom: "ใส่จำนวนเท่าของหนึ่งหน่วยที่มากกว่า 0",
@@ -159,9 +163,12 @@
       remove: "Remove",
       save: "Keep this meal",
       saveChanges: "Keep changes",
+      saving: "Keeping this meal…",
       cancelEdit: "Cancel editing",
       saved: "This meal has been kept.",
       updated: "This meal has been updated.",
+      savedConfirmationHelper: "This meal is now in today's record.",
+      visualItemCount: (count) => `${count} ${count === 1 ? "item" : "items"} in this meal`,
       deleted: "This meal was removed from the record.",
       saveNeedsItem: "Choose at least one item before keeping this meal.",
       invalidCustom: "Enter a serving multiplier greater than 0.",
@@ -271,9 +278,12 @@
       remove: "移除",
       save: "留下这一餐",
       saveChanges: "保存修改",
+      saving: "正在留下这一餐…",
       cancelEdit: "取消修改",
       saved: "这一餐已经留下来了。",
       updated: "这一餐已经更新。",
+      savedConfirmationHelper: "这一餐已经在今天的记录里了。",
+      visualItemCount: (count) => `这一餐中有 ${count} 项记录`,
       deleted: "这一餐已从记录中移除。",
       saveNeedsItem: "请先选择至少一项，再留下这一餐。",
       invalidCustom: "请输入大于 0 的份量倍数。",
@@ -612,6 +622,49 @@
     return FOOD_ICONS[reference?.food_id] || "·";
   }
 
+  function buildMealVisualModel(items, runtime, language = "th", maxTokens = MAX_MEAL_VISUAL_TOKENS) {
+    const normalizedLanguage = normalizeLanguage(language);
+    const sourceItems = Array.isArray(items) ? items : [];
+    const tokenLimit = Number.isInteger(maxTokens) && maxTokens > 0 ? maxTokens : MAX_MEAL_VISUAL_TOKENS;
+    const components = sourceItems.map((item) => {
+      const reference = runtime?.getFoodReferenceById?.(item?.food_id) || null;
+      const name = reference
+        ? runtime.getFoodDisplayName(reference, normalizedLanguage)
+        : String(item?.display_name_snapshot || item?.food_id || "").trim();
+      return Object.freeze({
+        foodId: String(item?.food_id || ""),
+        name,
+        icon: getFoodIcon(reference)
+      });
+    });
+    return Object.freeze({
+      itemCount: components.length,
+      tokens: Object.freeze(components.slice(0, tokenLimit)),
+      overflowCount: Math.max(0, components.length - tokenLimit),
+      componentNames: Object.freeze(components.map((component) => component.name).filter(Boolean))
+    });
+  }
+
+  function buildSavedMealCardModel(meal, runtime, language = "th") {
+    const copy = getText(language);
+    const visual = buildMealVisualModel(meal?.items, runtime, language);
+    return Object.freeze({
+      mealId: String(meal?.meal_id || ""),
+      time: String(meal?.time || "").trim(),
+      label: copy.labels[meal?.meal_label] || copy.labels.unnamed,
+      mealType: copy.mealTypes[meal?.meal_type] || copy.mealTypes.unspecified,
+      condimentKnowledge: meal?.condiment_knowledge === "unknown" ? "unknown" : "",
+      visual
+    });
+  }
+
+  function buildSaveFeedbackModel(phase, wasEditing = false, language = "th") {
+    const copy = getText(language);
+    if (phase === "saving") return Object.freeze({ phase, message: copy.saving });
+    if (phase === "saved") return Object.freeze({ phase, message: wasEditing ? copy.updated : copy.saved });
+    return Object.freeze({ phase: "idle", message: "" });
+  }
+
   function getCategoryKeys(library) {
     const found = new Set(library.map((reference) => reference.category || "other"));
     return [...CATEGORY_ORDER.filter((category) => found.has(category)), ...[...found].filter((category) => !CATEGORY_ORDER.includes(category))];
@@ -656,12 +709,19 @@
     const runtime = options.runtime;
     const model = options.model || createMealComposerModel(options);
     const confirmAction = options.confirmAction || ((message) => globalScope.confirm(message));
+    const scheduleFrame = options.scheduleFrame || ((callback) => {
+      if (typeof globalScope.requestAnimationFrame === "function") return globalScope.requestAnimationFrame(callback);
+      return globalScope.setTimeout(callback, 0);
+    });
     let language = normalizeLanguage(options.language);
     let isOpen = false;
     let category = "grain";
     let search = "";
     let showAllFoodResults = false;
     let status = "";
+    let savePhase = "idle";
+    let recentSavedMealId = "";
+    let recentSaveWasEditing = false;
 
     const headerTitle = root.querySelector("[data-meal-title]");
     const headerIntro = root.querySelector("[data-meal-intro]");
@@ -687,6 +747,24 @@
         base = language === "th" ? "ไข่ต้มฟองใหญ่ 1 ฟอง" : language === "zh" ? "1 枚大号水煮蛋" : "1 large boiled egg";
       }
       return item.serving_multiplier === 1 ? base : `${formatNumber(item.serving_multiplier, language)} × ${base}`;
+    }
+
+    function renderMealVisual(items, variant = "draft") {
+      const copy = getText(language);
+      const visual = buildMealVisualModel(items, runtime, language);
+      if (!visual.itemCount) return "";
+      const tokens = visual.tokens.map((token, index) => `
+        <span class="meal-visual-token meal-visual-token--${(index % MAX_MEAL_VISUAL_TOKENS) + 1}" title="${escapeHtml(token.name)}" aria-hidden="true">${escapeHtml(token.icon)}</span>
+      `).join("");
+      const overflow = visual.overflowCount
+        ? `<span class="meal-visual-token meal-visual-token--overflow" aria-hidden="true">+${visual.overflowCount}</span>`
+        : "";
+      return `
+        <div class="meal-visual meal-visual--${escapeHtml(variant)}">
+          <div class="meal-visual-plate" aria-hidden="true">${tokens}${overflow}</div>
+          <span class="meal-visual-count">${escapeHtml(copy.visualItemCount(visual.itemCount))}</span>
+        </div>
+      `;
     }
 
     function renderHeader() {
@@ -833,8 +911,10 @@
       const items = draft.items.length
         ? draft.items.map(renderDraftItem).join("")
         : `<p class="meal-inline-empty meal-draft-empty">${escapeHtml(copy.currentMealEmpty)}</p>`;
+      const saveFeedback = buildSaveFeedbackModel(savePhase, Boolean(draft.mealId), language);
+      const isSaving = saveFeedback.phase === "saving";
       return `
-        <section class="meal-draft" aria-labelledby="mealDraftTitle">
+        <section class="meal-draft" aria-labelledby="mealDraftTitle" aria-busy="${isSaving}">
           <div class="meal-section-heading meal-draft-heading">
             <div>
               <p class="section-kicker">${draft.mealId ? escapeHtml(copy.editMeal) : escapeHtml(copy.draftKicker)}</p>
@@ -845,6 +925,7 @@
               <label><span>${escapeHtml(copy.mealTime)}</span><input type="time" data-meal-time value="${escapeHtml(draft.time)}"></label>
             </div>
           </div>
+          ${renderMealVisual(draft.items)}
           <div class="meal-draft-list">${items}</div>
           <div class="meal-draft-footer">
             <div class="meal-estimate" aria-live="polite">
@@ -854,7 +935,7 @@
             </div>
             <div class="meal-draft-actions">
               ${draft.mealId ? `<button type="button" class="ghost-button" data-cancel-meal-edit>${escapeHtml(copy.cancelEdit)}</button>` : ""}
-              <button type="button" class="primary-button" data-save-meal${draft.items.length ? "" : " disabled"}>${escapeHtml(draft.mealId ? copy.saveChanges : copy.save)}</button>
+              <button type="button" class="primary-button${isSaving ? " is-saving" : ""}" data-save-meal${draft.items.length && !isSaving ? "" : " disabled"}>${escapeHtml(isSaving ? copy.saving : draft.mealId ? copy.saveChanges : copy.save)}</button>
             </div>
           </div>
         </section>
@@ -865,14 +946,14 @@
       const copy = getText(language);
       const meals = model.getMeals();
       const cards = meals.length ? meals.map((meal) => {
-        const names = meal.items.map((item) => foodName(runtime.getFoodReferenceById(item.food_id)) || item.display_name_snapshot);
-        const type = copy.mealTypes[meal.meal_type] || copy.mealTypes.unspecified;
-        const unknownCondiments = meal.condiment_knowledge === "unknown" ? ` · ${copy.condimentUnknown}` : "";
+        const card = buildSavedMealCardModel(meal, runtime, language);
+        const unknownCondiments = card.condimentKnowledge === "unknown" ? ` · ${copy.condimentUnknown}` : "";
         return `
-          <article class="meal-saved-item">
-            <div>
-              <p class="meal-saved-meta">${escapeHtml(meal.time || "·")} · ${escapeHtml(copy.labels[meal.meal_label] || copy.labels.unnamed)} · ${escapeHtml(type)}${escapeHtml(unknownCondiments)}</p>
-              <h4>${escapeHtml(names.join(" · "))}</h4>
+          <article class="meal-saved-item${meal.meal_id === recentSavedMealId ? " is-recent" : ""}" data-saved-meal="${escapeHtml(meal.meal_id)}">
+            ${renderMealVisual(meal.items, "saved")}
+            <div class="meal-saved-copy">
+              <p class="meal-saved-meta">${escapeHtml(card.time || "·")} · ${escapeHtml(card.label)} · ${escapeHtml(card.mealType)}${escapeHtml(unknownCondiments)}</p>
+              <h4>${escapeHtml(card.visual.componentNames.join(" · "))}</h4>
             </div>
             <div class="meal-saved-actions">
               <button type="button" class="meal-text-button" data-edit-meal="${escapeHtml(meal.meal_id)}">${escapeHtml(copy.editMeal)}</button>
@@ -881,9 +962,26 @@
           </article>
         `;
       }).join("") : `<p class="meal-inline-empty">${escapeHtml(copy.savedMealsEmpty)}</p>`;
+      const recentMeal = recentSavedMealId ? meals.find((meal) => meal.meal_id === recentSavedMealId) : null;
+      const confirmation = savePhase === "saved" && recentMeal ? `
+        <article class="meal-saved-confirmation" role="status" aria-live="polite">
+          <span class="meal-saved-check" aria-hidden="true">✓</span>
+          ${renderMealVisual(recentMeal.items, "confirmation")}
+          <div>
+            <h4>${escapeHtml(buildSaveFeedbackModel("saved", recentSaveWasEditing, language).message)}</h4>
+            <p>${escapeHtml(copy.savedConfirmationHelper)}</p>
+          </div>
+        </article>
+      ` : "";
       return `
         <section class="meal-saved" aria-labelledby="mealSavedTitle">
-          <div class="meal-section-heading"><h3 id="mealSavedTitle">${escapeHtml(copy.savedMeals)}</h3></div>
+          <div class="meal-section-heading">
+            <div>
+              <h3 id="mealSavedTitle">${escapeHtml(copy.savedMeals)}</h3>
+              <p>${meals.length ? escapeHtml(copy.dailyCount(meals.length)) : escapeHtml(copy.savedMealsEmpty)}</p>
+            </div>
+          </div>
+          ${confirmation}
           <div class="meal-saved-list">${cards}</div>
         </section>
       `;
@@ -932,6 +1030,8 @@
         return;
       }
       if (action.dataset.addFood) {
+        savePhase = "idle";
+        recentSavedMealId = "";
         model.addFood(action.dataset.addFood);
         status = "";
         render();
@@ -944,9 +1044,32 @@
         return;
       }
       if (action.hasAttribute("data-save-meal")) {
-        const result = model.saveDraft();
-        status = result ? (result.wasEditing ? getText(language).updated : getText(language).saved) : getText(language).saveNeedsItem;
+        if (savePhase === "saving") return;
+        const draft = model.getDraft();
+        if (!draft.items.length) {
+          status = getText(language).saveNeedsItem;
+          render();
+          return;
+        }
+        const wasEditing = Boolean(draft.mealId);
+        savePhase = "saving";
+        status = buildSaveFeedbackModel("saving", wasEditing, language).message;
         render();
+        scheduleFrame(() => {
+          const result = model.saveDraft();
+          if (!result) {
+            savePhase = "idle";
+            status = getText(language).saveNeedsItem;
+            render();
+            return;
+          }
+          recentSavedMealId = result.meal.meal_id;
+          recentSaveWasEditing = result.wasEditing;
+          savePhase = "saved";
+          status = buildSaveFeedbackModel("saved", result.wasEditing, language).message;
+          render();
+          root.querySelector(".meal-saved-confirmation")?.scrollIntoView({ behavior: scrollBehavior(), block: "nearest" });
+        });
         return;
       }
       if (action.hasAttribute("data-cancel-meal-edit")) {
@@ -957,6 +1080,8 @@
       }
       if (action.dataset.editMeal) {
         if (model.editMeal(action.dataset.editMeal)) {
+          savePhase = "idle";
+          recentSavedMealId = "";
           status = "";
           isOpen = true;
           render();
@@ -965,7 +1090,13 @@
         return;
       }
       if (action.dataset.deleteMeal && confirmAction(getText(language).deleteConfirm)) {
-        if (model.deleteMeal(action.dataset.deleteMeal)) status = getText(language).deleted;
+        if (model.deleteMeal(action.dataset.deleteMeal)) {
+          if (recentSavedMealId === action.dataset.deleteMeal) {
+            recentSavedMealId = "";
+            savePhase = "idle";
+          }
+          status = getText(language).deleted;
+        }
         render();
       }
     });
@@ -1018,6 +1149,8 @@
       },
       setDate(nextDate) {
         model.setDate(nextDate);
+        savePhase = "idle";
+        recentSavedMealId = "";
         render();
       },
       open() {
@@ -1033,11 +1166,15 @@
     TEXT,
     MEAL_TYPE_ILLUSTRATIONS,
     DEFAULT_COMPONENT_RESULT_LIMIT,
+    MAX_MEAL_VISUAL_TOKENS,
     normalizeLanguage,
     formatRange,
     buildDailyReflectionLines,
     filterFoodReferences,
     countDraftFoodItems,
+    buildMealVisualModel,
+    buildSavedMealCardModel,
+    buildSaveFeedbackModel,
     createMealComposerModel,
     createMealComposerUI
   });

@@ -83,6 +83,17 @@ function run() {
   const rice = model.addFood("rice");
   const fishSauce = model.addFood("fish_sauce");
   assert.equal(model.getDraft().items.length, 3);
+  const composingVisual = mealUI.buildMealVisualModel(model.getDraft().items, mealRuntime, "th");
+  assert.equal(composingVisual.itemCount, 3);
+  assert.deepEqual(composingVisual.componentNames, ["ไข่", "ข้าว", "น้ำปลา"]);
+  assert.deepEqual(composingVisual.tokens.map((token) => token.foodId), ["egg", "rice", "fish_sauce"]);
+  const fallbackVisual = mealUI.buildMealVisualModel([{
+    food_id: "unmapped_food",
+    display_name_snapshot: "รายการที่บันทึกไว้"
+  }], mealRuntime, "th");
+  assert.equal(fallbackVisual.itemCount, 1);
+  assert.equal(fallbackVisual.tokens[0].icon, "·");
+  assert.equal(fallbackVisual.tokens[0].name, "รายการที่บันทึกไว้");
   assert.equal(egg.sodium_estimate_min_mg, 60);
   assert.equal(rice.sodium_estimate_min_mg, null);
   assert.equal(fishSauce.sodium_estimate_min_mg, 1410);
@@ -104,6 +115,11 @@ function run() {
   assert.equal(firstSave.meal.condiment_knowledge, "unknown");
   assert.equal(model.getDailySummary().recorded_meal_count, 1);
   assert.equal(model.getDailySummary().sodium_estimate_coverage, "partial");
+  const firstSavedCard = mealUI.buildSavedMealCardModel(firstSave.meal, mealRuntime, "th");
+  assert.equal(firstSavedCard.mealId, firstSave.meal.meal_id);
+  assert.equal(firstSavedCard.label, "กลางวัน");
+  assert.equal(firstSavedCard.mealType, "ผัด");
+  assert.equal(firstSavedCard.visual.itemCount, 3);
   assert.match(mealUI.buildDailyReflectionLines(model.getDailySummary(), "th").join(" "), /1 มื้อที่บันทึกไว้/);
   assert.match(mealUI.buildDailyReflectionLines(model.getDailySummary(), "en").join(" "), /1 recorded meal/);
   assert.match(mealUI.buildDailyReflectionLines(model.getDailySummary(), "zh").join(" "), /1 餐被记录下来/);
@@ -139,6 +155,21 @@ function run() {
   assert.equal(model.getMeals().length, 1);
   assert.equal(model.getMeals()[0].meal_id, firstId);
   assert.ok(storage.snapshot(mealRuntime.MEAL_RECORDS_KEY));
+
+  const reloadedModel = mealUI.createMealComposerModel({
+    runtime: mealRuntime,
+    storage,
+    date: TEST_DATE,
+    language: "th",
+    normalizeDate: (value) => String(value || "").trim(),
+    now: () => "2026-08-26T14:00:00.000Z",
+    createId: (prefix) => `${prefix}_reload_${++id}`,
+    warn: () => {}
+  });
+  const reloadedCards = reloadedModel.getMeals().map((meal) => mealUI.buildSavedMealCardModel(meal, mealRuntime, "th"));
+  assert.equal(reloadedCards.length, 1);
+  assert.equal(reloadedCards[0].mealId, firstId);
+  assert.equal(reloadedCards[0].visual.itemCount, model.getMeals()[0].items.length);
 
   const noCondimentStorage = createMemoryStorage();
   const noCondimentModel = mealUI.createMealComposerModel({
@@ -181,6 +212,8 @@ function run() {
     "condimentUnknown",
     "currentMeal",
     "save",
+    "saving",
+    "savedConfirmationHelper",
     "savedMeals",
     "dailyReflectionTitle",
     "estimateUnknown",
@@ -189,7 +222,7 @@ function run() {
   ];
   mealUI.SUPPORTED_LANGUAGES.forEach((language) => {
     localeKeys.forEach((key) => assert.equal(typeof mealUI.TEXT[language][key], "string"));
-    ["showMoreFoods", "selectedComponent", "addSelectedFood"].forEach((key) => {
+    ["showMoreFoods", "selectedComponent", "addSelectedFood", "visualItemCount"].forEach((key) => {
       assert.equal(typeof mealUI.TEXT[language][key], "function");
       assert.ok(mealUI.TEXT[language][key](2, 2));
     });
@@ -198,6 +231,13 @@ function run() {
       assert.ok(mealUI.TEXT[language].categories[key]);
     });
     ["unspecified", "stir_fried", "curry", "broth_based"].forEach((key) => assert.ok(mealUI.TEXT[language].mealTypes[key]));
+  });
+
+  mealUI.SUPPORTED_LANGUAGES.forEach((language) => {
+    assert.equal(mealUI.buildSaveFeedbackModel("saving", false, language).phase, "saving");
+    assert.ok(mealUI.buildSaveFeedbackModel("saving", false, language).message);
+    assert.equal(mealUI.buildSaveFeedbackModel("saved", false, language).phase, "saved");
+    assert.equal(mealUI.buildSaveFeedbackModel("saved", true, language).message, mealUI.TEXT[language].updated);
   });
 
   const mealTypeKeys = Object.keys(mealUI.TEXT.th.mealTypes);
@@ -210,9 +250,14 @@ function run() {
   const allUserCopy = mealUI.SUPPORTED_LANGUAGES.flatMap((language) => [
     ...mealUI.buildDailyReflectionLines(model.getDailySummary(), language),
     mealUI.TEXT[language].estimateUnknown,
+    mealUI.TEXT[language].saving,
+    mealUI.TEXT[language].saved,
+    mealUI.TEXT[language].updated,
+    mealUI.TEXT[language].savedConfirmationHelper,
+    mealUI.TEXT[language].dailyCount(2),
     mealUI.TEXT[language].emptyReflection.join(" ")
   ]).join(" ");
-  assert.doesNotMatch(allUserCopy, /meal score|diet score|health score|medical target|calorie|good meal|bad meal/i);
+  assert.doesNotMatch(allUserCopy, /meal score|diet score|health score|medical target|calorie|good meal|bad meal|achievement|reward|perfect meal/i);
   assert.doesNotMatch(allUserCopy, /วันนี้กิน\s*\d|today you ate\s*\d|今天吃了\s*\d/iu);
   assert.equal(Object.keys(model.getDailySummary()).some((key) => /score|medical|target/i.test(key)), false);
   assert.equal(Object.keys(model.getMeals()[0]).some((key) => /daily_log|medical|target|score/i.test(key)), false);
