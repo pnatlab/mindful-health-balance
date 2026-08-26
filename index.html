@@ -12,6 +12,7 @@
   <script defer src="js/config/workbookSchema.js"></script>
   <script defer src="js/config/reflectionRootMatrix.js"></script>
   <script defer src="js/mealCompositionRuntime.js"></script>
+  <script defer src="js/mealCompositionUI.js"></script>
   <script defer src="script.js"></script>
 </head>
 <body>
@@ -469,6 +470,28 @@
       </article>
       </section>
 
+      <section class="glass-card meal-composer-card" id="mealComposer" data-today-step="1" aria-labelledby="mealComposerTitle">
+        <div class="meal-composer-header">
+          <div class="meal-composer-heading">
+            <span class="meal-composer-mark" aria-hidden="true">🍽️</span>
+            <div>
+              <p class="section-kicker">MEAL COMPOSITION</p>
+              <h2 id="mealComposerTitle" data-meal-title>มื้ออาหารวันนี้</h2>
+              <p class="section-helper" data-meal-intro>ค่อย ๆ ประกอบสิ่งที่กินไว้เท่าที่จำได้ก็พอ</p>
+            </div>
+          </div>
+          <div class="meal-composer-header-actions">
+            <span class="soft-badge" data-meal-count>0 มื้อที่บันทึกไว้</span>
+            <button type="button" class="ghost-button meal-composer-toggle" data-meal-toggle aria-expanded="false" aria-controls="mealComposerWorkspace">เปิดประกอบมื้อ</button>
+          </div>
+        </div>
+        <div class="meal-composer-workspace" id="mealComposerWorkspace" data-meal-workspace tabindex="-1" hidden>
+          <p class="meal-composer-status" data-meal-status aria-live="polite"></p>
+          <div data-meal-content></div>
+        </div>
+        <article class="meal-daily-reflection" data-meal-reflection aria-live="polite"></article>
+      </section>
+
       <section class="control-panel today-actions" data-today-step="1">
         <div>
           <p class="section-kicker" data-i18n="tabToday">วันนี้</p>
@@ -808,7 +831,7 @@
       <div class="app-info-copy">
         <p class="eyebrow" data-i18n="eyebrow">Personal mindful dashboard</p>
         <h2 id="appInfoTitle" data-i18n="title">Mindful Health Balance by MSxAI</h2>
-        <p class="version" data-i18n="version">v2.2 — Daily Log Gap Awareness</p>
+        <p class="version" data-i18n="version">v2.3 — Gentle Meal Composition</p>
         <p class="subtitle" data-i18n="subtitle">แอปบันทึกจังหวะชีวิตแบบ local-first พร้อม Field Review และ Signal Engine</p>
         <p class="app-info-note">
           <strong data-i18n="noticeTitle">Boundary-aware field review</strong>

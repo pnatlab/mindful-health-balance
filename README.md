@@ -36,10 +36,14 @@ The fact that it is not SaaS is intentional. Its value is in the design of a use
 
 ## Current Version
 
-**MHB 2.2 — Daily Log Gap Awareness**
+**MHB 2.3 — Gentle Meal Composition**
 
 Latest refinements include:
 
+- a calm, collapsible Meal Composer inside Today for recording multiple optional meals without turning the app into a nutrition dashboard
+- separate local Meal records with create, edit, and gentle targeted delete behavior; meal data does not expand `Daily_Log`
+- hybrid portions, optional preparation, first-class condiments, and source-bound sodium ranges with incomplete evidence shown as unknown or partial rather than zero
+- a Dynamic Daily Meal Reflection Panel derived from saved meals only, using recorded-fact language without scores, guilt, or medical targets
 - runtime-only awareness of the time since the latest earlier `Daily_Log` date, used once in the Reflection opening without schema changes, saved counters, streaks, rewards, or penalties
 - Gentle Mind Note with an Observe → Keep → Release writing invitation, balanced feeling groups, and softer support/practice wording without changing stored columns or historical compatibility
 - Mindful Practice Context before Mind Note using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma
@@ -64,13 +68,13 @@ Latest refinements include:
 - Input-grounded Reflection composer that remains deterministic, rule-based, and local-first
 - Practice Context and Practice Note stored for Field Review context and bounded `practice_context` Reflection, never as spiritual scoring
 
-MHB 2.2 keeps the MHB 2.1 Gentle Mind Note experience and the locked MHB 2.0 foundation unchanged. It adds a bounded, runtime-derived sense of when the user last returned to `Daily_Log`, without turning logging into a streak, score, reward, or failure state. It is not an AI companion, free-form Ask My Log, medical review layer, causation analysis, or production SaaS release.
+MHB 2.3 keeps the MHB 2.2 Reflection rhythm and the locked MHB 2.0 foundation unchanged while adding the first usable Gentle Meal Composition slice. Meal records remain separate from `Daily_Log`, daily meal summaries are derived rather than persisted, and missing nutrition evidence remains visible. It is not an AI companion, nutrition dashboard, calorie tracker, medical review layer, causation analysis, or production SaaS release.
 
 ## Main Navigation
 
 The app currently has five main views:
 
-- `Today`: current-day signals, hydration, drinks, load/recovery, Practice Context, and Mind Note
+- `Today`: current-day signals, hydration, drinks, load/recovery, the collapsible Meal Composer, Practice Context, and Mind Note
 - `Reflection/NuTuenSai`: deterministic Reflection generation, review, editing, and save
 - `Field Review / ประมวลข้อมูล`: Guided Field Rooms and Signal Engine over saved `Daily_Log`
 - `Log`: Daily Log Table, Export Master Excel, Import Master Excel, and Clear Daily Log
@@ -147,6 +151,14 @@ MHB 2.1 reframes Mind Note around **Observe → Keep → Release**. The page ask
 Feeling choices are presented in three light groups: gentle/supportive, neutral/noticing, and heavy/needs space. Existing stored values remain compatible, while optional labels such as peaceful, proud, learning, and thinking broaden what can be recorded. `วันนี้ใจอยากได้อะไร` / `What might support the mind today?` replaces the problem-oriented Support Need heading and adds gentle options without changing the `Mind_Note_Support` column.
 
 This is a UX, copy, and presentation change only. `Daily_Log`, workbook export/import, Reflection, Signal Engine, Field Review, and historical rows keep their existing contracts.
+
+## Gentle Meal Composition
+
+MHB 2.3 adds a compact Meal Composer inside Today. The user can choose from the small Food Reference pilot, assemble one meal, adjust an approximate portion or optional preparation, save multiple meals for the same day, and later edit or remove a targeted meal. Condiments remain first-class items rather than hidden note text.
+
+Meal records are stored locally under a separate versioned source and do not become columns in `Daily_Log`. Sodium appears only as an evidence-backed range. Items without supported evidence remain unknown, and a meal with mixed known and unknown items is shown as partial rather than as a complete total.
+
+The Daily Meal Reflection Panel is rebuilt from saved meals whenever the recorded day changes. It says `recorded meals`, never claims that unrecorded food was not eaten, and does not score, diagnose, prescribe, or set a medical sodium target. Meal data is not yet connected to the main Reflection renderer or workbook export/import.
 
 ## Reflection/NuTuenSai
 
@@ -293,9 +305,10 @@ Thai documentation, field notes, and original design context remain available in
 
 ## Version History / Design Trace
 
-- **MHB 2.2 — Current release / Daily Log Gap Awareness**: derives the latest earlier log date and the time between saved dates at runtime, then uses a five-state rhythm only to shape one gentle Reflection opening. It does not add schema fields, persistence, streaks, rewards, penalties, or new interpretation.
+- **MHB 2.3 — Current release / Gentle Meal Composition**: adds the Today Meal Composer, multiple local meals per day, edit/delete, uncertainty-aware sodium ranges, and a derived Daily Meal Reflection Panel without changing `Daily_Log` or workbook contracts.
+- **MHB 2.2 — Daily Log Gap Awareness**: derives the latest earlier log date and the time between saved dates at runtime, then uses a five-state rhythm only to shape one gentle Reflection opening. It does not add schema fields, persistence, streaks, rewards, penalties, or new interpretation.
 - **MHB 2.1 — Gentle Mind Note**: refreshed Mind Note around Observe → Keep → Release, balanced feeling groups, and gentler support/practice wording without changing schema, export/import, Reflection, or historical data compatibility.
-- **MHB 2.0 — Locked foundation**: Field Review, Guided Field Rooms, Signal Engine, User Intention Profile, Excel profile bridge, and profile-aware Today welcome remain the release baseline under MHB 2.2.
+- **MHB 2.0 — Locked foundation**: Field Review, Guided Field Rooms, Signal Engine, User Intention Profile, Excel profile bridge, and profile-aware Today welcome remain the release baseline under MHB 2.3.
 - **MHB 2.0 design trace**: Earlier internal slices such as Field Review Slice A, Field Review UI v2/v2.1/v2.2/v2.3, Guided Reading, and User Intention Profile U0-U4 are historical implementation steps inside the MHB 2.0 release, not separate current versions.
 - **v1.9.9 — Mindful Practice Context and User-Owned Field Memory Refinement**: adds Practice Context, `Practice_Note`, honest data copy, source-aware safe merge, three-layer save status, ordered mind scale, NuTuenSai voice cadence, low-data micro-continuity, and Reflection anti-repetition.
 - **v1.9.8c — Reflection Sentence Smoothing**: reduces repeated connectors and uses short paragraphs so input-grounded reflection reads more naturally.

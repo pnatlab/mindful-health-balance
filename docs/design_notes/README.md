@@ -1,6 +1,6 @@
 # Mindful Health Balance Design Notes
 
-This folder contains design notes for Mindful Health Balance history, the current MHB 2.2 runtime direction, and bounded future work.
+This folder contains design notes for Mindful Health Balance history, the current MHB 2.3 runtime direction, and bounded future work.
 
 Source files are currently kept flat in this folder for path stability. This README groups them by topic for easier reading, but it is organizational only. Do not treat this grouping as a physical folder migration yet.
 
@@ -76,9 +76,10 @@ Field Review Slice A, future Field Review Companion, timeframe-aware review, v2 
 Runtime architecture, modularization planning, and implementation-safety notes for future MHB refactors.
 
 - [SCRIPT_MODULARIZATION_PLAN.md](SCRIPT_MODULARIZATION_PLAN.md) - Audits the current monolithic `script.js` responsibilities and proposes a conservative GitHub Pages-compatible modularization path.
-- [MEAL_COMPOSITION_DATA_CONTRACT.md](MEAL_COMPOSITION_DATA_CONTRACT.md) - Locked MHB 2.3 Meal Composition contract: separate meal ownership, uncertainty-aware sodium ranges, relational workbook direction, and implementation pending.
-- [MEAL_COMPOSITION_RUNTIME_DATA_LAYER.md](MEAL_COMPOSITION_RUNTIME_DATA_LAYER.md) - Records the non-user-facing MHB 2.3B meal storage, immutable unknown-value pilot, derived summary, and bounded Reflection context foundation.
+- [MEAL_COMPOSITION_DATA_CONTRACT.md](MEAL_COMPOSITION_DATA_CONTRACT.md) - Locked MHB 2.3 Meal Composition contract: separate meal ownership, uncertainty-aware sodium ranges, and relational workbook direction.
+- [MEAL_COMPOSITION_RUNTIME_DATA_LAYER.md](MEAL_COMPOSITION_RUNTIME_DATA_LAYER.md) - Records the MHB 2.3B meal storage, immutable Food Reference pilot, derived summary, and bounded Reflection context foundation now used by the UI.
 - [MEAL_COMPOSITION_FOOD_REFERENCE_EVIDENCE_AUDIT.md](MEAL_COMPOSITION_FOOD_REFERENCE_EVIDENCE_AUDIT.md) - Audits all 26 pilot Food References; four human-approved references are implemented with traceable sodium evidence while the remaining 22 stay unknown.
+- [MEAL_COMPOSER_UI.md](MEAL_COMPOSER_UI.md) - Defines the MHB 2.3 Today workspace, calm composition flow, dynamic recorded-meal panel, responsive presentation, and deferred Reflection/workbook boundaries.
 
 ## 99 Stabilization
 

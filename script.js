@@ -8,6 +8,7 @@ const USER_INTENTION_PROFILE_KEY = "mhb_user_intention_profile_v1";
 const USER_INTENTION_PROFILE_SCHEMA_VERSION = "1.0";
 const USER_INTENTION_PROFILE_SHEET_NAME = "User_Intention_Profile";
 const MEAL_COMPOSITION_RUNTIME = window.MHBMealRuntime;
+const MEAL_COMPOSITION_UI = window.MHBMealUI;
 const MEAL_RECORDS_KEY = MEAL_COMPOSITION_RUNTIME?.MEAL_RECORDS_KEY || "mhb_meal_records_v1";
 const USER_INTENTION_PROFILE_EXPORT_COLUMNS = [
   "Profile_Schema_Version",
@@ -44,7 +45,7 @@ const translations = {
     eyebrow: "Personal mindful dashboard",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v2.2 — Daily Log Gap Awareness",
+    version: "v2.3 — Gentle Meal Composition",
     subtitle: "แอปบันทึกจังหวะชีวิตแบบ local-first พร้อม Field Review และ Signal Engine",
     viewTabsAria: "เลือกมุมมองของแอป",
     tabToday: "วันนี้",
@@ -1045,7 +1046,7 @@ const translations = {
     eyebrow: "Personal mindful dashboard",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v2.2 — Daily Log Gap Awareness",
+    version: "v2.3 — Gentle Meal Composition",
     subtitle: "A local-first reflective health log with Field Review and Signal Engine.",
     viewTabsAria: "Choose app view",
     tabToday: "Today",
@@ -2046,7 +2047,7 @@ const translations = {
     eyebrow: "个人正念健康仪表板",
     appShortTitle: "Mindful Health Balance",
     title: "Mindful Health Balance by MSxAI",
-    version: "v2.2 — Daily Log Gap Awareness",
+    version: "v2.3 — Gentle Meal Composition",
     subtitle: "本地优先的反思型健康记录，包含 Field Review 与 Signal Engine。",
     viewTabsAria: "选择应用视图",
     tabToday: "今天",
@@ -3336,6 +3337,7 @@ let activeSignalRelationshipPair = "";
 const guidedReadingStateByRoom = {};
 let guidedReadingTimeframe = "";
 let selectedReflectionRoot = "auto";
+let mealComposerUI = null;
 let isEditingReflection = false;
 let isGeneratingReflection = false;
 let reflectionGenerationTimerId;
@@ -3433,6 +3435,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderPracticeOptions();
   bindEvents();
   loadUserIntentionProfileIntoForm();
+  initializeMealComposerUI();
   initWelcome();
   startThemeAutoRefresh();
   updateTodayStateOrb();
@@ -3506,6 +3509,21 @@ function applyTranslations() {
   renderReflectionRootPicker();
   renderIntentionProfileScaffold();
   renderTodayHydrationWelcome();
+  mealComposerUI?.setLanguage(currentLanguage);
+}
+
+function initializeMealComposerUI() {
+  const root = document.querySelector("#mealComposer");
+  if (!root || !MEAL_COMPOSITION_RUNTIME || !MEAL_COMPOSITION_UI) return;
+  mealComposerUI = MEAL_COMPOSITION_UI.createMealComposerUI({
+    root,
+    runtime: MEAL_COMPOSITION_RUNTIME,
+    storage: localStorage,
+    normalizeDate: normalizeExcelDate,
+    date: todayIso,
+    language: currentLanguage,
+    warn: (...args) => console.warn("Meal Composition:", ...args)
+  });
 }
 
 function getIntentionProfileAddressPreview() {

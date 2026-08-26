@@ -2,7 +2,7 @@
 
 ## Status
 
-Implemented inside MHB 2.2. Current runtime version remains MHB 2.2.
+Implemented inside MHB 2.2 and retained unchanged in the current MHB 2.3 runtime.
 
 ## Purpose
 

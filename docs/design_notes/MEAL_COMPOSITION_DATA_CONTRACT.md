@@ -9,7 +9,7 @@
 - UI implementation: none in this patch
 - Daily_Log, workbook, export/import, and schema change: none in this patch
 
-**MHB 2.3 Meal Composition contract is locked for implementation, but MHB 2.3 is not yet the current runtime. MHB 2.2 remains the current runtime.**
+**The contract remains canonical. MHB 2.3D now provides the first approved user-facing implementation, so MHB 2.3 - Gentle Meal Composition is the current runtime; workbook and main Reflection integration remain deferred.**
 
 This note records the human-approved architectural decisions for Meal Composition. Exact implementation names, local storage keys, workbook columns, validation details, and UI layout remain implementation work, not unresolved product direction.
 
@@ -411,4 +411,4 @@ The implementation is aligned with this contract only when:
 
 ## 21. Documentation Impact
 
-Runtime documentation update not required; design contract only. README and user guides continue to describe the current MHB 2.2 runtime. The design-notes index identifies this file as a locked MHB 2.3 candidate with implementation pending.
+The contract lock itself was docs-only. After the approved MHB 2.3D user-facing slice, README, TH/EN/ZH user guides, the design-notes index, and `MEAL_COMPOSER_UI.md` document the current runtime while preserving this file as the canonical product/data contract.

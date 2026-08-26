@@ -1,0 +1,129 @@
+const assert = require("node:assert/strict");
+const mealRuntime = require("../js/mealCompositionRuntime.js");
+const mealUI = require("../js/mealCompositionUI.js");
+
+const TEST_DATE = "2026-08-26";
+
+function createMemoryStorage() {
+  const values = new Map();
+  return {
+    getItem(key) { return values.get(key) || null; },
+    setItem(key, value) { values.set(key, value); },
+    snapshot(key) { return values.get(key) || null; }
+  };
+}
+
+function run() {
+  const storage = createMemoryStorage();
+  let id = 0;
+  const model = mealUI.createMealComposerModel({
+    runtime: mealRuntime,
+    storage,
+    date: TEST_DATE,
+    language: "th",
+    normalizeDate: (value) => String(value || "").trim(),
+    now: () => "2026-08-26T12:00:00.000Z",
+    createId: (prefix) => `${prefix}_${++id}`,
+    warn: () => {}
+  });
+
+  assert.equal(model.getMeals().length, 0);
+  assert.deepEqual(mealUI.buildDailyReflectionLines(model.getDailySummary(), "th"), [
+    "วันนี้ยังไม่มีมื้อที่บันทึกไว้",
+    "ถ้าอยากเก็บภาพคร่าว ๆ ของมื้อไหนไว้ เริ่มจากตรงนี้ได้เลย"
+  ]);
+
+  const egg = model.addFood("egg");
+  const rice = model.addFood("rice");
+  const fishSauce = model.addFood("fish_sauce");
+  assert.equal(model.getDraft().items.length, 3);
+  assert.equal(egg.sodium_estimate_min_mg, 60);
+  assert.equal(rice.sodium_estimate_min_mg, null);
+  assert.equal(fishSauce.sodium_estimate_min_mg, 1410);
+  assert.equal(model.getDraftEstimate().sodium_estimate_coverage, "partial");
+
+  const smallFishSauce = model.updateDraftItem(fishSauce.meal_item_id, { portion_label: "small" });
+  assert.deepEqual([smallFishSauce.sodium_estimate_min_mg, smallFishSauce.sodium_estimate_max_mg], [705, 740]);
+  assert.equal(model.updateDraftItem(rice.meal_item_id, { preparation: "fried" }).preparation, "fried");
+  assert.equal(model.updateDraftItem(egg.meal_item_id, { portion_label: "custom", serving_multiplier: 1.2 }).serving_multiplier, 1.2);
+  assert.equal(model.updateDraftItem(egg.meal_item_id, { portion_label: "custom", serving_multiplier: 0 }), null);
+  model.updateDraftItem(egg.meal_item_id, { portion_label: "regular" });
+
+  model.setDraftMeta({ mealLabel: "lunch", time: "12:30" });
+  const firstSave = model.saveDraft();
+  assert.equal(firstSave.wasEditing, false);
+  assert.equal(model.getMeals().length, 1);
+  assert.equal(model.getMeals()[0].meal_id, firstSave.meal.meal_id);
+  assert.equal(model.getDailySummary().recorded_meal_count, 1);
+  assert.equal(model.getDailySummary().sodium_estimate_coverage, "partial");
+  assert.match(mealUI.buildDailyReflectionLines(model.getDailySummary(), "th").join(" "), /1 มื้อที่บันทึกไว้/);
+  assert.match(mealUI.buildDailyReflectionLines(model.getDailySummary(), "en").join(" "), /1 recorded meal/);
+  assert.match(mealUI.buildDailyReflectionLines(model.getDailySummary(), "zh").join(" "), /1 餐被记录下来/);
+
+  model.addFood("soy_sauce");
+  model.setDraftMeta({ mealLabel: "dinner", time: "18:45" });
+  const secondSave = model.saveDraft();
+  assert.equal(model.getMeals().length, 2);
+  assert.equal(model.getDailySummary().recorded_meal_count, 2);
+  assert.deepEqual([
+    model.getDailySummary().estimated_sodium_min_mg,
+    model.getDailySummary().estimated_sodium_max_mg
+  ], [1644, 1722]);
+
+  const firstId = firstSave.meal.meal_id;
+  model.editMeal(firstId);
+  assert.equal(model.getDraft().mealId, firstId);
+  const itemCountBeforeEdit = model.getDraft().items.length;
+  model.addFood("mixed_vegetables");
+  const editSave = model.saveDraft();
+  assert.equal(editSave.wasEditing, true);
+  assert.equal(editSave.meal.meal_id, firstId);
+  assert.equal(model.getMeals().length, 2);
+  assert.equal(editSave.meal.items.length, itemCountBeforeEdit + 1);
+  assert.equal(model.getDailySummary().vegetable_present_meals, 1);
+
+  assert.equal(model.deleteMeal(secondSave.meal.meal_id), true);
+  assert.equal(model.getMeals().length, 1);
+  assert.equal(model.getMeals()[0].meal_id, firstId);
+  assert.ok(storage.snapshot(mealRuntime.MEAL_RECORDS_KEY));
+
+  const evidenceReferences = ["egg", "fish_sauce", "soy_sauce", "oyster_sauce"]
+    .map((foodId) => mealRuntime.getFoodReferenceById(foodId));
+  assert.deepEqual(evidenceReferences.map((reference) => [reference.food_id, reference.sodium_estimate_min_mg, reference.sodium_estimate_max_mg]), [
+    ["egg", 60, 62],
+    ["fish_sauce", 1410, 1480],
+    ["soy_sauce", 879, 920],
+    ["oyster_sauce", 490, 870]
+  ]);
+
+  const localeKeys = [
+    "title",
+    "intro",
+    "open",
+    "chooseFood",
+    "currentMeal",
+    "save",
+    "savedMeals",
+    "dailyReflectionTitle",
+    "estimateUnknown"
+  ];
+  mealUI.SUPPORTED_LANGUAGES.forEach((language) => {
+    localeKeys.forEach((key) => assert.equal(typeof mealUI.TEXT[language][key], "string"));
+    ["small", "regular", "large", "custom"].forEach((key) => assert.ok(mealUI.TEXT[language].portions[key]));
+    ["grain", "animal_protein", "plant_protein", "egg", "vegetable", "soup", "condiment"].forEach((key) => {
+      assert.ok(mealUI.TEXT[language].categories[key]);
+    });
+  });
+
+  const allUserCopy = mealUI.SUPPORTED_LANGUAGES.flatMap((language) => [
+    ...mealUI.buildDailyReflectionLines(model.getDailySummary(), language),
+    mealUI.TEXT[language].estimateUnknown,
+    mealUI.TEXT[language].emptyReflection.join(" ")
+  ]).join(" ");
+  assert.doesNotMatch(allUserCopy, /meal score|diet score|health score|medical target|calorie|good meal|bad meal/i);
+  assert.doesNotMatch(allUserCopy, /วันนี้กิน\s*\d|today you ate\s*\d|今天吃了\s*\d/iu);
+  assert.equal(Object.keys(model.getDailySummary()).some((key) => /score|medical|target/i.test(key)), false);
+}
+
+run();
+console.log("Meal Composer UI model and copy tests passed.");

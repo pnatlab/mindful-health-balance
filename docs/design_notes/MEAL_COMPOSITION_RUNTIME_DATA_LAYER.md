@@ -2,7 +2,7 @@
 
 ## Status
 
-Implemented as a non-user-facing runtime/data foundation. MHB 2.2 remains the current runtime version; no Meal Composer UI, workbook meal sheet, or user-facing Reflection wording is included in this slice.
+Implemented first as the MHB 2.3B runtime/data foundation and now consumed by the user-facing MHB 2.3D Meal Composer UI. The data ownership and derivation rules in this note remain unchanged; workbook meal sheets and user-facing main Reflection wording are still deferred.
 
 ## Purpose
 
@@ -67,15 +67,14 @@ Meal confidence is conservative: any incomplete coverage yields `unknown`; compl
 
 The adapter is not connected to Reflection rendering in MHB 2.3B. It cannot select or override a Reflection Root, alter deterministic health interpretation, or add medical claims.
 
-## Deferred Work
+## Deferred Work After MHB 2.3D
 
-- Meal Composer UI and Dynamic Daily Meal Reflection Panel presentation
 - user-facing Reflection meal wording
 - workbook export/import sheets
-- Food Reference Evidence Pass and supported sodium estimates
+- additional Food Reference evidence beyond the four human-approved references
 - Field Review integration
 - custom-food editor, barcode/API, calorie/macros, or food inference
 
 ## Documentation Impact
 
-Runtime documentation update not required; implementation remains non-user-facing. This note records the data-layer implementation while README and user guides continue to describe MHB 2.2.
+MHB 2.3D makes this foundation user-facing through the Meal Composer and Dynamic Daily Meal Reflection Panel. README, TH/EN/ZH user guides, and `MEAL_COMPOSER_UI.md` describe that presentation; this note remains the canonical implementation boundary for storage and derived facts.

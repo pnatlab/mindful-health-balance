@@ -13,7 +13,7 @@ This audit does not attempt to fill every blank. A blank remains preferable when
 
 > The goal is not to know every food. The goal is to know exactly how much MHB is justified in claiming about each food.
 
-MHB 2.2 remains the current runtime. MHB 2.3 is not yet the current release.
+At research time MHB 2.2 was current. The four approved references now support the user-facing MHB 2.3 Meal Composer; this audit remains the evidence trace and does not authorize values for the other 22 references.
 
 ### Implementation Addendum - MHB 2.3C-I
 

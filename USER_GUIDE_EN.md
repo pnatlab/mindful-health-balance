@@ -14,7 +14,7 @@ The app helps you record honest daily signals as structured local data across:
 
 This app is not a medical tool, not a diagnosis system, and not a replacement for professional care or medical follow-up.
 
-This guide describes the current **MHB 2.2 — Daily Log Gap Awareness** release, built on MHB 2.1 Gentle Mind Note and the locked MHB 2.0 Field Review, Signal Engine, and User Intention Profile foundation without changing schema or historical data.
+This guide describes the current **MHB 2.3 — Gentle Meal Composition** release. It adds a local-first meal workspace on the MHB 2.2 foundation while keeping Meal records separate from `Daily_Log` and leaving the workbook and historical data unchanged.
 
 Its value is not in being a production SaaS platform. Its value is in a portable, user-owned data layer that can later be reviewed by the user or intentionally shared with AI without handing agency to the system.
 
@@ -85,7 +85,7 @@ If you choose Light or Dark manually, that choice stays active until you switch 
 
 After the Welcome Glass, the app is organized into five main views:
 
-- `Today` for current-day signals in two steps: `Today’s Signals 1/2` is Energy, Mind, Sleep Hours/Sleep, Hydration, Drink Profile, and Load & Recovery; `Mind Note 2/2` is Practice Context, Mind Note, and the shortcut to Reflection/NuTuenSai
+- `Today` for current-day signals in two steps: `Today’s Signals 1/2` is Energy, Mind, Sleep Hours/Sleep, Hydration, Drink Profile, Load & Recovery, and a collapsible Meal Composer; `Mind Note 2/2` is Practice Context, Mind Note, and the shortcut to Reflection/NuTuenSai
 - `Reflection/NuTuenSai` for the compact NuTuenSai note strip, generated reflection preview/editing, and `Save Today’s Reflection`
 - `Field Review` for rule-based review from saved `Daily_Log`, with 7-day, 14-day, 30-day, and all-available timeframes
 - `Log` for the Daily Log Table, Export Master Excel, Import Master Excel, and Clear Daily Log
@@ -224,6 +224,14 @@ Starting in v1.9.x, the Hydration card shows a flexible estimated range based on
 On a long-run day, around 3.0 L is treated as a good zone, with gentle cues to notice sweat, thirst, or urine color. If intake reaches 4.0 L or more, the app does not push more; it reminds the user to spread intake and avoid forcing a large amount at once.
 
 The system separates activity load from recovery-only signals such as low sleep, low energy, or a very heavy/uneasy/pressured overall mind state. If only a recovery signal is present, it should not describe the day as heavy activity load; it should keep hydration as a gentle base alongside rest. This guidance uses existing signals, adds no new inputs, and is not medical advice, diagnosis, or an exact requirement.
+
+## 10.1 Meal Composer — Gently Assembling Today's Meals
+
+Open `Today's meals` within Today’s Signals 1/2 to choose food or condiments from the small reference pilot. You can adjust an approximate `Small / Regular / Large / Custom` portion and optional preparation only as far as you remember. A meal does not require a label or time, and the same day can hold any number of optional recorded meals.
+
+A saved meal can be edited without creating a duplicate, or removed by a targeted confirmation. Meal records stay in this browser under a source separate from `Daily_Log`; clearing the current Today form or saving a Daily Log row does not replace Meal record management.
+
+Sodium is shown only as an evidence-backed range. When some items remain unsupported, the interface says the estimate is partial and never substitutes `0 mg` for unknown. The panel below the composer is derived again after a meal is saved, edited, or removed. It describes recorded facts without scores, food judgment, or medical targets. Meal data is not yet connected to the main Daily Reflection renderer or workbook export/import.
 
 ## 11. Drinks / Drink Profile
 

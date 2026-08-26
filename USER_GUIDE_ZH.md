@@ -14,7 +14,7 @@ Mindful Health Balance by MSxAI 是一款本地优先的个人节律观察原型
 
 它不是医疗诊断工具，也不能代替医生、专业照护或既定的医疗随访。
 
-本指南说明当前的 **MHB 2.2 — Daily Log Gap Awareness**。它建立在 MHB 2.1 Gentle Mind Note 与 MHB 2.0 的 Field Review、Signal Engine、User Intention Profile 基础之上，不改变 schema，也不迁移历史数据。
+本指南说明当前的 **MHB 2.3 — Gentle Meal Composition**。它在 MHB 2.2 的基础上加入本地优先的餐食组合空间；Meal records 与 `Daily_Log` 分开保存，不改变 workbook，也不迁移历史数据。
 
 应用的价值不在于成为生产级 SaaS，而在于提供一个由用户拥有、可以导出、可以检查，并能由用户主动交给 AI 协助反思的个人数据层。数据的最终意义仍由用户决定。
 
@@ -71,7 +71,7 @@ TH | EN | 中文
 
 通过欢迎页后，应用分为 5 个主要 view：
 
-- `今天`：分两步填写当天信息。`今日信号 1/2` 包含 Energy、Mind、Sleep Hours/Sleep、饮水、Drink Profile 与 Load & Recovery；`Mind Note 2/2` 包含观照练习情境、Mind Note 与前往 Reflection/NuTuenSai 的入口
+- `今天`：分两步填写当天信息。`今日信号 1/2` 包含 Energy、Mind、Sleep Hours/Sleep、饮水、Drink Profile、Load & Recovery，以及可收起的 Meal Composer；`Mind Note 2/2` 包含观照练习情境、Mind Note 与前往 Reflection/NuTuenSai 的入口
 - `Reflection`：查看简短 NuTuenSai note、生成/检查/轻微编辑 Reflection，并保存今日 Reflection
 - `处理数据`：从已保存的 `Daily_Log` 进行 rule-based Field Review，可选择 7、14、30 天或全部数据
 - `Log`：查看 Daily Log Table、Export Master Excel、Import Master Excel 与 Clear Daily Log
@@ -206,6 +206,14 @@ Energy level 与 Energy Cause 有时看似相反，例如能量低但睡够，�
 Hydration card 会根据当天情境显示弹性范围，以基础饮水 + load/出汗 + 身体 cue 为原则。例如休息日约 2.0–2.4 L，认知工作约 2.4–2.8 L，easy run 或大量步行约 2.6–3.0 L，short quality run 约 2.8–3.3 L，long run / 大量出汗约 3.2–4.0 L，并强调分散饮用。
 
 这些数字是 self-care guidance，不是必须达成的目标，也不是医疗建议。系统会区分 activity load 与单纯 recovery signal；只有睡少、能量低或心境沉重时，不会自动判断为高负荷日。
+
+### Meal Composer — 轻轻拼出今天的餐食
+
+在 `今日信号 1/2` 打开 `今天的餐食`，可以从小型 Food Reference 中选择食物或调味品，再按自己记得的程度调整 `少量 / 一般 / 较多 / 自定义` 份量与可选烹调方式。餐食名称与时间都不是必填项，同一天也可以记录多餐。
+
+已保存的餐食可以修改而不会意外复制，也可以在确认后只移除目标餐食。Meal records 保存在当前浏览器中，并与 `Daily_Log` 分开；清除 Today 当前表单或保存 Daily Log 都不会代替 Meal records 的管理。
+
+钠含量只显示有证据支持的范围。若部分条目仍缺少资料，界面会明确表示估算并不完整，不会用 `0 mg` 代替未知值。Meal Composer 下方的阅读卡会在保存、修改或移除餐食后重新推导，只描述已记录事实，不评分、不判断食物，也不设置医疗目标。本版本尚未把 Meal data 接入主要 Daily Reflection 或 workbook export/import。
 
 ### Drinks / Drink Profile
 
