@@ -1,5 +1,6 @@
 (function initializeMealCompositionUI(globalScope) {
   const SUPPORTED_LANGUAGES = ["th", "en", "zh"];
+  const DEFAULT_COMPONENT_RESULT_LIMIT = 8;
   const CATEGORY_ORDER = [
     "grain",
     "animal_protein",
@@ -29,7 +30,10 @@
       searchPlaceholder: "ค้นหา เช่น ไข่ ผัก น้ำปลา",
       allCategories: "ทั้งหมด",
       addFood: (name) => `เพิ่ม ${name} ลงมื้อนี้`,
-      noFoodFound: "ยังไม่พบรายการที่ตรงกับคำค้นนี้",
+      noFoodFound: "ยังไม่พบรายการนี้ในชุดอาหารตอนนี้ค่ะ",
+      showMoreFoods: (count) => `ดูอีก ${count} รายการ`,
+      selectedComponent: (count) => count > 1 ? `อยู่ในมื้อนี้ ×${count}` : "อยู่ในมื้อนี้",
+      addSelectedFood: (name, count) => `เพิ่ม ${name} อีกหนึ่งรายการ ตอนนี้อยู่ในมื้อนี้ ${count} รายการ`,
       condimentUnknown: "ไม่ทราบเครื่องปรุงทั้งหมด",
       condimentUnknownHelper: "ยังเก็บมื้อนี้ได้ตามปกติ",
       currentMeal: "มื้อนี้กำลังประกอบอยู่",
@@ -139,6 +143,9 @@
       allCategories: "All",
       addFood: (name) => `Add ${name} to this meal`,
       noFoodFound: "No reference item matches this search yet.",
+      showMoreFoods: (count) => `Show ${count} more`,
+      selectedComponent: (count) => count > 1 ? `In this meal ×${count}` : "In this meal",
+      addSelectedFood: (name, count) => `Add another ${name}. ${count} currently in this meal`,
       condimentUnknown: "I do not know all condiments",
       condimentUnknownHelper: "You can still keep this meal as it is.",
       currentMeal: "This meal is taking shape",
@@ -248,6 +255,9 @@
       allCategories: "全部",
       addFood: (name) => `把${name}加入这一餐`,
       noFoodFound: "暂时没有符合这次搜索的参考条目。",
+      showMoreFoods: (count) => `再看 ${count} 项`,
+      selectedComponent: (count) => count > 1 ? `已在这餐中 ×${count}` : "已在这餐中",
+      addSelectedFood: (name, count) => `再添加一份${name}；这餐中目前有 ${count} 份`,
       condimentUnknown: "不清楚全部调味品",
       condimentUnknownHelper: "这样也可以留下这一餐。",
       currentMeal: "正在轻轻拼出这一餐",
@@ -607,6 +617,33 @@
     return [...CATEGORY_ORDER.filter((category) => found.has(category)), ...[...found].filter((category) => !CATEGORY_ORDER.includes(category))];
   }
 
+  function filterFoodReferences(library, options = {}) {
+    const language = normalizeLanguage(options.language);
+    const locale = language === "zh" ? "zh-CN" : language === "en" ? "en-US" : "th-TH";
+    const category = options.category || "grain";
+    const search = String(options.search || "").trim().toLocaleLowerCase(locale);
+    const matches = library.filter((reference) => {
+      if (!search && category !== "all" && reference.category !== category) return false;
+      if (!search) return true;
+      const haystack = [reference.display_name_th, reference.display_name_en, reference.display_name_zh, reference.food_id]
+        .filter(Boolean)
+        .join(" ")
+        .toLocaleLowerCase(locale);
+      return haystack.includes(search);
+    });
+    const limit = Number.isInteger(options.limit) && options.limit > 0 ? options.limit : DEFAULT_COMPONENT_RESULT_LIMIT;
+    const shouldLimit = !search && category === "all" && !options.showAll;
+    return Object.freeze({
+      results: shouldLimit ? matches.slice(0, limit) : matches,
+      total: matches.length,
+      remaining: shouldLimit ? Math.max(0, matches.length - limit) : 0
+    });
+  }
+
+  function countDraftFoodItems(items, foodId) {
+    return Array.isArray(items) ? items.filter((item) => item?.food_id === foodId).length : 0;
+  }
+
   function renderOptions(entries, selected) {
     return Object.entries(entries).map(([value, label]) => `
       <option value="${escapeHtml(value)}"${value === selected ? " selected" : ""}>${escapeHtml(label)}</option>
@@ -623,6 +660,7 @@
     let isOpen = false;
     let category = "grain";
     let search = "";
+    let showAllFoodResults = false;
     let status = "";
 
     const headerTitle = root.querySelector("[data-meal-title]");
@@ -689,33 +727,38 @@
     function renderFoodPicker() {
       const copy = getText(language);
       const library = model.getLibrary();
-      const normalizedSearch = search.trim().toLocaleLowerCase(language === "zh" ? "zh-CN" : language === "en" ? "en-US" : "th-TH");
-      const filtered = library.filter((reference) => {
-        const matchesCategory = normalizedSearch || category === "all" || reference.category === category;
-        const haystack = [reference.display_name_th, reference.display_name_en, reference.display_name_zh, reference.food_id]
-          .filter(Boolean)
-          .join(" ")
-          .toLocaleLowerCase();
-        return matchesCategory && (!normalizedSearch || haystack.includes(normalizedSearch));
+      const draft = model.getDraft();
+      const foodResults = filterFoodReferences(library, {
+        language,
+        category,
+        search,
+        showAll: showAllFoodResults
       });
       const categoryButtons = ["all", ...getCategoryKeys(library)].map((key) => {
         const label = key === "all" ? copy.allCategories : copy.categories[key] || copy.categories.other;
         return `<button type="button" class="meal-category-chip${category === key ? " is-active" : ""}" data-meal-category="${escapeHtml(key)}" aria-pressed="${category === key}">${escapeHtml(label)}</button>`;
       }).join("");
-      const foodButtons = filtered.map((reference) => {
+      const foodButtons = foodResults.results.map((reference) => {
         const name = foodName(reference);
         const detail = copy.categories[reference.category] || copy.categories.other;
+        const selectedCount = countDraftFoodItems(draft.items, reference.food_id);
+        const selectedId = `mealFoodState-${reference.food_id}`;
+        const ariaLabel = selectedCount ? copy.addSelectedFood(name, selectedCount) : copy.addFood(name);
         return `
-          <button type="button" class="meal-food-option" data-add-food="${escapeHtml(reference.food_id)}" aria-label="${escapeHtml(copy.addFood(name))}">
+          <button type="button" class="meal-food-option${selectedCount ? " is-selected" : ""}" data-add-food="${escapeHtml(reference.food_id)}" aria-label="${escapeHtml(ariaLabel)}"${selectedCount ? ` aria-describedby="${escapeHtml(selectedId)}"` : ""}>
             <span class="meal-food-icon" aria-hidden="true">${escapeHtml(getFoodIcon(reference))}</span>
             <span class="meal-food-copy">
               <strong>${escapeHtml(name)}</strong>
               <span>${escapeHtml(detail)}</span>
+              ${selectedCount ? `<span class="meal-food-selected" id="${escapeHtml(selectedId)}">✓ ${escapeHtml(copy.selectedComponent(selectedCount))}</span>` : ""}
             </span>
             <span class="meal-food-add" aria-hidden="true">+</span>
           </button>
         `;
       }).join("");
+      const showMore = foodResults.remaining
+        ? `<button type="button" class="meal-food-more" data-meal-show-all>${escapeHtml(copy.showMoreFoods(foodResults.remaining))}</button>`
+        : "";
       return `
         <section class="meal-picker" aria-labelledby="mealPickerTitle">
           <div class="meal-section-heading">
@@ -723,15 +766,16 @@
               <h3 id="mealPickerTitle">${escapeHtml(copy.chooseFood)}</h3>
               <p>${escapeHtml(copy.chooseFoodHelper)}</p>
             </div>
-            <label class="meal-search">
-              <span class="sr-only">${escapeHtml(copy.searchLabel)}</span>
-              <input type="search" data-meal-search value="${escapeHtml(search)}" placeholder="${escapeHtml(copy.searchPlaceholder)}" autocomplete="off">
-            </label>
           </div>
+          <label class="meal-search">
+            <span class="sr-only">${escapeHtml(copy.searchLabel)}</span>
+            <input type="search" data-meal-search value="${escapeHtml(search)}" placeholder="${escapeHtml(copy.searchPlaceholder)}" autocomplete="off">
+          </label>
           <div class="meal-category-list" role="group" aria-label="${escapeHtml(copy.chooseFood)}">${categoryButtons}</div>
           <div class="meal-food-grid">${foodButtons || `<p class="meal-inline-empty">${escapeHtml(copy.noFoodFound)}</p>`}</div>
+          ${showMore}
           <label class="meal-condiment-knowledge">
-            <input type="checkbox" data-meal-condiment-unknown${model.getDraft().condimentKnowledge === "unknown" ? " checked" : ""}>
+            <input type="checkbox" data-meal-condiment-unknown${draft.condimentKnowledge === "unknown" ? " checked" : ""}>
             <span><strong>${escapeHtml(copy.condimentUnknown)}</strong><small>${escapeHtml(copy.condimentUnknownHelper)}</small></span>
           </label>
         </section>
@@ -873,6 +917,12 @@
       }
       if (action.dataset.mealCategory) {
         category = action.dataset.mealCategory;
+        showAllFoodResults = false;
+        render();
+        return;
+      }
+      if (action.hasAttribute("data-meal-show-all")) {
+        showAllFoodResults = true;
         render();
         return;
       }
@@ -923,6 +973,7 @@
     root.addEventListener("input", (event) => {
       if (event.target.matches("[data-meal-search]")) {
         search = event.target.value;
+        showAllFoodResults = false;
         const cursor = event.target.selectionStart;
         render();
         const nextSearch = root.querySelector("[data-meal-search]");
@@ -981,9 +1032,12 @@
     SUPPORTED_LANGUAGES,
     TEXT,
     MEAL_TYPE_ILLUSTRATIONS,
+    DEFAULT_COMPONENT_RESULT_LIMIT,
     normalizeLanguage,
     formatRange,
     buildDailyReflectionLines,
+    filterFoodReferences,
+    countDraftFoodItems,
     createMealComposerModel,
     createMealComposerUI
   });

@@ -27,6 +27,46 @@ function run() {
     warn: () => {}
   });
 
+  const library = model.getLibrary();
+  const initialComponents = mealUI.filterFoodReferences(library, { category: "grain", language: "th" });
+  assert.equal(initialComponents.results.length, 3);
+  assert.equal(initialComponents.remaining, 0);
+
+  const compactAll = mealUI.filterFoodReferences(library, { category: "all", language: "th" });
+  assert.equal(compactAll.results.length, mealUI.DEFAULT_COMPONENT_RESULT_LIMIT);
+  assert.equal(compactAll.total, library.length);
+  assert.equal(compactAll.remaining, library.length - mealUI.DEFAULT_COMPONENT_RESULT_LIMIT);
+  assert.equal(mealUI.filterFoodReferences(library, { category: "all", showAll: true }).results.length, library.length);
+
+  const condimentComponents = mealUI.filterFoodReferences(library, { category: "condiment", language: "th" });
+  assert.ok(condimentComponents.results.length > 0);
+  assert.ok(condimentComponents.results.every((reference) => reference.category === "condiment"));
+  const crossCategorySearch = mealUI.filterFoodReferences(library, {
+    category: "grain",
+    search: "น้ำปลา",
+    language: "th"
+  });
+  assert.deepEqual(crossCategorySearch.results.map((reference) => reference.food_id), ["fish_sauce"]);
+  assert.equal(mealUI.filterFoodReferences(library, { category: "all", search: "not-in-library", language: "en" }).total, 0);
+
+  const duplicateSelectionModel = mealUI.createMealComposerModel({
+    runtime: mealRuntime,
+    storage: createMemoryStorage(),
+    date: TEST_DATE,
+    language: "th",
+    normalizeDate: (value) => String(value || "").trim(),
+    now: () => "2026-08-26T11:00:00.000Z",
+    createId: (prefix) => `${prefix}_selection_${++id}`,
+    warn: () => {}
+  });
+  const firstRice = duplicateSelectionModel.addFood("rice");
+  const secondRice = duplicateSelectionModel.addFood("rice");
+  assert.equal(mealUI.countDraftFoodItems(duplicateSelectionModel.getDraft().items, "rice"), 2);
+  duplicateSelectionModel.removeDraftItem(firstRice.meal_item_id);
+  assert.equal(mealUI.countDraftFoodItems(duplicateSelectionModel.getDraft().items, "rice"), 1);
+  duplicateSelectionModel.removeDraftItem(secondRice.meal_item_id);
+  assert.equal(mealUI.countDraftFoodItems(duplicateSelectionModel.getDraft().items, "rice"), 0);
+
   assert.equal(model.getMeals().length, 0);
   assert.deepEqual(mealUI.buildDailyReflectionLines(model.getDailySummary(), "th"), [
     "วันนี้ยังไม่มีมื้อที่บันทึกไว้",
@@ -143,10 +183,16 @@ function run() {
     "save",
     "savedMeals",
     "dailyReflectionTitle",
-    "estimateUnknown"
+    "estimateUnknown",
+    "searchPlaceholder",
+    "noFoodFound"
   ];
   mealUI.SUPPORTED_LANGUAGES.forEach((language) => {
     localeKeys.forEach((key) => assert.equal(typeof mealUI.TEXT[language][key], "string"));
+    ["showMoreFoods", "selectedComponent", "addSelectedFood"].forEach((key) => {
+      assert.equal(typeof mealUI.TEXT[language][key], "function");
+      assert.ok(mealUI.TEXT[language][key](2, 2));
+    });
     ["small", "regular", "large", "custom"].forEach((key) => assert.ok(mealUI.TEXT[language].portions[key]));
     ["grain", "animal_protein", "plant_protein", "egg", "vegetable", "soup", "condiment"].forEach((key) => {
       assert.ok(mealUI.TEXT[language].categories[key]);

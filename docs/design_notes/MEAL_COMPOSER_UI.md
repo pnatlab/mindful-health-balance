@@ -77,6 +77,14 @@ The optional unknown-condiment control preserves a user statement of uncertainty
 
 Meal Type keeps the same semantic button, `aria-pressed` selected state, and persisted value, but presents each option as a compact 2D illustrated card. Lightweight inline SVG line art is an orientation cue for meal form, not a food catalog or nutritional claim. Cards use the existing theme variables, a quiet selected check, keyboard-visible focus, and a responsive grid: five columns on wide layouts, four on tablet, and two on narrow screens. Motion is limited to a 1px hover lift and subtle selected-state transition, both disabled under reduced-motion preferences.
 
+### MHB 2.3E.2 Component Discovery Polish
+
+Meal Components use category-first progressive disclosure. The initial category remains compact, while `All` shows eight references before offering an explicit control for the remaining items. A non-empty search always searches across every category and is not capped by the `All` disclosure limit, so users can look for a known component without first choosing its internal category.
+
+Each Food Reference card reflects how many matching Meal Item Instances are already in the current draft. The quiet selected tint and `In this meal` count are orientation cues; the add action remains available because duplicate Food References are intentionally supported as separate Meal Item Instances. Removing an item updates the count immediately and clears the selected state when the final matching instance leaves the draft. No selected state changes Food Reference ownership, sodium evidence, or saved-meal semantics.
+
+The search field precedes category filters and component cards. Narrow layouts keep a compact two-column component grid down to 360px, then use one column below that threshold. This reduces scanning and vertical fatigue without adding another navigation layer.
+
 ## Daily Meal Reflection Panel
 
 The panel re-derives after create, edit, or delete. It may mention:
