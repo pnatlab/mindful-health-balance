@@ -78,3 +78,5 @@ The adapter is not connected to Reflection rendering in MHB 2.3B. It cannot sele
 ## Documentation Impact
 
 MHB 2.3D makes this foundation user-facing through the Meal Composer and Dynamic Daily Meal Reflection Panel. README, TH/EN/ZH user guides, and `MEAL_COMPOSER_UI.md` describe that presentation; this note remains the canonical implementation boundary for storage and derived facts.
+
+MHB 2.3E adds two backward-compatible Meal Instance descriptors: optional `meal_type` for the broad form a user recognizes, and `condiment_knowledge: "unknown"` only when the user explicitly does not know all condiments. Legacy records normalize to `meal_type: "unspecified"` and blank condiment knowledge. Neither field contributes a sodium value, changes coverage/confidence, or enters the main Reflection renderer.
