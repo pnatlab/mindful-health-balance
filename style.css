@@ -235,29 +235,94 @@
 }
 
 .meal-type-choice-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 9px;
 }
 
 .meal-type-choice {
-  min-height: 40px;
-  padding: 8px 12px;
+  position: relative;
+  display: grid;
+  min-height: 96px;
+  padding: 10px 9px 9px;
   border: 1px solid var(--border-soft);
   border-radius: 8px;
   color: var(--text-soft);
   background: var(--button-bg);
   font-size: 0.84rem;
   font-weight: 700;
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  text-align: center;
+  place-items: center;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.meal-type-illustration {
+  display: grid;
+  width: 62px;
+  height: 44px;
+  place-items: center;
+  color: var(--accent);
+  opacity: 0.76;
+}
+
+.meal-type-illustration svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.meal-type-label {
+  min-width: 0;
+  color: var(--text-main);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.meal-type-selected {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  display: grid;
+  width: 17px;
+  height: 17px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--active-text);
+  background: var(--accent);
+  font-size: 0.7rem;
+  line-height: 1;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .meal-type-choice:hover,
-.meal-type-choice:focus-visible,
+.meal-type-choice:focus-visible {
+  color: var(--active-text);
+  border-color: var(--accent);
+  background: var(--button-soft-bg);
+  box-shadow: 0 6px 18px rgba(91, 137, 211, 0.12);
+  transform: translateY(-1px);
+}
+
 .meal-type-choice.is-active {
   color: var(--active-text);
   border-color: var(--accent);
   background: var(--active-bg);
+  box-shadow: 0 6px 20px rgba(91, 137, 211, 0.14);
+}
+
+.meal-type-choice.is-active .meal-type-illustration {
+  opacity: 1;
+}
+
+.meal-type-choice.is-active .meal-type-selected {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .meal-category-chip {
@@ -548,6 +613,7 @@ body[data-theme="dark"] .meal-composer-card {
 }
 
 body[data-theme="dark"] .meal-food-option,
+body[data-theme="dark"] .meal-type-choice,
 body[data-theme="dark"] .meal-draft-item,
 body[data-theme="dark"] .meal-saved-item {
   background: rgba(31, 27, 52, 0.62);
@@ -575,6 +641,10 @@ body[data-theme="dark"] .meal-daily-reflection {
 
   .meal-food-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .meal-type-choice-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .meal-search,
@@ -620,6 +690,14 @@ body[data-theme="dark"] .meal-daily-reflection {
     grid-template-columns: 1fr;
   }
 
+  .meal-type-choice-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .meal-type-choice {
+    min-height: 88px;
+  }
+
   .meal-item-controls {
     padding-left: 0;
   }
@@ -637,7 +715,8 @@ body[data-theme="dark"] .meal-daily-reflection {
 
 @media (prefers-reduced-motion: reduce) {
   .meal-food-option,
-  .meal-type-choice {
+  .meal-type-choice,
+  .meal-type-selected {
     transition: none;
   }
 

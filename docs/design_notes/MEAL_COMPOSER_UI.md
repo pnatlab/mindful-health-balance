@@ -73,6 +73,10 @@ Unknown is never rendered as `0 mg`. No score, traffic-light state, medical sodi
 
 The optional unknown-condiment control preserves a user statement of uncertainty. A meal with no condiment item means only that none was recorded. Meal-Type-aware sodium estimation, restaurant-food assumptions, and any unknown-condiment estimate logic are intentionally deferred to **MHB 2.3F**.
 
+### MHB 2.3E.1 Visual Polish
+
+Meal Type keeps the same semantic button, `aria-pressed` selected state, and persisted value, but presents each option as a compact 2D illustrated card. Lightweight inline SVG line art is an orientation cue for meal form, not a food catalog or nutritional claim. Cards use the existing theme variables, a quiet selected check, keyboard-visible focus, and a responsive grid: five columns on wide layouts, four on tablet, and two on narrow screens. Motion is limited to a 1px hover lift and subtle selected-state transition, both disabled under reduced-motion preferences.
+
 ## Daily Meal Reflection Panel
 
 The panel re-derives after create, edit, or delete. It may mention:

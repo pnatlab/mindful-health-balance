@@ -154,6 +154,13 @@ function run() {
     ["unspecified", "stir_fried", "curry", "broth_based"].forEach((key) => assert.ok(mealUI.TEXT[language].mealTypes[key]));
   });
 
+  const mealTypeKeys = Object.keys(mealUI.TEXT.th.mealTypes);
+  assert.deepEqual(Object.keys(mealUI.MEAL_TYPE_ILLUSTRATIONS), mealTypeKeys);
+  Object.values(mealUI.MEAL_TYPE_ILLUSTRATIONS).forEach((illustration) => {
+    assert.match(illustration, /<svg /);
+    assert.doesNotMatch(illustration, /sodium|score|medical|target/i);
+  });
+
   const allUserCopy = mealUI.SUPPORTED_LANGUAGES.flatMap((language) => [
     ...mealUI.buildDailyReflectionLines(model.getDailySummary(), language),
     mealUI.TEXT[language].estimateUnknown,

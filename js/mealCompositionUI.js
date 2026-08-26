@@ -22,7 +22,7 @@
       close: "เก็บพื้นที่ประกอบมื้อ",
       recordedCount: (count) => `${count} มื้อที่บันทึกไว้`,
       mealType: "มื้อนี้เป็นอาหารแบบไหน",
-      mealTypeHelper: "เลือกตามสิ่งที่เห็นหรือจำได้ ไม่ต้องเดาสูตรหรือเครื่องปรุง",
+      mealTypeHelper: "เลือกจากที่เห็นหรือจำได้ ไม่ต้องรู้สูตรทั้งหมด",
       chooseFood: "มีอะไรอยู่ในมื้อนี้บ้าง",
       chooseFoodHelper: "เลือกเท่าที่รู้ ไม่จำเป็นต้องครบทุกอย่าง",
       searchLabel: "ค้นหาอาหารหรือเครื่องปรุง",
@@ -131,7 +131,7 @@
       close: "Close meal composer",
       recordedCount: (count) => `${count} recorded ${count === 1 ? "meal" : "meals"}`,
       mealType: "What kind of meal is this?",
-      mealTypeHelper: "Choose what you noticed or remember. You do not need to reconstruct the recipe or condiments.",
+      mealTypeHelper: "Choose what you recognize. You do not need the full recipe.",
       chooseFood: "What was in this meal?",
       chooseFoodHelper: "Choose what you know. It does not need to be complete.",
       searchLabel: "Search foods or condiments",
@@ -240,7 +240,7 @@
       close: "收起餐食组合区",
       recordedCount: (count) => `已记录 ${count} 餐`,
       mealType: "这一餐是什么类型？",
-      mealTypeHelper: "按看见或记得的样子选择，不需要猜食谱或调味品。",
+      mealTypeHelper: "按看见或记得的样子选择，不需要知道完整食谱。",
       chooseFood: "这一餐里有什么？",
       chooseFoodHelper: "按知道的部分选择，不需要记全。",
       searchLabel: "搜索食物或调味品",
@@ -370,6 +370,20 @@
     processed_sausage: "◌",
     fried_snack: "◇",
     dessert: "🍮"
+  });
+
+  // These visual cues describe meal form only. They do not encode ingredients, nutrition, or sodium.
+  const MEAL_TYPE_ILLUSTRATIONS = Object.freeze({
+    unspecified: '<svg viewBox="0 0 64 44" aria-hidden="true"><ellipse cx="29" cy="28" rx="20" ry="9"/><path d="M12 28h34"/><path d="M31 12c5 0 7 6 3 9-2 2-4 3-4 6"/><circle cx="30" cy="32" r="1"/></svg>',
+    stir_fried: '<svg viewBox="0 0 64 44" aria-hidden="true"><circle cx="25" cy="27" r="12"/><path d="M35 27h18"/><path d="M21 23h8M20 28h10M24 17l3 4"/><path d="M47 13l5 7"/></svg>',
+    boiled: '<svg viewBox="0 0 64 44" aria-hidden="true"><path d="M16 23h28v13H16z"/><path d="M13 21h34M22 18c-3-4 3-5 0-9M31 18c-3-4 3-5 0-9M39 18c-3-4 3-5 0-9"/><path d="M16 28h-4M44 28h4"/></svg>',
+    curry: '<svg viewBox="0 0 64 44" aria-hidden="true"><path d="M13 25c2 11 11 14 19 14s17-3 19-14H13z"/><path d="M10 24h44"/><path d="M42 12l10 10"/><circle cx="32" cy="20" r="4"/></svg>',
+    fried: '<svg viewBox="0 0 64 44" aria-hidden="true"><path d="M12 28c2 8 9 11 17 11s15-3 17-11H12z"/><path d="M15 27h28"/><path d="M42 28h13"/><path d="M24 20l5 4 5-4"/></svg>',
+    grilled: '<svg viewBox="0 0 64 44" aria-hidden="true"><rect x="15" y="17" width="32" height="17" rx="3"/><path d="M20 20l10 11M29 20l10 11M38 20l6 7M22 38h18"/></svg>',
+    steamed: '<svg viewBox="0 0 64 44" aria-hidden="true"><path d="M17 25h30v12H17z"/><path d="M14 24h36M20 20h24v4M23 16h18v4M25 12h14v4"/><path d="M24 9c-2-3 2-4 0-6M33 9c-2-3 2-4 0-6"/></svg>',
+    broth_based: '<svg viewBox="0 0 64 44" aria-hidden="true"><path d="M13 25c2 10 10 14 19 14s17-4 19-14H13z"/><path d="M10 24h44"/><path d="M43 13l10 10"/><path d="M22 19c-2-4 2-5 0-9M32 19c-2-4 2-5 0-9"/></svg>',
+    minimally_prepared: '<svg viewBox="0 0 64 44" aria-hidden="true"><ellipse cx="31" cy="29" rx="20" ry="8"/><path d="M31 27c0-10 8-14 15-13-1 8-6 14-15 13z"/><path d="M31 27c-4-7-10-8-14-6 3 7 8 9 14 6z"/></svg>',
+    other: '<svg viewBox="0 0 64 44" aria-hidden="true"><ellipse cx="31" cy="28" rx="20" ry="9"/><path d="M12 28h38"/><circle cx="23" cy="25" r="2"/><circle cx="32" cy="22" r="2"/><circle cx="39" cy="27" r="2"/></svg>'
   });
 
   function normalizeLanguage(language) {
@@ -653,7 +667,11 @@
       const draft = model.getDraft();
       const mealTypes = Object.keys(copy.mealTypes);
       const choices = mealTypes.map((type) => `
-        <button type="button" class="meal-type-choice${draft.mealType === type ? " is-active" : ""}" data-meal-type-choice="${escapeHtml(type)}" aria-pressed="${draft.mealType === type}">${escapeHtml(copy.mealTypes[type])}</button>
+        <button type="button" class="meal-type-choice${draft.mealType === type ? " is-active" : ""}" data-meal-type-choice="${escapeHtml(type)}" aria-pressed="${draft.mealType === type}">
+          <span class="meal-type-illustration">${MEAL_TYPE_ILLUSTRATIONS[type] || MEAL_TYPE_ILLUSTRATIONS.other}</span>
+          <span class="meal-type-label">${escapeHtml(copy.mealTypes[type])}</span>
+          <span class="meal-type-selected" aria-hidden="true">✓</span>
+        </button>
       `).join("");
       return `
         <section class="meal-type-picker" aria-labelledby="mealTypeTitle">
@@ -962,6 +980,7 @@
   const api = Object.freeze({
     SUPPORTED_LANGUAGES,
     TEXT,
+    MEAL_TYPE_ILLUSTRATIONS,
     normalizeLanguage,
     formatRange,
     buildDailyReflectionLines,
