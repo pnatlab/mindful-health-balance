@@ -91,10 +91,11 @@ Runtime architecture, modularization planning, and implementation-safety notes f
 - [LOCAL_VISION_HEIC_NORMALIZATION.md](LOCAL_VISION_HEIC_NORMALIZATION.md) - MHB 2.4F local-only HEIC/HEIF normalization: a vendored MIT WASM decoder prepares transient JPEG Blobs before the unchanged Vision review flow.
 - [VISION_OBSERVATION_QUALITY_IMAGE_AUDIT.md](VISION_OBSERVATION_QUALITY_IMAGE_AUDIT.md) - MHB 2.4G controlled local audit: current HEIC normalization and 1600px/0.90 preprocessing are sufficient in the pilot; model visual errors and one strict-validation failure need targeted follow-up.
 - [VISION_OBSERVATION_PROMPT_VALIDATION_REFINEMENT.md](VISION_OBSERVATION_PROMPT_VALIDATION_REFINEMENT.md) - MHB 2.4H controlled local refinement: parser-lines-v3 improves strict-valid, uncertainty-first observations without relaxing evidence or validation firewalls.
+- [HEIC_INPUT_RELIABILITY_LARGE_IPHONE_PHOTOS.md](HEIC_INPUT_RELIABILITY_LARGE_IPHONE_PHOTOS.md) - MHB 2.4I local HEIC reliability audit: all nine authorized corpus images, including 24.47-megapixel iPhone photos, reached the fixed transient JPEG target; diagnostics and preparation responsiveness were tightened without changing Vision authority.
 
 MHB 2.3F sequence: 2.3F-R research -> 2.3F-C contract locked -> 2.3F-D Thai Named-Dish Evidence Pilot -> Human Approval -> 2.3F-I bounded runtime implementation for two approved references.
 
-MHB 2.4 experimental sequence: 2.4A local vision feasibility probe -> 2.4B authorized local corpus and measured observation pilot -> 2.4C contract and optional-provider architecture lock -> 2.4D browser-to-local-Ollama integration probe -> 2.4E bounded vision review and Meal Composer prefill prototype -> 2.4F local HEIC/HEIF normalization -> 2.4G controlled observation-quality and image-input audit -> 2.4H parser-lines-v3 prompt/strict-validation refinement -> human decision on a future controlled model comparison.
+MHB 2.4 experimental sequence: 2.4A local vision feasibility probe -> 2.4B authorized local corpus and measured observation pilot -> 2.4C contract and optional-provider architecture lock -> 2.4D browser-to-local-Ollama integration probe -> 2.4E bounded vision review and Meal Composer prefill prototype -> 2.4F local HEIC/HEIF normalization -> 2.4G controlled observation-quality and image-input audit -> 2.4H parser-lines-v3 prompt/strict-validation refinement -> 2.4I large-iPhone HEIC input reliability audit -> deferred narrow large-HEIC review-path QA or human decision on a future controlled model comparison.
 
 ## 99 Stabilization
 

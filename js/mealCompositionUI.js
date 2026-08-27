@@ -934,11 +934,24 @@
       return copy.visionUnavailable;
     }
 
+    function yieldForVisionPreparation() {
+      return new Promise((resolve) => {
+        if (typeof globalScope.requestAnimationFrame === "function") {
+          globalScope.requestAnimationFrame(resolve);
+          return;
+        }
+        globalScope.setTimeout(resolve, 0);
+      });
+    }
+
     async function observeVisionImage(file) {
       clearVisionSession();
       const requestId = visionRequestId;
       visionSession = { phase: "preparing", file, previewUrl: "", observation: null, review: null, failureStatus: "" };
       render();
+
+      await yieldForVisionPreparation();
+      if (requestId !== visionRequestId) return;
 
       if (!visionImageNormalizer || !visionProviderFactory || !visionReview) {
         if (requestId !== visionRequestId) return;

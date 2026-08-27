@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MHB HEIC Reliability Probe</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { max-width: 780px; margin: 40px auto; padding: 0 20px; line-height: 1.5; }
+    fieldset { margin: 20px 0; padding: 16px; border-radius: 8px; }
+    button, input { font: inherit; margin: 6px 0; }
+    button { padding: 8px 12px; }
+    pre { max-height: 55vh; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; padding: 14px; border: 1px solid color-mix(in srgb, currentColor 25%, transparent); border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>MHB HEIC Reliability Probe</h1>
+  <p>Local normalization only. This page never contacts Ollama, writes app storage, or changes a meal draft.</p>
+  <fieldset>
+    <label>Authorized local images <input id="images" type="file" multiple accept="image/png,image/jpeg,image/webp,image/heic,image/heif,.heic,.heif"></label><br>
+    <button id="run" type="button">Normalize selected images</button>
+  </fieldset>
+  <pre id="result" role="status" aria-live="polite">No conversion started.</pre>
+  <script src="../../js/mealVisionImageNormalizer.js"></script>
+  <script>
+    const result = document.querySelector("#result");
+    const run = document.querySelector("#run");
+    const images = document.querySelector("#images");
+    window.__MHBHeicReliabilityResults = [];
+
+    run.addEventListener("click", async () => {
+      const files = [...images.files];
+      if (!files.length) {
+        result.textContent = "Choose authorized local images first.";
+        return;
+      }
+      run.disabled = true;
+      const results = [];
+      try {
+        for (const file of files) {
+          result.textContent = `Preparing ${file.name} locally…`;
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+          const normalized = await window.MHBMealVisionImageNormalizer.normalizeVisionImage(file);
+          results.push({
+            file: file.name,
+            source_bytes: file.size,
+            source_type: file.type || "",
+            result: {
+              status: normalized.status,
+              source_format: normalized.sourceFormat,
+              normalized_format: normalized.normalizedFormat,
+              converted: normalized.converted,
+              diagnostics: normalized.diagnostics
+            }
+          });
+          result.textContent = JSON.stringify(results, null, 2);
+        }
+      } finally {
+        window.__MHBHeicReliabilityResults = results;
+        run.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

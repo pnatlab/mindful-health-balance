@@ -92,3 +92,11 @@ JPEG/PNG/WebP remain passthrough paths under unit coverage. Unit coverage also v
 - This is a single-image first-frame conversion, not a Live Photo or multi-frame media workflow.
 - HEIC files that the vendored libheif decoder cannot read fail calmly; MHB does not add a remote fallback.
 - Browser memory was observed only conservatively in this slice. A later performance slice may consider worker isolation, but must preserve the same local-only and transient boundaries.
+
+## 2.4I Reliability Addendum
+
+MHB 2.4I audited the authorized nine-file local HEIC corpus using normalization only, then repeated the same sequence after adding reliability diagnostics. Both passes normalized all nine files to upright `1200 x 1600` JPEGs. The corpus included five `3024 x 4032` images and four `4284 x 5712` images; the latter are about 24.47 megapixels. No corpus sample reproduced the earlier field report of ending during preparation.
+
+The output policy remains unchanged: maximum dimension `1600 px`, JPEG quality `0.90`. No source-byte or source-pixel rejection threshold was added because the largest tested normal iPhone files (up to 24.47 megapixels and about 2.52 MiB compressed) converted successfully. The normalizer now provides private, transient failure diagnostics for decoder, allocation, bitmap decode, canvas, JPEG encode, and unknown image failures. The UI still shows only calm non-technical copy.
+
+The vendored decoder still expands a full source frame before MHB can resize it. A `4284 x 5712` RGBA frame alone is roughly 93 MiB, so peak temporary memory may include more than one large browser-side buffer. MHB closes its decoded bitmap after resizing and yields one render frame after showing the preparing state before work begins. This improves visible responsiveness and diagnosis, but it is not a worker-based decode path. Large-phone reliability is therefore recorded as **reliable with constraints**, not as an unlimited-memory guarantee.

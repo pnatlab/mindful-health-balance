@@ -4,6 +4,7 @@
   const DEFAULT_MAX_DIMENSION = 1600;
   const DEFAULT_JPEG_QUALITY = 0.9;
   const HEIC_DECODE_QUALITY = 0.92;
+  const FAILURE_STAGES = new Set(["decoder_failed", "allocation_failed", "bitmap_decode_failed", "canvas_failed", "jpeg_encode_failed", "unknown_image_error"]);
   const converterModuleUrl = typeof document !== "undefined" && document.currentScript?.src
     ? new URL("./vendor/heic-converter/index.mjs", document.currentScript.src).href
     : "";
@@ -49,39 +50,71 @@
     });
   }
 
+  function stageError(stage, error) {
+    const wrapped = new Error(error?.message || stage);
+    wrapped.mhbImageStage = stage;
+    return wrapped;
+  }
+
+  function failureStage(error, fallback = "unknown_image_error") {
+    if (FAILURE_STAGES.has(error?.mhbImageStage)) return error.mhbImageStage;
+    if (error?.name === "RangeError" || /alloc|memory|heap/i.test(String(error?.message || ""))) return "allocation_failed";
+    return fallback;
+  }
+
   async function resizeJpegBlob(blob, options = {}) {
     if (typeof globalScope.createImageBitmap !== "function") return { blob, diagnostics: {} };
-    const bitmap = await globalScope.createImageBitmap(blob, { imageOrientation: "from-image" });
+    let bitmap;
+    try {
+      bitmap = await globalScope.createImageBitmap(blob, { imageOrientation: "from-image" });
+    } catch (error) {
+      throw stageError(failureStage(error, "bitmap_decode_failed"), error);
+    }
     try {
       const maxDimension = options.maxDimension || DEFAULT_MAX_DIMENSION;
       const target = scaledDimensions(bitmap.width, bitmap.height, maxDimension);
       if (target.width === bitmap.width && target.height === bitmap.height) {
         return { blob, diagnostics: { source_width: bitmap.width, source_height: bitmap.height, normalized_width: bitmap.width, normalized_height: bitmap.height } };
       }
-      const canvas = typeof globalScope.OffscreenCanvas === "function"
-        ? new globalScope.OffscreenCanvas(target.width, target.height)
-        : globalScope.document?.createElement("canvas");
-      if (!canvas) throw new Error("Canvas is unavailable");
-      canvas.width = target.width;
-      canvas.height = target.height;
-      const context = canvas.getContext("2d", { alpha: false });
-      if (!context) throw new Error("Canvas context is unavailable");
-      context.drawImage(bitmap, 0, 0, target.width, target.height);
-      const resized = await canvasToJpeg(canvas, options.quality || DEFAULT_JPEG_QUALITY);
-      return {
-        blob: resized,
-        diagnostics: { source_width: bitmap.width, source_height: bitmap.height, normalized_width: target.width, normalized_height: target.height }
-      };
+      let canvas;
+      try {
+        canvas = typeof globalScope.OffscreenCanvas === "function"
+          ? new globalScope.OffscreenCanvas(target.width, target.height)
+          : globalScope.document?.createElement("canvas");
+        if (!canvas) throw stageError("canvas_failed", new Error("Canvas is unavailable"));
+        canvas.width = target.width;
+        canvas.height = target.height;
+        const context = canvas.getContext("2d", { alpha: false });
+        if (!context) throw stageError("canvas_failed", new Error("Canvas context is unavailable"));
+        context.drawImage(bitmap, 0, 0, target.width, target.height);
+      } catch (error) {
+        throw stageError(failureStage(error, "canvas_failed"), error);
+      }
+      try {
+        const resized = await canvasToJpeg(canvas, options.quality || DEFAULT_JPEG_QUALITY);
+        return {
+          blob: resized,
+          diagnostics: { source_width: bitmap.width, source_height: bitmap.height, normalized_width: target.width, normalized_height: target.height }
+        };
+      } catch (error) {
+        throw stageError(failureStage(error, "jpeg_encode_failed"), error);
+      }
     } finally {
-      bitmap.close();
+      bitmap?.close();
     }
   }
 
   async function convertHeicLocally(image, options = {}) {
     if (!converterModuleUrl) throw new Error("Local HEIC converter is unavailable");
     const startedAt = globalScope.performance?.now?.() || Date.now();
-    const converter = await import(converterModuleUrl);
-    const decodedJpeg = await converter.convertHeic(image, { to: "jpeg", quality: HEIC_DECODE_QUALITY });
+    let converter;
+    let decodedJpeg;
+    try {
+      converter = await import(converterModuleUrl);
+      decodedJpeg = await converter.convertHeic(image, { to: "jpeg", quality: HEIC_DECODE_QUALITY });
+    } catch (error) {
+      throw stageError(failureStage(error, "decoder_failed"), error);
+    }
     const resized = await resizeJpegBlob(decodedJpeg, options);
     const endedAt = globalScope.performance?.now?.() || Date.now();
     return {
@@ -136,8 +169,15 @@
             normalized_size_bytes: output?.diagnostics?.normalized_size_bytes || converted.size || null
           })
         });
-      } catch {
-        return Object.freeze({ status: "conversion_failed", image: null, sourceFormat: capability.format, normalizedFormat: "", converted: false, diagnostics: Object.freeze({}) });
+      } catch (error) {
+        return Object.freeze({
+          status: "conversion_failed",
+          image: null,
+          sourceFormat: capability.format,
+          normalizedFormat: "",
+          converted: false,
+          diagnostics: Object.freeze({ failure_stage: failureStage(error, "decoder_failed"), error_name: String(error?.name || "Error") })
+        });
       }
     }
 

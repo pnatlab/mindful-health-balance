@@ -47,9 +47,25 @@ async function run() {
   assert.equal(converterInput, heic, "the original File is passed through untouched");
   assert.equal(heic.type, "image/heic");
 
+  const largeHeic = namedBlob("large-meal.HEIC", "image/heic");
+  const largeConverted = await normalizer.normalizeVisionImage(largeHeic, {
+    heicConverter: async () => ({
+      blob: convertedJpeg,
+      diagnostics: { source_width: 4284, source_height: 5712, normalized_width: 1200, normalized_height: 1600 }
+    })
+  });
+  assert.equal(largeConverted.status, "ready");
+  assert.equal(largeConverted.diagnostics.normalized_width, 1200);
+  assert.equal(largeConverted.diagnostics.normalized_height, 1600);
+
   const failedConversion = await normalizer.normalizeVisionImage(heic, { heicConverter: async () => { throw new Error("local converter unavailable"); } });
   assert.equal(failedConversion.status, "conversion_failed");
   assert.equal(failedConversion.image, null);
+  assert.equal(failedConversion.diagnostics.failure_stage, "decoder_failed");
+  const allocationFailure = await normalizer.normalizeVisionImage(heic, {
+    heicConverter: async () => { throw new RangeError("allocation failed"); }
+  });
+  assert.equal(allocationFailure.diagnostics.failure_stage, "allocation_failed");
   assert.equal((await normalizer.normalizeVisionImage(namedBlob("meal.gif", "image/gif"))).status, "unsupported_format");
   assert.equal((await normalizer.normalizeVisionImage(null)).status, "image_error");
   assert.equal(normalizer.DEFAULT_MAX_DIMENSION, 1600);
@@ -57,6 +73,7 @@ async function run() {
 
   const source = require("node:fs").readFileSync(require("node:path").join(__dirname, "../js/mealVisionImageNormalizer.js"), "utf8");
   assert.ok(!/localStorage|indexedDB|Daily_Log|workbook/i.test(source), "the normalizer has no persistence path");
+  assert.match(source, /bitmap\?\.close\(\)/, "decoded bitmap cleanup remains explicit");
 
   console.log("Meal Vision image normalizer tests passed.");
 }
