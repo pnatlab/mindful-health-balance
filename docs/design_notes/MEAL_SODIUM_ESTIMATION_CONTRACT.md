@@ -5,7 +5,7 @@
 - Status: **Contract Locked for MHB 2.3F Implementation**.
 - Research basis: MHB 2.3F-R is complete.
 - Decision status: human architecture decisions in this note are approved.
-- Runtime implementation: not yet performed.
+- Runtime implementation: bounded 2.3F-I support exists only for two human-approved Thai FCD named-dish references; all other evidence paths remain unimplemented.
 - Current public runtime remains **MHB 2.3 - Gentle Meal Composition**.
 
 This contract turns the evidence findings in [MEAL_SODIUM_ESTIMATION_RESEARCH.md](MEAL_SODIUM_ESTIMATION_RESEARCH.md) into the canonical architecture boundary for a future sodium-estimation implementation. It does not add an estimate, change UI behavior, change storage, or set a medical target.
@@ -189,3 +189,8 @@ Each candidate must be traceable, serving-specific, human-reviewed, and bounded 
 
 This contract does not change the current MHB 2.3 runtime. It does not alter Food Reference evidence, Meal Type semantics, `condiment_knowledge`, sodium calculations, Meal storage, UI, Reflection, workbook schema, import/export, Daily_Log, or the public version.
 
+## MHB 2.3F-I Implementation Status
+
+The bounded runtime path is now implemented for exactly two human-approved Thai FCD named-dish references: `fried_rice_pork_vegetable_egg` and `fried_rice_vegetable`. Both are explicit-match-only, `dish_inclusive` 100-g references with `scaling_allowed: false` and medium confidence. Runtime retains the contract's one-base-per-meal rule, preserves `partial` coverage for these source-basis references, and falls back safely when an ID is absent or unapproved.
+
+This status does not approve any additional dish, package, restaurant, or add-on-condiment path. Current public runtime remains **MHB 2.3 - Gentle Meal Composition**.

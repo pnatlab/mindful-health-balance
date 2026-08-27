@@ -104,8 +104,12 @@ function run() {
     estimated_sodium_max_mg: 2400,
     sodium_estimate_coverage: "complete",
     estimate_confidence: "medium",
+    estimate_basis: "component_only",
+    named_dish_id: "",
     known_item_count: 2,
-    unknown_item_count: 0
+    unknown_item_count: 0,
+    source_basis: null,
+    provenance: null
   });
   const productionStore = createStore(createMemoryStorage(), productionLibrary, []);
   const immutableMeal = productionStore.createMeal({ date: TEST_DATE, meal_label: "lunch", items: [productionStore.createMealItem({ food_id: "fish_sauce" })] });
@@ -177,6 +181,7 @@ function run() {
   assert.equal(store.getMealsForDate(TEST_DATE).length, 2);
   assert.equal(store.getMealsForDate(OTHER_DATE).length, 1);
   assert.equal(firstMeal.meal_type, "unspecified");
+  assert.equal(firstMeal.named_dish_id, "");
   assert.equal(firstMeal.condiment_knowledge, "");
   assert.equal(secondMeal.meal_type, "stir_fried");
   assert.equal(secondMeal.condiment_knowledge, "unknown");
@@ -190,6 +195,7 @@ function run() {
     updated_at: "2026-08-26T06:00:00.000Z"
   });
   assert.equal(legacyMeal.meal_type, "unspecified");
+  assert.equal(legacyMeal.named_dish_id, "");
   assert.equal(legacyMeal.condiment_knowledge, "");
 
   const updatedMeal = store.updateMeal(firstMeal.meal_id, { meal_note: "kept as plain text", meal_type: "broth_based" });
@@ -263,6 +269,94 @@ function run() {
   assert.equal(Object.isFrozen(mealRuntime.getFoodReferenceById("rice")), true);
   assert.equal(Object.isFrozen(fishSauceReference), true);
   assert.equal(mealRuntime.getFoodReferenceById("rice").sodium_estimate_min_mg, null);
+
+  const namedDishLibrary = mealRuntime.getNamedDishReferenceLibrary();
+  assert.equal(namedDishLibrary.length, 2);
+  assert.deepEqual(namedDishLibrary.map((reference) => reference.dish_id), ["fried_rice_pork_vegetable_egg", "fried_rice_vegetable"]);
+  assert.equal(mealRuntime.getNamedDishReferenceById("green_curry_chicken"), null);
+  namedDishLibrary.forEach((reference) => {
+    assert.equal(reference.estimate_basis, "dish_inclusive");
+    assert.equal(reference.confidence, "medium");
+    assert.equal(reference.scaling_allowed, false);
+    assert.equal(reference.source_type, "reference_database");
+    assert.match(reference.source_reference, /Thai Food Composition Database v3/);
+    assert.match(reference.source_url, /food_id=155[34]/);
+    assert.equal(Object.keys(reference).some((key) => /score|good|bad|healthy|cheat|medical|target/i.test(key)), false);
+  });
+  assert.deepEqual(
+    [mealRuntime.getNamedDishReferenceById("fried_rice_pork_vegetable_egg").sodium_estimate_min_mg, mealRuntime.getNamedDishReferenceById("fried_rice_pork_vegetable_egg").sodium_estimate_max_mg],
+    [141, 141]
+  );
+  assert.deepEqual(
+    [mealRuntime.getNamedDishReferenceById("fried_rice_vegetable").sodium_estimate_min_mg, mealRuntime.getNamedDishReferenceById("fried_rice_vegetable").sodium_estimate_max_mg],
+    [268, 268]
+  );
+
+  const namedDishMeal = {
+    meal_id: "named_dish_meal",
+    date: TEST_DATE,
+    meal_label: "lunch",
+    named_dish_id: "fried_rice_pork_vegetable_egg",
+    items: [riceUnknownItem, regularItem, eggItem, fishSauceItem],
+    created_at: "2026-08-26T12:00:00.000Z",
+    updated_at: "2026-08-26T12:00:00.000Z"
+  };
+  const namedDishEstimate = mealRuntime.deriveMealEstimate(namedDishMeal);
+  assert.deepEqual(
+    [namedDishEstimate.estimated_sodium_min_mg, namedDishEstimate.estimated_sodium_max_mg, namedDishEstimate.sodium_estimate_coverage, namedDishEstimate.estimate_confidence, namedDishEstimate.estimate_basis],
+    [141, 141, "partial", "medium", "dish_inclusive"]
+  );
+  assert.deepEqual(namedDishEstimate.source_basis, { label: "100 g edible portion", amount: 100, unit: "g", scaling_allowed: false });
+  assert.equal(namedDishEstimate.provenance.matched_identity, "fried_rice_pork_vegetable_egg");
+  assert.match(namedDishEstimate.provenance.source_url, /food_id=1554/);
+  assert.equal(namedDishEstimate.estimated_sodium_max_mg, 141);
+
+  const mealTypeOnlyEstimate = mealRuntime.deriveMealEstimate({ meal_type: "stir_fried", items: [regularItem] });
+  const componentsOnlyEstimate = mealRuntime.deriveMealEstimate({ items: [regularItem, eggItem] });
+  const unsupportedDishEstimate = mealRuntime.deriveMealEstimate({ named_dish_id: "green_curry_chicken", items: [eggItem] });
+  assert.equal(mealTypeOnlyEstimate.estimate_basis, "component_only");
+  assert.equal(componentsOnlyEstimate.estimate_basis, "component_only");
+  assert.deepEqual([unsupportedDishEstimate.estimated_sodium_min_mg, unsupportedDishEstimate.estimated_sodium_max_mg, unsupportedDishEstimate.estimate_basis], [60, 62, "component_only"]);
+  assert.deepEqual([mealRuntime.deriveMealEstimate({ named_dish_id: "unapproved_dish", items: [riceUnknownItem] }).sodium_estimate_coverage, mealRuntime.deriveMealEstimate({ named_dish_id: "unapproved_dish", items: [riceUnknownItem] }).estimate_basis], ["unknown", "unknown"]);
+
+  ["small", "regular", "large"].forEach((portionLabel) => {
+    const item = mealRuntime.createMealItem({ food_id: "fish_sauce", portion_label: portionLabel });
+    const estimate = mealRuntime.deriveMealEstimate({ ...namedDishMeal, items: [item] });
+    assert.deepEqual([estimate.estimated_sodium_min_mg, estimate.estimated_sodium_max_mg], [141, 141]);
+  });
+  const customDishEstimate = mealRuntime.deriveMealEstimate({
+    ...namedDishMeal,
+    items: [mealRuntime.createMealItem({ food_id: "fish_sauce", portion_label: "custom", serving_multiplier: 2 })]
+  });
+  assert.deepEqual([customDishEstimate.estimated_sodium_min_mg, customDishEstimate.estimated_sodium_max_mg], [141, 141]);
+
+  const namedDishDailySummary = mealRuntime.deriveDailyMealSummary(TEST_DATE, [
+    namedDishMeal,
+    { ...namedDishMeal, meal_id: "named_dish_vegetable", named_dish_id: "fried_rice_vegetable", items: [vegetableItem] },
+    { ...namedDishMeal, meal_id: "component_meal", named_dish_id: "", items: [eggItem] }
+  ]);
+  assert.deepEqual(
+    [namedDishDailySummary.estimated_sodium_min_mg, namedDishDailySummary.estimated_sodium_max_mg, namedDishDailySummary.sodium_estimate_coverage, namedDishDailySummary.estimate_confidence],
+    [469, 471, "partial", "medium"]
+  );
+  assert.deepEqual(namedDishDailySummary.estimate_bases, ["component_only", "dish_inclusive"]);
+  assert.deepEqual(namedDishDailySummary.named_dish_ids, ["fried_rice_pork_vegetable_egg", "fried_rice_vegetable"]);
+  const namedDishContext = mealRuntime.buildMealReflectionContext(TEST_DATE, [namedDishMeal]);
+  assert.deepEqual(namedDishContext.estimateBases, ["dish_inclusive"]);
+  assert.deepEqual(namedDishContext.namedDishIds, ["fried_rice_pork_vegetable_egg"]);
+  assert.equal(Object.keys(namedDishContext).some((key) => /score|medical|target|high|low/i.test(key)), false);
+
+  const namedDishStorage = createMemoryStorage();
+  const namedDishStore = createStore(namedDishStorage, library, []);
+  const persistedNamedDish = namedDishStore.createMeal({
+    date: TEST_DATE,
+    meal_label: "lunch",
+    named_dish_id: "fried_rice_vegetable",
+    items: [vegetableItem]
+  });
+  assert.equal(persistedNamedDish.named_dish_id, "fried_rice_vegetable");
+  const reloadedNamedDishStore = createStore(namedDishStorage, library, []);
+  assert.equal(reloadedNamedDishStore.getMealRecords()[0].named_dish_id, "fried_rice_vegetable");
 }
 
 run();

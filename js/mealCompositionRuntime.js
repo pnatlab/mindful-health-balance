@@ -9,6 +9,7 @@
   const CONFIDENCE_LEVELS = new Set(["high", "medium", "low", "unknown"]);
   const SOURCE_TYPES = new Set(["reference_database", "package_label", "restaurant_declared", "user_entered", "system_default", "unknown"]);
   const PORTION_MULTIPLIERS = Object.freeze({ small: 0.5, regular: 1, large: 1.5 });
+  const ESTIMATE_BASES = new Set(["dish_inclusive", "component_only", "unknown"]);
 
   function createUnknownFoodReference(foodId, names, category, servingLabel) {
     return {
@@ -111,6 +112,54 @@
   const FOOD_REFERENCE_BY_ID = new Map(FOOD_REFERENCE_PILOT.map((reference) => [reference.food_id, reference]));
   Object.freeze(FOOD_REFERENCE_PILOT);
 
+  // These references are separate from Food Reference items. They are only used after an explicit, approved dish match.
+  const NAMED_DISH_REFERENCE_LIBRARY = [
+    {
+      dish_id: "fried_rice_pork_vegetable_egg",
+      display_name_th: "ข้าวผัดหมู ผัก และไข่",
+      display_name_en: "Fried rice with pork, vegetable and egg",
+      display_name_zh: "猪肉蔬菜鸡蛋炒饭",
+      source_type: "reference_database",
+      source_reference: "Thai Food Composition Database v3, food ID 1554, Thai FCD code T56: Fried rice with pork, vegetable and egg.",
+      source_url: "https://inmu.mahidol.ac.th/thaifcd/foodsearch/food_name_result_std_pdf/?dbcode=STD&food_id=1554",
+      source_version: "Thai Food Composition Database v3, August 2025",
+      accessed_date: "2026-08-27",
+      source_serving_label: "100 g edible portion",
+      source_serving_amount: 100,
+      source_serving_unit: "g",
+      sodium_estimate_min_mg: 141,
+      sodium_estimate_max_mg: 141,
+      estimate_basis: "dish_inclusive",
+      confidence: "medium",
+      scaling_allowed: false,
+      inclusive_boundary: "Includes the source-prepared fried rice, pork, vegetable, egg, and seasoning represented by the Thai FCD record. External add-ons are not established and must not be added in this slice.",
+      notes: "Use only after an explicit user-confirmed named_dish_id. This 100 g reference is not a whole-plate estimate."
+    },
+    {
+      dish_id: "fried_rice_vegetable",
+      display_name_th: "ข้าวผัดผัก",
+      display_name_en: "Fried rice with vegetables",
+      display_name_zh: "蔬菜炒饭",
+      source_type: "reference_database",
+      source_reference: "Thai Food Composition Database v3, food ID 1553, Thai FCD code T204: Fried rice with vegetables.",
+      source_url: "https://inmu.mahidol.ac.th/thaifcd/foodsearch/food_name_result_std_pdf/?dbcode=STD&food_id=1553",
+      source_version: "Thai Food Composition Database v3, August 2025",
+      accessed_date: "2026-08-27",
+      source_serving_label: "100 g edible portion",
+      source_serving_amount: 100,
+      source_serving_unit: "g",
+      sodium_estimate_min_mg: 268,
+      sodium_estimate_max_mg: 268,
+      estimate_basis: "dish_inclusive",
+      confidence: "medium",
+      scaling_allowed: false,
+      inclusive_boundary: "Includes the source-prepared fried rice, vegetables, and seasoning represented by the Thai FCD record. Meat, egg, and external add-ons are outside this identity and must not be added in this slice.",
+      notes: "Use only after an explicit user-confirmed named_dish_id. This 100 g reference is not a whole-plate estimate."
+    }
+  ].map((reference) => Object.freeze(reference));
+  const NAMED_DISH_REFERENCE_BY_ID = new Map(NAMED_DISH_REFERENCE_LIBRARY.map((reference) => [reference.dish_id, reference]));
+  Object.freeze(NAMED_DISH_REFERENCE_LIBRARY);
+
   function isBlank(value) {
     return value === undefined || value === null || String(value).trim() === "";
   }
@@ -188,6 +237,14 @@
 
   function getFoodReferenceById(foodId) {
     return FOOD_REFERENCE_BY_ID.get(asTrimmedText(foodId)) || null;
+  }
+
+  function getNamedDishReferenceLibrary() {
+    return NAMED_DISH_REFERENCE_LIBRARY;
+  }
+
+  function getNamedDishReferenceById(dishId) {
+    return NAMED_DISH_REFERENCE_BY_ID.get(asTrimmedText(dishId)) || null;
   }
 
   function getFoodDisplayName(reference, language = "th") {
@@ -283,6 +340,8 @@
       custom_meal_label: label === "custom" ? asTrimmedText(meal.custom_meal_label) : "",
       // These fields only preserve what the user chose to describe. They never estimate ingredients or sodium.
       meal_type: mealType,
+      // An unknown ID is retained for forward compatibility, but only an approved library record can route an estimate.
+      named_dish_id: asTrimmedText(meal.named_dish_id),
       condiment_knowledge: condimentKnowledge,
       items,
       meal_note: asTrimmedText(meal.meal_note),
@@ -309,6 +368,38 @@
   }
 
   function deriveMealEstimate(meal) {
+    const namedDishId = asTrimmedText(meal?.named_dish_id);
+    const namedDish = getNamedDishReferenceById(namedDishId);
+    if (namedDish) {
+      return {
+        estimated_sodium_min_mg: namedDish.sodium_estimate_min_mg,
+        estimated_sodium_max_mg: namedDish.sodium_estimate_max_mg,
+        // A direct 100 g dish reference is still not evidence of the user's whole meal or all external add-ons.
+        sodium_estimate_coverage: "partial",
+        estimate_confidence: namedDish.confidence,
+        estimate_basis: namedDish.estimate_basis,
+        named_dish_id: namedDish.dish_id,
+        known_item_count: 1,
+        unknown_item_count: 0,
+        source_basis: Object.freeze({
+          label: namedDish.source_serving_label,
+          amount: namedDish.source_serving_amount,
+          unit: namedDish.source_serving_unit,
+          scaling_allowed: namedDish.scaling_allowed
+        }),
+        provenance: Object.freeze({
+          source_type: namedDish.source_type,
+          source_reference: namedDish.source_reference,
+          source_url: namedDish.source_url,
+          source_version: namedDish.source_version,
+          accessed_date: namedDish.accessed_date,
+          matched_identity: namedDish.dish_id,
+          inclusive_boundary: namedDish.inclusive_boundary,
+          add_on_boundary: "No add-on condiment is included in this implementation slice."
+        })
+      };
+    }
+
     const items = Array.isArray(meal?.items) ? meal.items.map(normalizeMealItem).filter(Boolean) : [];
     let min = 0;
     let max = 0;
@@ -337,8 +428,12 @@
       estimated_sodium_max_mg: knownItemCount ? max : null,
       sodium_estimate_coverage: sodiumEstimateCoverage,
       estimate_confidence: deriveConservativeConfidence(items, sodiumEstimateCoverage),
+      estimate_basis: knownItemCount ? "component_only" : "unknown",
+      named_dish_id: "",
       known_item_count: knownItemCount,
-      unknown_item_count: unknownItemCount
+      unknown_item_count: unknownItemCount,
+      source_basis: null,
+      provenance: null
     };
   }
 
@@ -371,15 +466,24 @@
     if (hasFlag("is_animal_protein") || hasCategory("animal_protein")) proteinCategories.push("animal_protein");
     if (hasFlag("is_plant_protein") || hasCategory("plant_protein")) proteinCategories.push("plant_protein");
 
+    const estimateBases = [...new Set(mealEstimates.map((estimate) => estimate.estimate_basis).filter((basis) => basis !== "unknown"))].sort();
+    const namedDishIds = [...new Set(mealEstimates.map((estimate) => estimate.named_dish_id).filter(Boolean))].sort();
+    const knownEstimates = mealEstimates.filter((estimate) => estimate.known_item_count > 0);
+    const dailyConfidence = sodiumEstimateCoverage === "complete"
+      ? deriveConservativeConfidence(selectedMeals.flatMap((meal) => meal.items), sodiumEstimateCoverage)
+      : knownEstimates.length && knownEstimates.every((estimate) => estimate.estimate_basis === "dish_inclusive" || estimate.estimate_confidence !== "unknown")
+        ? deriveConservativeConfidence(knownEstimates.map((estimate) => ({ confidence: estimate.estimate_confidence })), "complete")
+        : "unknown";
+
     return {
       date: asTrimmedText(date),
       recorded_meal_count: selectedMeals.length,
       estimated_sodium_min_mg: knownMealEstimateCount ? estimatedSodiumMin : null,
       estimated_sodium_max_mg: knownMealEstimateCount ? estimatedSodiumMax : null,
       sodium_estimate_coverage: sodiumEstimateCoverage,
-      estimate_confidence: sodiumEstimateCoverage === "complete"
-        ? deriveConservativeConfidence(selectedMeals.flatMap((meal) => meal.items), sodiumEstimateCoverage)
-        : "unknown",
+      estimate_confidence: dailyConfidence,
+      estimate_bases: estimateBases,
+      named_dish_ids: namedDishIds,
       animal_protein_meals: hasCategory("animal_protein"),
       plant_protein_meals: hasCategory("plant_protein"),
       vegetable_present_meals: hasCategory("vegetable"),
@@ -403,6 +507,8 @@
         coverage: summary.sodium_estimate_coverage
       },
       estimateConfidence: summary.estimate_confidence,
+      estimateBases: [...summary.estimate_bases],
+      namedDishIds: [...summary.named_dish_ids],
       proteinCategories: [...summary.recorded_protein_categories],
       vegetablePresentMeals: summary.vegetable_present_meals,
       friedFoodMeals: summary.fried_food_meals,
@@ -566,8 +672,11 @@
     MEAL_SCHEMA_VERSION,
     MEAL_TYPES,
     PORTION_MULTIPLIERS,
+    ESTIMATE_BASES,
     getFoodReferenceLibrary,
     getFoodReferenceById,
+    getNamedDishReferenceLibrary,
+    getNamedDishReferenceById,
     getFoodDisplayName,
     normalizeFoodReference,
     normalizeSodiumRange,

@@ -80,3 +80,24 @@ The adapter is not connected to Reflection rendering in MHB 2.3B. It cannot sele
 MHB 2.3D makes this foundation user-facing through the Meal Composer and Dynamic Daily Meal Reflection Panel. README, TH/EN/ZH user guides, and `MEAL_COMPOSER_UI.md` describe that presentation; this note remains the canonical implementation boundary for storage and derived facts.
 
 MHB 2.3E adds two backward-compatible Meal Instance descriptors: optional `meal_type` for the broad form a user recognizes, and `condiment_knowledge: "unknown"` only when the user explicitly does not know all condiments. Legacy records normalize to `meal_type: "unspecified"` and blank condiment knowledge. Neither field contributes a sodium value, changes coverage/confidence, or enters the main Reflection renderer.
+
+## MHB 2.3F-I Implementation Addendum: Evidence-Routed Named-Dish Base
+
+MHB 2.3F-I adds a bounded internal named-dish reference layer. It is separate from the immutable Food Reference library and does not change Meal Item ownership, Daily_Log, workbook behavior, UI selection, or the four existing Food Reference sodium values.
+
+Only two human-approved Thai FCD references are present in runtime:
+
+| `dish_id` | Thai FCD identity | Sodium source basis | Runtime estimate |
+| --- | --- | --- | --- |
+| `fried_rice_pork_vegetable_egg` | food ID 1554 / T56, Fried rice with pork, vegetable and egg | 100 g edible portion | 141-141 mg, `dish_inclusive`, medium confidence |
+| `fried_rice_vegetable` | food ID 1553 / T204, Fried rice with vegetables | 100 g edible portion | 268-268 mg, `dish_inclusive`, medium confidence |
+
+`named_dish_id` is an optional, additive Meal Instance field. It routes an estimate only when it exactly matches one of these approved records. Old meals normalize with an empty value; unknown or deferred IDs are retained but fall back to the existing component-only or unknown path. Meal Type and components never auto-match a named dish.
+
+For an approved ID, `deriveMealEstimate()` uses the named-dish base alone. It does not sum recorded components or condiments, so source-prepared ingredients cannot be double-counted. External condiment add-ons remain out of scope. The result exposes `estimate_basis: dish_inclusive`, bounded source/provenance metadata, and `scaling_allowed: false`.
+
+Both references remain at their declared 100-g basis. MHB does not apply `small`, `regular`, `large`, or custom Meal Item multipliers to them and does not present either number as a whole-plate estimate. Their coverage is intentionally `partial`: the direct source is meaningful, but it does not prove the user's consumed meal size or external add-ons. Confidence remains `medium` as an evidence-quality statement independent of coverage.
+
+`deriveDailyMealSummary()` sums one derived base per meal and exposes the bounded `estimate_bases` and `named_dish_ids` arrays so mixed daily evidence does not lose basis visibility. `buildMealReflectionContext()` exposes those derived identifiers only; the existing Reflection renderer and copy remain unchanged.
+
+`green_curry_chicken` and every other researched dish remain absent from runtime. Current public runtime remains **MHB 2.3 - Gentle Meal Composition**.

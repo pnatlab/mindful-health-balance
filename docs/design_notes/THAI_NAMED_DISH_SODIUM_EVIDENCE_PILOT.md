@@ -165,3 +165,14 @@ Each must remain `dish_inclusive`, retain Thai FCD food ID and version provenanc
 - No clinical thresholds, medical advice, scoring, or runtime behavior is proposed.
 
 Next step: Human Approval of the proposed subset and serving policy. Only after approval should MHB consider **MHB 2.3F-I - runtime implementation**. Without that approval, every candidate in this note remains research evidence only.
+
+## MHB 2.3F-I Human-Approved Runtime Subset
+
+Human review approved only the following two records for the bounded MHB 2.3F-I runtime implementation:
+
+1. `fried_rice_pork_vegetable_egg` - Thai FCD food ID 1554 / T56, 141 mg per 100 g edible portion.
+2. `fried_rice_vegetable` - Thai FCD food ID 1553 / T204, 268 mg per 100 g edible portion.
+
+Both remain `dish_inclusive`, medium confidence, and `scaling_allowed: no`. They require an explicit confirmed named-dish identity and suppress component and condiment sums for that meal base.
+
+`green_curry_chicken` is deliberately not approved or implemented in this slice. Its curry/rice identity boundary remains research-only. Every other candidate in this pilot remains unknown, deferred, or pending a separate human approval.
