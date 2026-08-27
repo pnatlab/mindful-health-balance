@@ -28,6 +28,7 @@
       visionAction: "ให้ AI ช่วยมองจากรูป",
       visionLocalNote: "วิเคราะห์ผ่านโมเดลในเครื่องนี้ รูปจะไม่ถูกเก็บไว้กับมื้อ",
       visionChooseImage: "เลือกรูปอาหาร",
+      visionPreparing: "กำลังเตรียมรูปในเครื่องนี้…",
       visionChecking: "กำลังตรวจว่าโมเดลในเครื่องพร้อมไหม…",
       visionObserving: "กำลังมองมื้อนี้ให้ค่ะ… อาจใช้เวลาสักครู่",
       visionReviewTitle: "หนูลองมองจากภาพให้ก่อนนะ",
@@ -51,7 +52,7 @@
       visionModelMissing: "ยังไม่พบโมเดลสำหรับช่วยมองรูปในเครื่องนี้ ประกอบมื้อเองต่อได้ตามปกติค่ะ",
       visionTimeout: "การมองรูปใช้เวลานานกว่ารอบนี้ ลองใหม่หรือประกอบมื้อเองต่อได้ค่ะ",
       visionInvalid: "ผลจากรูปยังไม่น่าใช้เป็นร่าง จึงยังไม่ได้เติมอะไรลงมื้อค่ะ",
-      visionImageError: "เส้นทางนี้ยังอ่าน HEIC/HEIF โดยตรงไม่ได้ ลอง PNG, JPEG หรือ WebP ได้ค่ะ โดยยังไม่ต้องเปลี่ยน draft",
+      visionImageError: "ยังเตรียมรูปนี้สำหรับการอ่านไม่ได้ค่ะ ลองเลือกรูปอื่น หรือใช้ JPG/PNG แทนได้ โดย draft ยังเหมือนเดิม",
       visionNotObservableLabels: { sauce_identity: "ชนิดของซอส", seasoning_amount: "ปริมาณเครื่องปรุง", cooking_method: "วิธีปรุงที่มองไม่ชัด" },
       namedDishSuggestion: "อาจมีเมนูอ้างอิงที่ตรงกับมื้อนี้",
       namedDishConfirm: "ใช้รายการนี้",
@@ -182,6 +183,7 @@
       visionAction: "Let local AI look at a photo",
       visionLocalNote: "Analyzed by a model on this device. The photo is not stored with the meal.",
       visionChooseImage: "Choose a meal photo",
+      visionPreparing: "Preparing the photo on this device…",
       visionChecking: "Checking whether the local model is ready…",
       visionObserving: "Looking at this meal… This may take a few seconds.",
       visionReviewTitle: "Here is what I can see so far",
@@ -205,7 +207,7 @@
       visionModelMissing: "The local vision model is not available. Manual meal composition still works normally.",
       visionTimeout: "The observation took longer than this attempt. Try again or continue manually.",
       visionInvalid: "This image result was not reliable enough to use as a draft, so nothing was applied.",
-      visionImageError: "This path cannot read HEIC/HEIF directly yet. Try PNG, JPEG, or WebP; the draft stays unchanged.",
+      visionImageError: "This photo could not be prepared for observation. Try another image or use JPG/PNG; the draft stays unchanged.",
       visionNotObservableLabels: { sauce_identity: "sauce identity", seasoning_amount: "seasoning amount", cooking_method: "unclear cooking method" },
       namedDishSuggestion: "A reference dish may fit this meal",
       namedDishConfirm: "Use this reference",
@@ -336,6 +338,7 @@
       visionAction: "让本机 AI 帮忙看看照片",
       visionLocalNote: "由这台设备上的模型分析；照片不会随餐食保存。",
       visionChooseImage: "选择餐食照片",
+      visionPreparing: "正在这台设备上准备照片…",
       visionChecking: "正在检查本机模型是否可用…",
       visionObserving: "正在看看这一餐… 可能需要几秒钟。",
       visionReviewTitle: "先看看我从照片里观察到了什么",
@@ -359,7 +362,7 @@
       visionModelMissing: "这台设备上未找到本地视觉模型，仍可照常手动组合餐食。",
       visionTimeout: "这次观察用时较长；可以重试或继续手动填写。",
       visionInvalid: "这次照片结果还不足以作为草稿，因此没有加入任何内容。",
-      visionImageError: "当前路径还不能直接读取 HEIC/HEIF；请尝试 PNG、JPEG 或 WebP，草稿不会改变。",
+      visionImageError: "暂时无法准备这张照片。请尝试其他图片或使用 JPG/PNG；草稿不会改变。",
       visionNotObservableLabels: { sauce_identity: "酱汁种类", seasoning_amount: "调味用量", cooking_method: "看不清的烹调方式" },
       namedDishSuggestion: "这餐可能有相符的参考菜品",
       namedDishConfirm: "使用这项参考",
@@ -934,7 +937,7 @@
     async function observeVisionImage(file) {
       clearVisionSession();
       const requestId = visionRequestId;
-      visionSession = { phase: "checking", file, previewUrl: "", observation: null, review: null, failureStatus: "" };
+      visionSession = { phase: "preparing", file, previewUrl: "", observation: null, review: null, failureStatus: "" };
       render();
 
       if (!visionImageNormalizer || !visionProviderFactory || !visionReview) {
@@ -950,11 +953,13 @@
         if (requestId !== visionRequestId) return;
         if (normalized.status !== "ready" || !normalized.image) {
           visionSession.phase = "failure";
-          visionSession.failureStatus = normalized.status === "image_error" ? "image_error" : "unsupported_format";
+          visionSession.failureStatus = ["image_error", "conversion_failed"].includes(normalized.status) ? "image_error" : "unsupported_format";
           render();
           return;
         }
         visionSession.previewUrl = globalScope.URL?.createObjectURL ? globalScope.URL.createObjectURL(normalized.image) : "";
+        visionSession.phase = "checking";
+        render();
         const provider = await visionProviderFactory();
         if (requestId !== visionRequestId) return;
         const availability = await provider.isAvailable();
@@ -1160,8 +1165,10 @@
         `;
       }
 
-      if (visionSession.phase === "checking" || visionSession.phase === "observing") {
-        const message = visionSession.phase === "checking" ? copy.visionChecking : copy.visionObserving;
+      if (["preparing", "checking", "observing"].includes(visionSession.phase)) {
+        const message = visionSession.phase === "preparing"
+          ? copy.visionPreparing
+          : visionSession.phase === "checking" ? copy.visionChecking : copy.visionObserving;
         return `
           <section class="meal-vision-helper is-active" aria-busy="true" aria-live="polite">
             ${renderVisionPreview()}

@@ -41,7 +41,7 @@ The fact that it is not SaaS is intentional. Its value is in the design of a use
 Latest refinements include:
 
 - a calm, collapsible Meal Composer inside Today for recording multiple optional meals without turning the app into a nutrition dashboard
-- an experimental, optional local Vision helper that proposes visible Meal Type/components for human review before adding anything to the draft
+- an experimental, optional local Vision helper that accepts PNG, JPEG, WebP, HEIC, and HEIF, then proposes visible Meal Type/components for human review before adding anything to the draft
 - separate local Meal records with create, edit, and gentle targeted delete behavior; meal data does not expand `Daily_Log`
 - hybrid portions, optional preparation, first-class condiments, and source-bound sodium ranges with incomplete evidence shown as unknown or partial rather than zero
 - a Dynamic Daily Meal Reflection Panel derived from saved meals only, using recorded-fact language without scores, guilt, or medical targets
@@ -161,7 +161,7 @@ Meal records are stored locally under a separate versioned source and do not bec
 
 For the two human-approved Thai FCD fried-rice references, Meal Composer may offer a compact reference card after matching components are recorded. A suggestion does not change the meal or sodium estimate: the user must explicitly confirm it. The visible value remains a reference per 100 g, not an estimate for the user's whole plate; a conflicting recorded component pauses that reference and safely returns the meal to its component-only or unknown path.
 
-The bounded local Vision prototype can send a user-selected PNG, JPEG, or WebP only to an available Ollama model on this device. Its observations remain temporary until the user reviews them. Applying selected observations adds only accepted, safely mapped values to the existing draft; it does not save the meal, set a named-dish identity, or create sodium evidence. Manual Meal Composer remains available when the provider is absent or a result is rejected.
+The bounded local Vision prototype can send a user-selected PNG, JPEG, WebP, HEIC, or HEIF only to an available Ollama model on this device. HEIC/HEIF is prepared locally into a temporary JPEG first; no image is saved with the meal. Its observations remain temporary until the user reviews them. Applying selected observations adds only accepted, safely mapped values to the existing draft; it does not save the meal, set a named-dish identity, or create sodium evidence. Manual Meal Composer remains available when the provider is absent or a result is rejected.
 
 The Daily Meal Reflection Panel is rebuilt from saved meals whenever the recorded day changes. It says `recorded meals`, never claims that unrecorded food was not eaten, and does not score, diagnose, prescribe, or set a medical sodium target. Meal data is not yet connected to the main Reflection renderer or workbook export/import.
 

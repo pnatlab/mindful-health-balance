@@ -137,8 +137,10 @@ These require separate bounded contracts and regression review.
 
 ## MHB 2.4E Addendum - Bounded Local Vision Review
 
-Meal Composer now contains an experimental, optional local Vision helper after Meal Type and before component discovery. A selected PNG/JPEG/WebP is passed through a provider-neutral image normalizer and sent only to the validated loopback provider. HEIC/HEIF selection fails calmly without draft mutation because the direct browser/Ollama probe did not support it and no conversion dependency is included. The resulting `VisionMealObservation` remains transient and is rendered as a review surface; it never mutates the draft on arrival.
+Meal Composer now contains an experimental, optional local Vision helper after Meal Type and before component discovery. A selected PNG/JPEG/WebP passes through unchanged; HEIC/HEIF is prepared locally into a transient bounded JPEG by the provider-neutral image normalizer before being sent only to the validated loopback provider. The resulting `VisionMealObservation` remains transient and is rendered as a review surface; it never mutates the draft on arrival.
 
 The user may accept or omit safe component suggestions, resolve ambiguous labels through an explicit Food Reference choice, and choose at most one Meal Type suggestion because the current contract remains single-select. Dish text is informational only. Applying the review conservatively adds missing accepted items and fills only an unspecified Meal Type; existing human draft facts, quantities, preparation, condiment knowledge, label, and time win or remain unchanged.
 
 Applying Vision review is not meal save and cannot set `named_dish_id`. Any named-dish candidate is derived later by the existing deterministic helper and still requires its separate confirmation card. Provider errors and invalid output leave the draft untouched and return calmly to normal manual composition.
+
+MHB 2.4F uses a lazy-loaded, vendored MIT HEIC decoder only for HEIC/HEIF input. It is local-only, resizes the normalized JPEG to a maximum 1600 px dimension, and never persists original or normalized image bytes. Conversion failure leaves the draft untouched and returns to manual composition. See `LOCAL_VISION_HEIC_NORMALIZATION.md` for the supported-format, orientation, license, and QA record.

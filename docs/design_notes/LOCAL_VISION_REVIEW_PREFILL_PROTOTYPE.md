@@ -23,9 +23,9 @@ Vision observes and proposes. The human accepts, omits, or resolves mappings. Me
 
 The helper appears as a compact secondary row after Meal Type and before the Food Component library. Manual composition remains fully visible and usable. The action is localized as a gentle request for local AI help rather than an analyzer or chatbot.
 
-The prototype accepts PNG, JPEG, and WebP through a browser file picker. A direct browser/File-to-base64 test with one authorized original HEIC reached local Ollama but returned HTTP 400 `Failed to load image or audio file`; therefore HEIC/HEIF is not sent through production review as if supported. Camera capture remains outside scope. A bounded thumbnail is supplementary and exists only for the transient session.
+The prototype accepts PNG, JPEG, WebP, HEIC, and HEIF through a browser file picker. PNG/JPEG/WebP pass through unchanged. MHB 2.4F added local transient HEIC/HEIF normalization after the direct browser/File-to-base64 test with an authorized original returned HTTP 400 `Failed to load image or audio file`. Camera capture remains outside scope. A bounded thumbnail is supplementary and exists only for the transient session.
 
-`js/mealVisionImageNormalizer.js` is the provider-neutral format boundary. PNG/JPEG/WebP pass through as the same Blob. HEIC/HEIF is classified as requiring local conversion and fails calmly as `unsupported_format` because no approved browser-native conversion path exists. The interface can accept a future injected local converter, but this slice adds no third-party package, bridge, or conversion dependency. The provider receives only a successfully normalized Blob and remains format-agnostic.
+`js/mealVisionImageNormalizer.js` is the provider-neutral format boundary. PNG/JPEG/WebP pass through as the same Blob. HEIC/HEIF is decoded locally by the vendored MIT `@keeratita/heic-converter@0.3.0` browser distribution, rendered to a bounded JPEG Blob, and then passed to the unchanged provider. Native browser decode failed on the authorized iPhone sample, so the converter is lazy-loaded only for HEIC/HEIF. The provider receives only a successfully normalized Blob and remains format-agnostic. See `LOCAL_VISION_HEIC_NORMALIZATION.md` for the asset, license, orientation, and QA record.
 
 Measured local latency requires honest `checking` and `observing` states without fake percentages, countdowns, rewards, or blocked manual draft state.
 
@@ -104,7 +104,7 @@ Browser acceptance covers local provider availability, actual local image observ
 
 ## Known Limitations
 
-- The prototype uses a local file picker only; no camera capture or HEIC conversion.
+- The prototype uses a local file picker only; no camera capture.
 - `gemma3:12b` retains the systematic species and dish-family errors measured in 2.4B.
 - Mapping vocabulary is deliberately small and conservative.
 - There is no cancellation request transport; clearing the UI invalidates a stale response but the local provider request may finish in the background.
