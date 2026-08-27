@@ -28,6 +28,8 @@
       visionAction: "ให้ AI ช่วยมองจากรูป",
       visionLocalNote: "วิเคราะห์ผ่านโมเดลในเครื่องนี้ รูปจะไม่ถูกเก็บไว้กับมื้อ",
       visionPrepareImage: "เตรียมรูปสำหรับ AI",
+      visionRuntimeRequired: "ตัวช่วยจากรูปและการเตรียมรูปต้องเปิดผ่าน Local Launcher ค่ะ",
+      visionRuntimeHelper: "เปิด Start Mindful Health Balance.command แล้วกลับมาที่หน้านี้ได้เลย ส่วนประกอบมื้อเองยังใช้ได้ตามปกติค่ะ",
       visionChooseImage: "เลือกรูปอาหาร",
       visionPreparing: "กำลังเตรียมรูปในเครื่องนี้…",
       visionChecking: "กำลังตรวจว่าโมเดลในเครื่องพร้อมไหม…",
@@ -184,6 +186,8 @@
       visionAction: "Let local AI look at a photo",
       visionLocalNote: "Analyzed by a model on this device. The photo is not stored with the meal.",
       visionPrepareImage: "Prepare a photo for AI",
+      visionRuntimeRequired: "The photo helper and image preparation need the Local Launcher.",
+      visionRuntimeHelper: "Open Start Mindful Health Balance.command, then return here. Manual meal composition is still available.",
       visionChooseImage: "Choose a meal photo",
       visionPreparing: "Preparing the photo on this device…",
       visionChecking: "Checking whether the local model is ready…",
@@ -340,6 +344,8 @@
       visionAction: "让本机 AI 帮忙看看照片",
       visionLocalNote: "由这台设备上的模型分析；照片不会随餐食保存。",
       visionPrepareImage: "为 AI 准备照片",
+      visionRuntimeRequired: "照片助手和图片准备需要通过 Local Launcher 打开。",
+      visionRuntimeHelper: "打开 Start Mindful Health Balance.command 后再回到这里。手动组合餐食仍可正常使用。",
       visionChooseImage: "选择餐食照片",
       visionPreparing: "正在这台设备上准备照片…",
       visionChecking: "正在检查本机模型是否可用…",
@@ -876,6 +882,8 @@
     const visionReview = options.visionReview || globalScope.MHBMealVisionReview || null;
     const visionProviderFactory = options.visionProviderFactory || null;
     const imagePrepBridgeFactory = options.imagePrepBridgeFactory || globalScope.MHBImagePrepBridge?.createImagePrepBridge || null;
+    const localRuntimeGuard = options.localRuntimeGuard || globalScope.MHBLocalRuntimeGuard || null;
+    const runtimeEnvironment = localRuntimeGuard?.detectLocalRuntime?.(globalScope.location) || { isFileMode: false, supportsVisionAndImagePrep: true };
     const confirmAction = options.confirmAction || ((message) => globalScope.confirm(message));
     const scheduleFrame = options.scheduleFrame || ((callback) => {
       if (typeof globalScope.requestAnimationFrame === "function") return globalScope.requestAnimationFrame(callback);
@@ -1033,6 +1041,7 @@
     }
 
     function openImagePrep() {
+      if (!runtimeEnvironment.supportsVisionAndImagePrep) return;
       if (!imagePrepBridgeFactory) return;
       if (!imagePrepBridge) {
         imagePrepBridge = imagePrepBridgeFactory({
@@ -1206,6 +1215,17 @@
     function renderVisionHelper() {
       const copy = getText(language);
       if (visionSession.phase === "idle") {
+        if (!runtimeEnvironment.supportsVisionAndImagePrep) {
+          return `
+            <section class="meal-vision-helper is-attention" role="alert" aria-labelledby="mealVisionRuntimeTitle">
+              <span class="meal-vision-icon" aria-hidden="true">📷</span>
+              <div class="meal-vision-intro">
+                <h3 id="mealVisionRuntimeTitle">${escapeHtml(copy.visionRuntimeRequired)}</h3>
+                <p>${escapeHtml(copy.visionRuntimeHelper)}</p>
+              </div>
+            </section>
+          `;
+        }
         return `
           <section class="meal-vision-helper" aria-labelledby="mealVisionTitle">
             <span class="meal-vision-icon" aria-hidden="true">📷</span>

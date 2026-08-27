@@ -17,6 +17,8 @@
       standalone: "หน้านี้ต้องเปิดจาก Meal Composer เพื่อส่งรูปกลับไปยังมื้อที่กำลังประกอบ",
       previewAlt: "รูปอาหารที่เตรียมไว้ชั่วคราวสำหรับตัวช่วยจากรูป",
       privacy: "รูปนี้เตรียมในเครื่องและจะไม่ถูกเก็บไว้กับมื้อ",
+      runtimeRequired: "การเตรียมรูปต้องเปิดผ่าน Local Launcher ค่ะ",
+      runtimeHelper: "เปิด Start Mindful Health Balance.command แล้วลองอีกครั้ง",
       local: "LOCAL IMAGE PREPARATION"
     }),
     en: Object.freeze({
@@ -35,6 +37,8 @@
       standalone: "Open this page from Meal Composer to return a prepared image to the meal draft.",
       previewAlt: "Meal photo prepared temporarily for the photo helper",
       privacy: "This image is prepared on this device and is not stored with the meal.",
+      runtimeRequired: "Image preparation needs the Local Launcher.",
+      runtimeHelper: "Open Start Mindful Health Balance.command, then try again.",
       local: "LOCAL IMAGE PREPARATION"
     }),
     zh: Object.freeze({
@@ -53,6 +57,8 @@
       standalone: "请从 Meal Composer 打开此页面，才能把准备好的图片交回餐食草稿。",
       previewAlt: "为照片助手临时准备的餐食照片",
       privacy: "图片仅在这台设备上准备，不会随餐食保存。",
+      runtimeRequired: "图片准备需要通过 Local Launcher 打开。",
+      runtimeHelper: "打开 Start Mindful Health Balance.command 后再试一次。",
       local: "LOCAL IMAGE PREPARATION"
     })
   });
@@ -84,12 +90,14 @@
     const root = options.root;
     const normalizer = options.normalizer || globalScope.MHBMealVisionImageNormalizer;
     const bridge = options.bridge || globalScope.MHBImagePrepBridge;
+    const localRuntimeGuard = options.localRuntimeGuard || globalScope.MHBLocalRuntimeGuard;
     const windowRef = options.windowRef || globalScope;
     const locationRef = options.locationRef || windowRef.location;
     if (!root || !normalizer || !bridge) return null;
 
     const query = getQueryOptions(locationRef);
     const copy = TEXT[query.language];
+    const runtimeEnvironment = localRuntimeGuard?.detectLocalRuntime?.(locationRef) || { supportsVisionAndImagePrep: true };
     const requestFrame = options.requestFrame || ((callback) => windowRef.requestAnimationFrame?.(callback) || windowRef.setTimeout(callback, 0));
     let requestId = 0;
     let previewUrl = "";
@@ -105,6 +113,7 @@
       const diagnostics = prepared?.diagnostics || {};
       const ready = phase === "ready" && prepared?.image;
       const failure = phase === "failure";
+      const runtimeBlocked = !runtimeEnvironment.supportsVisionAndImagePrep;
       root.innerHTML = `
         <main class="image-prep-shell" data-image-prep-phase="${phase}">
           <section class="image-prep-card" aria-labelledby="imagePrepTitle" aria-busy="${phase === "preparing"}">
@@ -120,10 +129,10 @@
               </div>
               <p class="image-prep-use-helper">${copy.useHelper}</p>
             ` : ""}
-            <p class="image-prep-status" role="status" aria-live="polite">${phase === "preparing" ? copy.preparing : failure ? copy.failure : !query.token ? copy.standalone : ""}</p>
-            <div class="image-prep-actions">
+            <p class="image-prep-status" role="status" aria-live="polite">${runtimeBlocked ? `${copy.runtimeRequired} ${copy.runtimeHelper}` : phase === "preparing" ? copy.preparing : failure ? copy.failure : !query.token ? copy.standalone : ""}</p>
+            <div class="image-prep-actions"${runtimeBlocked ? " aria-disabled=\"true\"" : ""}>
               ${ready ? `<button type="button" class="primary-button" data-image-prep-use>${copy.use}</button>` : ""}
-              <label class="ghost-button image-prep-file-action"><span>${ready ? copy.replace : copy.select}</span><input type="file" data-image-prep-file accept="image/png,image/jpeg,image/webp,image/heic,image/heif,.heic,.heif"></label>
+              ${runtimeBlocked ? "" : `<label class="ghost-button image-prep-file-action"><span>${ready ? copy.replace : copy.select}</span><input type="file" data-image-prep-file accept="image/png,image/jpeg,image/webp,image/heic,image/heif,.heic,.heif"></label>`}
               <button type="button" class="meal-text-button" data-image-prep-cancel>${copy.cancel}</button>
             </div>
           </section>
@@ -147,6 +156,7 @@
     }
 
     async function prepareImage(file) {
+      if (!runtimeEnvironment.supportsVisionAndImagePrep) return;
       requestId += 1;
       const activeRequestId = requestId;
       revokePreview();
