@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import {
   createLocalOllamaVisionProvider,
   isLoopbackEndpoint,
@@ -56,5 +57,8 @@ assert.equal(transientResult.status, "success");
 assert.equal(transientResult.observation.schema_version, "mhb.vision-meal-observation/v1");
 assert.equal(JSON.stringify(transientResult).includes("images"), false);
 assert.equal(JSON.stringify(transientResult).includes("aW1hZ2UgYnl0ZXM="), false);
+
+const providerSource = fs.readFileSync(new URL("../js/localVisionProvider.mjs", import.meta.url), "utf8");
+assert.equal(/heic|heif|image\/jpeg/i.test(providerSource), false, "the provider remains format-neutral");
 
 console.log("Local vision provider tests passed.");

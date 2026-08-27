@@ -11,13 +11,14 @@
     button, input { font: inherit; margin: 6px 0; }
     button { padding: 8px 12px; }
     pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: 14px; border: 1px solid color-mix(in srgb, currentColor 25%, transparent); border-radius: 8px; }
+    #normalizedPreview { display: none; width: min(100%, 360px); max-height: 420px; object-fit: contain; border-radius: 8px; }
     .notice { color: #5b45a7; }
   </style>
 </head>
 <body>
   <h1>MHB Local Vision Browser Probe</h1>
   <p class="notice">Experimental only. This page does not change Meal Composer, save a meal, or route sodium evidence.</p>
-  <p>Selected files are sent only to the configured local Ollama endpoint for this request. Nothing is persisted by this page.</p>
+  <p>Files stay local. Only the explicit transient-observation action sends a normalized image to the configured local Ollama endpoint; nothing is persisted by this page.</p>
   <fieldset>
     <label>Loopback endpoint <input id="endpoint" value="http://127.0.0.1:11434" size="32"></label><br>
     <label>Model <input id="model" value="gemma3:12b"></label><br>
@@ -25,14 +26,68 @@
   </fieldset>
   <fieldset>
     <label>Authorized local image <input id="image" type="file" accept="image/png,image/jpeg,image/webp,image/heic,image/heif,.heic,.heif"></label><br>
+    <button id="decode" type="button">Check native image decode</button>
+    <button id="normalize" type="button">Normalize image locally</button>
     <button id="observe" type="button">Run transient observation</button>
   </fieldset>
+  <img id="normalizedPreview" alt="Locally normalized diagnostic preview">
   <pre id="result" role="status" aria-live="polite">No request made.</pre>
+  <script src="../../js/mealVisionImageNormalizer.js"></script>
   <script type="module">
     import { createLocalOllamaVisionProvider } from "./localVisionProvider.mjs";
     const result = document.querySelector("#result");
+    const normalizedPreview = document.querySelector("#normalizedPreview");
+    let normalizedPreviewUrl = "";
     const provider = () => createLocalOllamaVisionProvider({ endpoint: document.querySelector("#endpoint").value, model: document.querySelector("#model").value });
     document.querySelector("#check").addEventListener("click", async () => { result.textContent = JSON.stringify(await provider().isAvailable(), null, 2); });
+    document.querySelector("#decode").addEventListener("click", async () => {
+      const image = document.querySelector("#image").files[0];
+      const probe = { file: image ? { name: image.name, type: image.type, size: image.size } : null };
+      if (!image) {
+        result.textContent = JSON.stringify(probe, null, 2);
+        return;
+      }
+      if (typeof createImageBitmap === "function") {
+        const startedAt = performance.now();
+        try {
+          const bitmap = await createImageBitmap(image);
+          probe.create_image_bitmap = { ok: true, width: bitmap.width, height: bitmap.height, latency_ms: Math.round(performance.now() - startedAt) };
+          bitmap.close();
+        } catch (error) {
+          probe.create_image_bitmap = { ok: false, error: error?.name || "decode_failed", latency_ms: Math.round(performance.now() - startedAt) };
+        }
+      } else {
+        probe.create_image_bitmap = { ok: false, error: "api_unavailable" };
+      }
+      const objectUrl = URL.createObjectURL(image);
+      const preview = new Image();
+      const startedAt = performance.now();
+      try {
+        preview.src = objectUrl;
+        await preview.decode();
+        probe.image_decode = { ok: true, width: preview.naturalWidth, height: preview.naturalHeight, latency_ms: Math.round(performance.now() - startedAt) };
+      } catch (error) {
+        probe.image_decode = { ok: false, error: error?.name || "decode_failed", latency_ms: Math.round(performance.now() - startedAt) };
+      } finally {
+        URL.revokeObjectURL(objectUrl);
+      }
+      result.textContent = JSON.stringify(probe, null, 2);
+    });
+    document.querySelector("#normalize").addEventListener("click", async () => {
+      const image = document.querySelector("#image").files[0];
+      const normalized = await window.MHBMealVisionImageNormalizer.normalizeVisionImage(image);
+      if (normalizedPreviewUrl) URL.revokeObjectURL(normalizedPreviewUrl);
+      normalizedPreviewUrl = normalized.status === "ready" ? URL.createObjectURL(normalized.image) : "";
+      normalizedPreview.src = normalizedPreviewUrl;
+      normalizedPreview.style.display = normalizedPreviewUrl ? "block" : "none";
+      result.textContent = JSON.stringify({
+        status: normalized.status,
+        source_format: normalized.sourceFormat,
+        normalized_format: normalized.normalizedFormat,
+        converted: normalized.converted,
+        diagnostics: normalized.diagnostics
+      }, null, 2);
+    });
     document.querySelector("#observe").addEventListener("click", async () => {
       const image = document.querySelector("#image").files[0];
       result.textContent = JSON.stringify(await provider().observeMeal(image), null, 2);

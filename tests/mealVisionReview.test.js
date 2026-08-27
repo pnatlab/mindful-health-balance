@@ -93,7 +93,7 @@ assert.equal(candidateModel.getNamedDishCandidates()[0]?.candidate_id, "fried_ri
 
 for (const language of ["th", "en", "zh"]) {
   const copy = mealUI.TEXT[language];
-  for (const key of ["visionAction", "visionObserving", "visionReviewTitle", "visionApply", "visionUnavailable", "visionInvalid"]) {
+  for (const key of ["visionAction", "visionPreparing", "visionObserving", "visionReviewTitle", "visionApply", "visionUnavailable", "visionInvalid", "visionImageError"]) {
     assert.ok(copy[key], `${language} copy must include ${key}`);
   }
 }
