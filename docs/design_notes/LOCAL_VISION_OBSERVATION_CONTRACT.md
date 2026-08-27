@@ -43,7 +43,7 @@ Vision must never set `named_dish_id`, select Thai FCD evidence, produce sodium/
   provider: {
     provider_id: "ollama-local",
     model_id: "gemma3:12b",
-    strategy_id: "parser-lines-v2",
+    strategy_id: "parser-lines-v3",
     endpoint_scope: "localhost"
   },
   status: "valid", // valid | invalid
@@ -172,7 +172,7 @@ The future reference adapter is `OllamaGemmaVisionProvider`, not a permanent cor
 | Reference model | `gemma3:12b` |
 | Endpoint | Explicit `http://127.0.0.1:11434` or `http://localhost:11434` only |
 | Request | Non-streaming local `/api/generate` with image bytes and constrained prompt |
-| Strategy | `parser-lines-v2`-equivalent normalization |
+| Strategy | `parser-lines-v3` constrained normalization; v2 remains the measured baseline |
 | Temperature | 0 |
 | Actionable output | Only after deterministic v1 validation |
 

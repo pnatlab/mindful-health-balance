@@ -17,6 +17,9 @@ MEAL_TYPES: comma-separated values from ${[...MEAL_TYPES].join(", ")}
 UNCERTAIN: comma-separated visually uncertain observations
 NOT_OBSERVABLE: comma-separated image limits using only sauce identity, seasoning amount, or cooking method`;
 
+export const PARSER_LINES_V3_PROMPT = `${PARSER_LINES_V2_PROMPT}
+Prefer a broad visible meal family over an exact named dish when the image does not clearly support that specificity. For animal protein, name pork, chicken, beef, or a fish species only when the image itself makes that species visually unmistakable. Otherwise use the broad visible label meat, fish, seafood, or animal protein in COMPONENTS and write animal protein species in UNCERTAIN. Do not list a specific species and animal protein species uncertainty together. In NOT_OBSERVABLE, write only zero or more exact tokens from this list: sauce_identity, seasoning_amount, cooking_method. Never use spaces, prose, synonyms, or any other token there; use unknown when none applies.`;
+
 export function isLoopbackEndpoint(value) {
   try {
     const url = new URL(value);
@@ -134,7 +137,7 @@ export function createLocalOllamaVisionProvider(options = {}) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: timeout.signal,
-        body: JSON.stringify({ model, prompt: PARSER_LINES_V2_PROMPT, images: [await imageToBase64(image)], stream: false, options: { temperature: 0 } })
+        body: JSON.stringify({ model, prompt: PARSER_LINES_V3_PROMPT, images: [await imageToBase64(image)], stream: false, options: { temperature: 0 } })
       });
       const body = await response.json();
       if (!response.ok || body.error) return createProviderFailure("provider_unreachable", body.error || `HTTP ${response.status}`);
@@ -151,7 +154,7 @@ export function createLocalOllamaVisionProvider(options = {}) {
         observation: Object.freeze({
           schema_version: "mhb.vision-meal-observation/v1",
           observation_id: `transient-${Date.now()}`,
-          provider: Object.freeze({ provider_id: "ollama-local", model_id: model, strategy_id: "parser-lines-v2", endpoint_scope: "localhost" }),
+          provider: Object.freeze({ provider_id: "ollama-local", model_id: model, strategy_id: "parser-lines-v3", endpoint_scope: "localhost" }),
           status: "valid",
           ...proposal,
           validation,

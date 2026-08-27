@@ -33,7 +33,7 @@ Measured local latency requires honest `checking` and `observing` states without
 
 `js/localVisionProvider.mjs` is the single provider source of truth. The 2.4D diagnostic import under `tools/browser_vision_probe/` re-exports that module rather than retaining a copy.
 
-The provider remains lazy and optional. It is dynamically imported only after the user selects a supported image. It allows loopback HTTP endpoints only, uses local Ollama with `gemma3:12b`, parser-lines-v2, temperature `0`, deterministic validation, and transient diagnostics. MHB startup and manual Meal Composer do not require Ollama, Gemma, Python, or a bridge.
+The provider remains lazy and optional. It is dynamically imported only after the user selects a supported image. It allows loopback HTTP endpoints only, uses local Ollama with `gemma3:12b`, parser-lines-v3, temperature `0`, deterministic validation, and transient diagnostics. MHB startup and manual Meal Composer do not require Ollama, Gemma, Python, or a bridge.
 
 ## Review Semantics
 

@@ -1,5 +1,6 @@
 import {
   PARSER_LINES_V2_PROMPT,
+  PARSER_LINES_V3_PROMPT,
   normalizeEndpoint,
   parseParserLinesV2,
   validateVisionObservation
@@ -17,8 +18,8 @@ export const RESOLUTION_TIERS = Object.freeze([
 
 export const PROMPTS = Object.freeze({
   p0_current: PARSER_LINES_V2_PROMPT,
-  p1_broad_structure: `${PARSER_LINES_V2_PROMPT}\nPrefer a broad visible meal family over an exact named dish when the image does not clearly support that specificity.`,
-  p2_protein_uncertainty: `${PARSER_LINES_V2_PROMPT}\nWhen animal-protein species is not visually clear, put the ambiguity in UNCERTAIN instead of selecting a species.`
+  p3_generic_species_restraint: `${PARSER_LINES_V2_PROMPT}\nPrefer a broad visible meal family over an exact named dish when the image does not clearly support that specificity. For animal protein, name pork, chicken, beef, or a fish species only when the image itself makes that species visually unmistakable. Otherwise use the broad visible label meat, fish, seafood, or animal protein in COMPONENTS and write animal protein species in UNCERTAIN. Do not list a specific species and animal protein species uncertainty together.`,
+  p4_strict_not_observable: PARSER_LINES_V3_PROMPT
 });
 
 function withTimeout(timeoutMs) {
