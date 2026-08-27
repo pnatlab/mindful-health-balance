@@ -9,7 +9,7 @@ assert.match(imagePrepUI.formatBytes(1024 * 1024), /1\.00 MB/);
 
 for (const language of imagePrepUI.SUPPORTED_LANGUAGES) {
   const copy = imagePrepUI.TEXT[language];
-  for (const key of ["title", "select", "preparing", "ready", "use", "replace", "cancel", "failure", "privacy"]) {
+  for (const key of ["title", "select", "preparing", "ready", "use", "replace", "cancel", "failure", "privacy", "runtimeRequired", "runtimeHelper"]) {
     assert.equal(typeof copy[key], "string", `${language} has ${key} copy`);
   }
 }

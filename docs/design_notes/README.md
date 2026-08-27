@@ -94,6 +94,7 @@ Runtime architecture, modularization planning, and implementation-safety notes f
 - [HEIC_INPUT_RELIABILITY_LARGE_IPHONE_PHOTOS.md](HEIC_INPUT_RELIABILITY_LARGE_IPHONE_PHOTOS.md) - MHB 2.4I local HEIC reliability audit: all nine authorized corpus images, including 24.47-megapixel iPhone photos, reached the fixed transient JPEG target; diagnostics and preparation responsiveness were tightened without changing Vision authority.
 - [LOCAL_VISION_V1_FIELD_ACCEPTANCE.md](LOCAL_VISION_V1_FIELD_ACCEPTANCE.md) - MHB 2.4J large-HEIC field acceptance: two authorized iPhone photos reached validated human review and conservative draft merge; Vision v1 is ready for local field use with known latency, model, and decoder constraints.
 - [LOCAL_IMAGE_PREPARATION_PAGE_BOUNDARY.md](LOCAL_IMAGE_PREPARATION_PAGE_BOUNDARY.md) - MHB 2.5A locks the separate local image-preparation page, its transient same-origin handoff, and its strict separation from Vision, meal state, and evidence.
+- [LOCAL_LAUNCHER_RUNTIME_GUARD.md](LOCAL_LAUNCHER_RUNTIME_GUARD.md) - MHB 2.5B defines the macOS one-click loopback launcher, safe port reuse/fallback, and the `file://` guard for optional image/Vision capabilities.
 
 MHB 2.3F sequence: 2.3F-R research -> 2.3F-C contract locked -> 2.3F-D Thai Named-Dish Evidence Pilot -> Human Approval -> 2.3F-I bounded runtime implementation for two approved references.
 
