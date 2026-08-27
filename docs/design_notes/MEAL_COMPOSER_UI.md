@@ -144,3 +144,9 @@ The user may accept or omit safe component suggestions, resolve ambiguous labels
 Applying Vision review is not meal save and cannot set `named_dish_id`. Any named-dish candidate is derived later by the existing deterministic helper and still requires its separate confirmation card. Provider errors and invalid output leave the draft untouched and return calmly to normal manual composition.
 
 MHB 2.4F uses a lazy-loaded, vendored MIT HEIC decoder only for HEIC/HEIF input. It is local-only, resizes the normalized JPEG to a maximum 1600 px dimension, and never persists original or normalized image bytes. Conversion failure leaves the draft untouched and returns to manual composition. See `LOCAL_VISION_HEIC_NORMALIZATION.md` for the supported-format, orientation, license, and QA record.
+
+## MHB 2.5A Addendum - Separate Local Image Preparation
+
+Meal Composer now also offers a secondary `Prepare a photo for AI` action. It opens a same-origin preparation page in a separate window so the unsaved composer draft remains in place. That page accepts one JPEG, PNG, WebP, HEIC, or HEIF image, uses the existing local normalizer to produce a temporary 1600 px JPEG at quality 0.90, and previews the result before the user explicitly returns it.
+
+The return is a token- and origin-validated transient Blob handoff only. It does not save an image, contact a provider from the preparation page, modify the meal draft, create observations, set `named_dish_id`, or route sodium. Once returned, the existing optional Vision flow still performs its own availability check, observation, validation, and human review before any ordinary draft prefill can occur. Cancel, decode failure, and page reload preserve the Meal Composer draft and may discard the transient image.

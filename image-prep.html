@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prepare a photo | Mindful Health Balance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="js/mealVisionImageNormalizer.js"></script>
+  <script defer src="js/imagePrep/imagePrepBridge.js"></script>
+  <script defer src="js/imagePrep/imagePrepUI.js"></script>
+  <script defer>
+    window.addEventListener("DOMContentLoaded", () => {
+      window.MHBImagePrepUI?.createImagePrepUI({ root: document.querySelector("#imagePrepRoot") });
+    });
+  </script>
+</head>
+<body class="image-prep-page">
+  <div id="imagePrepRoot"></div>
+</body>
+</html>

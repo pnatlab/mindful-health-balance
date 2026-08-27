@@ -18,6 +18,23 @@ async function run() {
     assert.equal(result.converted, false);
   }
 
+  const preparedPng = await normalizer.normalizeVisionImage(png, {
+    forceJpeg: true,
+    rasterPreparer: async (input, options) => {
+      assert.equal(input, png, "the original raster file remains untouched");
+      assert.equal(options.maxDimension, 1600);
+      assert.equal(options.quality, 0.9);
+      return {
+        blob: namedBlob("prepared.jpg", "image/jpeg"),
+        diagnostics: { source_width: 3200, source_height: 2400, normalized_width: 1600, normalized_height: 1200 }
+      };
+    }
+  });
+  assert.equal(preparedPng.status, "ready");
+  assert.equal(preparedPng.normalizedFormat, "image/jpeg");
+  assert.equal(preparedPng.converted, true);
+  assert.equal(preparedPng.diagnostics.normalized_width, 1600);
+
   const heic = namedBlob("meal.HEIC", "image/heic");
   assert.equal(normalizer.getVisionImageCapability(heic).status, "requires_local_conversion");
   const mimeLessHeif = namedBlob("meal.heif", "");
