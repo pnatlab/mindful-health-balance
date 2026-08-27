@@ -83,8 +83,11 @@ Runtime architecture, modularization planning, and implementation-safety notes f
 - [MEAL_SODIUM_ESTIMATION_CONTRACT.md](MEAL_SODIUM_ESTIMATION_CONTRACT.md) - Locked MHB 2.3F contract: one evidence-routed base estimate per meal, Meal Type context only, traceable provenance, and visible uncertainty. A bounded two-dish implementation now follows it.
 - [THAI_NAMED_DISH_SODIUM_EVIDENCE_PILOT.md](THAI_NAMED_DISH_SODIUM_EVIDENCE_PILOT.md) - MHB 2.3F-D evidence pilot: two Thai FCD fried-rice references are human-approved and implemented at a fixed 100-g source basis; green curry and incomplete identities remain outside runtime.
 - [MEAL_COMPOSER_UI.md](MEAL_COMPOSER_UI.md) - Defines the MHB 2.3 Today workspace, illustrated Meal Type cards, progressive component discovery, explicit named-dish confirmation, symbolic draft/saved-meal presence, dynamic recorded-meal panel, responsive presentation, and deferred Reflection/workbook boundaries.
+- [LOCAL_VISION_MEAL_CAPTURE_FEASIBILITY.md](LOCAL_VISION_MEAL_CAPTURE_FEASIBILITY.md) - MHB 2.4A local-only feasibility probe for vision-proposed meal observations; it documents the optional-provider boundary, local environment findings, corpus requirement, and no-evidence-routing rule.
 
 MHB 2.3F sequence: 2.3F-R research -> 2.3F-C contract locked -> 2.3F-D Thai Named-Dish Evidence Pilot -> Human Approval -> 2.3F-I bounded runtime implementation for two approved references.
+
+MHB 2.4 experimental sequence: 2.4A local vision feasibility probe -> authorized local corpus and measured observation pilot -> human review -> any separately bounded optional-provider prototype.
 
 ## 99 Stabilization
 
