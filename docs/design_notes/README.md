@@ -89,10 +89,11 @@ Runtime architecture, modularization planning, and implementation-safety notes f
 - [BROWSER_LOCAL_OLLAMA_INTEGRATION_PROBE.md](BROWSER_LOCAL_OLLAMA_INTEGRATION_PROBE.md) - MHB 2.4D isolated browser-to-loopback-Ollama probe; it confirms the local HTTP path, strict transient validation, endpoint allowlisting, and manual fallback boundary.
 - [LOCAL_VISION_REVIEW_PREFILL_PROTOTYPE.md](LOCAL_VISION_REVIEW_PREFILL_PROTOTYPE.md) - MHB 2.4E bounded local Vision review prototype: validated observations stay transient until per-field human review, then merge conservatively into the Meal Composer draft without saving or routing evidence.
 - [LOCAL_VISION_HEIC_NORMALIZATION.md](LOCAL_VISION_HEIC_NORMALIZATION.md) - MHB 2.4F local-only HEIC/HEIF normalization: a vendored MIT WASM decoder prepares transient JPEG Blobs before the unchanged Vision review flow.
+- [VISION_OBSERVATION_QUALITY_IMAGE_AUDIT.md](VISION_OBSERVATION_QUALITY_IMAGE_AUDIT.md) - MHB 2.4G controlled local audit: current HEIC normalization and 1600px/0.90 preprocessing are sufficient in the pilot; model visual errors and one strict-validation failure need targeted follow-up.
 
 MHB 2.3F sequence: 2.3F-R research -> 2.3F-C contract locked -> 2.3F-D Thai Named-Dish Evidence Pilot -> Human Approval -> 2.3F-I bounded runtime implementation for two approved references.
 
-MHB 2.4 experimental sequence: 2.4A local vision feasibility probe -> 2.4B authorized local corpus and measured observation pilot -> 2.4C contract and optional-provider architecture lock -> 2.4D browser-to-local-Ollama integration probe -> 2.4E bounded vision review and Meal Composer prefill prototype -> 2.4F local HEIC/HEIF normalization -> human review before any stable capability decision.
+MHB 2.4 experimental sequence: 2.4A local vision feasibility probe -> 2.4B authorized local corpus and measured observation pilot -> 2.4C contract and optional-provider architecture lock -> 2.4D browser-to-local-Ollama integration probe -> 2.4E bounded vision review and Meal Composer prefill prototype -> 2.4F local HEIC/HEIF normalization -> 2.4G controlled observation-quality and image-input audit -> 2.4H targeted prompt/strict-validation refinement before any stable capability decision.
 
 ## 99 Stabilization
 

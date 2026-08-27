@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MHB Vision Quality Audit</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { max-width: 780px; margin: 40px auto; padding: 0 20px; line-height: 1.5; }
+    fieldset { margin: 20px 0; padding: 16px; border-radius: 8px; }
+    button, input, select { font: inherit; margin: 6px 0; }
+    button { padding: 8px 12px; }
+    pre { max-height: 48vh; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; padding: 14px; border: 1px solid color-mix(in srgb, currentColor 25%, transparent); border-radius: 8px; }
+    .notice { color: #5b45a7; }
+  </style>
+</head>
+<body>
+  <h1>MHB Vision Quality Audit</h1>
+  <p class="notice">Local experiment only. Results are transient, do not modify Meal Composer, and never save image bytes or raw model prose.</p>
+  <fieldset>
+    <label>Authorized local images <input id="images" type="file" multiple accept="image/png,image/jpeg,image/webp,image/heic,image/heif,.heic,.heif"></label><br>
+    <label>Prompt <select id="prompt"><option value="p0_current">P0 current parser-lines-v2</option><option value="p1_broad_structure">P1 broad visible structure</option><option value="p2_protein_uncertainty">P2 protein uncertainty</option></select></label><br>
+    <label>JPEG quality <select id="quality"><option value="0.9">0.90</option><option value="0.85">0.85</option><option value="0.95">0.95</option></select></label><br>
+    <label>Resolution scope <select id="tierScope"><option value="all">All four tiers</option><option value="v1_current_1600">1600px only</option></select></label><br>
+    <button id="run" type="button">Run resolution tiers</button>
+  </fieldset>
+  <pre id="result" role="status" aria-live="polite">No request made.</pre>
+  <script src="../../js/mealVisionImageNormalizer.js"></script>
+  <script type="module">
+    import { RESOLUTION_TIERS, observeNormalizedImage, publicResult } from "./qualityAudit.mjs";
+    const result = document.querySelector("#result");
+    const run = document.querySelector("#run");
+    const images = document.querySelector("#images");
+    const prompt = document.querySelector("#prompt");
+    const quality = document.querySelector("#quality");
+    const tierScope = document.querySelector("#tierScope");
+    window.__MHBVisionQualityAuditResults = [];
+
+    run.addEventListener("click", async () => {
+      const files = [...images.files];
+      if (!files.length) {
+        result.textContent = "Choose authorized local images first.";
+        return;
+      }
+      run.disabled = true;
+      const results = [];
+      try {
+        for (const file of files) {
+          const tiers = tierScope.value === "all" ? RESOLUTION_TIERS : RESOLUTION_TIERS.filter((tier) => tier.id === tierScope.value);
+          for (const tier of tiers) {
+            result.textContent = `Preparing ${file.name} at ${tier.maxDimension}px...`;
+            const normalization = await window.MHBMealVisionImageNormalizer.normalizeVisionImage(file, { maxDimension: tier.maxDimension, quality: Number(quality.value) });
+            const observationResult = normalization.status === "ready"
+              ? await observeNormalizedImage(normalization.image, { promptId: prompt.value })
+              : { status: normalization.status, observation: null, validation: null, diagnostics: {} };
+            results.push(publicResult({ file: file.name, tier, quality: Number(quality.value), promptId: prompt.value, normalization, observationResult }));
+            result.textContent = JSON.stringify(results, null, 2);
+          }
+        }
+      } finally {
+        window.__MHBVisionQualityAuditResults = results;
+        run.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
