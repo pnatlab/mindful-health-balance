@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MHB Local Vision Browser Probe</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { max-width: 720px; margin: 48px auto; padding: 0 20px; line-height: 1.5; }
+    fieldset { margin: 20px 0; padding: 16px; border-radius: 8px; }
+    button, input { font: inherit; margin: 6px 0; }
+    button { padding: 8px 12px; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: 14px; border: 1px solid color-mix(in srgb, currentColor 25%, transparent); border-radius: 8px; }
+    .notice { color: #5b45a7; }
+  </style>
+</head>
+<body>
+  <h1>MHB Local Vision Browser Probe</h1>
+  <p class="notice">Experimental only. This page does not change Meal Composer, save a meal, or route sodium evidence.</p>
+  <p>Selected files are sent only to the configured local Ollama endpoint for this request. Nothing is persisted by this page.</p>
+  <fieldset>
+    <label>Loopback endpoint <input id="endpoint" value="http://127.0.0.1:11434" size="32"></label><br>
+    <label>Model <input id="model" value="gemma3:12b"></label><br>
+    <button id="check" type="button">Check provider</button>
+  </fieldset>
+  <fieldset>
+    <label>Authorized local image <input id="image" type="file" accept="image/png,image/jpeg,image/webp"></label><br>
+    <button id="observe" type="button">Run transient observation</button>
+  </fieldset>
+  <pre id="result" role="status" aria-live="polite">No request made.</pre>
+  <script type="module">
+    import { createLocalOllamaVisionProvider } from "./localVisionProvider.mjs";
+    const result = document.querySelector("#result");
+    const provider = () => createLocalOllamaVisionProvider({ endpoint: document.querySelector("#endpoint").value, model: document.querySelector("#model").value });
+    document.querySelector("#check").addEventListener("click", async () => { result.textContent = JSON.stringify(await provider().isAvailable(), null, 2); });
+    document.querySelector("#observe").addEventListener("click", async () => {
+      const image = document.querySelector("#image").files[0];
+      result.textContent = JSON.stringify(await provider().observeMeal(image), null, 2);
+    });
+  </script>
+</body>
+</html>
