@@ -27,6 +27,7 @@
       mealTypeHelper: "เลือกจากที่เห็นหรือจำได้ ไม่ต้องรู้สูตรทั้งหมด",
       visionAction: "ให้ AI ช่วยมองจากรูป",
       visionLocalNote: "วิเคราะห์ผ่านโมเดลในเครื่องนี้ รูปจะไม่ถูกเก็บไว้กับมื้อ",
+      visionPrepareImage: "เตรียมรูปสำหรับ AI",
       visionChooseImage: "เลือกรูปอาหาร",
       visionPreparing: "กำลังเตรียมรูปในเครื่องนี้…",
       visionChecking: "กำลังตรวจว่าโมเดลในเครื่องพร้อมไหม…",
@@ -182,6 +183,7 @@
       mealTypeHelper: "Choose what you recognize. You do not need the full recipe.",
       visionAction: "Let local AI look at a photo",
       visionLocalNote: "Analyzed by a model on this device. The photo is not stored with the meal.",
+      visionPrepareImage: "Prepare a photo for AI",
       visionChooseImage: "Choose a meal photo",
       visionPreparing: "Preparing the photo on this device…",
       visionChecking: "Checking whether the local model is ready…",
@@ -337,6 +339,7 @@
       mealTypeHelper: "按看见或记得的样子选择，不需要知道完整食谱。",
       visionAction: "让本机 AI 帮忙看看照片",
       visionLocalNote: "由这台设备上的模型分析；照片不会随餐食保存。",
+      visionPrepareImage: "为 AI 准备照片",
       visionChooseImage: "选择餐食照片",
       visionPreparing: "正在这台设备上准备照片…",
       visionChecking: "正在检查本机模型是否可用…",
@@ -872,6 +875,7 @@
     const visionImageNormalizer = options.visionImageNormalizer || globalScope.MHBMealVisionImageNormalizer || null;
     const visionReview = options.visionReview || globalScope.MHBMealVisionReview || null;
     const visionProviderFactory = options.visionProviderFactory || null;
+    const imagePrepBridgeFactory = options.imagePrepBridgeFactory || globalScope.MHBImagePrepBridge?.createImagePrepBridge || null;
     const confirmAction = options.confirmAction || ((message) => globalScope.confirm(message));
     const scheduleFrame = options.scheduleFrame || ((callback) => {
       if (typeof globalScope.requestAnimationFrame === "function") return globalScope.requestAnimationFrame(callback);
@@ -895,6 +899,7 @@
       review: null,
       failureStatus: ""
     };
+    let imagePrepBridge = null;
 
     const headerTitle = root.querySelector("[data-meal-title]");
     const headerIntro = root.querySelector("[data-meal-intro]");
@@ -944,17 +949,9 @@
       });
     }
 
-    async function observeVisionImage(file) {
-      clearVisionSession();
-      const requestId = visionRequestId;
-      visionSession = { phase: "preparing", file, previewUrl: "", observation: null, review: null, failureStatus: "" };
-      render();
-
-      await yieldForVisionPreparation();
+    async function observeNormalizedVisionImage(image, requestId, file = image) {
       if (requestId !== visionRequestId) return;
-
-      if (!visionImageNormalizer || !visionProviderFactory || !visionReview) {
-        if (requestId !== visionRequestId) return;
+      if (!visionProviderFactory || !visionReview) {
         visionSession.phase = "failure";
         visionSession.failureStatus = "unavailable";
         render();
@@ -962,15 +959,8 @@
       }
 
       try {
-        const normalized = await visionImageNormalizer.normalizeVisionImage(file);
-        if (requestId !== visionRequestId) return;
-        if (normalized.status !== "ready" || !normalized.image) {
-          visionSession.phase = "failure";
-          visionSession.failureStatus = ["image_error", "conversion_failed"].includes(normalized.status) ? "image_error" : "unsupported_format";
-          render();
-          return;
-        }
-        visionSession.previewUrl = globalScope.URL?.createObjectURL ? globalScope.URL.createObjectURL(normalized.image) : "";
+        visionSession.file = file;
+        visionSession.previewUrl = globalScope.URL?.createObjectURL ? globalScope.URL.createObjectURL(image) : "";
         visionSession.phase = "checking";
         render();
         const provider = await visionProviderFactory();
@@ -986,7 +976,7 @@
 
         visionSession.phase = "observing";
         render();
-        const result = await provider.observeMeal(normalized.image);
+        const result = await provider.observeMeal(image);
         if (requestId !== visionRequestId) return;
         if (result.status !== "success" || !result.observation) {
           visionSession.phase = "failure";
@@ -1005,6 +995,59 @@
         visionSession.failureStatus = error?.name === "AbortError" ? "timeout" : "provider_unreachable";
         render();
       }
+    }
+
+    async function observeVisionImage(file) {
+      clearVisionSession();
+      const requestId = visionRequestId;
+      visionSession = { phase: "preparing", file, previewUrl: "", observation: null, review: null, failureStatus: "" };
+      render();
+
+      await yieldForVisionPreparation();
+      if (requestId !== visionRequestId) return;
+
+      if (!visionImageNormalizer) {
+        if (requestId !== visionRequestId) return;
+        visionSession.phase = "failure";
+        visionSession.failureStatus = "unavailable";
+        render();
+        return;
+      }
+
+      try {
+        const normalized = await visionImageNormalizer.normalizeVisionImage(file);
+        if (requestId !== visionRequestId) return;
+        if (normalized.status !== "ready" || !normalized.image) {
+          visionSession.phase = "failure";
+          visionSession.failureStatus = ["image_error", "conversion_failed"].includes(normalized.status) ? "image_error" : "unsupported_format";
+          render();
+          return;
+        }
+        await observeNormalizedVisionImage(normalized.image, requestId, file);
+      } catch (error) {
+        if (requestId !== visionRequestId) return;
+        visionSession.phase = "failure";
+        visionSession.failureStatus = error?.name === "AbortError" ? "timeout" : "provider_unreachable";
+        render();
+      }
+    }
+
+    function openImagePrep() {
+      if (!imagePrepBridgeFactory) return;
+      if (!imagePrepBridge) {
+        imagePrepBridge = imagePrepBridgeFactory({
+          onPrepared(envelope) {
+            if (!envelope?.image_blob) return;
+            clearVisionSession();
+            const requestId = visionRequestId;
+            observeNormalizedVisionImage(envelope.image_blob, requestId, envelope.image_blob);
+          }
+        });
+      }
+      imagePrepBridge.open({
+        language,
+        theme: globalScope.document?.body?.dataset?.theme || "auto"
+      });
     }
 
     function itemServingBasis(reference, item) {
@@ -1174,6 +1217,7 @@
               <span>${escapeHtml(copy.visionChooseImage)}</span>
               <input type="file" data-vision-image accept="image/png,image/jpeg,image/webp,image/heic,image/heif,.heic,.heif">
             </label>
+            ${imagePrepBridgeFactory ? `<button type="button" class="meal-text-button" data-image-prep-open>${escapeHtml(copy.visionPrepareImage)}</button>` : ""}
           </section>
         `;
       }
@@ -1480,6 +1524,10 @@
         render();
         return;
       }
+      if (action.hasAttribute("data-image-prep-open")) {
+        openImagePrep();
+        return;
+      }
       if (action.hasAttribute("data-vision-retry") && visionSession.file) {
         observeVisionImage(visionSession.file);
         return;
@@ -1682,6 +1730,10 @@
       open() {
         isOpen = true;
         render();
+      },
+      destroy() {
+        imagePrepBridge?.destroy?.();
+        clearVisionSession();
       },
       getModel: () => model
     });

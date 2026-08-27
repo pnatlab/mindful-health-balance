@@ -63,7 +63,10 @@
   }
 
   async function resizeJpegBlob(blob, options = {}) {
-    if (typeof globalScope.createImageBitmap !== "function") return { blob, diagnostics: {} };
+    if (typeof globalScope.createImageBitmap !== "function") {
+      if (options.forceJpeg) throw stageError("bitmap_decode_failed", new Error("Image preparation is unavailable"));
+      return { blob, diagnostics: {} };
+    }
     let bitmap;
     try {
       bitmap = await globalScope.createImageBitmap(blob, { imageOrientation: "from-image" });
@@ -73,7 +76,7 @@
     try {
       const maxDimension = options.maxDimension || DEFAULT_MAX_DIMENSION;
       const target = scaledDimensions(bitmap.width, bitmap.height, maxDimension);
-      if (target.width === bitmap.width && target.height === bitmap.height) {
+      if (!options.forceJpeg && target.width === bitmap.width && target.height === bitmap.height) {
         return { blob, diagnostics: { source_width: bitmap.width, source_height: bitmap.height, normalized_width: bitmap.width, normalized_height: bitmap.height } };
       }
       let canvas;
@@ -135,6 +138,37 @@
 
     const capability = getVisionImageCapability(image);
     if (capability.status === "passthrough") {
+      if (options.forceJpeg) {
+        try {
+          const rasterPreparer = options.rasterPreparer || resizeJpegBlob;
+          const prepared = await rasterPreparer(image, {
+            maxDimension: options.maxDimension || DEFAULT_MAX_DIMENSION,
+            quality: options.quality || DEFAULT_JPEG_QUALITY,
+            forceJpeg: true
+          });
+          return Object.freeze({
+            status: "ready",
+            image: prepared.blob,
+            sourceFormat: capability.format,
+            normalizedFormat: "image/jpeg",
+            converted: true,
+            diagnostics: Object.freeze({
+              ...prepared.diagnostics,
+              source_size_bytes: image.size || null,
+              normalized_size_bytes: prepared.blob.size || null
+            })
+          });
+        } catch (error) {
+          return Object.freeze({
+            status: "conversion_failed",
+            image: null,
+            sourceFormat: capability.format,
+            normalizedFormat: "",
+            converted: false,
+            diagnostics: Object.freeze({ failure_stage: failureStage(error), error_name: String(error?.name || "Error") })
+          });
+        }
+      }
       return Object.freeze({
         status: "ready",
         image,
@@ -150,7 +184,8 @@
       try {
         const output = await heicConverter(image, {
           maxDimension: options.maxDimension || DEFAULT_MAX_DIMENSION,
-          quality: options.quality || DEFAULT_JPEG_QUALITY
+          quality: options.quality || DEFAULT_JPEG_QUALITY,
+          forceJpeg: Boolean(options.forceJpeg)
         });
         const converted = output?.blob || output;
         const convertedCapability = getVisionImageCapability(converted);
