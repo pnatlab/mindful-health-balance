@@ -237,6 +237,8 @@ Sodium is shown only as an evidence-backed range. When some items remain unsuppo
 
 For a meal whose recorded components fit an approved reference, MHB may offer that reference as an optional card. It is only a suggestion: you must choose `Use this reference` before it can route the estimate. The displayed value is a reference per 100 g, not the sodium of your whole plate, and you can clear it at any time. If later components conflict with the reference boundary, MHB pauses the reference while still allowing the meal to be kept.
 
+The optional photo helper is a bounded prototype for PNG, JPEG, and WebP using a model on this device only. After choosing an image, review what the model observed, omit suggestions, and resolve ambiguous mappings before choosing `Use selected items in this meal`. This adds only accepted Meal Type/components to the existing draft. It does not save the meal, set `named_dish_id`, or create sodium evidence from the image; any reference dish still needs its separate confirmation. Manual composition remains available when the local model is unavailable.
+
 ## 11. Drinks / Drink Profile
 
 Drink Profile is for drinks other than plain water, such as coffee, tea, cocoa, sweet drinks, juice, or soda / soft drinks. Plain water should be logged in the Hydration card so it does not need to be entered twice.

@@ -25,6 +25,34 @@
       recordedCount: (count) => `${count} มื้อที่บันทึกไว้`,
       mealType: "มื้อนี้เป็นอาหารแบบไหน",
       mealTypeHelper: "เลือกจากที่เห็นหรือจำได้ ไม่ต้องรู้สูตรทั้งหมด",
+      visionAction: "ให้ AI ช่วยมองจากรูป",
+      visionLocalNote: "วิเคราะห์ผ่านโมเดลในเครื่องนี้ รูปจะไม่ถูกเก็บไว้กับมื้อ",
+      visionChooseImage: "เลือกรูปอาหาร",
+      visionChecking: "กำลังตรวจว่าโมเดลในเครื่องพร้อมไหม…",
+      visionObserving: "กำลังมองมื้อนี้ให้ค่ะ… อาจใช้เวลาสักครู่",
+      visionReviewTitle: "หนูลองมองจากภาพให้ก่อนนะ",
+      visionReviewHelper: "เลือกเฉพาะสิ่งที่ตรงกับมื้อนี้ แล้วค่อยเติมเป็นร่างได้ค่ะ",
+      visionDish: "อาหารที่ดูคล้าย",
+      visionDishInformational: "เป็นข้อความช่วยตรวจเท่านั้น ไม่ใช่เมนูอ้างอิง",
+      visionMealTypes: "ลักษณะอาหาร",
+      visionComponents: "สิ่งที่มองเห็น",
+      visionUncertain: "ส่วนที่ยังไม่แน่ใจ",
+      visionNotObservable: "ยังบอกไม่ได้จากภาพ",
+      visionOmitMealType: "ไม่ใช้ลักษณะอาหารจากภาพ",
+      visionChooseComponent: "เลือกว่ารายการนี้ตรงกับอะไร",
+      visionUnsupported: "ยังไม่เติมรายการนี้อัตโนมัติ",
+      visionApply: "ใช้รายการที่เลือกกับมื้อนี้",
+      visionRetry: "ลองมองอีกครั้ง",
+      visionClear: "ปิดตัวช่วยจากรูป",
+      visionPreviewAlt: "รูปอาหารที่เลือกไว้ชั่วคราวเพื่อช่วยตรวจรายการ",
+      visionApplied: "เติมรายการที่เลือกไว้ในมื้อที่กำลังประกอบแล้วค่ะ ยังไม่ได้บันทึกมื้อ",
+      visionAppliedConflict: "เก็บลักษณะอาหารที่พี่เลือกไว้เดิม และเติมเฉพาะรายการอื่นที่ไม่ซ้ำค่ะ",
+      visionUnavailable: "ตอนนี้ยังใช้ตัวช่วยจากรูปไม่ได้ ประกอบมื้อเองต่อได้ตามปกติค่ะ",
+      visionModelMissing: "ยังไม่พบโมเดลสำหรับช่วยมองรูปในเครื่องนี้ ประกอบมื้อเองต่อได้ตามปกติค่ะ",
+      visionTimeout: "การมองรูปใช้เวลานานกว่ารอบนี้ ลองใหม่หรือประกอบมื้อเองต่อได้ค่ะ",
+      visionInvalid: "ผลจากรูปยังไม่น่าใช้เป็นร่าง จึงยังไม่ได้เติมอะไรลงมื้อค่ะ",
+      visionImageError: "เส้นทางนี้ยังอ่าน HEIC/HEIF โดยตรงไม่ได้ ลอง PNG, JPEG หรือ WebP ได้ค่ะ โดยยังไม่ต้องเปลี่ยน draft",
+      visionNotObservableLabels: { sauce_identity: "ชนิดของซอส", seasoning_amount: "ปริมาณเครื่องปรุง", cooking_method: "วิธีปรุงที่มองไม่ชัด" },
       namedDishSuggestion: "อาจมีเมนูอ้างอิงที่ตรงกับมื้อนี้",
       namedDishConfirm: "ใช้รายการนี้",
       namedDishReject: "ไม่ใช่",
@@ -151,6 +179,34 @@
       recordedCount: (count) => `${count} recorded ${count === 1 ? "meal" : "meals"}`,
       mealType: "What kind of meal is this?",
       mealTypeHelper: "Choose what you recognize. You do not need the full recipe.",
+      visionAction: "Let local AI look at a photo",
+      visionLocalNote: "Analyzed by a model on this device. The photo is not stored with the meal.",
+      visionChooseImage: "Choose a meal photo",
+      visionChecking: "Checking whether the local model is ready…",
+      visionObserving: "Looking at this meal… This may take a few seconds.",
+      visionReviewTitle: "Here is what I can see so far",
+      visionReviewHelper: "Keep only what fits this meal, then use it as a draft.",
+      visionDish: "Looks similar to",
+      visionDishInformational: "Review context only, not a reference-dish identity.",
+      visionMealTypes: "Meal type suggestions",
+      visionComponents: "Visible components",
+      visionUncertain: "Still uncertain",
+      visionNotObservable: "Not observable from the image",
+      visionOmitMealType: "Do not use a meal type from the image",
+      visionChooseComponent: "Choose what this observation maps to",
+      visionUnsupported: "This observation will not be added automatically",
+      visionApply: "Use selected items in this meal",
+      visionRetry: "Look again",
+      visionClear: "Close photo helper",
+      visionPreviewAlt: "Meal photo selected temporarily for observation review",
+      visionApplied: "Selected items were added to the meal draft. The meal has not been saved.",
+      visionAppliedConflict: "Your existing meal type was kept; only non-duplicate items were added.",
+      visionUnavailable: "The photo helper is unavailable right now. Manual meal composition still works normally.",
+      visionModelMissing: "The local vision model is not available. Manual meal composition still works normally.",
+      visionTimeout: "The observation took longer than this attempt. Try again or continue manually.",
+      visionInvalid: "This image result was not reliable enough to use as a draft, so nothing was applied.",
+      visionImageError: "This path cannot read HEIC/HEIF directly yet. Try PNG, JPEG, or WebP; the draft stays unchanged.",
+      visionNotObservableLabels: { sauce_identity: "sauce identity", seasoning_amount: "seasoning amount", cooking_method: "unclear cooking method" },
       namedDishSuggestion: "A reference dish may fit this meal",
       namedDishConfirm: "Use this reference",
       namedDishReject: "Not this one",
@@ -277,6 +333,34 @@
       recordedCount: (count) => `已记录 ${count} 餐`,
       mealType: "这一餐是什么类型？",
       mealTypeHelper: "按看见或记得的样子选择，不需要知道完整食谱。",
+      visionAction: "让本机 AI 帮忙看看照片",
+      visionLocalNote: "由这台设备上的模型分析；照片不会随餐食保存。",
+      visionChooseImage: "选择餐食照片",
+      visionChecking: "正在检查本机模型是否可用…",
+      visionObserving: "正在看看这一餐… 可能需要几秒钟。",
+      visionReviewTitle: "先看看我从照片里观察到了什么",
+      visionReviewHelper: "只保留符合这一餐的内容，再作为草稿使用。",
+      visionDish: "看起来像",
+      visionDishInformational: "仅供核对，不是参考菜品身份。",
+      visionMealTypes: "餐食类型建议",
+      visionComponents: "看得见的组成",
+      visionUncertain: "仍不确定的部分",
+      visionNotObservable: "无法从照片判断",
+      visionOmitMealType: "不采用照片中的餐食类型",
+      visionChooseComponent: "选择这项观察对应的食物",
+      visionUnsupported: "这项观察不会自动加入",
+      visionApply: "把所选内容用于这一餐",
+      visionRetry: "再看一次",
+      visionClear: "关闭照片助手",
+      visionPreviewAlt: "为观察核对而临时选择的餐食照片",
+      visionApplied: "所选内容已加入餐食草稿；餐食尚未保存。",
+      visionAppliedConflict: "已保留原先选择的餐食类型，只加入不重复的其他条目。",
+      visionUnavailable: "照片助手目前不可用，仍可照常手动组合餐食。",
+      visionModelMissing: "这台设备上未找到本地视觉模型，仍可照常手动组合餐食。",
+      visionTimeout: "这次观察用时较长；可以重试或继续手动填写。",
+      visionInvalid: "这次照片结果还不足以作为草稿，因此没有加入任何内容。",
+      visionImageError: "当前路径还不能直接读取 HEIC/HEIF；请尝试 PNG、JPEG 或 WebP，草稿不会改变。",
+      visionNotObservableLabels: { sauce_identity: "酱汁种类", seasoning_amount: "调味用量", cooking_method: "看不清的烹调方式" },
       namedDishSuggestion: "这餐可能有相符的参考菜品",
       namedDishConfirm: "使用这项参考",
       namedDishReject: "不是这项",
@@ -782,6 +866,9 @@
     if (!root) return null;
     const runtime = options.runtime;
     const model = options.model || createMealComposerModel(options);
+    const visionImageNormalizer = options.visionImageNormalizer || globalScope.MHBMealVisionImageNormalizer || null;
+    const visionReview = options.visionReview || globalScope.MHBMealVisionReview || null;
+    const visionProviderFactory = options.visionProviderFactory || null;
     const confirmAction = options.confirmAction || ((message) => globalScope.confirm(message));
     const scheduleFrame = options.scheduleFrame || ((callback) => {
       if (typeof globalScope.requestAnimationFrame === "function") return globalScope.requestAnimationFrame(callback);
@@ -796,6 +883,15 @@
     let savePhase = "idle";
     let recentSavedMealId = "";
     let recentSaveWasEditing = false;
+    let visionRequestId = 0;
+    let visionSession = {
+      phase: "idle",
+      file: null,
+      previewUrl: "",
+      observation: null,
+      review: null,
+      failureStatus: ""
+    };
 
     const headerTitle = root.querySelector("[data-meal-title]");
     const headerIntro = root.querySelector("[data-meal-intro]");
@@ -812,6 +908,85 @@
 
     function scrollBehavior() {
       return globalScope.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? "auto" : "smooth";
+    }
+
+    function revokeVisionPreview() {
+      if (visionSession.previewUrl && globalScope.URL?.revokeObjectURL) {
+        globalScope.URL.revokeObjectURL(visionSession.previewUrl);
+      }
+    }
+
+    function clearVisionSession() {
+      visionRequestId += 1;
+      revokeVisionPreview();
+      visionSession = { phase: "idle", file: null, previewUrl: "", observation: null, review: null, failureStatus: "" };
+    }
+
+    function visionFailureMessage(failureStatus) {
+      const copy = getText(language);
+      if (failureStatus === "model_missing") return copy.visionModelMissing;
+      if (failureStatus === "timeout") return copy.visionTimeout;
+      if (failureStatus === "invalid_output") return copy.visionInvalid;
+      if (failureStatus === "image_error" || failureStatus === "unsupported_format") return copy.visionImageError;
+      return copy.visionUnavailable;
+    }
+
+    async function observeVisionImage(file) {
+      clearVisionSession();
+      const requestId = visionRequestId;
+      visionSession = { phase: "checking", file, previewUrl: "", observation: null, review: null, failureStatus: "" };
+      render();
+
+      if (!visionImageNormalizer || !visionProviderFactory || !visionReview) {
+        if (requestId !== visionRequestId) return;
+        visionSession.phase = "failure";
+        visionSession.failureStatus = "unavailable";
+        render();
+        return;
+      }
+
+      try {
+        const normalized = await visionImageNormalizer.normalizeVisionImage(file);
+        if (requestId !== visionRequestId) return;
+        if (normalized.status !== "ready" || !normalized.image) {
+          visionSession.phase = "failure";
+          visionSession.failureStatus = normalized.status === "image_error" ? "image_error" : "unsupported_format";
+          render();
+          return;
+        }
+        visionSession.previewUrl = globalScope.URL?.createObjectURL ? globalScope.URL.createObjectURL(normalized.image) : "";
+        const provider = await visionProviderFactory();
+        if (requestId !== visionRequestId) return;
+        const availability = await provider.isAvailable();
+        if (requestId !== visionRequestId) return;
+        if (availability.status !== "ready") {
+          visionSession.phase = "failure";
+          visionSession.failureStatus = availability.status;
+          render();
+          return;
+        }
+
+        visionSession.phase = "observing";
+        render();
+        const result = await provider.observeMeal(normalized.image);
+        if (requestId !== visionRequestId) return;
+        if (result.status !== "success" || !result.observation) {
+          visionSession.phase = "failure";
+          visionSession.failureStatus = result.status;
+          render();
+          return;
+        }
+
+        visionSession.phase = "review";
+        visionSession.observation = result.observation;
+        visionSession.review = visionReview.createVisionReviewModel(result.observation);
+        render();
+      } catch (error) {
+        if (requestId !== visionRequestId) return;
+        visionSession.phase = "failure";
+        visionSession.failureStatus = error?.name === "AbortError" ? "timeout" : "provider_unreachable";
+        render();
+      }
     }
 
     function itemServingBasis(reference, item) {
@@ -872,6 +1047,150 @@
             </div>
           </div>
           <div class="meal-type-choice-list" role="group" aria-label="${escapeHtml(copy.mealType)}">${choices}</div>
+        </section>
+      `;
+    }
+
+    function renderVisionPreview() {
+      const copy = getText(language);
+      return visionSession.previewUrl
+        ? `<img class="meal-vision-preview" src="${escapeHtml(visionSession.previewUrl)}" alt="${escapeHtml(copy.visionPreviewAlt)}">`
+        : `<span class="meal-vision-icon" aria-hidden="true">📷</span>`;
+    }
+
+    function renderVisionReview() {
+      const copy = getText(language);
+      const review = visionSession.review;
+      if (!review) return "";
+      const dishLabels = review.dishCandidates.length
+        ? review.dishCandidates.map((label) => `<span class="meal-vision-observation-pill">${escapeHtml(label)}</span>`).join("")
+        : `<span class="meal-vision-muted">${escapeHtml(copy.visionUncertain)}</span>`;
+      const mealTypes = review.mealTypes.map((entry) => `
+        <label class="meal-vision-choice">
+          <input type="radio" name="mealVisionType" value="${escapeHtml(entry.mealType)}" data-vision-meal-type${entry.accepted ? " checked" : ""}>
+          <span>✓ ${escapeHtml(copy.mealTypes[entry.mealType] || entry.mealType)}</span>
+        </label>
+      `).join("");
+      const mealTypeReview = `
+        <div class="meal-vision-choice-list" role="radiogroup" aria-label="${escapeHtml(copy.visionMealTypes)}">
+          ${mealTypes}
+          <label class="meal-vision-choice meal-vision-choice--omit">
+            <input type="radio" name="mealVisionType" value="" data-vision-meal-type${review.mealTypes.some((entry) => entry.accepted) ? "" : " checked"}>
+            <span>${escapeHtml(copy.visionOmitMealType)}</span>
+          </label>
+        </div>
+      `;
+      const components = review.components.map((entry) => {
+        if (entry.mappingStatus === "safe_exact") {
+          const reference = runtime.getFoodReferenceById(entry.selectedFoodId);
+          return `
+            <label class="meal-vision-choice">
+              <input type="checkbox" data-vision-component="${escapeHtml(entry.reviewId)}"${entry.accepted ? " checked" : ""}>
+              <span><strong>${escapeHtml(entry.label)}</strong><small>→ ${escapeHtml(foodName(reference))}</small></span>
+            </label>
+          `;
+        }
+        if (entry.mappingStatus === "needs_user_choice") {
+          const choices = entry.choices.map((foodId) => {
+            const reference = runtime.getFoodReferenceById(foodId);
+            return `<option value="${escapeHtml(foodId)}"${entry.selectedFoodId === foodId ? " selected" : ""}>${escapeHtml(foodName(reference))}</option>`;
+          }).join("");
+          return `
+            <label class="meal-vision-mapping-choice">
+              <span><strong>${escapeHtml(entry.label)}</strong><small>${escapeHtml(copy.visionChooseComponent)}</small></span>
+              <select data-vision-component-map="${escapeHtml(entry.reviewId)}">
+                <option value="">${escapeHtml(copy.visionUnsupported)}</option>
+                ${choices}
+              </select>
+            </label>
+          `;
+        }
+        return `
+          <div class="meal-vision-unsupported">
+            <span>${escapeHtml(entry.label)}</span>
+            <small>${escapeHtml(copy.visionUnsupported)}</small>
+          </div>
+        `;
+      }).join("");
+      const uncertain = review.uncertainObservations.length
+        ? `<div class="meal-vision-note-group"><strong>${escapeHtml(copy.visionUncertain)}</strong><ul>${review.uncertainObservations.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></div>`
+        : "";
+      const notObservable = review.notObservable.length
+        ? `<div class="meal-vision-note-group"><strong>${escapeHtml(copy.visionNotObservable)}</strong><ul>${review.notObservable.map((item) => `<li>${escapeHtml(copy.visionNotObservableLabels[item] || item)}</li>`).join("")}</ul></div>`
+        : "";
+      return `
+        <div class="meal-vision-review-grid">
+          <div class="meal-vision-review-group">
+            <h4>${escapeHtml(copy.visionDish)}</h4>
+            <div class="meal-vision-observation-list">${dishLabels}</div>
+            <small>${escapeHtml(copy.visionDishInformational)}</small>
+          </div>
+          <div class="meal-vision-review-group">
+            <h4>${escapeHtml(copy.visionMealTypes)}</h4>
+            ${mealTypeReview}
+          </div>
+          <div class="meal-vision-review-group meal-vision-review-group--wide">
+            <h4>${escapeHtml(copy.visionComponents)}</h4>
+            <div class="meal-vision-component-list">${components || `<p class="meal-vision-muted">${escapeHtml(copy.visionUncertain)}</p>`}</div>
+          </div>
+          ${uncertain}${notObservable}
+        </div>
+        <div class="meal-vision-actions">
+          <button type="button" class="meal-text-button" data-vision-clear>${escapeHtml(copy.visionClear)}</button>
+          <button type="button" class="primary-button" data-vision-apply>${escapeHtml(copy.visionApply)}</button>
+        </div>
+      `;
+    }
+
+    function renderVisionHelper() {
+      const copy = getText(language);
+      if (visionSession.phase === "idle") {
+        return `
+          <section class="meal-vision-helper" aria-labelledby="mealVisionTitle">
+            <span class="meal-vision-icon" aria-hidden="true">📷</span>
+            <div class="meal-vision-intro">
+              <h3 id="mealVisionTitle">${escapeHtml(copy.visionAction)}</h3>
+              <p>${escapeHtml(copy.visionLocalNote)}</p>
+            </div>
+            <label class="ghost-button meal-vision-file-action">
+              <span>${escapeHtml(copy.visionChooseImage)}</span>
+              <input type="file" data-vision-image accept="image/png,image/jpeg,image/webp,image/heic,image/heif,.heic,.heif">
+            </label>
+          </section>
+        `;
+      }
+
+      if (visionSession.phase === "checking" || visionSession.phase === "observing") {
+        const message = visionSession.phase === "checking" ? copy.visionChecking : copy.visionObserving;
+        return `
+          <section class="meal-vision-helper is-active" aria-busy="true" aria-live="polite">
+            ${renderVisionPreview()}
+            <div class="meal-vision-intro"><h3>${escapeHtml(copy.visionAction)}</h3><p>${escapeHtml(message)}</p></div>
+            <button type="button" class="meal-text-button" data-vision-clear>${escapeHtml(copy.visionClear)}</button>
+          </section>
+        `;
+      }
+
+      if (visionSession.phase === "failure") {
+        return `
+          <section class="meal-vision-helper is-attention" role="status">
+            ${renderVisionPreview()}
+            <div class="meal-vision-intro"><h3>${escapeHtml(copy.visionAction)}</h3><p>${escapeHtml(visionFailureMessage(visionSession.failureStatus))}</p></div>
+            <div class="meal-vision-actions">
+              ${visionSession.file ? `<button type="button" class="ghost-button" data-vision-retry>${escapeHtml(copy.visionRetry)}</button>` : ""}
+              <button type="button" class="meal-text-button" data-vision-clear>${escapeHtml(copy.visionClear)}</button>
+            </div>
+          </section>
+        `;
+      }
+
+      return `
+        <section class="meal-vision-review" aria-labelledby="mealVisionReviewTitle">
+          <div class="meal-vision-review-header">
+            ${renderVisionPreview()}
+            <div><h3 id="mealVisionReviewTitle">${escapeHtml(copy.visionReviewTitle)}</h3><p>${escapeHtml(copy.visionReviewHelper)}</p></div>
+          </div>
+          ${renderVisionReview()}
         </section>
       `;
     }
@@ -1121,7 +1440,7 @@
 
     function render() {
       renderHeader();
-      if (isOpen) content.innerHTML = `${renderMealType()}${renderFoodPicker()}${renderNamedDishReference()}${renderDraft()}${renderSavedMeals()}`;
+      if (isOpen) content.innerHTML = `${renderMealType()}${renderVisionHelper()}${renderFoodPicker()}${renderNamedDishReference()}${renderDraft()}${renderSavedMeals()}`;
       renderReflection();
       statusNode.textContent = status;
     }
@@ -1133,6 +1452,24 @@
         isOpen = !isOpen;
         render();
         if (isOpen) workspace.focus({ preventScroll: true });
+        return;
+      }
+      if (action.hasAttribute("data-vision-clear")) {
+        clearVisionSession();
+        status = "";
+        render();
+        return;
+      }
+      if (action.hasAttribute("data-vision-retry") && visionSession.file) {
+        observeVisionImage(visionSession.file);
+        return;
+      }
+      if (action.hasAttribute("data-vision-apply") && visionSession.review && visionReview) {
+        const result = visionReview.applyVisionReviewToDraft(model, visionSession.review);
+        clearVisionSession();
+        status = result.mealTypeConflict ? getText(language).visionAppliedConflict : getText(language).visionApplied;
+        render();
+        root.querySelector(".meal-draft")?.scrollIntoView({ behavior: scrollBehavior(), block: "nearest" });
         return;
       }
       if (action.dataset.mealCategory) {
@@ -1206,6 +1543,7 @@
           recentSavedMealId = result.meal.meal_id;
           recentSaveWasEditing = result.wasEditing;
           savePhase = "saved";
+          clearVisionSession();
           status = buildSaveFeedbackModel("saved", result.wasEditing, language).message;
           render();
           root.querySelector(".meal-saved-confirmation")?.scrollIntoView({ behavior: scrollBehavior(), block: "nearest" });
@@ -1214,12 +1552,14 @@
       }
       if (action.hasAttribute("data-cancel-meal-edit")) {
         model.resetDraft();
+        clearVisionSession();
         status = "";
         render();
         return;
       }
       if (action.dataset.editMeal) {
         if (model.editMeal(action.dataset.editMeal)) {
+          clearVisionSession();
           savePhase = "idle";
           recentSavedMealId = "";
           status = "";
@@ -1254,6 +1594,31 @@
     });
 
     root.addEventListener("change", (event) => {
+      if (event.target.matches("[data-vision-image]")) {
+        const file = event.target.files?.[0];
+        if (file) observeVisionImage(file);
+        return;
+      }
+      if (event.target.matches("[data-vision-meal-type]") && visionSession.review) {
+        visionSession.review.mealTypes.forEach((entry) => { entry.accepted = entry.mealType === event.target.value; });
+        render();
+        return;
+      }
+      if (event.target.matches("[data-vision-component]") && visionSession.review) {
+        const component = visionSession.review.components.find((entry) => entry.reviewId === event.target.dataset.visionComponent);
+        if (component) component.accepted = event.target.checked;
+        render();
+        return;
+      }
+      if (event.target.matches("[data-vision-component-map]") && visionSession.review) {
+        const component = visionSession.review.components.find((entry) => entry.reviewId === event.target.dataset.visionComponentMap);
+        if (component) {
+          component.selectedFoodId = component.choices.includes(event.target.value) ? event.target.value : "";
+          component.accepted = Boolean(component.selectedFoodId);
+        }
+        render();
+        return;
+      }
       if (event.target.matches("[data-meal-label]")) model.setDraftMeta({ mealLabel: event.target.value });
       if (event.target.matches("[data-meal-time]")) model.setDraftMeta({ time: event.target.value });
       if (event.target.matches("[data-meal-condiment-unknown]")) {
@@ -1288,6 +1653,7 @@
         render();
       },
       setDate(nextDate) {
+        clearVisionSession();
         model.setDate(nextDate);
         savePhase = "idle";
         recentSavedMealId = "";

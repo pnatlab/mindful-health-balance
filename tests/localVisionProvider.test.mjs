@@ -6,6 +6,8 @@ import {
   validateVisionObservation
 } from "../tools/browser_vision_probe/localVisionProvider.mjs";
 
+assert.equal((await import("../js/localVisionProvider.mjs")).createLocalOllamaVisionProvider, createLocalOllamaVisionProvider);
+
 assert.equal(isLoopbackEndpoint("http://127.0.0.1:11434"), true);
 assert.equal(isLoopbackEndpoint("http://localhost:11434"), true);
 assert.equal(isLoopbackEndpoint("http://192.168.1.20:11434"), false);
