@@ -134,3 +134,11 @@ This slice does not add:
 - custom food editing, barcode/API lookup, image recognition, calories/macros, scores, or medical targets.
 
 These require separate bounded contracts and regression review.
+
+## MHB 2.4E Addendum - Bounded Local Vision Review
+
+Meal Composer now contains an experimental, optional local Vision helper after Meal Type and before component discovery. A selected PNG/JPEG/WebP is passed through a provider-neutral image normalizer and sent only to the validated loopback provider. HEIC/HEIF selection fails calmly without draft mutation because the direct browser/Ollama probe did not support it and no conversion dependency is included. The resulting `VisionMealObservation` remains transient and is rendered as a review surface; it never mutates the draft on arrival.
+
+The user may accept or omit safe component suggestions, resolve ambiguous labels through an explicit Food Reference choice, and choose at most one Meal Type suggestion because the current contract remains single-select. Dish text is informational only. Applying the review conservatively adds missing accepted items and fills only an unspecified Meal Type; existing human draft facts, quantities, preparation, condiment knowledge, label, and time win or remain unchanged.
+
+Applying Vision review is not meal save and cannot set `named_dish_id`. Any named-dish candidate is derived later by the existing deterministic helper and still requires its separate confirmation card. Provider errors and invalid output leave the draft untouched and return calmly to normal manual composition.
