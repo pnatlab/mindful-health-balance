@@ -49,13 +49,16 @@
     if (!corpusPath) return [];
     if (!fs.existsSync(corpusPath)) throw new Error(`Corpus directory does not exist: ${corpusPath}`);
     return fs.readdirSync(corpusPath, { withFileTypes: true })
-      .filter((entry) => entry.isFile() && ALLOWED_IMAGE_EXTENSIONS.has(path.extname(entry.name).toLowerCase()))
+      .filter((entry) => (entry.isFile() || entry.isSymbolicLink()) && ALLOWED_IMAGE_EXTENSIONS.has(path.extname(entry.name).toLowerCase()))
       .map((entry) => path.join(corpusPath, entry.name))
       .sort();
   }
 
   function buildPrompt(strategy) {
     const boundary = "Observe only what is visibly supported by the image. Never estimate sodium, calories, macros, grams, health effects, hidden ingredients, hidden sauces, seasoning amounts, or a recipe. If uncertain, say so. Do not output canonical MHB IDs.";
+    if (strategy === "parser-lines-v2") {
+      return `Observe only visibly supported food facts. Components must be edible food or drink only; never list plates, bowls, utensils, furniture, or other scene objects. Do not name unavailable nutrition fields, health effects, quantities, recipe ingredients, hidden sauces, or hidden seasoning anywhere in the response. Do not output canonical MHB IDs. If uncertain, say so briefly.\nReturn exactly five lines:\nDISH: comma-separated broad visible dish labels or unknown\nCOMPONENTS: comma-separated edible visible components or unknown\nMEAL_TYPES: comma-separated values from ${[...MEAL_TYPES].join(", ")}\nUNCERTAIN: comma-separated visually uncertain observations\nNOT_OBSERVABLE: comma-separated image limits such as sauce identity, seasoning amount, or cooking method`;
+    }
     if (strategy === "parser-lines") {
       return `${boundary}\nReturn exactly five lines:\nDISH: comma-separated visible dish labels or unknown\nCOMPONENTS: comma-separated visible components or unknown\nMEAL_TYPES: comma-separated values from ${[...MEAL_TYPES].join(", ")}\nUNCERTAIN: comma-separated uncertainties\nNOT_OBSERVABLE: comma-separated items not safely observable`;
     }
@@ -119,6 +122,12 @@
       file: path.basename(imagePath),
       strategy,
       latency_ms: Date.now() - startedAt,
+      ollama_timing_ns: {
+        total_duration: body.total_duration || null,
+        load_duration: body.load_duration || null,
+        prompt_eval_duration: body.prompt_eval_duration || null,
+        eval_duration: body.eval_duration || null
+      },
       observation,
       validation: validateObservation(observation)
     };

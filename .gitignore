@@ -5,3 +5,6 @@ node_modules/
 dist/
 build/
 *.log
+
+# Authorized local-only meal-photo corpus for MHB 2.4B; never commit personal images.
+/ตัวอย่างรูปทดสอบอ่านภาพ/
