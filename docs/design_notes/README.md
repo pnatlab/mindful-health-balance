@@ -85,10 +85,11 @@ Runtime architecture, modularization planning, and implementation-safety notes f
 - [MEAL_COMPOSER_UI.md](MEAL_COMPOSER_UI.md) - Defines the MHB 2.3 Today workspace, illustrated Meal Type cards, progressive component discovery, explicit named-dish confirmation, symbolic draft/saved-meal presence, dynamic recorded-meal panel, responsive presentation, and deferred Reflection/workbook boundaries.
 - [LOCAL_VISION_MEAL_CAPTURE_FEASIBILITY.md](LOCAL_VISION_MEAL_CAPTURE_FEASIBILITY.md) - MHB 2.4A local-only feasibility probe for vision-proposed meal observations; it documents the optional-provider boundary, local environment findings, corpus requirement, and no-evidence-routing rule.
 - [LOCAL_VISION_MEAL_OBSERVATION_PILOT.md](LOCAL_VISION_MEAL_OBSERVATION_PILOT.md) - MHB 2.4B measured local-only observation pilot on an authorized nine-image corpus; vision is feasible only as a validated, user-reviewed proposal source.
+- [LOCAL_VISION_OBSERVATION_CONTRACT.md](LOCAL_VISION_OBSERVATION_CONTRACT.md) - MHB 2.4C contract lock for transient vision proposals, explicit human acceptance, local-only optional providers, and the named-dish/evidence firewall.
 
 MHB 2.3F sequence: 2.3F-R research -> 2.3F-C contract locked -> 2.3F-D Thai Named-Dish Evidence Pilot -> Human Approval -> 2.3F-I bounded runtime implementation for two approved references.
 
-MHB 2.4 experimental sequence: 2.4A local vision feasibility probe -> 2.4B authorized local corpus and measured observation pilot -> 2.4C observation contract and optional-provider adapter design -> any separately bounded prototype.
+MHB 2.4 experimental sequence: 2.4A local vision feasibility probe -> 2.4B authorized local corpus and measured observation pilot -> 2.4C contract and optional-provider architecture lock -> 2.4D browser-to-local-Ollama integration probe -> any separately bounded prototype.
 
 ## 99 Stabilization
 
