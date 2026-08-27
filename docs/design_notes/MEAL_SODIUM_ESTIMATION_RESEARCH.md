@@ -206,6 +206,12 @@ Choose **Candidate B** as the first implementation direction, with Candidate C d
 - Some studies show variation but do not expose a portable, current per-dish data set suitable for runtime.
 - No clinical thresholds or recommendations are part of this research.
 
-## Suggested Next Step: MHB 2.3F-C
+## Original Suggested Next Step: MHB 2.3F-C
 
-Hold a focused human review on Candidate B. If approved, perform a narrow named-dish evidence audit that proposes only a small set of traceable references, each with serving basis, source, estimate basis, confidence, range rationale, and no-double-count boundary. Do not implement any sodium values until that review approves the subset and the resulting contract.
+This research recommendation called for a focused human review of Candidate B before any implementation. The approved result is recorded in the contract-lock addendum below.
+
+## 2.3F-C Contract Lock Addendum
+
+Research is complete. Human review approved Candidate B, the evidence-routed base-estimate architecture. The canonical locked decisions now live in [MEAL_SODIUM_ESTIMATION_CONTRACT.md](MEAL_SODIUM_ESTIMATION_CONTRACT.md).
+
+This addendum does not revise the research findings or introduce runtime behavior. The next evidence step is MHB 2.3F-D, a small Thai named-dish evidence pilot before any implementation proposal.
