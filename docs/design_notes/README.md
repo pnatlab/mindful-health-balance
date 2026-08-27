@@ -82,7 +82,7 @@ Runtime architecture, modularization planning, and implementation-safety notes f
 - [MEAL_SODIUM_ESTIMATION_RESEARCH.md](MEAL_SODIUM_ESTIMATION_RESEARCH.md) - Completed MHB 2.3F-R research on evidence-routed sodium estimation for partially known real meals, Thai dish evidence limits, and double-counting controls.
 - [MEAL_SODIUM_ESTIMATION_CONTRACT.md](MEAL_SODIUM_ESTIMATION_CONTRACT.md) - Locked MHB 2.3F contract: one evidence-routed base estimate per meal, Meal Type context only, traceable provenance, and visible uncertainty. A bounded two-dish implementation now follows it.
 - [THAI_NAMED_DISH_SODIUM_EVIDENCE_PILOT.md](THAI_NAMED_DISH_SODIUM_EVIDENCE_PILOT.md) - MHB 2.3F-D evidence pilot: two Thai FCD fried-rice references are human-approved and implemented at a fixed 100-g source basis; green curry and incomplete identities remain outside runtime.
-- [MEAL_COMPOSER_UI.md](MEAL_COMPOSER_UI.md) - Defines the MHB 2.3 Today workspace, illustrated Meal Type cards, progressive component discovery, symbolic draft/saved-meal presence, dynamic recorded-meal panel, responsive presentation, and deferred Reflection/workbook boundaries.
+- [MEAL_COMPOSER_UI.md](MEAL_COMPOSER_UI.md) - Defines the MHB 2.3 Today workspace, illustrated Meal Type cards, progressive component discovery, explicit named-dish confirmation, symbolic draft/saved-meal presence, dynamic recorded-meal panel, responsive presentation, and deferred Reflection/workbook boundaries.
 
 MHB 2.3F sequence: 2.3F-R research -> 2.3F-C contract locked -> 2.3F-D Thai Named-Dish Evidence Pilot -> Human Approval -> 2.3F-I bounded runtime implementation for two approved references.
 

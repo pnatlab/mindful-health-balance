@@ -194,3 +194,7 @@ This contract does not change the current MHB 2.3 runtime. It does not alter Foo
 The bounded runtime path is now implemented for exactly two human-approved Thai FCD named-dish references: `fried_rice_pork_vegetable_egg` and `fried_rice_vegetable`. Both are explicit-match-only, `dish_inclusive` 100-g references with `scaling_allowed: false` and medium confidence. Runtime retains the contract's one-base-per-meal rule, preserves `partial` coverage for these source-basis references, and falls back safely when an ID is absent or unapproved.
 
 This status does not approve any additional dish, package, restaurant, or add-on-condiment path. Current public runtime remains **MHB 2.3 - Gentle Meal Composition**.
+
+## MHB 2.3F-UX Confirmation Addendum
+
+Candidate discovery may use deterministic structured components only as a suggestion. Candidate status is not identity, does not persist, and cannot route sodium evidence. `named_dish_id` becomes canonical only after an explicit user confirmation. Runtime must re-evaluate its consistency at derivation time, so a later evidence conflict suspends the dish base and falls back safely without rewriting Meal Items or silently reconciling the record.

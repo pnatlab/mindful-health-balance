@@ -235,6 +235,8 @@ A saved meal can be edited without creating a duplicate, or removed by a targete
 
 Sodium is shown only as an evidence-backed range. When some items remain unsupported, the interface says the estimate is partial and never substitutes `0 mg` for unknown. The panel below the composer is derived again after a meal is saved, edited, or removed. It describes recorded facts without scores, food judgment, or medical targets. Meal data is not yet connected to the main Daily Reflection renderer or workbook export/import.
 
+For a meal whose recorded components fit an approved reference, MHB may offer that reference as an optional card. It is only a suggestion: you must choose `Use this reference` before it can route the estimate. The displayed value is a reference per 100 g, not the sodium of your whole plate, and you can clear it at any time. If later components conflict with the reference boundary, MHB pauses the reference while still allowing the meal to be kept.
+
 ## 11. Drinks / Drink Profile
 
 Drink Profile is for drinks other than plain water, such as coffee, tea, cocoa, sweet drinks, juice, or soda / soft drinks. Plain water should be logged in the Hydration card so it does not need to be entered twice.

@@ -93,6 +93,14 @@ Saving uses a single render-frame acknowledgment rather than simulated progress.
 
 Saved meals use compact vertical cards with time when recorded, meal label, Meal Type, component names, the shared plate visual, and the existing edit/remove actions. The section states the number of **recorded meals**, never the number of meals eaten. Multiple cards remain independent, and reload reconstructs every visual from canonical saved Meal Instances instead of persisting presentation data.
 
+### MHB 2.3F-UX Explicit Named-Dish Confirmation
+
+When structured components exactly support one of the two approved fried-rice identities, Meal Composer may show a compact reference card. This is a deterministic `manual_structured` suggestion only: it does not persist, change the draft estimate, or enter the daily summary until the user explicitly selects the reference. Confirmation sets the optional `named_dish_id`; rejection is draft-only, and clearing a confirmation removes only that identity reference, never Meal Items.
+
+The card identifies the Thai Food Composition Database and the source basis as 100 g. Its copy explicitly states that the number is not a whole-plate estimate. A confirmed reference remains visible when editing and after reload. Meal Type alone never produces a candidate.
+
+Runtime consistency is checked again from the persisted Meal Instance. A non-stir-fried Meal Type is a soft conflict: the user retains the confirmed identity and the evidence may remain usable. An evidence conflict, such as pork or egg recorded with `fried_rice_vegetable`, suspends the named-dish base without deleting the meal or its components. The estimate then falls back to the existing component-only or unknown path. Components never auto-confirm a reference, no hidden components are created, and no additional named dish is introduced.
+
 ## Daily Meal Reflection Panel
 
 The panel re-derives after create, edit, or delete. It may mention:

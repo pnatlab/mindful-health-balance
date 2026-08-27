@@ -25,6 +25,17 @@
       recordedCount: (count) => `${count} มื้อที่บันทึกไว้`,
       mealType: "มื้อนี้เป็นอาหารแบบไหน",
       mealTypeHelper: "เลือกจากที่เห็นหรือจำได้ ไม่ต้องรู้สูตรทั้งหมด",
+      namedDishSuggestion: "อาจมีเมนูอ้างอิงที่ตรงกับมื้อนี้",
+      namedDishConfirm: "ใช้รายการนี้",
+      namedDishReject: "ไม่ใช่",
+      namedDishConfirmed: "กำลังใช้ข้อมูลอ้างอิงของ",
+      namedDishClear: "ยกเลิกเมนูอ้างอิง",
+      namedDishSource: "Thai Food Composition Database",
+      namedDishBasis: (range) => `ข้อมูลอ้างอิงของเมนูนี้: ${range} / 100 g`,
+      namedDishBasisHelper: "เป็นค่าจากข้อมูลอ้างอิงต่อ 100 กรัม ยังไม่ได้แปลงเป็นทั้งจาน",
+      namedDishSoftConflict: "ลักษณะอาหารที่เลือกอาจไม่ตรงกับเมนูอ้างอิง ลองตรวจอีกครั้งได้ค่ะ",
+      namedDishEvidenceConflict: "รายการที่เลือกเปลี่ยนขอบเขตของเมนูอ้างอิง จึงพักการใช้ค่าประมาณนี้ไว้ก่อน",
+      namedDishFallback: "มื้อนี้ยังเก็บได้ตามปกติ และจะอ่านจากรายการที่บันทึกไว้เท่าที่มีข้อมูลรองรับ",
       chooseFood: "มีอะไรอยู่ในมื้อนี้บ้าง",
       chooseFoodHelper: "เลือกเท่าที่รู้ ไม่จำเป็นต้องครบทุกอย่าง",
       searchLabel: "ค้นหาอาหารหรือเครื่องปรุง",
@@ -140,6 +151,17 @@
       recordedCount: (count) => `${count} recorded ${count === 1 ? "meal" : "meals"}`,
       mealType: "What kind of meal is this?",
       mealTypeHelper: "Choose what you recognize. You do not need the full recipe.",
+      namedDishSuggestion: "A reference dish may fit this meal",
+      namedDishConfirm: "Use this reference",
+      namedDishReject: "Not this one",
+      namedDishConfirmed: "Using the reference for",
+      namedDishClear: "Clear reference dish",
+      namedDishSource: "Thai Food Composition Database",
+      namedDishBasis: (range) => `Reference for this dish: ${range} / 100 g`,
+      namedDishBasisHelper: "This is a 100 g reference value, not an estimate for the whole plate.",
+      namedDishSoftConflict: "The selected meal type may not match this reference dish. You can check it again.",
+      namedDishEvidenceConflict: "The selected items change this reference dish boundary, so this estimate is paused for now.",
+      namedDishFallback: "You can still keep the meal. MHB will read supported recorded items instead.",
       chooseFood: "What was in this meal?",
       chooseFoodHelper: "Choose what you know. It does not need to be complete.",
       searchLabel: "Search foods or condiments",
@@ -255,6 +277,17 @@
       recordedCount: (count) => `已记录 ${count} 餐`,
       mealType: "这一餐是什么类型？",
       mealTypeHelper: "按看见或记得的样子选择，不需要知道完整食谱。",
+      namedDishSuggestion: "这餐可能有相符的参考菜品",
+      namedDishConfirm: "使用这项参考",
+      namedDishReject: "不是这项",
+      namedDishConfirmed: "正在使用这项参考",
+      namedDishClear: "取消参考菜品",
+      namedDishSource: "Thai Food Composition Database",
+      namedDishBasis: (range) => `这道菜的参考资料：${range} / 100 g`,
+      namedDishBasisHelper: "这是每 100 克的参考值，并非整盘餐食的估算。",
+      namedDishSoftConflict: "所选餐食类型可能与这项参考菜品不完全一致，可以再确认一下。",
+      namedDishEvidenceConflict: "所选条目改变了这项参考菜品的范围，因此暂时不使用这项估算。",
+      namedDishFallback: "这餐仍可正常保存；MHB 会按有资料支持的已记录条目来读取。",
       chooseFood: "这一餐里有什么？",
       chooseFoodHelper: "按知道的部分选择，不需要记全。",
       searchLabel: "搜索食物或调味品",
@@ -463,6 +496,7 @@
       mealId: "",
       mealLabel: "unnamed",
       mealType: "unspecified",
+      namedDishId: "",
       condimentKnowledge: "",
       time: "",
       items: []
@@ -488,9 +522,11 @@
     let date = String(options.date || "").trim();
     let language = normalizeLanguage(options.language);
     let draft = createEmptyDraft();
+    let dismissedNamedDishIds = new Set();
 
     function resetDraft() {
       draft = createEmptyDraft();
+      dismissedNamedDishIds = new Set();
       return getDraft();
     }
 
@@ -511,6 +547,7 @@
       });
       if (!item) return null;
       draft.items.push(item);
+      dismissedNamedDishIds = new Set();
       return cloneItem(item);
     }
 
@@ -528,12 +565,14 @@
       }, reference, { language });
       if (!item) return null;
       draft.items[index] = item;
+      dismissedNamedDishIds = new Set();
       return cloneItem(item);
     }
 
     function removeDraftItem(mealItemId) {
       const length = draft.items.length;
       draft.items = draft.items.filter((item) => item.meal_item_id !== mealItemId);
+      dismissedNamedDishIds = new Set();
       return draft.items.length !== length;
     }
 
@@ -560,6 +599,7 @@
         time: draft.time,
         meal_label: draft.mealLabel,
         meal_type: draft.mealType,
+        named_dish_id: draft.namedDishId,
         condiment_knowledge: draft.condimentKnowledge,
         items: draft.items.map(cloneItem),
         meal_note: ""
@@ -578,6 +618,7 @@
         mealId: meal.meal_id,
         mealLabel: meal.meal_label,
         mealType: meal.meal_type || "unspecified",
+        namedDishId: meal.named_dish_id || "",
         condimentKnowledge: meal.condiment_knowledge || "",
         time: meal.time,
         items: meal.items.map(cloneItem)
@@ -589,6 +630,30 @@
       const deleted = store.deleteMeal(mealId);
       if (deleted && draft.mealId === mealId) resetDraft();
       return deleted;
+    }
+
+    function getNamedDishCandidates() {
+      if (draft.namedDishId || typeof runtime.getNamedDishCandidates !== "function") return [];
+      return runtime.getNamedDishCandidates({ meal_type: draft.mealType, items: draft.items })
+        .filter((candidate) => !dismissedNamedDishIds.has(candidate.candidate_id));
+    }
+
+    function confirmNamedDish(candidateId) {
+      const candidate = getNamedDishCandidates().find((entry) => entry.candidate_id === candidateId && entry.match_status === "compatible");
+      if (!candidate || !runtime.getNamedDishReferenceById(candidate.candidate_id)) return null;
+      draft.namedDishId = candidate.candidate_id;
+      dismissedNamedDishIds = new Set();
+      return getDraft();
+    }
+
+    function rejectNamedDishCandidate(candidateId) {
+      dismissedNamedDishIds.add(String(candidateId || ""));
+      return getDraft();
+    }
+
+    function clearNamedDishConfirmation() {
+      draft.namedDishId = "";
+      return getDraft();
     }
 
     return Object.freeze({
@@ -612,8 +677,17 @@
       saveDraft,
       editMeal,
       deleteMeal,
+      getNamedDishCandidates,
+      confirmNamedDish,
+      rejectNamedDishCandidate,
+      clearNamedDishConfirmation,
       getMeals: () => store.getMealsForDate(date),
-      getDraftEstimate: () => runtime.deriveMealEstimate({ items: draft.items }),
+      getDraftNamedDishConsistency: () => runtime.evaluateNamedDishConsistency({
+        meal_type: draft.mealType,
+        named_dish_id: draft.namedDishId,
+        items: draft.items
+      }),
+      getDraftEstimate: () => runtime.deriveMealEstimate({ named_dish_id: draft.namedDishId, meal_type: draft.mealType, items: draft.items }),
       getDailySummary: () => runtime.deriveDailyMealSummary(date, store.getMealsForDate(date), library)
     });
   }
@@ -860,6 +934,50 @@
       `;
     }
 
+    function renderNamedDishReference() {
+      const copy = getText(language);
+      const draft = model.getDraft();
+      const confirmedReference = runtime.getNamedDishReferenceById(draft.namedDishId);
+      if (confirmedReference) {
+        const consistency = model.getDraftNamedDishConsistency();
+        const range = formatRange(confirmedReference.sodium_estimate_min_mg, confirmedReference.sodium_estimate_max_mg, language);
+        const isSuspended = consistency.status === "evidence_conflict";
+        return `
+          <section class="meal-named-dish-card${isSuspended ? " is-suspended" : " is-confirmed"}" role="status">
+            <div class="meal-named-dish-icon" aria-hidden="true">🍚</div>
+            <div class="meal-named-dish-copy">
+              <p>${escapeHtml(copy.namedDishConfirmed)}</p>
+              <h3>${escapeHtml(runtime.getFoodDisplayName(confirmedReference, language))}</h3>
+              <strong>${escapeHtml(copy.namedDishBasis(range))}</strong>
+              <small>${escapeHtml(copy.namedDishSource)} · ${escapeHtml(copy.namedDishBasisHelper)}</small>
+              ${consistency.status === "soft_conflict" ? `<span class="meal-named-dish-helper">${escapeHtml(copy.namedDishSoftConflict)}</span>` : ""}
+              ${isSuspended ? `<span class="meal-named-dish-helper">${escapeHtml(copy.namedDishEvidenceConflict)} ${escapeHtml(copy.namedDishFallback)}</span>` : ""}
+            </div>
+            <button type="button" class="meal-text-button" data-clear-named-dish>${escapeHtml(copy.namedDishClear)}</button>
+          </section>
+        `;
+      }
+      const candidate = model.getNamedDishCandidates()[0];
+      const candidateReference = candidate && runtime.getNamedDishReferenceById(candidate.candidate_id);
+      if (!candidateReference) return "";
+      const range = formatRange(candidateReference.sodium_estimate_min_mg, candidateReference.sodium_estimate_max_mg, language);
+      return `
+        <section class="meal-named-dish-card">
+          <div class="meal-named-dish-icon" aria-hidden="true">🍚</div>
+          <div class="meal-named-dish-copy">
+            <p>${escapeHtml(copy.namedDishSuggestion)}</p>
+            <h3>${escapeHtml(runtime.getFoodDisplayName(candidateReference, language))}</h3>
+            <strong>${escapeHtml(copy.namedDishBasis(range))}</strong>
+            <small>${escapeHtml(copy.namedDishSource)} · ${escapeHtml(copy.namedDishBasisHelper)}</small>
+          </div>
+          <div class="meal-named-dish-actions">
+            <button type="button" class="ghost-button" data-reject-named-dish="${escapeHtml(candidate.candidate_id)}">${escapeHtml(copy.namedDishReject)}</button>
+            <button type="button" class="primary-button" data-confirm-named-dish="${escapeHtml(candidate.candidate_id)}">${escapeHtml(copy.namedDishConfirm)}</button>
+          </div>
+        </section>
+      `;
+    }
+
     function renderDraftItem(item) {
       const copy = getText(language);
       const reference = runtime.getFoodReferenceById(item.food_id);
@@ -903,8 +1021,11 @@
       let estimateText = copy.estimateUnknown;
       let estimateNote = "";
       const range = formatRange(estimate.estimated_sodium_min_mg, estimate.estimated_sodium_max_mg, language);
-      if (estimate.sodium_estimate_coverage === "complete" && range) estimateText = copy.estimateComplete(range);
-      if (estimate.sodium_estimate_coverage === "partial" && range) {
+      if (estimate.estimate_basis === "dish_inclusive" && range) {
+        estimateText = copy.namedDishBasis(range);
+        estimateNote = copy.namedDishBasisHelper;
+      } else if (estimate.sodium_estimate_coverage === "complete" && range) estimateText = copy.estimateComplete(range);
+      else if (estimate.sodium_estimate_coverage === "partial" && range) {
         estimateText = copy.estimatePartial(range);
         estimateNote = copy.estimatePartialNote;
       }
@@ -954,6 +1075,7 @@
             <div class="meal-saved-copy">
               <p class="meal-saved-meta">${escapeHtml(card.time || "·")} · ${escapeHtml(card.label)} · ${escapeHtml(card.mealType)}${escapeHtml(unknownCondiments)}</p>
               <h4>${escapeHtml(card.visual.componentNames.join(" · "))}</h4>
+              ${meal.named_dish_id && runtime.getNamedDishReferenceById(meal.named_dish_id) && runtime.evaluateNamedDishConsistency(meal).evidence_usable ? `<p class="meal-named-dish-saved">${escapeHtml(copy.namedDishConfirmed)} ${escapeHtml(runtime.getFoodDisplayName(runtime.getNamedDishReferenceById(meal.named_dish_id), language))} · ${escapeHtml(copy.namedDishBasisHelper)}</p>` : ""}
             </div>
             <div class="meal-saved-actions">
               <button type="button" class="meal-text-button" data-edit-meal="${escapeHtml(meal.meal_id)}">${escapeHtml(copy.editMeal)}</button>
@@ -999,7 +1121,7 @@
 
     function render() {
       renderHeader();
-      if (isOpen) content.innerHTML = `${renderMealType()}${renderFoodPicker()}${renderDraft()}${renderSavedMeals()}`;
+      if (isOpen) content.innerHTML = `${renderMealType()}${renderFoodPicker()}${renderNamedDishReference()}${renderDraft()}${renderSavedMeals()}`;
       renderReflection();
       statusNode.textContent = status;
     }
@@ -1026,6 +1148,24 @@
       }
       if (action.dataset.mealTypeChoice) {
         model.setDraftMeta({ mealType: action.dataset.mealTypeChoice });
+        render();
+        return;
+      }
+      if (action.dataset.confirmNamedDish) {
+        model.confirmNamedDish(action.dataset.confirmNamedDish);
+        status = "";
+        render();
+        return;
+      }
+      if (action.dataset.rejectNamedDish) {
+        model.rejectNamedDishCandidate(action.dataset.rejectNamedDish);
+        status = "";
+        render();
+        return;
+      }
+      if (action.hasAttribute("data-clear-named-dish")) {
+        model.clearNamedDishConfirmation();
+        status = "";
         render();
         return;
       }

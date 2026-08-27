@@ -101,3 +101,9 @@ Both references remain at their declared 100-g basis. MHB does not apply `small`
 `deriveDailyMealSummary()` sums one derived base per meal and exposes the bounded `estimate_bases` and `named_dish_ids` arrays so mixed daily evidence does not lose basis visibility. `buildMealReflectionContext()` exposes those derived identifiers only; the existing Reflection renderer and copy remain unchanged.
 
 `green_curry_chicken` and every other researched dish remain absent from runtime. Current public runtime remains **MHB 2.3 - Gentle Meal Composition**.
+
+### MHB 2.3F-UX Confirmation and Consistency Addendum
+
+`getNamedDishCandidates()` exposes only deterministic, structured-component suggestions for the two approved records. Suggestions are nonpersistent and cannot create a sodium estimate. The UI must call `confirmNamedDish()` before it writes `named_dish_id`; rejection and clearing leave Meal Items untouched.
+
+`evaluateNamedDishConsistency()` is the runtime authority for whether a persisted ID can use its dish base. Soft conflicts preserve usability. Evidence conflicts suspend the dish base and make `deriveMealEstimate()` fall back to `component_only` or `unknown`; a stale ID therefore cannot bypass the one-base/evidence-boundary rule.

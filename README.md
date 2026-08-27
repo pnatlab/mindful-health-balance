@@ -158,6 +158,8 @@ MHB 2.3 adds a compact Meal Composer inside Today. It begins with the broad kind
 
 Meal records are stored locally under a separate versioned source and do not become columns in `Daily_Log`. Sodium appears only as an evidence-backed range. Items without supported evidence remain unknown, and a meal with mixed known and unknown items is shown as partial rather than as a complete total.
 
+For the two human-approved Thai FCD fried-rice references, Meal Composer may offer a compact reference card after matching components are recorded. A suggestion does not change the meal or sodium estimate: the user must explicitly confirm it. The visible value remains a reference per 100 g, not an estimate for the user's whole plate; a conflicting recorded component pauses that reference and safely returns the meal to its component-only or unknown path.
+
 The Daily Meal Reflection Panel is rebuilt from saved meals whenever the recorded day changes. It says `recorded meals`, never claims that unrecorded food was not eaten, and does not score, diagnose, prescribe, or set a medical sodium target. Meal data is not yet connected to the main Reflection renderer or workbook export/import.
 
 ## Reflection/NuTuenSai

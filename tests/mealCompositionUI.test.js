@@ -194,6 +194,54 @@ function run() {
     noCondimentModel.getDailySummary().sodium_estimate_coverage
   ], [60, 62, "partial"]);
 
+  const namedDishModel = mealUI.createMealComposerModel({
+    runtime: mealRuntime,
+    storage: createMemoryStorage(),
+    date: TEST_DATE,
+    language: "th",
+    normalizeDate: (value) => String(value || "").trim(),
+    now: () => "2026-08-26T15:00:00.000Z",
+    createId: (prefix) => `${prefix}_named_${++id}`,
+    warn: () => {}
+  });
+  ["rice", "pork_lean", "mixed_vegetables", "egg"].forEach((foodId) => namedDishModel.addFood(foodId));
+  assert.deepEqual(namedDishModel.getNamedDishCandidates().map((candidate) => candidate.candidate_id), ["fried_rice_pork_vegetable_egg"]);
+  assert.equal(namedDishModel.getDraft().namedDishId, "");
+  assert.equal(namedDishModel.getDraftEstimate().estimate_basis, "component_only");
+  assert.equal(namedDishModel.confirmNamedDish("fried_rice_pork_vegetable_egg").namedDishId, "fried_rice_pork_vegetable_egg");
+  assert.equal(namedDishModel.getDraftEstimate().estimate_basis, "dish_inclusive");
+  assert.deepEqual([namedDishModel.getDraftEstimate().estimated_sodium_min_mg, namedDishModel.getDraftEstimate().estimated_sodium_max_mg], [141, 141]);
+  const confirmedNamedDishSave = namedDishModel.saveDraft();
+  assert.equal(confirmedNamedDishSave.meal.named_dish_id, "fried_rice_pork_vegetable_egg");
+  namedDishModel.editMeal(confirmedNamedDishSave.meal.meal_id);
+  assert.equal(namedDishModel.getDraft().namedDishId, "fried_rice_pork_vegetable_egg");
+  namedDishModel.addFood("chicken");
+  assert.equal(namedDishModel.getDraftNamedDishConsistency().status, "evidence_conflict");
+  assert.equal(namedDishModel.getDraftEstimate().estimate_basis, "component_only");
+  const suspendedEvidenceSave = namedDishModel.saveDraft();
+  assert.equal(suspendedEvidenceSave.meal.named_dish_id, "fried_rice_pork_vegetable_egg");
+  assert.equal(mealRuntime.deriveMealEstimate(suspendedEvidenceSave.meal).estimate_basis, "component_only");
+  namedDishModel.editMeal(suspendedEvidenceSave.meal.meal_id);
+  assert.equal(namedDishModel.clearNamedDishConfirmation().namedDishId, "");
+  assert.equal(namedDishModel.getDraftEstimate().estimate_basis, "component_only");
+
+  const rejectedCandidateModel = mealUI.createMealComposerModel({
+    runtime: mealRuntime,
+    storage: createMemoryStorage(),
+    date: TEST_DATE,
+    language: "th",
+    normalizeDate: (value) => String(value || "").trim(),
+    now: () => "2026-08-26T16:00:00.000Z",
+    createId: (prefix) => `${prefix}_rejected_${++id}`,
+    warn: () => {}
+  });
+  ["rice", "mixed_vegetables"].forEach((foodId) => rejectedCandidateModel.addFood(foodId));
+  assert.deepEqual(rejectedCandidateModel.getNamedDishCandidates().map((candidate) => candidate.candidate_id), ["fried_rice_vegetable"]);
+  rejectedCandidateModel.rejectNamedDishCandidate("fried_rice_vegetable");
+  assert.deepEqual(rejectedCandidateModel.getNamedDishCandidates(), []);
+  assert.equal(rejectedCandidateModel.getDraft().namedDishId, "");
+  assert.equal(rejectedCandidateModel.saveDraft().meal.named_dish_id, "");
+
   const evidenceReferences = ["egg", "fish_sauce", "soy_sauce", "oyster_sauce"]
     .map((foodId) => mealRuntime.getFoodReferenceById(foodId));
   assert.deepEqual(evidenceReferences.map((reference) => [reference.food_id, reference.sodium_estimate_min_mg, reference.sodium_estimate_max_mg]), [
@@ -218,11 +266,21 @@ function run() {
     "dailyReflectionTitle",
     "estimateUnknown",
     "searchPlaceholder",
-    "noFoodFound"
+    "noFoodFound",
+    "namedDishSuggestion",
+    "namedDishConfirm",
+    "namedDishReject",
+    "namedDishConfirmed",
+    "namedDishClear",
+    "namedDishSource",
+    "namedDishBasisHelper",
+    "namedDishSoftConflict",
+    "namedDishEvidenceConflict",
+    "namedDishFallback"
   ];
   mealUI.SUPPORTED_LANGUAGES.forEach((language) => {
     localeKeys.forEach((key) => assert.equal(typeof mealUI.TEXT[language][key], "string"));
-    ["showMoreFoods", "selectedComponent", "addSelectedFood", "visualItemCount"].forEach((key) => {
+    ["showMoreFoods", "selectedComponent", "addSelectedFood", "visualItemCount", "namedDishBasis"].forEach((key) => {
       assert.equal(typeof mealUI.TEXT[language][key], "function");
       assert.ok(mealUI.TEXT[language][key](2, 2));
     });

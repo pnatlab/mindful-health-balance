@@ -311,6 +311,39 @@ function run() {
   assert.match(namedDishEstimate.provenance.source_url, /food_id=1554/);
   assert.equal(namedDishEstimate.estimated_sodium_max_mg, 141);
 
+  const namedDishCandidateItems = ["rice", "pork_lean", "mixed_vegetables", "egg"]
+    .map((foodId) => mealRuntime.createMealItem({ food_id: foodId }));
+  assert.deepEqual(
+    mealRuntime.getNamedDishCandidates({ meal_type: "stir_fried", items: namedDishCandidateItems }).map((candidate) => candidate.candidate_id),
+    ["fried_rice_pork_vegetable_egg"]
+  );
+  assert.deepEqual(mealRuntime.getNamedDishCandidates({ meal_type: "stir_fried", items: [mealRuntime.createMealItem({ food_id: "rice" })] }), []);
+  assert.deepEqual(mealRuntime.getNamedDishCandidates({ meal_type: "stir_fried", items: namedDishCandidateItems }).map((candidate) => candidate.match_status), ["compatible"]);
+  assert.equal(mealRuntime.getNamedDishCandidates({ meal_type: "stir_fried", items: namedDishCandidateItems })[0].reason, "structured_components");
+
+  const compatibleNamedDish = {
+    named_dish_id: "fried_rice_vegetable",
+    meal_type: "stir_fried",
+    items: [mealRuntime.createMealItem({ food_id: "rice" }), mealRuntime.createMealItem({ food_id: "mixed_vegetables" })]
+  };
+  assert.equal(mealRuntime.evaluateNamedDishConsistency(compatibleNamedDish).status, "compatible");
+  assert.equal(mealRuntime.deriveMealEstimate(compatibleNamedDish).estimate_basis, "dish_inclusive");
+  const softConflictMeal = { ...compatibleNamedDish, meal_type: "boiled" };
+  assert.equal(mealRuntime.evaluateNamedDishConsistency(softConflictMeal).status, "soft_conflict");
+  assert.equal(mealRuntime.evaluateNamedDishConsistency(softConflictMeal).evidence_usable, true);
+  assert.equal(mealRuntime.deriveMealEstimate(softConflictMeal).estimate_basis, "dish_inclusive");
+  const evidenceConflictMeal = {
+    ...compatibleNamedDish,
+    items: [...compatibleNamedDish.items, mealRuntime.createMealItem({ food_id: "pork_lean" }), mealRuntime.createMealItem({ food_id: "egg" })]
+  };
+  const evidenceConflict = mealRuntime.evaluateNamedDishConsistency(evidenceConflictMeal);
+  assert.equal(evidenceConflict.status, "evidence_conflict");
+  assert.equal(evidenceConflict.evidence_usable, false);
+  assert.deepEqual(evidenceConflict.conflicting_components, ["pork_lean", "egg"]);
+  assert.equal(mealRuntime.deriveMealEstimate(evidenceConflictMeal).estimate_basis, "component_only");
+  assert.deepEqual([mealRuntime.deriveMealEstimate(evidenceConflictMeal).estimated_sodium_min_mg, mealRuntime.deriveMealEstimate(evidenceConflictMeal).estimated_sodium_max_mg], [60, 62]);
+  assert.equal(mealRuntime.deriveMealEstimate(compatibleNamedDish).estimate_basis, "dish_inclusive");
+
   const mealTypeOnlyEstimate = mealRuntime.deriveMealEstimate({ meal_type: "stir_fried", items: [regularItem] });
   const componentsOnlyEstimate = mealRuntime.deriveMealEstimate({ items: [regularItem, eggItem] });
   const unsupportedDishEstimate = mealRuntime.deriveMealEstimate({ named_dish_id: "green_curry_chicken", items: [eggItem] });

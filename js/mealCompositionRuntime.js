@@ -247,6 +247,110 @@
     return NAMED_DISH_REFERENCE_BY_ID.get(asTrimmedText(dishId)) || null;
   }
 
+  function getMealItemReference(item) {
+    return getFoodReferenceById(item?.food_id);
+  }
+
+  function evaluateNamedDishConsistency(meal) {
+    const namedDishId = asTrimmedText(meal?.named_dish_id);
+    const reference = getNamedDishReferenceById(namedDishId);
+    const items = Array.isArray(meal?.items) ? meal.items.map(normalizeMealItem).filter(Boolean) : [];
+    const itemIds = new Set(items.map((item) => item.food_id));
+    const itemReferences = items.map(getMealItemReference).filter(Boolean);
+    const softConflicts = [];
+    const evidenceConflicts = [];
+
+    if (!namedDishId) {
+      return Object.freeze({
+        status: "no_reference",
+        named_dish_id: "",
+        soft_conflicts: Object.freeze([]),
+        evidence_conflicts: Object.freeze([]),
+        matching_components: Object.freeze([]),
+        conflicting_components: Object.freeze([]),
+        evidence_usable: false
+      });
+    }
+    if (!reference) {
+      return Object.freeze({
+        status: "unsupported",
+        named_dish_id: namedDishId,
+        soft_conflicts: Object.freeze([]),
+        evidence_conflicts: Object.freeze(["unapproved_named_dish"]),
+        matching_components: Object.freeze([]),
+        conflicting_components: Object.freeze([]),
+        evidence_usable: false
+      });
+    }
+
+    if (meal?.meal_type && meal.meal_type !== "unspecified" && meal.meal_type !== "stir_fried") {
+      softConflicts.push("meal_type_not_stir_fried");
+    }
+
+    if (reference.dish_id === "fried_rice_vegetable") {
+      const conflicting = itemReferences.filter((itemReference) => itemReference.is_animal_protein || itemReference.category === "egg");
+      if (conflicting.length) {
+        evidenceConflicts.push("vegetable_fried_rice_has_meat_or_egg");
+      }
+    }
+    if (reference.dish_id === "fried_rice_pork_vegetable_egg") {
+      const conflicting = itemReferences.filter((itemReference) => itemReference.is_animal_protein && itemReference.food_id !== "pork_lean");
+      if (conflicting.length) {
+        evidenceConflicts.push("pork_fried_rice_has_other_animal_protein");
+      }
+    }
+
+    const matchingComponents = reference.dish_id === "fried_rice_pork_vegetable_egg"
+      ? ["rice", "pork_lean", "egg"].filter((foodId) => itemIds.has(foodId))
+      : ["rice"].filter((foodId) => itemIds.has(foodId));
+    const conflictingComponents = itemReferences
+      .filter((itemReference) => reference.dish_id === "fried_rice_vegetable"
+        ? itemReference.is_animal_protein || itemReference.category === "egg"
+        : itemReference.is_animal_protein && itemReference.food_id !== "pork_lean")
+      .map((itemReference) => itemReference.food_id);
+    const status = evidenceConflicts.length ? "evidence_conflict" : softConflicts.length ? "soft_conflict" : "compatible";
+
+    return Object.freeze({
+      status,
+      named_dish_id: reference.dish_id,
+      soft_conflicts: Object.freeze(softConflicts),
+      evidence_conflicts: Object.freeze(evidenceConflicts),
+      matching_components: Object.freeze(matchingComponents),
+      conflicting_components: Object.freeze(conflictingComponents),
+      evidence_usable: evidenceConflicts.length === 0
+    });
+  }
+
+  function getNamedDishCandidates(meal) {
+    const items = Array.isArray(meal?.items) ? meal.items.map(normalizeMealItem).filter(Boolean) : [];
+    const itemIds = new Set(items.map((item) => item.food_id));
+    const itemReferences = items.map(getMealItemReference).filter(Boolean);
+    const hasVegetable = itemReferences.some((reference) => reference.category === "vegetable");
+    const hasAnimalProtein = itemReferences.some((reference) => reference.is_animal_protein);
+    const hasEgg = itemReferences.some((reference) => reference.category === "egg");
+    const candidates = [];
+
+    if (itemIds.has("rice") && itemIds.has("pork_lean") && hasVegetable && itemIds.has("egg")) {
+      candidates.push(Object.freeze({
+        candidate_id: "fried_rice_pork_vegetable_egg",
+        match_status: "compatible",
+        matching_components: Object.freeze(["rice", "pork_lean", "vegetable", "egg"]),
+        conflicting_components: Object.freeze([]),
+        reason: "structured_components"
+      }));
+    }
+    if (itemIds.has("rice") && hasVegetable && !hasAnimalProtein && !hasEgg) {
+      candidates.push(Object.freeze({
+        candidate_id: "fried_rice_vegetable",
+        match_status: "compatible",
+        matching_components: Object.freeze(["rice", "vegetable"]),
+        conflicting_components: Object.freeze([]),
+        reason: "structured_components"
+      }));
+    }
+    return Object.freeze(candidates);
+  }
+
   function getFoodDisplayName(reference, language = "th") {
     if (!reference) return "";
     const key = language === "zh" ? "display_name_zh" : language === "en" ? "display_name_en" : "display_name_th";
@@ -370,7 +474,8 @@
   function deriveMealEstimate(meal) {
     const namedDishId = asTrimmedText(meal?.named_dish_id);
     const namedDish = getNamedDishReferenceById(namedDishId);
-    if (namedDish) {
+    const namedDishConsistency = evaluateNamedDishConsistency(meal);
+    if (namedDish && namedDishConsistency.evidence_usable) {
       return {
         estimated_sodium_min_mg: namedDish.sodium_estimate_min_mg,
         estimated_sodium_max_mg: namedDish.sodium_estimate_max_mg,
@@ -677,6 +782,8 @@
     getFoodReferenceById,
     getNamedDishReferenceLibrary,
     getNamedDishReferenceById,
+    getNamedDishCandidates,
+    evaluateNamedDishConsistency,
     getFoodDisplayName,
     normalizeFoodReference,
     normalizeSodiumRange,
