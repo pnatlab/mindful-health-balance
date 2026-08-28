@@ -42,6 +42,7 @@ Latest refinements include:
 
 - a calm, collapsible Meal Composer inside Today for recording multiple optional meals without turning the app into a nutrition dashboard
 - an experimental, optional local Vision helper that accepts PNG, JPEG, WebP, HEIC, and HEIF, then proposes visible Meal Type/components for human review before adding anything to the draft
+- a small read-only local Vision vocabulary view that shows observed labels, counts, and mapping status without adding Food References or changing meals
 - separate local Meal records with create, edit, and gentle targeted delete behavior; meal data does not expand `Daily_Log`
 - hybrid portions, optional preparation, first-class condiments, and source-bound sodium ranges with incomplete evidence shown as unknown or partial rather than zero
 - a Dynamic Daily Meal Reflection Panel derived from saved meals only, using recorded-fact language without scores, guilt, or medical targets
