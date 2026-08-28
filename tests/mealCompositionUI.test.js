@@ -28,6 +28,20 @@ function run() {
   });
 
   const library = model.getLibrary();
+  assert.deepEqual(mealUI.MEAL_TYPE_VISUAL_TONES, {
+    unspecified: "cream",
+    stir_fried: "leaf-gold",
+    boiled: "orange",
+    curry: "coral",
+    fried: "amber",
+    grilled: "terracotta",
+    steamed: "soft-yellow",
+    broth_based: "broth-green",
+    minimally_prepared: "fresh-green",
+    other: "warm-neutral"
+  }, "Meal Type visual tones remain deterministic and presentation-only");
+  assert.deepEqual(Object.keys(mealUI.MEAL_TYPE_VISUAL_TONES), Object.keys(mealUI.TEXT.th.mealTypes), "visual tones cover the existing canonical taxonomy exactly");
+  assert.deepEqual(Object.keys(mealUI.MEAL_TYPE_ILLUSTRATIONS), Object.keys(mealUI.TEXT.th.mealTypes), "existing illustrations still cover the same taxonomy");
   let foodDisclosure = mealUI.createFoodItemsDisclosureState(0);
   assert.equal(foodDisclosure.expanded, false, "a new empty composer keeps food items collapsed");
   foodDisclosure = mealUI.reduceFoodItemsDisclosureState(foodDisclosure, { type: "toggle" });

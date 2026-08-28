@@ -577,6 +577,20 @@
     other: '<svg viewBox="0 0 64 44" aria-hidden="true"><ellipse cx="31" cy="28" rx="20" ry="9"/><path d="M12 28h38"/><circle cx="23" cy="25" r="2"/><circle cx="32" cy="22" r="2"/><circle cx="39" cy="27" r="2"/></svg>'
   });
 
+  // Color is a presentation cue for meal form, never a health or nutrition judgment.
+  const MEAL_TYPE_VISUAL_TONES = Object.freeze({
+    unspecified: "cream",
+    stir_fried: "leaf-gold",
+    boiled: "orange",
+    curry: "coral",
+    fried: "amber",
+    grilled: "terracotta",
+    steamed: "soft-yellow",
+    broth_based: "broth-green",
+    minimally_prepared: "fresh-green",
+    other: "warm-neutral"
+  });
+
   function normalizeLanguage(language) {
     return SUPPORTED_LANGUAGES.includes(language) ? language : "th";
   }
@@ -1192,7 +1206,7 @@
       const draft = model.getDraft();
       const mealTypes = Object.keys(copy.mealTypes);
       const choices = mealTypes.map((type) => `
-        <button type="button" class="meal-type-choice${draft.mealType === type ? " is-active" : ""}" data-meal-type-choice="${escapeHtml(type)}" aria-pressed="${draft.mealType === type}">
+        <button type="button" class="meal-type-choice meal-type-choice--${escapeHtml(MEAL_TYPE_VISUAL_TONES[type] || MEAL_TYPE_VISUAL_TONES.other)}${draft.mealType === type ? " is-active" : ""}" data-meal-type-choice="${escapeHtml(type)}" aria-pressed="${draft.mealType === type}">
           <span class="meal-type-illustration">${MEAL_TYPE_ILLUSTRATIONS[type] || MEAL_TYPE_ILLUSTRATIONS.other}</span>
           <span class="meal-type-label">${escapeHtml(copy.mealTypes[type])}</span>
           <span class="meal-type-selected" aria-hidden="true">✓</span>
@@ -1963,6 +1977,7 @@
     SUPPORTED_LANGUAGES,
     TEXT,
     MEAL_TYPE_ILLUSTRATIONS,
+    MEAL_TYPE_VISUAL_TONES,
     DEFAULT_COMPONENT_RESULT_LIMIT,
     MAX_MEAL_VISUAL_TOKENS,
     normalizeLanguage,

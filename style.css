@@ -171,14 +171,34 @@
 }
 
 /* Meal Composer keeps saved daily facts visually separate from the unsaved draft. */
-.meal-composer-card {
+.glass-card.meal-composer-card {
+  --meal-selected-inner: rgba(255, 255, 255, 0.92);
   display: grid;
   gap: 18px;
   margin: 18px 0;
   overflow: hidden;
+  border-color: rgba(170, 157, 143, 0.3);
   background:
-    radial-gradient(circle at 92% 8%, rgba(184, 223, 240, 0.2), transparent 28%),
-    var(--card-bg);
+    linear-gradient(116deg, transparent 0 24%, rgba(140, 157, 171, 0.07) 24.4%, transparent 25.1% 66%, rgba(190, 157, 126, 0.055) 66.4%, transparent 67.1%),
+    linear-gradient(28deg, transparent 0 42%, rgba(152, 169, 181, 0.05) 42.3%, transparent 43% 81%, rgba(196, 174, 148, 0.04) 81.4%, transparent 82%),
+    radial-gradient(circle at 88% 8%, rgba(225, 236, 240, 0.44), transparent 28%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(249, 249, 246, 0.91));
+  box-shadow:
+    0 18px 48px rgba(77, 95, 113, 0.11),
+    0 3px 12px rgba(128, 107, 84, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.meal-composer-card .meal-type-picker,
+.meal-composer-card .meal-picker,
+.meal-composer-card .meal-draft,
+.meal-composer-card .meal-saved {
+  background: rgba(255, 255, 255, 0.77);
+  box-shadow: 0 6px 18px rgba(87, 96, 104, 0.045);
+}
+
+.meal-composer-card .meal-type-picker {
+  border-color: rgba(184, 155, 117, 0.22);
 }
 
 .meal-composer-header,
@@ -818,14 +838,19 @@
 }
 
 .meal-type-choice {
+  --meal-tone-bg: var(--button-bg);
+  --meal-tone-border: var(--border-soft);
+  --meal-tone-accent: var(--accent);
+  --meal-tone-check: #ffffff;
+  --meal-tone-selected-bg: var(--active-bg);
   position: relative;
   display: grid;
   min-height: 96px;
   padding: 10px 9px 9px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--meal-tone-border);
   border-radius: 8px;
   color: var(--text-soft);
-  background: var(--button-bg);
+  background: var(--meal-tone-bg);
   font-size: 0.84rem;
   font-weight: 700;
   text-align: center;
@@ -838,8 +863,8 @@
   width: 62px;
   height: 44px;
   place-items: center;
-  color: var(--accent);
-  opacity: 0.76;
+  color: var(--meal-tone-accent);
+  opacity: 0.82;
 }
 
 .meal-type-illustration svg {
@@ -868,8 +893,8 @@
   height: 17px;
   place-items: center;
   border-radius: 50%;
-  color: var(--active-text);
-  background: var(--accent);
+  color: var(--meal-tone-check);
+  background: var(--meal-tone-accent);
   font-size: 0.7rem;
   line-height: 1;
   opacity: 0;
@@ -879,18 +904,21 @@
 
 .meal-type-choice:hover,
 .meal-type-choice:focus-visible {
-  color: var(--active-text);
-  border-color: var(--accent);
-  background: var(--button-soft-bg);
-  box-shadow: 0 6px 18px rgba(91, 137, 211, 0.12);
+  color: var(--text-main);
+  border-color: var(--meal-tone-accent);
+  background: var(--meal-tone-selected-bg);
+  box-shadow: 0 6px 18px rgba(117, 91, 57, 0.1);
   transform: translateY(-1px);
 }
 
 .meal-type-choice.is-active {
-  color: var(--active-text);
-  border-color: var(--accent);
-  background: var(--active-bg);
-  box-shadow: 0 6px 20px rgba(91, 137, 211, 0.14);
+  color: var(--text-main);
+  border-color: var(--meal-tone-accent);
+  background: var(--meal-tone-selected-bg);
+  box-shadow:
+    0 0 0 2px var(--meal-selected-inner),
+    0 0 0 4px var(--meal-tone-accent),
+    0 8px 20px rgba(105, 80, 51, 0.12);
 }
 
 .meal-type-choice.is-active .meal-type-illustration {
@@ -900,6 +928,77 @@
 .meal-type-choice.is-active .meal-type-selected {
   opacity: 1;
   transform: scale(1);
+}
+
+.meal-type-choice--cream {
+  --meal-tone-bg: rgba(255, 249, 230, 0.72);
+  --meal-tone-border: rgba(190, 151, 74, 0.28);
+  --meal-tone-accent: #a87c28;
+  --meal-tone-check: #ffffff;
+  --meal-tone-selected-bg: rgba(255, 244, 207, 0.94);
+}
+
+.meal-type-choice--leaf-gold {
+  --meal-tone-bg: rgba(244, 248, 221, 0.76);
+  --meal-tone-border: rgba(137, 153, 62, 0.28);
+  --meal-tone-accent: #71872d;
+  --meal-tone-selected-bg: rgba(235, 244, 191, 0.94);
+}
+
+.meal-type-choice--orange {
+  --meal-tone-bg: rgba(255, 241, 221, 0.76);
+  --meal-tone-border: rgba(202, 124, 53, 0.27);
+  --meal-tone-accent: #bc6928;
+  --meal-tone-selected-bg: rgba(255, 228, 190, 0.94);
+}
+
+.meal-type-choice--coral {
+  --meal-tone-bg: rgba(255, 232, 226, 0.76);
+  --meal-tone-border: rgba(202, 91, 76, 0.27);
+  --meal-tone-accent: #bd5748;
+  --meal-tone-selected-bg: rgba(255, 216, 207, 0.94);
+}
+
+.meal-type-choice--amber {
+  --meal-tone-bg: rgba(255, 242, 218, 0.76);
+  --meal-tone-border: rgba(211, 143, 39, 0.28);
+  --meal-tone-accent: #b87620;
+  --meal-tone-selected-bg: rgba(255, 228, 177, 0.94);
+}
+
+.meal-type-choice--terracotta {
+  --meal-tone-bg: rgba(252, 235, 223, 0.76);
+  --meal-tone-border: rgba(178, 94, 57, 0.27);
+  --meal-tone-accent: #a85b38;
+  --meal-tone-selected-bg: rgba(246, 217, 198, 0.94);
+}
+
+.meal-type-choice--soft-yellow {
+  --meal-tone-bg: rgba(255, 250, 219, 0.78);
+  --meal-tone-border: rgba(183, 154, 48, 0.27);
+  --meal-tone-accent: #967a19;
+  --meal-tone-selected-bg: rgba(249, 240, 176, 0.94);
+}
+
+.meal-type-choice--broth-green {
+  --meal-tone-bg: rgba(231, 246, 226, 0.78);
+  --meal-tone-border: rgba(83, 147, 91, 0.27);
+  --meal-tone-accent: #4e8657;
+  --meal-tone-selected-bg: rgba(211, 237, 204, 0.94);
+}
+
+.meal-type-choice--fresh-green {
+  --meal-tone-bg: rgba(226, 245, 228, 0.8);
+  --meal-tone-border: rgba(61, 142, 81, 0.28);
+  --meal-tone-accent: #3f7f4f;
+  --meal-tone-selected-bg: rgba(204, 235, 210, 0.94);
+}
+
+.meal-type-choice--warm-neutral {
+  --meal-tone-bg: rgba(246, 244, 224, 0.76);
+  --meal-tone-border: rgba(139, 138, 91, 0.25);
+  --meal-tone-accent: #777649;
+  --meal-tone-selected-bg: rgba(235, 233, 197, 0.92);
 }
 
 .meal-category-chip {
@@ -1473,16 +1572,111 @@
 }
 
 body[data-theme="dark"] .meal-composer-card {
+  --meal-selected-inner: rgba(17, 16, 30, 0.96);
+  border-color: rgba(195, 183, 166, 0.16);
   background:
-    radial-gradient(circle at 92% 8%, rgba(142, 167, 255, 0.12), transparent 30%),
-    var(--card-bg);
+    linear-gradient(116deg, transparent 0 25%, rgba(205, 213, 216, 0.035) 25.4%, transparent 26% 67%, rgba(182, 151, 121, 0.03) 67.4%, transparent 68%),
+    linear-gradient(28deg, transparent 0 43%, rgba(190, 200, 207, 0.028) 43.4%, transparent 44% 82%, rgba(172, 144, 117, 0.025) 82.4%, transparent 83%),
+    radial-gradient(circle at 88% 8%, rgba(104, 119, 135, 0.12), transparent 30%),
+    linear-gradient(145deg, rgba(27, 27, 40, 0.96), rgba(17, 17, 29, 0.94));
+  box-shadow:
+    0 20px 54px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+body[data-theme="dark"] .meal-composer-card .meal-type-picker,
+body[data-theme="dark"] .meal-composer-card .meal-picker,
+body[data-theme="dark"] .meal-composer-card .meal-draft,
+body[data-theme="dark"] .meal-composer-card .meal-saved {
+  border-color: rgba(205, 195, 181, 0.12);
+  background: rgba(25, 23, 38, 0.82);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.14);
 }
 
 body[data-theme="dark"] .meal-food-option,
-body[data-theme="dark"] .meal-type-choice,
 body[data-theme="dark"] .meal-draft-item,
 body[data-theme="dark"] .meal-saved-item {
   background: rgba(31, 27, 52, 0.62);
+}
+
+body[data-theme="dark"] .meal-type-choice--cream {
+  --meal-tone-bg: rgba(83, 69, 38, 0.42);
+  --meal-tone-border: rgba(202, 166, 83, 0.3);
+  --meal-tone-accent: #d2aa54;
+  --meal-tone-check: #211a0b;
+  --meal-tone-selected-bg: rgba(111, 87, 36, 0.58);
+}
+
+body[data-theme="dark"] .meal-type-choice--leaf-gold {
+  --meal-tone-bg: rgba(58, 67, 31, 0.44);
+  --meal-tone-border: rgba(151, 169, 79, 0.3);
+  --meal-tone-accent: #a6b75b;
+  --meal-tone-check: #15200d;
+  --meal-tone-selected-bg: rgba(73, 88, 34, 0.6);
+}
+
+body[data-theme="dark"] .meal-type-choice--orange {
+  --meal-tone-bg: rgba(83, 52, 29, 0.46);
+  --meal-tone-border: rgba(216, 135, 67, 0.3);
+  --meal-tone-accent: #dd9454;
+  --meal-tone-check: #241206;
+  --meal-tone-selected-bg: rgba(109, 63, 28, 0.62);
+}
+
+body[data-theme="dark"] .meal-type-choice--coral {
+  --meal-tone-bg: rgba(81, 41, 39, 0.46);
+  --meal-tone-border: rgba(214, 111, 99, 0.3);
+  --meal-tone-accent: #df8175;
+  --meal-tone-check: #ffffff;
+  --meal-tone-selected-bg: rgba(108, 48, 44, 0.62);
+}
+
+body[data-theme="dark"] .meal-type-choice--amber {
+  --meal-tone-bg: rgba(82, 57, 28, 0.46);
+  --meal-tone-border: rgba(219, 151, 54, 0.3);
+  --meal-tone-accent: #daa044;
+  --meal-tone-check: #251805;
+  --meal-tone-selected-bg: rgba(110, 72, 27, 0.62);
+}
+
+body[data-theme="dark"] .meal-type-choice--terracotta {
+  --meal-tone-bg: rgba(75, 43, 33, 0.46);
+  --meal-tone-border: rgba(194, 107, 73, 0.3);
+  --meal-tone-accent: #cb7957;
+  --meal-tone-check: #ffffff;
+  --meal-tone-selected-bg: rgba(100, 51, 35, 0.62);
+}
+
+body[data-theme="dark"] .meal-type-choice--soft-yellow {
+  --meal-tone-bg: rgba(75, 68, 31, 0.45);
+  --meal-tone-border: rgba(196, 169, 62, 0.3);
+  --meal-tone-accent: #c8ae4d;
+  --meal-tone-check: #201b06;
+  --meal-tone-selected-bg: rgba(96, 85, 33, 0.62);
+}
+
+body[data-theme="dark"] .meal-type-choice--broth-green {
+  --meal-tone-bg: rgba(39, 65, 44, 0.46);
+  --meal-tone-border: rgba(95, 159, 105, 0.3);
+  --meal-tone-accent: #79ae80;
+  --meal-tone-check: #102016;
+  --meal-tone-selected-bg: rgba(46, 84, 52, 0.62);
+}
+
+body[data-theme="dark"] .meal-type-choice--fresh-green {
+  --meal-tone-bg: rgba(35, 66, 43, 0.46);
+  --meal-tone-border: rgba(79, 161, 98, 0.3);
+  --meal-tone-accent: #6cad79;
+  --meal-tone-check: #0c1f12;
+  --meal-tone-selected-bg: rgba(40, 87, 50, 0.62);
+}
+
+body[data-theme="dark"] .meal-type-choice--warm-neutral {
+  --meal-tone-bg: rgba(61, 61, 41, 0.44);
+  --meal-tone-border: rgba(148, 148, 99, 0.26);
+  --meal-tone-accent: #a7a56c;
+  --meal-tone-check: #1b1b0c;
+  --meal-tone-selected-bg: rgba(78, 78, 45, 0.58);
 }
 
 body[data-theme="dark"] .meal-named-dish-card {
