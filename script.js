@@ -13,6 +13,7 @@ const MEAL_VISION_IMAGE_NORMALIZER = window.MHBMealVisionImageNormalizer;
 const MEAL_VISION_REVIEW = window.MHBMealVisionReview;
 const IMAGE_PREP_BRIDGE = window.MHBImagePrepBridge;
 const LOCAL_RUNTIME_GUARD = window.MHBLocalRuntimeGuard;
+const VISION_OBSERVATION_VOCABULARY = window.MHBVisionObservationVocabulary;
 const MEAL_RECORDS_KEY = MEAL_COMPOSITION_RUNTIME?.MEAL_RECORDS_KEY || "mhb_meal_records_v1";
 const USER_INTENTION_PROFILE_EXPORT_COLUMNS = [
   "Profile_Schema_Version",
@@ -3530,6 +3531,7 @@ function initializeMealComposerUI() {
     visionReview: MEAL_VISION_REVIEW,
     imagePrepBridgeFactory: IMAGE_PREP_BRIDGE?.createImagePrepBridge,
     localRuntimeGuard: LOCAL_RUNTIME_GUARD,
+    visionVocabulary: VISION_OBSERVATION_VOCABULARY,
     visionProviderFactory: async () => {
       const providerModule = await import("./js/localVisionProvider.mjs");
       return providerModule.createLocalOllamaVisionProvider();

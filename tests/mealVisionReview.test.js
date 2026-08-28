@@ -4,6 +4,7 @@ const path = require("node:path");
 const runtime = require("../js/mealCompositionRuntime.js");
 const mealUI = require("../js/mealCompositionUI.js");
 const visionReview = require("../js/mealVisionReview.js");
+const vocabulary = require("../js/visionObservationVocabulary.js");
 
 function createMemoryStorage() {
   const values = new Map();
@@ -50,6 +51,7 @@ assert.deepEqual(visionReview.classifyVisionComponent("rice"), {
 assert.equal(visionReview.classifyVisionComponent("pork").status, "needs_user_choice");
 assert.equal(visionReview.classifyVisionComponent("seafood").status, "needs_user_choice");
 assert.equal(visionReview.classifyVisionComponent("scallions").status, "unsupported");
+assert.deepEqual(visionReview.createObservedVocabularyEntries(observation({ visible_components: [{ label: "rice" }, { label: "seafood" }, { label: "scallions" }] }), vocabulary).map((entry) => entry.mapping_status), ["mapped", "needs_review", "unsupported"]);
 
 const eggReview = review.components.find((entry) => entry.label === "egg");
 eggReview.accepted = false;

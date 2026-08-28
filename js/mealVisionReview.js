@@ -81,6 +81,19 @@
     };
   }
 
+  function createObservedVocabularyEntries(observation, vocabulary = globalScope.MHBVisionObservationVocabulary) {
+    if (!vocabulary?.createObservedVocabularyEntry) return Object.freeze([]);
+    const components = Array.isArray(observation?.visible_components) ? observation.visible_components : [];
+    return Object.freeze(components.map((entry) => {
+      const mapping = classifyVisionComponent(entry?.label);
+      const mappingStatus = mapping.status === "safe_exact" ? "mapped" : mapping.status === "needs_user_choice" ? "needs_review" : "unsupported";
+      return vocabulary.createObservedVocabularyEntry(mapping.label, {
+        mapping_status: mappingStatus,
+        mapped_food_reference_id: mappingStatus === "mapped" ? mapping.foodId : null
+      });
+    }).filter(Boolean));
+  }
+
   function getAcceptedMealType(review) {
     return review?.mealTypes?.find((entry) => entry.accepted)?.mealType || "";
   }
@@ -128,6 +141,7 @@
   const api = Object.freeze({
     classifyVisionComponent,
     createVisionReviewModel,
+    createObservedVocabularyEntries,
     getAcceptedMealType,
     getAcceptedFoodIds,
     applyVisionReviewToDraft

@@ -883,6 +883,8 @@
     const visionProviderFactory = options.visionProviderFactory || null;
     const imagePrepBridgeFactory = options.imagePrepBridgeFactory || globalScope.MHBImagePrepBridge?.createImagePrepBridge || null;
     const localRuntimeGuard = options.localRuntimeGuard || globalScope.MHBLocalRuntimeGuard || null;
+    const visionVocabulary = options.visionVocabulary || globalScope.MHBVisionObservationVocabulary || null;
+    const visionVocabularyEvidenceStore = options.visionVocabularyEvidenceStore || visionVocabulary?.createVisionVocabularyEvidenceStore?.(options.storage) || null;
     const runtimeEnvironment = localRuntimeGuard?.detectLocalRuntime?.(globalScope.location) || { isFileMode: false, supportsVisionAndImagePrep: true };
     const confirmAction = options.confirmAction || ((message) => globalScope.confirm(message));
     const scheduleFrame = options.scheduleFrame || ((callback) => {
@@ -957,6 +959,11 @@
       });
     }
 
+    function recordVisionVocabulary(observation) {
+      if (!visionVocabularyEvidenceStore || !visionReview?.createObservedVocabularyEntries) return;
+      visionVocabularyEvidenceStore.recordMany(visionReview.createObservedVocabularyEntries(observation, visionVocabulary));
+    }
+
     async function observeNormalizedVisionImage(image, requestId, file = image) {
       if (requestId !== visionRequestId) return;
       if (!visionProviderFactory || !visionReview) {
@@ -996,6 +1003,7 @@
         visionSession.phase = "review";
         visionSession.observation = result.observation;
         visionSession.review = visionReview.createVisionReviewModel(result.observation);
+        recordVisionVocabulary(result.observation);
         render();
       } catch (error) {
         if (requestId !== visionRequestId) return;
