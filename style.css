@@ -302,6 +302,87 @@
   line-height: 1.55;
 }
 
+.meal-picker.is-collapsed,
+.meal-draft.is-collapsed {
+  gap: 0;
+  padding: 12px 14px;
+}
+
+.meal-picker-heading,
+.meal-draft-disclosure-heading {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.meal-picker-heading > div:first-child,
+.meal-draft-disclosure-heading > div:first-child {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.meal-picker-count {
+  flex: 0 0 auto;
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.meal-picker-toggle,
+.meal-draft-toggle {
+  display: inline-grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  color: var(--text-soft);
+  background: transparent;
+}
+
+.meal-picker-toggle::after,
+.meal-draft-toggle::after {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  content: "";
+  transform: rotate(45deg) translate(-2px, -2px);
+}
+
+.meal-picker-toggle.is-expanded::after,
+.meal-draft-toggle.is-expanded::after {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.meal-picker-toggle:hover,
+.meal-picker-toggle:focus-visible,
+.meal-draft-toggle:hover,
+.meal-draft-toggle:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.meal-picker-content {
+  display: grid;
+  gap: 14px;
+}
+
+.meal-draft-content {
+  display: grid;
+  gap: 14px;
+}
+
+.meal-picker-helper {
+  margin: -3px 0 0;
+  color: var(--text-soft);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
 .meal-vision-helper,
 .meal-vision-review,
 .meal-vision-audit {
@@ -1466,6 +1547,12 @@ body[data-theme="dark"] .meal-daily-reflection {
 
   .meal-composer-toggle {
     min-width: 0;
+  }
+
+  .meal-picker-heading,
+  .meal-draft-disclosure-heading {
+    align-items: center;
+    flex-direction: row;
   }
 
   .meal-food-grid {

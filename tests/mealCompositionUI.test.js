@@ -28,6 +28,46 @@ function run() {
   });
 
   const library = model.getLibrary();
+  let foodDisclosure = mealUI.createFoodItemsDisclosureState(0);
+  assert.equal(foodDisclosure.expanded, false, "a new empty composer keeps food items collapsed");
+  foodDisclosure = mealUI.reduceFoodItemsDisclosureState(foodDisclosure, { type: "toggle" });
+  assert.equal(foodDisclosure.expanded, true, "manual toggle opens food items");
+  foodDisclosure = mealUI.reduceFoodItemsDisclosureState(foodDisclosure, { type: "toggle" });
+  assert.equal(foodDisclosure.expanded, false, "manual toggle closes food items");
+  foodDisclosure = mealUI.reduceFoodItemsDisclosureState(foodDisclosure, { type: "meal_type_selected" });
+  assert.equal(foodDisclosure.expanded, true, "meal type selection opens food items");
+  foodDisclosure = mealUI.reduceFoodItemsDisclosureState(foodDisclosure, { type: "unrelated_image_selected" });
+  assert.equal(foodDisclosure.expanded, true, "image selection does not collapse an open section");
+  foodDisclosure = mealUI.reduceFoodItemsDisclosureState(foodDisclosure, { type: "reset", draftItemCount: 0 });
+  assert.equal(foodDisclosure.expanded, false, "a clean reset may return food items to the compact state");
+  assert.equal(mealUI.createFoodItemsDisclosureState(2).expanded, true, "a loaded draft keeps food items accessible");
+  assert.equal(mealUI.hasMeaningfulVisionReview({ mealTypes: [], components: [] }), false);
+  assert.equal(mealUI.hasMeaningfulVisionReview({ mealTypes: [{ mealType: "stir_fried" }], components: [] }), true);
+  assert.equal(mealUI.hasMeaningfulVisionReview({ mealTypes: [], components: [{ label: "rice" }] }), true);
+  let compositionDisclosure = mealUI.createCurrentCompositionDisclosureState(0);
+  assert.equal(compositionDisclosure.expanded, false, "a clean draft keeps current composition collapsed");
+  compositionDisclosure = mealUI.reduceCurrentCompositionDisclosureState(compositionDisclosure, { type: "meal_type_selected" });
+  assert.equal(compositionDisclosure.expanded, false, "meal type intent does not open current composition");
+  compositionDisclosure = mealUI.reduceCurrentCompositionDisclosureState(compositionDisclosure, { type: "unrelated_image_selected" });
+  assert.equal(compositionDisclosure.expanded, false, "image selection does not open current composition");
+  compositionDisclosure = mealUI.reduceCurrentCompositionDisclosureState(compositionDisclosure, { type: "vision_review_ready" });
+  assert.equal(compositionDisclosure.expanded, false, "a Vision proposal does not open current composition");
+  compositionDisclosure = mealUI.reduceCurrentCompositionDisclosureState(compositionDisclosure, { type: "draft_item_added", draftItemCount: 1 });
+  assert.equal(compositionDisclosure.expanded, true, "the first actual draft item opens current composition");
+  compositionDisclosure = mealUI.reduceCurrentCompositionDisclosureState(compositionDisclosure, { type: "toggle" });
+  assert.equal(compositionDisclosure.expanded, false, "current composition can be collapsed manually");
+  compositionDisclosure = mealUI.reduceCurrentCompositionDisclosureState(compositionDisclosure, { type: "vision_items_applied", draftItemCount: 1 });
+  assert.equal(compositionDisclosure.expanded, true, "a human-applied Vision item opens current composition");
+  compositionDisclosure = mealUI.reduceCurrentCompositionDisclosureState(compositionDisclosure, { type: "meal_type_selected" });
+  assert.equal(compositionDisclosure.expanded, true, "later events do not collapse current composition");
+  assert.equal(mealUI.createCurrentCompositionDisclosureState(2).expanded, true, "an existing draft keeps current composition accessible");
+  compositionDisclosure = mealUI.reduceCurrentCompositionDisclosureState(compositionDisclosure, { type: "reset", draftItemCount: 0 });
+  assert.equal(compositionDisclosure.expanded, false, "a clean reset returns current composition to the compact state");
+  for (const language of ["th", "en", "zh"]) {
+    assert.ok(mealUI.TEXT[language].foodItemCount(2));
+    assert.ok(mealUI.TEXT[language].expandFoodPicker);
+    assert.ok(mealUI.TEXT[language].collapseFoodPicker);
+  }
   const initialComponents = mealUI.filterFoodReferences(library, { category: "grain", language: "th" });
   assert.equal(initialComponents.results.length, 3);
   assert.equal(initialComponents.remaining, 0);
@@ -78,6 +118,12 @@ function run() {
   model.setDraftMeta({ mealType: "stir_fried", condimentKnowledge: "unknown" });
   assert.equal(model.getDraft().mealType, "stir_fried");
   assert.equal(model.getDraft().condimentKnowledge, "unknown");
+  const draftBeforeDisclosureToggle = model.getDraft();
+  foodDisclosure = mealUI.reduceFoodItemsDisclosureState(foodDisclosure, { type: "toggle" });
+  assert.deepEqual(model.getDraft(), draftBeforeDisclosureToggle, "collapsing presentation leaves meal type and condiment state untouched");
+  compositionDisclosure = mealUI.reduceCurrentCompositionDisclosureState(compositionDisclosure, { type: "toggle" });
+  assert.deepEqual(model.getDraft(), draftBeforeDisclosureToggle, "current composition disclosure does not mutate the draft");
+  assert.equal(model.getMeals().length, 0, "collapsing presentation does not save a meal");
 
   const egg = model.addFood("egg");
   const rice = model.addFood("rice");

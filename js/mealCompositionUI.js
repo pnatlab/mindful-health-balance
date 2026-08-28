@@ -81,6 +81,9 @@
       namedDishFallback: "มื้อนี้ยังเก็บได้ตามปกติ และจะอ่านจากรายการที่บันทึกไว้เท่าที่มีข้อมูลรองรับ",
       chooseFood: "มีอะไรอยู่ในมื้อนี้บ้าง",
       chooseFoodHelper: "เลือกเท่าที่รู้ ไม่จำเป็นต้องครบทุกอย่าง",
+      foodItemCount: (count) => `${count} รายการ`,
+      expandFoodPicker: "แสดงรายการอาหาร",
+      collapseFoodPicker: "พับรายการอาหาร",
       searchLabel: "ค้นหาอาหารหรือเครื่องปรุง",
       searchPlaceholder: "ค้นหา เช่น ไข่ ผัก น้ำปลา",
       allCategories: "ทั้งหมด",
@@ -250,6 +253,9 @@
       namedDishFallback: "You can still keep the meal. MHB will read supported recorded items instead.",
       chooseFood: "What was in this meal?",
       chooseFoodHelper: "Choose what you know. It does not need to be complete.",
+      foodItemCount: (count) => `${count} item${count === 1 ? "" : "s"}`,
+      expandFoodPicker: "Show meal items",
+      collapseFoodPicker: "Collapse meal items",
       searchLabel: "Search foods or condiments",
       searchPlaceholder: "Search, for example egg, vegetables, fish sauce",
       allCategories: "All",
@@ -419,6 +425,9 @@
       namedDishFallback: "这餐仍可正常保存；MHB 会按有资料支持的已记录条目来读取。",
       chooseFood: "这一餐里有什么？",
       chooseFoodHelper: "按知道的部分选择，不需要记全。",
+      foodItemCount: (count) => `${count} 项`,
+      expandFoodPicker: "显示餐食项目",
+      collapseFoodPicker: "收起餐食项目",
       searchLabel: "搜索食物或调味品",
       searchPlaceholder: "例如：鸡蛋、蔬菜、鱼露",
       allCategories: "全部",
@@ -900,6 +909,34 @@
     return Array.isArray(items) ? items.filter((item) => item?.food_id === foodId).length : 0;
   }
 
+  function createFoodItemsDisclosureState(draftItemCount = 0) {
+    return Object.freeze({ expanded: Number(draftItemCount) > 0 });
+  }
+
+  function hasMeaningfulVisionReview(review) {
+    return Boolean(review && ((Array.isArray(review.mealTypes) && review.mealTypes.length) || (Array.isArray(review.components) && review.components.length)));
+  }
+
+  function reduceFoodItemsDisclosureState(state, action = {}) {
+    const current = Boolean(state?.expanded);
+    if (action.type === "toggle") return Object.freeze({ expanded: !current });
+    if (action.type === "reset") return createFoodItemsDisclosureState(action.draftItemCount);
+    if (["meal_type_selected", "vision_review_ready", "draft_loaded"].includes(action.type)) return Object.freeze({ expanded: true });
+    return Object.freeze({ expanded: current });
+  }
+
+  function createCurrentCompositionDisclosureState(draftItemCount = 0) {
+    return Object.freeze({ expanded: Number(draftItemCount) > 0 });
+  }
+
+  function reduceCurrentCompositionDisclosureState(state, action = {}) {
+    const current = Boolean(state?.expanded);
+    if (action.type === "toggle") return Object.freeze({ expanded: !current });
+    if (action.type === "reset") return createCurrentCompositionDisclosureState(action.draftItemCount);
+    if (["draft_item_added", "vision_items_applied", "draft_loaded"].includes(action.type) && Number(action.draftItemCount) > 0) return Object.freeze({ expanded: true });
+    return Object.freeze({ expanded: current });
+  }
+
   function renderOptions(entries, selected) {
     return Object.entries(entries).map(([value, label]) => `
       <option value="${escapeHtml(value)}"${value === selected ? " selected" : ""}>${escapeHtml(label)}</option>
@@ -946,6 +983,8 @@
     let imagePrepBridge = null;
     let visionAuditOpen = false;
     let visionAuditFilter = "all";
+    let foodItemsDisclosure = createFoodItemsDisclosureState(model.getDraft().items.length);
+    let currentCompositionDisclosure = createCurrentCompositionDisclosureState(model.getDraft().items.length);
 
     const headerTitle = root.querySelector("[data-meal-title]");
     const headerIntro = root.querySelector("[data-meal-intro]");
@@ -1043,6 +1082,9 @@
         visionSession.phase = "review";
         visionSession.observation = result.observation;
         visionSession.review = visionReview.createVisionReviewModel(result.observation);
+        if (hasMeaningfulVisionReview(visionSession.review)) {
+          foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "vision_review_ready" });
+        }
         recordVisionVocabulary(result.observation);
         render();
       } catch (error) {
@@ -1375,6 +1417,21 @@
       const copy = getText(language);
       const library = model.getLibrary();
       const draft = model.getDraft();
+      const isExpanded = foodItemsDisclosure.expanded;
+      const itemCount = draft.items.length;
+      const contentId = "mealFoodPickerContent";
+      const compactHeader = `
+        <div class="meal-section-heading meal-picker-heading">
+          <div>
+            <h3 id="mealPickerTitle">${escapeHtml(copy.chooseFood)}</h3>
+            ${itemCount ? `<span class="meal-picker-count">${escapeHtml(copy.foodItemCount(itemCount))}</span>` : ""}
+          </div>
+          <button type="button" class="meal-picker-toggle${isExpanded ? " is-expanded" : ""}" data-meal-picker-toggle aria-expanded="${isExpanded}" aria-controls="${contentId}" aria-label="${escapeHtml(isExpanded ? copy.collapseFoodPicker : copy.expandFoodPicker)}"></button>
+        </div>
+      `;
+      if (!isExpanded) {
+        return `<section class="meal-picker is-collapsed" aria-labelledby="mealPickerTitle">${compactHeader}</section>`;
+      }
       const foodResults = filterFoodReferences(library, {
         language,
         category,
@@ -1408,23 +1465,21 @@
         : "";
       return `
         <section class="meal-picker" aria-labelledby="mealPickerTitle">
-          <div class="meal-section-heading">
-            <div>
-              <h3 id="mealPickerTitle">${escapeHtml(copy.chooseFood)}</h3>
-              <p>${escapeHtml(copy.chooseFoodHelper)}</p>
-            </div>
+          ${compactHeader}
+          <div id="${contentId}" class="meal-picker-content">
+            <p class="meal-picker-helper">${escapeHtml(copy.chooseFoodHelper)}</p>
+            <label class="meal-search">
+              <span class="sr-only">${escapeHtml(copy.searchLabel)}</span>
+              <input type="search" data-meal-search value="${escapeHtml(search)}" placeholder="${escapeHtml(copy.searchPlaceholder)}" autocomplete="off">
+            </label>
+            <div class="meal-category-list" role="group" aria-label="${escapeHtml(copy.chooseFood)}">${categoryButtons}</div>
+            <div class="meal-food-grid">${foodButtons || `<p class="meal-inline-empty">${escapeHtml(copy.noFoodFound)}</p>`}</div>
+            ${showMore}
+            <label class="meal-condiment-knowledge">
+              <input type="checkbox" data-meal-condiment-unknown${draft.condimentKnowledge === "unknown" ? " checked" : ""}>
+              <span><strong>${escapeHtml(copy.condimentUnknown)}</strong><small>${escapeHtml(copy.condimentUnknownHelper)}</small></span>
+            </label>
           </div>
-          <label class="meal-search">
-            <span class="sr-only">${escapeHtml(copy.searchLabel)}</span>
-            <input type="search" data-meal-search value="${escapeHtml(search)}" placeholder="${escapeHtml(copy.searchPlaceholder)}" autocomplete="off">
-          </label>
-          <div class="meal-category-list" role="group" aria-label="${escapeHtml(copy.chooseFood)}">${categoryButtons}</div>
-          <div class="meal-food-grid">${foodButtons || `<p class="meal-inline-empty">${escapeHtml(copy.noFoodFound)}</p>`}</div>
-          ${showMore}
-          <label class="meal-condiment-knowledge">
-            <input type="checkbox" data-meal-condiment-unknown${draft.condimentKnowledge === "unknown" ? " checked" : ""}>
-            <span><strong>${escapeHtml(copy.condimentUnknown)}</strong><small>${escapeHtml(copy.condimentUnknownHelper)}</small></span>
-          </label>
         </section>
       `;
     }
@@ -1512,6 +1567,22 @@
     function renderDraft() {
       const copy = getText(language);
       const draft = model.getDraft();
+      const isExpanded = currentCompositionDisclosure.expanded;
+      const itemCount = draft.items.length;
+      const contentId = "mealDraftContent";
+      const compactHeader = `
+        <div class="meal-section-heading meal-draft-heading meal-draft-disclosure-heading">
+          <div>
+            <p class="section-kicker">${draft.mealId ? escapeHtml(copy.editMeal) : escapeHtml(copy.draftKicker)}</p>
+            <h3 id="mealDraftTitle">${escapeHtml(copy.currentMeal)}</h3>
+            ${itemCount ? `<span class="meal-picker-count">${escapeHtml(copy.foodItemCount(itemCount))}</span>` : ""}
+          </div>
+          <button type="button" class="meal-draft-toggle${isExpanded ? " is-expanded" : ""}" data-meal-draft-toggle aria-expanded="${isExpanded}" aria-controls="${contentId}" aria-label="${escapeHtml(isExpanded ? copy.collapseFoodPicker : copy.expandFoodPicker)}"></button>
+        </div>
+      `;
+      if (!isExpanded) {
+        return `<section class="meal-draft is-collapsed" aria-labelledby="mealDraftTitle">${compactHeader}</section>`;
+      }
       const estimate = model.getDraftEstimate();
       let estimateText = copy.estimateUnknown;
       let estimateNote = "";
@@ -1531,27 +1602,24 @@
       const isSaving = saveFeedback.phase === "saving";
       return `
         <section class="meal-draft" aria-labelledby="mealDraftTitle" aria-busy="${isSaving}">
-          <div class="meal-section-heading meal-draft-heading">
-            <div>
-              <p class="section-kicker">${draft.mealId ? escapeHtml(copy.editMeal) : escapeHtml(copy.draftKicker)}</p>
-              <h3 id="mealDraftTitle">${escapeHtml(copy.currentMeal)}</h3>
-            </div>
+          ${compactHeader}
+          <div id="${contentId}" class="meal-draft-content">
             <div class="meal-meta-controls">
               <label><span>${escapeHtml(copy.mealLabel)}</span><select data-meal-label>${renderOptions(copy.labels, draft.mealLabel)}</select></label>
               <label><span>${escapeHtml(copy.mealTime)}</span><input type="time" data-meal-time value="${escapeHtml(draft.time)}"></label>
             </div>
-          </div>
-          ${renderMealVisual(draft.items)}
-          <div class="meal-draft-list">${items}</div>
-          <div class="meal-draft-footer">
-            <div class="meal-estimate" aria-live="polite">
-              <span>${escapeHtml(copy.draftEstimateTitle)}</span>
-              <strong>${escapeHtml(estimateText)}</strong>
-              ${estimateNote ? `<small>${escapeHtml(estimateNote)}</small>` : ""}
-            </div>
-            <div class="meal-draft-actions">
-              ${draft.mealId ? `<button type="button" class="ghost-button" data-cancel-meal-edit>${escapeHtml(copy.cancelEdit)}</button>` : ""}
-              <button type="button" class="primary-button${isSaving ? " is-saving" : ""}" data-save-meal${draft.items.length && !isSaving ? "" : " disabled"}>${escapeHtml(isSaving ? copy.saving : draft.mealId ? copy.saveChanges : copy.save)}</button>
+            ${renderMealVisual(draft.items)}
+            <div class="meal-draft-list">${items}</div>
+            <div class="meal-draft-footer">
+              <div class="meal-estimate" aria-live="polite">
+                <span>${escapeHtml(copy.draftEstimateTitle)}</span>
+                <strong>${escapeHtml(estimateText)}</strong>
+                ${estimateNote ? `<small>${escapeHtml(estimateNote)}</small>` : ""}
+              </div>
+              <div class="meal-draft-actions">
+                ${draft.mealId ? `<button type="button" class="ghost-button" data-cancel-meal-edit>${escapeHtml(copy.cancelEdit)}</button>` : ""}
+                <button type="button" class="primary-button${isSaving ? " is-saving" : ""}" data-save-meal${draft.items.length && !isSaving ? "" : " disabled"}>${escapeHtml(isSaving ? copy.saving : draft.mealId ? copy.saveChanges : copy.save)}</button>
+              </div>
             </div>
           </div>
         </section>
@@ -1663,6 +1731,9 @@
       }
       if (action.hasAttribute("data-vision-apply") && visionSession.review && visionReview) {
         const result = visionReview.applyVisionReviewToDraft(model, visionSession.review);
+        if (result.addedFoodIds.length) {
+          currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "vision_items_applied", draftItemCount: model.getDraft().items.length });
+        }
         clearVisionSession();
         status = result.mealTypeConflict ? getText(language).visionAppliedConflict : getText(language).visionApplied;
         render();
@@ -1680,8 +1751,19 @@
         render();
         return;
       }
+      if (action.hasAttribute("data-meal-picker-toggle")) {
+        foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "toggle" });
+        render();
+        return;
+      }
+      if (action.hasAttribute("data-meal-draft-toggle")) {
+        currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "toggle" });
+        render();
+        return;
+      }
       if (action.dataset.mealTypeChoice) {
         model.setDraftMeta({ mealType: action.dataset.mealTypeChoice });
+        foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "meal_type_selected" });
         render();
         return;
       }
@@ -1707,6 +1789,7 @@
         savePhase = "idle";
         recentSavedMealId = "";
         model.addFood(action.dataset.addFood);
+        currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "draft_item_added", draftItemCount: model.getDraft().items.length });
         status = "";
         render();
         root.querySelector(".meal-draft")?.scrollIntoView({ behavior: scrollBehavior(), block: "nearest" });
@@ -1741,6 +1824,8 @@
           recentSaveWasEditing = result.wasEditing;
           savePhase = "saved";
           clearVisionSession();
+          foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "reset", draftItemCount: model.getDraft().items.length });
+          currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "reset", draftItemCount: model.getDraft().items.length });
           status = buildSaveFeedbackModel("saved", result.wasEditing, language).message;
           render();
           root.querySelector(".meal-saved-confirmation")?.scrollIntoView({ behavior: scrollBehavior(), block: "nearest" });
@@ -1750,6 +1835,8 @@
       if (action.hasAttribute("data-cancel-meal-edit")) {
         model.resetDraft();
         clearVisionSession();
+        foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "reset", draftItemCount: model.getDraft().items.length });
+        currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "reset", draftItemCount: model.getDraft().items.length });
         status = "";
         render();
         return;
@@ -1761,6 +1848,8 @@
           recentSavedMealId = "";
           status = "";
           isOpen = true;
+          foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "draft_loaded" });
+          currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "draft_loaded", draftItemCount: model.getDraft().items.length });
           render();
           root.querySelector(".meal-draft")?.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
         }
@@ -1852,6 +1941,8 @@
       setDate(nextDate) {
         clearVisionSession();
         model.setDate(nextDate);
+        foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "reset", draftItemCount: model.getDraft().items.length });
+        currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "reset", draftItemCount: model.getDraft().items.length });
         savePhase = "idle";
         recentSavedMealId = "";
         render();
@@ -1879,6 +1970,11 @@
     buildDailyReflectionLines,
     filterFoodReferences,
     countDraftFoodItems,
+    createFoodItemsDisclosureState,
+    hasMeaningfulVisionReview,
+    reduceFoodItemsDisclosureState,
+    createCurrentCompositionDisclosureState,
+    reduceCurrentCompositionDisclosureState,
     buildMealVisualModel,
     buildSavedMealCardModel,
     buildSaveFeedbackModel,
