@@ -2243,7 +2243,17 @@ body.welcome-open {
 }
 
 .app-title-lockup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   min-width: 0;
+}
+
+.app-brand-mark {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  object-fit: contain;
 }
 
 .app-topbar h1 {
@@ -7189,6 +7199,15 @@ td:nth-child(10) {
   .app-topbar h1 {
     font-size: clamp(1.2rem, 6vw, 1.55rem);
     line-height: 1.18;
+  }
+
+  .app-title-lockup {
+    gap: 10px;
+  }
+
+  .app-brand-mark {
+    width: 34px;
+    height: 34px;
   }
 
   .app-topbar .date-pill {
