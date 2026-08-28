@@ -303,7 +303,8 @@
 }
 
 .meal-vision-helper,
-.meal-vision-review {
+.meal-vision-review,
+.meal-vision-audit {
   margin: 0;
   border: 1px solid rgba(111, 137, 211, 0.24);
   border-radius: 8px;
@@ -415,6 +416,118 @@
   display: grid;
   gap: 14px;
   padding: 14px;
+}
+
+.meal-vision-audit {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.meal-vision-audit-header {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.meal-vision-audit-header h3 {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.meal-vision-audit-header p {
+  margin: 3px 0 0;
+  color: var(--text-soft);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.meal-vision-audit-summary,
+.meal-vision-audit-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.meal-vision-audit-summary span {
+  padding: 5px 8px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  color: var(--text-soft);
+  background: var(--button-bg);
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+.meal-vision-audit-summary strong {
+  color: var(--text-main);
+}
+
+.meal-vision-audit-filters .meal-text-button {
+  min-height: 30px;
+  padding: 5px 8px;
+  font-size: 0.75rem;
+}
+
+.meal-vision-audit-filters .meal-text-button.is-active {
+  border-color: rgba(111, 137, 211, 0.42);
+  color: var(--accent);
+  background: var(--badge-bg);
+}
+
+.meal-vision-audit-list {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.meal-vision-audit-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: var(--button-bg);
+}
+
+.meal-vision-audit-item > div {
+  min-width: 0;
+}
+
+.meal-vision-audit-item strong,
+.meal-vision-audit-item span,
+.meal-vision-audit-item p {
+  display: block;
+}
+
+.meal-vision-audit-item strong {
+  overflow-wrap: anywhere;
+  color: var(--text-main);
+  font-size: 0.82rem;
+}
+
+.meal-vision-audit-item span,
+.meal-vision-audit-item p {
+  color: var(--text-soft);
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
+.meal-vision-audit-item span {
+  margin-top: 2px;
+}
+
+.meal-vision-audit-item p {
+  max-width: 46%;
+  margin: 0;
+  text-align: right;
 }
 
 .meal-vision-review-header {
@@ -1297,7 +1410,8 @@ body[data-theme="dark"] .meal-named-dish-card {
 }
 
 body[data-theme="dark"] .meal-vision-helper,
-body[data-theme="dark"] .meal-vision-review {
+body[data-theme="dark"] .meal-vision-review,
+body[data-theme="dark"] .meal-vision-audit {
   border-color: rgba(142, 167, 255, 0.28);
   background: rgba(38, 34, 66, 0.52);
 }
@@ -1310,7 +1424,9 @@ body[data-theme="dark"] .meal-vision-helper.is-attention {
 body[data-theme="dark"] .meal-vision-review-group,
 body[data-theme="dark"] .meal-vision-note-group,
 body[data-theme="dark"] .meal-vision-choice,
-body[data-theme="dark"] .meal-vision-mapping-choice {
+body[data-theme="dark"] .meal-vision-mapping-choice,
+body[data-theme="dark"] .meal-vision-audit-summary span,
+body[data-theme="dark"] .meal-vision-audit-item {
   background: rgba(31, 27, 52, 0.66);
 }
 
@@ -1394,6 +1510,21 @@ body[data-theme="dark"] .meal-daily-reflection {
 
   .meal-vision-review-grid {
     grid-template-columns: 1fr;
+  }
+
+  .meal-vision-audit-header,
+  .meal-vision-audit-item {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .meal-vision-audit-header > .meal-text-button {
+    align-self: flex-start;
+  }
+
+  .meal-vision-audit-item p {
+    max-width: none;
+    text-align: left;
   }
 
   .meal-vision-review-group--wide {

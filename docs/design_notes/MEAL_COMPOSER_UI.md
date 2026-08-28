@@ -154,3 +154,7 @@ The return is a token- and origin-validated transient Blob handoff only. It does
 ## MHB 2.5B Addendum - Local Runtime Guard
 
 The optional photo helper requires an HTTP origin for local-full-capability behavior. When the app is opened with `file://`, Meal Composer leaves its manual controls intact but replaces image selection and image-preparation actions with a localized, accessible explanation that names `Start Mindful Health Balance.command`. No Vision request or image-preparation popup is attempted. Opening through the loopback launcher restores the existing helper unchanged.
+
+# MHB 2.6B Addendum - Read-only Vision Vocabulary Audit
+
+The optional local Vision helper includes a secondary `What MHB has seen` action. It opens a compact inline panel of local normalized observation labels, counts, and current mapping outcomes. The panel is intentionally read-only: it cannot edit Food References, remap a label, create Meal Items, modify the draft, save a meal, set a named dish, or affect sodium evidence. Counts describe repeated validated model output, not food truth or automatic learning.

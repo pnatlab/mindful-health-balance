@@ -30,6 +30,17 @@
       visionPrepareImage: "เตรียมรูปสำหรับ AI",
       visionRuntimeRequired: "ตัวช่วยจากรูปและการเตรียมรูปต้องเปิดผ่าน Local Launcher ค่ะ",
       visionRuntimeHelper: "เปิด Start Mindful Health Balance.command แล้วกลับมาที่หน้านี้ได้เลย ส่วนประกอบมื้อเองยังใช้ได้ตามปกติค่ะ",
+      visionAuditOpen: "สิ่งที่ระบบเคยเห็น",
+      visionAuditTitle: "ร่องรอยจากตาของ MHB",
+      visionAuditHelper: "หน้านี้ช่วยให้เห็นว่าตาของ MHB พบคำอะไรบ่อย เพื่อใช้ทบทวนว่าฐานอาหารยังขาดอะไรบ้าง จำนวนครั้งไม่ใช่ความจริง และไม่ได้เพิ่มรายการอาหารให้อัตโนมัติ",
+      visionAuditClose: "ปิดรายการนี้",
+      visionAuditAll: "ทั้งหมด",
+      visionAuditMapped: "รู้จักแล้ว",
+      visionAuditNeedsReview: "ต้องเลือกให้ชัดก่อน",
+      visionAuditUnsupported: "ยังไม่มีในระบบ",
+      visionAuditSeen: (count) => `พบ ${count} ครั้ง`,
+      visionAuditMapsTo: (name) => `รู้จักแล้ว → ${name}`,
+      visionAuditEmpty: "ยังไม่มีร่องรอยจากการใช้ Vision ค่ะ เมื่อเริ่มใช้ตัวช่วยจากรูป ระบบจะค่อย ๆ เก็บคำที่เคยเห็นไว้ให้ทบทวน",
       visionChooseImage: "เลือกรูปอาหาร",
       visionPreparing: "กำลังเตรียมรูปในเครื่องนี้…",
       visionChecking: "กำลังตรวจว่าโมเดลในเครื่องพร้อมไหม…",
@@ -188,6 +199,17 @@
       visionPrepareImage: "Prepare a photo for AI",
       visionRuntimeRequired: "The photo helper and image preparation need the Local Launcher.",
       visionRuntimeHelper: "Open Start Mindful Health Balance.command, then return here. Manual meal composition is still available.",
+      visionAuditOpen: "What MHB has seen",
+      visionAuditTitle: "Traces from MHB's local eye",
+      visionAuditHelper: "This shows labels MHB's local eye has noticed, so you can review where the food vocabulary may be thin. Counts are not truth and never add food automatically.",
+      visionAuditClose: "Close this list",
+      visionAuditAll: "All",
+      visionAuditMapped: "Known already",
+      visionAuditNeedsReview: "Needs a clearer choice",
+      visionAuditUnsupported: "Not in the system yet",
+      visionAuditSeen: (count) => `Seen ${count} times`,
+      visionAuditMapsTo: (name) => `Known already -> ${name}`,
+      visionAuditEmpty: "There are no Vision traces yet. When you use the photo helper, MHB will quietly keep visible labels here for review.",
       visionChooseImage: "Choose a meal photo",
       visionPreparing: "Preparing the photo on this device…",
       visionChecking: "Checking whether the local model is ready…",
@@ -346,6 +368,17 @@
       visionPrepareImage: "为 AI 准备照片",
       visionRuntimeRequired: "照片助手和图片准备需要通过 Local Launcher 打开。",
       visionRuntimeHelper: "打开 Start Mindful Health Balance.command 后再回到这里。手动组合餐食仍可正常使用。",
+      visionAuditOpen: "系统曾看到的内容",
+      visionAuditTitle: "MHB 本机之眼留下的痕迹",
+      visionAuditHelper: "这里显示本机之眼曾注意到的标签，帮助你查看食物词汇可能缺少什么。次数不代表事实，也不会自动添加食物。",
+      visionAuditClose: "关闭此列表",
+      visionAuditAll: "全部",
+      visionAuditMapped: "已识别",
+      visionAuditNeedsReview: "需要进一步选择",
+      visionAuditUnsupported: "系统尚未支持",
+      visionAuditSeen: (count) => `见过 ${count} 次`,
+      visionAuditMapsTo: (name) => `已识别 -> ${name}`,
+      visionAuditEmpty: "还没有 Vision 痕迹。开始使用照片助手后，MHB 会安静地把看见过的标签留在这里供你查看。",
       visionChooseImage: "选择餐食照片",
       visionPreparing: "正在这台设备上准备照片…",
       visionChecking: "正在检查本机模型是否可用…",
@@ -885,6 +918,7 @@
     const localRuntimeGuard = options.localRuntimeGuard || globalScope.MHBLocalRuntimeGuard || null;
     const visionVocabulary = options.visionVocabulary || globalScope.MHBVisionObservationVocabulary || null;
     const visionVocabularyEvidenceStore = options.visionVocabularyEvidenceStore || visionVocabulary?.createVisionVocabularyEvidenceStore?.(options.storage) || null;
+    const visionVocabularyAudit = options.visionVocabularyAudit || globalScope.MHBVisionVocabularyAuditUI || null;
     const runtimeEnvironment = localRuntimeGuard?.detectLocalRuntime?.(globalScope.location) || { isFileMode: false, supportsVisionAndImagePrep: true };
     const confirmAction = options.confirmAction || ((message) => globalScope.confirm(message));
     const scheduleFrame = options.scheduleFrame || ((callback) => {
@@ -910,6 +944,8 @@
       failureStatus: ""
     };
     let imagePrepBridge = null;
+    let visionAuditOpen = false;
+    let visionAuditFilter = "all";
 
     const headerTitle = root.querySelector("[data-meal-title]");
     const headerIntro = root.querySelector("[data-meal-intro]");
@@ -962,6 +998,10 @@
     function recordVisionVocabulary(observation) {
       if (!visionVocabularyEvidenceStore || !visionReview?.createObservedVocabularyEntries) return;
       visionVocabularyEvidenceStore.recordMany(visionReview.createObservedVocabularyEntries(observation, visionVocabulary));
+    }
+
+    function getVisionVocabularyAuditSnapshot() {
+      return visionVocabularyAudit?.createVocabularyAuditSnapshot?.(visionVocabularyEvidenceStore) || { entries: [], summary: { total: 0, mapped: 0, needs_review: 0, unsupported: 0 } };
     }
 
     async function observeNormalizedVisionImage(image, requestId, file = image) {
@@ -1220,6 +1260,49 @@
       `;
     }
 
+    function visionAuditStatus(entry, copy) {
+      if (entry.mapping_status === "mapped") {
+        const reference = runtime.getFoodReferenceById?.(entry.mapped_food_reference_id);
+        return reference ? copy.visionAuditMapsTo(foodName(reference)) : copy.visionAuditMapped;
+      }
+      if (entry.mapping_status === "needs_review") return copy.visionAuditNeedsReview;
+      return copy.visionAuditUnsupported;
+    }
+
+    function renderVisionVocabularyAudit() {
+      if (!visionAuditOpen) return "";
+      const copy = getText(language);
+      const snapshot = getVisionVocabularyAuditSnapshot();
+      const entries = visionVocabularyAudit?.filterVocabularyEntries?.(snapshot.entries, visionAuditFilter) || [];
+      const filters = [
+        ["all", copy.visionAuditAll, snapshot.summary.total],
+        ["mapped", copy.visionAuditMapped, snapshot.summary.mapped],
+        ["needs_review", copy.visionAuditNeedsReview, snapshot.summary.needs_review],
+        ["unsupported", copy.visionAuditUnsupported, snapshot.summary.unsupported]
+      ];
+      const list = entries.length ? entries.map((entry) => `
+        <li class="meal-vision-audit-item">
+          <div><strong>${escapeHtml(entry.observed_label)}</strong><span>${escapeHtml(copy.visionAuditSeen(entry.seen_count))}</span></div>
+          <p>${escapeHtml(visionAuditStatus(entry, copy))}</p>
+        </li>
+      `).join("") : `<p class="meal-vision-muted">${escapeHtml(copy.visionAuditEmpty)}</p>`;
+      return `
+        <section class="meal-vision-audit" aria-labelledby="mealVisionAuditTitle">
+          <div class="meal-vision-audit-header">
+            <div><h3 id="mealVisionAuditTitle">${escapeHtml(copy.visionAuditTitle)}</h3><p>${escapeHtml(copy.visionAuditHelper)}</p></div>
+            <button type="button" class="meal-text-button" data-vision-audit-close>${escapeHtml(copy.visionAuditClose)}</button>
+          </div>
+          <div class="meal-vision-audit-summary" aria-label="${escapeHtml(copy.visionAuditAll)}">
+            ${filters.map(([filter, label, count]) => `<span><strong>${count}</strong> ${escapeHtml(label)}</span>`).join("")}
+          </div>
+          <div class="meal-vision-audit-filters" aria-label="${escapeHtml(copy.visionAuditTitle)}">
+            ${filters.map(([filter, label, count]) => `<button type="button" class="meal-text-button${visionAuditFilter === filter ? " is-active" : ""}" data-vision-audit-filter="${filter}" aria-pressed="${visionAuditFilter === filter}">${escapeHtml(label)} (${count})</button>`).join("")}
+          </div>
+          <ul class="meal-vision-audit-list">${list}</ul>
+        </section>
+      `;
+    }
+
     function renderVisionHelper() {
       const copy = getText(language);
       if (visionSession.phase === "idle") {
@@ -1246,6 +1329,7 @@
               <input type="file" data-vision-image accept="image/png,image/jpeg,image/webp,image/heic,image/heif,.heic,.heif">
             </label>
             ${imagePrepBridgeFactory ? `<button type="button" class="meal-text-button" data-image-prep-open>${escapeHtml(copy.visionPrepareImage)}</button>` : ""}
+            ${visionVocabularyAudit ? `<button type="button" class="meal-text-button" data-vision-audit-open>${escapeHtml(copy.visionAuditOpen)}</button>` : ""}
           </section>
         `;
       }
@@ -1532,7 +1616,7 @@
 
     function render() {
       renderHeader();
-      if (isOpen) content.innerHTML = `${renderMealType()}${renderVisionHelper()}${renderFoodPicker()}${renderNamedDishReference()}${renderDraft()}${renderSavedMeals()}`;
+      if (isOpen) content.innerHTML = `${renderMealType()}${renderVisionHelper()}${renderVisionVocabularyAudit()}${renderFoodPicker()}${renderNamedDishReference()}${renderDraft()}${renderSavedMeals()}`;
       renderReflection();
       statusNode.textContent = status;
     }
@@ -1554,6 +1638,23 @@
       }
       if (action.hasAttribute("data-image-prep-open")) {
         openImagePrep();
+        return;
+      }
+      if (action.hasAttribute("data-vision-audit-open")) {
+        visionAuditOpen = true;
+        render();
+        root.querySelector("[data-vision-audit-close]")?.focus();
+        return;
+      }
+      if (action.hasAttribute("data-vision-audit-close")) {
+        visionAuditOpen = false;
+        render();
+        root.querySelector("[data-vision-audit-open]")?.focus();
+        return;
+      }
+      if (action.dataset.visionAuditFilter) {
+        visionAuditFilter = action.dataset.visionAuditFilter;
+        render();
         return;
       }
       if (action.hasAttribute("data-vision-retry") && visionSession.file) {

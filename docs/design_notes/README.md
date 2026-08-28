@@ -96,6 +96,7 @@ Runtime architecture, modularization planning, and implementation-safety notes f
 - [LOCAL_IMAGE_PREPARATION_PAGE_BOUNDARY.md](LOCAL_IMAGE_PREPARATION_PAGE_BOUNDARY.md) - MHB 2.5A locks the separate local image-preparation page, its transient same-origin handoff, and its strict separation from Vision, meal state, and evidence.
 - [LOCAL_LAUNCHER_RUNTIME_GUARD.md](LOCAL_LAUNCHER_RUNTIME_GUARD.md) - MHB 2.5B defines the macOS one-click loopback launcher, safe port reuse/fallback, and the `file://` guard for optional image/Vision capabilities.
 - [VISION_OBSERVATION_VOCABULARY_FIELD_LEARNING.md](VISION_OBSERVATION_VOCABULARY_FIELD_LEARNING.md) - MHB 2.6A preserves model-visible vocabulary as a separate local evidence layer without promoting labels into Food References or Meal Items.
+- [VISION_VOCABULARY_READ_ONLY_AUDIT_UI.md](VISION_VOCABULARY_READ_ONLY_AUDIT_UI.md) - MHB 2.6B makes the local vocabulary evidence visible in a calm read-only Meal Composer panel, without promotion, remapping, or canonical mutation.
 
 MHB 2.3F sequence: 2.3F-R research -> 2.3F-C contract locked -> 2.3F-D Thai Named-Dish Evidence Pilot -> Human Approval -> 2.3F-I bounded runtime implementation for two approved references.
 

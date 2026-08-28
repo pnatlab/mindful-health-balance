@@ -51,8 +51,8 @@ Only small text labels, deterministic mapping outcomes, and counts are stored lo
 
 ## Known Limitations and Future Direction
 
-Counts can include model mistakes and cannot establish a Food Reference candidate on their own. The layer currently has no end-user taxonomy-editing UI by design. A future, separately approved human-review slice may present read-only gap evidence and define an evidence process for Food Reference additions. Food Reference expansion, meal context/amount, and taxonomy changes remain outside MHB 2.6A.
+Counts can include model mistakes and cannot establish a Food Reference candidate on their own. MHB 2.6B adds a read-only local audit panel for this evidence, but still has no end-user taxonomy-editing, promotion, or remapping UI by design. A future, separately approved human-review slice may define an evidence process for Food Reference additions. Food Reference expansion, meal context/amount, and taxonomy changes remain outside this layer.
 
 ## Documentation Impact Check
 
-This is an internal local evidence layer with no new user action or changed meal semantics. The design-note index is updated; README and user guides do not need expansion in this slice.
+MHB 2.6A was an internal local evidence layer. MHB 2.6B adds a small user-facing read-only entry, so the README and user guides describe only that audit visibility and its non-promoting boundary.

@@ -239,6 +239,8 @@ For a meal whose recorded components fit an approved reference, MHB may offer th
 
 The optional photo helper is a bounded prototype for PNG, JPEG, WebP, HEIC, and HEIF using a model on this device only. For a larger phone image, choose `Prepare a photo for AI`: a separate local page prepares a temporary JPEG, lets you check it, and returns it to the photo helper without storing it with the meal. After choosing an image, review what the model observed, omit suggestions, and resolve ambiguous mappings before choosing `Use selected items in this meal`. This adds only accepted Meal Type/components to the existing draft. It does not save the meal, set `named_dish_id`, or create sodium evidence from the image; any reference dish still needs its separate confirmation. Manual composition remains available when the local model is unavailable.
 
+Choose `What MHB has seen` to view locally observed labels, their counts, and mapping status. This read-only view helps reveal vocabulary gaps; it never adds a Food Reference or changes a meal automatically.
+
 For photo preparation and the local photo helper, open MHB by double-clicking `Start Mindful Health Balance.command`. This starts a loopback-only local runtime and opens the correct page automatically. If you open `index.html` directly, manual meal composition still works, while photo actions explain that the Local Launcher is needed. A manual fallback is `python3 -m http.server 4173 --bind 127.0.0.1`, then open `http://127.0.0.1:4173/index.html`.
 
 ## 11. Drinks / Drink Profile
