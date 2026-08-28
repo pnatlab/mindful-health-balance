@@ -241,7 +241,7 @@ The optional photo helper is a bounded prototype for PNG, JPEG, WebP, HEIC, and 
 
 Choose `What MHB has seen` to view locally observed labels, their counts, and mapping status. This read-only view helps reveal vocabulary gaps; it never adds a Food Reference or changes a meal automatically.
 
-For photo preparation and the local photo helper, open MHB by double-clicking `Start Mindful Health Balance.command`. This starts a loopback-only local runtime and opens the correct page automatically. If you open `index.html` directly, manual meal composition still works, while photo actions explain that the Local Launcher is needed. A manual fallback is `python3 -m http.server 4173 --bind 127.0.0.1`, then open `http://127.0.0.1:4173/index.html`.
+For photo preparation and the local photo helper on macOS, build once with `./tools/build_mhb_macos_app.sh`, then double-click `dist/Mindful Health Balance.app`. This personal local launcher has no Developer ID or App Store signature; it starts a loopback-only runtime and opens the correct page automatically. `Start Mindful Health Balance.command` remains the fallback and debugging entry. If you open `index.html` directly, manual meal composition still works, while photo actions explain that the Local Launcher is needed. A manual fallback is `python3 -m http.server 4173 --bind 127.0.0.1`, then open `http://127.0.0.1:4173/index.html`.
 
 ## 11. Drinks / Drink Profile
 

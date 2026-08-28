@@ -2,7 +2,7 @@
 
 ## Purpose
 
-`Start Mindful Health Balance.command` is the recommended macOS entry for local-full-capability MHB. It starts or reuses a loopback static server, then opens the app at an HTTP origin that can support same-origin image-preparation handoff and the optional local Vision provider.
+The generated `dist/Mindful Health Balance.app` is the recommended macOS entry for local-full-capability MHB. `Start Mindful Health Balance.command` remains the fallback and debugging entry. Both call `tools/mhb_local_launcher.sh`, which starts or reuses a loopback static server and opens the HTTP origin needed by same-origin image preparation and the optional local Vision provider.
 
 ## Why `file://` Is Insufficient
 
@@ -10,7 +10,7 @@ Manual MHB remains useful from a file URL, but image preparation uses a same-ori
 
 ## Launcher Design
 
-The executable `.command` derives the repository directory from its own location, checks `python3`, and serves that directory with:
+The shared launcher receives the repository directory from a thin entry wrapper, checks `python3`, and serves that directory with:
 
 ```sh
 python3 -m http.server <port> --bind 127.0.0.1 --directory <repo>
@@ -40,4 +40,4 @@ open http://127.0.0.1:4173/index.html
 
 ## QA and Limits
 
-The launcher is syntax-checked and tested for fresh start, existing-server reuse, and a safe fallback when its canonical port is occupied. Browser QA verifies that the HTTP runtime does not show the guard, while the `file://` runtime does. The launcher is a small auditable macOS script, not an application bundle. A future Automator, Shortcuts, or `.app` wrapper can call this script without changing app authority or runtime behavior.
+The launcher is syntax-checked and tested for fresh start, existing-server reuse, Python failure, and a safe fallback when its canonical port is occupied. Browser QA verifies that the HTTP runtime does not show the guard, while the `file://` runtime does. MHB 2.6E adds a generated lightweight `.app` wrapper with a custom icon; it delegates to the same auditable shell contract and does not change app authority or runtime behavior. See [NATIVE_MACOS_APP_LAUNCHER.md](NATIVE_MACOS_APP_LAUNCHER.md).
