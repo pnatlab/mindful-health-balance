@@ -19,6 +19,7 @@
   <script defer src="js/visionVocabularyAuditUI.js"></script>
   <script defer src="js/mealVisionReview.js"></script>
   <script defer src="js/mealCompositionUI.js"></script>
+  <script defer src="js/drinkReflectionAcknowledgement.js"></script>
   <script defer src="script.js"></script>
 </head>
 <body>
@@ -289,13 +290,6 @@
           <p class="caffeine-cup-caption" id="caffeineCupCaption">ยังไม่มีแก้วคาเฟอีนวันนี้</p>
         </div>
         <ul class="drink-list" id="drinkProfileList" aria-label="Drink list"></ul>
-        <aside class="drink-insight-card" aria-live="polite">
-          <div class="drink-insight-heading">
-            <span class="drink-insight-icon" aria-hidden="true">☕</span>
-            <span data-i18n="drinkInsightTitle">ข้อสังเกตเครื่องดื่มวันนี้</span>
-          </div>
-          <p class="feedback" id="drinksFeedback">เลือกเครื่องดื่มวันนี้เพื่อดู reminder แบบเบา ๆ</p>
-        </aside>
       </article>
 
       <article class="glass-card load-recovery-card today-signal-detail-card" id="todaySignalLoadDetail" data-today-step="1" data-today-signal-detail="load" role="tabpanel">
@@ -861,5 +855,15 @@
       </div>
     </section>
   </main>
+  <section class="drink-reflection-modal" id="drinkReflectionModal" hidden aria-hidden="true">
+    <div class="drink-reflection-modal__surface" role="dialog" aria-modal="true" aria-labelledby="drinkReflectionModalTitle" aria-describedby="drinkReflectionModalText" tabindex="-1">
+      <button type="button" class="drink-reflection-modal__close" id="closeDrinkReflectionModal" data-i18n-aria-label="drinkAcknowledgementClose" aria-label="ปิดข้อสังเกตเครื่องดื่ม">×</button>
+      <span class="drink-reflection-modal__icon" aria-hidden="true">☕</span>
+      <p class="section-kicker" data-i18n="drinks">Drinks</p>
+      <h2 id="drinkReflectionModalTitle" data-i18n="drinkAcknowledgementTitle">บันทึกเครื่องดื่มนี้แล้ว</h2>
+      <p id="drinkReflectionModalText" class="drink-reflection-modal__message"></p>
+      <button type="button" class="primary-button drink-reflection-modal__acknowledge" id="acknowledgeDrinkReflection" data-i18n="drinkAcknowledgementDismiss">เข้าใจแล้ว</button>
+    </div>
+  </section>
 </body>
 </html>

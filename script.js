@@ -15,6 +15,7 @@ const IMAGE_PREP_BRIDGE = window.MHBImagePrepBridge;
 const LOCAL_RUNTIME_GUARD = window.MHBLocalRuntimeGuard;
 const VISION_OBSERVATION_VOCABULARY = window.MHBVisionObservationVocabulary;
 const VISION_VOCABULARY_AUDIT_UI = window.MHBVisionVocabularyAuditUI;
+const DRINK_REFLECTION_ACKNOWLEDGEMENT = window.MHBDrinkReflectionAcknowledgement;
 const MEAL_RECORDS_KEY = MEAL_COMPOSITION_RUNTIME?.MEAL_RECORDS_KEY || "mhb_meal_records_v1";
 const USER_INTENTION_PROFILE_EXPORT_COLUMNS = [
   "Profile_Schema_Version",
@@ -392,7 +393,9 @@ const translations = {
     drinks: "Drinks",
     drinksHeading: "Drink Profile วันนี้",
     drinksHelper: "บันทึกเครื่องดื่มอื่นนอกจากน้ำเปล่า เช่น กาแฟ ชา โกโก้ น้ำหวาน หรือน้ำผลไม้",
-    drinkInsightTitle: "ข้อสังเกตเครื่องดื่มวันนี้",
+    drinkAcknowledgementTitle: "บันทึกเครื่องดื่มนี้แล้ว",
+    drinkAcknowledgementDismiss: "เข้าใจแล้ว",
+    drinkAcknowledgementClose: "ปิดข้อสังเกตเครื่องดื่ม",
     drinkTypeLabel: "Drink Type",
     sweetnessLabel: "Sweetness",
     caffeineLabel: "คาเฟอีนโดยประมาณ",
@@ -1393,7 +1396,9 @@ const translations = {
     drinks: "Drinks",
     drinksHeading: "Drink Profile today",
     drinksHelper: "Log drinks other than plain water, such as coffee, tea, cocoa, sweet drinks, or juice.",
-    drinkInsightTitle: "Drink insight",
+    drinkAcknowledgementTitle: "Drink recorded",
+    drinkAcknowledgementDismiss: "Got it",
+    drinkAcknowledgementClose: "Close drink insight",
     drinkTypeLabel: "Drink Type",
     sweetnessLabel: "Sweetness",
     caffeineLabel: "Approx. caffeine",
@@ -2394,7 +2399,9 @@ const translations = {
     drinks: "饮品",
     drinksHeading: "今日饮品记录",
     drinksHelper: "记录白水以外的饮品，例如咖啡、茶、可可、甜饮或果汁。",
-    drinkInsightTitle: "今日饮品观察",
+    drinkAcknowledgementTitle: "这杯饮品已记录",
+    drinkAcknowledgementDismiss: "知道了",
+    drinkAcknowledgementClose: "关闭饮品观察",
     drinkTypeLabel: "饮品类型",
     sweetnessLabel: "甜度",
     caffeineLabel: "大约咖啡因",
@@ -3333,6 +3340,8 @@ let currentThemePreference = getThemePreference();
 let appState = loadState();
 let themeIntervalId;
 let stateOrbIntervalId;
+let drinkReflectionAcknowledgementState = DRINK_REFLECTION_ACKNOWLEDGEMENT?.createState?.() || { isOpen: false, message: "", triggerCount: 0 };
+let drinkReflectionModalTrigger = null;
 let currentView = "today";
 let todayInputStep = 1;
 let todayInputStepResetAfterSave = false;
@@ -5226,12 +5235,16 @@ function bindEvents() {
   document.querySelector("#addDrink").addEventListener("click", () => {
     appState.drinkProfiles = [...(appState.drinkProfiles || []), getDrinkProfileFromForm()];
     syncUIAndPersistDraft();
+    openDrinkReflectionAcknowledgement({ trigger: document.querySelector("#addDrink") });
   });
   document.querySelector("#clearDrinks").addEventListener("click", () => {
     appState.drinkProfiles = [];
     appState.drinks = [];
     syncUIAndPersistDraft();
   });
+  document.querySelector("#acknowledgeDrinkReflection")?.addEventListener("click", closeDrinkReflectionAcknowledgement);
+  document.querySelector("#closeDrinkReflectionModal")?.addEventListener("click", closeDrinkReflectionAcknowledgement);
+  document.addEventListener("keydown", handleDrinkReflectionAcknowledgementKeydown);
 
 	  document.querySelector("#activitiesList").addEventListener("click", (event) => {
     const button = event.target.closest("[data-activity]");
@@ -6043,7 +6056,68 @@ function updateDrinkUI() {
   document.querySelector("#hydrationSupportBadge").textContent = t("hydrationSupportLabel", { count: scores.hydrationSupportCount });
   renderCaffeineCupVisual();
   renderDrinkProfileList();
-  document.querySelector("#drinksFeedback").textContent = getDrinksFeedback();
+}
+
+function openDrinkReflectionAcknowledgement({ trigger = null } = {}) {
+  const nextState = DRINK_REFLECTION_ACKNOWLEDGEMENT?.openForSuccessfulAdd?.(
+    drinkReflectionAcknowledgementState,
+    { succeeded: true, reflectionText: getDrinksFeedback() }
+  );
+  if (!nextState || nextState === drinkReflectionAcknowledgementState || !nextState.isOpen) return false;
+  drinkReflectionAcknowledgementState = nextState;
+  drinkReflectionModalTrigger = trigger instanceof HTMLElement ? trigger : document.activeElement;
+  renderDrinkReflectionAcknowledgement();
+  requestAnimationFrame(() => document.querySelector("#acknowledgeDrinkReflection")?.focus());
+  return true;
+}
+
+function closeDrinkReflectionAcknowledgement() {
+  if (!drinkReflectionAcknowledgementState.isOpen) return;
+  drinkReflectionAcknowledgementState = DRINK_REFLECTION_ACKNOWLEDGEMENT?.dismiss?.(drinkReflectionAcknowledgementState)
+    || { ...drinkReflectionAcknowledgementState, isOpen: false, message: "" };
+  renderDrinkReflectionAcknowledgement();
+  const trigger = drinkReflectionModalTrigger;
+  drinkReflectionModalTrigger = null;
+  requestAnimationFrame(() => trigger?.focus?.());
+}
+
+function renderDrinkReflectionAcknowledgement() {
+  const modal = document.querySelector("#drinkReflectionModal");
+  const message = document.querySelector("#drinkReflectionModalText");
+  if (!modal || !message) return;
+  const isOpen = Boolean(drinkReflectionAcknowledgementState.isOpen);
+  modal.hidden = !isOpen;
+  modal.setAttribute("aria-hidden", String(!isOpen));
+  message.textContent = isOpen ? drinkReflectionAcknowledgementState.message : "";
+  document.body.classList.toggle("drink-reflection-modal-open", isOpen);
+}
+
+function handleDrinkReflectionAcknowledgementKeydown(event) {
+  if (!drinkReflectionAcknowledgementState.isOpen) return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeDrinkReflectionAcknowledgement();
+    return;
+  }
+  if (event.key !== "Tab") return;
+  const modal = document.querySelector("#drinkReflectionModal");
+  const focusable = [...(modal?.querySelectorAll("button:not([disabled]), [tabindex]:not([tabindex='-1'])") || [])]
+    .filter((element) => !element.hidden);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (!modal.contains(document.activeElement)) {
+    event.preventDefault();
+    (event.shiftKey ? last : first).focus();
+    return;
+  }
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
 }
 
 function updateActivityUI() {

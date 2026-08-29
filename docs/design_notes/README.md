@@ -51,7 +51,7 @@ Today and Reflection page hierarchy, preview synthesis, NuTuenSai note strip, ze
 Signal interpretation rules, hydration/drink/energy/mind/activity mapping, and reflection guardrails.
 
 - [HYDRATION_ADAPTIVE_GUIDANCE.md](HYDRATION_ADAPTIVE_GUIDANCE.md) - Defines adaptive hydration guidance and the separation of activity load from recovery-only signals.
-- [DRINK_SWEETNESS_INSIGHT.md](DRINK_SWEETNESS_INSIGHT.md) - Defines sweetness and soda as drink-load context, not moral or medical judgment.
+- [DRINK_SWEETNESS_INSIGHT.md](DRINK_SWEETNESS_INSIGHT.md) - Defines sweetness and soda as drink-load context, not moral or medical judgment, with an ephemeral post-save acknowledgement that reuses the existing deterministic reflection.
 - [ENERGY_CAUSE_ALIGNMENT.md](ENERGY_CAUSE_ALIGNMENT.md) - Explains layered interpretation for energy causes and seemingly mixed signals.
 - [MIND_STATE_WORDING_DECISION.md](MIND_STATE_WORDING_DECISION.md) - Records wording choices for public-safe mind state language.
 - [MIND_NOTE_FEELING_OPTIONS.md](MIND_NOTE_FEELING_OPTIONS.md) - Defines Mind Note Feeling options such as uneasy and feeling_good.

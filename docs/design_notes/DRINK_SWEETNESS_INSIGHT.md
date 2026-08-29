@@ -48,7 +48,7 @@ The wording should stay soft:
 - recovery and water can follow afterward
 - the previous drink does not need to be judged
 
-In the UI, Drink Profile may present this as a small `Drink insight` callout rather than a plain paragraph, so the user can see the cue without treating it as a warning or score.
+In the UI, the current deterministic output is presented as a brief acknowledgement after a successful `Add Drink` action, so the user can notice the cue without treating it as a warning or score. It is not shown while editing fields, and it is not replayed after reload.
 
 The wording should avoid:
 
@@ -82,3 +82,9 @@ No new user input is required.
 ## Guardrail Sentence
 
 Drink Sweetness Insight should make sweet-drink patterns easier to notice gently, without turning soda, sugar, or caffeine into guilt, medical advice, diet advice, or a judgment of the user's day.
+
+## Acknowledgement Presentation
+
+The drink record is saved before the acknowledgement surface opens. The surface reuses the existing deterministic reflection text; it does not generate, alter, approve, or require agreement with that text.
+
+It is an ephemeral presentation layer: dismissing it does not change the drink record or scores, and no dismissed state is persisted. The dialog can be closed with its acknowledgement button, close control, or Escape, with keyboard focus returned to the Add Drink action. The prior full inline callout is intentionally absent to avoid showing the same reflection twice.

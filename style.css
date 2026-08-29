@@ -4464,57 +4464,137 @@ body[data-theme="dark"] .coffee-cup-icon.active::after {
   line-height: 1.55;
 }
 
-.drink-insight-card {
+.drink-reflection-modal[hidden] {
+  display: none;
+}
+
+body.drink-reflection-modal-open {
+  overflow: hidden;
+}
+
+.drink-reflection-modal {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
   display: grid;
-  gap: 8px;
-  margin-top: 14px;
-  padding: 14px;
-  border: 1px solid rgba(111, 167, 232, 0.24);
-  border-radius: 8px;
-  background:
-    radial-gradient(circle at 12% 12%, rgba(111, 167, 232, 0.16), transparent 32%),
-    linear-gradient(135deg, rgba(244, 250, 255, 0.86), rgba(245, 241, 255, 0.62));
-  box-shadow: 0 12px 24px rgba(111, 167, 232, 0.08);
-}
-
-.drink-insight-heading {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #234a78;
-  font-size: 0.86rem;
-  font-weight: 800;
-}
-
-.drink-insight-icon {
-  display: inline-grid;
   place-items: center;
-  width: 24px;
-  height: 24px;
-  border: 1px solid rgba(111, 167, 232, 0.24);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.58);
+  padding: 24px;
+  background: rgba(29, 43, 78, 0.3);
+  backdrop-filter: blur(3px);
 }
 
-.drink-insight-card .feedback {
-  margin: 0;
-}
-
-body[data-theme="dark"] .drink-insight-card {
-  border-color: rgba(142, 167, 255, 0.2);
+.drink-reflection-modal__surface {
+  position: relative;
+  width: min(100%, 470px);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  padding: 30px;
+  border: 1px solid rgba(111, 132, 219, 0.26);
+  border-radius: 16px;
   background:
-    radial-gradient(circle at 12% 12%, rgba(142, 167, 255, 0.14), transparent 34%),
-    linear-gradient(135deg, rgba(26, 31, 58, 0.72), rgba(36, 29, 58, 0.62));
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+    radial-gradient(circle at 18% 10%, rgba(179, 192, 255, 0.2), transparent 36%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(247, 248, 255, 0.96));
+  box-shadow: 0 22px 60px rgba(25, 37, 72, 0.22);
+  color: var(--text);
+  text-align: center;
 }
 
-body[data-theme="dark"] .drink-insight-heading {
-  color: #cfe6ff;
+.drink-reflection-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: inline-grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--border-soft);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.68);
+  color: var(--text-soft);
+  font-size: 1.45rem;
+  line-height: 1;
 }
 
-body[data-theme="dark"] .drink-insight-icon {
-  border-color: rgba(197, 214, 255, 0.18);
+.drink-reflection-modal__icon {
+  display: inline-grid;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 14px;
+  place-items: center;
+  border: 1px solid rgba(111, 132, 219, 0.22);
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(227, 235, 255, 0.9), rgba(246, 242, 255, 0.9));
+  font-size: 1.3rem;
+}
+
+.drink-reflection-modal .section-kicker {
+  margin: 0 0 6px;
+}
+
+.drink-reflection-modal h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.22rem;
+}
+
+.drink-reflection-modal__message {
+  margin: 18px 0 22px;
+  padding: 16px;
+  border: 1px solid rgba(124, 145, 225, 0.2);
+  border-radius: 10px;
+  background: rgba(240, 242, 255, 0.72);
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+.drink-reflection-modal__acknowledge {
+  width: 100%;
+  min-height: 46px;
+}
+
+body[data-theme="dark"] .drink-reflection-modal {
+  background: rgba(7, 11, 29, 0.46);
+}
+
+body[data-theme="dark"] .drink-reflection-modal__surface {
+  border-color: rgba(162, 178, 255, 0.24);
+  background:
+    radial-gradient(circle at 18% 8%, rgba(135, 154, 247, 0.2), transparent 36%),
+    linear-gradient(145deg, rgba(32, 35, 61, 0.98), rgba(24, 29, 48, 0.98));
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.34);
+}
+
+body[data-theme="dark"] .drink-reflection-modal__close {
+  border-color: rgba(197, 214, 255, 0.2);
   background: rgba(255, 255, 255, 0.07);
+  color: #e6ebff;
+}
+
+body[data-theme="dark"] .drink-reflection-modal__icon {
+  border-color: rgba(178, 193, 255, 0.24);
+  background: linear-gradient(145deg, rgba(111, 132, 219, 0.26), rgba(177, 148, 238, 0.16));
+}
+
+body[data-theme="dark"] .drink-reflection-modal h2 {
+  color: #f2f4ff;
+}
+
+body[data-theme="dark"] .drink-reflection-modal__message {
+  border-color: rgba(162, 178, 255, 0.18);
+  background: rgba(15, 20, 42, 0.38);
+  color: #d8dff9;
+}
+
+@media (max-width: 600px) {
+  .drink-reflection-modal {
+    padding: 18px;
+  }
+
+  .drink-reflection-modal__surface {
+    max-height: calc(100vh - 36px);
+    padding: 28px 22px 22px;
+  }
 }
 
 .toggle-card,
