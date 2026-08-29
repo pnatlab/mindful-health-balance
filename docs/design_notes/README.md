@@ -23,7 +23,7 @@ Excel export structure, Summary sheet behavior, Column_Guide, and human/AI-reada
 - [EXCEL_SUMMARY_REFINEMENT.md](EXCEL_SUMMARY_REFINEMENT.md) - Clarifies Summary sheet fields such as Total_Logs, Unique_Days, and Summary_Note.
 - [EXCEL_COLUMN_GUIDE_DESIGN.md](EXCEL_COLUMN_GUIDE_DESIGN.md) - Defines Column_Guide as a Thai/English schema guide that preserves canonical headers.
 - [LEGACY_WORKBOOK_NORMALIZATION.md](LEGACY_WORKBOOK_NORMALIZATION.md) - Defines import normalization for old workbook placeholder artifacts without modifying source files.
-- [DAILY_LOG_PERSISTENCE_INTEGRITY_AUDIT.md](DAILY_LOG_PERSISTENCE_INTEGRITY_AUDIT.md) - Investigates missing historical Daily Logs, proves localhost origin/port partitioning, documents recovery semantics and malformed-storage risk, and recommends a fail-closed launcher Phase B without changing runtime data.
+- [DAILY_LOG_PERSISTENCE_INTEGRITY_AUDIT.md](DAILY_LOG_PERSISTENCE_INTEGRITY_AUDIT.md) - Investigates missing historical Daily Logs, proves localhost origin/port partitioning, documents recovery semantics and malformed-storage risk, and records the B1 canonical-origin launcher guard.
 
 ## 02 Reflection UX
 
@@ -95,7 +95,7 @@ Runtime architecture, modularization planning, and implementation-safety notes f
 - [HEIC_INPUT_RELIABILITY_LARGE_IPHONE_PHOTOS.md](HEIC_INPUT_RELIABILITY_LARGE_IPHONE_PHOTOS.md) - MHB 2.4I local HEIC reliability audit: all nine authorized corpus images, including 24.47-megapixel iPhone photos, reached the fixed transient JPEG target; diagnostics and preparation responsiveness were tightened without changing Vision authority.
 - [LOCAL_VISION_V1_FIELD_ACCEPTANCE.md](LOCAL_VISION_V1_FIELD_ACCEPTANCE.md) - MHB 2.4J large-HEIC field acceptance: two authorized iPhone photos reached validated human review and conservative draft merge; Vision v1 is ready for local field use with known latency, model, and decoder constraints.
 - [LOCAL_IMAGE_PREPARATION_PAGE_BOUNDARY.md](LOCAL_IMAGE_PREPARATION_PAGE_BOUNDARY.md) - MHB 2.5A locks the separate local image-preparation page, its transient same-origin handoff, and its strict separation from Vision, meal state, and evidence.
-- [LOCAL_LAUNCHER_RUNTIME_GUARD.md](LOCAL_LAUNCHER_RUNTIME_GUARD.md) - MHB 2.5B defines the macOS one-click loopback launcher, safe port reuse/fallback, and the `file://` guard for optional image/Vision capabilities.
+- [LOCAL_LAUNCHER_RUNTIME_GUARD.md](LOCAL_LAUNCHER_RUNTIME_GUARD.md) - Defines the macOS one-click loopback launcher, canonical `127.0.0.1:4173` origin guard, and the `file://` guard for optional image/Vision capabilities.
 - [NATIVE_MACOS_APP_LAUNCHER.md](NATIVE_MACOS_APP_LAUNCHER.md) - MHB 2.6E adds a reproducible local macOS app-icon wrapper with an identity-free ad-hoc seal that delegates to the same loopback launcher contract as the `.command` fallback.
 - [MHB_HEADER_BRAND_MARK.md](MHB_HEADER_BRAND_MARK.md) - MHB 2.6F adds a quiet transparent in-app mark derived locally from the launcher artwork, while preserving the title as the primary header element.
 - [VISION_OBSERVATION_VOCABULARY_FIELD_LEARNING.md](VISION_OBSERVATION_VOCABULARY_FIELD_LEARNING.md) - MHB 2.6A preserves model-visible vocabulary as a separate local evidence layer without promoting labels into Food References or Meal Items.

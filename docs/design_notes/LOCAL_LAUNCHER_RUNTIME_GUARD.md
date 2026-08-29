@@ -20,7 +20,9 @@ It backgrounds the server with output in the system temporary directory, then op
 
 ## Port and Reuse Policy
 
-Ports are considered in order: `4173`, `4174`, `4175`, `4176`. For each port, the launcher first requests `/index.html` and reuses it only when the response identifies Mindful Health Balance. A listening non-MHB process is never killed; the launcher tries the next bounded fallback port instead. This avoids duplicate MHB servers in normal sequential launches.
+The one canonical browser origin is `http://127.0.0.1:4173`. The launcher first requests `/index.html` there and reuses it only when the response identifies Mindful Health Balance. If port `4173` is free, it starts the server there. If another local process owns `4173`, the launcher does not kill it and does not fall back to `4174`-`4176`: it explains that switching ports would open a separate browser-storage partition and asks the user to resolve the known port collision before trying again.
+
+This fail-closed policy preserves continuity for browser-local Daily Logs. Legacy noncanonical origins may still contain historical local data; B1 neither clears nor migrates them.
 
 The detached local server may stay alive after the browser closes. To stop one intentionally, identify its exact PID first, for example with `lsof -nP -iTCP:4173 -sTCP:LISTEN`, and terminate only that PID. No broad process-kill command is part of the launcher.
 
@@ -40,4 +42,4 @@ open http://127.0.0.1:4173/index.html
 
 ## QA and Limits
 
-The launcher is syntax-checked and tested for fresh start, existing-server reuse, Python failure, and a safe fallback when its canonical port is occupied. Browser QA verifies that the HTTP runtime does not show the guard, while the `file://` runtime does. MHB 2.6E adds a generated lightweight `.app` wrapper with a custom icon; it delegates to the same auditable shell contract and does not change app authority or runtime behavior. See [NATIVE_MACOS_APP_LAUNCHER.md](NATIVE_MACOS_APP_LAUNCHER.md).
+The launcher is syntax-checked and tested for fresh start, verified existing-server reuse, Python failure, and a safe fail-closed response when its canonical port is occupied. Browser QA verifies that the HTTP runtime does not show the guard, while the `file://` runtime does. MHB 2.6E adds a generated lightweight `.app` wrapper with a custom icon; it delegates to the same auditable shell contract and does not change app authority or runtime behavior. See [NATIVE_MACOS_APP_LAUNCHER.md](NATIVE_MACOS_APP_LAUNCHER.md).

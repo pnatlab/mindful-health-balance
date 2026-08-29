@@ -229,7 +229,7 @@ Energy Cause ไม่ได้มีไว้เก็บเฉพาะเห�
 
 กด `สิ่งที่ระบบเคยเห็น` เพื่อดูคำที่ตัวช่วยจากรูปเคยสังเกตไว้ในเครื่อง พร้อมจำนวนครั้งและสถานะการ map หน้านี้มีไว้ดูช่องว่างของฐานอาหารเท่านั้น ไม่เพิ่ม Food Reference หรือเปลี่ยนมื้อให้อัตโนมัติ
 
-สำหรับการเตรียมรูปและตัวช่วยจากรูปในเครื่องบน macOS ให้ build หนึ่งครั้งด้วย `./tools/build_mhb_macos_app.sh` แล้วดับเบิลคลิก `dist/Mindful Health Balance.app` ระบบจะเปิด local runtime แบบ loopback และพาไปหน้าที่ถูกต้องอัตโนมัติ แอปนี้เป็น launcher ส่วนตัวในเครื่อง ไม่มี Developer ID หรือ App Store signature; `Start Mindful Health Balance.command` ยังคงเป็นทางเลือกสำรองและใช้ตรวจปัญหาได้ หากเปิด `index.html` ตรง ๆ ยังประกอบมื้อเองได้ตามปกติ แต่ปุ่มรูปจะแจ้งว่าต้องใช้ Local Launcher ทางเลือกแบบ manual คือ `python3 -m http.server 4173 --bind 127.0.0.1` แล้วเปิด `http://127.0.0.1:4173/index.html`
+สำหรับการเตรียมรูปและตัวช่วยจากรูปในเครื่องบน macOS ให้ build หนึ่งครั้งด้วย `./tools/build_mhb_macos_app.sh` แล้วดับเบิลคลิก `dist/Mindful Health Balance.app` ระบบจะเปิดที่ canonical loopback origin `http://127.0.0.1:4173` เท่านั้น แอปนี้เป็น launcher ส่วนตัวในเครื่อง ไม่มี Developer ID หรือ App Store signature; ถ้ามี service อื่นใช้พอร์ตนี้อยู่ MHB จะหยุดพร้อมข้อความชัดเจน แทนการสลับไป browser storage คนละชุดโดยเงียบ ๆ ให้ปิด service นั้นเมื่อทราบว่าเป็นอะไร แล้วลองเปิด MHB อีกครั้ง `Start Mindful Health Balance.command` ยังคงเป็นทางเลือกสำรองและใช้ตรวจปัญหาได้ หากเปิด `index.html` ตรง ๆ ยังประกอบมื้อเองได้ตามปกติ แต่ปุ่มรูปจะแจ้งว่าต้องใช้ Local Launcher ทางเลือกแบบ manual คือ `python3 -m http.server 4173 --bind 127.0.0.1` แล้วเปิด `http://127.0.0.1:4173/index.html`
 
 ### Drinks / Drink Profile
 

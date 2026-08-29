@@ -121,7 +121,9 @@ assert.match(scriptSource, /const dailyRows = rows\.map\(\(row\) => pickColumns\
 assert.match(scriptSource, /XLSX\.utils\.sheet_to_json\(dailySheet, \{ defval: "" \}\)/);
 assert.match(scriptSource, /XLSX\.writeFile\(workbook, "Mindful_Health_Balance_Master\.xlsx"\);/);
 assert.match(launcherSource, /HOST="127\.0\.0\.1"/);
-assert.match(launcherSource, /PORTS=\(4173 4174 4175 4176\)/);
+assert.match(launcherSource, /PORT="4173"/);
+assert.match(launcherSource, /will not switch to another port automatically/);
+assert.doesNotMatch(launcherSource, /417[4-6]/);
 assert.doesNotMatch(launcherSource, /localhost/);
 
 console.log("Daily Log persistence integrity tests passed.");

@@ -5,7 +5,7 @@ unsetopt BG_NICE
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_DIR="${1:-$(cd "$SCRIPT_DIR/.." && pwd)}"
 HOST="127.0.0.1"
-PORTS=(4173 4174 4175 4176)
+PORT="4173"
 LOG_FILE="${TMPDIR:-/tmp}/mhb-local-server.log"
 
 show_failure() {
@@ -64,22 +64,11 @@ if [[ -z "$PYTHON_BIN" ]]; then
   exit 1
 fi
 
-PORT=""
 REUSED_SERVER=0
-for candidate in "${PORTS[@]}"; do
-  if is_mhb_server "$candidate"; then
-    PORT="$candidate"
-    REUSED_SERVER=1
-    break
-  fi
-  if ! is_port_in_use "$candidate"; then
-    PORT="$candidate"
-    break
-  fi
-done
-
-if [[ -z "$PORT" ]]; then
-  show_failure "MHB could not find a free local port (tried: ${PORTS[*]})."
+if is_mhb_server "$PORT"; then
+  REUSED_SERVER=1
+elif is_port_in_use "$PORT"; then
+  show_failure "Mindful Health Balance cannot open on its canonical local port 4173 right now. To keep Daily Log history in the same browser storage, it will not switch to another port automatically. Close the service using 4173 if you recognize it, then open MHB again."
   exit 1
 fi
 

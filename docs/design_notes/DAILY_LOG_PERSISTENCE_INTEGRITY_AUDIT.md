@@ -108,14 +108,14 @@ Confidence in the browser mechanism: **HIGH**. Exact port and hostname isolation
 
 Confidence that origin switching was the historical incident's exact cause: **MEDIUM**. The symptom and launcher behavior match, but no browser-origin snapshot from the incident remains. True deletion, manual Clear Daily Log, malformed storage, or a different browser profile cannot be conclusively excluded from current evidence.
 
-## Recommended Phase B
+## Phase B1 Follow-Up
 
-The smallest safe Phase B should prevent silent origin changes before considering storage migration:
+Phase B1 implements the smallest launcher-only guard: normal launch is fixed to canonical origin `http://127.0.0.1:4173`. The shared launcher reuses only a verified MHB server at that origin; if an unrelated listener owns `4173`, it fails clearly instead of silently opening `4174`-`4176`. No browser data is copied, cleared, migrated, or merged, and legacy noncanonical partitions remain untouched.
 
-1. Give the shared launcher a stable remembered MHB origin and reuse it on later launches.
-2. If that origin is unavailable, fail clearly instead of silently opening another port's empty partition.
-3. Provide a read-only recovery diagnostic that lists the current origin and local Daily Log count without clearing, importing, or promoting data.
-4. Handle malformed Daily Log storage fail-closed: preserve the raw value and block overwrite until the user exports/reviews recovery options.
+The following remain separate work, not B1 behavior:
+
+1. A read-only recovery diagnostic that lists the current origin and local Daily Log count without clearing, importing, or promoting data.
+2. Fail-closed handling for malformed Daily Log storage that preserves the raw value before a later Save or confirmed Import could overwrite it.
 
 Cross-origin migration, file-backed canonical storage, import merge semantics, and duplicate-date cleanup require separate contracts. They should not be bundled into the launcher safety patch.
 

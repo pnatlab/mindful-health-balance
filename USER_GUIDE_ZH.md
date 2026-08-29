@@ -223,7 +223,7 @@ Hydration card 会根据当天情境显示弹性范围，以基础饮水 + load/
 
 选择“系统曾看到的内容”，可查看本机记录的观察标签、次数和映射状态。这个只读视图用于发现词汇缺口，不会自动添加 Food Reference，也不会自动更改餐食。
 
-在 macOS 上使用图片准备和本机照片助手时，请先运行一次 `./tools/build_mhb_macos_app.sh`，然后双击 `dist/Mindful Health Balance.app`。这个个人本机 launcher 没有 Developer ID 或 App Store 签名；它会启动仅限 loopback 的运行环境，并自动打开正确页面。`Start Mindful Health Balance.command` 仍作为备用和调试入口。直接打开 `index.html` 时，手动组合餐食仍可使用；照片操作会说明需要 Local Launcher。手动方式是执行 `python3 -m http.server 4173 --bind 127.0.0.1`，再打开 `http://127.0.0.1:4173/index.html`。
+在 macOS 上使用图片准备和本机照片助手时，请先运行一次 `./tools/build_mhb_macos_app.sh`，然后双击 `dist/Mindful Health Balance.app`。这个个人本机 launcher 没有 Developer ID 或 App Store 签名；它只会打开 canonical loopback origin `http://127.0.0.1:4173`。如果其他服务正在使用该端口，MHB 会停止并说明原因，而不会悄悄切换到另一套浏览器存储；请在确认服务身份后关闭它，再重新打开 MHB。`Start Mindful Health Balance.command` 仍作为备用和调试入口。直接打开 `index.html` 时，手动组合餐食仍可使用；照片操作会说明需要 Local Launcher。手动方式是执行 `python3 -m http.server 4173 --bind 127.0.0.1`，再打开 `http://127.0.0.1:4173/index.html`。
 
 ### Drinks / Drink Profile
 

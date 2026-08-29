@@ -11,7 +11,7 @@
 - primary local entry: `dist/Mindful Health Balance.app`
 - fallback and debugging entry: `Start Mindful Health Balance.command`
 
-The shared contract keeps Python 3 detection, `127.0.0.1` binding, ordered ports `4173` through `4176`, verified MHB-server reuse, safe unrelated-listener fallback, optional Ollama detection, server logging, and browser opening. Neither wrapper contains an independent copy of this policy.
+The shared contract keeps Python 3 detection, the canonical `127.0.0.1:4173` origin, verified MHB-server reuse, fail-closed handling for an unrelated listener on that port, optional Ollama detection, server logging, and browser opening. Neither wrapper contains an independent copy of this policy.
 
 ## Bundle Architecture
 
@@ -43,7 +43,7 @@ The source icon, launcher scripts, metadata, tests, and documentation are tracke
 
 ## Local-Only and Optional Vision Boundary
 
-The shared launcher binds only `127.0.0.1`; it never uses `0.0.0.0`, sudo, cloud services, telemetry, user shell input, or process-kill commands. An unrelated listener is left untouched. Ollama is checked only on `127.0.0.1:11434` and never blocks manual MHB use.
+The shared launcher binds only `127.0.0.1`; it never uses `0.0.0.0`, sudo, cloud services, telemetry, user shell input, or process-kill commands. An unrelated listener on canonical port `4173` is left untouched and stops the launch rather than moving MHB to a separate browser-storage origin. Ollama is checked only on `127.0.0.1:11434` and never blocks manual MHB use.
 
 ## Unsigned Local App
 
@@ -57,4 +57,4 @@ The generated app is repository-relative in this slice. Moving it independently 
 
 ## QA
 
-Deterministic checks validate bundle structure, plist fields, executable permissions, ICNS presence, shared-core delegation, loopback binding, port order, collision fallback, Python failure copy, Ollama optionality, and absence of process killing or external runtime dependencies. Live macOS QA confirmed local page loading, repeated-launch server reuse, no console error, custom icon artwork at Finder-scale tiers, and unchanged browser runtime behavior.
+Deterministic checks validate bundle structure, plist fields, executable permissions, ICNS presence, shared-core delegation, canonical loopback binding, collision fail-closed behavior, Python failure copy, Ollama optionality, and absence of process killing or external runtime dependencies. Live macOS QA confirmed local page loading, repeated-launch server reuse, no console error, custom icon artwork at Finder-scale tiers, and unchanged browser runtime behavior.
