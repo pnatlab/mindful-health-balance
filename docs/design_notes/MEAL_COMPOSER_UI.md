@@ -71,7 +71,7 @@ Unknown is never rendered as `0 mg`. No score, traffic-light state, medical sodi
 
 `meal_type` describes only the broad form the user recognizes. It does not supply hidden recipe details, estimate sodium, select a Reflection Root, or create a food-quality conclusion. The Meal Type taxonomy stays intentionally small: unspecified, stir-fried, boiled, curry, fried, grilled, steamed, broth-based, minimally prepared, and other.
 
-The optional unknown-condiment control preserves a user statement of uncertainty. A meal with no condiment item means only that none was recorded. Meal-Type-aware sodium estimation, restaurant-food assumptions, and any unknown-condiment estimate logic are intentionally deferred to **MHB 2.3F**.
+The optional unknown-condiment control preserves a user statement of uncertainty. A meal with no condiment item means only that none was recorded. Meal-Type-aware sodium estimation, restaurant-food assumptions, and unknown-condiment estimate logic remain intentionally deferred; the bounded named-dish work does not authorize those inference paths.
 
 ### MHB 2.3E.1 Visual Polish
 

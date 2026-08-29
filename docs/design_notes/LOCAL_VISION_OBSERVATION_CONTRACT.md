@@ -2,9 +2,9 @@
 
 ## Status
 
-**Contract locked for a future bounded local-provider prototype. Runtime implementation is not performed in this slice.**
+**Original MHB 2.4C contract locked before implementation. It remains the canonical authority for the bounded local-provider path that MHB 2.4D-2.4J subsequently implemented.**
 
-This contract follows MHB 2.4A and the measured MHB 2.4B pilot. `gemma3:12b` can observe images locally, but its systematic species and dish-family errors mean vision remains a transient proposal source. Current public runtime remains **MHB 2.3 - Gentle Meal Composition**.
+The current runtime uses the optional `js/localVisionProvider.mjs` adapter only after a user selects an image from Meal Composer. It remains loopback-only, transient, validated, and human-reviewed. `gemma3:12b` can observe images locally, but its systematic species and dish-family errors mean Vision remains a proposal source rather than an authority. Current public runtime remains **MHB 2.3 - Gentle Meal Composition**.
 
 ## Canonical Authority Chain
 
@@ -117,7 +117,7 @@ The review result is a separate transient `AcceptedVisionMealPrefill` concept:
 }
 ```
 
-This is an interaction payload, not a persistence schema. A future UI may use it to invoke existing Meal Composer draft APIs for only the accepted Food References. It must not overwrite existing draft items, create a meal, or save a meal. **"เก็บมื้อนี้" remains the only canonical save boundary.** Closing, rejecting, or losing a transient proposal changes no meal record and reload must not resurrect it.
+This is an interaction payload, not a persistence schema. The current review UI invokes existing Meal Composer draft APIs only for accepted Food References. It must not overwrite existing draft items, create a meal, or save a meal. **"เก็บมื้อนี้" remains the only canonical save boundary.** Closing, rejecting, or losing a transient proposal changes no meal record and reload must not resurrect it.
 
 ### Mapping Boundary
 
@@ -149,7 +149,7 @@ There is no raw-label-to-`named_dish_id` table, no vision-confidence substitute 
 
 ## Optional Provider Boundary
 
-The MHB core must not import, start, or require Ollama, Gemma, Python, a model, or a network service. A future provider layer is optional and conceptually exposes:
+The MHB core must not import, start, or require Ollama, Gemma, Python, a model, or a network service. The current optional provider layer exposes:
 
 ```text
 isAvailable() -> ProviderAvailability
@@ -164,7 +164,7 @@ Availability detects capability only; it does not block Meal Composer startup or
 
 ## Reference Adapter: Local Ollama / Gemma
 
-The future reference adapter is `OllamaGemmaVisionProvider`, not a permanent core dependency or a model-selection system.
+The current reference adapter is `createLocalOllamaVisionProvider()` in `js/localVisionProvider.mjs`, not a permanent core dependency or a model-selection system.
 
 | Adapter property | Locked initial value |
 | --- | --- |
@@ -176,7 +176,7 @@ The future reference adapter is `OllamaGemmaVisionProvider`, not a permanent cor
 | Temperature | 0 |
 | Actionable output | Only after deterministic v1 validation |
 
-Ollama documents `/api/generate` image input as base64 data for image-capable models, plus response timing fields that the probe already captures. Future code should keep these provider details inside the adapter rather than spreading model/prompt/API assumptions into Meal Composer. [Ollama generate API](https://docs.ollama.com/api/generate)
+Ollama documents `/api/generate` image input as base64 data for image-capable models, plus response timing fields that the provider captures only as transient diagnostics. The current code keeps these provider details inside the adapter rather than spreading model/prompt/API assumptions into Meal Composer. [Ollama generate API](https://docs.ollama.com/api/generate)
 
 ## Privacy and Local-Only Contract
 
@@ -184,13 +184,13 @@ Ollama documents `/api/generate` image input as base64 data for image-capable mo
 - No cloud upload fallback, telemetry carrying photos, remote image hosting, or automatic corpus reuse is allowed.
 - Personal meal photos remain ignored/outside Git and must never enter workbook data, `Daily_Log`, Meal Instance storage, Meal Items, Reflection data, or exports.
 - No raw image bytes or raw model transcript is required for MHB persistence. A future debug mode, if approved separately, must be temporary/local and off by default.
-- Future implementations may create an in-memory or temporary derived image for the local provider. It must be deleted after success/failure/cancel according to the browser/runtime's practical capabilities and must never be copied into app storage automatically.
+- The current normalizer may create an in-memory, temporary derived JPEG for the local Vision session. It is cleared when that session fails, is cancelled, cleared, or replaced according to browser/runtime practical capabilities and is never copied into app storage automatically.
 
-## Browser-to-Ollama Risk
+## Browser-to-Ollama Risk (Historical Pre-Integration Boundary)
 
-The successful Node probe does not establish browser integration safety. Ollama runs locally by default, but its CORS defaults allow loopback origins and additional origins require `OLLAMA_ORIGINS`; a GitHub Pages origin is not implicitly an allowed origin. [Ollama FAQ](https://docs.ollama.com/faq)
+At the time of this contract, the successful Node probe did not establish browser integration safety. MHB 2.4D later verified the current local HTTP-origin path. Ollama runs locally by default, but its CORS defaults allow loopback origins and additional origins require `OLLAMA_ORIGINS`; a GitHub Pages origin is not implicitly an allowed origin. [Ollama FAQ](https://docs.ollama.com/faq)
 
-Before a browser UI slice, conduct a separate local integration probe that verifies:
+The completed 2.4D browser integration probe verified these local HTTP-origin conditions:
 
 1. CORS preflight and actual requests from the deployed and local MHB origins;
 2. HTTPS-page to `http://localhost` browser security behavior on target browsers;
@@ -199,17 +199,17 @@ Before a browser UI slice, conduct a separate local integration probe that verif
 5. endpoint allowlisting and rejection of non-loopback values; and
 6. failure paths when a browser cannot reach Ollama although the local CLI can.
 
-Do not add a Python bridge or startup manager to work around these unknowns. Whether a thin local bridge is needed is a separate human-reviewed architecture decision.
+The current implementation adds neither a Python bridge nor a startup manager to work around these conditions. A future architecture change would require separate human review.
 
-## Performance and Future UX Boundary
+## Performance and UX Boundary
 
-MHB 2.4B measured `parser-lines-v2` at about 6.6-8.0 seconds in the corpus run (6.9-second median), with warm repeats sometimes faster. A future experience therefore needs an explicit, optional action such as "Let AI look at this photo," a calm observing state, and a manual path that remains available. It must preserve draft state, avoid fake progress, and never turn observation into scoring or reward.
+MHB 2.4B measured `parser-lines-v2` at about 6.6-8.0 seconds in the corpus run (6.9-second median), with warm repeats sometimes faster. The current optional helper therefore uses an explicit "Let local AI look at a photo" action, calm preparation/observing states, and a manual path that remains available. It preserves the draft, avoids fake progress, and never turns observation into scoring or reward. MHB 2.4H later adopted `parser-lines-v3`; the v2 figures remain the measured pilot baseline rather than a claim about current latency.
 
-No image capture, picker, preview, prefill, or loading UI is implemented by this contract.
+The contract itself did not implement UI. The current bounded path includes a local file picker, transient preview, image-preparation page, validation, review, and conservative draft prefill; it still excludes camera capture, auto-apply, auto-save, and persistence of image bytes or raw model prose.
 
-## Future Acceptance Plan
+## Original Acceptance Plan and Completed Boundary
 
-A bounded provider/prototype implementation must verify:
+The original implementation plan required:
 
 1. MHB works normally without Ollama or a model.
 2. Remote endpoints are rejected.
@@ -226,6 +226,6 @@ A bounded provider/prototype implementation must verify:
 13. Photos, bytes, and raw transcripts do not enter Git, workbook, `Daily_Log`, Meal records, or exports.
 14. Keyboard/focus/announcement behavior and a no-provider manual fallback are accessible and understandable.
 
-## Recommended Next Slice
+## Historical Next Slice
 
-**MHB 2.4D - Browser-to-Local-Ollama Integration Probe.** Validate CORS, localhost allowlisting, browser security behavior, availability detection, and fail-open behavior from an MHB browser origin before building a production image-capture or review UI.
+**MHB 2.4D - Browser-to-Local-Ollama Integration Probe** completed this next slice. The later 2.4E-2.4J notes record the implemented review, HEIC normalization, prompt/validation refinement, reliability, and field-acceptance evidence. This contract's authority boundaries remain unchanged.
