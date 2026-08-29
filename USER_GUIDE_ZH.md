@@ -357,6 +357,8 @@ MHB 2.2 可以在运行时从 `Daily_Log.Date` 推导最近一次较早的记录
 
 它不是健康评分表，只是一面帮助观察生活节律的镜子。
 
+如果 MHB 无法读取此浏览器中的 Daily Log，系统会显示恢复提示，而不会把它当作 0 条记录。为保留原始本机内容，Save、Import、Clear、Restore 和 Export 会暂停。请先选择 `在本机备份无法读取的数据`，然后在同一 session 中选择可信的 Master Excel 文件进行明确恢复。系统不会上传或静默重置数据。
+
 ### Clear Daily Log
 
 点击 `Clear Daily Log` 会清除当前浏览器中的全部历史 log。操作前应确认，因为它会删除该浏览器 localStorage 中的记录。

@@ -7,6 +7,7 @@ const CURRENT_FORM_CLEARED_PREFIX = "mindfulHealthCurrentFormCleared";
 const USER_INTENTION_PROFILE_KEY = "mhb_user_intention_profile_v1";
 const USER_INTENTION_PROFILE_SCHEMA_VERSION = "1.0";
 const USER_INTENTION_PROFILE_SHEET_NAME = "User_Intention_Profile";
+const DAILY_LOG_STORAGE_INTEGRITY = window.MHBDailyLogStorageIntegrity;
 const MEAL_COMPOSITION_RUNTIME = window.MHBMealRuntime;
 const MEAL_COMPOSITION_UI = window.MHBMealUI;
 const MEAL_VISION_IMAGE_NORMALIZER = window.MHBMealVisionImageNormalizer;
@@ -43,6 +44,7 @@ const getReflectionRootDeclaration = window.getReflectionRootDeclaration;
 const getReflectionRootSignalGroups = window.getReflectionRootSignalGroups;
 const getReflectionRootSignalWeights = window.getReflectionRootSignalWeights;
 const getReflectionRootBoundaryTags = window.getReflectionRootBoundaryTags;
+let dailyLogRecoveryBackupKey = "";
 
 const translations = {
   th: {
@@ -522,6 +524,16 @@ const translations = {
     savedDailyLog: "บันทึกลง Daily Log แล้ว ไม่ต้องแบกต่อในหัวแล้วนะ",
     clearConfirm: "ต้องการล้าง Daily Log ทั้งหมดใน browser นี้ไหม?",
     clearedDailyLog: "ล้าง Daily Log ใน browser นี้แล้ว",
+    dailyLogIntegrityKicker: "LOCAL DATA PROTECTION",
+    dailyLogIntegrityTitle: "Daily Log ต้องกู้คืนก่อน",
+    dailyLogIntegrityMessage: "พบว่าข้อมูล Daily Log ในเครื่องอ่านไม่ได้ในรูปแบบปัจจุบัน ระบบยังไม่ได้เขียนทับข้อมูลเดิมค่ะ",
+    dailyLogIntegrityBoundary: "เพื่อป้องกันข้อมูลหาย การบันทึก Import และ Clear ถูกหยุดไว้ชั่วคราว ให้สำรองข้อมูลดิบในเครื่องก่อน แล้วจึงเลือกไฟล์ Master Excel เพื่อกู้คืนอย่างชัดเจน",
+    dailyLogIntegrityBackup: "สำรองข้อมูลดิบไว้ในเครื่อง",
+    dailyLogIntegrityBackupReady: "สำรองข้อมูลดิบแล้ว เลือก Master Excel เพื่อกู้คืนได้",
+    dailyLogIntegrityRecover: "เลือก Master Excel เพื่อกู้คืน",
+    dailyLogIntegrityWriteBlocked: "Daily Log ยังอ่านไม่ได้ จึงยังไม่เขียนทับข้อมูลเดิม",
+    dailyLogIntegrityBackupFailed: "ยังสำรองข้อมูลดิบไม่ได้ จึงยังไม่เปิดการกู้คืน",
+    dailyLogIntegrityNeedsRecoveryShort: "ต้องกู้คืน Daily Log",
     sheetJsMissing: "ยังโหลด SheetJS ไม่สำเร็จ ลองเช็กอินเทอร์เน็ตแล้วกดอีกครั้ง",
     noDailyLog: "ยังไม่มี Daily Log ให้ export เริ่มจาก Save to Daily Log ก่อนนะ",
     exportedMaster: "Export Master Excel แล้ว ไฟล์จะถูกดาวน์โหลดลงเครื่องของคุณ",
@@ -1525,6 +1537,16 @@ const translations = {
     savedDailyLog: "Saved to Daily Log. You do not have to carry it all in your head now.",
     clearConfirm: "Clear all Daily Log data in this browser?",
     clearedDailyLog: "Daily Log in this browser has been cleared.",
+    dailyLogIntegrityKicker: "LOCAL DATA PROTECTION",
+    dailyLogIntegrityTitle: "Daily Log needs recovery",
+    dailyLogIntegrityMessage: "This browser's Daily Log cannot be read in its current format. MHB has not replaced the original data.",
+    dailyLogIntegrityBoundary: "To protect the data, saving, importing, and clearing are paused. Create a local raw backup first, then explicitly choose a Master Excel file for recovery.",
+    dailyLogIntegrityBackup: "Back up unreadable data locally",
+    dailyLogIntegrityBackupReady: "Raw data is backed up. You can now choose a Master Excel file for recovery.",
+    dailyLogIntegrityRecover: "Choose Master Excel for recovery",
+    dailyLogIntegrityWriteBlocked: "Daily Log is unreadable, so MHB has not replaced the original data.",
+    dailyLogIntegrityBackupFailed: "MHB could not create a local raw backup, so recovery remains unavailable.",
+    dailyLogIntegrityNeedsRecoveryShort: "Daily Log needs recovery",
     sheetJsMissing: "SheetJS has not loaded yet. Check your internet connection and try again.",
     noDailyLog: "There is no Daily Log to export yet. Start with Save to Daily Log.",
     exportedMaster: "Master Excel exported. The file will download to your device.",
@@ -2528,6 +2550,16 @@ const translations = {
     savedDailyLog: "已保存到 Daily Log。现在不用再把它都放在脑子里了。",
     clearConfirm: "要清空这个浏览器里的所有 Daily Log 吗？",
     clearedDailyLog: "这个浏览器里的 Daily Log 已清空。",
+    dailyLogIntegrityKicker: "本机数据保护",
+    dailyLogIntegrityTitle: "Daily Log 需要恢复",
+    dailyLogIntegrityMessage: "此浏览器中的 Daily Log 目前无法按现有格式读取。MHB 尚未替换原始数据。",
+    dailyLogIntegrityBoundary: "为保护数据，保存、导入和清空已暂停。请先在本机备份原始内容，再明确选择 Master Excel 文件进行恢复。",
+    dailyLogIntegrityBackup: "在本机备份无法读取的数据",
+    dailyLogIntegrityBackupReady: "原始数据已备份。现在可以选择 Master Excel 文件进行恢复。",
+    dailyLogIntegrityRecover: "选择 Master Excel 进行恢复",
+    dailyLogIntegrityWriteBlocked: "Daily Log 无法读取，因此 MHB 尚未替换原始数据。",
+    dailyLogIntegrityBackupFailed: "MHB 无法创建本机原始备份，因此恢复仍不可用。",
+    dailyLogIntegrityNeedsRecoveryShort: "Daily Log 需要恢复",
     sheetJsMissing: "SheetJS 还没有加载完成。请检查网络后再试一次。",
     noDailyLog: "目前没有 Daily Log 可导出。请先 Save to Daily Log。",
     exportedMaster: "Master Excel 已导出，文件会下载到你的设备。",
@@ -5358,12 +5390,14 @@ function bindEvents() {
   document.querySelector("#saveDailyLog").addEventListener("click", saveToDailyLog);
   document.querySelector("#resetCurrentForm").addEventListener("click", resetCurrentForm);
   document.querySelector("#restoreCurrentForm").addEventListener("click", restoreCurrentFormFromDailyLog);
-	  document.querySelector("#clearDailyLog").addEventListener("click", clearDailyLog);
-	  document.querySelector("#exportMasterExcel").addEventListener("click", exportMasterExcel);
-	  document.querySelector("#importMasterExcel").addEventListener("click", () => {
-	    document.querySelector("#importExcelFile").click();
-	  });
-	  document.querySelector("#importExcelFile").addEventListener("change", importMasterExcel);
+  document.querySelector("#clearDailyLog").addEventListener("click", clearDailyLog);
+  document.querySelector("#exportMasterExcel").addEventListener("click", exportMasterExcel);
+  document.querySelector("#importMasterExcel").addEventListener("click", () => {
+    document.querySelector("#importExcelFile").click();
+  });
+  document.querySelector("#backupDailyLogRaw")?.addEventListener("click", backupMalformedDailyLogRaw);
+  document.querySelector("#recoverDailyLogFromExcel")?.addEventListener("click", beginDailyLogRecoveryImport);
+  document.querySelector("#importExcelFile").addEventListener("change", importMasterExcel);
 	  document.querySelector("#fieldReviewTimeframe")?.addEventListener("change", () => {
 	    resetAllGuidedReading();
 	    renderFieldReview();
@@ -9420,6 +9454,11 @@ function getDailyLogRowForRestore() {
 }
 
 function restoreCurrentFormFromDailyLog() {
+  if (hasMalformedDailyLogStorage()) {
+    showDailyLogWriteBlocked();
+    return;
+  }
+
   const row = getDailyLogRowForRestore();
   const saveStatus = document.querySelector("#saveStatus");
   if (!row) {
@@ -9500,24 +9539,61 @@ function loadDailyLogRowIntoCurrentState(row) {
 }
 
 function getDailyLog() {
-  const saved = localStorage.getItem(DAILY_LOG_KEY);
-  if (!saved) return [];
-
-  try {
-    const parsed = JSON.parse(saved);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+  const storageState = getDailyLogStorageState();
+  return storageState.status === "ok" ? storageState.records : [];
 }
 
-function setDailyLog(rows) {
+function getDailyLogStorageState() {
+  return DAILY_LOG_STORAGE_INTEGRITY.inspect(localStorage, DAILY_LOG_KEY);
+}
+
+function hasMalformedDailyLogStorage() {
+  return getDailyLogStorageState().status === "malformed";
+}
+
+function showDailyLogWriteBlocked() {
+  const saveStatus = document.querySelector("#saveStatus");
+  if (saveStatus) saveStatus.textContent = t("dailyLogIntegrityWriteBlocked");
+}
+
+function setDailyLog(rows, { allowMalformedRecovery = false } = {}) {
+  if (hasMalformedDailyLogStorage() && (!allowMalformedRecovery || !dailyLogRecoveryBackupKey)) {
+    showDailyLogWriteBlocked();
+    return false;
+  }
+
   const cleanRows = rows
     .filter((row) => row && row.Date)
     .map(normalizeLogRow)
     .sort((a, b) => String(a.Date).localeCompare(String(b.Date)));
   localStorage.setItem(DAILY_LOG_KEY, JSON.stringify(cleanRows));
   renderDailyLogTable();
+  return true;
+}
+
+function backupMalformedDailyLogRaw() {
+  const result = DAILY_LOG_STORAGE_INTEGRITY.createRecoveryBackup(localStorage, DAILY_LOG_KEY);
+  if (!result.ok) {
+    const saveStatus = document.querySelector("#saveStatus");
+    if (saveStatus) saveStatus.textContent = t("dailyLogIntegrityBackupFailed");
+    return;
+  }
+
+  dailyLogRecoveryBackupKey = result.backupKey;
+  renderDailyLogTable();
+  const saveStatus = document.querySelector("#saveStatus");
+  if (saveStatus) saveStatus.textContent = t("dailyLogIntegrityBackupReady");
+}
+
+function beginDailyLogRecoveryImport() {
+  if (!hasMalformedDailyLogStorage() || !dailyLogRecoveryBackupKey) {
+    showDailyLogWriteBlocked();
+    return;
+  }
+  const input = document.querySelector("#importExcelFile");
+  if (!input) return;
+  input.dataset.dailyLogRecovery = "true";
+  input.click();
 }
 
 const legacyTextLikeFields = new Set([
@@ -9787,6 +9863,11 @@ Object.assign(window, {
 });
 
 function saveCurrentDailyLog({ generateReflection = true, saveSource = "reflection" } = {}) {
+  if (hasMalformedDailyLogStorage()) {
+    showDailyLogWriteBlocked();
+    return;
+  }
+
   if (generateReflection) {
     appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
   }
@@ -9810,7 +9891,7 @@ function saveCurrentDailyLog({ generateReflection = true, saveSource = "reflecti
   }
 
   saveCurrentForm({ generateReflection: false });
-  setDailyLog(rows);
+  if (!setDailyLog(rows)) return;
   resetTodayInputStep();
   document.querySelector("#saveStatus").textContent = t("savedDailyLog");
   syncUI();
@@ -9826,6 +9907,11 @@ function saveTodayLog({ source = "today_1" } = {}) {
 }
 
 function clearDailyLog() {
+  if (hasMalformedDailyLogStorage()) {
+    showDailyLogWriteBlocked();
+    return;
+  }
+
   const rows = getDailyLog();
   if (rows.length && !confirm(t("clearConfirm"))) {
     return;
@@ -9837,27 +9923,53 @@ function clearDailyLog() {
 }
 
 function renderDailyLogTable() {
-  const rows = getDailyLog();
+  const storageState = getDailyLogStorageState();
+  const isMalformed = storageState.status === "malformed";
+  const rows = isMalformed ? [] : storageState.records;
   const body = document.querySelector("#dailyLogBody");
   const emptyState = document.querySelector("#emptyLogState");
   const logCount = document.querySelector("#logCount");
+  const notice = document.querySelector("#dailyLogIntegrityNotice");
+  const backupButton = document.querySelector("#backupDailyLogRaw");
+  const recoveryButton = document.querySelector("#recoverDailyLogFromExcel");
+  const protectedActions = [
+    document.querySelector("#saveTodayFromStepOne"),
+    document.querySelector("#saveTodayFromStepTwo"),
+    document.querySelector("#saveDailyLog"),
+    document.querySelector("#importMasterExcel"),
+    document.querySelector("#clearDailyLog")
+  ];
 
   if (!body || !emptyState || !logCount) return;
 
-  logCount.textContent = rows.length === 1
-    ? t("logCountSingular", { count: rows.length })
-    : t("logCountPlural", { count: rows.length });
+  protectedActions.forEach((action) => {
+    if (action) action.disabled = isMalformed;
+  });
+  if (notice) notice.classList.toggle("is-hidden", !isMalformed);
+  if (backupButton) backupButton.disabled = !isMalformed;
+  if (recoveryButton) recoveryButton.disabled = !isMalformed || !dailyLogRecoveryBackupKey;
+
+  logCount.textContent = isMalformed
+    ? t("dailyLogIntegrityNeedsRecoveryShort")
+    : rows.length === 1
+      ? t("logCountSingular", { count: rows.length })
+      : t("logCountPlural", { count: rows.length });
   body.innerHTML = rows.map((row) => `
     <tr>
       ${DAILY_LOG_COLUMNS.map((column) => `<td>${escapeHtml(localizeLogCell(column, row[column]))}</td>`).join("")}
     </tr>
   `).join("");
-  emptyState.classList.toggle("is-hidden", rows.length > 0);
+  emptyState.classList.toggle("is-hidden", isMalformed || rows.length > 0);
   updateDailySaveStatus();
   renderFieldReview();
 }
 
 function exportMasterExcel() {
+  if (hasMalformedDailyLogStorage()) {
+    showDailyLogWriteBlocked();
+    return;
+  }
+
   if (!window.XLSX) {
     alert(t("sheetJsMissing"));
     return;
@@ -12719,11 +12831,22 @@ function renderFieldReview() {
     resetAllGuidedReading();
     guidedReadingTimeframe = timeframe;
   }
+  if (hasMalformedDailyLogStorage()) {
+    status.textContent = t("dailyLogIntegrityNeedsRecoveryShort");
+    emptyState.textContent = t("dailyLogIntegrityNeedsRecoveryShort");
+    emptyState.classList.remove("is-hidden");
+    thinState.classList.add("is-hidden");
+    container.classList.remove("is-room-workspace");
+    container.innerHTML = "";
+    return;
+  }
+
   const allRows = getAllFieldReviewRows();
   const rows = getFieldReviewRows(timeframe);
   const hasRows = rows.length > 0;
   const isThin = hasRows && rows.length < 3;
 
+  emptyState.textContent = t("fieldReviewEmptyState");
   updateFieldReviewTimeframeSegments(timeframe);
   renderFieldReviewOverview(rows, allRows);
 
@@ -12745,8 +12868,15 @@ function renderFieldReview() {
 
 function importMasterExcel(event) {
   const file = event.target.files?.[0];
+  const isRecoveryImport = event.target.dataset.dailyLogRecovery === "true";
   event.target.value = "";
+  delete event.target.dataset.dailyLogRecovery;
   if (!file) return;
+
+  if (hasMalformedDailyLogStorage() && (!isRecoveryImport || !dailyLogRecoveryBackupKey)) {
+    showDailyLogWriteBlocked();
+    return;
+  }
 
   if (getDailyLog().length && !confirm(t("importOverwriteConfirm"))) {
     document.querySelector("#saveStatus").textContent = t("importCancelled");
@@ -12778,7 +12908,10 @@ function importMasterExcel(event) {
         });
       });
 
-      setDailyLog(rowsWithReflections);
+      if (!setDailyLog(rowsWithReflections, { allowMalformedRecovery: isRecoveryImport })) {
+        return;
+      }
+      dailyLogRecoveryBackupKey = "";
       const profileImportResult = confirmAndReplaceUserIntentionProfile(profileImport);
       document.querySelector("#saveStatus").textContent = [
         t("importDone", { count: rowsWithReflections.length }),

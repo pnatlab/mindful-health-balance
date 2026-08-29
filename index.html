@@ -12,6 +12,7 @@
   <script defer src="js/config/workbookSchema.js"></script>
   <script defer src="js/config/reflectionRootMatrix.js"></script>
   <script defer src="js/mealCompositionRuntime.js"></script>
+  <script defer src="js/dailyLogStorageIntegrity.js"></script>
   <script defer src="js/localRuntimeGuard.js"></script>
   <script defer src="js/mealVisionImageNormalizer.js"></script>
   <script defer src="js/imagePrep/imagePrepBridge.js"></script>
@@ -791,6 +792,16 @@
         <span class="soft-badge" id="logCount">0 logs</span>
       </div>
       <p class="table-helper" data-i18n="tableHelper">ตารางนี้คือบันทึกย้อนหลังใน browser นี้ ใช้ดู pattern แบบไม่ต้องกรอกละเอียดเกินไป</p>
+      <section class="daily-log-integrity-notice is-hidden" id="dailyLogIntegrityNotice" role="status" aria-live="polite" aria-labelledby="dailyLogIntegrityTitle">
+        <p class="section-kicker" data-i18n="dailyLogIntegrityKicker">LOCAL DATA PROTECTION</p>
+        <h3 id="dailyLogIntegrityTitle" data-i18n="dailyLogIntegrityTitle">Daily Log needs recovery</h3>
+        <p data-i18n="dailyLogIntegrityMessage">This browser's Daily Log cannot be read in its current format. MHB has not replaced the original data.</p>
+        <p class="daily-log-integrity-boundary" data-i18n="dailyLogIntegrityBoundary">Saving, importing, and clearing are paused until you create a local raw backup and explicitly choose recovery.</p>
+        <div class="daily-log-integrity-actions">
+          <button type="button" class="action-button" id="backupDailyLogRaw" data-i18n="dailyLogIntegrityBackup">Back up unreadable data locally</button>
+          <button type="button" class="ghost-button" id="recoverDailyLogFromExcel" data-i18n="dailyLogIntegrityRecover" disabled>Choose Master Excel for recovery</button>
+        </div>
+      </section>
       <div class="table-wrap">
         <table>
           <thead>

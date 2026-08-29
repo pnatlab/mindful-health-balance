@@ -230,6 +230,7 @@ Mindful Health Balance is local-first and user-controlled.
 - Daily data is stored in browser `localStorage` on the user's device.
 - Current form edits are autosaved locally as a same-day draft; if the draft is missing but today already has a saved Daily Log row, the app can load that row back into the form on startup.
 - `Save to Daily Log` is still required to write or update a saved row in the Daily Log table.
+- If the stored Daily Log cannot be read, MHB preserves the original local value and pauses Daily Log save, import, clear, restore, and export. The Log view offers a local raw backup step before an explicit Master Excel recovery; it never silently resets or uploads the data.
 - There is no backend and no automatic upload.
 - The exported Excel workbook belongs to the user.
 - AI can only read the workbook when the user intentionally exports and shares it.

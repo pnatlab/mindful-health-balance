@@ -115,7 +115,16 @@ Phase B1 implements the smallest launcher-only guard: normal launch is fixed to 
 The following remain separate work, not B1 behavior:
 
 1. A read-only recovery diagnostic that lists the current origin and local Daily Log count without clearing, importing, or promoting data.
-2. Fail-closed handling for malformed Daily Log storage that preserves the raw value before a later Save or confirmed Import could overwrite it.
+
+## Phase B2 - Malformed Storage Fail-Closed
+
+Phase B2 distinguishes a missing Daily Log key from unreadable storage. The local-only storage inspector reports `missing`, `ok`, or `malformed`; malformed covers JSON parse failure, a non-array top level, or an array with a record that is not an object with a Date identity. It does not normalize, migrate, or rewrite historical rows while inspecting them.
+
+When storage is malformed, the Log view shows a recovery notice instead of an ordinary zero-log state. Daily Log Save, normal Import, Clear, Restore, and Master Excel export are paused so the raw value cannot be silently replaced by an empty or newly created array. The rest of MHB remains available because this guard concerns only the canonical Daily Log key.
+
+Recovery is explicit and local-only: the user first creates a raw backup under a unique `mindfulHealthDailyLog_recovery_backup_<timestamp>` key. The stored backup string is byte-for-byte the original value and an existing backup key is never overwritten. Only for that active session may the user choose a known-good Master Excel file; confirmed import then retains its existing replacement semantics and restores a valid Daily Log array. B2 does not auto-reset, auto-migrate, merge origins, upload data, or change the storage key, workbook contract, date identity, or import rules.
+
+The remaining follow-up is a read-only recovery diagnostic that shows the current origin and local Daily Log count without clearing, importing, or promoting data.
 
 Cross-origin migration, file-backed canonical storage, import merge semantics, and duplicate-date cleanup require separate contracts. They should not be bundled into the launcher safety patch.
 

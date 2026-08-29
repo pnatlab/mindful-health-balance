@@ -413,6 +413,8 @@ MHB 2.2 can derive the latest earlier log date and the number of calendar days b
 
 This table is not a judgment table. It is a local mirror for seeing life rhythm over time.
 
+If MHB cannot read this browser's Daily Log, it shows a recovery notice instead of treating the data as zero logs. Save, Import, Clear, Restore, and Export pause to preserve the original local value. First choose `Back up unreadable data locally`; then, in the same session, choose a known-good Master Excel file for explicit recovery. This never uploads or silently resets your data.
+
 ## 19. Clear Daily Log
 
 Click `Clear Daily Log` only when you want to remove all saved logs from this browser.
