@@ -8,7 +8,7 @@ It is not an analytics dashboard, an AI administration surface, or a Food Refere
 
 ## Placement and Data Source
 
-The Meal Composer shows a secondary `What MHB has seen` action beside the optional local Vision helper. Opening it expands an inline audit panel directly below that helper, before Food Reference selection. This keeps the evidence close to its source without adding a new top-level navigation destination or making Today feel like an AI workspace.
+The Log page shows this audit as a separate section immediately after the Daily Log Table. It is collapsed by default, then expands to show the same summary, filters, and list. This places a historical model-observation trace with other reviewable records rather than inside the active Meal Composition workflow, where it could be mistaken for part of the meal currently being composed.
 
 The panel reads only from `mhb_vision_observation_vocabulary_v1` through `js/visionObservationVocabulary.js`. `js/visionVocabularyAuditUI.js` is a display-only adapter: it calls the store's `list()` method, safely handles read failure as an empty snapshot, sorts entries, creates summary counts, and filters an in-memory snapshot. It has no storage write API.
 
@@ -42,7 +42,7 @@ It does not display photos, base64, prompts, provider diagnostics, latency, mode
 
 The surface uses browser-local evidence only. It makes no network request, cloud request, telemetry call, or synchronization attempt. A missing or unreadable local store produces a calm empty state; the Meal Composer and optional Vision helper remain usable.
 
-The panel uses semantic headings, keyboard-operable buttons, visible focus from the existing button system, textual status labels, and an empty state. It reflows to a single column at narrow widths and uses existing dark-theme contrast tokens.
+The panel uses semantic headings, a keyboard-operable disclosure button with `aria-expanded` and `aria-controls`, visible focus from the existing button system, textual status labels, and an empty state. It reflows to a single column at narrow widths and uses existing dark-theme contrast tokens.
 
 ## Limitations and Future Direction
 

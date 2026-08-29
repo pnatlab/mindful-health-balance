@@ -2,7 +2,6 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const audit = require("../js/visionVocabularyAuditUI.js");
-const mealUI = require("../js/mealCompositionUI.js");
 
 let listCalls = 0;
 const store = {
@@ -32,13 +31,74 @@ assert.deepEqual(emptySnapshot, { entries: [], summary: { total: 0, mapped: 0, n
 const unavailableSnapshot = audit.createVocabularyAuditSnapshot({ list() { throw new Error("storage unavailable"); } });
 assert.equal(unavailableSnapshot.entries.length, 0, "storage failures remain non-blocking");
 
+let auditClickHandler;
+const panelRoot = {
+  innerHTML: "",
+  addEventListener(type, handler) {
+    if (type === "click") auditClickHandler = handler;
+  },
+  contains() {
+    return true;
+  },
+  querySelector() {
+    return { focus() {} };
+  }
+};
+audit.createVisionVocabularyAuditPanel({
+  root: panelRoot,
+  store,
+  language: "th",
+  runtime: {
+    getFoodReferenceById(id) {
+      return id === "rice" ? { id } : null;
+    },
+    getFoodDisplayName() {
+      return "ข้าว";
+    }
+  }
+});
+assert.match(panelRoot.innerHTML, /aria-expanded="false"/);
+assert.match(panelRoot.innerHTML, /visionVocabularyAuditDetails[^>]* hidden/);
+auditClickHandler({
+  target: {
+    closest() {
+      return { hasAttribute: (name) => name === "data-vision-vocabulary-audit-toggle", dataset: {} };
+    }
+  }
+});
+assert.match(panelRoot.innerHTML, /aria-expanded="true"/);
+assert.match(panelRoot.innerHTML, /รู้จักแล้ว → ข้าว/);
+auditClickHandler({
+  target: {
+    closest() {
+      return { hasAttribute: () => false, dataset: { visionVocabularyAuditFilter: "unsupported" } };
+    }
+  }
+});
+assert.match(panelRoot.innerHTML, /Mushroom/);
+assert.doesNotMatch(panelRoot.innerHTML, /Seafood/);
+
 for (const language of ["th", "en", "zh"]) {
-  const copy = mealUI.TEXT[language];
-  for (const key of ["visionAuditOpen", "visionAuditTitle", "visionAuditHelper", "visionAuditMapped", "visionAuditNeedsReview", "visionAuditUnsupported", "visionAuditEmpty"]) {
+  const copy = audit.TEXT[language];
+  for (const key of ["title", "helper", "expand", "collapse", "all", "mapped", "needsReview", "unsupported", "empty"]) {
     assert.ok(copy[key], `${language} includes ${key}`);
   }
 }
 
 const source = fs.readFileSync(path.join(__dirname, "../js/visionVocabularyAuditUI.js"), "utf8");
 assert.doesNotMatch(source, /recordMany|\.record\(|setItem|localStorage|addFood|Meal_Item|named_dish|sodium|workbook|Daily_Log/i);
+assert.match(source, /data-vision-vocabulary-audit-toggle/);
+assert.match(source, /aria-expanded/);
+assert.match(source, /aria-controls/);
+assert.match(source, /data-vision-vocabulary-audit-filter/);
+
+const mealSource = fs.readFileSync(path.join(__dirname, "../js/mealCompositionUI.js"), "utf8");
+assert.doesNotMatch(mealSource, /visionAudit|visionVocabularyAudit|data-vision-audit/i, "Meal Composer no longer owns the historical audit panel");
+
+const htmlSource = fs.readFileSync(path.join(__dirname, "../index.html"), "utf8");
+assert.ok(htmlSource.indexOf('id="visionVocabularyAudit"') > htmlSource.indexOf('id="dailyLogBody"'), "audit root follows the Daily Log table");
+
+const appSource = fs.readFileSync(path.join(__dirname, "../script.js"), "utf8");
+assert.match(appSource, /initializeVisionVocabularyAuditPanel\(\)/);
+assert.match(appSource, /createVisionVocabularyAuditPanel/);
 console.log("Vision vocabulary audit UI tests passed.");

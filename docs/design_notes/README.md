@@ -99,7 +99,7 @@ Runtime architecture, modularization planning, and implementation-safety notes f
 - [NATIVE_MACOS_APP_LAUNCHER.md](NATIVE_MACOS_APP_LAUNCHER.md) - MHB 2.6E adds a reproducible local macOS app-icon wrapper with an identity-free ad-hoc seal that delegates to the same loopback launcher contract as the `.command` fallback.
 - [MHB_HEADER_BRAND_MARK.md](MHB_HEADER_BRAND_MARK.md) - MHB 2.6F adds a quiet transparent in-app mark derived locally from the launcher artwork, while preserving the title as the primary header element.
 - [VISION_OBSERVATION_VOCABULARY_FIELD_LEARNING.md](VISION_OBSERVATION_VOCABULARY_FIELD_LEARNING.md) - MHB 2.6A preserves model-visible vocabulary as a separate local evidence layer without promoting labels into Food References or Meal Items.
-- [VISION_VOCABULARY_READ_ONLY_AUDIT_UI.md](VISION_VOCABULARY_READ_ONLY_AUDIT_UI.md) - MHB 2.6B makes the local vocabulary evidence visible in a calm read-only Meal Composer panel, without promotion, remapping, or canonical mutation.
+- [VISION_VOCABULARY_READ_ONLY_AUDIT_UI.md](VISION_VOCABULARY_READ_ONLY_AUDIT_UI.md) - MHB 2.6B/2.6H makes local vocabulary evidence visible in a calm, collapsed read-only Log-page panel after Daily Log, without promotion, remapping, or canonical mutation.
 
 MHB 2.3F sequence: 2.3F-R research -> 2.3F-C contract locked -> 2.3F-D Thai Named-Dish Evidence Pilot -> Human Approval -> 2.3F-I bounded runtime implementation for two approved references.
 

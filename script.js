@@ -3371,6 +3371,7 @@ let currentLanguage = loadLanguage();
 let currentThemePreference = getThemePreference();
 let appState = loadState();
 let themeIntervalId;
+let visionVocabularyAuditPanel;
 let stateOrbIntervalId;
 let drinkReflectionAcknowledgementState = DRINK_REFLECTION_ACKNOWLEDGEMENT?.createState?.() || { isOpen: false, message: "", triggerCount: 0 };
 let drinkReflectionModalTrigger = null;
@@ -3483,6 +3484,7 @@ document.addEventListener("DOMContentLoaded", () => {
   bindEvents();
   loadUserIntentionProfileIntoForm();
   initializeMealComposerUI();
+  initializeVisionVocabularyAuditPanel();
   initWelcome();
   startThemeAutoRefresh();
   updateTodayStateOrb();
@@ -3557,6 +3559,7 @@ function applyTranslations() {
   renderIntentionProfileScaffold();
   renderTodayHydrationWelcome();
   mealComposerUI?.setLanguage(currentLanguage);
+  visionVocabularyAuditPanel?.setLanguage(currentLanguage);
 }
 
 function initializeMealComposerUI() {
@@ -3574,12 +3577,22 @@ function initializeMealComposerUI() {
     imagePrepBridgeFactory: IMAGE_PREP_BRIDGE?.createImagePrepBridge,
     localRuntimeGuard: LOCAL_RUNTIME_GUARD,
     visionVocabulary: VISION_OBSERVATION_VOCABULARY,
-    visionVocabularyAudit: VISION_VOCABULARY_AUDIT_UI,
     visionProviderFactory: async () => {
       const providerModule = await import("./js/localVisionProvider.mjs");
       return providerModule.createLocalOllamaVisionProvider();
     },
     warn: (...args) => console.warn("Meal Composition:", ...args)
+  });
+}
+
+function initializeVisionVocabularyAuditPanel() {
+  const root = document.querySelector("#visionVocabularyAudit");
+  if (!root || !VISION_VOCABULARY_AUDIT_UI || !VISION_OBSERVATION_VOCABULARY || !MEAL_COMPOSITION_RUNTIME) return;
+  visionVocabularyAuditPanel = VISION_VOCABULARY_AUDIT_UI.createVisionVocabularyAuditPanel({
+    root,
+    store: VISION_OBSERVATION_VOCABULARY.createVisionVocabularyEvidenceStore(localStorage),
+    runtime: MEAL_COMPOSITION_RUNTIME,
+    language: currentLanguage
   });
 }
 
