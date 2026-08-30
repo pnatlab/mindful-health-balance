@@ -102,6 +102,9 @@ function run() {
   });
   assert.deepEqual(crossCategorySearch.results.map((reference) => reference.food_id), ["fish_sauce"]);
   assert.equal(mealUI.filterFoodReferences(library, { category: "all", search: "not-in-library", language: "en" }).total, 0);
+  const porkCategory = mealUI.filterFoodReferences(library, { category: "animal_protein", language: "th" });
+  assert.deepEqual(porkCategory.results.filter((reference) => reference.food_id.startsWith("pork_")).map((reference) => reference.food_id), ["pork_lean", "pork_fatty", "pork_crispy"]);
+  assert.deepEqual(mealUI.filterFoodReferences(library, { category: "all", search: "หมู", language: "th" }).results.map((reference) => reference.food_id), ["pork_lean", "pork_fatty", "pork_crispy"], "Thai search finds the preserved and additive pork references");
 
   const duplicateSelectionModel = mealUI.createMealComposerModel({
     runtime: mealRuntime,
@@ -120,6 +123,10 @@ function run() {
   assert.equal(mealUI.countDraftFoodItems(duplicateSelectionModel.getDraft().items, "rice"), 1);
   duplicateSelectionModel.removeDraftItem(secondRice.meal_item_id);
   assert.equal(mealUI.countDraftFoodItems(duplicateSelectionModel.getDraft().items, "rice"), 0);
+  const crispyPorkDraftItem = duplicateSelectionModel.addFood("pork_crispy");
+  const fattyPorkDraftItem = duplicateSelectionModel.addFood("pork_fatty");
+  assert.equal(crispyPorkDraftItem.food_id, "pork_crispy");
+  assert.equal(fattyPorkDraftItem.food_id, "pork_fatty");
 
   assert.equal(model.getMeals().length, 0);
   assert.deepEqual(mealUI.buildDailyReflectionLines(model.getDailySummary(), "th"), [

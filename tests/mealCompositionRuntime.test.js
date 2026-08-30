@@ -51,9 +51,23 @@ function run() {
   const fishSauceReference = mealRuntime.getFoodReferenceById("fish_sauce");
   const soySauceReference = mealRuntime.getFoodReferenceById("soy_sauce");
   const oysterSauceReference = mealRuntime.getFoodReferenceById("oyster_sauce");
+  const leanPorkReference = mealRuntime.getFoodReferenceById("pork_lean");
+  const fattyPorkReference = mealRuntime.getFoodReferenceById("pork_fatty");
+  const crispyPorkReference = mealRuntime.getFoodReferenceById("pork_crispy");
 
-  assert.equal(productionLibrary.length, 26);
+  assert.equal(productionLibrary.length, 28);
+  assert.equal(new Set(productionLibrary.map((reference) => reference.food_id)).size, productionLibrary.length, "Food Reference IDs remain unique");
   assert.deepEqual(productionLibrary.filter((reference) => reference.sodium_estimate_min_mg !== null).map((reference) => reference.food_id), ["egg", "fish_sauce", "soy_sauce", "oyster_sauce"]);
+  assert.deepEqual([leanPorkReference.food_id, leanPorkReference.display_name_th, leanPorkReference.display_name_en, leanPorkReference.display_name_zh], ["pork_lean", "หมูไม่ติดมัน", "Lean pork", "瘦猪肉"], "the existing lean-pork identity remains unchanged");
+  assert.deepEqual([fattyPorkReference.food_id, fattyPorkReference.display_name_th, fattyPorkReference.display_name_en, fattyPorkReference.display_name_zh], ["pork_fatty", "หมูติดมัน", "Fatty pork", "肥猪肉"]);
+  assert.deepEqual([crispyPorkReference.food_id, crispyPorkReference.display_name_th, crispyPorkReference.display_name_en, crispyPorkReference.display_name_zh], ["pork_crispy", "หมูกรอบ", "Crispy pork", "脆皮猪肉"]);
+  [fattyPorkReference, crispyPorkReference].forEach((reference) => {
+    assert.equal(reference.category, "animal_protein");
+    assert.equal(reference.is_animal_protein, true);
+    assert.deepEqual([reference.sodium_estimate_min_mg, reference.sodium_estimate_max_mg, reference.sodium_confidence, reference.source_type], [null, null, "unknown", "unknown"], "new pork labels carry no automatic sodium evidence");
+  });
+  assert.ok(mealRuntime.createMealItem({ food_id: "pork_fatty" }), "fatty pork uses the ordinary Meal Item contract");
+  assert.ok(mealRuntime.createMealItem({ food_id: "pork_crispy" }), "crispy pork uses the ordinary Meal Item contract");
   assert.deepEqual([eggReference.sodium_estimate_min_mg, eggReference.sodium_estimate_max_mg, eggReference.sodium_confidence], [60, 62, "high"]);
   assert.deepEqual([eggReference.default_serving_label, eggReference.default_serving_amount, eggReference.default_serving_unit, eggReference.preparation_default], ["1 large boiled egg", 1, "egg", "boiled"]);
   assert.match(eggReference.source_reference, /USDA FoodData Central FDC 173424/);

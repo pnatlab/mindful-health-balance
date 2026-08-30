@@ -30,9 +30,11 @@ Static Food Reference pilot
 
 ## Food Reference Pilot
 
-The pilot contains 26 immutable static Food References across grain, animal protein, egg, plant protein, vegetable, fruit, soup, condiment, processed food, and dessert categories. Condiments are first-class references.
+The current library contains 28 immutable static Food References across grain, animal protein, egg, plant protein, vegetable, fruit, soup, condiment, processed food, and dessert categories. Condiments are first-class references.
 
-After Human Evidence Review, exactly four references carry evidence-backed sodium ranges: one large boiled `egg` (60-62 mg, high confidence), regular `fish_sauce` (1,410-1,480 mg/tbsp, medium), regular `soy_sauce` (879-920 mg/tbsp, medium), and `oyster_sauce` (490-870 mg/tbsp, low). The singular `source_type` remains `reference_database` as the primary evidence class, while `source_reference` records the institutional or manufacturer cross-check used for the human-reviewed range. The other 22 references deliberately remain sodium-unknown. This preserves `unknown ≠ zero` and does not turn broad categories into confident-looking estimates.
+After Human Evidence Review, exactly four references carry evidence-backed sodium ranges: one large boiled `egg` (60-62 mg, high confidence), regular `fish_sauce` (1,410-1,480 mg/tbsp, medium), regular `soy_sauce` (879-920 mg/tbsp, medium), and `oyster_sauce` (490-870 mg/tbsp, low). The singular `source_type` remains `reference_database` as the primary evidence class, while `source_reference` records the institutional or manufacturer cross-check used for the human-reviewed range. The other 24 references deliberately remain sodium-unknown. This preserves `unknown ≠ zero` and does not turn broad categories into confident-looking estimates.
+
+MHB 2.6J adds `pork_fatty` and `pork_crispy` after field use exposed a vocabulary gap beside the preserved `pork_lean` reference. Both are ordinary animal-protein identities with unknown sodium, no automatic preparation or health meaning, and no Vision mapping. This is an additive vocabulary update only; it does not change Meal schema, storage, evidence routing, or named-dish matching.
 
 The evidence-backed condiment references use `1 tbsp`, replacing the prior ambiguous `1 spoon`. A future package-specific label may override a generic estimate only on a Meal Item Instance; it must never overwrite the canonical Food Reference.
 

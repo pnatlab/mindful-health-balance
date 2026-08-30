@@ -514,6 +514,8 @@
     chicken_breast: "🍗",
     chicken: "🍗",
     pork_lean: "🥩",
+    pork_fatty: "🥩",
+    pork_crispy: "🥩",
     beef: "🥩",
     fish: "🐟",
     shrimp: "🍤",

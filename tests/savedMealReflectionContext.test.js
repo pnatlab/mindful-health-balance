@@ -33,6 +33,7 @@ const rice = item("rice");
 const egg = item("egg");
 const vegetables = item("mixed_vegetables");
 const fish = item("fish");
+const crispyPork = item("pork_crispy");
 const rawVision = { label: "unconfirmed vision label" };
 
 const empty = runtime.buildSavedMealReflectionContext(date, []);
@@ -74,6 +75,10 @@ assert.deepEqual(aggregate.meals.map((entry) => entry.mealId), ["meal_earlier", 
 assert.deepEqual(aggregate.visibleItems.map((entry) => entry.foodId), ["egg", "fish", "mixed_vegetables", "rice"], "presentation labels are deduped and ordered by canonical food ID");
 assert.equal(aggregate.additionalItemCount, 0);
 assert.equal(aggregate.meals[0].confirmedItems[0].foodId, "egg", "missing optional meal fields are not inferred into context");
+
+const porkCueContext = runtime.buildSavedMealReflectionContext(date, [meal("meal_pork", date, [crispyPork])]);
+const porkCueReference = runtime.getFoodReferenceById(porkCueContext.visibleItems[0].foodId);
+assert.equal(runtime.getFoodDisplayName(porkCueReference, "th"), "หมูกรอบ", "saved-meal context continues to use the existing Food Reference display mechanism");
 
 const capped = runtime.buildSavedMealReflectionContext(date, [
   meal("meal_many", date, [item("rice"), item("egg"), item("fish"), item("mixed_vegetables"), item("fruit")])

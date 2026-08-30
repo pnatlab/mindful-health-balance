@@ -48,7 +48,9 @@ assert.equal(model.getMeals().length, 0);
 assert.deepEqual(visionReview.classifyVisionComponent("rice"), {
   status: "safe_exact", label: "rice", foodId: "rice", choices: ["rice"]
 });
-assert.equal(visionReview.classifyVisionComponent("pork").status, "needs_user_choice");
+assert.deepEqual(visionReview.classifyVisionComponent("pork"), {
+  status: "needs_user_choice", label: "pork", foodId: "", choices: ["pork_lean"]
+}, "generic Vision pork remains a human-choice review and does not infer fatty or crispy pork");
 assert.equal(visionReview.classifyVisionComponent("seafood").status, "needs_user_choice");
 assert.equal(visionReview.classifyVisionComponent("scallions").status, "unsupported");
 assert.deepEqual(visionReview.createObservedVocabularyEntries(observation({ visible_components: [{ label: "rice" }, { label: "seafood" }, { label: "scallions" }] }), vocabulary).map((entry) => entry.mapping_status), ["mapped", "needs_review", "unsupported"]);
@@ -102,5 +104,6 @@ for (const language of ["th", "en", "zh"]) {
 
 const reviewSource = fs.readFileSync(path.join(__dirname, "../js/mealVisionReview.js"), "utf8");
 assert.equal(/named_dish_id|sodium_estimate|evidence_router/i.test(reviewSource), false, "review mapper must not own identity or sodium evidence");
+assert.equal(/pork_fatty|pork_crispy/.test(reviewSource), false, "Food Reference expansion does not add a Vision mapping");
 
 console.log("Meal Vision review and prefill tests passed.");

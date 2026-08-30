@@ -50,6 +50,8 @@
     createUnknownFoodReference("chicken_breast", { th: "อกไก่", en: "Chicken breast", zh: "鸡胸肉" }, "animal_protein", "1 serving"),
     createUnknownFoodReference("chicken", { th: "ไก่", en: "Chicken", zh: "鸡肉" }, "animal_protein", "1 serving"),
     createUnknownFoodReference("pork_lean", { th: "หมูไม่ติดมัน", en: "Lean pork", zh: "瘦猪肉" }, "animal_protein", "1 serving"),
+    createUnknownFoodReference("pork_fatty", { th: "หมูติดมัน", en: "Fatty pork", zh: "肥猪肉" }, "animal_protein", "1 serving"),
+    createUnknownFoodReference("pork_crispy", { th: "หมูกรอบ", en: "Crispy pork", zh: "脆皮猪肉" }, "animal_protein", "1 serving"),
     createUnknownFoodReference("beef", { th: "เนื้อวัว", en: "Beef", zh: "牛肉" }, "animal_protein", "1 serving"),
     createUnknownFoodReference("fish", { th: "ปลา", en: "Fish", zh: "鱼" }, "animal_protein", "1 serving"),
     createUnknownFoodReference("shrimp", { th: "กุ้ง", en: "Shrimp", zh: "虾" }, "animal_protein", "1 serving"),
