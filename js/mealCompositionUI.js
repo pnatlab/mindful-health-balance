@@ -100,7 +100,8 @@
       cancelEdit: "ยกเลิกการแก้ไข",
       saved: "เก็บมื้อนี้ไว้แล้วค่ะ",
       updated: "อัปเดตมื้อนี้แล้วค่ะ",
-      savedConfirmationHelper: "มื้อนี้อยู่ในบันทึกของวันนี้แล้ว",
+      savedLatest: "เก็บมื้อล่าสุดไว้แล้วค่ะ",
+      updatedLatest: "อัปเดตมื้อล่าสุดแล้วค่ะ",
       visualItemCount: (count) => `${count} รายการในมื้อนี้`,
       deleted: "เอามื้อนี้ออกจากบันทึกแล้วค่ะ",
       saveNeedsItem: "เลือกอย่างน้อยหนึ่งรายการก่อนเก็บมื้อนี้นะคะ",
@@ -263,7 +264,8 @@
       cancelEdit: "Cancel editing",
       saved: "This meal has been kept.",
       updated: "This meal has been updated.",
-      savedConfirmationHelper: "This meal is now in today's record.",
+      savedLatest: "Your latest meal has been saved.",
+      updatedLatest: "Your latest meal has been updated.",
       visualItemCount: (count) => `${count} ${count === 1 ? "item" : "items"} in this meal`,
       deleted: "This meal was removed from the record.",
       saveNeedsItem: "Choose at least one item before keeping this meal.",
@@ -426,7 +428,8 @@
       cancelEdit: "取消修改",
       saved: "这一餐已经留下来了。",
       updated: "这一餐已经更新。",
-      savedConfirmationHelper: "这一餐已经在今天的记录里了。",
+      savedLatest: "刚记录的这一餐已经留下来了。",
+      updatedLatest: "刚记录的这一餐已经更新。",
       visualItemCount: (count) => `这一餐中有 ${count} 项记录`,
       deleted: "这一餐已从记录中移除。",
       saveNeedsItem: "请先选择至少一项，再留下这一餐。",
@@ -1597,14 +1600,14 @@
       }).join("") : `<p class="meal-inline-empty">${escapeHtml(copy.savedMealsEmpty)}</p>`;
       const recentMeal = recentSavedMealId ? meals.find((meal) => meal.meal_id === recentSavedMealId) : null;
       const confirmation = savePhase === "saved" && recentMeal ? `
-        <article class="meal-saved-confirmation" role="status" aria-live="polite">
+        <div class="meal-saved-confirmation" role="status" aria-live="polite">
           <span class="meal-saved-check" aria-hidden="true">✓</span>
-          ${renderMealVisual(recentMeal.items, "confirmation")}
-          <div>
-            <h4>${escapeHtml(buildSaveFeedbackModel("saved", recentSaveWasEditing, language).message)}</h4>
-            <p>${escapeHtml(copy.savedConfirmationHelper)}</p>
-          </div>
-        </article>
+          <span class="meal-saved-confirmation-copy">
+            <span class="meal-saved-confirmation-title">${escapeHtml(recentSaveWasEditing ? copy.updatedLatest : copy.savedLatest)}</span>
+            <span aria-hidden="true"> · </span>
+            <span>${escapeHtml(copy.foodItemCount(recentMeal.items.length))}</span>
+          </span>
+        </div>
       ` : "";
       return `
         <section class="meal-saved" aria-labelledby="mealSavedTitle">

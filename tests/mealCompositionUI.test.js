@@ -1,4 +1,6 @@
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 const mealRuntime = require("../js/mealCompositionRuntime.js");
 const mealUI = require("../js/mealCompositionUI.js");
 
@@ -14,6 +16,7 @@ function createMemoryStorage() {
 }
 
 function run() {
+  const mealUiSource = fs.readFileSync(path.join(__dirname, "..", "js", "mealCompositionUI.js"), "utf8");
   const storage = createMemoryStorage();
   let id = 0;
   const model = mealUI.createMealComposerModel({
@@ -330,7 +333,8 @@ function run() {
     "reflectMealDraftHelper",
     "save",
     "saving",
-    "savedConfirmationHelper",
+    "savedLatest",
+    "updatedLatest",
     "savedMeals",
     "dailyReflectionTitle",
     "estimateUnknown",
@@ -380,12 +384,19 @@ function run() {
     mealUI.TEXT[language].saving,
     mealUI.TEXT[language].saved,
     mealUI.TEXT[language].updated,
-    mealUI.TEXT[language].savedConfirmationHelper,
+    mealUI.TEXT[language].savedLatest,
+    mealUI.TEXT[language].updatedLatest,
     mealUI.TEXT[language].dailyCount(2),
     mealUI.TEXT[language].emptyReflection.join(" ")
   ]).join(" ");
   assert.doesNotMatch(allUserCopy, /meal score|diet score|health score|medical target|calorie|good meal|bad meal|achievement|reward|perfect meal/i);
   assert.doesNotMatch(allUserCopy, /วันนี้กิน\s*\d|today you ate\s*\d|今天吃了\s*\d/iu);
+  assert.match(mealUI.TEXT.th.savedLatest, /มื้อล่าสุด/);
+  assert.match(mealUI.TEXT.en.savedLatest, /latest meal/i);
+  assert.match(mealUI.TEXT.zh.savedLatest, /刚记录/);
+  assert.match(mealUiSource, /<div class="meal-saved-confirmation" role="status" aria-live="polite">/);
+  assert.doesNotMatch(mealUiSource, /renderMealVisual\(recentMeal\.items, "confirmation"\)/);
+  assert.doesNotMatch(mealUiSource, /<article class="meal-saved-confirmation"/);
   assert.equal(Object.keys(model.getDailySummary()).some((key) => /score|medical|target/i.test(key)), false);
   assert.equal(Object.keys(model.getMeals()[0]).some((key) => /daily_log|medical|target|score/i.test(key)), false);
 }

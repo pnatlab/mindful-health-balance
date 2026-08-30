@@ -91,9 +91,9 @@ The search field precedes category filters and component cards. Narrow layouts k
 
 ### MHB 2.3E.3 Meal Presence Polish
 
-The draft, save confirmation, and saved-meal cards share one lightweight symbolic plate. Its tokens are derived only from the Meal Item Instances currently being presented, using the existing Food Reference icon map and a neutral fallback when no icon exists. The visual never supplies an ingredient, amount, preparation, condiment, nutrition value, or sodium inference; component names remain available as text.
+The draft and saved-meal cards share one lightweight symbolic plate. Its tokens are derived only from the Meal Item Instances currently being presented, using the existing Food Reference icon map and a neutral fallback when no icon exists. The visual never supplies an ingredient, amount, preparation, condiment, nutrition value, or sodium inference; component names remain available as text.
 
-Saving uses a single render-frame acknowledgment rather than simulated progress. The save action briefly reads `Keeping this meal…`, then the persisted Meal Instance appears in a calm confirmation card and in the recorded-meal list. The confirmation states that the record now exists; it is not praise, an achievement, or a reward. Reduced-motion preferences remove the arrival and saving animations.
+Saving uses a single render-frame acknowledgment rather than simulated progress. The save action briefly reads `Keeping this meal…`, then the persisted Meal Instance appears in the recorded-meal list while a compact status strip states that the latest meal was saved or updated and shows its item count. The strip has no food artwork and deliberately does not use the saved-meal card structure, so it cannot be mistaken for another record. It is not praise, an achievement, or a reward. Reduced-motion preferences remove the arrival and saving animations.
 
 Saved meals use compact vertical cards with time when recorded, meal label, Meal Type, component names, the shared plate visual, and the existing edit/remove actions. The section states the number of **recorded meals**, never the number of meals eaten. Multiple cards remain independent, and reload reconstructs every visual from canonical saved Meal Instances instead of persisting presentation data.
 
