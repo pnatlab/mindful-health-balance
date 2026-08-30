@@ -70,3 +70,7 @@ Avoid:
 MHB 2.6I may show a compact source-fact cue after normal Reflection generation when the user explicitly arrived with an eligible Meal draft snapshot. The cue is not part of the preview synthesis or stored detail. It does not alter generated text, root metadata, NuTuenSai reminder, Tomorrow Focus, Daily Log, or Excel.
 
 Only confirmed item labels, selected Meal Type when present, unsaved status, and the return action are shown. No meal advice, nutrition/sodium interpretation, raw Vision label, or good/bad judgment belongs in this cue.
+
+## Saved Meal Context Cue
+
+MHB 2.6I Slice 2 can instead show a small aggregate of meals already recorded for the current local day after normal generation. Its copy says recorded, never eaten; it displays a bounded deduplicated label list and recorded-meal count only. It stays outside preview synthesis and saved Reflection detail, has no Meal navigation affordance, and yields to an active transient draft cue.

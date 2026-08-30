@@ -5560,6 +5560,10 @@ body[data-theme="dark"] .reflection-pulse-orb {
   white-space: nowrap;
 }
 
+.meal-reflection-context-cue[data-context-source="saved_today"] {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
 @media (max-width: 520px) {
   .meal-reflection-context-cue {
     grid-template-columns: auto minmax(0, 1fr);

@@ -420,3 +420,7 @@ The implementation is aligned with this contract only when:
 ## 21. Documentation Impact
 
 The contract lock itself was docs-only. After the approved MHB 2.3D user-facing slice, README, TH/EN/ZH user guides, the design-notes index, and `MEAL_COMPOSER_UI.md` document the current runtime while preserving this file as the canonical product/data contract.
+
+## 22. MHB 2.6I Saved Meal Recall Boundary
+
+Reflection may make a read-only, post-generation presentation of canonical meals recorded for the app's current local day. The adapter is bounded to meal identity/label/type/time and confirmed Food Reference item facts; it does not expose raw Meal records, Vision data, sodium estimates, notes, named-dish metadata, or any mutable object. This presentation does not make Meal Composition a Reflection Root, signal, generator input, Daily Log field, or workbook/export concern. Recorded context is evidence of what was logged, not proof of all consumption.

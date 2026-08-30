@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Slice 1 lets a user carry one human-confirmed, unsaved Meal Composer draft into Reflection as quiet context and return to the same draft. It does not integrate meal data into the Reflection generator.
+Slice 1 lets a user carry one human-confirmed, unsaved Meal Composer draft into Reflection as quiet context and return to the same draft. Slice 2 also lets normal Reflection recall a bounded, read-only summary of canonical meals recorded for the current local day. Neither slice integrates meal data into the Reflection generator.
 
 > Meal Composition owns the meal. Reflection may borrow a human-confirmed snapshot to mirror it gently.
 
@@ -43,3 +43,13 @@ The cue appears only after the existing Reflection generation moment succeeds. I
 ## Accessibility and Presentation
 
 The Meal Composer action is a secondary semantic button and is disabled without a confirmed item. Reflection receives focus at its existing heading. The cue is a labeled contextual aside, wraps compactly on narrow screens, uses existing light/dark tokens, and provides a keyboard-accessible return button. Returning reopens the Meal Composer and restores focus to the bridge action without changing the draft.
+
+## Slice 2 - Saved Meal Context Recall
+
+After a normal successful Reflection generation, and only when no active Slice 1 snapshot exists, Reflection may read canonical records for the app's current local date through the Meal runtime store. The resulting `saved_today` context is a fresh, read-only view of recorded meals, not an assertion of everything the user consumed.
+
+The bounded adapter exposes only date, recorded meal count, sorted meal identity/label/type/time, and confirmed item IDs with display snapshots. It excludes raw Vision output, rejected proposals, observation vocabulary, sodium/nutrition estimates, named-dish metadata, notes, and raw Meal records. For presentation it deduplicates by canonical Food Reference ID, orders IDs deterministically, shows at most four labels, and reports any remainder as an item count. This presentation dedupe never mutates canonical records.
+
+The saved cue has no return action and appears in the same secondary area below Clear Reflection. Clear hides it; a later generation reads the canonical store again, so meals saved between generations are reflected only on that later read. An active explicit Slice 1 snapshot wins visually and suppresses saved-today recall to keep provenance clear.
+
+Saved meal recall is evidence of what was recorded, not proof of everything the user consumed. It is not a Root, whole-day signal, generator input, generated Reflection content, Daily Log data, Excel data, recommendation, score, or health interpretation.

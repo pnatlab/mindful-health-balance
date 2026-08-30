@@ -75,3 +75,5 @@ The Reflection page should feel like a calm daily closure space where NuTuenSai 
 An eligible Meal Composer draft may be carried into the page as an invisible, memory-only snapshot after explicit user action. The page remains unchanged before generation. Once the existing Reflection generation completes, a small contextual cue may appear below Clear Reflection with confirmed item labels, optional Meal Type, unsaved status, and a return action.
 
 The cue is secondary to the Reflection output and is not a new card, Root, signal, or generator input. Clearing Reflection hides it; regenerating may show it again; returning to Today clears the bridge while preserving the Meal Composer draft.
+
+Slice 2 may use the same compact area for a read-only aggregate of canonical meals recorded today when Reflection was opened normally. It remains hidden until generation completes, has no return action, and is suppressed whenever the explicit unsaved Slice 1 snapshot is active.

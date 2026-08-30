@@ -168,3 +168,7 @@ Vision vocabulary evidence is historical audit information, not active meal-comp
 Current Composition now offers a quiet optional action after at least one actual Meal Item exists. It clones the human-confirmed draft into an immutable memory-only snapshot, opens the existing Reflection page, and preserves the draft. Meal Type alone and unapplied Vision proposals remain ineligible.
 
 The snapshot is not passed to the main Reflection generator. After the existing generation completes, a small cue below Clear Reflection lists only confirmed item labels, selected Meal Type when present, and the unsaved boundary. Clear hides the cue while retaining the transient snapshot; returning to the meal clears the bridge and restores the same draft. No Meal Root, signal, canonical meal write, Daily Log field, workbook data, sodium inference, or persistence is added. See `MEAL_DRAFT_GENTLE_REFLECTION_CONTEXT_BRIDGE.md`.
+
+## MHB 2.6I Slice 2 Addendum - Saved Meal Recall
+
+Normal Reflection may also show a compact post-generation cue from canonical meals already recorded for the current local day. It reads through the existing Meal store, aggregates a deterministic bounded set of confirmed Food Reference labels, and explicitly describes the count as meals that were recorded. It has no navigation action, does not alter the Meal Composer, and is suppressed while an explicit unsaved Slice 1 draft snapshot is active.

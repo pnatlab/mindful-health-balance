@@ -197,6 +197,7 @@ Preferred phrases:
 - [ ] Confirm no medical/guilt/fear wording appears in low-data state.
 - [ ] Confirm an eligible transient Meal draft does not enter `buildSignals()`, Root selection, generated Reflection, reminder, Tomorrow Focus, Daily Log, or Excel.
 - [ ] Confirm its compact cue stays hidden before generation and contains only human-confirmed source facts afterward.
+- [ ] Confirm saved Meal context remains a post-generation, current-local-day recorded-meal cue only: no Root, signal, generator input, Daily Log field, Excel data, or consumption inference.
 
 ## 6. Notes For Future v2.0
 

@@ -623,6 +623,52 @@
     };
   }
 
+  function buildSavedMealReflectionContext(date, meals = [], library = getFoodReferenceLibrary(), options = {}) {
+    const selectedDate = asTrimmedText(date);
+    const maxVisibleItems = Math.max(1, Number.parseInt(options.maxVisibleItems, 10) || 4);
+    const selectedMeals = sortMealRecords((Array.isArray(meals) ? meals : [])
+      .map((meal) => normalizeMealRecord(meal))
+      .filter((meal) => meal && meal.date === selectedDate));
+    const references = library instanceof Map
+      ? library
+      : new Map((Array.isArray(library) ? library : []).map((reference) => [reference.food_id, reference]));
+    const distinctItems = new Map();
+
+    const boundedMeals = selectedMeals.map((meal) => {
+      const confirmedItems = meal.items.map((item) => {
+        const foodId = asTrimmedText(item.food_id);
+        const itemSummary = Object.freeze({
+          foodId,
+          displayNameSnapshot: asTrimmedText(item.display_name_snapshot)
+        });
+        if (foodId && !distinctItems.has(foodId)) distinctItems.set(foodId, itemSummary);
+        return itemSummary;
+      });
+
+      return Object.freeze({
+        mealId: meal.meal_id,
+        mealLabel: meal.meal_label,
+        mealType: meal.meal_type,
+        time: meal.time,
+        confirmedItems: Object.freeze(confirmedItems)
+      });
+    });
+
+    const sortedDistinctItems = [...distinctItems.values()]
+      .filter((item) => references.has(item.foodId) || item.displayNameSnapshot)
+      .sort((left, right) => left.foodId.localeCompare(right.foodId));
+    const visibleItems = sortedDistinctItems.slice(0, maxVisibleItems);
+
+    return Object.freeze({
+      source: "saved_today",
+      date: selectedDate,
+      mealCount: boundedMeals.length,
+      meals: Object.freeze(boundedMeals),
+      visibleItems: Object.freeze(visibleItems),
+      additionalItemCount: Math.max(0, sortedDistinctItems.length - visibleItems.length)
+    });
+  }
+
   function createMealStore(storage, options = {}) {
     const normalizeDate = typeof options.normalizeDate === "function" ? options.normalizeDate : (value) => asTrimmedText(value);
     const now = typeof options.now === "function" ? options.now : () => new Date().toISOString();
@@ -795,7 +841,8 @@
     createMealStore,
     deriveMealEstimate,
     deriveDailyMealSummary,
-    buildMealReflectionContext
+    buildMealReflectionContext,
+    buildSavedMealReflectionContext
   });
 
   if (typeof module !== "undefined" && module.exports) module.exports = api;

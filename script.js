@@ -455,6 +455,10 @@ const translations = {
     mealReflectionCueTitle: "กำลังมองวันนี้พร้อมกับมื้อนี้",
     mealReflectionCueUnsaved: "มื้อที่ยังไม่ได้บันทึก",
     mealReflectionCueReturn: "กลับไปที่มื้อ",
+    savedMealReflectionCueTitle: "ร่องรอยมื้ออาหารวันนี้",
+    savedMealReflectionCueCountOne: "บันทึกไว้ 1 มื้อ",
+    savedMealReflectionCueCountMany: "บันทึกไว้ {count} มื้อ",
+    savedMealReflectionCueMoreItems: "และอีก {count} รายการ",
     editReflection: "แก้ไขเล็กน้อย",
     doneEditingReflection: "เสร็จสิ้นการแก้ไข",
     mindNoteKicker: "Mind Note — สิ่งเล็ก ๆ ของวันนี้",
@@ -1471,6 +1475,10 @@ const translations = {
     mealReflectionCueTitle: "Viewing today alongside this meal",
     mealReflectionCueUnsaved: "Unsaved meal draft",
     mealReflectionCueReturn: "Return to meal",
+    savedMealReflectionCueTitle: "Today’s recorded meal context",
+    savedMealReflectionCueCountOne: "1 recorded meal",
+    savedMealReflectionCueCountMany: "{count} recorded meals",
+    savedMealReflectionCueMoreItems: "and {count} more item(s)",
     editReflection: "Light edit",
     doneEditingReflection: "Done Editing",
     mindNoteKicker: "Mind Note — a small part of today",
@@ -2487,6 +2495,10 @@ const translations = {
     mealReflectionCueTitle: "正把今天和这一餐放在一起看",
     mealReflectionCueUnsaved: "尚未保存的餐食草稿",
     mealReflectionCueReturn: "返回这一餐",
+    savedMealReflectionCueTitle: "今天记录的餐食痕迹",
+    savedMealReflectionCueCountOne: "已记录 1 餐",
+    savedMealReflectionCueCountMany: "已记录 {count} 餐",
+    savedMealReflectionCueMoreItems: "以及另外 {count} 项",
     editReflection: "轻微编辑",
     doneEditingReflection: "完成编辑",
     mindNoteKicker: "Mind Note — 留下今天的一件小事",
@@ -3397,6 +3409,7 @@ let guidedReadingTimeframe = "";
 let selectedReflectionRoot = "auto";
 let mealComposerUI = null;
 let mealDraftReflectionBridgeState = MEAL_DRAFT_REFLECTION_CONTEXT?.createBridgeState?.() || { snapshot: null, cueVisible: false };
+let savedMealReflectionContext = null;
 let isEditingReflection = false;
 let isGeneratingReflection = false;
 let reflectionGenerationTimerId;
@@ -6024,6 +6037,7 @@ function beginMealDraftReflection(draft) {
   const snapshot = MEAL_DRAFT_REFLECTION_CONTEXT?.buildMealDraftReflectionSnapshot?.(draft);
   if (!snapshot) return false;
   mealDraftReflectionBridgeState = MEAL_DRAFT_REFLECTION_CONTEXT.beginBridge(snapshot);
+  savedMealReflectionContext = null;
   setActiveView("reflection");
   updateReflectionPreview();
   window.requestAnimationFrame?.(() => document.querySelector("#reflectionViewTitle")?.focus({ preventScroll: true }));
@@ -6048,25 +6062,77 @@ function renderMealDraftReflectionCue() {
   const cue = document.querySelector("#mealReflectionContextCue");
   if (!cue) return;
   const snapshot = mealDraftReflectionBridgeState?.snapshot;
-  const visible = Boolean(snapshot && mealDraftReflectionBridgeState.cueVisible && appState.generatedReflection.trim() && !isGeneratingReflection);
+  const hasGeneratedReflection = Boolean(appState.generatedReflection.trim() && !isGeneratingReflection);
+  const transientVisible = Boolean(snapshot && mealDraftReflectionBridgeState.cueVisible && hasGeneratedReflection);
+  const savedVisible = Boolean(!transientVisible && savedMealReflectionContext?.mealCount > 0 && hasGeneratedReflection);
+  const visible = transientVisible || savedVisible;
+  const returnButton = document.querySelector("#returnToMealDraft");
   cue.hidden = !visible;
   cue.classList.toggle("is-hidden", !visible);
-  if (!visible) return;
+  if (!visible) {
+    delete cue.dataset.contextSource;
+    return;
+  }
 
-  const labels = snapshot.items.map((item) => {
+  const renderLabel = (item) => {
     const reference = MEAL_COMPOSITION_RUNTIME?.getFoodReferenceById?.(item.foodId);
     return reference
       ? MEAL_COMPOSITION_RUNTIME.getFoodDisplayName(reference, currentLanguage)
       : item.displayNameSnapshot || item.foodId;
-  }).filter(Boolean);
-  const mealType = snapshot.mealType && snapshot.mealType !== "unspecified"
-    ? MEAL_COMPOSITION_UI?.TEXT?.[currentLanguage]?.mealTypes?.[snapshot.mealType] || ""
-    : "";
+  };
 
-  document.querySelector("#mealReflectionContextTitle").textContent = t("mealReflectionCueTitle");
+  if (transientVisible) {
+    cue.dataset.contextSource = "transient_draft";
+    const labels = snapshot.items.map(renderLabel).filter(Boolean);
+    const mealType = snapshot.mealType && snapshot.mealType !== "unspecified"
+      ? MEAL_COMPOSITION_UI?.TEXT?.[currentLanguage]?.mealTypes?.[snapshot.mealType] || ""
+      : "";
+    document.querySelector("#mealReflectionContextTitle").textContent = t("mealReflectionCueTitle");
+    document.querySelector("#mealReflectionContextItems").textContent = labels.join(" · ");
+    document.querySelector("#mealReflectionContextMeta").textContent = [mealType, t("mealReflectionCueUnsaved")].filter(Boolean).join(" · ");
+    if (returnButton) {
+      returnButton.hidden = false;
+      returnButton.classList.remove("is-hidden");
+      returnButton.textContent = t("mealReflectionCueReturn");
+    }
+    return;
+  }
+
+  const labels = savedMealReflectionContext.visibleItems.map(renderLabel).filter(Boolean);
+  cue.dataset.contextSource = "saved_today";
+  const countKey = savedMealReflectionContext.mealCount === 1
+    ? "savedMealReflectionCueCountOne"
+    : "savedMealReflectionCueCountMany";
+  const overflow = savedMealReflectionContext.additionalItemCount > 0
+    ? t("savedMealReflectionCueMoreItems", { count: savedMealReflectionContext.additionalItemCount })
+    : "";
+  document.querySelector("#mealReflectionContextTitle").textContent = t("savedMealReflectionCueTitle");
   document.querySelector("#mealReflectionContextItems").textContent = labels.join(" · ");
-  document.querySelector("#mealReflectionContextMeta").textContent = [mealType, t("mealReflectionCueUnsaved")].filter(Boolean).join(" · ");
-  document.querySelector("#returnToMealDraft").textContent = t("mealReflectionCueReturn");
+  document.querySelector("#mealReflectionContextMeta").textContent = [t(countKey, { count: savedMealReflectionContext.mealCount }), overflow].filter(Boolean).join(" · ");
+  if (returnButton) {
+    returnButton.hidden = true;
+    returnButton.classList.add("is-hidden");
+    returnButton.textContent = "";
+  }
+}
+
+function readTodaySavedMealReflectionContext() {
+  const date = normalizeMealDate(appState.date || todayIso);
+  return MEAL_COMPOSITION_RUNTIME?.buildSavedMealReflectionContext?.(
+    date,
+    getMealsForDate(date),
+    getFoodReferenceLibrary()
+  ) || null;
+}
+
+function resolveMealReflectionContextAfterGeneration() {
+  if (mealDraftReflectionBridgeState?.snapshot) {
+    mealDraftReflectionBridgeState = MEAL_DRAFT_REFLECTION_CONTEXT?.revealCue?.(mealDraftReflectionBridgeState)
+      || mealDraftReflectionBridgeState;
+    savedMealReflectionContext = null;
+    return;
+  }
+  savedMealReflectionContext = readTodaySavedMealReflectionContext();
 }
 
 function goToTodayStep(step) {
@@ -8610,8 +8676,7 @@ function generateReflectionWithPulse() {
   reflectionGenerationTimerId = setTimeout(() => {
     isGeneratingReflection = false;
     reflectionGenerationTimerId = null;
-    mealDraftReflectionBridgeState = MEAL_DRAFT_REFLECTION_CONTEXT?.revealCue?.(mealDraftReflectionBridgeState)
-      || mealDraftReflectionBridgeState;
+    resolveMealReflectionContextAfterGeneration();
     updateReflectionPreview();
   }, getReflectionGenerationDelay());
 }
@@ -8627,6 +8692,7 @@ function clearGeneratedReflection() {
   appState.generatedReflection = "";
   mealDraftReflectionBridgeState = MEAL_DRAFT_REFLECTION_CONTEXT?.hideCue?.(mealDraftReflectionBridgeState)
     || mealDraftReflectionBridgeState;
+  savedMealReflectionContext = null;
   updateReflectionPreview();
   persistCurrentFormDraft();
 }
