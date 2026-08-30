@@ -30,7 +30,7 @@ The v1.9.8 composer adds an overview layer before detailed reflection notes.
 | Compose overview | Writes one natural sentence that embeds user input traces in NuTuenSai tone. | Avoid chatbot language, medical advice, diet judgment, training advice, or productivity pressure. |
 | Smooth connectors | Uses short sentences, light line breaks, and varied connector shapes instead of repeating one connector across all anchors. | Do not remove input grounding or make reflection generic. |
 | Add breathing markers | Appends at most one marker in preview or two breathing markers in detailed Reflection at natural pause points. | Do not create emoji section headings or mark every line. |
-| Exclude practice context | `Practice_Root`, `Practice_Type`, `Practice_Minutes`, and `Practice_Context_JSON` stay available for future Field Review. | Do not say "today you practiced..." in daily Reflection/NuTuenSai in v1.9.9. |
+| Keep practice out of Auto/general composition | `Practice_Root`, `Practice_Type`, `Practice_Minutes`, and `Practice_Context_JSON` do not enter the general signal graph. The current runtime may read them only after explicit `practice_context` Root selection. | Do not infer practice context automatically or judge practice quality. |
 
 ## 2. Single Signal Matrix
 
@@ -195,6 +195,8 @@ Preferred phrases:
 - [ ] Generate with high load + water enough.
 - [ ] Switch TH/EN/ZH and verify tone.
 - [ ] Confirm no medical/guilt/fear wording appears in low-data state.
+- [ ] Confirm an eligible transient Meal draft does not enter `buildSignals()`, Root selection, generated Reflection, reminder, Tomorrow Focus, Daily Log, or Excel.
+- [ ] Confirm its compact cue stays hidden before generation and contains only human-confirmed source facts afterward.
 
 ## 6. Notes For Future v2.0
 

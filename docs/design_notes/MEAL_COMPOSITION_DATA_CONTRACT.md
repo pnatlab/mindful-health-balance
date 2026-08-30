@@ -313,6 +313,12 @@ Reflection language remains factual, gentle, concise, non-scoring, non-diagnosti
 
 Future Field Review may describe selected-window recorded facts, for example meal-record count, plant-protein appearance, or the supported share of sodium estimate associated with recorded soup/condiment items.
 
+### MHB 2.6I transient draft bridge
+
+Slice 1 does not implement the bounded saved-meal adapter above. It adds a separate presentation-only bridge for one explicit, human-confirmed unsaved draft. An immutable memory snapshot may accompany the user to Reflection, but it is not a Meal Instance, Daily Meal Summary, Reflection Root, whole-day signal, or canonical Reflection record. The main generator does not read it; a compact source-fact cue appears only after normal Reflection generation.
+
+The bridge adds no persistence or schema. It cannot save the meal, append meal wording to `Reflection_Text`, route sodium or named-dish evidence, or use unapplied Vision output. Meal Composition remains the only canonical owner.
+
 It must retain recorded-data qualifiers and estimate uncertainty. It must not score, rank, make causal or disease inferences, or use moral judgment. Field Review integration is deferred until bounded Daily Reflection integration is implemented and evaluated.
 
 ## 15. Workbook Direction

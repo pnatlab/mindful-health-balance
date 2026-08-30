@@ -319,6 +319,8 @@ function run() {
     "chooseFood",
     "condimentUnknown",
     "currentMeal",
+    "reflectMealDraft",
+    "reflectMealDraftHelper",
     "save",
     "saving",
     "savedConfirmationHelper",

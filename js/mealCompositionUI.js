@@ -94,6 +94,8 @@
       remove: "เอาออก",
       save: "เก็บมื้อนี้",
       saveChanges: "เก็บการแก้ไข",
+      reflectMealDraft: "สะท้อนมื้อนี้เบา ๆ",
+      reflectMealDraftHelper: "ดูมื้อนี้อีกมุมหนึ่งก่อนบันทึก โดยยังไม่เปลี่ยนข้อมูลของมื้อ",
       saving: "กำลังเก็บมื้อนี้…",
       cancelEdit: "ยกเลิกการแก้ไข",
       saved: "เก็บมื้อนี้ไว้แล้วค่ะ",
@@ -255,6 +257,8 @@
       remove: "Remove",
       save: "Keep this meal",
       saveChanges: "Keep changes",
+      reflectMealDraft: "Gently reflect on this meal",
+      reflectMealDraftHelper: "View this meal from another angle before saving, without changing the draft.",
       saving: "Keeping this meal…",
       cancelEdit: "Cancel editing",
       saved: "This meal has been kept.",
@@ -416,6 +420,8 @@
       remove: "移除",
       save: "留下这一餐",
       saveChanges: "保存修改",
+      reflectMealDraft: "轻轻回看这一餐",
+      reflectMealDraftHelper: "保存前从另一个角度看看这一餐，不会改变餐食草稿。",
       saving: "正在留下这一餐…",
       cancelEdit: "取消修改",
       saved: "这一餐已经留下来了。",
@@ -938,6 +944,10 @@
     const visionVocabularyEvidenceStore = options.visionVocabularyEvidenceStore || visionVocabulary?.createVisionVocabularyEvidenceStore?.(options.storage) || null;
     const runtimeEnvironment = localRuntimeGuard?.detectLocalRuntime?.(globalScope.location) || { isFileMode: false, supportsVisionAndImagePrep: true };
     const confirmAction = options.confirmAction || ((message) => globalScope.confirm(message));
+    const onReflectDraft = typeof options.onReflectDraft === "function" ? options.onReflectDraft : () => {};
+    const isReflectionEligible = typeof options.isReflectionEligible === "function"
+      ? options.isReflectionEligible
+      : (draft) => Array.isArray(draft?.items) && draft.items.length > 0;
     const scheduleFrame = options.scheduleFrame || ((callback) => {
       if (typeof globalScope.requestAnimationFrame === "function") return globalScope.requestAnimationFrame(callback);
       return globalScope.setTimeout(callback, 0);
@@ -1531,6 +1541,7 @@
         : `<p class="meal-inline-empty meal-draft-empty">${escapeHtml(copy.currentMealEmpty)}</p>`;
       const saveFeedback = buildSaveFeedbackModel(savePhase, Boolean(draft.mealId), language);
       const isSaving = saveFeedback.phase === "saving";
+      const canReflect = isReflectionEligible(draft);
       return `
         <section class="meal-draft" aria-labelledby="mealDraftTitle" aria-busy="${isSaving}">
           ${compactHeader}
@@ -1547,9 +1558,13 @@
                 <strong>${escapeHtml(estimateText)}</strong>
                 ${estimateNote ? `<small>${escapeHtml(estimateNote)}</small>` : ""}
               </div>
-              <div class="meal-draft-actions">
-                ${draft.mealId ? `<button type="button" class="ghost-button" data-cancel-meal-edit>${escapeHtml(copy.cancelEdit)}</button>` : ""}
-                <button type="button" class="primary-button${isSaving ? " is-saving" : ""}" data-save-meal${draft.items.length && !isSaving ? "" : " disabled"}>${escapeHtml(isSaving ? copy.saving : draft.mealId ? copy.saveChanges : copy.save)}</button>
+              <div class="meal-draft-action-group">
+                <small class="meal-reflect-helper">${escapeHtml(copy.reflectMealDraftHelper)}</small>
+                <div class="meal-draft-actions">
+                  <button type="button" class="ghost-button meal-reflect-button" data-reflect-meal-draft${canReflect && !isSaving ? "" : " disabled"}>${escapeHtml(copy.reflectMealDraft)}</button>
+                  ${draft.mealId ? `<button type="button" class="ghost-button" data-cancel-meal-edit>${escapeHtml(copy.cancelEdit)}</button>` : ""}
+                  <button type="button" class="primary-button${isSaving ? " is-saving" : ""}" data-save-meal${draft.items.length && !isSaving ? "" : " disabled"}>${escapeHtml(isSaving ? copy.saving : draft.mealId ? copy.saveChanges : copy.save)}</button>
+                </div>
               </div>
             </div>
           </div>
@@ -1673,6 +1688,11 @@
       if (action.hasAttribute("data-meal-draft-toggle")) {
         currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "toggle" });
         render();
+        return;
+      }
+      if (action.hasAttribute("data-reflect-meal-draft")) {
+        const draft = model.getDraft();
+        if (isReflectionEligible(draft)) onReflectDraft(draft);
         return;
       }
       if (action.dataset.mealTypeChoice) {

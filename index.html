@@ -19,6 +19,7 @@
   <script defer src="js/visionObservationVocabulary.js"></script>
   <script defer src="js/visionVocabularyAuditUI.js"></script>
   <script defer src="js/mealVisionReview.js"></script>
+  <script defer src="js/mealDraftReflectionContext.js"></script>
   <script defer src="js/mealCompositionUI.js"></script>
   <script defer src="js/drinkReflectionAcknowledgement.js"></script>
   <script defer src="script.js"></script>
@@ -628,7 +629,7 @@
     <section class="view-panel" data-view-panel="reflection" aria-labelledby="reflectionViewTitle">
       <div class="view-heading">
         <p class="section-kicker" data-i18n="tabReflection">Reflection/NuTuenSai</p>
-        <h2 id="reflectionViewTitle" data-i18n="reflectionViewTitle">Reflection</h2>
+        <h2 id="reflectionViewTitle" data-i18n="reflectionViewTitle" tabindex="-1">Reflection</h2>
         <p class="section-helper" data-i18n="reflectionViewHelper">ตรวจดู reflection จากข้อมูลวันนี้ แล้วค่อยบันทึกเป็น Daily Log เมื่อพร้อม</p>
       </div>
 
@@ -694,6 +695,15 @@
             <button type="button" class="primary-button reflection-zen-button" id="generateReflection" data-i18n="reflectToday">สรุปวันนี้</button>
             <button type="button" class="subtle-link-button is-hidden" id="clearReflection" data-i18n="clearReflection">ล้าง Reflection</button>
           </div>
+          <aside class="meal-reflection-context-cue is-hidden" id="mealReflectionContextCue" aria-labelledby="mealReflectionContextTitle" hidden>
+            <span class="meal-reflection-context-icon" aria-hidden="true">🍽️</span>
+            <div class="meal-reflection-context-copy">
+              <p id="mealReflectionContextTitle"></p>
+              <p class="meal-reflection-context-items" id="mealReflectionContextItems"></p>
+              <p class="meal-reflection-context-meta" id="mealReflectionContextMeta"></p>
+            </div>
+            <button type="button" class="subtle-link-button" id="returnToMealDraft"></button>
+          </aside>
         </div>
         <div class="reflection-edit-actions">
           <button type="button" class="subtle-link-button" id="toggleReflectionEdit" data-i18n="editReflection">แก้ไขเล็กน้อย</button>

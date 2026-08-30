@@ -1439,6 +1439,29 @@
   gap: 7px;
 }
 
+.meal-draft-action-group {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+  min-width: 0;
+}
+
+.meal-reflect-helper {
+  max-width: 360px;
+  color: var(--text-soft);
+  line-height: 1.45;
+  text-align: right;
+}
+
+.meal-reflect-button {
+  color: var(--accent);
+}
+
+.meal-reflect-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.46;
+}
+
 .meal-draft-actions .primary-button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
@@ -1779,6 +1802,10 @@ body[data-theme="dark"] .meal-daily-reflection {
     justify-content: flex-end;
   }
 
+  .meal-draft-action-group {
+    width: 100%;
+  }
+
   .meal-named-dish-card {
     align-items: start;
     grid-template-columns: 38px minmax(0, 1fr);
@@ -1861,6 +1888,11 @@ body[data-theme="dark"] .meal-daily-reflection {
 
   .meal-composer-header-actions .soft-badge {
     align-self: flex-start;
+  }
+
+  .meal-reflect-helper {
+    max-width: none;
+    text-align: left;
   }
 
   .meal-meta-controls,
@@ -5475,6 +5507,68 @@ body[data-theme="dark"] .reflection-pulse-orb {
 .reflection-preview.has-reflection .reflection-preview-actions {
   order: 3;
   margin-top: 20px;
+}
+
+.meal-reflection-context-cue {
+  order: 4;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px 12px;
+  align-items: center;
+  width: min(100%, 760px);
+  margin: 12px auto 0;
+  padding: 12px 2px 0;
+  border-top: 1px solid var(--border-soft);
+  color: var(--text-soft);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.meal-reflection-context-icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(111, 167, 232, 0.1);
+}
+
+.meal-reflection-context-copy {
+  min-width: 0;
+}
+
+.meal-reflection-context-copy p {
+  margin: 0;
+}
+
+#mealReflectionContextTitle {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.meal-reflection-context-items {
+  overflow-wrap: anywhere;
+  color: var(--text-main);
+}
+
+.meal-reflection-context-meta {
+  font-size: 0.78rem;
+}
+
+.meal-reflection-context-cue .subtle-link-button {
+  align-self: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .meal-reflection-context-cue {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .meal-reflection-context-cue .subtle-link-button {
+    grid-column: 2;
+    justify-self: start;
+  }
 }
 
 .reflection-preview.is-reflection-generating .reflection-preview-actions {

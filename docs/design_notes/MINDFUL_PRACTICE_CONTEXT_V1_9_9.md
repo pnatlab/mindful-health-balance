@@ -85,11 +85,11 @@ v1.9.9 adds backward-compatible optional `Daily_Log` columns:
 
 The note is not a merit score, spiritual assessment, proof of being good, therapy field, or daily Reflection input by default. It is stored for future weekly/monthly Field Review.
 
-`reflectDaily: false` is intentional. It marks this field as future Field Review context, not a daily Reflection signal in v1.9.9.
+`reflectDaily: false` is intentional. It keeps practice context out of automatic/general daily signal composition. The current runtime can still read it when the user explicitly selects the `practice_context` Reflection Root.
 
 ## Reflection Boundary
 
-Daily Reflection/NuTuenSai does not use practice context in v1.9.9.
+The general/Auto Daily Reflection does not use practice context as an automatic signal. The current runtime now also offers an explicit `practice_context` Reflection Root; only that deliberate selection may read the recorded practice context for the current reflection.
 
 The app must not:
 

@@ -162,3 +162,9 @@ The optional photo helper requires an HTTP origin for local-full-capability beha
 # MHB 2.6B / 2.6H Addendum - Read-only Vision Vocabulary Audit
 
 Vision vocabulary evidence is historical audit information, not active meal-composition input. The Meal Composer therefore no longer includes a `What MHB has seen` action or observation-history list. The Log page carries the collapsed, read-only panel after the Daily Log Table, where it can show local normalized labels, counts, and current mapping outcomes without being mistaken for part of the meal being assembled. It cannot edit Food References, remap a label, create Meal Items, modify the draft, save a meal, set a named dish, or affect sodium evidence. Counts describe repeated validated model output, not food truth or automatic learning.
+
+## MHB 2.6I Addendum - Transient Gentle Reflection Context
+
+Current Composition now offers a quiet optional action after at least one actual Meal Item exists. It clones the human-confirmed draft into an immutable memory-only snapshot, opens the existing Reflection page, and preserves the draft. Meal Type alone and unapplied Vision proposals remain ineligible.
+
+The snapshot is not passed to the main Reflection generator. After the existing generation completes, a small cue below Clear Reflection lists only confirmed item labels, selected Meal Type when present, and the unsaved boundary. Clear hides the cue while retaining the transient snapshot; returning to the meal clears the bridge and restores the same draft. No Meal Root, signal, canonical meal write, Daily Log field, workbook data, sodium inference, or persistence is added. See `MEAL_DRAFT_GENTLE_REFLECTION_CONTEXT_BRIDGE.md`.

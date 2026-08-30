@@ -65,3 +65,8 @@ Avoid:
 - robotic checklists
 - raw data dumps
 
+## Transient Meal Context Cue
+
+MHB 2.6I may show a compact source-fact cue after normal Reflection generation when the user explicitly arrived with an eligible Meal draft snapshot. The cue is not part of the preview synthesis or stored detail. It does not alter generated text, root metadata, NuTuenSai reminder, Tomorrow Focus, Daily Log, or Excel.
+
+Only confirmed item labels, selected Meal Type when present, unsaved status, and the return action are shown. No meal advice, nutrition/sodium interpretation, raw Vision label, or good/bad judgment belongs in this cue.

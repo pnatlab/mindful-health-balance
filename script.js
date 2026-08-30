@@ -12,6 +12,7 @@ const MEAL_COMPOSITION_RUNTIME = window.MHBMealRuntime;
 const MEAL_COMPOSITION_UI = window.MHBMealUI;
 const MEAL_VISION_IMAGE_NORMALIZER = window.MHBMealVisionImageNormalizer;
 const MEAL_VISION_REVIEW = window.MHBMealVisionReview;
+const MEAL_DRAFT_REFLECTION_CONTEXT = window.MHBMealDraftReflectionContext;
 const IMAGE_PREP_BRIDGE = window.MHBImagePrepBridge;
 const LOCAL_RUNTIME_GUARD = window.MHBLocalRuntimeGuard;
 const VISION_OBSERVATION_VOCABULARY = window.MHBVisionObservationVocabulary;
@@ -451,6 +452,9 @@ const translations = {
     reflectToday: "สรุปวันนี้",
     reflectAgain: "สรุปใหม่",
     clearReflection: "ล้าง Reflection",
+    mealReflectionCueTitle: "กำลังมองวันนี้พร้อมกับมื้อนี้",
+    mealReflectionCueUnsaved: "มื้อที่ยังไม่ได้บันทึก",
+    mealReflectionCueReturn: "กลับไปที่มื้อ",
     editReflection: "แก้ไขเล็กน้อย",
     doneEditingReflection: "เสร็จสิ้นการแก้ไข",
     mindNoteKicker: "Mind Note — สิ่งเล็ก ๆ ของวันนี้",
@@ -1464,6 +1468,9 @@ const translations = {
     reflectToday: "Reflect",
     reflectAgain: "Reflect Again",
     clearReflection: "Clear Reflection",
+    mealReflectionCueTitle: "Viewing today alongside this meal",
+    mealReflectionCueUnsaved: "Unsaved meal draft",
+    mealReflectionCueReturn: "Return to meal",
     editReflection: "Light edit",
     doneEditingReflection: "Done Editing",
     mindNoteKicker: "Mind Note — a small part of today",
@@ -2477,6 +2484,9 @@ const translations = {
     reflectToday: "今日回顾",
     reflectAgain: "重新回顾",
     clearReflection: "清除回顾",
+    mealReflectionCueTitle: "正把今天和这一餐放在一起看",
+    mealReflectionCueUnsaved: "尚未保存的餐食草稿",
+    mealReflectionCueReturn: "返回这一餐",
     editReflection: "轻微编辑",
     doneEditingReflection: "完成编辑",
     mindNoteKicker: "Mind Note — 留下今天的一件小事",
@@ -3386,6 +3396,7 @@ const guidedReadingStateByRoom = {};
 let guidedReadingTimeframe = "";
 let selectedReflectionRoot = "auto";
 let mealComposerUI = null;
+let mealDraftReflectionBridgeState = MEAL_DRAFT_REFLECTION_CONTEXT?.createBridgeState?.() || { snapshot: null, cueVisible: false };
 let isEditingReflection = false;
 let isGeneratingReflection = false;
 let reflectionGenerationTimerId;
@@ -3577,6 +3588,8 @@ function initializeMealComposerUI() {
     imagePrepBridgeFactory: IMAGE_PREP_BRIDGE?.createImagePrepBridge,
     localRuntimeGuard: LOCAL_RUNTIME_GUARD,
     visionVocabulary: VISION_OBSERVATION_VOCABULARY,
+    isReflectionEligible: MEAL_DRAFT_REFLECTION_CONTEXT?.isMealDraftReflectionEligible,
+    onReflectDraft: beginMealDraftReflection,
     visionProviderFactory: async () => {
       const providerModule = await import("./js/localVisionProvider.mjs");
       return providerModule.createLocalOllamaVisionProvider();
@@ -5321,6 +5334,7 @@ function bindEvents() {
 
   document.querySelector("#generateReflection").addEventListener("click", generateReflectionWithPulse);
   document.querySelector("#clearReflection").addEventListener("click", clearGeneratedReflection);
+  document.querySelector("#returnToMealDraft")?.addEventListener("click", returnToMealDraft);
   document.querySelector("#reflectionRootOptions")?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-reflection-root]");
     if (!button) return;
@@ -5555,6 +5569,7 @@ function hideWelcome({ remember = true, instant = false } = {}) {
 	function setActiveView(view) {
 	  if (!["today", "intention-profile", "reflection", "field-review", "log"].includes(view)) return;
 	  if (view === "today") {
+	    clearMealDraftReflectionBridge();
 	    prepareTodayStepForOpen();
 	  }
 	  currentView = view;
@@ -6005,6 +6020,55 @@ function goToReflectionFromToday() {
   setActiveView("reflection");
 }
 
+function beginMealDraftReflection(draft) {
+  const snapshot = MEAL_DRAFT_REFLECTION_CONTEXT?.buildMealDraftReflectionSnapshot?.(draft);
+  if (!snapshot) return false;
+  mealDraftReflectionBridgeState = MEAL_DRAFT_REFLECTION_CONTEXT.beginBridge(snapshot);
+  setActiveView("reflection");
+  updateReflectionPreview();
+  window.requestAnimationFrame?.(() => document.querySelector("#reflectionViewTitle")?.focus({ preventScroll: true }));
+  return true;
+}
+
+function clearMealDraftReflectionBridge() {
+  mealDraftReflectionBridgeState = MEAL_DRAFT_REFLECTION_CONTEXT?.clearBridge?.() || { snapshot: null, cueVisible: false };
+  renderMealDraftReflectionCue();
+}
+
+function returnToMealDraft() {
+  clearMealDraftReflectionBridge();
+  setActiveView("today");
+  mealComposerUI?.open();
+  window.requestAnimationFrame?.(() => {
+    document.querySelector("[data-reflect-meal-draft]")?.focus({ preventScroll: true });
+  });
+}
+
+function renderMealDraftReflectionCue() {
+  const cue = document.querySelector("#mealReflectionContextCue");
+  if (!cue) return;
+  const snapshot = mealDraftReflectionBridgeState?.snapshot;
+  const visible = Boolean(snapshot && mealDraftReflectionBridgeState.cueVisible && appState.generatedReflection.trim() && !isGeneratingReflection);
+  cue.hidden = !visible;
+  cue.classList.toggle("is-hidden", !visible);
+  if (!visible) return;
+
+  const labels = snapshot.items.map((item) => {
+    const reference = MEAL_COMPOSITION_RUNTIME?.getFoodReferenceById?.(item.foodId);
+    return reference
+      ? MEAL_COMPOSITION_RUNTIME.getFoodDisplayName(reference, currentLanguage)
+      : item.displayNameSnapshot || item.foodId;
+  }).filter(Boolean);
+  const mealType = snapshot.mealType && snapshot.mealType !== "unspecified"
+    ? MEAL_COMPOSITION_UI?.TEXT?.[currentLanguage]?.mealTypes?.[snapshot.mealType] || ""
+    : "";
+
+  document.querySelector("#mealReflectionContextTitle").textContent = t("mealReflectionCueTitle");
+  document.querySelector("#mealReflectionContextItems").textContent = labels.join(" · ");
+  document.querySelector("#mealReflectionContextMeta").textContent = [mealType, t("mealReflectionCueUnsaved")].filter(Boolean).join(" · ");
+  document.querySelector("#returnToMealDraft").textContent = t("mealReflectionCueReturn");
+}
+
 function goToTodayStep(step) {
   setActiveView("today");
   setTodayInputStep(step);
@@ -6058,6 +6122,7 @@ function updateReflectionPreview() {
   if (clearButton) {
     clearButton.classList.toggle("is-hidden", !hasReflection || isGeneratingReflection);
   }
+  renderMealDraftReflectionCue();
 }
 
 function renderReflectionPreviewText(element, text) {
@@ -8545,6 +8610,8 @@ function generateReflectionWithPulse() {
   reflectionGenerationTimerId = setTimeout(() => {
     isGeneratingReflection = false;
     reflectionGenerationTimerId = null;
+    mealDraftReflectionBridgeState = MEAL_DRAFT_REFLECTION_CONTEXT?.revealCue?.(mealDraftReflectionBridgeState)
+      || mealDraftReflectionBridgeState;
     updateReflectionPreview();
   }, getReflectionGenerationDelay());
 }
@@ -8558,6 +8625,8 @@ function clearGeneratedReflection() {
   isGeneratingReflection = false;
   isEditingReflection = false;
   appState.generatedReflection = "";
+  mealDraftReflectionBridgeState = MEAL_DRAFT_REFLECTION_CONTEXT?.hideCue?.(mealDraftReflectionBridgeState)
+    || mealDraftReflectionBridgeState;
   updateReflectionPreview();
   persistCurrentFormDraft();
 }
