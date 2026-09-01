@@ -10,7 +10,7 @@ Slice 1 lets a user carry one human-confirmed, unsaved Meal Composer draft into 
 
 The bridge begins only after explicit user action and only when the draft contains at least one actual Meal Item. Meal Type alone, image selection, raw Vision observations, unapplied review proposals, unsupported labels, and vocabulary evidence are ineligible. A Vision suggestion becomes eligible only after human Apply has created an ordinary Meal Item.
 
-`buildMealDraftReflectionSnapshot()` makes an immutable clone of bounded draft facts: draft identity when present, label, Meal Type, time, explicit unknown-condiment state, confirmed item identity/display/portion/preparation fields, and a snapshot timestamp. It excludes raw Vision output, vocabulary history, sodium/nutrition inference, hidden model prose, and unconfirmed named-dish inference.
+`buildMealDraftReflectionSnapshot()` makes an immutable clone of bounded draft facts: draft identity when present, optional human-authored Meal Name, label, Meal Type, time, explicit unknown-condiment state, confirmed item identity/display/portion/preparation fields, and a snapshot timestamp. It excludes raw Vision output, vocabulary history, sodium/nutrition inference, hidden model prose, and unconfirmed named-dish inference.
 
 ## Lifecycle
 
@@ -48,7 +48,7 @@ The Meal Composer action is a secondary semantic button and is disabled without 
 
 After a normal successful Reflection generation, and only when no active Slice 1 snapshot exists, Reflection may read canonical records for the app's current local date through the Meal runtime store. The resulting `saved_today` context is a fresh, read-only view of recorded meals, not an assertion of everything the user consumed.
 
-The bounded adapter exposes only date, recorded meal count, sorted meal identity/label/type/time, and confirmed item IDs with display snapshots. It excludes raw Vision output, rejected proposals, observation vocabulary, sodium/nutrition estimates, named-dish metadata, notes, and raw Meal records. For presentation it deduplicates by canonical Food Reference ID, orders IDs deterministically, shows at most four labels, and reports any remainder as an item count. This presentation dedupe never mutates canonical records.
+The bounded adapter exposes only date, recorded meal count, sorted meal identity, optional human-authored Meal Name, label/type/time, and confirmed item IDs with display snapshots. It excludes raw Vision output, rejected proposals, observation vocabulary, sodium/nutrition estimates, named-dish metadata, notes, and raw Meal records. For presentation it deduplicates by canonical Food Reference ID, orders IDs deterministically, shows at most four labels, and reports any remainder as an item count. This presentation dedupe never mutates canonical records.
 
 The saved cue has no return action and appears in the same secondary area below Clear Reflection. Clear hides it; a later generation reads the canonical store again, so meals saved between generations are reflected only on that later read. An active explicit Slice 1 snapshot wins visually and suppresses saved-today recall to keep provenance clear.
 

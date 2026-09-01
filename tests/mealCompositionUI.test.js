@@ -138,7 +138,11 @@ function run() {
   ]);
 
   assert.equal(model.getDraft().mealType, "unspecified");
+  assert.equal(model.getDraft().mealName, "");
   assert.equal(model.getDraft().condimentKnowledge, "");
+  model.setDraftMeta({ mealName: "กะเพราหมูกรอบ" });
+  assert.equal(model.saveDraft(), null, "a Meal Name alone does not satisfy the existing confirmed-item save rule");
+  model.setDraftMeta({ mealName: "" });
   model.setDraftMeta({ mealType: "stir_fried", condimentKnowledge: "unknown" });
   assert.equal(model.getDraft().mealType, "stir_fried");
   assert.equal(model.getDraft().condimentKnowledge, "unknown");
@@ -176,20 +180,24 @@ function run() {
   assert.equal(model.updateDraftItem(egg.meal_item_id, { portion_label: "custom", serving_multiplier: 0 }), null);
   model.updateDraftItem(egg.meal_item_id, { portion_label: "regular" });
 
-  model.setDraftMeta({ mealLabel: "lunch", time: "12:30" });
+  model.setDraftMeta({ mealName: "  ข้าวขาหมูไม่หนัง ใส่ไข่  ", mealLabel: "lunch", time: "12:30" });
   const firstSave = model.saveDraft();
   assert.equal(firstSave.wasEditing, false);
   assert.equal(model.getMeals().length, 1);
   assert.equal(model.getMeals()[0].meal_id, firstSave.meal.meal_id);
   assert.equal(firstSave.meal.meal_type, "stir_fried");
+  assert.equal(firstSave.meal.meal_name, "ข้าวขาหมูไม่หนัง ใส่ไข่");
+  assert.equal(model.getDraft().mealName, "", "a successful save resets the optional name with the draft");
   assert.equal(firstSave.meal.condiment_knowledge, "unknown");
   assert.equal(model.getDailySummary().recorded_meal_count, 1);
   assert.equal(model.getDailySummary().sodium_estimate_coverage, "partial");
   const firstSavedCard = mealUI.buildSavedMealCardModel(firstSave.meal, mealRuntime, "th");
   assert.equal(firstSavedCard.mealId, firstSave.meal.meal_id);
   assert.equal(firstSavedCard.label, "กลางวัน");
+  assert.equal(firstSavedCard.mealName, "ข้าวขาหมูไม่หนัง ใส่ไข่");
   assert.equal(firstSavedCard.mealType, "ผัด");
   assert.equal(firstSavedCard.visual.itemCount, 3);
+  assert.equal(mealUI.buildSavedMealCardModel({ ...firstSave.meal, meal_name: "" }, mealRuntime, "th").mealName, "", "unnamed historical cards retain their component-heading fallback");
   assert.match(mealUI.buildDailyReflectionLines(model.getDailySummary(), "th").join(" "), /1 มื้อที่บันทึกไว้/);
   assert.match(mealUI.buildDailyReflectionLines(model.getDailySummary(), "en").join(" "), /1 recorded meal/);
   assert.match(mealUI.buildDailyReflectionLines(model.getDailySummary(), "zh").join(" "), /1 餐被记录下来/);
@@ -207,19 +215,24 @@ function run() {
   const firstId = firstSave.meal.meal_id;
   model.editMeal(firstId);
   assert.equal(model.getDraft().mealId, firstId);
+  assert.equal(model.getDraft().mealName, "ข้าวขาหมูไม่หนัง ใส่ไข่", "editing restores the human-authored name");
   assert.equal(model.getDraft().mealType, "stir_fried");
   assert.equal(model.getDraft().condimentKnowledge, "unknown");
-  model.setDraftMeta({ mealType: "broth_based", condimentKnowledge: "" });
+  model.setDraftMeta({ mealName: "กะเพราหมูกรอบ", mealType: "broth_based", condimentKnowledge: "" });
   const itemCountBeforeEdit = model.getDraft().items.length;
   model.addFood("mixed_vegetables");
   const editSave = model.saveDraft();
   assert.equal(editSave.wasEditing, true);
   assert.equal(editSave.meal.meal_id, firstId);
   assert.equal(editSave.meal.meal_type, "broth_based");
+  assert.equal(editSave.meal.meal_name, "กะเพราหมูกรอบ");
   assert.equal(editSave.meal.condiment_knowledge, "");
   assert.equal(model.getMeals().length, 2);
   assert.equal(editSave.meal.items.length, itemCountBeforeEdit + 1);
   assert.equal(model.getDailySummary().vegetable_present_meals, 1);
+  model.editMeal(firstId);
+  model.setDraftMeta({ mealName: "" });
+  assert.equal(model.saveDraft().meal.meal_name, "", "editing can clear the optional name");
 
   assert.equal(model.deleteMeal(secondSave.meal.meal_id), true);
   assert.equal(model.getMeals().length, 1);
@@ -329,6 +342,9 @@ function run() {
     "chooseFood",
     "condimentUnknown",
     "currentMeal",
+    "mealName",
+    "mealNameHelper",
+    "mealNamePlaceholder",
     "reflectMealDraft",
     "reflectMealDraftHelper",
     "save",
@@ -397,6 +413,7 @@ function run() {
   assert.match(mealUiSource, /<div class="meal-saved-confirmation" role="status" aria-live="polite">/);
   assert.doesNotMatch(mealUiSource, /renderMealVisual\(recentMeal\.items, "confirmation"\)/);
   assert.doesNotMatch(mealUiSource, /<article class="meal-saved-confirmation"/);
+  assert.match(mealUiSource, /meal-saved-confirmation-copy[\s\S]*?copy\.foodItemCount\(recentMeal\.items\.length\)/, "the compact save confirmation stays item-count feedback, not a named meal card");
   assert.equal(Object.keys(model.getDailySummary()).some((key) => /score|medical|target/i.test(key)), false);
   assert.equal(Object.keys(model.getMeals()[0]).some((key) => /daily_log|medical|target|score/i.test(key)), false);
 }

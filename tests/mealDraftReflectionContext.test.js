@@ -42,7 +42,7 @@ assert.equal(context.isMealDraftReflectionEligible({
 }), false, "raw Vision state cannot make a draft eligible");
 
 const model = createModel();
-model.setDraftMeta({ mealLabel: "lunch", mealType: "grilled", condimentKnowledge: "unknown", time: "12:30" });
+model.setDraftMeta({ mealName: "ข้าวร้านประจำก่อนวิ่ง", mealLabel: "lunch", mealType: "grilled", condimentKnowledge: "unknown", time: "12:30" });
 const rice = model.addFood("rice");
 assert.ok(rice, "an actual Meal Item can be added");
 assert.equal(context.isMealDraftReflectionEligible(model.getDraft()), true, "one actual Meal Item is eligible");
@@ -57,8 +57,9 @@ assert.equal(Object.isFrozen(snapshot), true);
 assert.equal(Object.isFrozen(snapshot.items), true);
 assert.equal(Object.isFrozen(snapshot.items[0]), true);
 assert.deepEqual(Object.keys(snapshot), [
-  "kind", "version", "mealId", "mealLabel", "mealType", "time", "condimentKnowledge", "items", "createdAt"
+  "kind", "version", "mealId", "mealName", "mealLabel", "mealType", "time", "condimentKnowledge", "items", "createdAt"
 ]);
+assert.equal(snapshot.mealName, "ข้าวร้านประจำก่อนวิ่ง", "the bounded snapshot keeps the human-authored identity only as read-only context");
 assert.deepEqual(Object.keys(snapshot.items[0]), [
   "mealItemId", "foodId", "displayNameSnapshot", "portionLabel", "servingMultiplier", "preparation", "userAdjustment"
 ]);

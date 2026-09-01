@@ -182,7 +182,7 @@ function run() {
   assert.equal(customItem.serving_multiplier, 2);
   assert.equal(store.createMealItem({ food_id: animal.food_id, portion_label: "custom", serving_multiplier: 0 }), null);
 
-  const firstMeal = store.createMeal({ date: TEST_DATE, meal_label: "lunch", items: [regularItem] });
+  const firstMeal = store.createMeal({ date: TEST_DATE, meal_name: "  ข้าวขาหมูไม่หนัง ใส่ไข่  ", meal_label: "lunch", items: [regularItem] });
   const secondMeal = store.createMeal({
     date: TEST_DATE,
     meal_label: "dinner",
@@ -195,6 +195,7 @@ function run() {
   assert.equal(store.getMealsForDate(TEST_DATE).length, 2);
   assert.equal(store.getMealsForDate(OTHER_DATE).length, 1);
   assert.equal(firstMeal.meal_type, "unspecified");
+  assert.equal(firstMeal.meal_name, "ข้าวขาหมูไม่หนัง ใส่ไข่");
   assert.equal(firstMeal.named_dish_id, "");
   assert.equal(firstMeal.condiment_knowledge, "");
   assert.equal(secondMeal.meal_type, "stir_fried");
@@ -209,13 +210,16 @@ function run() {
     updated_at: "2026-08-26T06:00:00.000Z"
   });
   assert.equal(legacyMeal.meal_type, "unspecified");
+  assert.equal(legacyMeal.meal_name, "", "historical meals without a name remain valid");
   assert.equal(legacyMeal.named_dish_id, "");
   assert.equal(legacyMeal.condiment_knowledge, "");
 
-  const updatedMeal = store.updateMeal(firstMeal.meal_id, { meal_note: "kept as plain text", meal_type: "broth_based" });
+  const updatedMeal = store.updateMeal(firstMeal.meal_id, { meal_note: "kept as plain text", meal_name: "กะเพราหมูกรอบ", meal_type: "broth_based" });
   assert.equal(updatedMeal.meal_id, firstMeal.meal_id);
   assert.equal(updatedMeal.meal_note, "kept as plain text");
+  assert.equal(updatedMeal.meal_name, "กะเพราหมูกรอบ");
   assert.equal(updatedMeal.meal_type, "broth_based");
+  assert.equal(store.updateMeal(firstMeal.meal_id, { meal_name: "" }).meal_name, "", "a human-authored name can be cleared");
   assert.equal(store.deleteMeal(otherDateMeal.meal_id), true);
   assert.deepEqual(store.getMealRecords().map((meal) => meal.meal_id), [firstMeal.meal_id, secondMeal.meal_id]);
 

@@ -75,6 +75,7 @@ const mergedDraft = model.getDraft();
 assert.equal(result.mealTypeConflict, true);
 assert.equal(mergedDraft.mealType, "grilled", "existing human meal type wins");
 assert.equal(mergedDraft.mealLabel, "lunch");
+assert.equal(mergedDraft.mealName, "", "Vision does not populate a human-authored Meal Name");
 assert.equal(mergedDraft.time, "12:20");
 assert.equal(mergedDraft.condimentKnowledge, "unknown");
 assert.equal(mergedDraft.items.filter((item) => item.food_id === "rice").length, 1, "prefill must not duplicate existing items");
@@ -104,6 +105,7 @@ for (const language of ["th", "en", "zh"]) {
 
 const reviewSource = fs.readFileSync(path.join(__dirname, "../js/mealVisionReview.js"), "utf8");
 assert.equal(/named_dish_id|sodium_estimate|evidence_router/i.test(reviewSource), false, "review mapper must not own identity or sodium evidence");
+assert.equal(/meal_name|mealName/i.test(reviewSource), false, "Vision review cannot populate a human-authored Meal Name");
 assert.equal(/pork_fatty|pork_crispy/.test(reviewSource), false, "Food Reference expansion does not add a Vision mapping");
 
 console.log("Meal Vision review and prefill tests passed.");

@@ -44,10 +44,11 @@ assert.deepEqual(empty.meals, []);
 assert.deepEqual(empty.visibleItems, []);
 
 const one = runtime.buildSavedMealReflectionContext(date, [
-  meal("meal_today", date, [rice], { rawVision, named_dish_id: "not-for-context", meal_note: "private note" })
+  meal("meal_today", date, [rice], { meal_name: "ข้าวร้านประจำก่อนวิ่ง", rawVision, named_dish_id: "not-for-context", meal_note: "private note" })
 ]);
 assert.equal(one.mealCount, 1);
-assert.deepEqual(Object.keys(one.meals[0]), ["mealId", "mealLabel", "mealType", "time", "confirmedItems"]);
+assert.deepEqual(Object.keys(one.meals[0]), ["mealId", "mealName", "mealLabel", "mealType", "time", "confirmedItems"]);
+assert.equal(one.meals[0].mealName, "ข้าวร้านประจำก่อนวิ่ง", "saved context keeps the bounded human-authored identity");
 assert.deepEqual(Object.keys(one.meals[0].confirmedItems[0]), ["foodId", "displayNameSnapshot"]);
 assert.equal("rawVision" in one.meals[0], false);
 assert.equal("namedDishId" in one.meals[0], false);
