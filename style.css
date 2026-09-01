@@ -1267,13 +1267,61 @@
   width: min(100%, 620px);
 }
 
-.meal-meta-controls label,
+.meal-meta-controls .meal-meta-control,
 .meal-item-controls label {
   display: grid;
   gap: 5px;
   color: var(--text-soft);
   font-size: 0.76rem;
   font-weight: 600;
+}
+
+.meal-meta-control {
+  --meal-meta-accent: var(--accent);
+  --meal-meta-tint: rgba(105, 102, 196, 0.045);
+}
+
+.meal-name-control {
+  --meal-meta-accent: #7772cf;
+  --meal-meta-tint: rgba(119, 114, 207, 0.075);
+}
+
+.meal-moment-control {
+  --meal-meta-accent: #c98349;
+  --meal-meta-tint: rgba(201, 131, 73, 0.065);
+}
+
+.meal-time-control {
+  --meal-meta-accent: #4d9a8b;
+  --meal-meta-tint: rgba(77, 154, 139, 0.065);
+}
+
+.meal-meta-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  color: var(--text-main);
+}
+
+.meal-meta-icon {
+  display: inline-grid;
+  width: 1.1rem;
+  place-items: center;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.meal-meta-controls .meal-meta-control :is(input, select) {
+  border-color: color-mix(in srgb, var(--meal-meta-accent) 56%, var(--border-soft));
+  background: color-mix(in srgb, var(--textarea-bg) 94%, var(--meal-meta-tint));
+  box-shadow: inset 3px 0 0 var(--meal-meta-tint);
+}
+
+.meal-meta-controls .meal-meta-control :is(input, select):focus {
+  border-color: var(--meal-meta-accent);
+  box-shadow: inset 3px 0 0 var(--meal-meta-tint), 0 0 0 3px color-mix(in srgb, var(--meal-meta-accent) 18%, transparent);
+  outline: none;
 }
 
 .meal-name-control small,
@@ -1639,6 +1687,21 @@ body[data-theme="dark"] .meal-food-option,
 body[data-theme="dark"] .meal-draft-item,
 body[data-theme="dark"] .meal-saved-item {
   background: rgba(31, 27, 52, 0.62);
+}
+
+body[data-theme="dark"] .meal-name-control {
+  --meal-meta-accent: #9e9ae8;
+  --meal-meta-tint: rgba(123, 118, 213, 0.14);
+}
+
+body[data-theme="dark"] .meal-moment-control {
+  --meal-meta-accent: #d8a365;
+  --meal-meta-tint: rgba(187, 117, 63, 0.13);
+}
+
+body[data-theme="dark"] .meal-time-control {
+  --meal-meta-accent: #78b7a6;
+  --meal-meta-tint: rgba(67, 145, 130, 0.14);
 }
 
 body[data-theme="dark"] .meal-type-choice--cream {

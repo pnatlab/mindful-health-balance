@@ -55,6 +55,8 @@ The Dynamic Daily Meal Reflection Panel stays visible at the bottom. It is visua
 
 An optional Meal Name is a human-authored contextual identity for the Meal Instance. It may preserve how the user remembers a meal even when confirmed Meal Items are incomplete. It does not create Meal Items, `named_dish_id`, sodium evidence, nutrition meaning, or a canonical dish classification.
 
+The three compact Meal Instance meta controls use text labels with small decorative icons and restrained field-specific outlines: lavender for Meal Name, warm orange for meal moment, and cool teal for time. These are visual wayfinding only, not status, nutrition, or health semantics; native control and focus behavior remain unchanged.
+
 The UI module does not reimplement storage, sodium scaling, coverage, confidence, or daily-summary rules. Those remain owned by `js/mealCompositionRuntime.js`.
 
 ## Evidence and Unknown Values

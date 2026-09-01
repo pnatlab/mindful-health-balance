@@ -414,6 +414,10 @@ function run() {
   assert.doesNotMatch(mealUiSource, /renderMealVisual\(recentMeal\.items, "confirmation"\)/);
   assert.doesNotMatch(mealUiSource, /<article class="meal-saved-confirmation"/);
   assert.match(mealUiSource, /meal-saved-confirmation-copy[\s\S]*?copy\.foodItemCount\(recentMeal\.items\.length\)/, "the compact save confirmation stays item-count feedback, not a named meal card");
+  assert.match(mealUiSource, /meal-meta-control meal-name-control[\s\S]*?data-meal-name/, "Meal Name remains a labeled native input");
+  assert.match(mealUiSource, /meal-meta-control meal-moment-control[\s\S]*?data-meal-label/, "Meal moment retains its existing select binding");
+  assert.match(mealUiSource, /meal-meta-control meal-time-control[\s\S]*?data-meal-time/, "Time retains its existing native input binding");
+  assert.match(mealUiSource, /aria-hidden="true">🍽️[\s\S]*?aria-hidden="true">☀️[\s\S]*?aria-hidden="true">🕒/, "the three text labels gain restrained decorative icons without replacing text");
   assert.equal(Object.keys(model.getDailySummary()).some((key) => /score|medical|target/i.test(key)), false);
   assert.equal(Object.keys(model.getMeals()[0]).some((key) => /daily_log|medical|target|score/i.test(key)), false);
 }

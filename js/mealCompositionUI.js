@@ -1566,9 +1566,19 @@
           ${compactHeader}
           <div id="${contentId}" class="meal-draft-content">
             <div class="meal-meta-controls">
-              <label class="meal-name-control"><span>${escapeHtml(copy.mealName)}</span><input type="text" data-meal-name value="${escapeHtml(draft.mealName)}" placeholder="${escapeHtml(copy.mealNamePlaceholder)}" aria-describedby="mealNameHelper"><small id="mealNameHelper">${escapeHtml(copy.mealNameHelper)}</small></label>
-              <label><span>${escapeHtml(copy.mealLabel)}</span><select data-meal-label>${renderOptions(copy.labels, draft.mealLabel)}</select></label>
-              <label><span>${escapeHtml(copy.mealTime)}</span><input type="time" data-meal-time value="${escapeHtml(draft.time)}"></label>
+              <label class="meal-meta-control meal-name-control">
+                <span class="meal-meta-label"><span class="meal-meta-icon" aria-hidden="true">🍽️</span><span>${escapeHtml(copy.mealName)}</span></span>
+                <input type="text" data-meal-name value="${escapeHtml(draft.mealName)}" placeholder="${escapeHtml(copy.mealNamePlaceholder)}" aria-describedby="mealNameHelper">
+                <small id="mealNameHelper">${escapeHtml(copy.mealNameHelper)}</small>
+              </label>
+              <label class="meal-meta-control meal-moment-control">
+                <span class="meal-meta-label"><span class="meal-meta-icon" aria-hidden="true">☀️</span><span>${escapeHtml(copy.mealLabel)}</span></span>
+                <select data-meal-label>${renderOptions(copy.labels, draft.mealLabel)}</select>
+              </label>
+              <label class="meal-meta-control meal-time-control">
+                <span class="meal-meta-label"><span class="meal-meta-icon" aria-hidden="true">🕒</span><span>${escapeHtml(copy.mealTime)}</span></span>
+                <input type="time" data-meal-time value="${escapeHtml(draft.time)}">
+              </label>
             </div>
             ${renderMealVisual(draft.items)}
             <div class="meal-draft-list">${items}</div>
