@@ -1,5 +1,5 @@
 const DEFAULT_ENDPOINT = "http://127.0.0.1:11434";
-const DEFAULT_MODEL = "gemma3:12b";
+export const DEFAULT_LOCAL_OLLAMA_MODEL = "gemma3:12b";
 const MEAL_TYPES = new Set([
   "stir_fried", "boiled", "curry", "fried", "grilled", "steamed",
   "broth_based", "minimally_prepared", "other", "unspecified"
@@ -104,7 +104,7 @@ async function imageToBase64(image) {
 
 export function createLocalOllamaVisionProvider(options = {}) {
   const endpoint = normalizeEndpoint(options.endpoint || DEFAULT_ENDPOINT);
-  const model = String(options.model || DEFAULT_MODEL).trim();
+  const model = String(options.model || DEFAULT_LOCAL_OLLAMA_MODEL).trim();
   const fetchImpl = options.fetchImpl || fetch;
   const availabilityTimeoutMs = options.availabilityTimeoutMs || 2000;
   const observationTimeoutMs = options.observationTimeoutMs || 30000;

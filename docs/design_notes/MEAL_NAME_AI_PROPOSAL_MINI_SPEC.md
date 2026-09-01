@@ -399,3 +399,38 @@ The smallest safe sequence is:
 3. **Phase C:** field acceptance and wording refinement only after observed local use; no authority expansion by default.
 
 Each phase should remain independently reversible. Phase A authorizes none of them by itself.
+
+## Phase B1 Implementation Evidence
+
+**Implemented engine only; no UI or draft write.**
+
+`js/mealNameProposal.mjs` now owns the following local, transient operations:
+
+- `buildMealNameProposalInput()` accepts a valid `VisionMealObservation` plus matching deterministic review metadata, then produces the bounded `mhb.meal-name-proposal-input/v1` object.
+- `buildMealNameProposalPrompt()` owns prompt identifier `meal-name-lines-v1`. It takes no image, base64, raw provider response, stored meal, Daily Log, Reflection, profile, sodium, nutrition, or history data.
+- `parseMealNameProposalLines()` accepts only the ordered five-line wire shape.
+- `validateMealNameProposal()` checks candidate/basis consistency, input-scoped evidence IDs, length, structural safety, TH/EN/ZH prohibited-claim terms, duplicate comparison, and the species-uncertainty guard.
+- `createLocalOllamaMealNameProposalAdapter()` performs a text-only loopback Ollama request with `gemma3:12b`, temperature `0`, and an 8-second naming timeout. It reuses the existing loopback endpoint guard and the shared exported default-model constant, without changing `parser-lines-v3`.
+- `createMealNameProposalRequestCoordinator()` provides the smallest future-facing request/observation/language identity check plus cancellation and stale-response rejection. It owns no UI state.
+
+The B1 input intentionally omits mapped display labels and all human-selected Meal Type data. Mapping status and a mapped Food Reference ID are preserved only when the existing deterministic review already provides them; `needs_review` and `unsupported` remain non-canonical. This keeps the first naming input image-local and avoids treating review defaults as human acceptance.
+
+Adapter results use explicit transport statuses: `success`, `insufficient_evidence`, `provider_unavailable`, `model_missing`, `timeout`, `cancelled`, `malformed_response`, `validation_failed`, and coordinator-generated `stale_response`. A malformed or unsafe `ok` response becomes `validation_failed` with a transient proposal whose status is `error`; it is not silently converted to insufficient evidence. If candidate 1 is valid and candidate 2 fails validation, candidate 1 remains available.
+
+The engine is not loaded by `index.html`, does not trigger from Meal Composer, and has no path to `draft.mealName`, Meal Items, Save, `named_dish_id`, sodium, Reflection, Daily Log, Excel, or browser storage.
+
+### Synthetic Proposal-Quality Probe
+
+No newly authorized image corpus was available for this purpose, so B1 used the included `tools/mealNameProposalQualityProbe.mjs` with five de-identified bounded contexts only. It called the local `gemma3:12b` provider on 2026-09-01 with `meal-name-lines-v1`, Thai output, temperature `0`, and the 8-second limit. No images, base64, personal history, or raw model text were stored.
+
+| Synthetic context | Result | Candidate / review category | Latency |
+| --- | --- | --- | --- |
+| rice + braised meat, species uncertain | success | `ข้าวหน้าเนื้อ` / useful; broad rather than species-specific | 3,619 ms |
+| rice + pork + egg | success | `ข้าวหมูไข่` / useful | 4,449 ms |
+| noodles + shrimp | success | `บะหมี่กุ้ง` / useful | 3,946 ms |
+| rice + mixed vegetables | success | `ข้าวผักรวม` / useful | 4,107 ms |
+| ambiguous food | insufficient_evidence | no candidate / appropriately_absent | 3,351 ms |
+
+The first probe run showed that the model could append a sixth `LANGUAGE` line when language was positioned after the required output format. The prompt was corrected so language is now an instruction before that format. The same initial run tried `ข้าวหมู` under explicit species uncertainty; the validator rejected it. B1 then added the explicit prompt rule to use broad meat wording or insufficient evidence in that state. The final probe returned a broad name and all five cases completed with a valid contract result.
+
+The synthetic probe is sufficient to support a cautious B2 interaction prototype, provided it remains optional, skippable, and non-blocking. It does not establish image-field usefulness. A separately authorized, de-identified image-local field probe remains required before treating naming quality as field-accepted.
