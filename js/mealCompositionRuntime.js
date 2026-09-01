@@ -444,6 +444,8 @@
       time: asTrimmedText(meal.time),
       meal_label: label,
       custom_meal_label: label === "custom" ? asTrimmedText(meal.custom_meal_label) : "",
+      // Optional human-authored identity. It never supplies missing components or inference.
+      meal_name: asTrimmedText(meal.meal_name),
       // These fields only preserve what the user chose to describe. They never estimate ingredients or sodium.
       meal_type: mealType,
       // An unknown ID is retained for forward compatibility, but only an approved library record can route an estimate.
@@ -649,6 +651,7 @@
 
       return Object.freeze({
         mealId: meal.meal_id,
+        mealName: asTrimmedText(meal.meal_name),
         mealLabel: meal.meal_label,
         mealType: meal.meal_type,
         time: meal.time,

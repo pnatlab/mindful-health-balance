@@ -227,7 +227,7 @@ The system separates activity load from recovery-only signals such as low sleep,
 
 ## 10.1 Meal Composer — Gently Assembling Today's Meals
 
-Open `Today's meals` within Today’s Signals 1/2 and begin with the broad kind of meal it is, such as stir-fried, curry, or broth-based. Then choose only the components you saw or remember; you do not need to reconstruct the recipe or every condiment. You can adjust an approximate `Small / Regular / Large / Custom` portion and optional preparation only as far as you remember. A meal does not require a label or time, and the same day can hold any number of optional recorded meals.
+Open `Today's meals` within Today’s Signals 1/2 and begin with the broad kind of meal it is, such as stir-fried, curry, or broth-based. Then choose only the components you saw or remember; you do not need to reconstruct the recipe or every condiment. You can adjust an approximate `Small / Regular / Large / Custom` portion and optional preparation only as far as you remember. You may also write a natural Meal Name to help remember it; this is human-authored context, not a claim that the component list is complete or a nutrition assessment. A meal does not require a name or time, and the same day can hold any number of optional recorded meals.
 
 Condiments can still be selected as food items when you know them, but they are never required. You may explicitly say that you do not know all condiments; this is different from simply not recording one, and it never turns an unknown sodium estimate into zero.
 

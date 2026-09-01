@@ -86,7 +86,10 @@
       currentMeal: "มื้อนี้กำลังประกอบอยู่",
       draftKicker: "มื้อที่กำลังประกอบ",
       currentMealEmpty: "เลือกอาหารหรือเครื่องปรุงด้านบนเพื่อเริ่มประกอบมื้อนี้",
-      mealLabel: "เรียกมื้อนี้ว่า",
+      mealLabel: "ช่วงของมื้อ (ถ้าอยากระบุ)",
+      mealName: "ชื่อมื้อ / ชื่ออาหาร",
+      mealNameHelper: "ไม่บังคับ เขียนตามที่อยากจำมื้อนี้ได้",
+      mealNamePlaceholder: "เช่น ข้าวขาหมูไม่หนัง ใส่ไข่",
       mealTime: "เวลา (ถ้าอยากเก็บไว้)",
       portion: "ปริมาณโดยประมาณ",
       preparation: "วิธีเตรียม (ถ้าจำได้)",
@@ -250,7 +253,10 @@
       currentMeal: "This meal is taking shape",
       draftKicker: "MEAL IN PROGRESS",
       currentMealEmpty: "Choose a food or condiment above to begin this meal.",
-      mealLabel: "Meal label",
+      mealLabel: "Meal moment (optional)",
+      mealName: "Meal name",
+      mealNameHelper: "Optional. Write the name you would naturally use to remember this meal.",
+      mealNamePlaceholder: "For example, regular-shop rice before a run",
       mealTime: "Time (optional)",
       portion: "Approximate portion",
       preparation: "Preparation (optional)",
@@ -414,7 +420,10 @@
       currentMeal: "正在轻轻拼出这一餐",
       draftKicker: "正在组合",
       currentMealEmpty: "从上方选择一种食物或调味品，就可以开始记录这一餐。",
-      mealLabel: "这一餐的名称",
+      mealLabel: "用餐时段（可留空）",
+      mealName: "餐食名称",
+      mealNameHelper: "可留空。按你自然会记住这餐的方式来写。",
+      mealNamePlaceholder: "例如：去跑步前常去店里的饭",
       mealTime: "时间（可留空）",
       portion: "大致份量",
       preparation: "烹调方式（可留空）",
@@ -624,6 +633,7 @@
   function createEmptyDraft() {
     return {
       mealId: "",
+      mealName: "",
       mealLabel: "unnamed",
       mealType: "unspecified",
       namedDishId: "",
@@ -712,6 +722,7 @@
           ? updates.mealLabel
           : "unnamed";
       }
+      if (Object.prototype.hasOwnProperty.call(updates, "mealName")) draft.mealName = String(updates.mealName || "").trim();
       if (Object.prototype.hasOwnProperty.call(updates, "mealType")) {
         draft.mealType = runtime.MEAL_TYPES?.has(updates.mealType) ? updates.mealType : "unspecified";
       }
@@ -727,6 +738,7 @@
       const input = {
         date,
         time: draft.time,
+        meal_name: draft.mealName,
         meal_label: draft.mealLabel,
         meal_type: draft.mealType,
         named_dish_id: draft.namedDishId,
@@ -746,6 +758,7 @@
       if (!meal) return null;
       draft = {
         mealId: meal.meal_id,
+        mealName: meal.meal_name || "",
         mealLabel: meal.meal_label,
         mealType: meal.meal_type || "unspecified",
         namedDishId: meal.named_dish_id || "",
@@ -854,6 +867,7 @@
     const visual = buildMealVisualModel(meal?.items, runtime, language);
     return Object.freeze({
       mealId: String(meal?.meal_id || ""),
+      mealName: String(meal?.meal_name || "").trim(),
       time: String(meal?.time || "").trim(),
       label: copy.labels[meal?.meal_label] || copy.labels.unnamed,
       mealType: copy.mealTypes[meal?.meal_type] || copy.mealTypes.unspecified,
@@ -1552,6 +1566,7 @@
           ${compactHeader}
           <div id="${contentId}" class="meal-draft-content">
             <div class="meal-meta-controls">
+              <label class="meal-name-control"><span>${escapeHtml(copy.mealName)}</span><input type="text" data-meal-name value="${escapeHtml(draft.mealName)}" placeholder="${escapeHtml(copy.mealNamePlaceholder)}" aria-describedby="mealNameHelper"><small id="mealNameHelper">${escapeHtml(copy.mealNameHelper)}</small></label>
               <label><span>${escapeHtml(copy.mealLabel)}</span><select data-meal-label>${renderOptions(copy.labels, draft.mealLabel)}</select></label>
               <label><span>${escapeHtml(copy.mealTime)}</span><input type="time" data-meal-time value="${escapeHtml(draft.time)}"></label>
             </div>
@@ -1588,7 +1603,8 @@
             ${renderMealVisual(meal.items, "saved")}
             <div class="meal-saved-copy">
               <p class="meal-saved-meta">${escapeHtml(card.time || "·")} · ${escapeHtml(card.label)} · ${escapeHtml(card.mealType)}${escapeHtml(unknownCondiments)}</p>
-              <h4>${escapeHtml(card.visual.componentNames.join(" · "))}</h4>
+              <h4>${escapeHtml(card.mealName || card.visual.componentNames.join(" · "))}</h4>
+              ${card.mealName && card.visual.componentNames.length ? `<p class="meal-saved-components">${escapeHtml(card.visual.componentNames.join(" · "))}</p>` : ""}
               ${meal.named_dish_id && runtime.getNamedDishReferenceById(meal.named_dish_id) && runtime.evaluateNamedDishConsistency(meal).evidence_usable ? `<p class="meal-named-dish-saved">${escapeHtml(copy.namedDishConfirmed)} ${escapeHtml(runtime.getFoodDisplayName(runtime.getNamedDishReferenceById(meal.named_dish_id), language))} · ${escapeHtml(copy.namedDishBasisHelper)}</p>` : ""}
             </div>
             <div class="meal-saved-actions">
@@ -1807,6 +1823,10 @@
     });
 
     root.addEventListener("input", (event) => {
+      if (event.target.matches("[data-meal-name]")) {
+        model.setDraftMeta({ mealName: event.target.value });
+        return;
+      }
       if (event.target.matches("[data-meal-search]")) {
         search = event.target.value;
         showAllFoodResults = false;

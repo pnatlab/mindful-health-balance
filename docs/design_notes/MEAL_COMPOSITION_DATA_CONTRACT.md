@@ -162,6 +162,7 @@ This is required because seasoning, broth, and dipping sauces may contribute mor
 | `time` | Optional local time. |
 | `meal_label` | `breakfast`, `lunch`, `dinner`, `snack`, `late_meal`, `custom`, or `unnamed`. |
 | `custom_meal_label` | Optional display label when `meal_label` is `custom`. |
+| `meal_name` | Optional human-authored contextual identity, preserved with only outer-whitespace trimming. It is not evidence that Meal Items are complete, nor nutrition, sodium, or canonical dish classification. |
 | `meal_type` | Optional broad observed description: `unspecified`, `stir_fried`, `boiled`, `curry`, `fried`, `grilled`, `steamed`, `broth_based`, `minimally_prepared`, or `other`. It records the meal form the user recognizes; it must not infer ingredients, sodium, or health meaning. Missing legacy data normalizes to `unspecified`. |
 | `condiment_knowledge` | Optional explicit statement of `unknown` when the user does not know all condiments. Blank means no such statement was recorded; it never means no condiment was used. Recorded condiment Meal Items remain separate, inspectable facts. |
 | `items` | One or more Meal Item Instances. |

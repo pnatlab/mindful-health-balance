@@ -1262,9 +1262,9 @@
 
 .meal-meta-controls {
   display: grid;
-  grid-template-columns: minmax(130px, 1fr) minmax(120px, 0.8fr);
+  grid-template-columns: minmax(180px, 1.35fr) minmax(130px, 1fr) minmax(120px, 0.8fr);
   gap: 9px;
-  width: min(100%, 360px);
+  width: min(100%, 620px);
 }
 
 .meal-meta-controls label,
@@ -1274,6 +1274,19 @@
   color: var(--text-soft);
   font-size: 0.76rem;
   font-weight: 600;
+}
+
+.meal-name-control small,
+.meal-saved-components {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.74rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.meal-name-control small {
+  min-height: 2.1em;
 }
 
 .meal-draft-list,

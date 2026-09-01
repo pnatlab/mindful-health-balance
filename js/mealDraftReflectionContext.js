@@ -40,6 +40,7 @@
       kind: SNAPSHOT_KIND,
       version: SNAPSHOT_VERSION,
       mealId: cleanText(draft?.mealId),
+      mealName: cleanText(draft?.mealName),
       mealLabel: cleanText(draft?.mealLabel),
       mealType: cleanText(draft?.mealType),
       time: cleanText(draft?.time),

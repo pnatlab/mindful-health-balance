@@ -53,6 +53,8 @@ The Dynamic Daily Meal Reflection Panel stays visible at the bottom. It is visua
 - Deleting asks for gentle confirmation and removes only the target meal.
 - Multiple meals per date are supported without imposing breakfast/lunch/dinner limits.
 
+An optional Meal Name is a human-authored contextual identity for the Meal Instance. It may preserve how the user remembers a meal even when confirmed Meal Items are incomplete. It does not create Meal Items, `named_dish_id`, sodium evidence, nutrition meaning, or a canonical dish classification.
+
 The UI module does not reimplement storage, sodium scaling, coverage, confidence, or daily-summary rules. Those remain owned by `js/mealCompositionRuntime.js`.
 
 ## Evidence and Unknown Values
