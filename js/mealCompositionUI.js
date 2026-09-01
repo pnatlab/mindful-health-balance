@@ -90,6 +90,19 @@
       mealName: "ชื่อมื้อ / ชื่ออาหาร",
       mealNameHelper: "ไม่บังคับ เขียนตามที่อยากจำมื้อนี้ได้",
       mealNamePlaceholder: "เช่น ข้าวขาหมูไม่หนัง ใส่ไข่",
+      namingPending: "กำลังลองเสนอชื่อมื้อ…",
+      namingContinueWithout: "ไปต่อโดยยังไม่ตั้งชื่อ",
+      namingInsufficient: "ยังไม่แน่ใจพอที่จะช่วยตั้งชื่อมื้อนี้",
+      namingFailed: "ข้ามการช่วยตั้งชื่อครั้งนี้ได้เลย",
+      namingTitle: "AI ช่วยเสนอชื่อมื้อนี้",
+      namingDescription: "จากสิ่งที่เห็นในภาพ ลองเลือกชื่อที่ใกล้ที่สุด หรือเขียนชื่อที่อยากจำเองได้",
+      namingSuggestion: "ข้อเสนอจาก AI",
+      namingCustom: "เขียนชื่อของฉันเอง",
+      namingCustomLabel: "ชื่อมื้อ / ชื่ออาหาร",
+      namingCustomPlaceholder: "เขียนชื่อมื้อนี้ตามที่อยากจำ",
+      namingConfirm: "ใช้ชื่อนี้และไปต่อ",
+      namingSkip: "ข้ามไปก่อน",
+      namingClose: "ปิดการช่วยตั้งชื่อมื้อนี้",
       mealTime: "เวลา (ถ้าอยากเก็บไว้)",
       portion: "ปริมาณโดยประมาณ",
       preparation: "วิธีเตรียม (ถ้าจำได้)",
@@ -257,6 +270,19 @@
       mealName: "Meal name",
       mealNameHelper: "Optional. Write the name you would naturally use to remember this meal.",
       mealNamePlaceholder: "For example, regular-shop rice before a run",
+      namingPending: "Trying a meal name suggestion…",
+      namingContinueWithout: "Continue without a name",
+      namingInsufficient: "There is not enough certainty to suggest a name for this meal.",
+      namingFailed: "You can skip the naming help this time.",
+      namingTitle: "AI can suggest a name for this meal",
+      namingDescription: "Choose the closest name from what the image shows, or write the name you would like to remember.",
+      namingSuggestion: "AI suggestion",
+      namingCustom: "Write my own name",
+      namingCustomLabel: "Meal name",
+      namingCustomPlaceholder: "Write the name you would like to remember",
+      namingConfirm: "Use this name and continue",
+      namingSkip: "Skip for now",
+      namingClose: "Close meal naming help",
       mealTime: "Time (optional)",
       portion: "Approximate portion",
       preparation: "Preparation (optional)",
@@ -424,6 +450,19 @@
       mealName: "餐食名称",
       mealNameHelper: "可留空。按你自然会记住这餐的方式来写。",
       mealNamePlaceholder: "例如：去跑步前常去店里的饭",
+      namingPending: "正在尝试建议餐食名称…",
+      namingContinueWithout: "不命名，继续下一步",
+      namingInsufficient: "目前还不够确定，无法帮这餐建议名称。",
+      namingFailed: "这次可以先跳过命名帮助。",
+      namingTitle: "AI 可以帮忙建议这餐的名称",
+      namingDescription: "根据图片中看到的内容，选择最接近的名称，或写下你想记住的名称。",
+      namingSuggestion: "AI 建议",
+      namingCustom: "自己写名称",
+      namingCustomLabel: "餐食名称",
+      namingCustomPlaceholder: "写下你想记住的餐食名称",
+      namingConfirm: "使用这个名称并继续",
+      namingSkip: "暂时跳过",
+      namingClose: "关闭餐食命名帮助",
       mealTime: "时间（可留空）",
       portion: "大致份量",
       preparation: "烹调方式（可留空）",
@@ -923,6 +962,10 @@
     return Boolean(review && ((Array.isArray(review.mealTypes) && review.mealTypes.length) || (Array.isArray(review.components) && review.components.length)));
   }
 
+  function isVisionReviewPanelVisible(session) {
+    return Boolean(session?.phase === "review" && session.review && session.reviewVisible);
+  }
+
   function reduceFoodItemsDisclosureState(state, action = {}) {
     const current = Boolean(state?.expanded);
     if (action.type === "toggle") return Object.freeze({ expanded: !current });
@@ -957,6 +1000,8 @@
     const visionImageNormalizer = options.visionImageNormalizer || globalScope.MHBMealVisionImageNormalizer || null;
     const visionReview = options.visionReview || globalScope.MHBMealVisionReview || null;
     const visionProviderFactory = options.visionProviderFactory || null;
+    const mealNameProposalFactory = typeof options.mealNameProposalFactory === "function" ? options.mealNameProposalFactory : null;
+    const namingTraceEnabled = Boolean(options.namingTrace || globalScope.location?.search?.includes("mhbNamingTrace=1"));
     const imagePrepBridgeFactory = options.imagePrepBridgeFactory || globalScope.MHBImagePrepBridge?.createImagePrepBridge || null;
     const localRuntimeGuard = options.localRuntimeGuard || globalScope.MHBLocalRuntimeGuard || null;
     const visionVocabulary = options.visionVocabulary || globalScope.MHBVisionObservationVocabulary || null;
@@ -981,12 +1026,18 @@
     let recentSavedMealId = "";
     let recentSaveWasEditing = false;
     let visionRequestId = 0;
+    let mealNameProposalRequestId = 0;
+    let mealNameProposalModule = null;
+    let mealNameProposalCoordinator = null;
+    let mealNameProposalSession = null;
+    let visionTraceStartedAt = 0;
     let visionSession = {
       phase: "idle",
       file: null,
       previewUrl: "",
       observation: null,
       review: null,
+      reviewVisible: false,
       failureStatus: ""
     };
     let imagePrepBridge = null;
@@ -1006,6 +1057,16 @@
       return runtime.getFoodDisplayName(reference, language);
     }
 
+    function traceNaming(stage, details = {}) {
+      if (!namingTraceEnabled) return;
+      // Keep opt-in browser diagnostics inspectable without exposing raw image or model text.
+      globalScope.console?.info?.(`[MHB naming trace] ${stage} ${JSON.stringify(details)}`);
+    }
+
+    function traceNow() {
+      return globalScope.performance?.now?.() ?? Date.now();
+    }
+
     function scrollBehavior() {
       return globalScope.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? "auto" : "smooth";
     }
@@ -1018,8 +1079,120 @@
 
     function clearVisionSession() {
       visionRequestId += 1;
+      clearMealNameProposalSession();
       revokeVisionPreview();
-      visionSession = { phase: "idle", file: null, previewUrl: "", observation: null, review: null, failureStatus: "" };
+      visionSession = { phase: "idle", file: null, previewUrl: "", observation: null, review: null, reviewVisible: false, failureStatus: "" };
+    }
+
+    function namingResult(status, input) {
+      return {
+        status,
+        proposal: {
+          requestId: input.requestId,
+          observationId: input.observationId,
+          language: input.language,
+          status: "error",
+          candidates: []
+        }
+      };
+    }
+
+    function clearMealNameProposalSession() {
+      mealNameProposalRequestId += 1;
+      mealNameProposalCoordinator?.cancel?.();
+      mealNameProposalSession?.reset?.();
+      traceNaming("naming_session_state", { phase: "idle", reason: "cleared" });
+    }
+
+    function getMealNameProposalState() {
+      return mealNameProposalSession?.snapshot?.() || { phase: "idle", candidates: [], selection: "", customText: "" };
+    }
+
+    function isCurrentMealNameProposalContext(requestId, observationId, requestLanguage) {
+      return requestId === mealNameProposalRequestId
+        && visionSession.phase === "review"
+        && visionSession.observation?.observation_id === observationId
+        && language === requestLanguage;
+    }
+
+    function isCurrentMealNameProposal(requestId, observationId, requestLanguage) {
+      const state = getMealNameProposalState();
+      return isCurrentMealNameProposalContext(requestId, observationId, requestLanguage)
+        && state.requestId
+        && state.observationId === observationId
+        && state.language === requestLanguage;
+    }
+
+    function focusMealNameProposalDialog() {
+      scheduleFrame(() => root.querySelector("[data-meal-name-proposal-choice]")?.focus());
+    }
+
+    async function beginMealNameProposal(observation, review) {
+      const draft = model.getDraft();
+      if (!mealNameProposalFactory || draft.mealName || !observation || !review) return;
+      const requestId = ++mealNameProposalRequestId;
+      const observationId = String(observation.observation_id || "");
+      const requestLanguage = language;
+
+      try {
+        mealNameProposalModule = mealNameProposalModule || await mealNameProposalFactory();
+        traceNaming("naming_module_loaded", { requestId, observationId, language: requestLanguage, available: Boolean(mealNameProposalModule) });
+        if (!isCurrentMealNameProposalContext(requestId, observationId, requestLanguage)) return;
+        mealNameProposalSession = mealNameProposalSession || mealNameProposalModule.createMealNameProposalSession();
+        const input = mealNameProposalModule.buildMealNameProposalInput({
+          observation,
+          review,
+          requestId: `meal-name-${observationId}-${requestId}`,
+          language: requestLanguage
+        });
+        if (!input) {
+          traceNaming("naming_input_built", { requestId, observationId, valid: false });
+          visionSession.reviewVisible = true;
+          traceNaming("vision_review_visible", { observationId, visible: true, reason: "input_unavailable" });
+          render();
+          return;
+        }
+        traceNaming("naming_input_built", { requestId: input.requestId, observationId, valid: true, language: input.language, componentCount: input.visibleComponents.length });
+        mealNameProposalSession.begin(input);
+        traceNaming("naming_session_state", { requestId: input.requestId, observationId, phase: "pending" });
+        render();
+        const adapter = mealNameProposalModule.createLocalOllamaMealNameProposalAdapter({ onTrace: traceNaming });
+        const availability = await adapter.isAvailable();
+        if (!isCurrentMealNameProposal(requestId, observationId, requestLanguage)) return;
+        if (availability.status !== "ready") {
+          mealNameProposalSession.resolve(namingResult(availability.status, input));
+          visionSession.reviewVisible = true;
+          traceNaming("naming_session_state", { requestId: input.requestId, observationId, phase: getMealNameProposalState().phase, status: availability.status });
+          traceNaming("vision_review_visible", { observationId, visible: true, reason: "provider_unavailable" });
+          render();
+          return;
+        }
+        mealNameProposalCoordinator = mealNameProposalModule.createMealNameProposalRequestCoordinator(adapter);
+        const result = await mealNameProposalCoordinator.request(input);
+        if (!isCurrentMealNameProposal(requestId, observationId, requestLanguage)) return;
+        if (["cancelled", "stale_response"].includes(result.status)) {
+          mealNameProposalSession.settle();
+          visionSession.reviewVisible = true;
+        } else {
+          mealNameProposalSession.resolve(result);
+          visionSession.reviewVisible = getMealNameProposalState().phase !== "ready";
+        }
+        traceNaming("naming_session_state", { requestId: input.requestId, observationId, phase: getMealNameProposalState().phase, status: result.status, candidateCount: result.proposal?.candidates?.length || 0 });
+        traceNaming("vision_review_visible", { observationId, visible: visionSession.reviewVisible, reason: result.status });
+        render();
+        if (getMealNameProposalState().phase === "ready") {
+          traceNaming("naming_dialog_open_attempt", { requestId: input.requestId, observationId, candidateCount: getMealNameProposalState().candidates.length });
+          focusMealNameProposalDialog();
+        }
+      } catch (_error) {
+        if (!isCurrentMealNameProposalContext(requestId, observationId, requestLanguage)) return;
+        const state = getMealNameProposalState();
+        if (state.requestId) mealNameProposalSession.resolve(namingResult("provider_unavailable", state));
+        visionSession.reviewVisible = true;
+        traceNaming("naming_session_state", { requestId, observationId, phase: getMealNameProposalState().phase, status: "provider_unavailable" });
+        traceNaming("vision_review_visible", { observationId, visible: true, reason: "module_or_adapter_error" });
+        render();
+      }
     }
 
     function visionFailureMessage(failureStatus) {
@@ -1085,12 +1258,23 @@
 
         visionSession.phase = "review";
         visionSession.observation = result.observation;
+        traceNaming("vision_validated", {
+          observationId: result.observation.observation_id,
+          language,
+          latencyMs: visionTraceStartedAt ? Math.round(traceNow() - visionTraceStartedAt) : undefined
+        });
         visionSession.review = visionReview.createVisionReviewModel(result.observation);
+        traceNaming("review_model_ready", { observationId: result.observation.observation_id, componentCount: visionSession.review.components.length });
+        const namingEligible = Boolean(mealNameProposalFactory && !model.getDraft().mealName);
+        visionSession.reviewVisible = !namingEligible;
+        traceNaming("naming_eligible", { observationId: result.observation.observation_id, eligible: namingEligible, hasMealName: Boolean(model.getDraft().mealName) });
+        traceNaming("vision_review_visible", { observationId: result.observation.observation_id, visible: visionSession.reviewVisible, reason: namingEligible ? "naming_pending" : "existing_name_or_unavailable" });
         if (hasMeaningfulVisionReview(visionSession.review)) {
           foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "vision_review_ready" });
         }
         recordVisionVocabulary(result.observation);
         render();
+        if (namingEligible) beginMealNameProposal(result.observation, visionSession.review);
       } catch (error) {
         if (requestId !== visionRequestId) return;
         visionSession.phase = "failure";
@@ -1102,7 +1286,9 @@
     async function observeVisionImage(file) {
       clearVisionSession();
       const requestId = visionRequestId;
-      visionSession = { phase: "preparing", file, previewUrl: "", observation: null, review: null, failureStatus: "" };
+      visionTraceStartedAt = traceNow();
+      traceNaming("vision_request_started", { requestId, language });
+      visionSession = { phase: "preparing", file, previewUrl: "", observation: null, review: null, reviewVisible: false, failureStatus: "" };
       render();
 
       await yieldForVisionPreparation();
@@ -1143,6 +1329,8 @@
             if (!envelope?.image_blob) return;
             clearVisionSession();
             const requestId = visionRequestId;
+            visionTraceStartedAt = traceNow();
+            traceNaming("vision_request_started", { requestId, language, source: "prepared_image" });
             observeNormalizedVisionImage(envelope.image_blob, requestId, envelope.image_blob);
           }
         });
@@ -1306,6 +1494,53 @@
       `;
     }
 
+    function renderMealNameProposalStatus() {
+      const copy = getText(language);
+      const phase = getMealNameProposalState().phase;
+      if (phase === "pending") return `<p class="meal-name-proposal-status" role="status">${escapeHtml(copy.namingPending)}</p>`;
+      if (phase === "insufficient") return `<p class="meal-name-proposal-status" role="status">${escapeHtml(copy.namingInsufficient)}</p>`;
+      if (phase === "failed") return `<p class="meal-name-proposal-status" role="status">${escapeHtml(copy.namingFailed)}</p>`;
+      return "";
+    }
+
+    function renderMealNameProposalDialog() {
+      const copy = getText(language);
+      const state = getMealNameProposalState();
+      if (state.phase !== "ready") return "";
+      const choices = state.candidates.map((candidate) => `
+        <label class="meal-name-proposal-choice">
+          <input type="radio" name="mealNameProposal" value="${escapeHtml(candidate.candidateId)}" data-meal-name-proposal-choice${state.selection === candidate.candidateId ? " checked" : ""}>
+          <span><small>${escapeHtml(copy.namingSuggestion)}</small><strong>${escapeHtml(candidate.text)}</strong></span>
+        </label>
+      `).join("");
+      const customSelected = state.selection === "custom";
+      const canConfirm = state.candidates.some((candidate) => candidate.candidateId === state.selection) || (customSelected && String(state.customText || "").trim());
+      return `
+        <section class="meal-name-proposal-modal" data-meal-name-proposal-dialog aria-hidden="false">
+          <div class="meal-name-proposal-modal__surface" role="dialog" aria-modal="true" aria-labelledby="mealNameProposalTitle" aria-describedby="mealNameProposalDescription" tabindex="-1">
+            <button type="button" class="meal-name-proposal-modal__close" data-meal-name-proposal-skip aria-label="${escapeHtml(copy.namingClose)}">×</button>
+            <span class="meal-name-proposal-modal__icon" aria-hidden="true">🍽️</span>
+            <p class="section-kicker">${escapeHtml(copy.namingSuggestion)}</p>
+            <h2 id="mealNameProposalTitle">${escapeHtml(copy.namingTitle)}</h2>
+            <p id="mealNameProposalDescription" class="meal-name-proposal-modal__description">${escapeHtml(copy.namingDescription)}</p>
+            <fieldset class="meal-name-proposal-choices">
+              <legend class="sr-only">${escapeHtml(copy.namingTitle)}</legend>
+              ${choices}
+              <label class="meal-name-proposal-choice${customSelected ? " is-selected" : ""}">
+                <input type="radio" name="mealNameProposal" value="custom" data-meal-name-proposal-choice${customSelected ? " checked" : ""}>
+                <span><strong>${escapeHtml(copy.namingCustom)}</strong></span>
+              </label>
+              ${customSelected ? `<label class="meal-name-proposal-custom"><span>${escapeHtml(copy.namingCustomLabel)}</span><input type="text" data-meal-name-proposal-custom value="${escapeHtml(state.customText)}" placeholder="${escapeHtml(copy.namingCustomPlaceholder)}"></label>` : ""}
+            </fieldset>
+            <div class="meal-name-proposal-modal__actions">
+              <button type="button" class="ghost-button" data-meal-name-proposal-skip>${escapeHtml(copy.namingSkip)}</button>
+              <button type="button" class="primary-button" data-meal-name-proposal-confirm${canConfirm ? "" : " disabled"}>${escapeHtml(copy.namingConfirm)}</button>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
     function renderVisionHelper() {
       const copy = getText(language);
       if (visionSession.phase === "idle") {
@@ -1362,12 +1597,26 @@
         `;
       }
 
+      if (!isVisionReviewPanelVisible(visionSession)) {
+        return `
+          <section class="meal-vision-helper is-active meal-name-proposal-gate" aria-busy="${getMealNameProposalState().phase === "pending"}" aria-live="polite">
+            ${renderVisionPreview()}
+            <div class="meal-vision-intro"><h3>${escapeHtml(copy.namingTitle)}</h3><p>${escapeHtml(copy.namingPending)}</p></div>
+            <div class="meal-vision-actions">
+              <button type="button" class="ghost-button" data-meal-name-proposal-bypass>${escapeHtml(copy.namingContinueWithout)}</button>
+              <button type="button" class="meal-text-button" data-vision-clear>${escapeHtml(copy.visionClear)}</button>
+            </div>
+          </section>
+        `;
+      }
+
       return `
         <section class="meal-vision-review" aria-labelledby="mealVisionReviewTitle">
           <div class="meal-vision-review-header">
             ${renderVisionPreview()}
             <div><h3 id="mealVisionReviewTitle">${escapeHtml(copy.visionReviewTitle)}</h3><p>${escapeHtml(copy.visionReviewHelper)}</p></div>
           </div>
+          ${renderMealNameProposalStatus()}
           ${renderVisionReview()}
         </section>
       `;
@@ -1661,14 +1910,69 @@
 
     function render() {
       renderHeader();
-      if (isOpen) content.innerHTML = `${renderMealType()}${renderVisionHelper()}${renderFoodPicker()}${renderNamedDishReference()}${renderDraft()}${renderSavedMeals()}`;
+      if (isOpen) content.innerHTML = `${renderMealType()}${renderVisionHelper()}${renderFoodPicker()}${renderNamedDishReference()}${renderDraft()}${renderSavedMeals()}${renderMealNameProposalDialog()}`;
+      globalScope.document?.body?.classList.toggle("meal-name-proposal-modal-open", getMealNameProposalState().phase === "ready");
       renderReflection();
       statusNode.textContent = status;
+    }
+
+    function returnFocusFromMealNameProposal() {
+      scheduleFrame(() => root.querySelector("[data-vision-apply]")?.focus());
+    }
+
+    function settleMealNameProposal() {
+      mealNameProposalRequestId += 1;
+      mealNameProposalCoordinator?.cancel?.();
+      mealNameProposalSession?.settle?.();
+      visionSession.reviewVisible = true;
+      traceNaming("naming_session_state", { observationId: visionSession.observation?.observation_id || "", phase: "settled" });
+      traceNaming("vision_review_visible", { observationId: visionSession.observation?.observation_id || "", visible: true, reason: "naming_settled" });
+      render();
+      returnFocusFromMealNameProposal();
+    }
+
+    function confirmMealNameProposal() {
+      const confirmed = mealNameProposalSession?.confirm?.();
+      if (!confirmed?.text) return;
+      model.setDraftMeta({ mealName: confirmed.text });
+      visionSession.reviewVisible = true;
+      traceNaming("naming_session_state", { observationId: visionSession.observation?.observation_id || "", phase: "settled", source: confirmed.source });
+      traceNaming("vision_review_visible", { observationId: visionSession.observation?.observation_id || "", visible: true, reason: "name_confirmed" });
+      render();
+      returnFocusFromMealNameProposal();
+    }
+
+    function trapMealNameProposalFocus(event) {
+      const dialog = root.querySelector("[data-meal-name-proposal-dialog] [role='dialog']");
+      if (!dialog || event.key !== "Tab") return;
+      const focusable = [...dialog.querySelectorAll("button:not([disabled]), input:not([disabled])")];
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && globalScope.document?.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && globalScope.document?.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
 
     root.addEventListener("click", (event) => {
       const action = event.target.closest("button");
       if (!action) return;
+      if (action.hasAttribute("data-meal-name-proposal-skip")) {
+        settleMealNameProposal();
+        return;
+      }
+      if (action.hasAttribute("data-meal-name-proposal-bypass")) {
+        settleMealNameProposal();
+        return;
+      }
+      if (action.hasAttribute("data-meal-name-proposal-confirm")) {
+        confirmMealNameProposal();
+        return;
+      }
       if (action.matches("[data-meal-toggle]")) {
         isOpen = !isOpen;
         render();
@@ -1833,6 +2137,15 @@
     });
 
     root.addEventListener("input", (event) => {
+      if (event.target.matches("[data-meal-name-proposal-custom]")) {
+        const cursor = event.target.selectionStart;
+        mealNameProposalSession?.setCustomText?.(event.target.value);
+        render();
+        const nextInput = root.querySelector("[data-meal-name-proposal-custom]");
+        nextInput?.focus();
+        nextInput?.setSelectionRange(cursor, cursor);
+        return;
+      }
       if (event.target.matches("[data-meal-name]")) {
         model.setDraftMeta({ mealName: event.target.value });
         return;
@@ -1849,6 +2162,12 @@
     });
 
     root.addEventListener("change", (event) => {
+      if (event.target.matches("[data-meal-name-proposal-choice]")) {
+        mealNameProposalSession?.choose?.(event.target.value);
+        render();
+        if (event.target.value === "custom") scheduleFrame(() => root.querySelector("[data-meal-name-proposal-custom]")?.focus());
+        return;
+      }
       if (event.target.matches("[data-vision-image]")) {
         const file = event.target.files?.[0];
         if (file) observeVisionImage(file);
@@ -1898,12 +2217,24 @@
       render();
     });
 
+    root.addEventListener("keydown", (event) => {
+      if (getMealNameProposalState().phase !== "ready") return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        settleMealNameProposal();
+        return;
+      }
+      trapMealNameProposalFocus(event);
+    });
+
     render();
 
     return Object.freeze({
       render,
       setLanguage(nextLanguage) {
         language = normalizeLanguage(nextLanguage);
+        clearMealNameProposalSession();
+        if (visionSession.phase === "review" && visionSession.review) visionSession.reviewVisible = true;
         model.setLanguage(language);
         render();
       },
@@ -1923,6 +2254,7 @@
       destroy() {
         imagePrepBridge?.destroy?.();
         clearVisionSession();
+        globalScope.document?.body?.classList.remove("meal-name-proposal-modal-open");
       },
       getModel: () => model
     });
@@ -1942,6 +2274,7 @@
     countDraftFoodItems,
     createFoodItemsDisclosureState,
     hasMeaningfulVisionReview,
+    isVisionReviewPanelVisible,
     reduceFoodItemsDisclosureState,
     createCurrentCompositionDisclosureState,
     reduceCurrentCompositionDisclosureState,

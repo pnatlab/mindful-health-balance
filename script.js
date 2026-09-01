@@ -3603,6 +3603,7 @@ function initializeMealComposerUI() {
     visionVocabulary: VISION_OBSERVATION_VOCABULARY,
     isReflectionEligible: MEAL_DRAFT_REFLECTION_CONTEXT?.isMealDraftReflectionEligible,
     onReflectDraft: beginMealDraftReflection,
+    mealNameProposalFactory: async () => import("./js/mealNameProposal.mjs"),
     visionProviderFactory: async () => {
       const providerModule = await import("./js/localVisionProvider.mjs");
       return providerModule.createLocalOllamaVisionProvider();

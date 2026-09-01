@@ -7,6 +7,7 @@ import {
   buildMealNameProposalPrompt,
   createLocalOllamaMealNameProposalAdapter,
   createMealNameProposalRequestCoordinator,
+  createMealNameProposalSession,
   parseMealNameProposalLines,
   validateMealNameProposal
 } from "../js/mealNameProposal.mjs";
@@ -80,7 +81,7 @@ const isolatedInput = buildMealNameProposalInput({
 const isolatedSerialized = JSON.stringify(isolatedInput);
 assert.doesNotMatch(isolatedSerialized, /base64-private-image|private raw provider response|private history/);
 assert.doesNotMatch(buildMealNameProposalPrompt(isolatedInput), /base64-private-image|private raw provider response|private history/);
-assert.match(buildMealNameProposalPrompt(baseInput), /never name pork, chicken, or beef/i);
+assert.match(buildMealNameProposalPrompt(baseInput), /must not name pork, chicken, or beef/i);
 
 const parsedTwo = parseMealNameProposalLines(response({ candidateTwo: "ข้าวเนื้อตุ๋น", basisTwo: "dish-0" }));
 assert.equal(parsedTwo.status, "ok");
@@ -134,6 +135,8 @@ assert.equal("images" in requestBody, false, "naming transport is text-only");
 assert.doesNotMatch(JSON.stringify(requestBody), /base64|image_blob|dailyLog|Reflection_Text/);
 assert.match(requestBody.prompt, new RegExp(MEAL_NAME_PROPOSAL_PROMPT_ID));
 assert.equal(successAdapter.namingTimeoutMs, DEFAULT_NAMING_TIMEOUT_MS);
+assert.match(buildMealNameProposalPrompt(baseInput), /CRITICAL SPECIES RULE/);
+assert.match(buildMealNameProposalPrompt(baseInput), /หมู, ไก่, เนื้อวัว/);
 const readyAdapter = createLocalOllamaMealNameProposalAdapter({
   fetchImpl: async () => ({ ok: true, json: async () => ({ models: [{ name: "gemma3:12b" }] }) })
 });
@@ -191,6 +194,56 @@ const languageMismatch = createMealNameProposalRequestCoordinator({
 });
 assert.equal((await languageMismatch.request(baseInput)).status, "stale_response", "language identity is part of stale-response protection");
 
+const namingSession = createMealNameProposalSession();
+namingSession.begin(baseInput);
+assert.equal(namingSession.snapshot().phase, "pending");
+assert.equal(namingSession.resolve({
+  status: "success",
+  proposal: {
+    schemaVersion: "mhb.meal-name-proposal/v1",
+    requestId: baseInput.requestId,
+    observationId: baseInput.observationId,
+    language: baseInput.language,
+    status: "ok",
+    candidates: [{ candidateId: "candidate-1", text: "ข้าวราดเนื้อตุ๋น", basisEvidenceIds: ["dish-0"] }]
+  }
+}).phase, "ready");
+assert.equal(namingSession.snapshot().selection, "candidate-1", "ready sessions select a candidate visually without writing a draft");
+namingSession.choose("custom");
+namingSession.setCustomText("  ข้าวขาหมูไม่หนัง ใส่ไข่  ");
+assert.deepEqual(namingSession.confirm(), { text: "ข้าวขาหมูไม่หนัง ใส่ไข่", source: "custom" }, "only an explicit confirmation returns text for the caller to write");
+assert.equal(namingSession.snapshot().phase, "settled");
+namingSession.begin(baseInput);
+namingSession.resolve({
+  status: "success",
+  proposal: {
+    requestId: baseInput.requestId,
+    observationId: baseInput.observationId,
+    language: baseInput.language,
+    status: "ok",
+    candidates: [{ candidateId: "candidate-1", text: "ข้าวราดเนื้อตุ๋น", basisEvidenceIds: ["dish-0"] }]
+  }
+});
+assert.equal(namingSession.confirm().text, "ข้าวราดเนื้อตุ๋น");
+namingSession.begin(baseInput);
+assert.equal(namingSession.resolve({ status: "success", proposal: { ...baseInput, observationId: "other", status: "ok", candidates: [] } }).phase, "pending", "a mismatched observation cannot make the current session ready");
+namingSession.settle();
+assert.equal(namingSession.snapshot().phase, "settled");
+assert.equal(namingSession.resolve({
+  status: "success",
+  proposal: { ...baseInput, status: "ok", candidates: [{ candidateId: "candidate-1", text: "ข้าวราดเนื้อตุ๋น", basisEvidenceIds: ["dish-0"] }] }
+}).phase, "settled", "a settled observation cannot reopen its naming dialog");
+namingSession.begin(baseInput);
+assert.equal(namingSession.resolve({
+  status: "insufficient_evidence",
+  proposal: { ...baseInput, status: "insufficient_evidence", candidates: [] }
+}).phase, "insufficient", "insufficient evidence settles without candidates or a dialog");
+namingSession.begin(baseInput);
+assert.equal(namingSession.resolve({
+  status: "timeout",
+  proposal: { ...baseInput, status: "error", candidates: [] }
+}).phase, "failed", "provider failures remain transient and cannot produce a ready dialog");
+
 const proposalSource = fs.readFileSync(new URL("../js/mealNameProposal.mjs", import.meta.url), "utf8");
 const indexSource = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const mealUiSource = fs.readFileSync(new URL("../js/mealCompositionUI.js", import.meta.url), "utf8");
@@ -198,7 +251,7 @@ const scriptSource = fs.readFileSync(new URL("../script.js", import.meta.url), "
 assert.doesNotMatch(proposalSource, /localStorage|sessionStorage|setDraftMeta|saveDraft|addFood|Reflection_Text|Daily_Log|workbook/i);
 assert.doesNotMatch(proposalSource, /images\s*:/i, "the adapter has no image transport field");
 assert.doesNotMatch(proposalSource, /(?:createMeal|updateMeal|deleteMeal)\s*\(/, "the adapter cannot mutate canonical meals");
-assert.doesNotMatch(indexSource, /mealNameProposal/i, "Phase B1 does not load a naming UI module");
-assert.doesNotMatch(mealUiSource, /mealNameProposal/i, "Phase B1 does not trigger naming from Meal Composer");
-assert.doesNotMatch(scriptSource, /mealNameProposal/i, "Phase B1 does not add a global naming flow");
-console.log("Meal Name proposal input, parser, validator, and adapter tests passed.");
+assert.match(mealUiSource, /mealNameProposalFactory/, "B2 owns the naming UI integration within Meal Composer");
+assert.match(scriptSource, /mealNameProposalFactory/, "B2 supplies the local proposal module to Meal Composer only");
+assert.doesNotMatch(indexSource, /mealNameProposal/i, "B2 does not add a separate global naming page or markup");
+console.log("Meal Name proposal input, parser, validator, adapter, and transient session tests passed.");

@@ -192,7 +192,11 @@ export function buildMealNameProposalPrompt(input) {
     "Respect uncertainty and NOT_OBSERVABLE limits. If no defensible name is available, return insufficient_evidence.",
     `Requested language: ${normalizeLanguage(input?.language)}.`,
     ...(input?.specificityConstraints?.includes("animal_species_unknown")
-      ? ["Animal species is unknown: never name pork, chicken, or beef. Use a broader meat wording or insufficient_evidence."]
+      ? [
+        "CRITICAL SPECIES RULE: animal species is unknown. A candidate must not name pork, chicken, or beef.",
+        "Do not use: pork, chicken, beef, หมู, ไก่, เนื้อวัว, 猪肉, 鸡肉, 牛肉.",
+        "Before returning the five lines, check each candidate for those terms. Use a broader meat wording or insufficient_evidence instead."
+      ]
       : []),
     "Return exactly five lines and no prose:",
     "STATUS: ok or insufficient_evidence",
@@ -303,6 +307,7 @@ export function createLocalOllamaMealNameProposalAdapter(options = {}) {
   const fetchImpl = options.fetchImpl || fetch;
   const availabilityTimeoutMs = options.availabilityTimeoutMs || 2000;
   const namingTimeoutMs = options.namingTimeoutMs || DEFAULT_NAMING_TIMEOUT_MS;
+  const trace = typeof options.onTrace === "function" ? options.onTrace : () => {};
 
   async function isAvailable({ signal } = {}) {
     if (!endpoint) return createAdapterResult("provider_unavailable", null, null, { code: "provider_unavailable" });
@@ -331,6 +336,7 @@ export function createLocalOllamaMealNameProposalAdapter(options = {}) {
     const abort = createAbortContext(namingTimeoutMs, signal);
     const startedAt = now();
     try {
+      trace("naming_request_started", { requestId: input.requestId, observationId: input.observationId, language: input.language });
       const response = await fetchImpl(`${endpoint}/api/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -343,14 +349,24 @@ export function createLocalOllamaMealNameProposalAdapter(options = {}) {
         })
       });
       const body = await response.json();
+      trace("naming_response_received", { requestId: input.requestId, observationId: input.observationId, ok: response.ok, responseLength: text(body?.response).length, latencyMs: Math.round(now() - startedAt) });
       if (!response.ok || body.error) {
         return createAdapterResult("provider_unavailable", input, createProposal(input, "error", [], { code: "provider_unavailable" }), { code: "provider_unavailable", latencyMs: Math.round(now() - startedAt) });
       }
       const parsed = parseMealNameProposalLines(body.response);
+      trace("naming_parse_result", { requestId: input.requestId, observationId: input.observationId, valid: Boolean(parsed) });
       if (!parsed) {
         return createAdapterResult("malformed_response", input, createProposal(input, "error", [], { code: "malformed_response" }), { code: "malformed_response", latencyMs: Math.round(now() - startedAt) });
       }
       const validation = validateMealNameProposal(parsed, input);
+      trace("naming_validation_result", {
+        requestId: input.requestId,
+        observationId: input.observationId,
+        valid: validation.valid,
+        candidateCount: validation.proposal?.candidates?.length || 0,
+        status: validation.proposal?.status || "error",
+        issueCodes: validation.issues || []
+      });
       if (!validation.valid) {
         return createAdapterResult("validation_failed", input, validation.proposal, { code: "validation_failed", latencyMs: Math.round(now() - startedAt), validationIssues: validation.issues });
       }
@@ -392,4 +408,92 @@ export function createMealNameProposalRequestCoordinator(adapter) {
   }
 
   return Object.freeze({ request, cancel });
+}
+
+export function createMealNameProposalSession() {
+  let state = {
+    phase: "idle",
+    requestId: "",
+    observationId: "",
+    language: "th",
+    candidates: [],
+    selection: "",
+    customText: ""
+  };
+
+  function snapshot() {
+    return cloneFrozen(state);
+  }
+
+  function belongsToCurrent(proposal) {
+    return proposal
+      && text(proposal.requestId) === state.requestId
+      && text(proposal.observationId) === state.observationId
+      && normalizeLanguage(proposal.language) === state.language;
+  }
+
+  function begin(input) {
+    state = {
+      phase: "pending",
+      requestId: text(input?.requestId),
+      observationId: text(input?.observationId),
+      language: normalizeLanguage(input?.language),
+      candidates: [],
+      selection: "",
+      customText: ""
+    };
+    return snapshot();
+  }
+
+  function resolve(result) {
+    const proposal = result?.proposal;
+    if (state.phase !== "pending" || !belongsToCurrent(proposal)) return snapshot();
+    if (result?.status === "success" && proposal.status === "ok" && proposal.candidates?.length) {
+      state = { ...state, phase: "ready", candidates: proposal.candidates, selection: proposal.candidates[0].candidateId, customText: "" };
+      return snapshot();
+    }
+    state = {
+      ...state,
+      phase: result?.status === "insufficient_evidence" ? "insufficient" : "failed",
+      candidates: [],
+      selection: "",
+      customText: ""
+    };
+    return snapshot();
+  }
+
+  function choose(value) {
+    if (state.phase !== "ready") return snapshot();
+    const isCandidate = state.candidates.some((candidate) => candidate.candidateId === value);
+    state = { ...state, selection: isCandidate || value === "custom" ? value : state.selection };
+    return snapshot();
+  }
+
+  function setCustomText(value) {
+    if (state.phase !== "ready") return snapshot();
+    state = { ...state, customText: String(value ?? "") };
+    return snapshot();
+  }
+
+  function confirm() {
+    if (state.phase !== "ready") return null;
+    const candidate = state.candidates.find((entry) => entry.candidateId === state.selection);
+    const textValue = candidate ? candidate.text : state.selection === "custom" ? text(state.customText) : "";
+    if (!textValue) return null;
+    state = { ...state, phase: "settled", selection: "", customText: "" };
+    return Object.freeze({ text: textValue, source: candidate ? "candidate" : "custom" });
+  }
+
+  function settle() {
+    if (state.phase === "idle") return snapshot();
+    state = { ...state, phase: "settled", selection: "", customText: "" };
+    return snapshot();
+  }
+
+  function reset() {
+    state = { phase: "idle", requestId: "", observationId: "", language: "th", candidates: [], selection: "", customText: "" };
+    return snapshot();
+  }
+
+  return Object.freeze({ snapshot, begin, resolve, choose, setCustomText, confirm, settle, reset });
 }

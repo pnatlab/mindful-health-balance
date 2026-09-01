@@ -434,3 +434,33 @@ No newly authorized image corpus was available for this purpose, so B1 used the 
 The first probe run showed that the model could append a sixth `LANGUAGE` line when language was positioned after the required output format. The prompt was corrected so language is now an instruction before that format. The same initial run tried `ข้าวหมู` under explicit species uncertainty; the validator rejected it. B1 then added the explicit prompt rule to use broad meat wording or insufficient evidence in that state. The final probe returned a broad name and all five cases completed with a valid contract result.
 
 The synthetic probe is sufficient to support a cautious B2 interaction prototype, provided it remains optional, skippable, and non-blocking. It does not establish image-field usefulness. A separately authorized, de-identified image-local field probe remains required before treating naming quality as field-accepted.
+
+## Phase B2 Implementation Evidence
+
+**Implemented optional transient dialog; not image-field accepted.**
+
+`js/mealCompositionUI.js` starts one local naming request only after the existing Vision observation has passed its deterministic validation and the existing review model has been created. It passes the observation and review to the B1 bounded-input builder through `mealNameProposalFactory`; the image, raw provider output, and user history are not sent again. The existing `parser-lines-v3` image path remains unchanged.
+
+The B2 session is created by `createMealNameProposalSession()` in `js/mealNameProposal.mjs`. Its state is memory-only: `idle`, `pending`, `ready`, `insufficient`, `failed`, or `settled`, plus the request/observation/language identity and candidate choice while the dialog is open. Replacing or clearing the image, rerunning Vision, changing language, changing date, destroying the composer, or reloading cancels/discards this state. A ready dialog opens at most once for one observation; skip, close, and Escape settle it without a draft write. Backdrop clicks do not dismiss it.
+
+The dialog appears only when the B1 adapter returns one or two validated candidates and the current `draft.mealName` is empty. An existing draft name, including one restored during edit or previously human-confirmed from a proposal, always wins and suppresses automatic naming.
+
+The data dependency and presentation sequence are intentionally different. Vision still completes observation validation and creates the unchanged review model before naming can start: **Vision validation -> bounded naming input -> naming adapter**. While naming is eligible and pending or ready, that review model remains in memory but its ingredient-review panel is presentation-gated: **naming checkpoint -> ingredient review**. Confirmation, custom confirmation, skip, close, Escape, or the explicit `Continue without a name` action settles naming and reveals the existing review. The pending bypass cancels and invalidates the request so a late result cannot open the dialog. An existing Meal Name reveals review immediately; insufficient evidence and provider/parser/validation failure also release the gate immediately, stay non-blocking, and show no error dialog.
+
+Selecting a candidate only changes transient dialog state. The sole B2 write occurs after the user presses the localized explicit confirmation action; it calls the existing `model.setDraftMeta({ mealName })` path. Custom text is empty by default and must be non-empty before confirmation. The dialog never invokes Vision Apply or Meal Save. After either confirmation or skip, focus returns to the existing Vision Apply control when available.
+
+The dialog uses a scoped semantic modal: `role="dialog"`, `aria-modal="true"`, associated title and description, labelled custom input, focus entry, a local Tab trap, Escape-to-skip, and a non-dismissing backdrop. TH, EN, and ZH copy is owned by the existing Meal Composer localization map. Its light, dark, and narrow styling follows the compact local Drink acknowledgement pattern without reusing Drink state or business logic.
+
+No Meal schema field, candidate provenance, `named_dish_id`, Meal Item, sodium/nutrition evidence, observation vocabulary, Reflection, Daily Log, Excel, localStorage, or session storage contract changes in B2. The B1 synthetic proposal-quality probe remains the only evidence to date. Before declaring the feature fit for field acceptance, run the separately authorized, de-identified image-local probe described above and record human review of usefulness, specificity, unsupported inference, language, and appropriate absence.
+
+## B2 Runtime Trace and Authorized Local Image Probe
+
+On 2026-09-01, an explicitly authorized local-only debug probe used three existing repository meal images without copying, uploading, or storing image/base64 evidence. The canonical app origin was `http://127.0.0.1:4173`; the text-only provider remained loopback Ollama at `127.0.0.1:11434` with `gemma3:12b`.
+
+The trace is opt-in only through `?mhbNamingTrace=1` (or an injected test option). It emits safe metadata only: request/observation identity, language, candidate count, status, validator issue codes, visibility gates, and measured latency. It never logs image bytes, raw model output, browser storage, or personal context.
+
+The observed failure was not a missing dynamic import, stale session, modal render failure, or timeout. For two valid observations with `animal_species_unknown`, the model returned an otherwise valid five-line response but used an unsupported species-specific candidate. The deterministic validator correctly rejected it with `candidate_1_unsupported_species_specificity`; B2 then correctly released the ingredient-review gate as `validation_failed`. The prompt already described the constraint, but that wording was not sufficiently reliable in the live local run.
+
+`meal-name-lines-v1` now repeats the species-unknown rule as a concrete final-output check and names the prohibited TH/EN/ZH species terms. The validator remains unchanged as the final authority. A focused regression assertion keeps this explicit prompt guard present. Re-running the previously rejected authorized images produced validated broad candidates and opened the naming dialog before the ingredient review.
+
+This small probe remains descriptive rather than an accuracy benchmark or field acceptance. It found useful and sometimes over-general naming behavior; no proposal becomes canonical until a person explicitly confirms it. B2 therefore remains an optional prototype pending broader authorized field review.
