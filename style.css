@@ -791,89 +791,43 @@
 }
 
 .meal-name-proposal-status {
-  margin: -4px 0 0;
+  margin: 0;
   color: var(--text-soft);
   font-size: 0.76rem;
   line-height: 1.45;
 }
 
-body.meal-name-proposal-modal-open {
-  overflow: hidden;
-}
-
-.meal-name-proposal-modal {
-  position: fixed;
-  z-index: 121;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: rgba(29, 43, 78, 0.28);
-  backdrop-filter: blur(3px);
-}
-
-.meal-name-proposal-modal__surface {
-  position: relative;
+.meal-name-proposal-inline {
   display: grid;
   gap: 13px;
-  width: min(100%, 470px);
-  max-height: calc(100vh - 48px);
-  overflow: auto;
-  padding: 27px;
-  border: 1px solid rgba(111, 132, 219, 0.27);
-  border-radius: 14px;
-  background:
-    radial-gradient(circle at 16% 8%, rgba(185, 193, 255, 0.19), transparent 35%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(248, 247, 255, 0.97));
-  box-shadow: 0 22px 60px rgba(25, 37, 72, 0.21);
-  color: var(--text-main);
-}
-
-.meal-name-proposal-modal__close {
-  position: absolute;
-  top: 11px;
-  right: 11px;
-  display: inline-grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  padding: 0;
-  border: 1px solid var(--border-soft);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.68);
-  color: var(--text-soft);
-  font-size: 1.35rem;
-  line-height: 1;
-}
-
-.meal-name-proposal-modal__icon {
-  display: inline-grid;
-  width: 42px;
-  height: 42px;
-  place-items: center;
-  border: 1px solid rgba(111, 132, 219, 0.22);
-  border-radius: 50%;
-  background: linear-gradient(145deg, rgba(228, 235, 255, 0.92), rgba(251, 244, 237, 0.9));
-  font-size: 1.2rem;
-}
-
-.meal-name-proposal-modal .section-kicker,
-.meal-name-proposal-modal h2,
-.meal-name-proposal-modal__description {
+  min-width: 0;
   margin: 0;
+  padding: 12px;
+  border: 1px solid rgba(111, 132, 219, 0.24);
+  border-radius: 8px;
+  background: rgba(241, 244, 255, 0.44);
 }
 
-.meal-name-proposal-modal h2 {
-  padding-right: 30px;
+.meal-name-proposal-inline legend {
+  padding: 0 4px;
   color: var(--text-main);
-  font-size: 1.15rem;
-  line-height: 1.45;
+  font-size: 0.92rem;
+  font-weight: 800;
 }
 
-.meal-name-proposal-modal__description {
+.meal-name-proposal-inline__description {
+  margin: 0;
   color: var(--text-soft);
-  font-size: 0.86rem;
-  line-height: 1.6;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.meal-name-proposal-existing {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 0.88rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 .meal-name-proposal-choices {
@@ -883,15 +837,6 @@ body.meal-name-proposal-modal-open {
   margin: 2px 0 0;
   padding: 0;
   border: 0;
-}
-
-.meal-name-proposal-choices .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
 }
 
 .meal-name-proposal-choice {
@@ -956,40 +901,9 @@ body.meal-name-proposal-modal-open {
   background: var(--textarea-bg);
 }
 
-.meal-name-proposal-modal__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-end;
-  margin-top: 3px;
-}
-
-.meal-name-proposal-modal__actions .primary-button,
-.meal-name-proposal-modal__actions .ghost-button {
-  min-height: 42px;
-}
-
-body[data-theme="dark"] .meal-name-proposal-modal {
-  background: rgba(7, 11, 29, 0.44);
-}
-
-body[data-theme="dark"] .meal-name-proposal-modal__surface {
+body[data-theme="dark"] .meal-name-proposal-inline {
   border-color: rgba(162, 178, 255, 0.24);
-  background:
-    radial-gradient(circle at 16% 8%, rgba(132, 151, 242, 0.19), transparent 35%),
-    linear-gradient(145deg, rgba(32, 35, 61, 0.98), rgba(24, 29, 48, 0.98));
-  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.34);
-}
-
-body[data-theme="dark"] .meal-name-proposal-modal__close {
-  border-color: rgba(197, 214, 255, 0.2);
-  background: rgba(255, 255, 255, 0.07);
-  color: #e6ebff;
-}
-
-body[data-theme="dark"] .meal-name-proposal-modal__icon {
-  border-color: rgba(178, 193, 255, 0.24);
-  background: linear-gradient(145deg, rgba(111, 132, 219, 0.25), rgba(199, 154, 103, 0.13));
+  background: rgba(47, 54, 93, 0.32);
 }
 
 body[data-theme="dark"] .meal-name-proposal-choice,
@@ -999,17 +913,8 @@ body[data-theme="dark"] .meal-name-proposal-custom input {
 }
 
 @media (max-width: 600px) {
-  .meal-name-proposal-modal {
-    padding: 18px;
-  }
-
-  .meal-name-proposal-modal__surface {
-    max-height: calc(100vh - 36px);
-    padding: 24px 20px 20px;
-  }
-
-  .meal-name-proposal-modal__actions > * {
-    flex: 1 1 150px;
+  .meal-name-proposal-inline {
+    padding: 10px;
   }
 }
 

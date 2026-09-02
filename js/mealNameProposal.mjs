@@ -449,7 +449,7 @@ export function createMealNameProposalSession() {
     const proposal = result?.proposal;
     if (state.phase !== "pending" || !belongsToCurrent(proposal)) return snapshot();
     if (result?.status === "success" && proposal.status === "ok" && proposal.candidates?.length) {
-      state = { ...state, phase: "ready", candidates: proposal.candidates, selection: proposal.candidates[0].candidateId, customText: "" };
+      state = { ...state, phase: "ready", candidates: proposal.candidates, selection: "skip", customText: "" };
       return snapshot();
     }
     state = {
@@ -463,20 +463,20 @@ export function createMealNameProposalSession() {
   }
 
   function choose(value) {
-    if (state.phase !== "ready") return snapshot();
+    if (!["ready", "insufficient", "failed"].includes(state.phase)) return snapshot();
     const isCandidate = state.candidates.some((candidate) => candidate.candidateId === value);
-    state = { ...state, selection: isCandidate || value === "custom" ? value : state.selection };
+    state = { ...state, selection: isCandidate || value === "custom" || value === "skip" ? value : state.selection };
     return snapshot();
   }
 
   function setCustomText(value) {
-    if (state.phase !== "ready") return snapshot();
+    if (!["ready", "insufficient", "failed"].includes(state.phase)) return snapshot();
     state = { ...state, customText: String(value ?? "") };
     return snapshot();
   }
 
   function confirm() {
-    if (state.phase !== "ready") return null;
+    if (!["ready", "insufficient", "failed"].includes(state.phase)) return null;
     const candidate = state.candidates.find((entry) => entry.candidateId === state.selection);
     const textValue = candidate ? candidate.text : state.selection === "custom" ? text(state.customText) : "";
     if (!textValue) return null;

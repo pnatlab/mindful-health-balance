@@ -208,7 +208,44 @@ assert.equal(namingSession.resolve({
     candidates: [{ candidateId: "candidate-1", text: "ข้าวราดเนื้อตุ๋น", basisEvidenceIds: ["dish-0"] }]
   }
 }).phase, "ready");
-assert.equal(namingSession.snapshot().selection, "candidate-1", "ready sessions select a candidate visually without writing a draft");
+assert.equal(namingSession.snapshot().selection, "skip", "ready sessions default to no name until a human explicitly chooses a candidate or custom text");
+
+const twoCandidateSession = createMealNameProposalSession();
+twoCandidateSession.begin(baseInput);
+twoCandidateSession.resolve({
+  status: "success",
+  proposal: {
+    schemaVersion: "mhb.meal-name-proposal/v1",
+    requestId: baseInput.requestId,
+    observationId: baseInput.observationId,
+    language: baseInput.language,
+    status: "ok",
+    candidates: [
+      { candidateId: "candidate-1", text: "ข้าวราดเนื้อตุ๋น", basisEvidenceIds: ["dish-0"] },
+      { candidateId: "candidate-2", text: "ข้าวกับเนื้อตุ๋น", basisEvidenceIds: ["dish-0"] }
+    ]
+  }
+});
+assert.equal(twoCandidateSession.choose("candidate-1").selection, "candidate-1", "candidate one maps to its stable session identity, including the first list position");
+assert.equal(twoCandidateSession.choose("candidate-2").selection, "candidate-2", "candidate two remains selected after the immediate session snapshot used for rerender");
+assert.equal(twoCandidateSession.snapshot().selection, "candidate-2");
+assert.equal(twoCandidateSession.choose("custom").selection, "custom");
+assert.equal(twoCandidateSession.choose("skip").selection, "skip", "custom and skip remain selectable beside validated candidates");
+
+const partialCandidateSession = createMealNameProposalSession();
+partialCandidateSession.begin(baseInput);
+partialCandidateSession.resolve({
+  status: "success",
+  proposal: {
+    schemaVersion: "mhb.meal-name-proposal/v1",
+    requestId: baseInput.requestId,
+    observationId: baseInput.observationId,
+    language: baseInput.language,
+    status: "ok",
+    candidates: [{ candidateId: "candidate-2", text: "ข้าวกับเนื้อตุ๋น", basisEvidenceIds: ["dish-0"] }]
+  }
+});
+assert.equal(partialCandidateSession.choose("candidate-2").selection, "candidate-2", "a valid second-slot candidate remains selectable when candidate one was rejected");
 namingSession.choose("custom");
 namingSession.setCustomText("  ข้าวขาหมูไม่หนัง ใส่ไข่  ");
 assert.deepEqual(namingSession.confirm(), { text: "ข้าวขาหมูไม่หนัง ใส่ไข่", source: "custom" }, "only an explicit confirmation returns text for the caller to write");
@@ -224,6 +261,7 @@ namingSession.resolve({
     candidates: [{ candidateId: "candidate-1", text: "ข้าวราดเนื้อตุ๋น", basisEvidenceIds: ["dish-0"] }]
   }
 });
+namingSession.choose("candidate-1");
 assert.equal(namingSession.confirm().text, "ข้าวราดเนื้อตุ๋น");
 namingSession.begin(baseInput);
 assert.equal(namingSession.resolve({ status: "success", proposal: { ...baseInput, observationId: "other", status: "ok", candidates: [] } }).phase, "pending", "a mismatched observation cannot make the current session ready");

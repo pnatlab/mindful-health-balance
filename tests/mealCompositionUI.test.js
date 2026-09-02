@@ -61,10 +61,10 @@ function run() {
   assert.equal(mealUI.hasMeaningfulVisionReview({ mealTypes: [], components: [] }), false);
   assert.equal(mealUI.hasMeaningfulVisionReview({ mealTypes: [{ mealType: "stir_fried" }], components: [] }), true);
   assert.equal(mealUI.hasMeaningfulVisionReview({ mealTypes: [], components: [{ label: "rice" }] }), true);
-  const readyHiddenReview = { phase: "review", review: { components: [{ label: "rice" }] }, reviewVisible: false };
-  assert.equal(mealUI.isVisionReviewPanelVisible(readyHiddenReview), false, "a ready review model stays presentation-hidden during the naming checkpoint");
-  assert.equal(mealUI.isVisionReviewPanelVisible({ ...readyHiddenReview, reviewVisible: true }), true, "settling naming reveals the unchanged review model");
-  assert.equal(mealUI.isVisionReviewPanelVisible({ phase: "observing", review: readyHiddenReview.review, reviewVisible: true }), false, "observation processing cannot expose review early");
+  const readyReview = { phase: "review", review: { components: [{ label: "rice" }] } };
+  assert.equal(mealUI.isVisionReviewPanelVisible(readyReview), true, "a deterministic review model is visible without waiting for naming");
+  assert.equal(mealUI.isVisionReviewPanelVisible({ ...readyReview, reviewVisible: false }), true, "legacy gate flags cannot hide a ready review model");
+  assert.equal(mealUI.isVisionReviewPanelVisible({ phase: "observing", review: readyReview.review }), false, "observation processing cannot expose review early");
   let compositionDisclosure = mealUI.createCurrentCompositionDisclosureState(0);
   assert.equal(compositionDisclosure.expanded, false, "a clean draft keeps current composition collapsed");
   compositionDisclosure = mealUI.reduceCurrentCompositionDisclosureState(compositionDisclosure, { type: "meal_type_selected" });
@@ -350,7 +350,6 @@ function run() {
     "mealNameHelper",
     "mealNamePlaceholder",
     "namingPending",
-    "namingContinueWithout",
     "namingInsufficient",
     "namingFailed",
     "namingTitle",
@@ -359,9 +358,8 @@ function run() {
     "namingCustom",
     "namingCustomLabel",
     "namingCustomPlaceholder",
-    "namingConfirm",
-    "namingSkip",
-    "namingClose",
+    "namingSkipInline",
+    "namingExisting",
     "reflectMealDraft",
     "reflectMealDraftHelper",
     "save",
@@ -435,16 +433,23 @@ function run() {
   assert.match(mealUiSource, /meal-meta-control meal-moment-control[\s\S]*?data-meal-label/, "Meal moment retains its existing select binding");
   assert.match(mealUiSource, /meal-meta-control meal-time-control[\s\S]*?data-meal-time/, "Time retains its existing native input binding");
   assert.match(mealUiSource, /aria-hidden="true">🍽️[\s\S]*?aria-hidden="true">☀️[\s\S]*?aria-hidden="true">🕒/, "the three text labels gain restrained decorative icons without replacing text");
-  assert.match(mealUiSource, /role="dialog" aria-modal="true" aria-labelledby="mealNameProposalTitle" aria-describedby="mealNameProposalDescription"/, "the optional naming dialog has semantic modal associations");
-  assert.match(mealUiSource, /data-meal-name-proposal-confirm[\s\S]*?model\.setDraftMeta\(\{ mealName: confirmed\.text \}\)/, "only explicit naming confirmation uses the existing Meal Name setter");
+  assert.match(mealUiSource, /<fieldset class="meal-name-proposal-inline meal-vision-review-group(?: meal-vision-review-group--wide)?"/, "naming proposals render inline with the Vision review rather than as a dialog");
+  const visionReviewSource = mealUiSource.match(/function renderVisionReview\(\) \{([\s\S]*?)\n    \}\n\n    function renderMealNameProposalInline/)[1];
+  assert.match(visionReviewSource, /<div class="meal-vision-review-grid">\s*\$\{renderMealNameProposalInline\(\)\}[\s\S]*?visionDish[\s\S]*?visionMealTypes[\s\S]*?visionComponents/, "Vision Review DOM order is Meal Name, food similarity, meal characteristic, then visible components");
+  assert.match(visionReviewSource, /meal-vision-review-group meal-vision-review-group--wide[\s\S]*?visionDish[\s\S]*?meal-vision-review-group meal-vision-review-group--wide[\s\S]*?visionMealTypes/, "food similarity and meal characteristic use the same full-width hierarchy as Meal Name");
+  assert.match(mealUiSource, /applyMealNameProposalToDraft\(\);[\s\S]*?applyVisionReviewToDraft\(model, visionSession\.review\)/, "the existing Apply action is the one explicit human action that can write a selected name and apply reviewed items");
   assert.match(mealUiSource, /draft\.mealName \|\| !observation \|\| !review\) return/, "an existing Meal Name suppresses automatic naming");
-  assert.match(mealUiSource, /const namingEligible = Boolean\(mealNameProposalFactory && !model\.getDraft\(\)\.mealName\);[\s\S]*?visionSession\.reviewVisible = !namingEligible/, "a valid empty-name observation gates review presentation while an existing name reveals it immediately");
-  assert.match(mealUiSource, /if \(!isVisionReviewPanelVisible\(visionSession\)\)[\s\S]*?data-meal-name-proposal-bypass[\s\S]*?return `[\s\S]*?renderVisionReview\(\)/, "the naming gate and bypass render before the existing ingredient review");
-  assert.match(mealUiSource, /mealNameProposalSession\.resolve\(namingResult\(availability\.status, input\)\);[\s\S]*?visionSession\.reviewVisible = true/, "provider failure releases the review gate");
-  assert.match(mealUiSource, /data-meal-name-proposal-bypass[\s\S]*?settleMealNameProposal\(\)/, "pending bypass settles naming and reveals review");
-  const namingConfirmSource = mealUiSource.match(/function confirmMealNameProposal\(\) \{([\s\S]*?)\n    \}\n\n    function trapMealNameProposalFocus/)[1];
-  assert.match(namingConfirmSource, /setDraftMeta\(\{ mealName: confirmed\.text \}\)[\s\S]*?reviewVisible = true/, "explicit name confirmation reveals ingredient review after writing through the existing setter");
-  assert.doesNotMatch(namingConfirmSource, /saveDraft|applyVisionReviewToDraft|addFood/, "naming confirmation has no automatic save or ingredient-apply path");
+  assert.match(mealUiSource, /const namingEligible = Boolean\(mealNameProposalFactory && !model\.getDraft\(\)\.mealName\);[\s\S]*?traceNaming\("vision_review_visible", \{[\s\S]*?reason: "review_ready"/, "the deterministic review is visible immediately even while naming begins independently");
+  assert.match(mealUiSource, /function isVisionReviewPanelVisible\(session\) \{\s*return Boolean\(session\?\.phase === "review" && session\.review\);/, "review visibility no longer depends on naming-session settlement");
+  assert.match(mealUiSource, /state\.phase === "pending"[\s\S]*?copy\.namingPending/, "pending naming stays as a quiet inline state");
+  assert.match(mealUiSource, /value="skip" data-meal-name-proposal-choice/, "the inline review includes an explicit no-name choice");
+  assert.match(mealUiSource, /meal-name-proposal-choice\$\{state\.selection === candidate\.candidateId \? " is-selected" : ""\}[\s\S]*?data-meal-name-proposal-candidate-id="\$\{escapeHtml\(candidate\.candidateId\)\}"[\s\S]*?value="\$\{escapeHtml\(candidate\.candidateId\)\}"/, "each enabled rendered AI candidate projects the same validated session identity into its label and radio value");
+  assert.match(mealUiSource, /naming_selection_changed[\s\S]*?lookupSucceeded: nextState\.selection === selectedChoice/, "opt-in trace records candidate lookup success without logging meal content");
+  assert.doesNotMatch(mealUiSource.match(/async function beginMealNameProposal\([\s\S]*?\n    \}\n\n    function visionFailureMessage/)[0], /createVisionReviewModel/, "an async naming result reuses the existing review model rather than resetting human ingredient choices");
+  assert.doesNotMatch(mealUiSource, /meal-name-proposal-modal|data-meal-name-proposal-bypass|data-meal-name-proposal-confirm|aria-modal="true"/, "modal and naming-gate markup are retired");
+  const namingApplySource = mealUiSource.match(/function applyMealNameProposalToDraft\(\) \{([\s\S]*?)\n    \}\n\n    root\.addEventListener\("click"/)[1];
+  assert.match(namingApplySource, /setDraftMeta\(\{ mealName: confirmed\.text \}\)/, "a selected candidate or custom text reaches the existing Meal Name setter only during Apply");
+  assert.doesNotMatch(namingApplySource, /saveDraft|applyVisionReviewToDraft|addFood/, "name application has no automatic save or ingredient mutation");
   assert.equal(Object.keys(model.getDailySummary()).some((key) => /score|medical|target/i.test(key)), false);
   assert.equal(Object.keys(model.getMeals()[0]).some((key) => /daily_log|medical|target|score/i.test(key)), false);
 }

@@ -91,7 +91,6 @@
       mealNameHelper: "ไม่บังคับ เขียนตามที่อยากจำมื้อนี้ได้",
       mealNamePlaceholder: "เช่น ข้าวขาหมูไม่หนัง ใส่ไข่",
       namingPending: "กำลังลองเสนอชื่อมื้อ…",
-      namingContinueWithout: "ไปต่อโดยยังไม่ตั้งชื่อ",
       namingInsufficient: "ยังไม่แน่ใจพอที่จะช่วยตั้งชื่อมื้อนี้",
       namingFailed: "ข้ามการช่วยตั้งชื่อครั้งนี้ได้เลย",
       namingTitle: "AI ช่วยเสนอชื่อมื้อนี้",
@@ -100,9 +99,8 @@
       namingCustom: "เขียนชื่อของฉันเอง",
       namingCustomLabel: "ชื่อมื้อ / ชื่ออาหาร",
       namingCustomPlaceholder: "เขียนชื่อมื้อนี้ตามที่อยากจำ",
-      namingConfirm: "ใช้ชื่อนี้และไปต่อ",
-      namingSkip: "ข้ามไปก่อน",
-      namingClose: "ปิดการช่วยตั้งชื่อมื้อนี้",
+      namingSkipInline: "ยังไม่ตั้งชื่อตอนนี้",
+      namingExisting: "ชื่อนี้มีอยู่แล้วและจะไม่ถูกเขียนทับอัตโนมัติ",
       mealTime: "เวลา (ถ้าอยากเก็บไว้)",
       portion: "ปริมาณโดยประมาณ",
       preparation: "วิธีเตรียม (ถ้าจำได้)",
@@ -271,7 +269,6 @@
       mealNameHelper: "Optional. Write the name you would naturally use to remember this meal.",
       mealNamePlaceholder: "For example, regular-shop rice before a run",
       namingPending: "Trying a meal name suggestion…",
-      namingContinueWithout: "Continue without a name",
       namingInsufficient: "There is not enough certainty to suggest a name for this meal.",
       namingFailed: "You can skip the naming help this time.",
       namingTitle: "AI can suggest a name for this meal",
@@ -280,9 +277,8 @@
       namingCustom: "Write my own name",
       namingCustomLabel: "Meal name",
       namingCustomPlaceholder: "Write the name you would like to remember",
-      namingConfirm: "Use this name and continue",
-      namingSkip: "Skip for now",
-      namingClose: "Close meal naming help",
+      namingSkipInline: "Do not name it now",
+      namingExisting: "This name is already present and will not be overwritten automatically.",
       mealTime: "Time (optional)",
       portion: "Approximate portion",
       preparation: "Preparation (optional)",
@@ -451,7 +447,6 @@
       mealNameHelper: "可留空。按你自然会记住这餐的方式来写。",
       mealNamePlaceholder: "例如：去跑步前常去店里的饭",
       namingPending: "正在尝试建议餐食名称…",
-      namingContinueWithout: "不命名，继续下一步",
       namingInsufficient: "目前还不够确定，无法帮这餐建议名称。",
       namingFailed: "这次可以先跳过命名帮助。",
       namingTitle: "AI 可以帮忙建议这餐的名称",
@@ -460,9 +455,8 @@
       namingCustom: "自己写名称",
       namingCustomLabel: "餐食名称",
       namingCustomPlaceholder: "写下你想记住的餐食名称",
-      namingConfirm: "使用这个名称并继续",
-      namingSkip: "暂时跳过",
-      namingClose: "关闭餐食命名帮助",
+      namingSkipInline: "暂时不命名",
+      namingExisting: "这个名称已经存在，不会被自动覆盖。",
       mealTime: "时间（可留空）",
       portion: "大致份量",
       preparation: "烹调方式（可留空）",
@@ -963,7 +957,7 @@
   }
 
   function isVisionReviewPanelVisible(session) {
-    return Boolean(session?.phase === "review" && session.review && session.reviewVisible);
+    return Boolean(session?.phase === "review" && session.review);
   }
 
   function reduceFoodItemsDisclosureState(state, action = {}) {
@@ -1037,7 +1031,6 @@
       previewUrl: "",
       observation: null,
       review: null,
-      reviewVisible: false,
       failureStatus: ""
     };
     let imagePrepBridge = null;
@@ -1081,7 +1074,7 @@
       visionRequestId += 1;
       clearMealNameProposalSession();
       revokeVisionPreview();
-      visionSession = { phase: "idle", file: null, previewUrl: "", observation: null, review: null, reviewVisible: false, failureStatus: "" };
+      visionSession = { phase: "idle", file: null, previewUrl: "", observation: null, review: null, failureStatus: "" };
     }
 
     function namingResult(status, input) {
@@ -1123,10 +1116,6 @@
         && state.language === requestLanguage;
     }
 
-    function focusMealNameProposalDialog() {
-      scheduleFrame(() => root.querySelector("[data-meal-name-proposal-choice]")?.focus());
-    }
-
     async function beginMealNameProposal(observation, review) {
       const draft = model.getDraft();
       if (!mealNameProposalFactory || draft.mealName || !observation || !review) return;
@@ -1147,8 +1136,6 @@
         });
         if (!input) {
           traceNaming("naming_input_built", { requestId, observationId, valid: false });
-          visionSession.reviewVisible = true;
-          traceNaming("vision_review_visible", { observationId, visible: true, reason: "input_unavailable" });
           render();
           return;
         }
@@ -1161,9 +1148,7 @@
         if (!isCurrentMealNameProposal(requestId, observationId, requestLanguage)) return;
         if (availability.status !== "ready") {
           mealNameProposalSession.resolve(namingResult(availability.status, input));
-          visionSession.reviewVisible = true;
           traceNaming("naming_session_state", { requestId: input.requestId, observationId, phase: getMealNameProposalState().phase, status: availability.status });
-          traceNaming("vision_review_visible", { observationId, visible: true, reason: "provider_unavailable" });
           render();
           return;
         }
@@ -1172,25 +1157,16 @@
         if (!isCurrentMealNameProposal(requestId, observationId, requestLanguage)) return;
         if (["cancelled", "stale_response"].includes(result.status)) {
           mealNameProposalSession.settle();
-          visionSession.reviewVisible = true;
         } else {
           mealNameProposalSession.resolve(result);
-          visionSession.reviewVisible = getMealNameProposalState().phase !== "ready";
         }
         traceNaming("naming_session_state", { requestId: input.requestId, observationId, phase: getMealNameProposalState().phase, status: result.status, candidateCount: result.proposal?.candidates?.length || 0 });
-        traceNaming("vision_review_visible", { observationId, visible: visionSession.reviewVisible, reason: result.status });
         render();
-        if (getMealNameProposalState().phase === "ready") {
-          traceNaming("naming_dialog_open_attempt", { requestId: input.requestId, observationId, candidateCount: getMealNameProposalState().candidates.length });
-          focusMealNameProposalDialog();
-        }
       } catch (_error) {
         if (!isCurrentMealNameProposalContext(requestId, observationId, requestLanguage)) return;
         const state = getMealNameProposalState();
         if (state.requestId) mealNameProposalSession.resolve(namingResult("provider_unavailable", state));
-        visionSession.reviewVisible = true;
         traceNaming("naming_session_state", { requestId, observationId, phase: getMealNameProposalState().phase, status: "provider_unavailable" });
-        traceNaming("vision_review_visible", { observationId, visible: true, reason: "module_or_adapter_error" });
         render();
       }
     }
@@ -1266,9 +1242,8 @@
         visionSession.review = visionReview.createVisionReviewModel(result.observation);
         traceNaming("review_model_ready", { observationId: result.observation.observation_id, componentCount: visionSession.review.components.length });
         const namingEligible = Boolean(mealNameProposalFactory && !model.getDraft().mealName);
-        visionSession.reviewVisible = !namingEligible;
         traceNaming("naming_eligible", { observationId: result.observation.observation_id, eligible: namingEligible, hasMealName: Boolean(model.getDraft().mealName) });
-        traceNaming("vision_review_visible", { observationId: result.observation.observation_id, visible: visionSession.reviewVisible, reason: namingEligible ? "naming_pending" : "existing_name_or_unavailable" });
+        traceNaming("vision_review_visible", { observationId: result.observation.observation_id, visible: true, reason: "review_ready" });
         if (hasMeaningfulVisionReview(visionSession.review)) {
           foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "vision_review_ready" });
         }
@@ -1288,7 +1263,7 @@
       const requestId = visionRequestId;
       visionTraceStartedAt = traceNow();
       traceNaming("vision_request_started", { requestId, language });
-      visionSession = { phase: "preparing", file, previewUrl: "", observation: null, review: null, reviewVisible: false, failureStatus: "" };
+      visionSession = { phase: "preparing", file, previewUrl: "", observation: null, review: null, failureStatus: "" };
       render();
 
       await yieldForVisionPreparation();
@@ -1472,12 +1447,13 @@
         : "";
       return `
         <div class="meal-vision-review-grid">
-          <div class="meal-vision-review-group">
+          ${renderMealNameProposalInline()}
+          <div class="meal-vision-review-group meal-vision-review-group--wide">
             <h4>${escapeHtml(copy.visionDish)}</h4>
             <div class="meal-vision-observation-list">${dishLabels}</div>
             <small>${escapeHtml(copy.visionDishInformational)}</small>
           </div>
-          <div class="meal-vision-review-group">
+          <div class="meal-vision-review-group meal-vision-review-group--wide">
             <h4>${escapeHtml(copy.visionMealTypes)}</h4>
             ${mealTypeReview}
           </div>
@@ -1494,50 +1470,54 @@
       `;
     }
 
-    function renderMealNameProposalStatus() {
-      const copy = getText(language);
-      const phase = getMealNameProposalState().phase;
-      if (phase === "pending") return `<p class="meal-name-proposal-status" role="status">${escapeHtml(copy.namingPending)}</p>`;
-      if (phase === "insufficient") return `<p class="meal-name-proposal-status" role="status">${escapeHtml(copy.namingInsufficient)}</p>`;
-      if (phase === "failed") return `<p class="meal-name-proposal-status" role="status">${escapeHtml(copy.namingFailed)}</p>`;
-      return "";
-    }
-
-    function renderMealNameProposalDialog() {
+    function renderMealNameProposalInline() {
       const copy = getText(language);
       const state = getMealNameProposalState();
-      if (state.phase !== "ready") return "";
-      const choices = state.candidates.map((candidate) => `
-        <label class="meal-name-proposal-choice">
+      const draft = model.getDraft();
+      if (draft.mealName) {
+        return `
+          <section class="meal-name-proposal-inline meal-vision-review-group meal-vision-review-group--wide" aria-labelledby="mealNameProposalTitle">
+            <h4 id="mealNameProposalTitle">${escapeHtml(copy.namingTitle)}</h4>
+            <p class="meal-name-proposal-status">${escapeHtml(copy.namingExisting)}</p>
+            <p class="meal-name-proposal-existing">${escapeHtml(draft.mealName)}</p>
+          </section>
+        `;
+      }
+      const status = state.phase === "pending"
+        ? `<p class="meal-name-proposal-status" role="status">${escapeHtml(copy.namingPending)}</p>`
+        : state.phase === "insufficient"
+          ? `<p class="meal-name-proposal-status" role="status">${escapeHtml(copy.namingInsufficient)}</p>`
+          : state.phase === "failed"
+            ? `<p class="meal-name-proposal-status" role="status">${escapeHtml(copy.namingFailed)}</p>`
+            : "";
+      const choices = state.phase === "ready" ? state.candidates.map((candidate) => `
+        <label class="meal-name-proposal-choice${state.selection === candidate.candidateId ? " is-selected" : ""}" data-meal-name-proposal-candidate-id="${escapeHtml(candidate.candidateId)}">
           <input type="radio" name="mealNameProposal" value="${escapeHtml(candidate.candidateId)}" data-meal-name-proposal-choice${state.selection === candidate.candidateId ? " checked" : ""}>
           <span><small>${escapeHtml(copy.namingSuggestion)}</small><strong>${escapeHtml(candidate.text)}</strong></span>
         </label>
-      `).join("");
+      `).join("") : "";
       const customSelected = state.selection === "custom";
-      const canConfirm = state.candidates.some((candidate) => candidate.candidateId === state.selection) || (customSelected && String(state.customText || "").trim());
+      const canChooseName = ["ready", "insufficient", "failed"].includes(state.phase);
       return `
-        <section class="meal-name-proposal-modal" data-meal-name-proposal-dialog aria-hidden="false">
-          <div class="meal-name-proposal-modal__surface" role="dialog" aria-modal="true" aria-labelledby="mealNameProposalTitle" aria-describedby="mealNameProposalDescription" tabindex="-1">
-            <button type="button" class="meal-name-proposal-modal__close" data-meal-name-proposal-skip aria-label="${escapeHtml(copy.namingClose)}">×</button>
-            <span class="meal-name-proposal-modal__icon" aria-hidden="true">🍽️</span>
-            <p class="section-kicker">${escapeHtml(copy.namingSuggestion)}</p>
-            <h2 id="mealNameProposalTitle">${escapeHtml(copy.namingTitle)}</h2>
-            <p id="mealNameProposalDescription" class="meal-name-proposal-modal__description">${escapeHtml(copy.namingDescription)}</p>
-            <fieldset class="meal-name-proposal-choices">
-              <legend class="sr-only">${escapeHtml(copy.namingTitle)}</legend>
+        <fieldset class="meal-name-proposal-inline meal-vision-review-group meal-vision-review-group--wide" aria-describedby="mealNameProposalDescription">
+          <legend id="mealNameProposalTitle">${escapeHtml(copy.namingTitle)}</legend>
+          <p id="mealNameProposalDescription" class="meal-name-proposal-inline__description">${escapeHtml(copy.namingDescription)}</p>
+          ${status}
+          ${canChooseName ? `
+            <div class="meal-name-proposal-choices">
               ${choices}
               <label class="meal-name-proposal-choice${customSelected ? " is-selected" : ""}">
                 <input type="radio" name="mealNameProposal" value="custom" data-meal-name-proposal-choice${customSelected ? " checked" : ""}>
                 <span><strong>${escapeHtml(copy.namingCustom)}</strong></span>
               </label>
               ${customSelected ? `<label class="meal-name-proposal-custom"><span>${escapeHtml(copy.namingCustomLabel)}</span><input type="text" data-meal-name-proposal-custom value="${escapeHtml(state.customText)}" placeholder="${escapeHtml(copy.namingCustomPlaceholder)}"></label>` : ""}
-            </fieldset>
-            <div class="meal-name-proposal-modal__actions">
-              <button type="button" class="ghost-button" data-meal-name-proposal-skip>${escapeHtml(copy.namingSkip)}</button>
-              <button type="button" class="primary-button" data-meal-name-proposal-confirm${canConfirm ? "" : " disabled"}>${escapeHtml(copy.namingConfirm)}</button>
+              <label class="meal-name-proposal-choice${state.selection === "skip" ? " is-selected" : ""}">
+                <input type="radio" name="mealNameProposal" value="skip" data-meal-name-proposal-choice${state.selection === "skip" ? " checked" : ""}>
+                <span><strong>${escapeHtml(copy.namingSkipInline)}</strong></span>
+              </label>
             </div>
-          </div>
-        </section>
+          ` : ""}
+        </fieldset>
       `;
     }
 
@@ -1597,26 +1577,12 @@
         `;
       }
 
-      if (!isVisionReviewPanelVisible(visionSession)) {
-        return `
-          <section class="meal-vision-helper is-active meal-name-proposal-gate" aria-busy="${getMealNameProposalState().phase === "pending"}" aria-live="polite">
-            ${renderVisionPreview()}
-            <div class="meal-vision-intro"><h3>${escapeHtml(copy.namingTitle)}</h3><p>${escapeHtml(copy.namingPending)}</p></div>
-            <div class="meal-vision-actions">
-              <button type="button" class="ghost-button" data-meal-name-proposal-bypass>${escapeHtml(copy.namingContinueWithout)}</button>
-              <button type="button" class="meal-text-button" data-vision-clear>${escapeHtml(copy.visionClear)}</button>
-            </div>
-          </section>
-        `;
-      }
-
       return `
         <section class="meal-vision-review" aria-labelledby="mealVisionReviewTitle">
           <div class="meal-vision-review-header">
             ${renderVisionPreview()}
             <div><h3 id="mealVisionReviewTitle">${escapeHtml(copy.visionReviewTitle)}</h3><p>${escapeHtml(copy.visionReviewHelper)}</p></div>
           </div>
-          ${renderMealNameProposalStatus()}
           ${renderVisionReview()}
         </section>
       `;
@@ -1910,69 +1876,26 @@
 
     function render() {
       renderHeader();
-      if (isOpen) content.innerHTML = `${renderMealType()}${renderVisionHelper()}${renderFoodPicker()}${renderNamedDishReference()}${renderDraft()}${renderSavedMeals()}${renderMealNameProposalDialog()}`;
-      globalScope.document?.body?.classList.toggle("meal-name-proposal-modal-open", getMealNameProposalState().phase === "ready");
+      if (isOpen) content.innerHTML = `${renderMealType()}${renderVisionHelper()}${renderFoodPicker()}${renderNamedDishReference()}${renderDraft()}${renderSavedMeals()}`;
       renderReflection();
       statusNode.textContent = status;
     }
 
-    function returnFocusFromMealNameProposal() {
-      scheduleFrame(() => root.querySelector("[data-vision-apply]")?.focus());
-    }
-
-    function settleMealNameProposal() {
-      mealNameProposalRequestId += 1;
-      mealNameProposalCoordinator?.cancel?.();
-      mealNameProposalSession?.settle?.();
-      visionSession.reviewVisible = true;
-      traceNaming("naming_session_state", { observationId: visionSession.observation?.observation_id || "", phase: "settled" });
-      traceNaming("vision_review_visible", { observationId: visionSession.observation?.observation_id || "", visible: true, reason: "naming_settled" });
-      render();
-      returnFocusFromMealNameProposal();
-    }
-
-    function confirmMealNameProposal() {
+    function applyMealNameProposalToDraft() {
+      if (model.getDraft().mealName) return;
       const confirmed = mealNameProposalSession?.confirm?.();
-      if (!confirmed?.text) return;
-      model.setDraftMeta({ mealName: confirmed.text });
-      visionSession.reviewVisible = true;
-      traceNaming("naming_session_state", { observationId: visionSession.observation?.observation_id || "", phase: "settled", source: confirmed.source });
-      traceNaming("vision_review_visible", { observationId: visionSession.observation?.observation_id || "", visible: true, reason: "name_confirmed" });
-      render();
-      returnFocusFromMealNameProposal();
-    }
-
-    function trapMealNameProposalFocus(event) {
-      const dialog = root.querySelector("[data-meal-name-proposal-dialog] [role='dialog']");
-      if (!dialog || event.key !== "Tab") return;
-      const focusable = [...dialog.querySelectorAll("button:not([disabled]), input:not([disabled])")];
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && globalScope.document?.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && globalScope.document?.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
+      if (confirmed?.text) model.setDraftMeta({ mealName: confirmed.text });
+      else mealNameProposalSession?.settle?.();
+      traceNaming("naming_session_state", {
+        observationId: visionSession.observation?.observation_id || "",
+        phase: getMealNameProposalState().phase,
+        source: confirmed?.source || "skipped_on_apply"
+      });
     }
 
     root.addEventListener("click", (event) => {
       const action = event.target.closest("button");
       if (!action) return;
-      if (action.hasAttribute("data-meal-name-proposal-skip")) {
-        settleMealNameProposal();
-        return;
-      }
-      if (action.hasAttribute("data-meal-name-proposal-bypass")) {
-        settleMealNameProposal();
-        return;
-      }
-      if (action.hasAttribute("data-meal-name-proposal-confirm")) {
-        confirmMealNameProposal();
-        return;
-      }
       if (action.matches("[data-meal-toggle]")) {
         isOpen = !isOpen;
         render();
@@ -1994,6 +1917,7 @@
         return;
       }
       if (action.hasAttribute("data-vision-apply") && visionSession.review && visionReview) {
+        applyMealNameProposalToDraft();
         const result = visionReview.applyVisionReviewToDraft(model, visionSession.review);
         if (result.addedFoodIds.length) {
           currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "vision_items_applied", draftItemCount: model.getDraft().items.length });
@@ -2163,9 +2087,16 @@
 
     root.addEventListener("change", (event) => {
       if (event.target.matches("[data-meal-name-proposal-choice]")) {
-        mealNameProposalSession?.choose?.(event.target.value);
+        const selectedChoice = String(event.target.value || "");
+        const nextState = mealNameProposalSession?.choose?.(selectedChoice) || getMealNameProposalState();
+        traceNaming("naming_selection_changed", {
+          observationId: nextState.observationId || visionSession.observation?.observation_id || "",
+          phase: nextState.phase,
+          selectedChoice,
+          lookupSucceeded: nextState.selection === selectedChoice
+        });
         render();
-        if (event.target.value === "custom") scheduleFrame(() => root.querySelector("[data-meal-name-proposal-custom]")?.focus());
+        if (selectedChoice === "custom") scheduleFrame(() => root.querySelector("[data-meal-name-proposal-custom]")?.focus());
         return;
       }
       if (event.target.matches("[data-vision-image]")) {
@@ -2217,16 +2148,6 @@
       render();
     });
 
-    root.addEventListener("keydown", (event) => {
-      if (getMealNameProposalState().phase !== "ready") return;
-      if (event.key === "Escape") {
-        event.preventDefault();
-        settleMealNameProposal();
-        return;
-      }
-      trapMealNameProposalFocus(event);
-    });
-
     render();
 
     return Object.freeze({
@@ -2234,7 +2155,6 @@
       setLanguage(nextLanguage) {
         language = normalizeLanguage(nextLanguage);
         clearMealNameProposalSession();
-        if (visionSession.phase === "review" && visionSession.review) visionSession.reviewVisible = true;
         model.setLanguage(language);
         render();
       },
@@ -2254,7 +2174,6 @@
       destroy() {
         imagePrepBridge?.destroy?.();
         clearVisionSession();
-        globalScope.document?.body?.classList.remove("meal-name-proposal-modal-open");
       },
       getModel: () => model
     });
