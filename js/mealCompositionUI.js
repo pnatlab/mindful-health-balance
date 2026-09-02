@@ -2,6 +2,7 @@
   const SUPPORTED_LANGUAGES = ["th", "en", "zh"];
   const DEFAULT_COMPONENT_RESULT_LIMIT = 8;
   const MAX_MEAL_VISUAL_TOKENS = 6;
+  const MAX_SAVED_MEAL_TYPE_INDICATORS = 3;
   const CATEGORY_ORDER = [
     "grain",
     "animal_protein",
@@ -661,6 +662,19 @@
       lines.push(copy.dailySodiumUnknown);
     }
     return lines.slice(0, 4);
+  }
+
+  function buildSavedMealTypeIndicatorModel(meals = []) {
+    const canonicalMeals = Array.isArray(meals) ? meals : [];
+    const mealTypes = canonicalMeals.map((meal) => {
+      const value = String(meal?.meal_type || "").trim();
+      return Object.prototype.hasOwnProperty.call(MEAL_TYPE_ILLUSTRATIONS, value) ? value : "unspecified";
+    });
+    return Object.freeze({
+      totalCount: canonicalMeals.length,
+      visibleMealTypes: Object.freeze(mealTypes.slice(0, MAX_SAVED_MEAL_TYPE_INDICATORS)),
+      overflowCount: Math.max(0, mealTypes.length - MAX_SAVED_MEAL_TYPE_INDICATORS)
+    });
   }
 
   function createEmptyDraft() {
@@ -1867,9 +1881,17 @@
     function renderReflection() {
       const copy = getText(language);
       const lines = buildDailyReflectionLines(model.getDailySummary(), language);
+      const typeIndicators = buildSavedMealTypeIndicatorModel(model.getMeals());
+      const indicators = typeIndicators.totalCount ? `
+        <div class="meal-saved-type-indicators" aria-hidden="true">
+          ${typeIndicators.visibleMealTypes.map((mealType) => `<span class="meal-saved-type-indicator meal-saved-type-indicator--${escapeHtml(MEAL_TYPE_VISUAL_TONES[mealType])}"><span class="meal-saved-type-indicator__illustration">${MEAL_TYPE_ILLUSTRATIONS[mealType]}</span></span>`).join("")}
+          ${typeIndicators.overflowCount ? `<span class="meal-saved-type-overflow">+${typeIndicators.overflowCount}</span>` : ""}
+        </div>
+      ` : "";
       reflection.innerHTML = `
         <p class="section-kicker">${escapeHtml(copy.dailyReflectionKicker)}</p>
         <h3>${escapeHtml(copy.dailyReflectionTitle)}</h3>
+        ${indicators}
         <div class="meal-reflection-copy">${lines.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}</div>
       `;
     }
@@ -2186,9 +2208,11 @@
     MEAL_TYPE_VISUAL_TONES,
     DEFAULT_COMPONENT_RESULT_LIMIT,
     MAX_MEAL_VISUAL_TOKENS,
+    MAX_SAVED_MEAL_TYPE_INDICATORS,
     normalizeLanguage,
     formatRange,
     buildDailyReflectionLines,
+    buildSavedMealTypeIndicatorModel,
     filterFoodReferences,
     countDraftFoodItems,
     createFoodItemsDisclosureState,

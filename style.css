@@ -1076,7 +1076,8 @@ body[data-theme="dark"] .meal-name-proposal-custom input {
   transform: scale(1);
 }
 
-.meal-type-choice--cream {
+.meal-type-choice--cream,
+.meal-saved-type-indicator--cream {
   --meal-tone-bg: rgba(255, 249, 230, 0.72);
   --meal-tone-border: rgba(190, 151, 74, 0.28);
   --meal-tone-accent: #a87c28;
@@ -1084,63 +1085,72 @@ body[data-theme="dark"] .meal-name-proposal-custom input {
   --meal-tone-selected-bg: rgba(255, 244, 207, 0.94);
 }
 
-.meal-type-choice--leaf-gold {
+.meal-type-choice--leaf-gold,
+.meal-saved-type-indicator--leaf-gold {
   --meal-tone-bg: rgba(244, 248, 221, 0.76);
   --meal-tone-border: rgba(137, 153, 62, 0.28);
   --meal-tone-accent: #71872d;
   --meal-tone-selected-bg: rgba(235, 244, 191, 0.94);
 }
 
-.meal-type-choice--orange {
+.meal-type-choice--orange,
+.meal-saved-type-indicator--orange {
   --meal-tone-bg: rgba(255, 241, 221, 0.76);
   --meal-tone-border: rgba(202, 124, 53, 0.27);
   --meal-tone-accent: #bc6928;
   --meal-tone-selected-bg: rgba(255, 228, 190, 0.94);
 }
 
-.meal-type-choice--coral {
+.meal-type-choice--coral,
+.meal-saved-type-indicator--coral {
   --meal-tone-bg: rgba(255, 232, 226, 0.76);
   --meal-tone-border: rgba(202, 91, 76, 0.27);
   --meal-tone-accent: #bd5748;
   --meal-tone-selected-bg: rgba(255, 216, 207, 0.94);
 }
 
-.meal-type-choice--amber {
+.meal-type-choice--amber,
+.meal-saved-type-indicator--amber {
   --meal-tone-bg: rgba(255, 242, 218, 0.76);
   --meal-tone-border: rgba(211, 143, 39, 0.28);
   --meal-tone-accent: #b87620;
   --meal-tone-selected-bg: rgba(255, 228, 177, 0.94);
 }
 
-.meal-type-choice--terracotta {
+.meal-type-choice--terracotta,
+.meal-saved-type-indicator--terracotta {
   --meal-tone-bg: rgba(252, 235, 223, 0.76);
   --meal-tone-border: rgba(178, 94, 57, 0.27);
   --meal-tone-accent: #a85b38;
   --meal-tone-selected-bg: rgba(246, 217, 198, 0.94);
 }
 
-.meal-type-choice--soft-yellow {
+.meal-type-choice--soft-yellow,
+.meal-saved-type-indicator--soft-yellow {
   --meal-tone-bg: rgba(255, 250, 219, 0.78);
   --meal-tone-border: rgba(183, 154, 48, 0.27);
   --meal-tone-accent: #967a19;
   --meal-tone-selected-bg: rgba(249, 240, 176, 0.94);
 }
 
-.meal-type-choice--broth-green {
+.meal-type-choice--broth-green,
+.meal-saved-type-indicator--broth-green {
   --meal-tone-bg: rgba(231, 246, 226, 0.78);
   --meal-tone-border: rgba(83, 147, 91, 0.27);
   --meal-tone-accent: #4e8657;
   --meal-tone-selected-bg: rgba(211, 237, 204, 0.94);
 }
 
-.meal-type-choice--fresh-green {
+.meal-type-choice--fresh-green,
+.meal-saved-type-indicator--fresh-green {
   --meal-tone-bg: rgba(226, 245, 228, 0.8);
   --meal-tone-border: rgba(61, 142, 81, 0.28);
   --meal-tone-accent: #3f7f4f;
   --meal-tone-selected-bg: rgba(204, 235, 210, 0.94);
 }
 
-.meal-type-choice--warm-neutral {
+.meal-type-choice--warm-neutral,
+.meal-saved-type-indicator--warm-neutral {
   --meal-tone-bg: rgba(246, 244, 224, 0.76);
   --meal-tone-border: rgba(139, 138, 91, 0.25);
   --meal-tone-accent: #777649;
@@ -1837,7 +1847,8 @@ body[data-theme="dark"] .meal-time-control {
   --meal-meta-tint: rgba(67, 145, 130, 0.14);
 }
 
-body[data-theme="dark"] .meal-type-choice--cream {
+body[data-theme="dark"] .meal-type-choice--cream,
+body[data-theme="dark"] .meal-saved-type-indicator--cream {
   --meal-tone-bg: rgba(83, 69, 38, 0.42);
   --meal-tone-border: rgba(202, 166, 83, 0.3);
   --meal-tone-accent: #d2aa54;
@@ -1845,7 +1856,8 @@ body[data-theme="dark"] .meal-type-choice--cream {
   --meal-tone-selected-bg: rgba(111, 87, 36, 0.58);
 }
 
-body[data-theme="dark"] .meal-type-choice--leaf-gold {
+body[data-theme="dark"] .meal-type-choice--leaf-gold,
+body[data-theme="dark"] .meal-saved-type-indicator--leaf-gold {
   --meal-tone-bg: rgba(58, 67, 31, 0.44);
   --meal-tone-border: rgba(151, 169, 79, 0.3);
   --meal-tone-accent: #a6b75b;
@@ -1853,7 +1865,8 @@ body[data-theme="dark"] .meal-type-choice--leaf-gold {
   --meal-tone-selected-bg: rgba(73, 88, 34, 0.6);
 }
 
-body[data-theme="dark"] .meal-type-choice--orange {
+body[data-theme="dark"] .meal-type-choice--orange,
+body[data-theme="dark"] .meal-saved-type-indicator--orange {
   --meal-tone-bg: rgba(83, 52, 29, 0.46);
   --meal-tone-border: rgba(216, 135, 67, 0.3);
   --meal-tone-accent: #dd9454;
@@ -1861,7 +1874,8 @@ body[data-theme="dark"] .meal-type-choice--orange {
   --meal-tone-selected-bg: rgba(109, 63, 28, 0.62);
 }
 
-body[data-theme="dark"] .meal-type-choice--coral {
+body[data-theme="dark"] .meal-type-choice--coral,
+body[data-theme="dark"] .meal-saved-type-indicator--coral {
   --meal-tone-bg: rgba(81, 41, 39, 0.46);
   --meal-tone-border: rgba(214, 111, 99, 0.3);
   --meal-tone-accent: #df8175;
@@ -1869,7 +1883,8 @@ body[data-theme="dark"] .meal-type-choice--coral {
   --meal-tone-selected-bg: rgba(108, 48, 44, 0.62);
 }
 
-body[data-theme="dark"] .meal-type-choice--amber {
+body[data-theme="dark"] .meal-type-choice--amber,
+body[data-theme="dark"] .meal-saved-type-indicator--amber {
   --meal-tone-bg: rgba(82, 57, 28, 0.46);
   --meal-tone-border: rgba(219, 151, 54, 0.3);
   --meal-tone-accent: #daa044;
@@ -1877,7 +1892,8 @@ body[data-theme="dark"] .meal-type-choice--amber {
   --meal-tone-selected-bg: rgba(110, 72, 27, 0.62);
 }
 
-body[data-theme="dark"] .meal-type-choice--terracotta {
+body[data-theme="dark"] .meal-type-choice--terracotta,
+body[data-theme="dark"] .meal-saved-type-indicator--terracotta {
   --meal-tone-bg: rgba(75, 43, 33, 0.46);
   --meal-tone-border: rgba(194, 107, 73, 0.3);
   --meal-tone-accent: #cb7957;
@@ -1885,7 +1901,8 @@ body[data-theme="dark"] .meal-type-choice--terracotta {
   --meal-tone-selected-bg: rgba(100, 51, 35, 0.62);
 }
 
-body[data-theme="dark"] .meal-type-choice--soft-yellow {
+body[data-theme="dark"] .meal-type-choice--soft-yellow,
+body[data-theme="dark"] .meal-saved-type-indicator--soft-yellow {
   --meal-tone-bg: rgba(75, 68, 31, 0.45);
   --meal-tone-border: rgba(196, 169, 62, 0.3);
   --meal-tone-accent: #c8ae4d;
@@ -1893,7 +1910,8 @@ body[data-theme="dark"] .meal-type-choice--soft-yellow {
   --meal-tone-selected-bg: rgba(96, 85, 33, 0.62);
 }
 
-body[data-theme="dark"] .meal-type-choice--broth-green {
+body[data-theme="dark"] .meal-type-choice--broth-green,
+body[data-theme="dark"] .meal-saved-type-indicator--broth-green {
   --meal-tone-bg: rgba(39, 65, 44, 0.46);
   --meal-tone-border: rgba(95, 159, 105, 0.3);
   --meal-tone-accent: #79ae80;
@@ -1901,7 +1919,8 @@ body[data-theme="dark"] .meal-type-choice--broth-green {
   --meal-tone-selected-bg: rgba(46, 84, 52, 0.62);
 }
 
-body[data-theme="dark"] .meal-type-choice--fresh-green {
+body[data-theme="dark"] .meal-type-choice--fresh-green,
+body[data-theme="dark"] .meal-saved-type-indicator--fresh-green {
   --meal-tone-bg: rgba(35, 66, 43, 0.46);
   --meal-tone-border: rgba(79, 161, 98, 0.3);
   --meal-tone-accent: #6cad79;
@@ -1909,7 +1928,8 @@ body[data-theme="dark"] .meal-type-choice--fresh-green {
   --meal-tone-selected-bg: rgba(40, 87, 50, 0.62);
 }
 
-body[data-theme="dark"] .meal-type-choice--warm-neutral {
+body[data-theme="dark"] .meal-type-choice--warm-neutral,
+body[data-theme="dark"] .meal-saved-type-indicator--warm-neutral {
   --meal-tone-bg: rgba(61, 61, 41, 0.44);
   --meal-tone-border: rgba(148, 148, 99, 0.26);
   --meal-tone-accent: #a7a56c;
@@ -5723,6 +5743,51 @@ body[data-theme="dark"] .reflection-pulse-orb {
   color: var(--text-soft);
   font-size: 0.84rem;
   line-height: 1.5;
+}
+
+.meal-saved-type-indicators {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin: 8px 0 4px;
+}
+
+.meal-saved-type-indicator {
+  --meal-tone-bg: var(--button-bg);
+  --meal-tone-border: var(--border-soft);
+  --meal-tone-accent: var(--accent);
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid var(--meal-tone-border);
+  border-radius: 50%;
+  background: var(--meal-tone-bg);
+}
+
+.meal-saved-type-indicator__illustration {
+  display: grid;
+  width: 27px;
+  height: 20px;
+  place-items: center;
+  color: var(--meal-tone-accent);
+}
+
+.meal-saved-type-indicator__illustration svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.meal-saved-type-overflow {
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 .meal-reflection-context-icon {

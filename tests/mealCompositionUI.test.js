@@ -45,6 +45,16 @@ function run() {
   }, "Meal Type visual tones remain deterministic and presentation-only");
   assert.deepEqual(Object.keys(mealUI.MEAL_TYPE_VISUAL_TONES), Object.keys(mealUI.TEXT.th.mealTypes), "visual tones cover the existing canonical taxonomy exactly");
   assert.deepEqual(Object.keys(mealUI.MEAL_TYPE_ILLUSTRATIONS), Object.keys(mealUI.TEXT.th.mealTypes), "existing illustrations still cover the same taxonomy");
+  assert.deepEqual(mealUI.buildSavedMealTypeIndicatorModel([]), { totalCount: 0, visibleMealTypes: [], overflowCount: 0 }, "no saved meals produce no Today-page Meal Type indicators");
+  assert.deepEqual(mealUI.buildSavedMealTypeIndicatorModel([{ meal_type: "stir_fried" }]), { totalCount: 1, visibleMealTypes: ["stir_fried"], overflowCount: 0 }, "one canonical saved Meal Type projects its existing icon");
+  assert.deepEqual(mealUI.buildSavedMealTypeIndicatorModel([{ meal_type: "unknown" }]), { totalCount: 1, visibleMealTypes: ["unspecified"], overflowCount: 0 }, "unknown saved Meal Type uses the neutral canonical fallback without inference");
+  assert.deepEqual(mealUI.buildSavedMealTypeIndicatorModel([
+    { meal_type: "stir_fried" },
+    { meal_type: "boiled" },
+    { meal_type: "grilled" },
+    { meal_type: "curry" },
+    { meal_type: "fried" }
+  ]), { totalCount: 5, visibleMealTypes: ["stir_fried", "boiled", "grilled"], overflowCount: 2 }, "canonical current-date order remains deterministic while the visual cluster is bounded");
   let foodDisclosure = mealUI.createFoodItemsDisclosureState(0);
   assert.equal(foodDisclosure.expanded, false, "a new empty composer keeps food items collapsed");
   foodDisclosure = mealUI.reduceFoodItemsDisclosureState(foodDisclosure, { type: "toggle" });
@@ -438,6 +448,9 @@ function run() {
   assert.match(visionReviewSource, /<div class="meal-vision-review-grid">\s*\$\{renderMealNameProposalInline\(\)\}[\s\S]*?visionDish[\s\S]*?visionMealTypes[\s\S]*?visionComponents/, "Vision Review DOM order is Meal Name, food similarity, meal characteristic, then visible components");
   assert.match(visionReviewSource, /meal-vision-review-group meal-vision-review-group--wide[\s\S]*?visionDish[\s\S]*?meal-vision-review-group meal-vision-review-group--wide[\s\S]*?visionMealTypes/, "food similarity and meal characteristic use the same full-width hierarchy as Meal Name");
   assert.match(mealUiSource, /applyMealNameProposalToDraft\(\);[\s\S]*?applyVisionReviewToDraft\(model, visionSession\.review\)/, "the existing Apply action is the one explicit human action that can write a selected name and apply reviewed items");
+  assert.match(mealUiSource, /buildSavedMealTypeIndicatorModel\(model\.getMeals\(\)\)/, "Today-page indicator reads only the current canonical saved Meal list");
+  assert.match(mealUiSource, /MEAL_TYPE_ILLUSTRATIONS\[mealType\]/, "Today-page indicator reuses the canonical Meal Type illustration map");
+  assert.doesNotMatch(mealUiSource.match(/function buildSavedMealTypeIndicatorModel\([\s\S]*?\n  \}/)[0], /meal_name|items|vision|food_id/i, "indicator derives only from canonical Meal Type and never infers from names, items, or Vision");
   assert.match(mealUiSource, /draft\.mealName \|\| !observation \|\| !review\) return/, "an existing Meal Name suppresses automatic naming");
   assert.match(mealUiSource, /const namingEligible = Boolean\(mealNameProposalFactory && !model\.getDraft\(\)\.mealName\);[\s\S]*?traceNaming\("vision_review_visible", \{[\s\S]*?reason: "review_ready"/, "the deterministic review is visible immediately even while naming begins independently");
   assert.match(mealUiSource, /function isVisionReviewPanelVisible\(session\) \{\s*return Boolean\(session\?\.phase === "review" && session\.review\);/, "review visibility no longer depends on naming-session settlement");

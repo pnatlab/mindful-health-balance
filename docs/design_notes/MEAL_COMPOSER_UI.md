@@ -39,6 +39,8 @@ The workspace contains four light regions:
 
 The Dynamic Daily Meal Reflection Panel stays visible at the bottom. It is visually separate from the draft because it describes saved Meal records only.
 
+When at least one Meal is saved for the selected local date, this Today-page summary also shows a small bounded cluster of canonical Meal Type illustrations before its text. It reuses the existing Meal Type visual language in the deterministic current-date saved-meal order, shows at most three icons with a visible `+N` overflow count, and falls back to the neutral `unspecified` illustration only when the canonical field is missing or unknown. These indicators are read-only visual cues; they do not infer from Meal Name, Meal Items, Vision, or images, and do not modify Meal data.
+
 ## Interaction Contract
 
 - Meal Type is the first interaction. It is optional, persists as `meal_type`, and defaults safely to `unspecified` for legacy records.
