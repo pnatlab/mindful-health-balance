@@ -175,6 +175,14 @@ This is required because seasoning, broth, and dipping sauces may contribute mor
 
 `unnamed` allows a user to record a meal without imposing breakfast/lunch/dinner structure.
 
+### Saved Meal History Projection
+
+The Log page may show a collapsed, read-only Saved Meal History sourced only from canonical records in `mhb_meal_records_v1` through the existing Meal store reader. It is a projection, not a second history store: it does not copy Meal Instances or Meal Items into `Daily_Log`, Excel, or another localStorage key.
+
+This history means **what a person explicitly saved as a Meal record**. It may display an optional `meal_name` only when that field exists on the canonical Meal Instance, plus canonical date/time, label/type, and confirmed Meal Item display facts. It does not infer Meal Name provenance, missing ingredients, nutrition, sodium, health meaning, or unrecorded consumption. Historical records without `meal_name` remain valid and receive no synthesized name.
+
+Saved Meal History must remain separate from Vision Observation History: the latter is model-observed evidence and may be uncertain, unmapped, or wrong; it is not evidence that a person ate or authorized a meal. Future MSS/RAG may retrieve human-authorized saved Meal evidence separately, but no downstream retrieval, sodium estimation, or export/import integration is created by this projection.
+
 ### Meal Item Instance
 
 | Field | Purpose |

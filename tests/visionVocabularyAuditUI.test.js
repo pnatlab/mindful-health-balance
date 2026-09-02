@@ -92,6 +92,9 @@ assert.match(source, /aria-expanded/);
 assert.match(source, /aria-controls/);
 assert.match(source, /data-vision-vocabulary-audit-filter/);
 
+const styleSource = fs.readFileSync(path.join(__dirname, "../style.css"), "utf8");
+assert.match(styleSource, /\.vision-vocabulary-audit-details\[hidden\][\s\S]*?display: none/, "the collapsed Vision audit details remain visually hidden");
+
 const mealSource = fs.readFileSync(path.join(__dirname, "../js/mealCompositionUI.js"), "utf8");
 assert.doesNotMatch(mealSource, /visionAudit|visionVocabularyAudit|data-vision-audit/i, "Meal Composer no longer owns the historical audit panel");
 

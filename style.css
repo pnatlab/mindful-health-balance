@@ -559,6 +559,11 @@
   gap: 12px;
 }
 
+.vision-vocabulary-audit-details[hidden],
+.saved-meal-history-details[hidden] {
+  display: none;
+}
+
 .vision-vocabulary-audit-summary,
 .vision-vocabulary-audit-filters {
   display: flex;
@@ -5860,6 +5865,88 @@ body[data-theme="dark"] .reflection-zen-button {
   margin-top: 18px;
 }
 
+#savedMealHistory {
+  margin-top: 18px;
+}
+
+#savedMealHistory .saved-meal-history {
+  display: grid;
+  gap: 12px;
+  padding: 18px 22px;
+  border-color: rgba(111, 137, 211, 0.24);
+  background: rgba(241, 246, 255, 0.54);
+}
+
+.saved-meal-history-heading {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.saved-meal-history-heading h2 {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.saved-meal-history-heading p,
+.saved-meal-history-count,
+.saved-meal-history-empty {
+  margin: 3px 0 0;
+  color: var(--text-soft);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.saved-meal-history-count {
+  margin: -4px 0 0;
+}
+
+.saved-meal-history-count strong {
+  color: var(--text-main);
+}
+
+.saved-meal-history-list {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.saved-meal-history-item {
+  display: grid;
+  gap: 2px;
+  padding: 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: var(--button-bg);
+}
+
+.saved-meal-history-item__meta,
+.saved-meal-history-item__facts,
+.saved-meal-history-item__items,
+.saved-meal-history-item__count {
+  color: var(--text-soft);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.saved-meal-history-item__name {
+  margin-top: 1px;
+  color: var(--text-main);
+  font-size: 0.88rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.saved-meal-history-item__count {
+  margin-top: 3px;
+}
+
 #visionVocabularyAudit .vision-vocabulary-audit {
   padding: 18px 22px;
   border-color: rgba(111, 137, 211, 0.24);
@@ -5869,6 +5956,26 @@ body[data-theme="dark"] .reflection-zen-button {
 body[data-theme="dark"] #visionVocabularyAudit .vision-vocabulary-audit {
   border-color: rgba(142, 167, 255, 0.28);
   background: rgba(38, 34, 66, 0.52);
+}
+
+body[data-theme="dark"] #savedMealHistory .saved-meal-history {
+  border-color: rgba(142, 167, 255, 0.28);
+  background: rgba(38, 34, 66, 0.52);
+}
+
+body[data-theme="dark"] .saved-meal-history-item {
+  background: rgba(31, 27, 52, 0.66);
+}
+
+@media (max-width: 640px) {
+  .saved-meal-history-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .saved-meal-history-heading > .meal-text-button {
+    align-self: flex-start;
+  }
 }
 
 .daily-log-integrity-notice {

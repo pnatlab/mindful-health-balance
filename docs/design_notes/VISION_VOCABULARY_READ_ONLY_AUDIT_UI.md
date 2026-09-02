@@ -8,7 +8,7 @@ It is not an analytics dashboard, an AI administration surface, or a Food Refere
 
 ## Placement and Data Source
 
-The Log page shows this audit as a separate section immediately after the Daily Log Table. It is collapsed by default, then expands to show the same summary, filters, and list. This places a historical model-observation trace with other reviewable records rather than inside the active Meal Composition workflow, where it could be mistaken for part of the meal currently being composed.
+The Log page shows this audit as a separate collapsed section after the read-only Saved Meal History projection. The Daily Log Table remains primary; Saved Meal History represents canonical human-authorized Meal records, while this panel remains a separate model-observation trace. It expands to show the same summary, filters, and list, without being mistaken for part of the meal currently being composed or for proof that a meal was saved.
 
 The panel reads only from `mhb_vision_observation_vocabulary_v1` through `js/visionObservationVocabulary.js`. `js/visionVocabularyAuditUI.js` is a display-only adapter: it calls the store's `list()` method, safely handles read failure as an empty snapshot, sorts entries, creates summary counts, and filters an in-memory snapshot. It has no storage write API.
 

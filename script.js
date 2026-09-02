@@ -3410,6 +3410,7 @@ let selectedReflectionRoot = "auto";
 let mealComposerUI = null;
 let mealDraftReflectionBridgeState = MEAL_DRAFT_REFLECTION_CONTEXT?.createBridgeState?.() || { snapshot: null, cueVisible: false };
 let savedMealReflectionContext = null;
+let savedMealHistoryPanel;
 let isEditingReflection = false;
 let isGeneratingReflection = false;
 let reflectionGenerationTimerId;
@@ -3508,6 +3509,7 @@ document.addEventListener("DOMContentLoaded", () => {
   bindEvents();
   loadUserIntentionProfileIntoForm();
   initializeMealComposerUI();
+  initializeSavedMealHistoryPanel();
   initializeVisionVocabularyAuditPanel();
   initWelcome();
   startThemeAutoRefresh();
@@ -3583,6 +3585,7 @@ function applyTranslations() {
   renderIntentionProfileScaffold();
   renderTodayHydrationWelcome();
   mealComposerUI?.setLanguage(currentLanguage);
+  savedMealHistoryPanel?.setLanguage(currentLanguage);
   visionVocabularyAuditPanel?.setLanguage(currentLanguage);
 }
 
@@ -3618,6 +3621,17 @@ function initializeVisionVocabularyAuditPanel() {
   visionVocabularyAuditPanel = VISION_VOCABULARY_AUDIT_UI.createVisionVocabularyAuditPanel({
     root,
     store: VISION_OBSERVATION_VOCABULARY.createVisionVocabularyEvidenceStore(localStorage),
+    runtime: MEAL_COMPOSITION_RUNTIME,
+    language: currentLanguage
+  });
+}
+
+function initializeSavedMealHistoryPanel() {
+  const root = document.querySelector("#savedMealHistory");
+  if (!root || !MHBSavedMealHistoryUI || !MEAL_COMPOSITION_RUNTIME) return;
+  savedMealHistoryPanel = MHBSavedMealHistoryUI.createSavedMealHistoryPanel({
+    root,
+    getMeals: getMealRecords,
     runtime: MEAL_COMPOSITION_RUNTIME,
     language: currentLanguage
   });
@@ -5593,6 +5607,9 @@ function hideWelcome({ remember = true, instant = false } = {}) {
 	  }
 	  if (view === "field-review") {
 	    renderFieldReview();
+	  }
+	  if (view === "log") {
+	    savedMealHistoryPanel?.render();
 	  }
 	}
 
