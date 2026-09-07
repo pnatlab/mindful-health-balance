@@ -29,6 +29,8 @@
       visionAction: "ให้ AI ช่วยมองจากรูป",
       visionLocalNote: "วิเคราะห์ผ่านโมเดลในเครื่องนี้ รูปจะไม่ถูกเก็บไว้กับมื้อ",
       visionPrepareImage: "เตรียมรูปสำหรับ AI",
+      visionPrepareUnavailable: "เตรียมรูปไม่ได้",
+      visionChooseImageFallback: "เลือกรูปโดยตรงแทน",
       visionRuntimeRequired: "ตัวช่วยจากรูปและการเตรียมรูปต้องเปิดผ่าน Local Launcher ค่ะ",
       visionRuntimeHelper: "เปิด Start Mindful Health Balance.command แล้วกลับมาที่หน้านี้ได้เลย ส่วนประกอบมื้อเองยังใช้ได้ตามปกติค่ะ",
       visionChooseImage: "เลือกรูปอาหาร",
@@ -207,6 +209,8 @@
       visionAction: "Let local AI look at a photo",
       visionLocalNote: "Analyzed by a model on this device. The photo is not stored with the meal.",
       visionPrepareImage: "Prepare a photo for AI",
+      visionPrepareUnavailable: "Couldn't prepare the image",
+      visionChooseImageFallback: "Choose an image directly instead",
       visionRuntimeRequired: "The photo helper and image preparation need the Local Launcher.",
       visionRuntimeHelper: "Open Start Mindful Health Balance.command, then return here. Manual meal composition is still available.",
       visionChooseImage: "Choose a meal photo",
@@ -385,6 +389,8 @@
       visionAction: "让本机 AI 帮忙看看照片",
       visionLocalNote: "由这台设备上的模型分析；照片不会随餐食保存。",
       visionPrepareImage: "为 AI 准备照片",
+      visionPrepareUnavailable: "暂时无法准备图片",
+      visionChooseImageFallback: "改为直接选择图片",
       visionRuntimeRequired: "照片助手和图片准备需要通过 Local Launcher 打开。",
       visionRuntimeHelper: "打开 Start Mindful Health Balance.command 后再回到这里。手动组合餐食仍可正常使用。",
       visionChooseImage: "选择餐食照片",
@@ -974,6 +980,14 @@
     return Boolean(session?.phase === "review" && session.review);
   }
 
+  function buildVisionImageEntryState(imagePrepBridgeFactory, fallbackReason = "") {
+    const canPrepare = typeof imagePrepBridgeFactory === "function";
+    return Object.freeze({
+      canPrepare,
+      showDirectFallback: !canPrepare || Boolean(fallbackReason)
+    });
+  }
+
   function reduceFoodItemsDisclosureState(state, action = {}) {
     const current = Boolean(state?.expanded);
     if (action.type === "toggle") return Object.freeze({ expanded: !current });
@@ -1048,6 +1062,7 @@
       failureStatus: ""
     };
     let imagePrepBridge = null;
+    let imagePrepFallbackReason = "";
     let foodItemsDisclosure = createFoodItemsDisclosureState(model.getDraft().items.length);
     let currentCompositionDisclosure = createCurrentCompositionDisclosureState(model.getDraft().items.length);
 
@@ -1311,23 +1326,43 @@
 
     function openImagePrep() {
       if (!runtimeEnvironment.supportsVisionAndImagePrep) return;
-      if (!imagePrepBridgeFactory) return;
-      if (!imagePrepBridge) {
-        imagePrepBridge = imagePrepBridgeFactory({
-          onPrepared(envelope) {
-            if (!envelope?.image_blob) return;
-            clearVisionSession();
-            const requestId = visionRequestId;
-            visionTraceStartedAt = traceNow();
-            traceNaming("vision_request_started", { requestId, language, source: "prepared_image" });
-            observeNormalizedVisionImage(envelope.image_blob, requestId, envelope.image_blob);
-          }
-        });
+      if (!imagePrepBridgeFactory) {
+        revealImagePrepFallback("bridge_unavailable");
+        return;
       }
-      imagePrepBridge.open({
-        language,
-        theme: globalScope.document?.body?.dataset?.theme || "auto"
-      });
+      try {
+        if (!imagePrepBridge) {
+          imagePrepBridge = imagePrepBridgeFactory({
+            onPrepared(envelope) {
+              if (!envelope?.image_blob) return;
+              imagePrepFallbackReason = "";
+              clearVisionSession();
+              const requestId = visionRequestId;
+              visionTraceStartedAt = traceNow();
+              traceNaming("vision_request_started", { requestId, language, source: "prepared_image" });
+              observeNormalizedVisionImage(envelope.image_blob, requestId, envelope.image_blob);
+            }
+          });
+        }
+        const opened = imagePrepBridge?.open?.({
+          language,
+          theme: globalScope.document?.body?.dataset?.theme || "auto"
+        });
+        if (opened) {
+          imagePrepFallbackReason = "";
+          render();
+          return;
+        }
+      } catch (_error) {
+        // A local popup/bridge failure is recoverable through the existing native picker.
+      }
+      revealImagePrepFallback("prepare_unavailable");
+    }
+
+    function revealImagePrepFallback(reason) {
+      imagePrepFallbackReason = reason;
+      render();
+      scheduleFrame(() => root.querySelector("[data-image-prep-open], [data-vision-image]")?.focus());
     }
 
     function itemServingBasis(reference, item) {
@@ -1549,6 +1584,7 @@
             </section>
           `;
         }
+        const imageEntry = buildVisionImageEntryState(imagePrepBridgeFactory, imagePrepFallbackReason);
         return `
           <section class="meal-vision-helper" aria-labelledby="mealVisionTitle">
             <span class="meal-vision-icon" aria-hidden="true">📷</span>
@@ -1556,11 +1592,18 @@
               <h3 id="mealVisionTitle">${escapeHtml(copy.visionAction)}</h3>
               <p>${escapeHtml(copy.visionLocalNote)}</p>
             </div>
-            <label class="ghost-button meal-vision-file-action">
-              <span>${escapeHtml(copy.visionChooseImage)}</span>
-              <input type="file" data-vision-image accept="image/png,image/jpeg,image/webp,image/heic,image/heif,.heic,.heif">
-            </label>
-            ${imagePrepBridgeFactory ? `<button type="button" class="meal-text-button" data-image-prep-open>${escapeHtml(copy.visionPrepareImage)}</button>` : ""}
+            <div class="meal-vision-entry-actions">
+              ${imageEntry.canPrepare ? `<button type="button" class="ghost-button meal-vision-prepare-action" data-image-prep-open>${escapeHtml(copy.visionPrepareImage)}</button>` : ""}
+              ${imageEntry.showDirectFallback ? `
+                <div class="meal-vision-direct-fallback">
+                  <p id="mealVisionDirectFallbackMessage" role="status">${escapeHtml(copy.visionPrepareUnavailable)}</p>
+                  <label class="meal-text-button meal-vision-file-action" aria-describedby="mealVisionDirectFallbackMessage">
+                    <span>${escapeHtml(copy.visionChooseImageFallback)}</span>
+                    <input type="file" data-vision-image accept="image/png,image/jpeg,image/webp,image/heic,image/heif,.heic,.heif">
+                  </label>
+                </div>
+              ` : ""}
+            </div>
           </section>
         `;
       }
@@ -2210,6 +2253,7 @@
     MAX_MEAL_VISUAL_TOKENS,
     MAX_SAVED_MEAL_TYPE_INDICATORS,
     normalizeLanguage,
+    buildVisionImageEntryState,
     formatRange,
     buildDailyReflectionLines,
     buildSavedMealTypeIndicatorModel,

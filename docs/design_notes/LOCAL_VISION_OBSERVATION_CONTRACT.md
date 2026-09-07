@@ -205,7 +205,7 @@ The current implementation adds neither a Python bridge nor a startup manager to
 
 MHB 2.4B measured `parser-lines-v2` at about 6.6-8.0 seconds in the corpus run (6.9-second median), with warm repeats sometimes faster. The current optional helper therefore uses an explicit "Let local AI look at a photo" action, calm preparation/observing states, and a manual path that remains available. It preserves the draft, avoids fake progress, and never turns observation into scoring or reward. MHB 2.4H later adopted `parser-lines-v3`; the v2 figures remain the measured pilot baseline rather than a claim about current latency.
 
-The contract itself did not implement UI. The current bounded path includes a local file picker, transient preview, image-preparation page, validation, review, and conservative draft prefill; it still excludes camera capture, auto-apply, auto-save, and persistence of image bytes or raw model prose.
+The contract itself did not implement UI. The current bounded path normally begins with the image-preparation page, then uses a transient preview, validation, review, and conservative draft prefill. The native local file picker remains an explicit recovery primitive only if preparation cannot begin; it still excludes camera capture, auto-apply, auto-save, and persistence of image bytes or raw model prose.
 
 ## Original Acceptance Plan and Completed Boundary
 

@@ -432,6 +432,35 @@
   background: rgba(247, 245, 252, 0.68);
 }
 
+.meal-vision-entry-actions {
+  display: grid;
+  justify-items: end;
+  gap: 7px;
+}
+
+.meal-vision-prepare-action {
+  white-space: nowrap;
+}
+
+.meal-vision-direct-fallback {
+  display: grid;
+  justify-items: end;
+  gap: 3px;
+  color: var(--text-soft);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  text-align: end;
+}
+
+.meal-vision-direct-fallback p {
+  margin: 0;
+}
+
+.meal-vision-direct-fallback .meal-vision-file-action {
+  min-height: auto;
+  font-size: 0.75rem;
+}
+
 .meal-vision-icon {
   display: grid;
   width: 42px;
@@ -2041,9 +2070,16 @@ body[data-theme="dark"] .meal-daily-reflection {
 
   .meal-vision-helper > .meal-vision-file-action,
   .meal-vision-helper > .meal-vision-actions,
+  .meal-vision-helper > .meal-vision-entry-actions,
   .meal-vision-helper > .meal-text-button {
     grid-column: 2;
     justify-self: start;
+  }
+
+  .meal-vision-entry-actions,
+  .meal-vision-direct-fallback {
+    justify-items: start;
+    text-align: start;
   }
 
   .meal-named-dish-card > .meal-text-button,

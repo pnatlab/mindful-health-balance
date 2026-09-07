@@ -26,6 +26,8 @@ The prepared envelope contains only an opaque image Blob plus format, dimensions
 
 Meal Composer opens `image-prep.html` in a same-origin popup. The composer stays open, so its in-memory draft cannot be lost to a same-tab page replacement. After an explicit `Use this image with this meal` action, the child sends the prepared JPEG Blob through a tokenized `postMessage`.
 
+Preparation is the normal visible Meal Composer entry for an image. The existing native direct picker remains behind this boundary as an explicit recovery action only when the parent cannot create or open the preparation bridge. A failed popup never opens the native picker automatically.
+
 The parent accepts a message only when its origin, source window, message type, opaque token, and envelope shape all match. It rejects image formats other than JPEG at the handoff boundary. Cancel closes the preparation page and changes no meal state. Reloading either page may discard a prepared image; that is intentional in this bounded prototype.
 
 The handoff begins the existing Vision availability/observation flow, but it does not itself send an image to Ollama, create a Vision observation, or accept a review. Preparation confirmation is not Vision-review acceptance.

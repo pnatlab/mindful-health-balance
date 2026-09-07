@@ -157,7 +157,9 @@ MHB 2.4F uses a lazy-loaded, vendored MIT HEIC decoder only for HEIC/HEIF input.
 
 ## MHB 2.5A Addendum - Separate Local Image Preparation
 
-Meal Composer now also offers a secondary `Prepare a photo for AI` action. It opens a same-origin preparation page in a separate window so the unsaved composer draft remains in place. That page accepts one JPEG, PNG, WebP, HEIC, or HEIF image, uses the existing local normalizer to produce a temporary 1600 px JPEG at quality 0.90, and previews the result before the user explicitly returns it.
+`Prepare a photo for AI` is the normal visible image-entry action. It opens a same-origin preparation page in a separate window so the unsaved composer draft remains in place. That page accepts one JPEG, PNG, WebP, HEIC, or HEIF image, uses the existing local normalizer to produce a temporary 1600 px JPEG at quality 0.90, and previews the result before the user explicitly returns it.
+
+The native direct-image picker remains an internal Vision primitive and is exposed only as a calm, explicit fallback when the preparation bridge is unavailable or its popup cannot open. It never opens automatically after preparation fails; the user chooses it deliberately. Both entry paths preserve the draft and converge into the same transient Vision observation flow.
 
 The return is a token- and origin-validated transient Blob handoff only. It does not save an image, contact a provider from the preparation page, modify the meal draft, create observations, set `named_dish_id`, or route sodium. Once returned, the existing optional Vision flow still performs its own availability check, observation, validation, and human review before any ordinary draft prefill can occur. Cancel, decode failure, and page reload preserve the Meal Composer draft and may discard the transient image.
 

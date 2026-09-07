@@ -66,6 +66,17 @@ function run() {
   assert.equal(received, null, "foreign-origin messages are ignored");
   pageBridge.destroy();
 
+  const blockedPopupBridge = bridge.createImagePrepBridge({
+    windowRef: {
+      location: { origin: "http://127.0.0.1:4173", href: "http://127.0.0.1:4173/index.html" },
+      addEventListener() {},
+      removeEventListener() {},
+      open() { return null; }
+    }
+  });
+  assert.equal(blockedPopupBridge.open({ language: "th" }), false, "a popup-blocked preparation entry reports failure without falling back automatically");
+  blockedPopupBridge.destroy();
+
   const source = require("node:fs").readFileSync(require("node:path").join(__dirname, "../js/imagePrep/imagePrepBridge.js"), "utf8");
   assert.doesNotMatch(source, /localStorage|indexedDB|Daily_Log|workbook/i);
   console.log("Image preparation bridge tests passed.");

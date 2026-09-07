@@ -75,6 +75,9 @@ function run() {
   assert.equal(mealUI.isVisionReviewPanelVisible(readyReview), true, "a deterministic review model is visible without waiting for naming");
   assert.equal(mealUI.isVisionReviewPanelVisible({ ...readyReview, reviewVisible: false }), true, "legacy gate flags cannot hide a ready review model");
   assert.equal(mealUI.isVisionReviewPanelVisible({ phase: "observing", review: readyReview.review }), false, "observation processing cannot expose review early");
+  assert.deepEqual(mealUI.buildVisionImageEntryState(() => {}), { canPrepare: true, showDirectFallback: false }, "healthy idle image entry exposes only preparation");
+  assert.deepEqual(mealUI.buildVisionImageEntryState(null), { canPrepare: false, showDirectFallback: true }, "a missing preparation bridge exposes the native fallback");
+  assert.deepEqual(mealUI.buildVisionImageEntryState(() => {}, "popup_unavailable"), { canPrepare: true, showDirectFallback: true }, "a failed preparation entry exposes the native fallback without removing retry access");
   let compositionDisclosure = mealUI.createCurrentCompositionDisclosureState(0);
   assert.equal(compositionDisclosure.expanded, false, "a clean draft keeps current composition collapsed");
   compositionDisclosure = mealUI.reduceCurrentCompositionDisclosureState(compositionDisclosure, { type: "meal_type_selected" });
@@ -403,6 +406,8 @@ function run() {
       assert.ok(mealUI.TEXT[language].categories[key]);
     });
     ["unspecified", "stir_fried", "curry", "broth_based"].forEach((key) => assert.ok(mealUI.TEXT[language].mealTypes[key]));
+    assert.equal(typeof mealUI.TEXT[language].visionPrepareUnavailable, "string");
+    assert.equal(typeof mealUI.TEXT[language].visionChooseImageFallback, "string");
   });
 
   mealUI.SUPPORTED_LANGUAGES.forEach((language) => {
@@ -452,6 +457,15 @@ function run() {
   assert.match(mealUiSource, /MEAL_TYPE_ILLUSTRATIONS\[mealType\]/, "Today-page indicator reuses the canonical Meal Type illustration map");
   assert.doesNotMatch(mealUiSource.match(/function buildSavedMealTypeIndicatorModel\([\s\S]*?\n  \}/)[0], /meal_name|items|vision|food_id/i, "indicator derives only from canonical Meal Type and never infers from names, items, or Vision");
   assert.match(mealUiSource, /draft\.mealName \|\| !observation \|\| !review\) return/, "an existing Meal Name suppresses automatic naming");
+  assert.match(mealUiSource, /const imageEntry = buildVisionImageEntryState\(imagePrepBridgeFactory, imagePrepFallbackReason\);/, "the idle helper derives visibility from the preparation-entry state");
+  assert.match(mealUiSource, /imageEntry\.canPrepare \? `<button type="button" class="ghost-button meal-vision-prepare-action" data-image-prep-open>/, "healthy idle state has one visible Prepare action");
+  assert.match(mealUiSource, /imageEntry\.showDirectFallback \? `[\s\S]*?visionPrepareUnavailable[\s\S]*?data-vision-image/, "the direct native picker renders only as recovery content");
+  assert.doesNotMatch(mealUiSource, /<label class="ghost-button meal-vision-file-action">[\s\S]*?visionChooseImage/, "the old always-visible direct image action is retired");
+  assert.match(mealUiSource, /const opened = imagePrepBridge\?\.open\?\.[\s\S]*?if \(opened\) \{[\s\S]*?imagePrepFallbackReason = ""/, "a successful later Prepare attempt clears fallback state");
+  assert.match(mealUiSource, /function revealImagePrepFallback\(reason\) \{[\s\S]*?imagePrepFallbackReason = reason;[\s\S]*?render\(\);/, "a popup or bridge entry failure reveals recovery state");
+  assert.match(mealUiSource, /root\.querySelector\("\[data-image-prep-open\], \[data-vision-image\]"\)\?\.focus\(\)/, "fallback recovery restores a predictable keyboard focus target");
+  assert.doesNotMatch(mealUiSource.match(/function revealImagePrepFallback\([\s\S]*?\n    \}/)[0], /\.click\(/, "recovery never opens the native picker automatically");
+  assert.match(mealUiSource, /if \(event\.target\.matches\("\[data-vision-image\]"\)\) \{[\s\S]*?if \(file\) observeVisionImage\(file\);/, "explicit fallback selection keeps the existing native Vision path");
   assert.match(mealUiSource, /const namingEligible = Boolean\(mealNameProposalFactory && !model\.getDraft\(\)\.mealName\);[\s\S]*?traceNaming\("vision_review_visible", \{[\s\S]*?reason: "review_ready"/, "the deterministic review is visible immediately even while naming begins independently");
   assert.match(mealUiSource, /function isVisionReviewPanelVisible\(session\) \{\s*return Boolean\(session\?\.phase === "review" && session\.review\);/, "review visibility no longer depends on naming-session settlement");
   assert.match(mealUiSource, /state\.phase === "pending"[\s\S]*?copy\.namingPending/, "pending naming stays as a quiet inline state");
