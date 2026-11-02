@@ -1,6 +1,64 @@
 .DS_Store
 *.xlsx
 *.csv
+# Personal workbooks, templates and tabular exports (including uppercase suffixes).
+*.[xX][lL][sS]
+*.[xX][lL][sS][xXmMbB]
+*.[xX][lL][tT]
+*.[xX][lL][tT][xXmM]
+*.[cC][sS][vV]
+*.[tT][sS][vV]
+
+# Local environment/credential material; only synthetic example files are public.
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+.secrets/
+.credentials/
+credentials.local.*
+
+# Personal photos/screenshots stay local. Reviewed app/document image assets
+# remain eligible inside their explicit public trees.
+*.[pP][nN][gG]
+*.[jJ][pP][gG]
+*.[jJ][pP][eE][gG]
+*.[hH][eE][iI][cCfF]
+*.[dD][nN][gG]
+*.[rR][aA][wW]
+*.[wW][eE][bB][pP]
+*.[tT][iI][fF][fF]
+*.[gG][iI][fF]
+!assets/**/*.[pP][nN][gG]
+!assets/**/*.[jJ][pP][gG]
+!assets/**/*.[jJ][pP][eE][gG]
+!assets/**/*.[wW][eE][bB][pP]
+!assets/**/*.[tT][iI][fF][fF]
+!assets/**/*.[gG][iI][fF]
+!docs/**/*.[pP][nN][gG]
+!docs/**/*.[jJ][pP][gG]
+!docs/**/*.[jJ][pP][eE][gG]
+!docs/**/*.[wW][eE][bB][pP]
+!docs/**/*.[tT][iI][fF][fF]
+!docs/**/*.[gG][iI][fF]
+
+# Bounded local export/QA output directories, never source or public assets.
+/local-exports/
+/local-output/
+/private-photos/
+/test-results/
+/playwright-report/
+/coverage/
+/tmp/
+*.tmp
+*.temp
+*.swp
 node_modules/
 dist/
 build/

@@ -2655,6 +2655,31 @@ h2 {
   font-weight: 800;
 }
 
+.recording-date-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.recording-date-controls button {
+  max-width: 100%;
+  white-space: normal;
+}
+
+.recording-date-controls .date-pill {
+  flex: 0 1 auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+#useTodayRecordingDate[hidden] {
+  display: none;
+}
+
 .date-pill,
 .soft-badge {
   flex: 0 0 auto;

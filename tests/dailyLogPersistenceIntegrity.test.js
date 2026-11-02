@@ -147,9 +147,9 @@ invalidRecordStorage.setItem(DAILY_LOG_KEY, '[{"Water_ml":900}]');
 assert.equal(DAILY_LOG_STORAGE_INTEGRITY.inspect(invalidRecordStorage, DAILY_LOG_KEY).errorCode, "invalid_record");
 
 assert.match(scriptSource, /const DAILY_LOG_KEY = "mindfulHealthDailyLog";/);
-assert.match(scriptSource, /const rows = getDailyLog\(\);\s*const existingIndex = rows\.findIndex\(\(item\) => item\.Date === row\.Date\);/);
+assert.match(scriptSource, /const rows = storageState.records;\s*const existingIndex = rows\.findIndex\(\(item\) => item\.Date === row\.Date\);/);
 assert.match(scriptSource, /else \{\s*rows\.push\(row\);\s*\}/);
-assert.match(scriptSource, /setDailyLog\(rowsWithReflections, \{ allowMalformedRecovery: isRecoveryImport \}\)/, "import can replace storage only through the guarded recovery path");
+assert.match(scriptSource, /setDailyLog\(rowsWithReflections, \{ allowMalformedRecovery: isRecoveryImport, expectedRawValue: existingState.rawValue \}\)/, "import uses guarded recovery and the inspected storage snapshot");
 assert.match(scriptSource, /const dailyRows = rows\.map\(\(row\) => pickColumns\(row, DAILY_LOG_COLUMNS\)\);/);
 assert.match(scriptSource, /XLSX\.utils\.sheet_to_json\(dailySheet, \{ defval: "" \}\)/);
 assert.match(scriptSource, /XLSX\.writeFile\(workbook, "Mindful_Health_Balance_Master\.xlsx"\);/);

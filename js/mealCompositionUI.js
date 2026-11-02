@@ -118,6 +118,7 @@
       saved: "เก็บมื้อนี้ไว้แล้วค่ะ",
       updated: "อัปเดตมื้อนี้แล้วค่ะ",
       savedLatest: "เก็บมื้อล่าสุดไว้แล้วค่ะ",
+      savedDate: (date) => `บันทึกวันที่ ${date}`,
       updatedLatest: "อัปเดตมื้อล่าสุดแล้วค่ะ",
       visualItemCount: (count) => `${count} รายการในมื้อนี้`,
       deleted: "เอามื้อนี้ออกจากบันทึกแล้วค่ะ",
@@ -298,6 +299,7 @@
       saved: "This meal has been kept.",
       updated: "This meal has been updated.",
       savedLatest: "Your latest meal has been saved.",
+      savedDate: (date) => `Saved for ${date}`,
       updatedLatest: "Your latest meal has been updated.",
       visualItemCount: (count) => `${count} ${count === 1 ? "item" : "items"} in this meal`,
       deleted: "This meal was removed from the record.",
@@ -478,6 +480,7 @@
       saved: "这一餐已经留下来了。",
       updated: "这一餐已经更新。",
       savedLatest: "刚记录的这一餐已经留下来了。",
+      savedDate: (date) => `已记录到 ${date}`,
       updatedLatest: "刚记录的这一餐已经更新。",
       visualItemCount: (count) => `这一餐中有 ${count} 项记录`,
       deleted: "这一餐已从记录中移除。",
@@ -872,7 +875,7 @@
       return { ok: true };
     }
 
-    function saveDraft() {
+    function saveDraft({ date: saveDate = date } = {}) {
       const validation = validateDraft();
       if (!validation.ok) return validation;
       const wasEditing = Boolean(draft.mealId);
@@ -880,7 +883,7 @@
         mealName: "meal_name", mealType: "meal_type", mealLabel: "meal_label",
         customMealLabel: "custom_meal_label", time: "time"
       };
-      const input = wasEditing ? {} : { date };
+      const input = wasEditing ? {} : { date: saveDate };
       for (const [key, field] of Object.entries(metadata)) {
         if (!wasEditing || dirtyMeta.has(key)) input[field] = draft[key];
       }
@@ -944,14 +947,16 @@
       getLanguage: () => language,
       setLanguage: (nextLanguage) => { language = normalizeLanguage(nextLanguage); },
       getDate: () => date,
-      setDate: (nextDate) => {
+      setDate: (nextDate, { preserveDraft = false } = {}) => {
         const normalized = String(nextDate || "").trim();
         if (normalized !== date) {
           date = normalized;
-          resetDraft();
+          if (preserveDraft) draftRevision += 1;
+          else resetDraft();
         }
       },
       getDraft,
+      hasUnsavedDraft: () => Boolean(draft.mealId || dirtyMeta.size || draft.items.length),
       getDraftRevision: () => draftRevision,
       resetDraft,
       addFood,
@@ -1139,6 +1144,7 @@
     let detailsOpen = false;
     let validationCode = "";
     let recentSavedMealId = "";
+    let recentSavedMeal = null;
     let recentSaveWasEditing = false;
     let visionRequestId = 0;
     let mealNameProposalRequestId = 0;
@@ -1883,7 +1889,7 @@
           </article>
         `;
       }).join("") : `<p class="meal-inline-empty">${escapeHtml(copy.savedMealsEmpty)}</p>`;
-      const recentMeal = recentSavedMealId ? meals.find((meal) => meal.meal_id === recentSavedMealId) : null;
+      const recentMeal = recentSavedMealId ? meals.find((meal) => meal.meal_id === recentSavedMealId) || recentSavedMeal : null;
       const confirmation = savePhase === "saved" && recentMeal ? `
         <div class="meal-saved-confirmation" role="status" aria-live="polite">
           <span class="meal-saved-check" aria-hidden="true">✓</span>
@@ -1891,6 +1897,7 @@
             <span class="meal-saved-confirmation-title">${escapeHtml(recentSaveWasEditing ? copy.updatedLatest : copy.savedLatest)}</span>
             <span aria-hidden="true"> · </span>
             <span>${escapeHtml(recentMeal.meal_name)}</span>
+            <span> · ${escapeHtml(copy.savedDate(recentMeal.date))}</span>
           </span>
         </div>
       ` : "";
@@ -1969,6 +1976,10 @@
         root.querySelector(validationCode === "name_required" ? "[data-meal-name]" : "[data-meal-time]")?.focus();
         return;
       }
+      const approval = options.beforeSave?.({ editingMeal: Boolean(model.getDraft().mealId), mealSave: true });
+      if (approval === false || approval?.ok === false) return;
+      const saveDate = approval?.date || model.getDate();
+      const revision = model.getDraftRevision();
       const wasEditing = Boolean(model.getDraft().mealId);
       validationCode = "";
       savePhase = "saving";
@@ -1976,7 +1987,13 @@
       render();
       scheduleFrame(() => {
         if (destroyed) return;
-        const result = model.saveDraft();
+        const finalApproval = options.beforeSave?.({ editingMeal: Boolean(model.getDraft().mealId), mealSave: true, saveDate });
+        if (revision !== model.getDraftRevision() || finalApproval === false || finalApproval?.ok === false) {
+          savePhase = "idle";
+          render();
+          return;
+        }
+        const result = model.saveDraft({ date: saveDate });
         if (!result.ok) {
           savePhase = "idle";
           validationCode = result.code;
@@ -1986,11 +2003,13 @@
           return;
         }
         recentSavedMealId = result.meal.meal_id;
+        recentSavedMeal = result.meal;
         recentSaveWasEditing = result.wasEditing;
         savePhase = "saved";
         detailsOpen = false;
         clearVisionSession();
-        status = buildSaveFeedbackModel("saved", result.wasEditing, language).message;
+        status = `${buildSaveFeedbackModel("saved", result.wasEditing, language).message} ${getText(language).savedDate(result.meal.date)}`;
+        options.onSaved?.(result);
         render();
         root.querySelector("[data-meal-name]")?.focus({ preventScroll: true });
       });
@@ -2191,6 +2210,9 @@
 
     root.addEventListener("change", (event) => {
       if (destroyed) return;
+      // The input handler already updates the name. Rebuilding on blur would
+      // replace a Save button between pointer-down and click.
+      if (event.target.matches("[data-meal-name]")) return;
       if (event.target.matches("[data-vision-image]")) {
         const file = event.target.files?.[0];
         if (file) observeVisionImage(file);
@@ -2227,6 +2249,9 @@
 
     return Object.freeze({
       render,
+      getDraft: () => model.getDraft(),
+      getDate: () => model.getDate(),
+      hasUnsavedDraft: () => model.hasUnsavedDraft(),
       setLanguage(nextLanguage) {
         language = normalizeLanguage(nextLanguage);
         status = "";
@@ -2234,15 +2259,17 @@
         model.setLanguage(language);
         render();
       },
-      setDate(nextDate) {
+      setDate(nextDate, { preserveDraft = false } = {}) {
         validationCode = "";
         detailsOpen = false;
         clearVisionSession();
-        model.setDate(nextDate);
+        model.setDate(nextDate, { preserveDraft });
         foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "reset", draftItemCount: model.getDraft().items.length });
         currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "reset", draftItemCount: model.getDraft().items.length });
-        savePhase = "idle";
-        recentSavedMealId = "";
+        if (recentSavedMeal?.date !== nextDate || savePhase !== "saved") {
+          savePhase = "idle";
+          recentSavedMealId = "";
+        }
         render();
       },
       open() {

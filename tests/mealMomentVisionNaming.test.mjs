@@ -4,6 +4,7 @@ import runtime from '../js/mealCompositionRuntime.js';
 import ui from '../js/mealCompositionUI.js';
 import vision from '../js/mealVisionReview.js';
 import * as naming from '../js/mealNameProposal.mjs';
+import fixtures from './helpers/syntheticApp.js';
 
 const date = '2026-11-02';
 const image = () => new Blob(['synthetic image'], { type: 'image/png' });
@@ -54,8 +55,9 @@ function setup(options = {}) {
   const storage = { getItem: () => raw, setItem: (_key, value) => { if (options.writeFailure) throw Error('quota'); raw = value; writes++; } };
   const root = rootFixture(), bridges = [], bodies = [], transports = [];
   let observations = 0, normalizations = 0;
-  const model = ui.createMealComposerModel({ runtime, storage, date, language: options.language || 'en', createId: () => `meal-${++id}`, now: () => `${date}T00:00:00Z` });
+  const model = options.model || ui.createMealComposerModel({ runtime, storage, date, language: options.language || 'en', createId: () => `meal-${++id}`, now: () => `${date}T00:00:00Z` });
   const panel = ui.createMealComposerUI({ root, model, runtime, language: options.language || 'en', scheduleFrame: (fn) => fn(),
+    beforeSave: options.beforeSave, onSaved: options.onSaved,
     visionReview: vision,
     visionImageNormalizer: { async normalizeVisionImage(blob) { normalizations++; return { status: 'ready', image: blob }; } },
     visionProviderFactory: async () => ({ isAvailable: async () => ({ status: options.visionUnavailable ? 'provider_unavailable' : 'ready' }),
@@ -178,6 +180,7 @@ const legacy = { meal_id: 'legacy', date, meal_name: 'Original', meal_label: 'cu
 const legacyRaw = JSON.stringify([legacy]);
 const lifecycle = [
   ['date', (f) => f.panel.setDate('2026-11-03')],
+  ['date preserving new draft', (f) => { f.root.type('Keep human text'); f.panel.setDate('2026-11-03', { preserveDraft: true }); assert.equal(f.model.getDraft().mealName, 'Keep human text'); }],
   ['edit', (f) => f.root.click('data-edit-meal', { editMeal: 'legacy' })],
   ['cancel edit', (f) => f.root.click('data-cancel-meal-edit')],
   ['reset', (f) => f.panel.resetDraft()],
@@ -253,6 +256,22 @@ for (const language of ['th', 'en', 'zh']) {
   f.panel.destroy();
 }
 const source = fs.readFileSync(new URL('../js/mealCompositionUI.js', import.meta.url), 'utf8');
+
+// R2: the actual naming pipeline and Meal UI can save Today without writing
+// either day's Daily draft, even while the selected Daily form stays historical.
+const sourceDraft='{ "date":"2026-11-01", "waterMl":700 }';
+const destinationDraft='{ "date":"2026-11-02", "waterMl":1700 }';
+const app=fixtures.syntheticApp({values:{'mindfulHealthBalance:2026-11-01':sourceDraft,'mindfulHealthBalance:2026-11-02':destinationDraft}});
+const named=setup({model:app.model,autoResponse:wire,beforeSave:input=>app.context.prepareRecordingDateForSave(input),onSaved:()=>app.context.refreshRecordingDate()});
+app.context.fixtureMealPanel=named.panel;app.run('mealComposerUI=fixtureMealPanel;');
+named.prepare();await named.ready();assert.deepEqual(app.writes,[]);
+named.accept();named.root.type('Final human food name');assert.deepEqual(app.writes,[]);
+app.setNow('2026-11-02T12:00:00Z');named.root.click('data-save-meal');
+const namedRecord=JSON.parse(app.values.get('mhb_meal_records_v1'))[0];
+assert.equal(namedRecord.date,'2026-11-02');assert.equal(namedRecord.meal_name,'Final human food name');assert.deepEqual(namedRecord.items,[]);
+assert.equal(app.values.get('mindfulHealthBalance:2026-11-01'),sourceDraft);assert.equal(app.values.get('mindfulHealthBalance:2026-11-02'),destinationDraft);
+assert.deepEqual(app.writes,['mhb_meal_records_v1']);named.panel.destroy();
+
 assert.doesNotMatch(source, /applyVisionReviewToDraft|data-vision-apply/);
 assert.ok(source.indexOf('data-meal-name-proposals>${') < source.indexOf('data-meal-photo-content>${'));
 console.log('Meal Moment S3: naming, human authority, no ingredients, lifecycle, fallback and localization passed.');

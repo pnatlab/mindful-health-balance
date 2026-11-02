@@ -70,13 +70,13 @@ Latest refinements include:
 - Input-grounded Reflection composer that remains deterministic, rule-based, and local-first
 - Practice Context and Practice Note stored for Field Review context and bounded `practice_context` Reflection, never as spiritual scoring
 
-MHB 2.3 keeps the MHB 2.2 Reflection rhythm and the locked MHB 2.0 foundation unchanged while adding the first usable Gentle Meal Composition slice. Meal records remain separate from `Daily_Log`, daily meal summaries are derived rather than persisted, and missing nutrition evidence remains visible. It is not an AI companion, nutrition dashboard, calorie tracker, medical review layer, causation analysis, or production SaaS release.
+MHB 2.3 retains the MHB 2.2 Reflection rhythm and locked MHB 2.0 foundation with the current name-first Meal Moment v2 workflow. Meal records remain separate from `Daily_Log`; ingredients and nutrition evidence are historical details rather than new-entry requirements. It is not an AI companion, nutrition dashboard, calorie tracker, medical review layer, causation analysis, or production SaaS release.
 
 ## Main Navigation
 
 The app currently has five main views:
 
-- `Today`: current-day signals, hydration, drinks, load/recovery, the collapsible Meal Composer, Practice Context, and Mind Note
+- `Today`: signals for the displayed recording date, hydration, drinks, load/recovery, name-first Meal Moment, Practice Context, and Mind Note
 - `Reflection/NuTuenSai`: deterministic Reflection generation, review, editing, and save
 - `Field Review / ประมวลข้อมูล`: Guided Field Rooms and Signal Engine over saved `Daily_Log`
 - `Log`: Daily Log Table, Export Master Excel, Import Master Excel, and Clear Daily Log
@@ -233,15 +233,22 @@ Mindful Health Balance is local-first and user-controlled.
 - `Save to Daily Log` is still required to write or update a saved row in the Daily Log table.
 - If the stored Daily Log cannot be read, MHB preserves the original local value and pauses Daily Log save, import, clear, restore, and export. The Log view offers a local raw backup step before an explicit Master Excel recovery; it never silently resets or uploads the data.
 - There is no backend and no automatic upload.
+- The page requests external Google Fonts and the SheetJS browser library. This does not send saved health records automatically, but it means fully offline operation is not guaranteed; CDN availability can affect Excel import/export. Optional image naming uses the existing local AI service.
 - The exported Excel workbook belongs to the user.
 - AI can only read the workbook when the user intentionally exports and shares it.
 - Reflection text is rule-based and descriptive; it is not diagnosis, treatment, therapy, or health-risk prediction.
 
-If the app folder or browser origin changes, existing browser storage may not follow. Export the workbook before moving the app, then import it again after opening from the new location.
+Browser records belong to the origin. Switching between `file://`, `localhost`, another port and `http://127.0.0.1:4173` does not transfer data. Daily Log workbook import is an explicit replacement/recovery bridge; Meal_Log cannot restore full Meals. Stay on the canonical origin for continuity.
+
+The header's **Recording date** selects the Daily form and the default Meal date. Clean forms follow the local day at focus/visibility/control/save boundaries; overnight drafts retain their contents and date. An overnight Meal Save may explicitly use Today for that meal alone: neither day's Daily draft is written, and the Meal confirmation shows its actual saved date. An unsaved Daily form stays on its selected date. A deliberately kept historical date is respected; existing Meal edits keep their saved date.
+
+**Use Today for this draft** and Daily Save date choices never silently replace another date's draft. If a different meaningful destination draft exists, Cancel preserves both drafts and the original date. Proceeding retains changed source input under its original date, opens the existing destination for review, and pauses the current Save; choose Save again after reviewing. A source-write failure or unreadable draft blocks that transition without losing the in-memory form. Date selection without a collision writes no destination draft, including blanks. There is no automatic merge. No saved history or meal time is reassigned. Meal drafts remain in-memory; reload starts from today's Daily draft/saved row rather than automatically finding older drafts.
+
+Each Daily Log save clears prior success and verifies the current write before reporting success. A quota, permission or readback failure retains the in-memory draft and reports that saving could not be confirmed. Draft autosave can also fail: keep the page open and retry after restoring storage access. Malformed storage still requires an explicit raw backup and known-good workbook recovery; nothing is automatically cleared or repaired. These browser checks are not a cross-tab transaction lock or a backup guarantee.
 
 ## How To Use
 
-1. Open `index.html` in a browser.
+1. Open `Start Mindful Health Balance.command` (or the supported generated macOS launcher) and use `http://127.0.0.1:4173`. The launcher needs the documented local Python 3 runtime; no package installation is performed. Directly opening `index.html` supports manual use in a separate, browser-dependent storage context and does not enable the canonical local AI preparation path.
 2. Fill what is true enough in Today’s Signals.
 3. Save Today’s Signals when ready.
 4. Optionally add Practice Context, Practice Note, and Mind Note.
@@ -276,6 +283,12 @@ The workbook currently includes:
 Export is available with saved Daily Log rows, saved Meals, or both. Meal-only export leaves Daily_Log header-only and does not invent daily signals. Meal_Log uses one row per stable Meal_ID; dates and names may repeat. Its columns contain the saved name, classification/occasion/time, save timestamps, record version and historical Item_Count. Missing values and unnamed legacy meals stay blank. It excludes ingredients, sodium, images and AI confidence.
 
 Unreadable, unsupported, malformed or duplicate Meal records pause the entire export without changing storage or silently skipping meals. Import ignores Meal_Log and explicitly reports its exclusion; browser Meals remain unchanged with or without that sheet. Meal_Log cannot restore full Meal records and is not a complete Meal backup.
+
+Import parses and validates the workbook before asking for consent. The preview gives existing and incoming Daily Log row counts, explains whole-array replacement and states whether Meal_Log is present/excluded. A populated local Daily Log cannot be replaced by an incoming zero-row Daily_Log; there is no override. Empty-to-empty import remains empty and reports zero rows. Cancelling the main preview writes nothing. Required Daily Log persistence is verified before its success message; the optional profile keeps its own confirmation and separately reported outcome, so a profile failure does not imply that an already imported Daily Log was rolled back. Browser multi-key/cross-tab operations are not atomic.
+
+Numeric import validation follows the existing Column_Guide types before consent. Numbers, supported finite numeric text and optional blanks remain accepted; malformed/nonfinite values are rejected with worksheet/row/column context without echoing cell contents. Existing sleep/practice duration limits and normalization remain in force. Each new file selection supersedes older pending reads; the preview includes a bounded, sanitized filename. Stale completion/errors cannot prompt, write or replace current feedback, and a later cancellation does not undo an authorized completed import.
+
+The button labeled **Restore Today’s Log** uses the selected recording date (normally Today), with the existing latest-row confirmation fallback. Restore populates the form and attempts to retain its draft; if that write cannot be confirmed, the form stays visible with a failure message and the saved Daily Log remains unchanged. Keep the page open and retry after storage access recovers.
 
 `Daily_Log` keeps canonical English headers for machine readability. `Column_Guide` explains key columns in Thai and English, including units and forbidden interpretations, without changing the canonical headers. `AI_Context` tells AI readers that the workbook is a self-care reflection log, not a finance, expense, accounting, trading, or spending workbook.
 

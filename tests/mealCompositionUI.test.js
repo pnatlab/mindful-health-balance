@@ -12,8 +12,11 @@ function memory(initial=null) {
 function rootFixture() {
   const nodes=new Map();
   const handlers={};
-  const root={handlers,contains:()=>true,addEventListener:(type,handler)=>{handlers[type]=handler;},querySelector(selector) {
-    if(!nodes.has(selector)) nodes.set(selector,{innerHTML:'',textContent:'',setAttribute(){},focus(){root.focused=selector;},scrollIntoView(){}});
+  const root={handlers,renderCount:0,contains:()=>true,addEventListener:(type,handler)=>{handlers[type]=handler;},querySelector(selector) {
+    if(!nodes.has(selector)) {
+      let html='';
+      nodes.set(selector,{get innerHTML(){return html;},set innerHTML(value){html=value;if(selector==='[data-meal-content]')root.renderCount++;},textContent:'',setAttribute(){},focus(){root.focused=selector;},scrollIntoView(){}});
+    }
     return nodes.get(selector);
   }};
   root.content=()=>root.querySelector('[data-meal-content]').innerHTML;
@@ -33,6 +36,34 @@ function setup(initial=null,language='en',extras={}) {
   const panel=ui.createMealComposerUI({root,model,runtime,language,storage,scheduleFrame:(callback)=>callback(),confirmAction:()=>true,...extras});
   panel.open();
   return {root,model,panel,storage};
+}
+
+// A native blur dispatches change between pointer-down and click. The Save
+// target must survive that change so the first click reaches the handler.
+{
+  const f=setup();
+  f.root.input('data-meal-name','QA rice');
+  const beforeBlur=f.root.renderCount;
+  f.root.change('data-meal-name','QA rice');
+  assert.equal(f.root.renderCount,beforeBlur,'Food Name change must not replace the pressed Save button');
+  assert.equal(f.storage.snapshot(),null,'changing a name never saves automatically');
+  f.root.click('data-save-meal');
+  assert.equal(f.model.getMeals().length,1);
+  assert.equal(JSON.parse(f.storage.snapshot()).length,1);
+  assert.match(f.root.content(),/<h4>QA rice<\/h4>/);
+  assert.match(f.root.content(),/meal-saved-confirmation/);
+  const id=f.model.getMeals()[0].meal_id;
+  f.root.click('data-edit-meal',{editMeal:id});
+  f.root.input('data-meal-name','Edited QA rice');
+  const beforeEditBlur=f.root.renderCount;
+  f.root.change('data-meal-name','Edited QA rice');
+  assert.equal(f.root.renderCount,beforeEditBlur);
+  f.root.click('data-save-meal');
+  assert.equal(f.model.getMeals().length,1);
+  assert.equal(JSON.parse(f.storage.snapshot()).length,1);
+  assert.equal(f.model.getMeals()[0].meal_id,id);
+  assert.equal(f.model.getMeals()[0].meal_name,'Edited QA rice');
+  f.panel.destroy();
 }
 const {root,model,panel,storage}=setup();
 assert.ok(root.content().indexOf('data-meal-name')<root.content().indexOf('data-image-prep-open') || root.content().indexOf('data-meal-name')<root.content().indexOf('data-vision-image'));
@@ -128,7 +159,7 @@ const source=fs.readFileSync(path.join(__dirname,'../js/mealCompositionUI.js'),'
 const activeRender=source.match(/function render\(\) \{[^]*?\n    \}/)[0];
 assert.doesNotMatch(activeRender,/renderFoodPicker|renderNamedDishReference|renderMealType/);
 assert.doesNotMatch(source,/data-vision-apply|applyVisionReviewToDraft/);
-const manualSave=source.match(/function saveDraft\(\)[^]*?\n    \}/)[0];
+const manualSave=source.match(/function saveDraft\([^\n]*\) \{[^]*?\n    \}/)[0];
 assert.doesNotMatch(manualSave,/draft\.items|meal_note|named_dish_id|condiment_knowledge/,'active metadata edits never rebuild hidden history');
 // Retained helper remains available for historical/module regression coverage.
 const review=vision.createVisionReviewModel({observation_id:'synthetic',visible_components:[{label:'rice'}]});

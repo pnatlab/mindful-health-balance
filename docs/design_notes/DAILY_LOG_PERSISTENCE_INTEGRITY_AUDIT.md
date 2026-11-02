@@ -1,5 +1,24 @@
 # Daily Log Persistence Integrity Audit
 
+## Current post-S4 repair addendum — R1 and R2
+
+The investigation below is a historical record; its original code-path findings must not be read as current runtime instructions. Current import parses/validates before consent, previews existing/incoming row counts and Meal_Log exclusion, and blocks a populated-to-empty replacement with no override. Cancellation of that preview writes nothing. The optional profile retains its separate confirmation/outcome; a profile failure is reported without implying rollback of a verified Daily import. No Meal storage is written.
+
+Daily Log saves clear stale success, handle quota/security/read failures, compare the inspected raw state before mutation and verify exact write readback before success. Draft autosave returns an explicit outcome and retains the in-memory form on failure. An inaccessible key blocks destructive paths without treating it as an empty store. Malformed storage still requires an exact local raw backup before explicit recovery; no auto-clear/migration is added. These localStorage checks are not atomic compare-and-set or multi-key transactions.
+
+`appState.date` is the shared selected recording date for the header, Daily saves and default new Meals. Clean forms follow the local calendar at visibility/focus/control/save boundaries; dirty overnight drafts retain their date/content until an explicit choice. Explicitly kept historical dates and saved Meal edits stay pinned. Date-scoped Daily draft copies remain separate from canonical Daily Log; reload opens the current day's draft/saved row, not an automatic search of prior drafts. Startup restoration is read-only. Unsaved Meal drafts remain in-memory. Reflection algorithms/Roots, Daily schema, saved history and meal time inference are unchanged.
+
+### R2 bounded integrity decisions
+
+- A pending overnight Meal Save may explicitly use Today via a date bound only to that Save. It neither writes Daily drafts nor moves a dirty Daily form. Its confirmation shows the actual saved Meal date. After successful Save, a clean Daily form may follow Today by reading the destination; saved Meal edits keep their stored date. This adds no persistent date authority or schema.
+- Shared date transitions do not write destination drafts, including blank drafts. If a meaningful destination draft conflicts with the Daily form, Cancel leaves both untouched. Explicitly proceeding first retains any changed source draft under its original date with write/readback verification, then opens the existing destination for review and pauses the current Daily Save. An already matching source copy remains byte-for-byte unchanged. Unreadable drafts or changed raw values block the transition; no merge or silent replacement occurs.
+- Import validates the existing nine numeric Daily_Log columns before normalization or consent. Blank optional cells remain supported; finite Excel numbers and the existing finite numeric-text representations remain supported. Existing Sleep_Hours (0–16) and Practice_Minutes (0–1440) limits remain; other columns gain no new ranges. Invalid input reports worksheet/row/column without echoing cell contents. A single latest-selection generation binds the parsed workbook to its filename/count preview and consent; superseded read completions/errors and repeated terminal callbacks cannot import or replace status.
+- Restore populates the selected date's form without writing canonical Daily Log. It reports ordinary success only when the date-scoped draft write and readback succeed. Otherwise the visible failure explains that the form remains in memory and asks the user to keep the page open and retry; a generic restored message cannot hide that failure.
+
+These checks preserve R1's empty-import guard, malformed-storage recovery and verified-save feedback. They do not provide atomic cross-tab transactions, automatic cross-day draft recovery or a durable unsaved Meal store.
+
+## Historical investigation
+
 ## Purpose
 
 This forensic note records the investigation of a field incident in which the Log view showed approximately one recent row while a protected Master workbook still contained the historical Daily Log. Importing that workbook restored approximately 77 visible rows. The audit does not modify runtime behavior, browser data, storage schemas, launcher behavior, or the protected workbook.

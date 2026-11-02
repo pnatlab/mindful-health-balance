@@ -12,6 +12,10 @@ Food Name → inline suggestions when available → single Prepare Image entry �
 
 Async progress updates only the AI slots, leaving Food Name/IME intact. Failure and insufficient evidence offer manual fallback and explicit retry. Naming retry uses the existing observation, not another image request. Draft/session invalidation includes prepared-popup handoffs and stale candidate controls; see the current contract for lifecycle details. Accepted names never set meal classification, occasion, time, items, evidence or named-dish identity.
 
+Food Name updates the draft on input; its blur/change event does not rebuild the form. This keeps the Save button in place through a pointer click, so the first explicit click saves the entered name. Validation and the separate human Save boundary remain unchanged.
+
+Post-S4 date safety: the header and default new Meals share `appState.date`. The Save boundary lets an overnight Meal explicitly keep its original date or use Today for that pending Save only, preserving name/metadata and leaving both Daily drafts untouched. A dirty Daily form stays selected on its date; the Meal confirmation displays the actual saved date. A clean Daily form can follow Today read-only after success. Shared date changes protect destination drafts and may open an existing destination for review after explicit consent, pausing Daily Save. Date changes and successful Meal Save invalidate old AI callbacks. Existing saved Meal edits retain identity, date and hidden historical data. This adds no persistent date store, ingredient mutation, Meal schema or new AI call. See the current contract for the date/reload limitations.
+
 ## Historical implementation record
 
 ## Status

@@ -70,7 +70,7 @@ function app(options = {}) {
     book_new: () => ({ SheetNames:[], Sheets:{} }),
     json_to_sheet(rows, settings = {}) { return { rows:plain(rows), headers:plain(settings.header || Object.keys(rows[0] || {})), '!ref':'A1:K1' }; },
     book_append_sheet(book, sheet, name) { book.SheetNames.push(name); book.Sheets[name] = sheet; },
-    sheet_to_json: (sheet) => plain(sheet.rows || [])
+    sheet_to_json: (sheet, settings = {}) => settings.header === 1 ? [sheet.headers || ['Date', 'Water_ml']] : plain(sheet.rows || [])
   },
   writeFile(book) { if(options.writeFailure) throw Error('generation failed'); xlsx.book = book; return options.downloadPromise; },
   read: () => options.importBook

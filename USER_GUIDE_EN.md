@@ -14,7 +14,7 @@ The app helps you record honest daily signals as structured local data across:
 
 This app is not a medical tool, not a diagnosis system, and not a replacement for professional care or medical follow-up.
 
-This guide describes the current **MHB 2.3 — Gentle Meal Composition** release. It adds a local-first meal workspace on the MHB 2.2 foundation while keeping Meal records separate from `Daily_Log` and leaving the workbook and historical data unchanged.
+This guide describes **MHB 2.3 — Gentle Meal Composition**, with the current name-first Meal Moment v2 workflow. Meal records remain separate from `Daily_Log`. Generated Excel exports include Meal_Log; protected Master workbooks/templates and historical records are not automatically modified or migrated.
 
 Its value is not in being a production SaaS platform. Its value is in a portable, user-owned data layer that can later be reviewed by the user or intentionally shared with AI without handing agency to the system.
 
@@ -112,9 +112,15 @@ The Today/Hydration area may greet you using the saved display name and address 
 
 Starting in v1.9.2 — Today Input Step Flow, `Clear Current Form` appears only on Today’s Signals 1/2. Today’s Signals 1/2 and Mind Note 2/2 now include `Save to Daily Log`, so you can save the Daily Log without visiting Reflection first. Going to Reflection/NuTuenSai is navigation only; it does not save data.
 
-`Restore Today’s Log` appears beside `Clear Current Form`. It loads the saved Daily_Log row for today back into the current form, which is useful if the current form was cleared by mistake. It does not create a new row, save automatically, delete Daily Log data, or generate Reflection. If there is no row for today, the app asks before loading the latest saved row into today’s form.
+The button labeled `Restore Today’s Log` appears beside `Clear Current Form`. It loads the row for the selected recording date (normally Today). If that date has no saved row, the app asks before loading the latest row into the selected date's form. It does not write a canonical Daily Log row or generate Reflection. It attempts to retain the restored draft; if this fails, the form stays visible with a draft-save failure message. Keep the page open and retry after storage recovers.
 
 During the day, the current form autosaves as a local browser draft when you enter or select data, so a reload can bring the form back. If the draft is missing but today already has a saved Daily_Log row, the app loads today’s row back into the form on startup, except after an intentional `Clear Current Form`. This draft is not a saved Daily_Log row until you click `Save to Daily Log` or `Save Today’s Reflection`.
+
+The header's **Recording date** selects the Daily form and default Meal date. Clean forms follow Today when you return to the page or use a control after midnight. An overnight Meal Save can explicitly use Today for that meal alone without writing either day's Daily draft; its confirmation shows the saved date. An unsaved Daily form keeps its selected date, and deliberately retained historical dates remain respected. Existing Meal edits keep their saved date.
+
+Use **Use Today for this draft** to change the shared selected date after saving/canceling an existing Meal edit. A different existing destination Daily draft is protected: Cancel keeps both drafts and the original date. OK retains current source input under its original date and opens the existing destination for review; the current Daily Save stops, so choose Save again when ready. If source persistence fails or a draft cannot be read safely, the transition stops with the form retained. A date choice alone writes no destination draft or blank record; there is no automatic merge. Saved history and meal time do not move. Reload opens today's Daily draft/saved row rather than finding older drafts automatically. Unsaved Meal drafts remain in memory only.
+
+Each Daily Log save replaces stale success with the current result. Storage space, permission or verification failures retain the in-memory draft and show failure rather than success. If draft autosave fails, keep the page open and avoid reloading until you can retry. Malformed Daily Log storage still requires the local raw backup and explicit known-good workbook recovery; the app does not clear or repair it automatically.
 
 Same-day saves use a source-aware safe merge. Saving Today’s Signals updates only that layer and preserves saved Practice Context, Practice Note, Mind Note, and Reflection. Saving Mind Note 2/2 updates Practice/Mind Note fields while preserving Reflection. Reflection uses `Save Today’s Reflection` when you want to save the generated or edited Reflection layer.
 
@@ -465,11 +471,13 @@ If any Meal record is unreadable, unsupported, malformed or has a duplicate ID, 
 
 ### Import Master Excel
 
-Meal_Log is export-only. If present, the app explicitly says it was not imported. Browser Meals stay unchanged whether that sheet is present or absent. It cannot restore full Meal records. A meal-only workbook has an empty Daily_Log; importing it follows the existing daily replacement confirmation behavior.
+Meal_Log is export-only. The preview explicitly says whether it is present and excluded. Browser Meals stay unchanged either way; this sheet cannot restore full Meal records. A Meal-only workbook's empty Daily_Log cannot replace an existing populated Daily Log. No override is offered.
 
 Click `Import Master Excel` to load a saved master file back into the app.
 
-The app reads the `Daily_Log` sheet and restores the rows into the Daily Log Table. If existing Daily Log data is already present, the app asks before overwriting it.
+The app parses and validates `Daily_Log` before consent. The preview shows existing and incoming row counts and asks whether to replace the entire Daily Log, rather than merge it. Cancelling this preview writes nothing; a malformed workbook fails before replacement. Empty local plus empty incoming data remains empty and reports zero rows. Persistence must be verified before Daily Log import success is shown.
+
+Numeric columns are checked before consent. Valid numbers, supported finite numeric text and blank optional cells remain accepted. Invalid/nonfinite values stop the entire import with a worksheet, row and column message, without displaying the cell contents. Existing sleep/practice duration limits and normalization remain unchanged. The preview includes a sanitized workbook filename. Selecting another file supersedes older pending reads, so their results/errors cannot confirm, write or replace current feedback. Canceling a later import never rolls back an already completed authorized import.
 
 If the workbook contains a valid `User_Intention_Profile` sheet, the app shows a preview and asks before replacing the local profile:
 
@@ -478,6 +486,8 @@ If the workbook contains a valid `User_Intention_Profile` sheet, the app shows a
 - v1 does not merge field-by-field.
 - A workbook without the profile sheet leaves the local profile unchanged.
 - An invalid profile candidate is skipped and should not break the rest of workbook import.
+
+Daily Log and the optional profile have separate outcomes, not an atomic transaction. A profile failure is reported separately and does not roll back an already imported Daily Log. Keep a known-good Daily Log workbook for recovery; Meal_Log is not a complete Meal backup. Concurrent-tab writes are not atomically locked.
 
 The core data is local-only in the browser/localStorage. There is no auto-upload.
 
@@ -489,15 +499,19 @@ Open this folder:
 ~/Desktop/MindfulSystem_xAi/apps/mindful-health-balance
 ```
 
-Then double-click:
+Then open the supported launcher:
 
 ```text
-index.html
+Start Mindful Health Balance.command
 ```
 
-The app is a static web app. It does not require a backend server or framework.
+Use the canonical local address `http://127.0.0.1:4173`. The launcher uses local Python 3 to serve this static app; no application backend or account is required. Optional local AI requires the existing separately running Ollama service and configured models; manual naming needs neither.
+
+Opening `index.html` directly uses a separate, browser-dependent file storage context. Records do not automatically transfer between it, `localhost`, other ports and the canonical address. Prefer the launcher for ongoing use and image preparation.
 
 If `Export Master Excel` does not work, check that the browser can load the SheetJS CDN, because Excel export/import uses a browser-side library.
+
+The page also requests Google Fonts. Personal records remain locally controlled with no automatic health-data upload, but these external library/font requests mean fully offline operation is not guaranteed.
 
 ## 22. Important Reminders
 
@@ -506,7 +520,7 @@ If `Export Master Excel` does not work, check that the browser can load the Shee
 - Do not use the app to pressure yourself.
 - If you have real symptoms or health concerns, seek professional care.
 - The goal is not to make numbers look good quickly. The goal is to build a system that can last.
-- The app is local-only and does not auto-upload your data.
+- The app is local-first and does not automatically upload health records; external font/library requests may still occur.
 - AI reads exported data only when you choose to share the workbook.
 - It is not a medical tool, not a diagnosis system, not therapy, not crisis support, not financial advice, and not a scoring/judgment app.
 - Positive signals are support signals, not performance scores.

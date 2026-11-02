@@ -46,6 +46,7 @@ const getReflectionRootSignalGroups = window.getReflectionRootSignalGroups;
 const getReflectionRootSignalWeights = window.getReflectionRootSignalWeights;
 const getReflectionRootBoundaryTags = window.getReflectionRootBoundaryTags;
 let dailyLogRecoveryBackupKey = "";
+let excelImportGeneration = 0;
 
 const translations = {
   th: {
@@ -553,14 +554,34 @@ const translations = {
     mealLogNotImported: "ไม่ได้นำเข้า Meal_Log มื้ออาหารใน browser ยังเหมือนเดิม แผ่นงานนี้ใช้ส่งออกเท่านั้นและกู้คืนมื้อฉบับเต็มไม่ได้",
     noDailyLog: "ยังไม่มี Daily Log ให้ export เริ่มจาก Save to Daily Log ก่อนนะ",
     exportedMaster: "Export Master Excel แล้ว ไฟล์จะถูกดาวน์โหลดลงเครื่องของคุณ",
-    importOverwriteConfirm: "มี Daily Log อยู่แล้ว ต้องการ overwrite ด้วยข้อมูลจากไฟล์นี้ไหม?",
+    importPreview: "Daily Log ใน browser: {existing} แถว\nDaily Log ในไฟล์: {incoming} แถว\nยืนยันแทนที่ Daily Log ทั้งชุดด้วยข้อมูลในไฟล์หรือไม่?",
+    importRecoveryPreview: "อ่านจำนวนแถว Daily Log เดิมไม่ได้ แต่เก็บสำรองข้อความดิบไว้แล้ว\nDaily Log ในไฟล์: {incoming} แถว\nยืนยันใช้ข้อมูลในไฟล์แทน Daily Log ที่อ่านไม่ได้ทั้งชุดเพื่อกู้คืนหรือไม่?",
+    importEmptyBlocked: "ไฟล์ที่เลือกไม่มีรายการ Daily Log จึงไม่ได้แทนที่ Daily Log เดิม",
+    importNoMealSheet: "ไฟล์นี้ไม่มี Meal_Log มื้ออาหารใน browser จะไม่เปลี่ยน",
+    dailyLogSaveFailed: "ยังยืนยันการบันทึก Daily Log ไม่ได้ ร่างยังอยู่ในหน้านี้ โปรดตรวจพื้นที่จัดเก็บหรือสิทธิ์ของ browser แล้วลองใหม่",
+    dailyLogChanged: "Daily Log เปลี่ยนไประหว่างดำเนินการ จึงยังไม่ได้แทนที่ โปรดตรวจข้อมูลแล้วลองใหม่",
+    draftSaveFailed: "ยังเก็บร่างใน browser ไม่สำเร็จ ข้อมูลยังอยู่ในหน้านี้ อย่าเพิ่งปิดหรือโหลดหน้าใหม่",
+    recordingDateLabel: "วันที่บันทึก: {date}",
+    recordingDateToday: "ใช้วันที่วันนี้กับร่างนี้",
+    recordingDateRollover: "ร่างนี้เป็นของวันที่ {date} ตอนนี้เป็นวันที่ {today}\nตกลง: ใช้วันที่วันนี้กับร่างทั้ง Daily Log และมื้ออาหาร\nยกเลิก: คงวันที่เดิมสำหรับการบันทึกครั้งนี้\nข้อมูลในร่างยังอยู่ การเลือกนี้ใช้กับการบันทึกที่เพิ่งกด",
+    recordingDateEditPinned: "โปรดบันทึกหรือยกเลิกการแก้ไขมื้อเดิมก่อนเปลี่ยนวันที่ วันที่ของมื้อที่บันทึกแล้วจะไม่ถูกย้าย",
+    recordingDateMealRollover: "วันที่ที่เลือกคือ {date} วันนี้คือ {today}\nตกลง: บันทึกเฉพาะมื้อนี้ในวันที่วันนี้\nยกเลิก: บันทึกมื้อนี้ในวันที่ที่เลือก\nร่าง Daily ทั้งสองวันจะไม่ถูกเขียนหรือแทนที่",
+    recordingDateDraftConflict: "มีร่าง Daily ของวันที่ {date} อยู่แล้ว\nตกลง: เก็บร่างปัจจุบันไว้ที่วันที่เดิม แล้วเปิดร่างปลายทางให้ตรวจ โดยยังไม่บันทึก Daily Log\nยกเลิก: อยู่วันที่เดิมและไม่เปลี่ยนร่างทั้งสองวัน",
+    recordingDateDraftUnavailable: "ยังเปลี่ยนวันที่ไม่ได้ เพราะอ่านร่าง Daily อย่างปลอดภัยไม่สำเร็จ ร่างในหน้ายังอยู่ และไม่ได้แทนที่ร่างใด",
+    recordingDateDraftOpened: "เปิดร่าง Daily ของวันที่ {date} แล้ว ร่างเดิมยังอยู่ที่วันที่เดิม โปรดตรวจและกดบันทึกเองเมื่อพร้อม",
     importCancelled: "ยังไม่ import ทับ Daily Log เดิม",
     missingDailySheet: "ไม่พบ Sheet Daily_Log ในไฟล์นี้",
-    importDone: "Import Master Excel แล้ว ({count} rows)",
+    importDone: "นำเข้า Daily Log แล้ว ({count} แถว)",
     importProfileImported: "นำเข้า Intention Profile แล้ว หลังพี่ยืนยัน",
     importProfileCancelled: "ยังไม่เปลี่ยน Intention Profile เดิม",
     importProfileEmpty: "ไม่พบ profile สำหรับ import ใน sheet นี้",
     importProfileRejected: "ข้าม Intention Profile เพราะข้อมูลไม่ผ่าน validation: {reason}",
+    importProfileSaveFailed: "ยังยืนยันการบันทึก Intention Profile ไม่ได้ โปรดตรวจพื้นที่จัดเก็บและ profile ก่อนลองใหม่ Daily Log ที่นำเข้าแล้วไม่ได้ถูกย้อนกลับ",
+    importPartialFailure: "นำเข้า Daily Log แล้ว ({count} แถว) แต่ขั้นตอนถัดไปไม่สำเร็จ โปรดตรวจ Intention Profile ไม่มีการย้อนข้อมูลที่นำเข้าแล้ว",
+    importInvalidNumeric: "ยังไม่ได้นำเข้า: {sheet} แถว {row} คอลัมน์ {column} ต้องเป็นตัวเลขที่รองรับหรือช่องว่าง โปรดตรวจไฟล์ ข้อมูลเดิมยังอยู่",
+    importWorkbookName: "ไฟล์: {name}",
+    importUnnamedWorkbook: "ไฟล์ที่เลือก",
+    restoreDraftSaveFailed: "เรียกข้อมูลมาในฟอร์มแล้ว แต่ยังยืนยันการเก็บร่างใน browser ไม่ได้ โปรดเปิดหน้านี้ไว้และลองใหม่ Daily Log เดิมไม่ได้เปลี่ยน",
     importFailed: "อ่านไฟล์ Excel ไม่สำเร็จ ลองตรวจไฟล์อีกครั้ง",
     overallMessage: "ข้อมูลนี้ช่วยดู pattern และ balance recovery ไม่ใช่การตัดสินสุขภาพจากวันใดวันหนึ่ง",
     reflection: {
@@ -1581,14 +1602,34 @@ const translations = {
     mealLogNotImported: "Meal_Log was not imported. Browser meals are unchanged. This export-only sheet cannot restore full Meal records.",
     noDailyLog: "There is no Daily Log to export yet. Start with Save to Daily Log.",
     exportedMaster: "Master Excel exported. The file will download to your device.",
-    importOverwriteConfirm: "Daily Log data already exists. Overwrite it with this file?",
+    importPreview: "Daily Log in this browser: {existing} rows\nDaily Log in this file: {incoming} rows\nReplace the entire browser Daily Log with the file's records?",
+    importRecoveryPreview: "Existing Daily Log row count is unreadable; its raw backup is retained.\nDaily Log in this file: {incoming} rows\nRecover by replacing the entire unreadable Daily Log with the file's records?",
+    importEmptyBlocked: "The selected workbook contains no Daily Log records. Your existing Daily Log was not replaced.",
+    importNoMealSheet: "This file has no Meal_Log. Browser meals will remain unchanged.",
+    dailyLogSaveFailed: "Daily Log save could not be confirmed. Your draft remains on this page. Check browser storage space or permissions, then retry.",
+    dailyLogChanged: "Daily Log changed during this operation. It was not replaced. Review the records and retry.",
+    draftSaveFailed: "The browser could not retain this draft. Your input remains on this page. Keep it open and avoid reloading.",
+    recordingDateLabel: "Recording date: {date}",
+    recordingDateToday: "Use Today for this draft",
+    recordingDateRollover: "This draft belongs to {date}. Today is {today}.\nOK: use Today for both the Daily Log and meal drafts.\nCancel: keep the original date for this save.\nDraft contents are retained. This choice applies to the Save action you just selected.",
+    recordingDateEditPinned: "Save or cancel the existing meal edit before changing the recording date. Saved meal dates are not moved.",
+    recordingDateMealRollover: "The selected date is {date}. Today is {today}.\nOK: save only this meal for Today.\nCancel: save this meal for the selected date.\nNeither day's Daily draft will be written or replaced.",
+    recordingDateDraftConflict: "A Daily draft already exists for {date}.\nOK: retain the current draft under its original date, then open the destination draft for review without saving Daily Log.\nCancel: keep the original date and leave both drafts unchanged.",
+    recordingDateDraftUnavailable: "The recording date could not change because a Daily draft could not be read safely. Your form remains in memory; no draft was replaced.",
+    recordingDateDraftOpened: "Opened the Daily draft for {date}. The source draft remains under its original date. Review it and choose Save when ready.",
     importCancelled: "Import cancelled. Existing Daily Log was not overwritten.",
     missingDailySheet: "No Daily_Log sheet was found in this file.",
-    importDone: "Master Excel imported ({count} rows).",
+    importDone: "Daily Log imported ({count} rows).",
     importProfileImported: "Intention Profile imported after confirmation.",
     importProfileCancelled: "Existing Intention Profile was not changed.",
     importProfileEmpty: "No profile was available to import in that sheet.",
     importProfileRejected: "Intention Profile skipped because it did not pass validation: {reason}",
+    importProfileSaveFailed: "Intention Profile save could not be confirmed. Check browser storage and review the profile before retrying. The imported Daily Log was not rolled back.",
+    importPartialFailure: "Daily Log imported ({count} rows), but a later import step did not complete. Review the optional Intention Profile. No rollback was performed.",
+    importInvalidNumeric: "Import paused: {sheet}, row {row}, column {column} requires a supported number or a blank cell. Check the workbook. Existing data is unchanged.",
+    importWorkbookName: "Workbook: {name}",
+    importUnnamedWorkbook: "Selected workbook",
+    restoreDraftSaveFailed: "Data restored into the form, but we could not confirm this draft was saved. Keep this page open and retry. The saved Daily Log is unchanged.",
     importFailed: "Could not read the Excel file. Please check the file and try again.",
     overallMessage: "This data helps notice patterns and balance recovery. It is not a judgment from any single day.",
     reflection: {
@@ -2609,14 +2650,34 @@ const translations = {
     mealLogNotImported: "未导入 Meal_Log，浏览器中的餐食未变更。此工作表仅供导出，无法恢复完整餐食记录。",
     noDailyLog: "目前没有 Daily Log 可导出。请先 Save to Daily Log。",
     exportedMaster: "Master Excel 已导出，文件会下载到你的设备。",
-    importOverwriteConfirm: "已经有 Daily Log 数据。要用这个文件覆盖吗？",
+    importPreview: "浏览器中的 Daily Log：{existing} 条\n文件中的 Daily Log：{incoming} 条\n是否用文件记录替换浏览器中的全部 Daily Log？",
+    importRecoveryPreview: "无法读取原有 Daily Log 的行数，原始备份已保留。\n文件中的 Daily Log：{incoming} 条\n是否用文件记录替换全部无法读取的 Daily Log，以完成恢复？",
+    importEmptyBlocked: "所选工作簿没有 Daily Log 记录，原有 Daily Log 未被替换。",
+    importNoMealSheet: "此文件没有 Meal_Log，浏览器中的餐食不会改变。",
+    dailyLogSaveFailed: "暂时无法确认 Daily Log 已保存。草稿仍在本页，请检查浏览器存储空间或权限后重试。",
+    dailyLogChanged: "操作期间 Daily Log 已发生变化，未进行替换。请检查记录后重试。",
+    draftSaveFailed: "浏览器暂时无法保留草稿。输入仍在本页，请先保持页面打开，不要刷新。",
+    recordingDateLabel: "记录日期：{date}",
+    recordingDateToday: "此草稿使用今天的日期",
+    recordingDateRollover: "此草稿属于 {date}，今天是 {today}。\n确定：Daily Log 和餐食草稿均使用今天。\n取消：本次保存保留原日期。\n草稿内容会保留，此选择用于刚才点击的保存操作。",
+    recordingDateEditPinned: "请先保存或取消已有餐食的编辑，再更改记录日期。已保存餐食的日期不会被移动。",
+    recordingDateMealRollover: "所选日期为 {date}，今天是 {today}。\n确定：仅将这餐保存到今天。\n取消：将这餐保存到所选日期。\n两天的 Daily 草稿均不会被写入或替换。",
+    recordingDateDraftConflict: "{date} 已有 Daily 草稿。\n确定：将当前草稿保留在原日期，再打开目标草稿供检查，不保存 Daily Log。\n取消：保留原日期，两份草稿均不变。",
+    recordingDateDraftUnavailable: "无法安全读取 Daily 草稿，暂时不能更改记录日期。表单内容仍在内存中，没有替换任何草稿。",
+    recordingDateDraftOpened: "已打开 {date} 的 Daily 草稿，原草稿仍保留在原日期。请检查后再点击保存。",
     importCancelled: "已取消导入，没有覆盖原本的 Daily Log。",
     missingDailySheet: "这个文件里找不到 Daily_Log sheet。",
-    importDone: "Master Excel 已导入（{count} rows）。",
+    importDone: "Daily Log 已导入（{count} 条）。",
     importProfileImported: "确认后已导入 Intention Profile。",
     importProfileCancelled: "原本的 Intention Profile 没有改变。",
     importProfileEmpty: "这个 sheet 中没有可导入的 profile。",
     importProfileRejected: "已跳过 Intention Profile，因为资料未通过 validation：{reason}",
+    importProfileSaveFailed: "无法确认 Intention Profile 已保存。请检查浏览器存储和 profile 后重试，已导入的 Daily Log 未被回滚。",
+    importPartialFailure: "Daily Log 已导入（{count} 条），但后续步骤未完成。请检查可选的 Intention Profile，已导入的数据未被回滚。",
+    importInvalidNumeric: "导入已暂停：{sheet} 第 {row} 行的 {column} 列需要支持的数字或空白单元格。请检查工作簿，原有数据未变更。",
+    importWorkbookName: "工作簿：{name}",
+    importUnnamedWorkbook: "所选工作簿",
+    restoreDraftSaveFailed: "数据已恢复到表单，但无法确认这份草稿已保存。请保持页面打开后重试，已保存的 Daily Log 未变更。",
     importFailed: "无法读取这个 Excel 文件。请检查文件后再试。",
     overallMessage: "这些数据帮助观察 pattern 和 balance recovery，不是用某一天来判断健康。",
     reflection: {
@@ -3347,7 +3408,11 @@ const legacyPracticeTypeMap = {
   open_space: "other"
 };
 
-const todayIso = new Date().toLocaleDateString("en-CA");
+function localCalendarDate(now = new Date()) {
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+}
+
+let todayIso = localCalendarDate();
 
 const defaultState = {
   date: todayIso,
@@ -3416,6 +3481,10 @@ function normalizeMindStateValue(value) {
 let currentLanguage = loadLanguage();
 let currentThemePreference = getThemePreference();
 let appState = loadState();
+// appState.date owns the recording date. This flag describes intent, not a
+// second date value; an explicitly kept/backdated draft never follows Today.
+let recordingDateFollowsToday = appState.date === todayIso;
+let recordingDateDecisionPending = false;
 let themeIntervalId;
 let visionVocabularyAuditPanel;
 let stateOrbIntervalId;
@@ -3541,14 +3610,22 @@ document.addEventListener("DOMContentLoaded", () => {
   startTodayStateOrbRefresh();
   syncUI();
   renderDailyLogTable();
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) refreshRecordingDate();
+  });
+  window.addEventListener("focus", () => refreshRecordingDate());
+  document.addEventListener("focusin", () => refreshRecordingDate());
+  // Resolve a clean overnight form before the first control mutates its draft.
+  document.addEventListener("pointerdown", () => refreshRecordingDate(), true);
+  document.addEventListener("keydown", () => refreshRecordingDate(), true);
 });
 
-function storageKey() {
-  return `${STORAGE_PREFIX}:${todayIso}`;
+function storageKey(date = todayIso) {
+  return `${STORAGE_PREFIX}:${date}`;
 }
 
-function currentFormClearedKey() {
-  return `${CURRENT_FORM_CLEARED_PREFIX}:${todayIso}`;
+function currentFormClearedKey(date = todayIso) {
+  return `${CURRENT_FORM_CLEARED_PREFIX}:${date}`;
 }
 
 function welcomeStorageKey() {
@@ -3556,12 +3633,14 @@ function welcomeStorageKey() {
 }
 
 function loadLanguage() {
-  const savedLanguage = localStorage.getItem(LANGUAGE_KEY);
+  let savedLanguage;
+  try { savedLanguage = localStorage.getItem(LANGUAGE_KEY); } catch { return "th"; }
   return translations[savedLanguage] ? savedLanguage : "th";
 }
 
 function getThemePreference() {
-  const savedTheme = localStorage.getItem(THEME_KEY);
+  let savedTheme;
+  try { savedTheme = localStorage.getItem(THEME_KEY); } catch { return "auto"; }
   return ["auto", "light", "dark"].includes(savedTheme) ? savedTheme : "auto";
 }
 
@@ -3621,7 +3700,7 @@ function initializeMealComposerUI() {
     runtime: MEAL_COMPOSITION_RUNTIME,
     storage: localStorage,
     normalizeDate: normalizeExcelDate,
-    date: todayIso,
+    date: appState.date,
     language: currentLanguage,
     visionImageNormalizer: MEAL_VISION_IMAGE_NORMALIZER,
     visionReview: MEAL_VISION_REVIEW,
@@ -3630,6 +3709,8 @@ function initializeMealComposerUI() {
     visionVocabulary: VISION_OBSERVATION_VOCABULARY,
     isReflectionEligible: MEAL_DRAFT_REFLECTION_CONTEXT?.isMealDraftReflectionEligible,
     onReflectDraft: beginMealDraftReflection,
+    beforeSave: prepareRecordingDateForSave,
+    onSaved: () => refreshRecordingDate(),
     mealNameProposalFactory: async () => import("./js/mealNameProposal.mjs"),
     visionProviderFactory: async () => {
       const providerModule = await import("./js/localVisionProvider.mjs");
@@ -3950,14 +4031,16 @@ function replaceUserIntentionProfileFromImport(profile) {
   const validation = validateUserIntentionProfile(normalized);
   if (!validation.ok) return { ok: false, errors: validation.errors, profile: normalized };
   try {
-    localStorage.setItem(USER_INTENTION_PROFILE_KEY, JSON.stringify(normalized));
+    const serialized = JSON.stringify(normalized);
+    localStorage.setItem(USER_INTENTION_PROFILE_KEY, serialized);
+    if (localStorage.getItem(USER_INTENTION_PROFILE_KEY) !== serialized) throw new Error("Profile write not confirmed");
   } catch {
-    return { ok: false, errors: ["ยังบันทึก Intention Profile จาก workbook ใน browser นี้ไม่ได้ค่ะ"], profile: normalized };
+    return { ok: false, code: "storage_write_failed", errors: ["ยังบันทึก Intention Profile จาก workbook ใน browser นี้ไม่ได้ค่ะ"], profile: normalized };
   }
   return { ok: true, errors: [], profile: normalized };
 }
 
-function confirmAndReplaceUserIntentionProfile(profileImport) {
+function confirmAndReplaceUserIntentionProfile(profileImport, { isCurrent = () => true } = {}) {
   if (profileImport.status === "missing") return { status: "missing", message: "" };
   if (profileImport.status === "empty") return { status: "empty", message: t("importProfileEmpty") };
   if (profileImport.status === "invalid") {
@@ -3968,9 +4051,11 @@ function confirmAndReplaceUserIntentionProfile(profileImport) {
   if (!confirm(buildUserIntentionProfileImportPreview(profileImport.profile, profileImport.warnings))) {
     return { status: "cancelled", message: t("importProfileCancelled") };
   }
+  if (!isCurrent()) return { status: "cancelled", message: t("importProfileCancelled") };
 
   const result = replaceUserIntentionProfileFromImport(profileImport.profile);
   if (!result.ok) {
+    if (result.code === "storage_write_failed") return { status: "failed", message: t("importProfileSaveFailed") };
     return { status: "invalid", message: t("importProfileRejected", { reason: result.errors.join("; ") }) };
   }
   writeProfileForm(result.profile);
@@ -5116,31 +5201,39 @@ function startTodayStateOrbRefresh() {
   }, 60 * 1000);
 }
 
-function loadState() {
-  const saved = localStorage.getItem(storageKey());
+function loadState(date = todayIso) {
+  let saved, intentionallyCleared;
+  try {
+    saved = localStorage.getItem(storageKey(date));
+    intentionallyCleared = localStorage.getItem(currentFormClearedKey(date)) === "true";
+  } catch {
+    return { ...structuredClone(defaultState), date };
+  }
   if (saved) {
     try {
       const parsed = normalizeDraftState(JSON.parse(saved));
+      parsed.date = date;
       if (hasMeaningfulCurrentFormDraft(parsed)) return parsed;
     } catch {
       // Fall through to today's saved Daily_Log row if the draft is malformed.
     }
   }
 
-  if (!wasCurrentFormIntentionallyClearedToday()) {
-    const todayRow = getTodayRawDailyLogRow();
+  if (!intentionallyCleared) {
+    const todayRow = getTodayRawDailyLogRow(date);
     if (todayRow) {
       const restored = buildStateFromDailyLogRow(todayRow);
-      localStorage.setItem(storageKey(), JSON.stringify(restored));
+      restored.date = date;
+      // Loading saved data is read-only. Draft persistence follows user input.
       return restored;
     }
   }
 
-  return structuredClone(defaultState);
+  return { ...structuredClone(defaultState), date };
 }
 
-function getTodayRawDailyLogRow() {
-  return getDailyLog().find((row) => normalizeExcelDate(row?.Date) === todayIso) || null;
+function getTodayRawDailyLogRow(date = todayIso) {
+  return getDailyLog().find((row) => normalizeExcelDate(row?.Date) === date) || null;
 }
 
 function normalizeDraftState(state = {}) {
@@ -5166,12 +5259,160 @@ function normalizeDraftState(state = {}) {
 
 function renderDate() {
   const currentDate = document.querySelector("#currentDate");
-  currentDate.textContent = new Date().toLocaleDateString(translations[currentLanguage].locale, {
+  if (!currentDate) return;
+  const formatted = new Date(`${appState.date}T12:00:00`).toLocaleDateString(translations[currentLanguage].locale, {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric"
   });
+  const label = t("recordingDateLabel", { date: formatted });
+  if (currentDate.textContent !== label) currentDate.textContent = label;
+  const useToday = document.querySelector("#useTodayRecordingDate");
+  if (useToday) {
+    useToday.hidden = appState.date === todayIso;
+    useToday.textContent = t("recordingDateToday");
+  }
+}
+
+function dailyDraftSignature(state) {
+  const normalized = normalizeDraftState(state);
+  const fields = ["waterMl", "drinks", "drinkProfiles", "activities", "energyCauses", "selectedState", "sleepHours", "runDetail",
+    "practiceRoot", "practiceType", "practiceMinutes", "practiceNote", "mindNoteText", "mindNoteFeeling", "mindNoteSupport", "generatedReflection"];
+  return JSON.stringify(fields.map((key) => normalized[key]));
+}
+
+function hasUnsavedDailyDraft() {
+  const state = getDailyLogStorageState();
+  const saved = state.records.find((row) => normalizeExcelDate(row.Date) === appState.date);
+  const dailyDirty = dailyDraftSignature(appState) !== dailyDraftSignature(saved ? buildStateFromDailyLogRow(saved) : defaultState);
+  return dailyDirty || isGeneratingReflection;
+}
+
+function hasUnsavedRecordingDraft() {
+  return hasUnsavedDailyDraft() || Boolean(mealComposerUI?.hasUnsavedDraft?.());
+}
+
+function readRecordingDraft(date) {
+  try {
+    const rawValue = localStorage.getItem(storageKey(date));
+    if (rawValue === null) return { ok: true, rawValue, state: null, meaningful: false };
+    const parsed = JSON.parse(rawValue);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)
+      || (parsed.date && parsed.date !== date)) throw new Error("Ambiguous draft date");
+    const state = { ...normalizeDraftState(parsed), date };
+    return { ok: true, rawValue, state, meaningful: hasMeaningfulCurrentFormDraft(state) };
+  } catch {
+    return { ok: false };
+  }
+}
+
+function setRecordingDate(date, { explicit = true, preserveDraft = true } = {}) {
+  if (!isValidRecordingDate(date)) return false;
+  if (date !== appState.date && mealComposerUI?.getDraft?.().mealId) {
+    document.querySelector("#saveStatus").textContent = t("recordingDateEditPinned");
+    return false;
+  }
+  if (date !== appState.date) {
+    const destination = readRecordingDraft(date);
+    if (!destination.ok) {
+      document.querySelector("#saveStatus").textContent = t("recordingDateDraftUnavailable");
+      return false;
+    }
+    if (preserveDraft && destination.meaningful && dailyDraftSignature(destination.state) !== dailyDraftSignature(appState)) {
+      if (!confirm(t("recordingDateDraftConflict", { date }))) return false;
+      const source = readRecordingDraft(appState.date);
+      if (!source.ok) {
+        document.querySelector("#saveStatus").textContent = t("recordingDateDraftUnavailable");
+        return false;
+      }
+      // Only this explicit Daily transition authorizes retaining changed source
+      // input. Never rewrite an already matching source, or the destination.
+      if (hasMeaningfulCurrentFormDraft(appState) && (!source.state || dailyDraftSignature(source.state) !== dailyDraftSignature(appState))
+        && !saveCurrentForm({ expectedRawValue: source.rawValue })) return false;
+      try {
+        if (localStorage.getItem(storageKey(date)) !== destination.rawValue) throw new Error("Destination changed");
+      } catch {
+        document.querySelector("#saveStatus").textContent = t("recordingDateDraftUnavailable");
+        return false;
+      }
+      appState = destination.state;
+      mealComposerUI?.setDate(date, { preserveDraft });
+      recordingDateFollowsToday = !explicit;
+      recordingDateDecisionPending = false;
+      renderDate();
+      syncUI();
+      document.querySelector("#saveStatus").textContent = t("recordingDateDraftOpened", { date });
+      // Opening another existing draft always pauses the current Save for review.
+      return false;
+    }
+    if (!preserveDraft) appState = loadState(date);
+    appState.date = date;
+    mealComposerUI?.setDate(date, { preserveDraft });
+    // Date selection itself never persists a destination draft, including blanks.
+  }
+  recordingDateFollowsToday = !explicit;
+  recordingDateDecisionPending = false;
+  renderDate();
+  return true;
+}
+
+function refreshRecordingDate({ beforeSave = false, editingMeal = false } = {}) {
+  const currentIso = localCalendarDate();
+  if (currentIso !== todayIso) {
+    const priorToday = todayIso;
+    todayIso = currentIso;
+    todayInputStep = 1;
+    todayInputStepResetAfterSave = true;
+    activeTodaySignal = "hydration";
+    if (recordingDateFollowsToday && (appState.date === priorToday || recordingDateDecisionPending)) {
+      if (hasUnsavedRecordingDraft()) recordingDateDecisionPending = true;
+      else {
+        if (!setRecordingDate(currentIso, { explicit: false, preserveDraft: false })) return false;
+        syncUI();
+      }
+    } else recordingDateFollowsToday = false;
+  }
+  if (recordingDateFollowsToday && appState.date !== todayIso && !hasUnsavedRecordingDraft()) {
+    if (!setRecordingDate(todayIso, { explicit: false, preserveDraft: false })) return false;
+    syncUI();
+  }
+  if (beforeSave && (editingMeal || mealComposerUI?.getDraft?.().mealId)) {
+    recordingDateFollowsToday = false;
+    recordingDateDecisionPending = false;
+  }
+  if (beforeSave && recordingDateDecisionPending && recordingDateFollowsToday) {
+    const useToday = confirm(t("recordingDateRollover", { date: appState.date, today: todayIso }));
+    if (useToday) {
+      if (!setRecordingDate(todayIso, { explicit: false, preserveDraft: true })) return false;
+    } else {
+      recordingDateFollowsToday = false;
+      recordingDateDecisionPending = false;
+    }
+  }
+  renderDate();
+  return true;
+}
+
+function prepareRecordingDateForSave({ editingMeal = false, mealSave = false, saveDate } = {}) {
+  if (mealSave) {
+    refreshRecordingDate({ editingMeal, beforeSave: false });
+    if (editingMeal) {
+      recordingDateFollowsToday = false;
+      recordingDateDecisionPending = false;
+      return { ok: true, date: appState.date };
+    }
+    // A human-selected Meal date is local to this pending Save, not a second
+    // selected-date authority. It never invokes Daily draft persistence.
+    if (saveDate) return { ok: true, date: saveDate };
+    if ((recordingDateDecisionPending || appState.date !== todayIso) && recordingDateFollowsToday) {
+      if (confirm(t("recordingDateMealRollover", { date: appState.date, today: todayIso }))) return { ok: true, date: todayIso };
+      recordingDateFollowsToday = false;
+      recordingDateDecisionPending = false;
+    }
+    return { ok: true, date: appState.date };
+  }
+  return refreshRecordingDate({ beforeSave: true, editingMeal });
 }
 
 function renderDrinkOptions() {
@@ -5254,6 +5495,11 @@ function renderPracticeTypeOptions() {
 }
 
 function bindEvents() {
+  document.querySelector("#useTodayRecordingDate")?.addEventListener("click", () => {
+    refreshRecordingDate();
+    setRecordingDate(todayIso, { explicit: false, preserveDraft: true });
+    syncUI();
+  });
   document.querySelector("#beginWelcome").addEventListener("click", hideWelcome);
   document.querySelector("#openWelcome").addEventListener("click", () => showWelcome({ remember: false }));
   document.querySelector("#openIntentionProfile")?.addEventListener("click", openIntentionProfileScaffold);
@@ -5693,7 +5939,8 @@ function syncUI() {
 }
 
 function persistCurrentFormDraft() {
-  saveCurrentForm({ generateReflection: false });
+  document.querySelector("#saveStatus").textContent = "";
+  return saveCurrentForm({ generateReflection: false });
 }
 
 function syncUIAndPersistDraft() {
@@ -5793,12 +6040,7 @@ function prepareTodayStepForOpen() {
 }
 
 function resetTodayStepIfDateChanged() {
-  const currentIso = new Date().toLocaleDateString("en-CA");
-  if (currentIso !== todayIso) {
-    todayInputStep = 1;
-    todayInputStepResetAfterSave = true;
-    activeTodaySignal = "hydration";
-  }
+  refreshRecordingDate();
 }
 
 function updateTodayInputStepUI() {
@@ -7289,9 +7531,9 @@ function buildSignals() {
     recoveryLoad: getRecoveryLoadSignal(loadScore),
     energySleep: getEnergySleepSignal(loadScore, sleepDetail),
     mindNote: getMindNoteSignal(),
-    dailyLogGap: getDailyLogGapContext(todayIso)
+    dailyLogGap: getDailyLogGapContext(appState.date)
   };
-  signals.continuity = buildContinuitySignals(signals, getPreviousLogContext(todayIso));
+  signals.continuity = buildContinuitySignals(signals, getPreviousLogContext(appState.date));
   return signals;
 }
 
@@ -9479,7 +9721,7 @@ function mergeDailyLogRow(existingRow, incomingRow, saveSource = "reflection") {
 function getTodaySavedLogRow() {
   return getDailyLog()
     .map(normalizeLogRow)
-    .find((row) => row.Date === todayIso);
+    .find((row) => row.Date === appState.date);
 }
 
 function hasSavedTodaySignals(row) {
@@ -9584,31 +9826,40 @@ function updateDailySaveStatus() {
 }
 
 function markCurrentFormClearedToday() {
-  localStorage.setItem(currentFormClearedKey(), "true");
+  localStorage.setItem(currentFormClearedKey(appState.date), "true");
 }
 
 function clearCurrentFormClearedMarker() {
-  localStorage.removeItem(currentFormClearedKey());
+  localStorage.removeItem(currentFormClearedKey(appState.date));
 }
 
 function wasCurrentFormIntentionallyClearedToday() {
   return localStorage.getItem(currentFormClearedKey()) === "true";
 }
 
-function saveCurrentForm({ generateReflection = false } = {}) {
+function saveCurrentForm({ generateReflection = false, expectedRawValue } = {}) {
   if (generateReflection) {
     appState.generatedReflection = ensureReflectionSignature(appState.generatedReflection || buildReflection());
   }
-  clearCurrentFormClearedMarker();
-  localStorage.setItem(storageKey(), JSON.stringify(appState));
+  try {
+    if (expectedRawValue !== undefined && localStorage.getItem(storageKey(appState.date)) !== expectedRawValue) throw new Error("Source draft changed");
+    const serialized = JSON.stringify(appState);
+    localStorage.setItem(storageKey(appState.date), serialized);
+    if (localStorage.getItem(storageKey(appState.date)) !== serialized) throw new Error("Draft write not confirmed");
+    clearCurrentFormClearedMarker();
+    return true;
+  } catch {
+    document.querySelector("#saveStatus").textContent = t("draftSaveFailed");
+    return false;
+  }
 }
 
 function resetCurrentForm() {
   if (!confirm(t("resetCurrentFormConfirm"))) return;
 
   isEditingReflection = false;
-  appState = structuredClone(defaultState);
-  localStorage.removeItem(storageKey());
+  appState = { ...structuredClone(defaultState), date: appState.date };
+  localStorage.removeItem(storageKey(appState.date));
   markCurrentFormClearedToday();
   resetTodayInputStep();
   resetDrinkProfileForm();
@@ -9664,11 +9915,11 @@ function restoreCurrentFormFromDailyLog() {
   }
 
   loadDailyLogRowIntoCurrentState(row);
-  saveCurrentForm({ generateReflection: false });
+  const draftSaved = saveCurrentForm({ generateReflection: false });
   renderPracticeTypeOptions();
   resetDrinkProfileForm();
   syncUI();
-  if (saveStatus) saveStatus.textContent = t("restoreCurrentFormDone");
+  if (saveStatus) saveStatus.textContent = t(draftSaved ? "restoreCurrentFormDone" : "restoreDraftSaveFailed");
 }
 
 function parseDrinkProfilesForRestore(row) {
@@ -9723,7 +9974,9 @@ function buildStateFromDailyLogRow(row) {
 }
 
 function loadDailyLogRowIntoCurrentState(row) {
-  appState = buildStateFromDailyLogRow(row);
+  // Restore inputs into the selected recording day; loading an older source
+  // row must not independently change date ownership or the Meal Composer.
+  appState = { ...buildStateFromDailyLogRow(row), date: appState.date };
   selectedReflectionRoot = normalizeReflectionRootMetadataValue(row?.Reflection_Root) || "auto";
   isEditingReflection = false;
 }
@@ -9734,11 +9987,13 @@ function getDailyLog() {
 }
 
 function getDailyLogStorageState() {
-  return DAILY_LOG_STORAGE_INTEGRITY.inspect(localStorage, DAILY_LOG_KEY);
+  try { return DAILY_LOG_STORAGE_INTEGRITY.inspect(localStorage, DAILY_LOG_KEY); }
+  catch { return { status: "unavailable", records: [], rawValue: null, errorCode: "storage_read_failed" }; }
 }
 
 function hasMalformedDailyLogStorage() {
-  return getDailyLogStorageState().status === "malformed";
+  // Legacy helper name: inaccessible storage also blocks every destructive path.
+  return ["malformed", "unavailable"].includes(getDailyLogStorageState().status);
 }
 
 function showDailyLogWriteBlocked() {
@@ -9746,18 +10001,38 @@ function showDailyLogWriteBlocked() {
   if (saveStatus) saveStatus.textContent = t("dailyLogIntegrityWriteBlocked");
 }
 
-function setDailyLog(rows, { allowMalformedRecovery = false } = {}) {
-  if (hasMalformedDailyLogStorage() && (!allowMalformedRecovery || !dailyLogRecoveryBackupKey)) {
+function setDailyLog(rows, { allowMalformedRecovery = false, expectedRawValue } = {}) {
+  const state = getDailyLogStorageState();
+  if (state.status === "unavailable") {
+    document.querySelector("#saveStatus").textContent = t("dailyLogSaveFailed");
+    return false;
+  }
+  if (state.status === "malformed" && (!allowMalformedRecovery || !dailyLogRecoveryBackupKey)) {
     showDailyLogWriteBlocked();
     return false;
   }
-
-  const cleanRows = rows
-    .filter((row) => row && row.Date)
-    .map(normalizeLogRow)
-    .sort((a, b) => String(a.Date).localeCompare(String(b.Date)));
-  localStorage.setItem(DAILY_LOG_KEY, JSON.stringify(cleanRows));
-  renderDailyLogTable();
+  if (expectedRawValue !== undefined && state.rawValue !== expectedRawValue) {
+    document.querySelector("#saveStatus").textContent = t("dailyLogChanged");
+    return false;
+  }
+  try {
+    if (state.status === "malformed" && localStorage.getItem(dailyLogRecoveryBackupKey) !== state.rawValue) {
+      showDailyLogWriteBlocked();
+      return false;
+    }
+    const cleanRows = rows
+      .filter((row) => row && row.Date)
+      .map(normalizeLogRow)
+      .sort((a, b) => String(a.Date).localeCompare(String(b.Date)));
+    const serialized = JSON.stringify(cleanRows);
+    localStorage.setItem(DAILY_LOG_KEY, serialized);
+    if (localStorage.getItem(DAILY_LOG_KEY) !== serialized) throw new Error("Daily Log write not confirmed");
+  } catch {
+    document.querySelector("#saveStatus").textContent = t("dailyLogSaveFailed");
+    return false;
+  }
+  try { renderDailyLogTable(); }
+  catch { console.warn("Daily Log persistence was confirmed, but its view could not refresh."); }
   return true;
 }
 
@@ -9919,6 +10194,12 @@ function normalizeExcelDate(value) {
   return String(value || "").trim();
 }
 
+function isValidRecordingDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const parsed = new Date(`${value}T12:00:00Z`);
+  return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+}
+
 function normalizeMealDate(value) {
   return normalizeExcelDate(value);
 }
@@ -10053,7 +10334,14 @@ Object.assign(window, {
 });
 
 function saveCurrentDailyLog({ generateReflection = true, saveSource = "reflection" } = {}) {
-  if (hasMalformedDailyLogStorage()) {
+  document.querySelector("#saveStatus").textContent = "";
+  if (!prepareRecordingDateForSave()) return;
+  const storageState = getDailyLogStorageState();
+  if (storageState.status === "unavailable") {
+    document.querySelector("#saveStatus").textContent = t("dailyLogSaveFailed");
+    return;
+  }
+  if (storageState.status === "malformed") {
     showDailyLogWriteBlocked();
     return;
   }
@@ -10066,7 +10354,7 @@ function saveCurrentDailyLog({ generateReflection = true, saveSource = "reflecti
     generateReflection,
     includeReflectionRoot: saveSource === "reflection"
   });
-  const rows = getDailyLog();
+  const rows = storageState.records;
   const existingIndex = rows.findIndex((item) => item.Date === row.Date);
 
   if (existingIndex >= 0) {
@@ -10080,8 +10368,8 @@ function saveCurrentDailyLog({ generateReflection = true, saveSource = "reflecti
     rows.push(row);
   }
 
-  saveCurrentForm({ generateReflection: false });
-  if (!setDailyLog(rows)) return;
+  if (!saveCurrentForm({ generateReflection: false })) return;
+  if (!setDailyLog(rows, { expectedRawValue: storageState.rawValue })) return;
   resetTodayInputStep();
   document.querySelector("#saveStatus").textContent = t("savedDailyLog");
   syncUI();
@@ -10115,6 +10403,7 @@ function clearDailyLog() {
 function renderDailyLogTable() {
   const storageState = getDailyLogStorageState();
   const isMalformed = storageState.status === "malformed";
+  const isUnavailable = storageState.status === "unavailable";
   const rows = isMalformed ? [] : storageState.records;
   const body = document.querySelector("#dailyLogBody");
   const emptyState = document.querySelector("#emptyLogState");
@@ -10133,13 +10422,14 @@ function renderDailyLogTable() {
   if (!body || !emptyState || !logCount) return;
 
   protectedActions.forEach((action) => {
-    if (action) action.disabled = isMalformed;
+    if (action) action.disabled = isMalformed || isUnavailable;
   });
   if (notice) notice.classList.toggle("is-hidden", !isMalformed);
   if (backupButton) backupButton.disabled = !isMalformed;
   if (recoveryButton) recoveryButton.disabled = !isMalformed || !dailyLogRecoveryBackupKey;
 
-  logCount.textContent = isMalformed
+  if (isUnavailable) document.querySelector("#saveStatus").textContent = t("dailyLogSaveFailed");
+  logCount.textContent = isMalformed || isUnavailable
     ? t("dailyLogIntegrityNeedsRecoveryShort")
     : rows.length === 1
       ? t("logCountSingular", { count: rows.length })
@@ -10149,7 +10439,7 @@ function renderDailyLogTable() {
       ${DAILY_LOG_COLUMNS.map((column) => `<td>${escapeHtml(localizeLogCell(column, row[column]))}</td>`).join("")}
     </tr>
   `).join("");
-  emptyState.classList.toggle("is-hidden", isMalformed || rows.length > 0);
+  emptyState.classList.toggle("is-hidden", isMalformed || isUnavailable || rows.length > 0);
   updateDailySaveStatus();
   renderFieldReview();
 }
@@ -13078,34 +13368,89 @@ function renderFieldReview() {
   container.innerHTML = hasRows ? renderFieldRoomWorkspace(cards, timeframe, rows) : "";
 }
 
+function validateDailyLogImportNumbers(rows) {
+  // Reuse the existing Column_Guide types; this is not a new Daily_Log schema.
+  const columns = DAILY_LOG_COLUMNS.filter((column) => COLUMN_SEMANTIC_GUIDE[`Daily_Log.${column}`]?.dataType === "number");
+  const prepared = [];
+  for (let index = 0; index < rows.length; index += 1) {
+    const source = rows[index];
+    const row = { ...source };
+    for (const column of columns) {
+      const value = source[column];
+      if (value === null || value === undefined || (typeof value === "string" && !value.trim())) {
+        if (value !== undefined) row[column] = "";
+        continue;
+      }
+      const number = typeof value === "number" || typeof value === "string" ? Number(value) : NaN;
+      const inRange = column === "Sleep_Hours" ? number >= 0 && number <= 16
+        : column === "Practice_Minutes" ? number >= 0 && number <= 1440 : true;
+      if (!Number.isFinite(number) || !inRange) {
+        const rowNumber = Number.isSafeInteger(source.__rowNum__) && source.__rowNum__ >= 1 ? source.__rowNum__ + 1 : index + 2;
+        return { ok: false, row: rowNumber, column };
+      }
+    }
+    prepared.push(row);
+  }
+  return { ok: true, rows: prepared };
+}
+
+function workbookDisplayName(file) {
+  // Text only: strip path/control/bidi characters and bound the preview label.
+  return String(file.name || "").split(/[\\/]/).pop()
+    .replace(/[\u0000-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/g, "").slice(0, 160) || t("importUnnamedWorkbook");
+}
+
 function importMasterExcel(event) {
+  const generation = ++excelImportGeneration;
+  const isCurrent = () => generation === excelImportGeneration;
   const file = event.target.files?.[0];
   const isRecoveryImport = event.target.dataset.dailyLogRecovery === "true";
   event.target.value = "";
   delete event.target.dataset.dailyLogRecovery;
   if (!file) return;
+  document.querySelector("#saveStatus").textContent = "";
 
   if (hasMalformedDailyLogStorage() && (!isRecoveryImport || !dailyLogRecoveryBackupKey)) {
     showDailyLogWriteBlocked();
     return;
   }
 
-  if (getDailyLog().length && !confirm(t("importOverwriteConfirm"))) {
-    document.querySelector("#saveStatus").textContent = t("importCancelled");
-    return;
-  }
-
-  const reader = new FileReader();
+  let reader;
+  try { reader = new FileReader(); }
+  catch { document.querySelector("#saveStatus").textContent = t("importFailed"); return; }
+  let readHandled = false;
   reader.onload = (loadEvent) => {
+    if (!isCurrent() || readHandled) return;
+    readHandled = true;
+    let importedDailyCount = null;
+    let importedMealNotice = "";
     try {
       const workbook = XLSX.read(loadEvent.target.result, { type: "array", cellDates: true });
+      if (!isCurrent()) return;
       const dailySheet = workbook.Sheets.Daily_Log;
       if (!dailySheet) {
         alert([t("missingDailySheet"), workbook.Sheets.Meal_Log ? t("mealLogNotImported") : ""].filter(Boolean).join(" "));
         return;
       }
 
-      const importedRows = XLSX.utils.sheet_to_json(dailySheet, { defval: "" }).map(normalizeLogRow);
+      const header = XLSX.utils.sheet_to_json(dailySheet, { header: 1, defval: "" })[0];
+      if (!Array.isArray(header) || header.filter((name) => name === "Date").length !== 1
+        || header.some((name) => name && header.indexOf(name) !== header.lastIndexOf(name))) {
+        throw new Error("Invalid Daily_Log header");
+      }
+      const rawRows = XLSX.utils.sheet_to_json(dailySheet, { defval: "" });
+      if (!Array.isArray(rawRows) || rawRows.some((row) => !row || typeof row !== "object" || Array.isArray(row)
+        || Object.values(row).some((value) => value !== null && typeof value === "object" && !(value instanceof Date))
+        || !isValidRecordingDate(normalizeExcelDate(row.Date)))) {
+        throw new Error("Invalid Daily_Log row");
+      }
+      const numericValidation = validateDailyLogImportNumbers(rawRows);
+      if (!isCurrent()) return;
+      if (!numericValidation.ok) {
+        document.querySelector("#saveStatus").textContent = t("importInvalidNumeric", { sheet: "Daily_Log", row: numericValidation.row, column: numericValidation.column });
+        return;
+      }
+      const importedRows = numericValidation.rows.map(normalizeLogRow);
       const reflectionMap = readReflectionMap(workbook);
       const profileImport = parseUserIntentionProfileSheet(workbook);
       const rowsWithReflections = importedRows.map((row) => {
@@ -13120,21 +13465,62 @@ function importMasterExcel(event) {
         });
       });
 
-      if (!setDailyLog(rowsWithReflections, { allowMalformedRecovery: isRecoveryImport })) {
+      const existingState = getDailyLogStorageState();
+      if (!isCurrent()) return;
+      if (existingState.status === "unavailable") {
+        document.querySelector("#saveStatus").textContent = t("dailyLogSaveFailed");
         return;
       }
+      if (existingState.status === "malformed" && (!isRecoveryImport || !dailyLogRecoveryBackupKey)) {
+        showDailyLogWriteBlocked();
+        return;
+      }
+      const existingCount = existingState.records.length;
+      const mealNotice = t(workbook.Sheets.Meal_Log ? "mealLogNotImported" : "importNoMealSheet");
+      if ((existingCount > 0 || existingState.status === "malformed") && rowsWithReflections.length === 0) {
+        document.querySelector("#saveStatus").textContent = [t("importEmptyBlocked"), mealNotice].join(" ");
+        return;
+      }
+      const preview = t(existingState.status === "malformed" ? "importRecoveryPreview" : "importPreview", {
+        existing: existingCount, incoming: rowsWithReflections.length
+      });
+      if (!confirm([t("importWorkbookName", { name: workbookDisplayName(file) }), preview, mealNotice].join("\n\n"))) {
+        if (isCurrent()) document.querySelector("#saveStatus").textContent = t("importCancelled");
+        return;
+      }
+      if (!isCurrent()) return;
+      if (!setDailyLog(rowsWithReflections, { allowMalformedRecovery: isRecoveryImport, expectedRawValue: existingState.rawValue })) {
+        return;
+      }
+      importedDailyCount = rowsWithReflections.length;
+      importedMealNotice = workbook.Sheets.Meal_Log ? t("mealLogNotImported") : "";
       dailyLogRecoveryBackupKey = "";
-      const profileImportResult = confirmAndReplaceUserIntentionProfile(profileImport);
+      if (!isCurrent()) return;
+      const profileImportResult = confirmAndReplaceUserIntentionProfile(profileImport, { isCurrent });
+      if (!isCurrent()) return;
       document.querySelector("#saveStatus").textContent = [
         t("importDone", { count: rowsWithReflections.length }),
         profileImportResult.message,
         workbook.Sheets.Meal_Log ? t("mealLogNotImported") : ""
       ].filter(Boolean).join(" ");
     } catch (error) {
-      alert(t("importFailed"));
+      if (!isCurrent()) return;
+      if (importedDailyCount !== null) {
+        document.querySelector("#saveStatus").textContent = [t("importPartialFailure", { count: importedDailyCount }), importedMealNotice].filter(Boolean).join(" ");
+      } else {
+        document.querySelector("#saveStatus").textContent = t("importFailed");
+        alert(t("importFailed"));
+      }
     }
   };
-  reader.readAsArrayBuffer(file);
+  reader.onerror = () => {
+    if (isCurrent() && !readHandled) { readHandled = true; document.querySelector("#saveStatus").textContent = t("importFailed"); }
+  };
+  reader.onabort = () => {
+    if (isCurrent() && !readHandled) { readHandled = true; document.querySelector("#saveStatus").textContent = t("importCancelled"); }
+  };
+  try { reader.readAsArrayBuffer(file); }
+  catch { if (isCurrent() && !readHandled) { readHandled = true; document.querySelector("#saveStatus").textContent = t("importFailed"); } }
 }
 
 function readReflectionMap(workbook) {

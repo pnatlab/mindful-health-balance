@@ -8,6 +8,10 @@ Column_Guide adds eleven stable Meal_Log column entries, marked as export projec
 
 No workbook/template file is opened or modified. Import remains Daily_Log plus the existing optional profile boundary, with an explicit localized notice when Meal_Log is excluded. The earlier guide design below is retained.
 
+Post-S4 import safety: parse and validate Daily_Log headers/rows before consent. The preview states existing/incoming row counts, whole-array replacement and Meal_Log presence/exclusion. Populated-to-empty replacement is blocked with no override; empty-to-empty stays zero rows. Cancel writes nothing. The required Daily Log write is checked against the inspected raw value and verified by readback before success; optional profile consent/outcome remains separate. There is no multi-key/cross-tab transaction guarantee. Malformed canonical storage still requires an exact raw backup and explicit recovery. No Meal import, workbook schema change or protected-file mutation is introduced.
+
+R2 validates nonblank cells in the nine existing `number` columns before normalization and replacement consent: Sleep_Hours, Water_ml, Sweet_Drinks_Count, Sugar_Score, Caffeine_Score, Milk_Drink_Count, Hydration_Support_Count, Load_Score and Practice_Minutes. Finite numbers and existing finite numeric-text representations are supported, as are optional blanks. Existing duration bounds remain (sleep 0–16 hours; practice 0–1440 minutes); no extra ranges or Daily_Log schema are introduced. Invalid values fail with a localized Daily_Log row/column message, never cell contents, and no canonical write. The preview also identifies the sanitized selected filename as plain text. A new selection invalidates older pending reads and their statuses; one terminal callback may act per read. The actual validated workbook and its generation, rather than the filename, bind consent to the write. A completed authorized import is not rolled back if a later selection is canceled.
+
 ## Purpose
 
 `Column_Guide` is a new workbook sheet for Mindful Health Balance v1.9.x.

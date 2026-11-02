@@ -1,6 +1,8 @@
 (() => {
   function inspect(storage, key) {
-    const rawValue = storage.getItem(key);
+    let rawValue;
+    try { rawValue = storage.getItem(key); }
+    catch { return { status: "unavailable", records: [], rawValue: null, errorCode: "storage_read_failed" }; }
     if (rawValue === null) {
       return { status: "missing", records: [], rawValue: null, errorCode: null };
     }
