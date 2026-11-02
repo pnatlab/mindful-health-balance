@@ -543,6 +543,14 @@ const translations = {
     dailyLogIntegrityBackupFailed: "ยังสำรองข้อมูลดิบไม่ได้ จึงยังไม่เปิดการกู้คืน",
     dailyLogIntegrityNeedsRecoveryShort: "ต้องกู้คืน Daily Log",
     sheetJsMissing: "ยังโหลด SheetJS ไม่สำเร็จ ลองเช็กอินเทอร์เน็ตแล้วกดอีกครั้ง",
+    noExportableData: "ยังไม่มี Daily Log หรือมื้ออาหารที่บันทึกไว้ให้ส่งออก",
+    mealExportDuplicate: "ยังส่งออกไม่ได้ เพราะพบ Meal_ID ซ้ำ ข้อมูลเดิมไม่ได้ถูกเปลี่ยน โปรดตรวจสอบก่อนลองใหม่",
+    mealExportIntegrityFailed: "ยังส่งออกไม่ได้ เพราะอ่านมื้ออาหารเดิมให้ครบอย่างปลอดภัยไม่สำเร็จ ข้อมูลไม่ได้ถูกเปลี่ยนหรือลบ",
+    excelExportFailed: "ยังสร้างหรือเริ่มดาวน์โหลด Excel ไม่สำเร็จ ข้อมูลในเครื่องยังอยู่ โปรดลองใหม่",
+    exportedDailyOnly: "เริ่มดาวน์โหลด Excel พร้อม Daily Log แล้ว Meal_Log ยังไม่มีมื้อที่บันทึกไว้",
+    exportedMealsOnly: "เริ่มดาวน์โหลด Excel พร้อม Meal_Log แล้ว Daily_Log มีเฉพาะหัวตาราง",
+    exportedDailyAndMeals: "เริ่มดาวน์โหลด Excel พร้อม Daily Log และ Meal_Log แล้ว",
+    mealLogNotImported: "ไม่ได้นำเข้า Meal_Log มื้ออาหารใน browser ยังเหมือนเดิม แผ่นงานนี้ใช้ส่งออกเท่านั้นและกู้คืนมื้อฉบับเต็มไม่ได้",
     noDailyLog: "ยังไม่มี Daily Log ให้ export เริ่มจาก Save to Daily Log ก่อนนะ",
     exportedMaster: "Export Master Excel แล้ว ไฟล์จะถูกดาวน์โหลดลงเครื่องของคุณ",
     importOverwriteConfirm: "มี Daily Log อยู่แล้ว ต้องการ overwrite ด้วยข้อมูลจากไฟล์นี้ไหม?",
@@ -1563,6 +1571,14 @@ const translations = {
     dailyLogIntegrityBackupFailed: "MHB could not create a local raw backup, so recovery remains unavailable.",
     dailyLogIntegrityNeedsRecoveryShort: "Daily Log needs recovery",
     sheetJsMissing: "SheetJS has not loaded yet. Check your internet connection and try again.",
+    noExportableData: "There are no saved Daily Log rows or meals to export.",
+    mealExportDuplicate: "Export paused: duplicate Meal_ID values were found. Your data is unchanged. Please review the records before retrying.",
+    mealExportIntegrityFailed: "Export paused: saved meals could not be read completely and safely. No local data was changed or deleted.",
+    excelExportFailed: "Excel generation or download could not start. Your local data is unchanged. Please retry.",
+    exportedDailyOnly: "Excel download started with Daily Log. Meal_Log has no saved meals.",
+    exportedMealsOnly: "Excel download started with Meal_Log. Daily_Log contains headers only.",
+    exportedDailyAndMeals: "Excel download started with Daily Log and Meal_Log.",
+    mealLogNotImported: "Meal_Log was not imported. Browser meals are unchanged. This export-only sheet cannot restore full Meal records.",
     noDailyLog: "There is no Daily Log to export yet. Start with Save to Daily Log.",
     exportedMaster: "Master Excel exported. The file will download to your device.",
     importOverwriteConfirm: "Daily Log data already exists. Overwrite it with this file?",
@@ -2583,6 +2599,14 @@ const translations = {
     dailyLogIntegrityBackupFailed: "MHB 无法创建本机原始备份，因此恢复仍不可用。",
     dailyLogIntegrityNeedsRecoveryShort: "Daily Log 需要恢复",
     sheetJsMissing: "SheetJS 还没有加载完成。请检查网络后再试一次。",
+    noExportableData: "目前没有已保存的 Daily Log 或餐食可导出。",
+    mealExportDuplicate: "导出已暂停：发现重复的 Meal_ID。原有数据未变更，请检查记录后重试。",
+    mealExportIntegrityFailed: "导出已暂停：暂时无法完整、安全地读取餐食记录。本机数据未被修改或删除。",
+    excelExportFailed: "暂时无法生成 Excel 或开始下载。本机数据未变更，请重试。",
+    exportedDailyOnly: "Excel 已开始下载，包含 Daily Log。Meal_Log 暂无餐食记录。",
+    exportedMealsOnly: "Excel 已开始下载，包含 Meal_Log。Daily_Log 只有表头。",
+    exportedDailyAndMeals: "Excel 已开始下载，包含 Daily Log 和 Meal_Log。",
+    mealLogNotImported: "未导入 Meal_Log，浏览器中的餐食未变更。此工作表仅供导出，无法恢复完整餐食记录。",
     noDailyLog: "目前没有 Daily Log 可导出。请先 Save to Daily Log。",
     exportedMaster: "Master Excel 已导出，文件会下载到你的设备。",
     importOverwriteConfirm: "已经有 Daily Log 数据。要用这个文件覆盖吗？",
@@ -10130,7 +10154,9 @@ function renderDailyLogTable() {
   renderFieldReview();
 }
 
-function exportMasterExcel() {
+async function exportMasterExcel() {
+  const statusNode = document.querySelector("#saveStatus");
+  statusNode.textContent = "";
   if (hasMalformedDailyLogStorage()) {
     showDailyLogWriteBlocked();
     return;
@@ -10141,69 +10167,88 @@ function exportMasterExcel() {
     return;
   }
 
-  const rows = getDailyLog();
-  if (!rows.length) {
-    alert(t("noDailyLog"));
+  let mealExport;
+  try {
+    mealExport = window.MHBMealExcelBridge?.buildMealLogExport(getMealCompositionStore()?.inspectStorage());
+  } catch (_error) {
+    statusNode.textContent = t("mealExportIntegrityFailed");
+    return;
+  }
+  if (!mealExport?.ok) {
+    statusNode.textContent = t(mealExport?.code === "duplicate_meal_id" ? "mealExportDuplicate" : "mealExportIntegrityFailed");
     return;
   }
 
-  const workbook = XLSX.utils.book_new();
-  const dailyRows = rows.map((row) => pickColumns(row, DAILY_LOG_COLUMNS));
-  const reflectionRows = rows.map((row) => ({
-    Date: row.Date,
-    Reflection_Root: row.Reflection_Root || "",
-    Reflection_Root_Label: row.Reflection_Root_Label || "",
-    Reflection_Root_Source: row.Reflection_Root_Source || "",
-    Reflection_Root_Declaration: row.Reflection_Root_Declaration || "",
-    Mind_Note_Text: row.Mind_Note_Text || "",
-    Mind_Note_Feeling: row.Mind_Note_Feeling || "",
-    Mind_Note_Support: row.Mind_Note_Support || "",
-    Reflection_Text: row.Reflection_Text || ""
-  }));
-  const dailySheet = XLSX.utils.json_to_sheet(dailyRows, { header: DAILY_LOG_COLUMNS });
-  const summarySheet = XLSX.utils.json_to_sheet([buildMasterSummary(rows)]);
-  const reflectionSheet = XLSX.utils.json_to_sheet(reflectionRows, {
-    header: [
-      "Date",
-      "Reflection_Root",
-      "Reflection_Root_Label",
-      "Reflection_Root_Source",
-      "Reflection_Root_Declaration",
-      "Mind_Note_Text",
-      "Mind_Note_Feeling",
-      "Mind_Note_Support",
-      "Reflection_Text"
-    ]
-  });
-  const fieldContextSheet = XLSX.utils.json_to_sheet(buildFieldContextRows(), {
-    header: ["Section", "Value"]
-  });
-  const fieldReviewSheet = XLSX.utils.json_to_sheet([buildFieldReview(rows)]);
-  const columnGuideSheet = XLSX.utils.json_to_sheet(buildColumnGuideRows(), {
-    header: COLUMN_GUIDE_HEADERS
-  });
-  const aiContextSheet = XLSX.utils.json_to_sheet(buildAIContextRows(), {
-    header: AI_CONTEXT_HEADERS
-  });
+  try {
+    const rows = getDailyLog();
+    if (!rows.length && !mealExport.rows.length) {
+      statusNode.textContent = t("noExportableData");
+      return;
+    }
 
-  applySheetReadability(dailySheet, getDailyLogExportColumnWidths());
-  applySheetReadability(summarySheet, [14, 14, 18, 16, 16, 18, 20, 72]);
-  applySheetReadability(reflectionSheet, [14, 24, 26, 24, 46, 30, 22, 22, 72]);
-  applySheetReadability(fieldContextSheet, [28, 90]);
-  applySheetReadability(fieldReviewSheet, [20, 20, 14, 18, 18, 18, 16, 22, 22, 22, 22, 22, 18, 18, 18, 24, 36, 92, 92, 92]);
-  applySheetReadability(columnGuideSheet, [18, 28, 58, 18, 18, 64, 72, 78, 28, 28, 78, 28, 14]);
-  applySheetReadability(aiContextSheet, [28, 110]);
+    const workbook = XLSX.utils.book_new();
+    const dailyRows = rows.map((row) => pickColumns(row, DAILY_LOG_COLUMNS));
+    const reflectionRows = rows.map((row) => ({
+      Date: row.Date,
+      Reflection_Root: row.Reflection_Root || "",
+      Reflection_Root_Label: row.Reflection_Root_Label || "",
+      Reflection_Root_Source: row.Reflection_Root_Source || "",
+      Reflection_Root_Declaration: row.Reflection_Root_Declaration || "",
+      Mind_Note_Text: row.Mind_Note_Text || "",
+      Mind_Note_Feeling: row.Mind_Note_Feeling || "",
+      Mind_Note_Support: row.Mind_Note_Support || "",
+      Reflection_Text: row.Reflection_Text || ""
+    }));
+    const dailySheet = XLSX.utils.json_to_sheet(dailyRows, { header: DAILY_LOG_COLUMNS });
+    const summarySheet = XLSX.utils.json_to_sheet([buildMasterSummary(rows)]);
+    const reflectionSheet = XLSX.utils.json_to_sheet(reflectionRows, {
+      header: [
+        "Date",
+        "Reflection_Root",
+        "Reflection_Root_Label",
+        "Reflection_Root_Source",
+        "Reflection_Root_Declaration",
+        "Mind_Note_Text",
+        "Mind_Note_Feeling",
+        "Mind_Note_Support",
+        "Reflection_Text"
+      ]
+    });
+    const fieldContextSheet = XLSX.utils.json_to_sheet(buildFieldContextRows(), {
+      header: ["Section", "Value"]
+    });
+    const fieldReviewSheet = XLSX.utils.json_to_sheet([buildFieldReview(rows)]);
+    const columnGuideSheet = XLSX.utils.json_to_sheet(buildColumnGuideRows(), {
+      header: COLUMN_GUIDE_HEADERS
+    });
+    const aiContextSheet = XLSX.utils.json_to_sheet(buildAIContextRows(), {
+      header: AI_CONTEXT_HEADERS
+    });
 
-  XLSX.utils.book_append_sheet(workbook, dailySheet, "Daily_Log");
-  XLSX.utils.book_append_sheet(workbook, summarySheet, "Summary");
-  XLSX.utils.book_append_sheet(workbook, reflectionSheet, "Reflections");
-  XLSX.utils.book_append_sheet(workbook, fieldContextSheet, "Field_Context");
-  XLSX.utils.book_append_sheet(workbook, fieldReviewSheet, "Field_Review");
-  XLSX.utils.book_append_sheet(workbook, columnGuideSheet, "Column_Guide");
-  XLSX.utils.book_append_sheet(workbook, aiContextSheet, "AI_Context");
-  appendUserIntentionProfileSheetIfAvailable(workbook);
-  XLSX.writeFile(workbook, "Mindful_Health_Balance_Master.xlsx");
-  document.querySelector("#saveStatus").textContent = t("exportedMaster");
+    applySheetReadability(dailySheet, getDailyLogExportColumnWidths());
+    applySheetReadability(summarySheet, [14, 14, 18, 16, 16, 18, 20, 72]);
+    applySheetReadability(reflectionSheet, [14, 24, 26, 24, 46, 30, 22, 22, 72]);
+    applySheetReadability(fieldContextSheet, [28, 90]);
+    applySheetReadability(fieldReviewSheet, [20, 20, 14, 18, 18, 18, 16, 22, 22, 22, 22, 22, 18, 18, 18, 24, 36, 92, 92, 92]);
+    applySheetReadability(columnGuideSheet, [18, 28, 58, 18, 18, 64, 72, 78, 28, 28, 78, 28, 14]);
+    applySheetReadability(aiContextSheet, [28, 110]);
+
+    XLSX.utils.book_append_sheet(workbook, dailySheet, "Daily_Log");
+    XLSX.utils.book_append_sheet(workbook, summarySheet, "Summary");
+    XLSX.utils.book_append_sheet(workbook, reflectionSheet, "Reflections");
+    XLSX.utils.book_append_sheet(workbook, fieldContextSheet, "Field_Context");
+    XLSX.utils.book_append_sheet(workbook, fieldReviewSheet, "Field_Review");
+    XLSX.utils.book_append_sheet(workbook, columnGuideSheet, "Column_Guide");
+    XLSX.utils.book_append_sheet(workbook, aiContextSheet, "AI_Context");
+    appendUserIntentionProfileSheetIfAvailable(workbook);
+    const mealSheet = XLSX.utils.json_to_sheet(mealExport.rows, { header: mealExport.headers });
+    applySheetReadability(mealSheet, [38, 14, 40, 22, 20, 28, 14, 28, 28, 24, 14]);
+    XLSX.utils.book_append_sheet(workbook, mealSheet, "Meal_Log");
+    await XLSX.writeFile(workbook, "Mindful_Health_Balance_Master.xlsx");
+    statusNode.textContent = t(rows.length ? (mealExport.rows.length ? "exportedDailyAndMeals" : "exportedDailyOnly") : "exportedMealsOnly");
+  } catch (_error) {
+    statusNode.textContent = t("excelExportFailed");
+  }
 }
 
 function getDailyLogExportColumnWidths() {
@@ -11245,7 +11290,8 @@ function buildColumnGuideRows() {
       aiNote: "Must be respected by AI and future v2.0 review flows.",
       example: "Not medical advice, not diagnosis.",
       canonical: false
-    })
+    }),
+    ...window.MHBMealExcelBridge.getColumnGuideEntries().map((entry) => row({ sheet: "Meal_Log", ...entry }))
   ];
 }
 
@@ -13055,7 +13101,7 @@ function importMasterExcel(event) {
       const workbook = XLSX.read(loadEvent.target.result, { type: "array", cellDates: true });
       const dailySheet = workbook.Sheets.Daily_Log;
       if (!dailySheet) {
-        alert(t("missingDailySheet"));
+        alert([t("missingDailySheet"), workbook.Sheets.Meal_Log ? t("mealLogNotImported") : ""].filter(Boolean).join(" "));
         return;
       }
 
@@ -13081,7 +13127,8 @@ function importMasterExcel(event) {
       const profileImportResult = confirmAndReplaceUserIntentionProfile(profileImport);
       document.querySelector("#saveStatus").textContent = [
         t("importDone", { count: rowsWithReflections.length }),
-        profileImportResult.message
+        profileImportResult.message,
+        workbook.Sheets.Meal_Log ? t("mealLogNotImported") : ""
       ].filter(Boolean).join(" ");
     } catch (error) {
       alert(t("importFailed"));

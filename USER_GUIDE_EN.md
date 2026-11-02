@@ -235,7 +235,7 @@ Optionally choose **Prepare a photo for AI** through the local launcher, prepare
 
 A failed save keeps your draft. If existing storage cannot be read safely, changes are paused without clearing or repairing data. Stay on the canonical local origin `http://127.0.0.1:4173`; do not use older app versions to write v2 Meal records. No migration runs automatically.
 
-Meal Moments remain separate from Daily Log and Reflection generation. Saved meal names may appear only as a read-only context cue after normal generation. Meal Excel export/import and human field acceptance are deferred; an Excel export is not a Meal backup in this slice.
+Meal Moments remain separate from Daily Log and Reflection generation. Saved meal names may appear only as a read-only context cue after normal generation. Saved Meals now export to Meal_Log. Meal import and human field acceptance remain deferred; Meal_Log is not a complete Meal backup.
 
 ## 11. Drinks / Drink Profile
 
@@ -435,8 +435,9 @@ The file includes these main sheets:
 - Column_Guide
 - AI_Context
 - User_Intention_Profile (optional)
+- Meal_Log
 
-Use this file as a master backup or open it in Excel when you want to review a longer period.
+Use this file to back up Daily Log data or review a longer period in Excel. Meal_Log provides meal-level context only and cannot restore full Meals.
 
 `Summary` is a JavaScript-calculated static export sheet, not Excel formulas and not AI analysis. It includes `Total_Logs` for row count, `Unique_Days` for unique logged dates, average water, high-load days, low-sleep days, sweet-drink days, most common mind state, and `Summary_Note`.
 
@@ -458,7 +459,13 @@ LLM outputs from this workbook should still be audited by the user. The context 
 
 The current master data file is `Mindful_Health_Balance_Master.xlsx`. `.xltx` is a template/local artifact, not the current master backup data file.
 
+Export works when you have saved Daily Log rows, saved Meals, or both. Meal-only export leaves Daily_Log with headers only; it creates no daily signals. Meal_Log has one row per saved Meal_ID, including repeated dates or names. Missing metadata and unnamed legacy meals stay blank. Item_Count is historical metadata, not nutrition or portion information. Ingredients, sodium evidence, images and AI confidence are excluded.
+
+If any Meal record is unreadable, unsupported, malformed or has a duplicate ID, export pauses without altering local data or skipping records. Success means the download has started, not that the file has been retained.
+
 ### Import Master Excel
+
+Meal_Log is export-only. If present, the app explicitly says it was not imported. Browser Meals stay unchanged whether that sheet is present or absent. It cannot restore full Meal records. A meal-only workbook has an empty Daily_Log; importing it follows the existing daily replacement confirmation behavior.
 
 Click `Import Master Excel` to load a saved master file back into the app.
 

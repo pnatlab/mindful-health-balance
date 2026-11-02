@@ -40,7 +40,7 @@ The fact that it is not SaaS is intentional. Its value is in the design of a use
 
 Latest refinements include:
 
-- Meal Moment v2 (S0–S3): enter a food name and save; classification, occasion, and time remain optional
+- Meal Moment v2 (S0–S4): enter a food name and save; classification, occasion, and time remain optional
 - optional local photo help offers inline food-name suggestions; select a name, edit it if needed, then save explicitly
 - a small collapsed read-only local Vision vocabulary view in Log that shows observed labels, counts, and mapping status without adding Food References or changing meals
 - separate local Meal records with create, edit, and gentle targeted delete behavior; meal data does not expand `Daily_Log`
@@ -95,6 +95,7 @@ The exported workbook is not just a spreadsheet dump. It is a portable field mem
 Workbook layers include:
 
 - `Daily_Log`: structured daily signals and optional practice/Mind Note/Reflection Root fields
+- `Meal_Log`: export-only saved Meal Instance context, separate from daily signals
 - JSON fields such as `Drink_Profile_JSON`, `Run_Detail_JSON`, and `Practice_Context_JSON`: portable context bundles
 - `Reflections`: generated companion text plus user-selected Reflection Root metadata, separate from raw input
 - `Summary`: static export summary, not Excel formulas and not AI analysis
@@ -154,7 +155,7 @@ Feeling choices are presented in three light groups: gentle/supportive, neutral/
 
 This is a UX, copy, and presentation change only. `Daily_Log`, workbook export/import, Reflection, Signal Engine, Field Review, and historical rows keep their existing contracts.
 
-## Meal Moment v2 — current S0–S3 implementation
+## Meal Moment v2 — current S0–S4 implementation
 
 A meal is a human-authorized record, not a required ingredient decomposition. In Today, enter **Food name** and choose **Save meal**. Additional details starts collapsed and contains optional food type, meal occasion, and time. Time remains blank unless supplied; new values use `HH:mm`. Multiple records may share a date.
 
@@ -164,7 +165,7 @@ Storage failures retain the draft and report failure. Unreadable storage blocks 
 
 The optional local photo/preparation entry now offers inline food-name suggestions. Select a candidate to copy it into Food Name, edit if needed, then explicitly Save. Suggestions never overwrite existing text on arrival, set other metadata, apply ingredients, or save automatically. If AI is unavailable or cannot suggest a name, type it manually. Explicit name retry reuses the validated observation; AI is never required. Existing local provider, parser, naming model, and image infrastructure are unchanged. The canonical launcher origin remains `http://127.0.0.1:4173`; direct file mode still supports manual entry.
 
-Today indicators and post-generation saved context include Meal Moments. Meal data does not enter Reflection generation, Roots, signals, or `Daily_Log`. The old item-based unsaved draft action is deferred from active entry. Meal export/import is not implemented in S0–S3; Master workbooks and templates remain unchanged. Human field acceptance is pending.
+Today indicators and post-generation saved context include Meal Moments. Meal data does not enter Reflection generation, Roots, signals, or `Daily_Log`. The old item-based unsaved draft action is deferred from active entry. S4 exports saved meals to a separate Meal_Log worksheet. Meal import remains unsupported; the protected Master workbook and templates remain unchanged. Human field acceptance is pending.
 
 See [the approved contract](docs/design_notes/MEAL_MOMENT_V2_CONTRACT.md). Earlier MHB 2.3 composition descriptions in release history document the previous workflow; the public version badge is unchanged by this slice.
 
@@ -270,6 +271,11 @@ The workbook currently includes:
 - `Column_Guide`
 - `AI_Context`
 - `User_Intention_Profile` (optional; only when a saved profile exists)
+- `Meal_Log`
+
+Export is available with saved Daily Log rows, saved Meals, or both. Meal-only export leaves Daily_Log header-only and does not invent daily signals. Meal_Log uses one row per stable Meal_ID; dates and names may repeat. Its columns contain the saved name, classification/occasion/time, save timestamps, record version and historical Item_Count. Missing values and unnamed legacy meals stay blank. It excludes ingredients, sodium, images and AI confidence.
+
+Unreadable, unsupported, malformed or duplicate Meal records pause the entire export without changing storage or silently skipping meals. Import ignores Meal_Log and explicitly reports its exclusion; browser Meals remain unchanged with or without that sheet. Meal_Log cannot restore full Meal records and is not a complete Meal backup.
 
 `Daily_Log` keeps canonical English headers for machine readability. `Column_Guide` explains key columns in Thai and English, including units and forbidden interpretations, without changing the canonical headers. `AI_Context` tells AI readers that the workbook is a self-care reflection log, not a finance, expense, accounting, trading, or spending workbook.
 

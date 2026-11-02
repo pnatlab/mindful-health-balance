@@ -8,7 +8,7 @@ Future folder migration may happen later as a dedicated docs patch.
 
 ## Current Meal contract
 
-- [MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) — Approved S0–S3 name-first entry, mixed-history storage preservation, explicit write outcomes, and human-confirmed inline AI names. Earlier composition notes remain historical.
+- [MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) — Approved S0–S4 name-first entry, mixed-history storage preservation, explicit write outcomes, human-confirmed inline AI names, and export-only Meal_Log. Earlier composition notes remain historical.
 
 ## 00 Foundation
 

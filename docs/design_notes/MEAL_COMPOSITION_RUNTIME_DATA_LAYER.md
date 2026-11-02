@@ -1,10 +1,12 @@
 # MHB 2.3B - Meal Composition Runtime/Data Layer
 
-## Current active contract — Meal Moment v2 (S0–S3)
+## Current active contract — Meal Moment v2 (S0–S4)
 
 The runtime now reads both unversioned compositions and record_schema_version "2" Meal Moments in the same store. Targeted writes preserve untouched JSON entry/property text, and all mutation outcomes distinguish success from failure. No migration or startup rewrite occurs.
 
-[MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) is the approved current contract. S3 adds optional human-confirmed AI names through the existing save path; S4 Excel and S5 human field acceptance remain deferred. The composition-first decisions below are retained as historical architecture; they do not reinstate active ingredient requirements.
+[MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) is the approved current contract. S3 adds optional human-confirmed AI names through the existing save path; S4 adds export-only Meal_Log; S5 human field acceptance remains deferred. The composition-first decisions below are retained as historical architecture; they do not reinstate active ingredient requirements.
+
+S4 reads the full runtime `inspectStorage()` result through `mealExcelBridge.js`. Every entry must be representable, with unique Meal IDs; filtered/unsupported records block export. Original metadata blanks and unnamed legacy records stay blank. The generated Meal_Log contains meal-level context and Item_Count only, is never imported into canonical Meal storage, and cannot restore full Meal records. Runtime read/write acceptance and preservation behavior are unchanged.
 
 ## Historical implementation record
 

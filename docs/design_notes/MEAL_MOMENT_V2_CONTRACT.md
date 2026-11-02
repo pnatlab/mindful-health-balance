@@ -1,12 +1,12 @@
-# Meal Moment v2 — approved S0–S3 contract
+# Meal Moment v2 — approved S0–S4 contract
 
 Approved product decision: a meal is a human-authorized record of what the person ate, not a required decomposition of its ingredients. Minimum sufficient data, maximum continuity.
 
 ## Scope and authority
 
-S0 documents this contract; S1 implements safe local persistence; S2 implements manual entry and saved presentation. S3 adds optional local Vision name suggestions with explicit name-only acceptance. S4 (Excel Meal_Log) and S5 (human field acceptance) remain deferred. The public release badge is not changed by this bounded implementation.
+S0 documents this contract; S1 implements safe local persistence; S2 implements manual entry and saved presentation. S3 adds optional local Vision name suggestions with explicit name-only acceptance. S4 adds an export-only Meal_Log worksheet. S5 (human field acceptance) remains deferred. The public release badge is not changed by this bounded implementation.
 
-`mhb_meal_records_v1` remains the only canonical Meal store. There is no second store, bulk migration, startup rewrite, automatic repair, or automatic save. Daily Log, workbook, Reflection generator/Roots/signals, and AI provider/parser/model authority remain unchanged.
+`mhb_meal_records_v1` remains the only canonical Meal store. There is no second store, bulk migration, startup rewrite, automatic repair, or automatic save. Daily Log, workbook import, Reflection generator/Roots/signals, and AI provider/parser/model authority remain unchanged.
 
 ## New record contract
 
@@ -52,6 +52,34 @@ Existing request IDs, naming coordinator cancellation, and proposal session rese
 
 Insufficient evidence, invalid naming output, unavailable providers, cancellation and stale results leave manual entry usable. There is no automatic retry. Explicit naming retry reuses the validated observation; only a deliberate image retry reruns observation. The single normal preparation entry and explicit native file fallback remain.
 
-## Transport and review boundary
+## Excel Meal_Log — S4 export-only boundary
 
-Excel export/import does not transport Meal Moments in S0–S3. Existing workbooks/templates are untouched. Older application code rejects name-only records and may discard them on subsequent writes; downgrade writes are unsupported once v2 records exist. Human review is required before publication.
+The existing Export Master Excel action appends `Meal_Log` to each newly generated workbook. It uses `getMealCompositionStore().inspectStorage()` and the pure `js/mealExcelBridge.js` adapter. Only saved canonical Meal Instances are eligible. No drafts, AI sessions, Vision vocabulary, Reflection or Daily Log data supplies Meal rows, and no export path writes Meal storage.
+
+| Stable header | Saved field / mapping |
+| --- | --- |
+| Meal_ID | meal_id, stable record identity |
+| Date | runtime-normalized ISO YYYY-MM-DD calendar text |
+| Food_Name | meal_name, blank when absent in legacy history |
+| Meal_Type | meal_type |
+| Meal_Period | meal_label |
+| Custom_Meal_Period | custom_meal_label |
+| Meal_Time | time, or blank |
+| Created_At | created_at, or blank |
+| Updated_At | updated_at, or blank |
+| Record_Schema_Version | record_schema_version, blank for unversioned history |
+| Item_Count | count of existing accepted Meal Items, historical metadata only |
+
+One row represents one saved Meal Instance. Date, time and names may repeat; no merge or deduplication occurs. Ordering reuses the runtime's date/time/creation/ID order. Original metadata blanks remain blank rather than receiving UI normalization defaults. No name fallback, timestamps-as-meal-time, sodium, ingredient/evidence detail, images or AI confidence are exported. The worksheet is a readable contextual projection, not a complete Meal backup.
+
+Export inspects every original array entry, not only the filtered UI projection. Unreadable/non-array JSON, unsupported or invalid records, duplicate Meal IDs, ambiguous duplicate properties, nonrepresentable metadata, invalid ISO dates, or filtered invalid items block the entire export action with a non-destructive localized message. Empty/missing valid storage is allowed. No records are silently skipped, repaired or rewritten. Stored metadata beyond Excel's text-cell limit also blocks projection.
+
+Export is eligible with saved Daily Log rows, saved Meals, or both. With Meals only, Daily_Log and Reflections contain headers only; existing Summary/Field_Review empty-input behavior is preserved, with zero counts and blank period bounds. No synthetic daily row or signal is created. Existing sheets, their order/calculations and optional User_Intention_Profile remain intact; Meal_Log is appended. Column_Guide explains each Meal column and its export-only authority. No Master workbook or template is opened or changed.
+
+Import still reads Daily_Log through its existing confirmation/recovery path and retains the existing optional profile bridge. Meal_Log is never parsed into Meal records, merged, cached or written to browser Meal storage. When present, a TH/EN/ZH notice states that it was not imported and cannot restore full Meals; absence of the sheet also leaves Meals unchanged. An imported meal-only workbook has an empty Daily_Log and follows the existing daily replacement confirmation behavior.
+
+Success messaging distinguishes Daily-only, Meal-only and combined exports and appears only after workbook generation and download initiation return successfully. This cannot confirm that a human retained the downloaded file. The existing SheetJS browser-library availability requirement remains unchanged.
+
+## Review boundary
+
+Older application code rejects name-only records and may discard them on subsequent writes; downgrade writes are unsupported once v2 records exist. Human review and field acceptance remain required before publication.

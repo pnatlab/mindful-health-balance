@@ -1,10 +1,10 @@
 # MHB 2.6I - Meal Draft Gentle Reflection Context Bridge
 
-## Current active contract — Meal Moment v2 (S0–S3)
+## Current active contract — Meal Moment v2 (S0–S4)
 
 The item-based transient draft helper is retained internally but its action is deferred from active Meal Moment entry. Name-only drafts do not enter that pathway. Saved context now presents bounded human-confirmed names with item fallback for unnamed history, after normal generation only.
 
-[MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) is the approved current contract. S3 adds optional human-confirmed AI names through the existing save path; S4 Excel and S5 human field acceptance remain deferred. The composition-first decisions below are retained as historical architecture; they do not reinstate active ingredient requirements.
+[MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) is the approved current contract. S3 adds optional human-confirmed AI names through the existing save path; S4 adds export-only Meal_Log without changing this UI/Reflection boundary; S5 human field acceptance remains deferred. The composition-first decisions below are retained as historical architecture; they do not reinstate active ingredient requirements.
 
 ## Historical implementation record
 

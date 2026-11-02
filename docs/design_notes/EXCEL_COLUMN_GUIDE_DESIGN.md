@@ -1,5 +1,13 @@
 # Excel Column Guide Design
 
+## Current S4 addition — export-only Meal_Log
+
+Generated workbooks now append Meal_Log, preserving existing sheet order, Daily_Log headers and all derived calculations. Export accepts saved Daily Log rows, saved Meals, or both; existing empty-input builders support meal-only exports without synthetic daily records.
+
+Column_Guide adds eleven stable Meal_Log column entries, marked as export projections rather than workbook import authority. They explain saved meal-level identity/context, blank names for legacy meals, blank optional metadata, historical-only Item_Count, and that Meal_Log is neither imported nor sufficient to restore full Meals. Existing guide rows are unchanged. Full schema, canonical inspection and fail-closed policy are recorded in [MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md).
+
+No workbook/template file is opened or modified. Import remains Daily_Log plus the existing optional profile boundary, with an explicit localized notice when Meal_Log is excluded. The earlier guide design below is retained.
+
 ## Purpose
 
 `Column_Guide` is a new workbook sheet for Mindful Health Balance v1.9.x.
@@ -49,6 +57,7 @@ The guide includes key columns from:
 - `Reflections`
 - `Field_Context`
 - `Field_Review`
+- `Meal_Log` (S4 export-only saved meal projection)
 
 `Daily_Log` remains the primary canonical data table for import and future parser stability.
 

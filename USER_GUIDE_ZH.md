@@ -217,7 +217,7 @@ Hydration card 会根据当天情境显示弹性范围，以基础饮水 + load/
 
 保存失败会保留草稿。无法安全读取原有存储时，修改会暂停，不会自动删除、重置或修复数据。请继续使用 `http://127.0.0.1:4173`，不要用旧版应用写入 Meal v2 数据。系统不会自动迁移历史记录。
 
-Meal Moment 与 Daily Log 及 Reflection 生成器保持独立。保存的名称仅可在正常生成后作为只读背景提示显示。Meal 的 Excel 导出/导入及实际使用验收仍待后续阶段；当前 Excel 导出不构成餐食备份。
+Meal Moment 与 Daily Log 及 Reflection 生成器保持独立。保存的名称仅可在正常生成后作为只读背景提示显示。已保存的餐食现在可导出到 Meal_Log。餐食导入与实际使用验收仍待后续阶段；Meal_Log 不是完整餐食备份。
 
 ### Drinks / Drink Profile
 
@@ -377,6 +377,7 @@ Workbook 的主要 sheets 为：
 - Column_Guide
 - AI_Context
 - User_Intention_Profile（可选）
+- Meal_Log
 
 `Summary` 是由 JavaScript 计算后写入的静态导出值，不是 Excel formulas，也不是 AI analysis。
 
@@ -392,7 +393,13 @@ Workbook 的主要 sheets 为：
 
 当前 master data 文件是 `Mindful_Health_Balance_Master.xlsx`。`.xltx` 只是 template/local artifact，不是日常备份的 master data 文件。
 
+有已保存的 Daily Log、餐食或两者时均可导出。只有餐食时，Daily_Log 仅含表头，不会生成每日信号。Meal_Log 每个 Meal_ID 占一行，日期或食物名称可以重复。缺失信息和旧餐食的空白名称均保留为空。Item_Count 只是历史条目数量，不代表份量或营养。不导出食材详情、钠证据、图片或 AI 置信度。
+
+如有无法读取、不支持、格式有误或 ID 重复的餐食，整个导出会暂停，不修改本机数据，也不静默跳过记录。成功提示只表示已开始下载，不保证文件已被保留。
+
 ### Import Master Excel
+
+Meal_Log 仅供导出。如工作簿含此表，应用会明确提示未导入。无论有无此表，浏览器中的餐食均不变。它无法恢复完整餐食记录。只有餐食的工作簿含空白 Daily_Log，导入时仍沿用原有的 Daily Log 替换确认流程。
 
 点击 `Import Master Excel` 把 master 文件载回应用。
 
