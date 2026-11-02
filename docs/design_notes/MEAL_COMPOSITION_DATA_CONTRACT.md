@@ -1,10 +1,10 @@
 # MHB 2.3 - Meal Composition Data Contract
 
-## Current active contract — Meal Moment v2 (S0–S2)
+## Current active contract — Meal Moment v2 (S0–S3)
 
-The active save contract is now a required human-entered food name with optional classification, occasion, and time. Unversioned ingredient compositions remain readable and preserved. The previous one-or-more-item entry requirement is historical; see the v2 contract for versioning and write safety.
+The active save contract is now a required human-entered or explicitly human-confirmed food name with optional classification, occasion, and time. Unversioned ingredient compositions remain readable and preserved. The previous one-or-more-item entry requirement is historical; see the v2 contract for versioning and write safety.
 
-[MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) is the approved current contract. S3 Vision adaptation, S4 Excel, and S5 human field acceptance are deferred. The composition-first decisions below are retained as historical architecture; they do not reinstate active ingredient requirements.
+[MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) is the approved current contract. S3 adds optional human-confirmed AI names through the existing save path; S4 Excel and S5 human field acceptance remain deferred. The composition-first decisions below are retained as historical architecture; they do not reinstate active ingredient requirements.
 
 ## Historical implementation record
 

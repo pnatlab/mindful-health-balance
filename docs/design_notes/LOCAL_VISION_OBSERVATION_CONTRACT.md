@@ -1,12 +1,30 @@
 # MHB 2.4C - Local Vision Observation Contract and Optional Provider Adapter Design
 
+## Current Meal Moment v2 S3 consumer
+
+The provider/model, parser-lines-v3, observation schema and validators remain unchanged. The active consumer is now name-only:
+
+```text
+Explicit prepared image (or native direct fallback)
+  → existing validated local Vision observation
+  → deterministic review metadata (internal naming evidence only)
+  → existing bounded text-only Meal Name Proposal adapter/validator
+  → inline suggestions
+  → explicit human selection into editable Food Name
+  → separate explicit Meal Moment v2 Save
+```
+
+Observation and candidate arrival never overwrite Food Name, apply ingredients or save. Selecting a name changes no classification/occasion/time/date/evidence. The historical ingredient Apply chain below is retained as architecture history and is not exposed in the active Meal Moment form. Its internal modules remain available. Vision vocabulary observation history retains its separate evidence boundary.
+
+Existing request/session cancellation is extended at the UI boundary to cover draft revision, image replacement, date/edit/reset/save/destroy/language and stale preparation handoffs. Failure leaves manual naming available; retry is explicit. Name retry uses the existing observation without another image inference. [Meal Moment v2 contract](MEAL_MOMENT_V2_CONTRACT.md) defines current acceptance and persistence authority.
+
 ## Status
 
 **Original MHB 2.4C contract locked before implementation. It remains the canonical authority for the bounded local-provider path that MHB 2.4D-2.4J subsequently implemented.**
 
 The current runtime uses the optional `js/localVisionProvider.mjs` adapter only after a user selects an image from Meal Composer. It remains loopback-only, transient, validated, and human-reviewed. `gemma3:12b` can observe images locally, but its systematic species and dish-family errors mean Vision remains a proposal source rather than an authority. Current public runtime remains **MHB 2.3 - Gentle Meal Composition**.
 
-## Canonical Authority Chain
+## Historical composition authority chain (provider constraints remain canonical)
 
 ```text
 Image

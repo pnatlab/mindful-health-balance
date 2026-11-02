@@ -1,6 +1,20 @@
 # MHB Meal Name AI Proposal - Phase A Mini-Spec
 
-## Status
+## Current implementation — Meal Moment v2 S3
+
+The existing adapter, bounded input builder, parser/validator, request coordinator and proposal session are reused unchanged. Prepared image → validated local observation → internal review metadata → bounded text-only naming request → validated inline candidates → explicit human name selection → editable Food Name → separate Save. There is one image inference and no extra model/provider, cloud service or dependency.
+
+Generation/display does not accept a name. Explicit selection calls the existing session's choose/confirm boundary and copies only the returned text into the ordinary draft name. Existing names no longer suppress naming and are never implicitly overwritten. Confirmation consumes the transient choices; the human can edit the field or explicitly request names again using the same observation. Manual naming always works. No proposal provenance/status is persisted, and no ingredient Apply is available.
+
+The existing evidence/species/specificity constraints remain in force. They reduce unsupported specificity but cannot guarantee semantic truth; human correction is authoritative. Invalid/malformed output fails closed, insufficient evidence and provider failures offer manual fallback, and retries are always human initiated.
+
+Request IDs plus the existing coordinator/session and an in-memory draft revision protect image replacement, retry, date/edit/reset/cancel/save/destroy/language boundaries. Old preparation handoffs and candidate button IDs are also rejected. Async results update only the AI area, preserving typing and focus. Storage, historical records, Reflection, Daily Log and Excel are unchanged. See [the current contract](MEAL_MOMENT_V2_CONTRACT.md).
+
+## Historical Phase A specification
+
+The original proposal and subsequent implementation traces below are preserved for context. Their modal, per-field ingredient review, Apply, existing-name suppression and deferred-status statements describe earlier stages, not the active S3 interface.
+
+### Original status
 
 **Architecture decision only. Not implemented.**
 
@@ -10,7 +24,7 @@ Core ownership sentence:
 
 > AI may suggest how the meal could be named, but the human remains the owner of what the record is called.
 
-## Current Runtime Truth
+## Historical runtime at Phase A
 
 The current image path is:
 

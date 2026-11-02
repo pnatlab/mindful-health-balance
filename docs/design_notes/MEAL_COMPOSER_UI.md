@@ -1,10 +1,16 @@
 # MHB 2.3 - Meal Composer UI
 
-## Current active contract — Meal Moment v2 (S0–S2)
+## Current active contract — Meal Moment v2 (S0–S3)
 
-The active Today entry is open and name-first, with collapsed optional details. Ingredient selection, portions, sodium and named-dish prompts, and draft Reflection actions are removed from active entry. Existing Vision is view-only with disabled Apply pending S3. Historical items remain inspectable.
+The active Today entry is open and name-first, with collapsed optional details. Ingredient selection, portions, sodium and named-dish prompts, and draft Reflection actions are removed from active entry. Optional Vision now offers validated inline name buttons beside Food Name. Selecting one copies only its text into that editable field; Save remains separate. No ingredient review or Apply is exposed. Historical items remain inspectable.
 
-[MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) is the approved current contract. S3 Vision adaptation, S4 Excel, and S5 human field acceptance are deferred. The composition-first decisions below are retained as historical architecture; they do not reinstate active ingredient requirements.
+[MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) is the approved current contract. S3 reuses the existing Vision/naming adapters; S4 Excel and S5 human field acceptance remain deferred. The composition-first decisions below are retained as historical architecture; they do not reinstate active ingredient requirements.
+
+### Current image-assisted entry
+
+Food Name → inline suggestions when available → single Prepare Image entry → collapsed Additional details → Save. Manual entry needs no AI or image. Suggestions may arrive alongside existing human text; only explicit selection may replace it. Candidate buttons use native keyboard behavior and return focus to Food Name. TH/EN/ZH copy, shared theme tokens, wrapping buttons and a persistent polite status region cover the active states without a modal or focus trap.
+
+Async progress updates only the AI slots, leaving Food Name/IME intact. Failure and insufficient evidence offer manual fallback and explicit retry. Naming retry uses the existing observation, not another image request. Draft/session invalidation includes prepared-popup handoffs and stale candidate controls; see the current contract for lifecycle details. Accepted names never set meal classification, occasion, time, items, evidence or named-dish identity.
 
 ## Historical implementation record
 

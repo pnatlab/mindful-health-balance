@@ -113,29 +113,27 @@ blocked.root.click('data-save-meal');
 assert.equal(blocked.storage.snapshot(),'{malformed');
 assert.equal(blocked.model.getDraft().mealName,'Retain blocked draft');
 
-// Transitional Vision Apply is inert even if a click is dispatched synthetically.
+// Historical ingredient Apply is absent and synthetic clicks remain inert.
 const before=model.getDraft();
 root.click('data-vision-apply');
 assert.deepEqual(model.getDraft(),before);
 assert.equal(model.getMeals().length,2);
-assert.match(root.querySelector('[data-meal-status]').textContent,/view-only/);
+assert.doesNotMatch(root.content(),/data-vision-apply/);
 for (const language of ['th','en','zh']) {
   panel.setLanguage(language);
   assert.match(root.content(),new RegExp(ui.MOMENT_TEXT[language].mealName));
-  for (const key of ['mealName','nameRequired','additionalDetails','storageFailed','storageBlocked','visionPending','historicalDetails','customOccasion']) assert.equal(typeof ui.MOMENT_TEXT[language][key],'string');
+  for (const key of ['mealName','nameRequired','additionalDetails','storageFailed','storageBlocked','historicalDetails','customOccasion']) assert.equal(typeof ui.MOMENT_TEXT[language][key],'string');
 }
 const source=fs.readFileSync(path.join(__dirname,'../js/mealCompositionUI.js'),'utf8');
 const activeRender=source.match(/function render\(\) \{[^]*?\n    \}/)[0];
 assert.doesNotMatch(activeRender,/renderFoodPicker|renderNamedDishReference|renderMealType/);
-assert.match(source,/data-vision-apply disabled aria-describedby="mealVisionPending"/);
-const applyHandler=source.match(/if \(action.hasAttribute\("data-vision-apply"\)\)[^]*?\n      \}/)[0];
-assert.doesNotMatch(applyHandler,/applyVisionReviewToDraft|applyMealNameProposalToDraft|addFood|saveDraft/);
+assert.doesNotMatch(source,/data-vision-apply|applyVisionReviewToDraft/);
 const manualSave=source.match(/function saveDraft\(\)[^]*?\n    \}/)[0];
 assert.doesNotMatch(manualSave,/draft\.items|meal_note|named_dish_id|condiment_knowledge/,'active metadata edits never rebuild hidden history');
 // Retained helper remains available for historical/module regression coverage.
 const review=vision.createVisionReviewModel({observation_id:'synthetic',visible_components:[{label:'rice'}]});
 assert.equal(review.components[0].selectedFoodId,'rice');
-async function checkTransitionalReview() {
+async function checkNameOnlyReview() {
   let observations=0;
   const observed=setup(null,'en',{
     visionReview:vision,
@@ -148,8 +146,8 @@ async function checkTransitionalReview() {
   observed.root.handlers.change({target:{files:[new Blob(['synthetic image'],{type:'image/png'})],dataset:{},matches:(selector)=>selector==='[data-vision-image]'}});
   await new Promise((resolve)=>setTimeout(resolve,10));
   assert.equal(observations,1);
-  assert.match(observed.root.content(),/data-vision-apply disabled/);
-  assert.match(observed.root.content(),/view-only/);
+  assert.doesNotMatch(observed.root.querySelector('[data-meal-photo-content]').innerHTML,/data-vision-apply|data-vision-component/);
+  assert.match(observed.root.querySelector('[data-meal-name-proposals]').innerHTML,/AI is unavailable/);
   observed.root.click('data-vision-apply');
   assert.deepEqual(observed.model.getDraft().items,[],'review defaults cannot create ingredients');
   assert.equal(observed.model.getDraft().mealType,'unspecified');
@@ -162,4 +160,4 @@ async function checkTransitionalReview() {
   assert.equal(observations,1,'no retry or additional inference');
   observed.panel.destroy();
 }
-checkTransitionalReview().then(()=>console.log('Meal Moment manual UI and transitional Vision tests passed.')).catch((error)=>{console.error(error);process.exitCode=1;});
+checkNameOnlyReview().then(()=>console.log('Meal Moment manual UI and name-only Vision tests passed.')).catch((error)=>{console.error(error);process.exitCode=1;});

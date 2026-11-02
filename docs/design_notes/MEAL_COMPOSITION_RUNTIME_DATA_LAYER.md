@@ -1,10 +1,10 @@
 # MHB 2.3B - Meal Composition Runtime/Data Layer
 
-## Current active contract — Meal Moment v2 (S0–S2)
+## Current active contract — Meal Moment v2 (S0–S3)
 
 The runtime now reads both unversioned compositions and record_schema_version "2" Meal Moments in the same store. Targeted writes preserve untouched JSON entry/property text, and all mutation outcomes distinguish success from failure. No migration or startup rewrite occurs.
 
-[MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) is the approved current contract. S3 Vision adaptation, S4 Excel, and S5 human field acceptance are deferred. The composition-first decisions below are retained as historical architecture; they do not reinstate active ingredient requirements.
+[MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) is the approved current contract. S3 adds optional human-confirmed AI names through the existing save path; S4 Excel and S5 human field acceptance remain deferred. The composition-first decisions below are retained as historical architecture; they do not reinstate active ingredient requirements.
 
 ## Historical implementation record
 

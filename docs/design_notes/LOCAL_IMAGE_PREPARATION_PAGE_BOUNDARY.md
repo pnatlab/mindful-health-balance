@@ -1,5 +1,11 @@
 # MHB 2.5A - Local Image Preparation Page & Boundary Lock
 
+## Current Meal Moment v2 S3 integration
+
+The preparation page, normalizer, envelope and bridge protocol are unchanged. After the human explicitly selects the prepared image, Meal Moment reuses the validated local observation and existing text naming adapter to show inline Food Name suggestions. The prepared-image handoff is neither name acceptance nor Save. No ingredients or meal metadata are applied.
+
+The composer invalidates its bridge listener/token and request context on image replacement, date/edit/cancel/reset, successful Save, destruction or language change. Late handoffs cannot attach to another draft. A consumed handoff detaches its listener. The single visible preparation entry and explicit native direct-file fallback remain; popup failure never automatically opens a picker. Cancellation leaves manual naming available. See [Meal Moment v2](MEAL_MOMENT_V2_CONTRACT.md) for the full name acceptance boundary.
+
 ## Purpose
 
 `image-prep.html` is a small, same-repository preparation room for one meal photo. It makes phone-sized image input compatible before optional local Vision sees it. It is not a meal editor, a Vision provider, or a record.

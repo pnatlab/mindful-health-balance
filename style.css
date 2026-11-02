@@ -8524,3 +8524,21 @@ td:nth-child(10) {
   .meal-moment-form ~ .meal-saved .meal-saved-item { flex-direction: column; align-items: stretch; }
   .meal-moment-form .meal-draft-actions { flex-wrap: wrap; }
 }
+
+/* Meal Moment v2: native inline candidate buttons reuse the existing theme. */
+.meal-moment-form .meal-name-proposal-inline { gap: 8px; }
+.meal-moment-form .meal-name-proposal-inline h4,
+.meal-moment-form .meal-name-proposal-inline p { margin: 0; }
+.meal-moment-form .meal-name-proposal-choices { display: flex; flex-wrap: wrap; }
+.meal-moment-form button.meal-name-proposal-choice {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: start;
+}
+.meal-moment-form button.meal-name-proposal-choice:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

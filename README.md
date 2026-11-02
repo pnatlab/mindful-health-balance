@@ -40,8 +40,8 @@ The fact that it is not SaaS is intentional. Its value is in the design of a use
 
 Latest refinements include:
 
-- Meal Moment v2 (S0–S2): enter a food name and save; classification, occasion, and time remain optional
-- the existing optional local photo helper remains view-only during this transition; Apply is disabled pending the S3 name-only adaptation
+- Meal Moment v2 (S0–S3): enter a food name and save; classification, occasion, and time remain optional
+- optional local photo help offers inline food-name suggestions; select a name, edit it if needed, then save explicitly
 - a small collapsed read-only local Vision vocabulary view in Log that shows observed labels, counts, and mapping status without adding Food References or changing meals
 - separate local Meal records with create, edit, and gentle targeted delete behavior; meal data does not expand `Daily_Log`
 - historical ingredient records, portions, condiments, named-dish references, and evidence remain preserved; these are not new-entry requirements
@@ -154,7 +154,7 @@ Feeling choices are presented in three light groups: gentle/supportive, neutral/
 
 This is a UX, copy, and presentation change only. `Daily_Log`, workbook export/import, Reflection, Signal Engine, Field Review, and historical rows keep their existing contracts.
 
-## Meal Moment v2 — current S0–S2 implementation
+## Meal Moment v2 — current S0–S3 implementation
 
 A meal is a human-authorized record, not a required ingredient decomposition. In Today, enter **Food name** and choose **Save meal**. Additional details starts collapsed and contains optional food type, meal occasion, and time. Time remains blank unless supplied; new values use `HH:mm`. Multiple records may share a date.
 
@@ -162,9 +162,9 @@ The existing `mhb_meal_records_v1` store accepts new `record_schema_version: "2"
 
 Storage failures retain the draft and report failure. Unreadable storage blocks mutation without repair/reset; safely preservable unsupported records retain their original JSON text during unrelated saves. Older app versions cannot safely write a store containing v2 records.
 
-The local photo/preparation entry remains available, but its results are view-only and Apply is disabled pending S3. Type the name manually; AI is never required. Existing local provider, parser, naming model, and image infrastructure are unchanged. The canonical launcher origin remains `http://127.0.0.1:4173`; direct file mode still supports manual entry.
+The optional local photo/preparation entry now offers inline food-name suggestions. Select a candidate to copy it into Food Name, edit if needed, then explicitly Save. Suggestions never overwrite existing text on arrival, set other metadata, apply ingredients, or save automatically. If AI is unavailable or cannot suggest a name, type it manually. Explicit name retry reuses the validated observation; AI is never required. Existing local provider, parser, naming model, and image infrastructure are unchanged. The canonical launcher origin remains `http://127.0.0.1:4173`; direct file mode still supports manual entry.
 
-Today indicators and post-generation saved context include Meal Moments. Meal data does not enter Reflection generation, Roots, signals, or `Daily_Log`. The old item-based unsaved draft action is deferred from active entry. Meal export/import is not implemented in S0–S2; Master workbooks and templates remain unchanged. Human field acceptance is pending.
+Today indicators and post-generation saved context include Meal Moments. Meal data does not enter Reflection generation, Roots, signals, or `Daily_Log`. The old item-based unsaved draft action is deferred from active entry. Meal export/import is not implemented in S0–S3; Master workbooks and templates remain unchanged. Human field acceptance is pending.
 
 See [the approved contract](docs/design_notes/MEAL_MOMENT_V2_CONTRACT.md). Earlier MHB 2.3 composition descriptions in release history document the previous workflow; the public version badge is unchanged by this slice.
 

@@ -8,7 +8,7 @@ Future folder migration may happen later as a dedicated docs patch.
 
 ## Current Meal contract
 
-- [MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) — Approved S0–S2 name-first entry, mixed-history storage preservation, explicit write outcomes, and transitional Vision boundary. Earlier composition notes remain historical.
+- [MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) — Approved S0–S3 name-first entry, mixed-history storage preservation, explicit write outcomes, and human-confirmed inline AI names. Earlier composition notes remain historical.
 
 ## 00 Foundation
 
@@ -89,7 +89,7 @@ Runtime architecture, modularization planning, and implementation-safety notes f
 - [THAI_NAMED_DISH_SODIUM_EVIDENCE_PILOT.md](THAI_NAMED_DISH_SODIUM_EVIDENCE_PILOT.md) - MHB 2.3F-D evidence pilot: two Thai FCD fried-rice references are human-approved and implemented at a fixed 100-g source basis; green curry and incomplete identities remain outside runtime.
 - [MEAL_COMPOSER_UI.md](MEAL_COMPOSER_UI.md) - Defines the MHB 2.3 Today workspace, illustrated Meal Type cards, progressive component discovery including the compact Food Items disclosure, explicit named-dish confirmation, symbolic draft/saved-meal presence, dynamic recorded-meal panel, responsive presentation, and deferred Reflection/workbook boundaries.
 - [MEAL_DRAFT_GENTLE_REFLECTION_CONTEXT_BRIDGE.md](MEAL_DRAFT_GENTLE_REFLECTION_CONTEXT_BRIDGE.md) - MHB 2.6I defines both the explicit memory-only draft bridge and bounded read-only current-day saved-meal recall, each secondary to Reflection and without adding a Root, signal, generated content, canonical Reflection record, or persistence.
-- [MEAL_NAME_AI_PROPOSAL_MINI_SPEC.md](MEAL_NAME_AI_PROPOSAL_MINI_SPEC.md) - Phase A architecture-only mini-spec for a separate local, transient Meal Name proposal stage with strict validation and an explicit human naming checkpoint; no runtime implementation is authorized.
+- [MEAL_NAME_AI_PROPOSAL_MINI_SPEC.md](MEAL_NAME_AI_PROPOSAL_MINI_SPEC.md) - Current S3 reuse of the bounded local naming adapter, validator and session with explicit name-only acceptance; original Phase A and implementation traces remain historical.
 - [LOCAL_VISION_MEAL_CAPTURE_FEASIBILITY.md](LOCAL_VISION_MEAL_CAPTURE_FEASIBILITY.md) - MHB 2.4A local-only feasibility probe for vision-proposed meal observations; it documents the optional-provider boundary, local environment findings, corpus requirement, and no-evidence-routing rule.
 - [LOCAL_VISION_MEAL_OBSERVATION_PILOT.md](LOCAL_VISION_MEAL_OBSERVATION_PILOT.md) - MHB 2.4B measured local-only observation pilot on an authorized nine-image corpus; vision is feasible only as a validated, user-reviewed proposal source.
 - [LOCAL_VISION_OBSERVATION_CONTRACT.md](LOCAL_VISION_OBSERVATION_CONTRACT.md) - MHB 2.4C contract lock for transient vision proposals, explicit human acceptance, local-only optional providers, and the named-dish/evidence firewall.
