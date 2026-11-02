@@ -108,4 +108,9 @@ assert.match(appSource, /createSavedMealHistoryPanel/);
 assert.match(appSource, /getMeals: getMealRecords/);
 assert.match(appSource, /if \(view === "log"\) \{\s*savedMealHistoryPanel\?\.render\(\);/, "Log open refreshes the read-only projection without adding write behavior");
 
+const momentRoot = { innerHTML: "", addEventListener() {} };
+history.createSavedMealHistoryPanel({ root: momentRoot, getMeals: () => [{ meal_id: "moment", date: "2026-11-02", meal_name: "Human food name", meal_type: "unspecified", meal_label: "unnamed", items: [] }], language: "en" });
+assert.match(momentRoot.innerHTML, /Human food name/);
+assert.doesNotMatch(momentRoot.innerHTML, /0 items|saved-meal-history-item__count|Unspecified/);
+assert.match(momentRoot.innerHTML, />1<\/strong> 1 meal/);
 console.log("Saved Meal History UI tests passed.");

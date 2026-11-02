@@ -109,7 +109,7 @@ const buildDailyLogRowBlock = script.match(/function buildDailyLogRow\([^]*?\n\}
 
 assert.doesNotMatch(helperSource, /localStorage|sessionStorage|Daily_Log|Reflection_Text|setItem\(/, "bridge helper introduces no persistence");
 assert.match(uiSource, /data-reflect-meal-draft/);
-assert.match(uiSource, /isReflectionEligible\(draft\)/);
+assert.doesNotMatch(uiSource.match(/function renderDraft\(\)[^]*?\n    \}/)[0], /data-reflect-meal-draft/, "new entry defers the old draft action");
 assert.match(script, /onReflectDraft: beginMealDraftReflection/);
 assert.match(script, /setActiveView\("reflection"\)/);
 assert.match(script, /mealComposerUI\?\.open\(\)/);

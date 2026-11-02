@@ -35,13 +35,20 @@ function createMemoryStorage(initialValue = null) {
 
 function createStore(storage, library, warnings) {
   let id = 0;
-  return mealRuntime.createMealStore(storage, {
+  const store = mealRuntime.createMealStore(storage, {
     library,
     normalizeDate: (value) => String(value || "").trim(),
     createId: (prefix) => `${prefix}_${++id}`,
     now: () => "2026-08-26T12:00:00.000Z",
     warn: (message) => warnings.push(message)
   });
+  // Historical fixtures enter storage directly. Production creation now creates v2.
+  return { ...store, seedLegacy(input) {
+    const record = mealRuntime.normalizeMealRecord({ ...input, meal_id: `legacy_${++id}`, created_at: "2026-08-26T12:00:00.000Z", updated_at: "2026-08-26T12:00:00.000Z" });
+    const records = JSON.parse(storage.getItem(mealRuntime.MEAL_RECORDS_KEY) || "[]");
+    storage.setItem(mealRuntime.MEAL_RECORDS_KEY, JSON.stringify([...records, record]));
+    return record;
+  } };
 }
 
 function run() {
@@ -126,9 +133,9 @@ function run() {
     provenance: null
   });
   const productionStore = createStore(createMemoryStorage(), productionLibrary, []);
-  const immutableMeal = productionStore.createMeal({ date: TEST_DATE, meal_label: "lunch", items: [productionStore.createMealItem({ food_id: "fish_sauce" })] });
+  const immutableMeal = productionStore.seedLegacy({ date: TEST_DATE, meal_label: "lunch", items: [productionStore.createMealItem({ food_id: "fish_sauce" })] });
   const immutableItem = immutableMeal.items[0];
-  const immutableUpdatedMeal = productionStore.updateMealItem(immutableMeal.meal_id, immutableItem.meal_item_id, { portion_label: "small", preparation: "soup" });
+  const immutableUpdatedMeal = productionStore.updateMealItem(immutableMeal.meal_id, immutableItem.meal_item_id, { portion_label: "small", preparation: "soup" }).meal;
   assert.deepEqual([immutableUpdatedMeal.items[0].sodium_estimate_min_mg, immutableUpdatedMeal.items[0].sodium_estimate_max_mg], [705, 740]);
   assert.deepEqual([fishSauceReference.sodium_estimate_min_mg, fishSauceReference.sodium_estimate_max_mg, fishSauceReference.source_reference], [1410, 1480, "USDA FoodData Central FDC 174531; Thai Kitchen Premium Fish Sauce (McCormick)."]);
   const evidenceDailySummary = mealRuntime.deriveDailyMealSummary(TEST_DATE, [
@@ -182,15 +189,15 @@ function run() {
   assert.equal(customItem.serving_multiplier, 2);
   assert.equal(store.createMealItem({ food_id: animal.food_id, portion_label: "custom", serving_multiplier: 0 }), null);
 
-  const firstMeal = store.createMeal({ date: TEST_DATE, meal_name: "  ข้าวขาหมูไม่หนัง ใส่ไข่  ", meal_label: "lunch", items: [regularItem] });
-  const secondMeal = store.createMeal({
+  const firstMeal = store.seedLegacy({ date: TEST_DATE, meal_name: "  ข้าวขาหมูไม่หนัง ใส่ไข่  ", meal_label: "lunch", items: [regularItem] });
+  const secondMeal = store.seedLegacy({
     date: TEST_DATE,
     meal_label: "dinner",
     meal_type: "stir_fried",
     condiment_knowledge: "unknown",
     items: [largeItem]
   });
-  const otherDateMeal = store.createMeal({ date: OTHER_DATE, meal_label: "unnamed", items: [smallItem] });
+  const otherDateMeal = store.seedLegacy({ date: OTHER_DATE, meal_label: "unnamed", items: [smallItem] });
   assert.equal(store.getMealRecords().length, 3);
   assert.equal(store.getMealsForDate(TEST_DATE).length, 2);
   assert.equal(store.getMealsForDate(OTHER_DATE).length, 1);
@@ -214,29 +221,29 @@ function run() {
   assert.equal(legacyMeal.named_dish_id, "");
   assert.equal(legacyMeal.condiment_knowledge, "");
 
-  const updatedMeal = store.updateMeal(firstMeal.meal_id, { meal_note: "kept as plain text", meal_name: "กะเพราหมูกรอบ", meal_type: "broth_based" });
+  const updatedMeal = store.updateMeal(firstMeal.meal_id, { meal_note: "kept as plain text", meal_name: "กะเพราหมูกรอบ", meal_type: "broth_based" }).meal;
   assert.equal(updatedMeal.meal_id, firstMeal.meal_id);
   assert.equal(updatedMeal.meal_note, "kept as plain text");
   assert.equal(updatedMeal.meal_name, "กะเพราหมูกรอบ");
   assert.equal(updatedMeal.meal_type, "broth_based");
-  assert.equal(store.updateMeal(firstMeal.meal_id, { meal_name: "" }).meal_name, "", "a human-authored name can be cleared");
-  assert.equal(store.deleteMeal(otherDateMeal.meal_id), true);
+  assert.equal(store.updateMeal(firstMeal.meal_id, { meal_name: "" }).ok, false, "explicit blank-name edits fail without changing history");
+  assert.equal(store.deleteMeal(otherDateMeal.meal_id).ok, true);
   assert.deepEqual(store.getMealRecords().map((meal) => meal.meal_id), [firstMeal.meal_id, secondMeal.meal_id]);
 
   const vegetableItem = store.createMealItem({ food_id: vegetable.food_id, portion_label: "regular" });
   const condimentItem = store.createMealItem({ food_id: condiment.food_id, portion_label: "regular" });
   const unknownItem = store.createMealItem({ food_id: unknown.food_id, portion_label: "regular" });
-  const afterAdd = store.addMealItem(firstMeal.meal_id, { food_id: vegetable.food_id, portion_label: "regular" });
+  const afterAdd = store.addMealItem(firstMeal.meal_id, { food_id: vegetable.food_id, portion_label: "regular" }).meal;
   assert.equal(afterAdd.items.length, 2);
   const addedVegetableItem = afterAdd.items.find((item) => item.food_id === vegetable.food_id);
-  const afterItemUpdate = store.updateMealItem(firstMeal.meal_id, addedVegetableItem.meal_item_id, { preparation: "fried" });
+  const afterItemUpdate = store.updateMealItem(firstMeal.meal_id, addedVegetableItem.meal_item_id, { preparation: "fried" }).meal;
   assert.equal(afterItemUpdate.items.find((item) => item.meal_item_id === addedVegetableItem.meal_item_id).preparation, "fried");
-  const afterFoodChange = store.updateMealItem(firstMeal.meal_id, addedVegetableItem.meal_item_id, { food_id: animal.food_id });
+  const afterFoodChange = store.updateMealItem(firstMeal.meal_id, addedVegetableItem.meal_item_id, { food_id: animal.food_id }).meal;
   assert.equal(afterFoodChange.items.find((item) => item.meal_item_id === addedVegetableItem.meal_item_id).display_name_snapshot, animal.display_name_th);
-  const secondWithItems = store.updateMeal(secondMeal.meal_id, { items: [regularItem, vegetableItem, condimentItem, unknownItem] });
-  const changedItemMeal = store.updateMealItem(secondMeal.meal_id, vegetableItem.meal_item_id, { preparation: "fried" });
+  const secondWithItems = store.updateMeal(secondMeal.meal_id, { items: [regularItem, vegetableItem, condimentItem, unknownItem] }).meal;
+  const changedItemMeal = store.updateMealItem(secondMeal.meal_id, vegetableItem.meal_item_id, { preparation: "fried" }).meal;
   assert.equal(changedItemMeal.items.find((item) => item.meal_item_id === vegetableItem.meal_item_id).preparation, "fried");
-  const afterItemDelete = store.deleteMealItem(secondMeal.meal_id, condimentItem.meal_item_id);
+  const afterItemDelete = store.deleteMealItem(secondMeal.meal_id, condimentItem.meal_item_id).meal;
   assert.equal(afterItemDelete.items.some((item) => item.meal_item_id === condimentItem.meal_item_id), false);
 
   const completeEstimate = mealRuntime.deriveMealEstimate({ items: [regularItem] });
@@ -277,7 +284,7 @@ function run() {
   storage.setItem(mealRuntime.MEAL_RECORDS_KEY, JSON.stringify([store.getMealRecords()[0], malformedRecord]));
   assert.equal(store.getMealRecords().length, 1);
   assert.equal(store.getMealRecords()[0].meal_id, firstMeal.meal_id);
-  assert.equal(warnings.some((message) => message.includes("Malformed meal records")), true);
+  assert.ok(storage.snapshot().includes('"meal_id":"bad"'), "read projections never rewrite unrecognized history");
 
   storage.setItem(mealRuntime.MEAL_RECORDS_KEY, JSON.stringify([secondWithItems]));
   const reloadedStore = createStore(storage, library, []);
@@ -399,7 +406,7 @@ function run() {
 
   const namedDishStorage = createMemoryStorage();
   const namedDishStore = createStore(namedDishStorage, library, []);
-  const persistedNamedDish = namedDishStore.createMeal({
+  const persistedNamedDish = namedDishStore.seedLegacy({
     date: TEST_DATE,
     meal_label: "lunch",
     named_dish_id: "fried_rice_vegetable",

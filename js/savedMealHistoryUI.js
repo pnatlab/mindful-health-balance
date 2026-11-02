@@ -116,16 +116,16 @@
         ? meals.map((meal) => {
           const label = meal.mealLabel === "custom" ? meal.customMealLabel : copy.labels[meal.mealLabel] || copy.labels.unnamed;
           const mealType = copy.mealTypes[meal.mealType] || "";
-          const facts = [label, mealType].filter(Boolean);
+          const facts = [meal.mealLabel !== "unnamed" ? label : "", mealType].filter(Boolean);
           const visibleItems = meal.items.slice(0, MAX_VISIBLE_ITEMS);
           const additionalItemCount = Math.max(0, meal.items.length - visibleItems.length);
           return `
             <li class="saved-meal-history-item">
               <div class="saved-meal-history-item__meta">${escapeHtml([formatDate(meal.date, language), meal.time].filter(Boolean).join(" · "))}</div>
-              ${meal.mealName ? `<strong class="saved-meal-history-item__name">${escapeHtml(meal.mealName)}</strong>` : ""}
+              ${meal.mealName ? `<strong class="saved-meal-history-item__name">${escapeHtml(meal.mealName)}</strong>` : `<strong class="saved-meal-history-item__fallback">${escapeHtml(visibleItems.join(" · "))}</strong>`}
               ${facts.length ? `<span class="saved-meal-history-item__facts">${escapeHtml(facts.join(" · "))}</span>` : ""}
               ${visibleItems.length ? `<span class="saved-meal-history-item__items">${escapeHtml(visibleItems.join(" · "))}${additionalItemCount ? ` · ${escapeHtml(copy.moreItems(additionalItemCount))}` : ""}</span>` : ""}
-              <span class="saved-meal-history-item__count">${escapeHtml(copy.itemCount(meal.itemCount))}</span>
+              ${meal.itemCount ? `<span class="saved-meal-history-item__count">${escapeHtml(copy.itemCount(meal.itemCount))}</span>` : ""}
             </li>
           `;
         }).join("")

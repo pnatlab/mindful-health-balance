@@ -6116,13 +6116,13 @@ function renderMealDraftReflectionCue() {
     return;
   }
 
-  const labels = savedMealReflectionContext.visibleItems.map(renderLabel).filter(Boolean);
+  const labels = savedMealReflectionContext.visibleLabels.map((entry) => entry.text || renderLabel(entry)).filter(Boolean);
   cue.dataset.contextSource = "saved_today";
   const countKey = savedMealReflectionContext.mealCount === 1
     ? "savedMealReflectionCueCountOne"
     : "savedMealReflectionCueCountMany";
-  const overflow = savedMealReflectionContext.additionalItemCount > 0
-    ? t("savedMealReflectionCueMoreItems", { count: savedMealReflectionContext.additionalItemCount })
+  const overflow = savedMealReflectionContext.additionalLabelCount > 0
+    ? t("savedMealReflectionCueMoreItems", { count: savedMealReflectionContext.additionalLabelCount })
     : "";
   document.querySelector("#mealReflectionContextTitle").textContent = t("savedMealReflectionCueTitle");
   document.querySelector("#mealReflectionContextItems").textContent = labels.join(" · ");

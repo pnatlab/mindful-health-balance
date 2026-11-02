@@ -1,6 +1,17 @@
 (function initializeMealCompositionRuntime(globalScope) {
   const MEAL_RECORDS_KEY = "mhb_meal_records_v1";
-  const MEAL_SCHEMA_VERSION = "1";
+  const MEAL_SCHEMA_VERSION = "1"; // Food Reference schema; independent from Meal records.
+  const MEAL_RECORD_SCHEMA_VERSION = "2";
+
+  function isValidMealDate(value) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+    const parsed = new Date(`${value}T00:00:00.000Z`);
+    return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+  }
+
+  function isValidMealTime(value) {
+    return value === "" || /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(value);
+  }
   const MEAL_LABELS = new Set(["breakfast", "lunch", "dinner", "snack", "late_meal", "custom", "unnamed"]);
   const MEAL_TYPES = new Set(["unspecified", "stir_fried", "boiled", "curry", "fried", "grilled", "steamed", "broth_based", "minimally_prepared", "other"]);
   const CONDIMENT_KNOWLEDGE = new Set(["", "unknown"]);
@@ -427,7 +438,9 @@
   }
 
   function normalizeMealRecord(meal, options = {}) {
-    if (!meal || typeof meal !== "object") return null;
+    if (!meal || typeof meal !== "object" || Array.isArray(meal)) return null;
+    const version = meal.record_schema_version;
+    if (version !== undefined && version !== MEAL_RECORD_SCHEMA_VERSION) return null;
     const normalizeDate = typeof options.normalizeDate === "function" ? options.normalizeDate : (value) => asTrimmedText(value);
     const mealId = asTrimmedText(meal.meal_id);
     const date = asTrimmedText(normalizeDate(meal.date));
@@ -436,15 +449,22 @@
     const condimentKnowledge = CONDIMENT_KNOWLEDGE.has(meal.condiment_knowledge) ? meal.condiment_knowledge : "";
     const items = Array.isArray(meal.items) ? meal.items.map(normalizeMealItem).filter(Boolean) : [];
 
-    if (!mealId || !date || !items.length) return null;
+    if (!mealId || !date) return null;
+    if (version === MEAL_RECORD_SCHEMA_VERSION) {
+      if (!isValidMealDate(date)) return null;
+      if (typeof meal.meal_name !== "string" || !meal.meal_name.trim() || !isValidMealTime(asTrimmedText(meal.time))) return null;
+      // Meal Moments cannot route ingredient or named-dish evidence.
+      if ((meal.items !== undefined && (!Array.isArray(meal.items) || meal.items.length)) || asTrimmedText(meal.named_dish_id)) return null;
+    } else if (!items.length) return null;
 
     return {
+      ...(version === MEAL_RECORD_SCHEMA_VERSION ? { record_schema_version: version } : {}),
       meal_id: mealId,
       date,
       time: asTrimmedText(meal.time),
       meal_label: label,
       custom_meal_label: label === "custom" ? asTrimmedText(meal.custom_meal_label) : "",
-      // Optional human-authored identity. It never supplies missing components or inference.
+      // Human-authorized identity; legacy records may remain unnamed. Never inference.
       meal_name: asTrimmedText(meal.meal_name),
       // These fields only preserve what the user chose to describe. They never estimate ingredients or sodium.
       meal_type: mealType,
@@ -476,6 +496,9 @@
   }
 
   function deriveMealEstimate(meal) {
+    if (meal?.record_schema_version === MEAL_RECORD_SCHEMA_VERSION) {
+      return deriveMealEstimate({ items: [] });
+    }
     const namedDishId = asTrimmedText(meal?.named_dish_id);
     const namedDish = getNamedDishReferenceById(namedDishId);
     const namedDishConsistency = evaluateNamedDishConsistency(meal);
@@ -663,12 +686,29 @@
       .filter((item) => references.has(item.foodId) || item.displayNameSnapshot)
       .sort((left, right) => left.foodId.localeCompare(right.foodId));
     const visibleItems = sortedDistinctItems.slice(0, maxVisibleItems);
+    const presentation = [];
+    const seenFallbackIds = new Set();
+    boundedMeals.forEach((meal) => {
+      if (meal.mealName) {
+        const points = [...meal.mealName];
+        presentation.push(Object.freeze({ text: points.length > 160 ? `${points.slice(0, 160).join("")}…` : meal.mealName }));
+      } else {
+        meal.confirmedItems.forEach((item) => {
+          if (!seenFallbackIds.has(item.foodId) && (references.has(item.foodId) || item.displayNameSnapshot)) {
+            seenFallbackIds.add(item.foodId);
+            presentation.push(item);
+          }
+        });
+      }
+    });
 
     return Object.freeze({
       source: "saved_today",
       date: selectedDate,
       mealCount: boundedMeals.length,
       meals: Object.freeze(boundedMeals),
+      visibleLabels: Object.freeze(presentation.slice(0, maxVisibleItems)),
+      additionalLabelCount: Math.max(0, presentation.length - maxVisibleItems),
       visibleItems: Object.freeze(visibleItems),
       additionalItemCount: Math.max(0, sortedDistinctItems.length - visibleItems.length)
     });
@@ -687,91 +727,171 @@
       return normalizeMealRecord(record, { normalizeDate });
     }
 
-    function getMealRecords() {
+    // Split only validated JSON containers, retaining every untouched source token.
+    // This preserves future records, large numbers, duplicate keys and formatting
+    // without round-tripping them through JSON.stringify.
+    function splitMembers(source) {
+      const text = source.trim();
+      if (!text.slice(1, -1).trim()) return [];
+      const members = [];
+      let start = 1;
+      let depth = 0;
+      let quoted = false;
+      let escaped = false;
+      for (let i = 1; i < text.length - 1; i += 1) {
+        const char = text[i];
+        if (quoted) {
+          if (escaped) escaped = false;
+          else if (char === "\\") escaped = true;
+          else if (char === '"') quoted = false;
+        } else if (char === '"') quoted = true;
+        else if (char === "{" || char === "[") depth += 1;
+        else if (char === "}" || char === "]") depth -= 1;
+        else if (char === "," && depth === 0) {
+          members.push(text.slice(start, i));
+          start = i + 1;
+        }
+      }
+      members.push(text.slice(start, -1));
+      return members;
+    }
+
+    function failure(code) { return { ok: false, code }; }
+
+    function inspectStorage() {
       let raw;
       try {
-        raw = storage?.getItem?.(MEAL_RECORDS_KEY);
+        if (typeof storage?.getItem !== "function") return { ...failure("storage_read_failed"), records: [] };
+        raw = storage.getItem(MEAL_RECORDS_KEY);
+        if (raw === null) return { ok: true, raw, entries: [], records: [] };
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return { ...failure("storage_invalid"), records: [] };
+        const tokens = splitMembers(raw);
+        if (tokens.length !== parsed.length) return { ...failure("storage_invalid"), records: [] };
+        const entries = parsed.map((value, index) => ({ value, raw: tokens[index], record: normalizeRecord(value) }));
+        const idCounts = new Map();
+        entries.forEach((entry) => {
+          const id = asTrimmedText(entry.value?.meal_id);
+          if (id) idCounts.set(id, (idCounts.get(id) || 0) + 1);
+        });
+        const records = sortMealRecords(entries.map((entry) => entry.record)
+          .filter((record) => record && idCounts.get(record.meal_id) === 1));
+        return { ok: true, raw, entries, records };
       } catch (error) {
-        warn("Unable to read meal records.", error);
-        return [];
+        warn("Meal storage is unreadable; mutation is blocked.", error);
+        return { ...failure(raw === undefined ? "storage_read_failed" : "storage_invalid"), records: [] };
       }
-      if (!raw) return [];
-
-      let parsed;
-      try {
-        parsed = JSON.parse(raw);
-      } catch (error) {
-        warn("Malformed meal storage JSON was ignored.", error);
-        return [];
-      }
-      if (!Array.isArray(parsed)) {
-        warn("Meal storage did not contain an array.");
-        return [];
-      }
-
-      const records = parsed.map(normalizeRecord).filter(Boolean);
-      if (records.length !== parsed.length) warn("Malformed meal records were skipped.");
-      return sortMealRecords(records);
     }
 
-    function setMealRecords(records) {
-      const normalized = sortMealRecords((Array.isArray(records) ? records : []).map(normalizeRecord).filter(Boolean));
-      try {
-        storage?.setItem?.(MEAL_RECORDS_KEY, JSON.stringify(normalized));
-      } catch (error) {
-        warn("Unable to save meal records.", error);
-      }
-      return normalized;
+    function getMealRecords() {
+      return inspectStorage().records;
     }
+
+    // Whole-store replacement cannot establish intent for omitted historical data.
+    // Mutations use the targeted create/update/delete paths below instead.
+    function setMealRecords() { return failure("bulk_write_disabled"); }
 
     function getMealsForDate(date) {
       const normalizedDate = asTrimmedText(normalizeDate(date));
       return getMealRecords().filter((meal) => meal.date === normalizedDate);
     }
 
+    function persist(state, tokens, result = {}) {
+      if (!state.ok) return failure(state.code);
+      try {
+        if (typeof storage?.setItem !== "function") return failure("storage_write_failed");
+        if (storage.getItem(MEAL_RECORDS_KEY) !== state.raw) return failure("storage_changed");
+        storage.setItem(MEAL_RECORDS_KEY, `[${tokens.join(",")}]`);
+        return { ok: true, ...result };
+      } catch (error) {
+        warn("Unable to save meal records; the draft is retained.", error);
+        return failure("storage_write_failed");
+      }
+    }
+
     function createMeal(input = {}) {
+      const state = inspectStorage();
+      if (!state.ok) return failure(state.code);
+      if (typeof input.meal_name !== "string" || !input.meal_name.trim()) return failure("name_required");
+      if (!isValidMealTime(asTrimmedText(input.time))) return failure("invalid_time");
+      if (input.items?.length || asTrimmedText(input.named_dish_id)) return failure("historical_fields_read_only");
       const timestamp = now();
       const meal = normalizeRecord({
-        ...input,
+        record_schema_version: MEAL_RECORD_SCHEMA_VERSION,
         meal_id: asTrimmedText(input.meal_id) || createId("meal"),
-        created_at: asTrimmedText(input.created_at) || timestamp,
+        date: input.date,
+        meal_name: input.meal_name,
+        meal_type: input.meal_type,
+        meal_label: input.meal_label,
+        custom_meal_label: input.custom_meal_label,
+        time: input.time,
+        items: [],
+        created_at: timestamp,
         updated_at: timestamp
       });
-      if (!meal) return null;
-      setMealRecords([...getMealRecords(), meal]);
-      return meal;
+      if (!meal) return failure("invalid_record");
+      if (state.entries.some((entry) => asTrimmedText(entry.value?.meal_id) === meal.meal_id)) return failure("duplicate_id");
+      return persist(state, [...state.entries.map((entry) => entry.raw), JSON.stringify(meal)], { meal });
+    }
+
+    function findTarget(state, mealId) {
+      const matches = state.entries.filter((entry) => asTrimmedText(entry.value?.meal_id) === mealId);
+      return matches.length === 1 && matches[0].record ? matches[0] : null;
+    }
+
+    function patchRecord(raw, patch) {
+      const seen = new Set();
+      const members = splitMembers(raw).map((member) => {
+        const match = member.match(/^\s*("(?:\\.|[^"\\])*")\s*:/);
+        if (!match) throw new Error("Unreconcilable record property");
+        const key = JSON.parse(match[1]);
+        if (seen.has(key)) throw new Error("Ambiguous duplicate record property");
+        seen.add(key);
+        return Object.prototype.hasOwnProperty.call(patch, key) ? `${JSON.stringify(key)}:${JSON.stringify(patch[key])}` : member;
+      });
+      for (const [key, value] of Object.entries(patch)) {
+        if (!seen.has(key)) members.push(`${JSON.stringify(key)}:${JSON.stringify(value)}`);
+      }
+      return `{${members.join(",")}}`;
     }
 
     function updateMeal(mealId, updates = {}) {
-      const records = getMealRecords();
-      const index = records.findIndex((meal) => meal.meal_id === mealId);
-      if (index < 0) return null;
-      const existing = records[index];
-      const updated = normalizeRecord({
-        ...existing,
-        ...updates,
-        meal_id: existing.meal_id,
-        created_at: existing.created_at,
-        updated_at: now()
-      });
-      if (!updated) return null;
-      records[index] = updated;
-      setMealRecords(records);
-      return updated;
+      const state = inspectStorage();
+      if (!state.ok) return failure(state.code);
+      const target = findTarget(state, mealId);
+      if (!target) return failure("record_not_editable");
+      const patch = { ...updates };
+      for (const key of ["meal_id", "created_at", "record_schema_version"]) delete patch[key];
+      if (Object.prototype.hasOwnProperty.call(patch, "meal_name")) {
+        if (typeof patch.meal_name !== "string" || !patch.meal_name.trim()) return failure("name_required");
+        patch.meal_name = patch.meal_name.trim();
+      }
+      if (Object.prototype.hasOwnProperty.call(patch, "time") && !isValidMealTime(asTrimmedText(patch.time))) return failure("invalid_time");
+      if (Object.prototype.hasOwnProperty.call(patch, "time")) patch.time = asTrimmedText(patch.time);
+      patch.updated_at = now();
+      try {
+        const nextRaw = patchRecord(target.raw, patch);
+        const meal = normalizeRecord(JSON.parse(nextRaw));
+        if (!meal) return failure("invalid_record");
+        return persist(state, state.entries.map((entry) => entry === target ? nextRaw : entry.raw), { meal });
+      } catch (error) {
+        warn("Historical meal could not be safely reconciled; no data was written.", error);
+        return failure("record_not_editable");
+      }
     }
 
     function deleteMeal(mealId) {
-      const records = getMealRecords();
-      const remaining = records.filter((meal) => meal.meal_id !== mealId);
-      if (remaining.length === records.length) return false;
-      setMealRecords(remaining);
-      return true;
+      const state = inspectStorage();
+      if (!state.ok) return failure(state.code);
+      const target = findTarget(state, mealId);
+      if (!target) return failure("record_not_editable");
+      return persist(state, state.entries.filter((entry) => entry !== target).map((entry) => entry.raw), { mealId });
     }
 
     function addMealItem(mealId, input = {}) {
       const reference = referenceById.get(asTrimmedText(input.food_id));
       const item = createMealItem(input, reference, { createId, language });
-      if (!item) return null;
+      if (!item) return failure("invalid_item");
       return updateMeal(mealId, (function appendItem(meal) {
         return { items: [...meal.items, item] };
       })(getMealRecords().find((meal) => meal.meal_id === mealId) || { items: [] }));
@@ -780,7 +900,7 @@
     function updateMealItem(mealId, mealItemId, updates = {}) {
       const meal = getMealRecords().find((record) => record.meal_id === mealId);
       const existingItem = meal?.items?.find((item) => item.meal_item_id === mealItemId);
-      if (!meal || !existingItem) return null;
+      if (!meal || !existingItem) return failure("invalid_item");
       const nextFoodId = asTrimmedText(updates.food_id) || existingItem.food_id;
       const reference = referenceById.get(nextFoodId);
       const displayNameSnapshot = Object.prototype.hasOwnProperty.call(updates, "display_name_snapshot")
@@ -795,7 +915,7 @@
         meal_item_id: existingItem.meal_item_id,
         food_id: nextFoodId
       }, reference, { createId, language });
-      if (!item) return null;
+      if (!item) return failure("invalid_item");
       return updateMeal(mealId, {
         items: meal.items.map((current) => current.meal_item_id === mealItemId ? item : current)
       });
@@ -803,14 +923,15 @@
 
     function deleteMealItem(mealId, mealItemId) {
       const meal = getMealRecords().find((record) => record.meal_id === mealId);
-      if (!meal) return null;
+      if (!meal) return failure("record_not_editable");
       const items = meal.items.filter((item) => item.meal_item_id !== mealItemId);
-      if (items.length === meal.items.length || !items.length) return null;
+      if (items.length === meal.items.length || !items.length) return failure("invalid_item");
       return updateMeal(mealId, { items });
     }
 
     return Object.freeze({
       getMealRecords,
+      inspectStorage,
       setMealRecords,
       getMealsForDate,
       createMeal,
@@ -826,6 +947,8 @@
   const api = Object.freeze({
     MEAL_RECORDS_KEY,
     MEAL_SCHEMA_VERSION,
+    MEAL_RECORD_SCHEMA_VERSION,
+    isValidMealTime,
     MEAL_TYPES,
     PORTION_MULTIPLIERS,
     ESTIMATE_BASES,

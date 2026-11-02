@@ -116,4 +116,16 @@ for (const key of [
   assert.equal((script.match(new RegExp(`${key}:`, "g")) || []).length, 3, `${key} exists in TH/EN/ZH`);
 }
 
+const moment = { record_schema_version: "2", meal_id: "name_only", date, meal_name: "Human meal name", items: [] };
+const mixed = runtime.buildSavedMealReflectionContext(date, [moment, meal("fallback", date, [rice])]);
+assert.equal(mixed.mealCount, 2);
+assert.ok(mixed.visibleLabels.some((entry) => entry.text === "Human meal name"));
+assert.ok(mixed.visibleLabels.some((entry) => entry.foodId === "rice"), "unnamed history retains label fallback alongside new names");
+assert.match(script, /visibleLabels\.map\(\(entry\) => entry\.text \|\| renderLabel\(entry\)\)/);
+const manyNames = Array.from({length:6}, (_, index) => ({...moment,meal_id:`name_${index}`,meal_name:`Name ${index}`}));
+assert.equal(runtime.buildSavedMealReflectionContext(date,manyNames).visibleLabels.length,4);
+assert.equal(runtime.buildSavedMealReflectionContext(date,manyNames).additionalLabelCount,2);
+const longName = runtime.buildSavedMealReflectionContext(date,[{...moment,meal_name:"ข".repeat(200)}]);
+assert.equal([...longName.visibleLabels[0].text].length,161);
+assert.equal(longName.meals[0].mealName.length,200,"presentation truncation never mutates the confirmed name");
 console.log("Saved Meal Reflection context tests passed.");

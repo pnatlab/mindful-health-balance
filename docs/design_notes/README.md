@@ -6,6 +6,10 @@ Source files are currently kept flat in this folder for path stability. This REA
 
 Future folder migration may happen later as a dedicated docs patch.
 
+## Current Meal contract
+
+- [MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) — Approved S0–S2 name-first entry, mixed-history storage preservation, explicit write outcomes, and transitional Vision boundary. Earlier composition notes remain historical.
+
 ## 00 Foundation
 
 Core identity, public definition, portable field memory, local-first behavior, and AI-ready reflection boundaries. The current positioning is a local-first personal rhythm research prototype and user-owned field memory for AI-assisted self-reflection.

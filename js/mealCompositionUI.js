@@ -618,12 +618,18 @@
     other: "warm-neutral"
   });
 
+  const MOMENT_TEXT = Object.freeze({
+    th: Object.freeze({ title: "วันนี้กินอะไร", intro: "เก็บชื่ออาหารไว้เท่าที่อยากจำ", open: "บันทึกมื้ออาหาร", close: "พับมื้ออาหาร", mealName: "ชื่ออาหาร", mealNameHelper: "จำเป็นสำหรับบันทึก · เขียนตามที่คุณเรียกอาหารนี้", additionalDetails: "รายละเอียดเพิ่มเติม", mealType: "ประเภทอาหาร (ไม่บังคับ)", mealLabel: "ช่วงของมื้อ (ไม่บังคับ)", mealTime: "เวลา (ไม่บังคับ)", save: "บันทึกมื้อนี้", nameRequired: "กรุณาระบุชื่ออาหารก่อนบันทึก", invalidTime: "กรุณาระบุเวลาเป็น HH:mm หรือเว้นว่าง", storageFailed: "ยังบันทึกไม่ได้ ข้อมูลเดิมและชื่อที่กรอกยังอยู่ โปรดลองอีกครั้ง", storageBlocked: "ยังแก้ไขข้อมูลมื้ออาหารไม่ได้ เพราะอ่านข้อมูลเดิมอย่างปลอดภัยไม่สำเร็จ ระบบไม่ได้ลบหรือรีเซ็ตข้อมูล", historicalDetails: "รายละเอียดจากบันทึกเดิม", customOccasion: "ช่วงของมื้อที่ตั้งเอง", visionPending: "ภาพและผล AI ใช้ดูประกอบเท่านั้น การนำไปใช้กับ Meal Moment อยู่ระหว่างปรับปรุง โปรดพิมพ์ชื่ออาหารแล้วบันทึกเอง", customLabel: "มื้อที่ตั้งเอง" }),
+    en: Object.freeze({ title: "What did you eat?", intro: "Keep the food name you want to remember.", open: "Record a meal", close: "Collapse meals", mealName: "Food name", mealNameHelper: "Required to save. Use the name you would naturally call it.", additionalDetails: "Additional details", mealType: "Food type (optional)", mealLabel: "Meal occasion (optional)", mealTime: "Time (optional)", save: "Save meal", nameRequired: "Enter a food name before saving.", invalidTime: "Enter time as HH:mm or leave it blank.", storageFailed: "Could not save. Your previous data and current draft are retained. Please try again.", storageBlocked: "Meal changes are paused because existing storage could not be read safely. Nothing has been deleted or reset.", historicalDetails: "Historical details", customOccasion: "Custom meal occasion", visionPending: "Photo and AI results are view-only while Meal Moment integration is pending. Type the food name and save manually.", customLabel: "Custom occasion" }),
+    zh: Object.freeze({ title: "今天吃了什么？", intro: "留下你想记住的食物名称。", open: "记录一餐", close: "收起餐食", mealName: "食物名称", mealNameHelper: "保存时必填。按你平时的叫法填写。", additionalDetails: "更多详情", mealType: "食物类型（可选）", mealLabel: "用餐时段（可选）", mealTime: "时间（可选）", save: "保存这一餐", nameRequired: "请先填写食物名称。", invalidTime: "请以 HH:mm 格式填写时间，或留空。", storageFailed: "未能保存。原有数据和当前草稿均已保留，请重试。", storageBlocked: "暂时无法安全读取原有餐食数据，修改已暂停。数据未被删除或重置。", historicalDetails: "历史记录详情", customOccasion: "自定义用餐时段", visionPending: "照片和 AI 结果目前仅供查看，Meal Moment 集成尚待调整。请手动填写食物名称后保存。", customLabel: "自定义时段" })
+  });
+
   function normalizeLanguage(language) {
     return SUPPORTED_LANGUAGES.includes(language) ? language : "th";
   }
 
   function getText(language) {
-    return TEXT[normalizeLanguage(language)];
+    return { ...TEXT[normalizeLanguage(language)], ...MOMENT_TEXT[normalizeLanguage(language)] };
   }
 
   function escapeHtml(value) {
@@ -688,6 +694,7 @@
       mealId: "",
       mealName: "",
       mealLabel: "unnamed",
+      customMealLabel: "",
       mealType: "unspecified",
       namedDishId: "",
       condimentKnowledge: "",
@@ -716,10 +723,12 @@
     let language = normalizeLanguage(options.language);
     let draft = createEmptyDraft();
     let dismissedNamedDishIds = new Set();
+    let dirtyMeta = new Set();
 
     function resetDraft() {
       draft = createEmptyDraft();
       dismissedNamedDishIds = new Set();
+      dirtyMeta = new Set();
       return getDraft();
     }
 
@@ -770,11 +779,13 @@
     }
 
     function setDraftMeta(updates = {}) {
+      Object.keys(updates).forEach((key) => dirtyMeta.add(key));
       if (Object.prototype.hasOwnProperty.call(updates, "mealLabel")) {
-        draft.mealLabel = ["breakfast", "lunch", "dinner", "snack", "late_meal", "unnamed"].includes(updates.mealLabel)
+        draft.mealLabel = ["breakfast", "lunch", "dinner", "snack", "late_meal", "custom", "unnamed"].includes(updates.mealLabel)
           ? updates.mealLabel
           : "unnamed";
       }
+      if (Object.prototype.hasOwnProperty.call(updates, "customMealLabel")) draft.customMealLabel = String(updates.customMealLabel || "").trim();
       if (Object.prototype.hasOwnProperty.call(updates, "mealName")) draft.mealName = String(updates.mealName || "").trim();
       if (Object.prototype.hasOwnProperty.call(updates, "mealType")) {
         draft.mealType = runtime.MEAL_TYPES?.has(updates.mealType) ? updates.mealType : "unspecified";
@@ -786,24 +797,29 @@
       return getDraft();
     }
 
+    function validateDraft() {
+      if (!draft.mealName.trim()) return { ok: false, code: "name_required" };
+      // Leave untouched historical time alone; validate all newly supplied times.
+      if ((!draft.mealId || dirtyMeta.has("time")) && !runtime.isValidMealTime(draft.time)) return { ok: false, code: "invalid_time" };
+      return { ok: true };
+    }
+
     function saveDraft() {
-      if (!date || !draft.items.length) return null;
-      const input = {
-        date,
-        time: draft.time,
-        meal_name: draft.mealName,
-        meal_label: draft.mealLabel,
-        meal_type: draft.mealType,
-        named_dish_id: draft.namedDishId,
-        condiment_knowledge: draft.condimentKnowledge,
-        items: draft.items.map(cloneItem),
-        meal_note: ""
-      };
+      const validation = validateDraft();
+      if (!validation.ok) return validation;
       const wasEditing = Boolean(draft.mealId);
-      const meal = wasEditing ? store.updateMeal(draft.mealId, input) : store.createMeal(input);
-      if (!meal) return null;
+      const metadata = {
+        mealName: "meal_name", mealType: "meal_type", mealLabel: "meal_label",
+        customMealLabel: "custom_meal_label", time: "time"
+      };
+      const input = wasEditing ? {} : { date };
+      for (const [key, field] of Object.entries(metadata)) {
+        if (!wasEditing || dirtyMeta.has(key)) input[field] = draft[key];
+      }
+      const result = wasEditing ? store.updateMeal(draft.mealId, input) : store.createMeal(input);
+      if (!result.ok) return result;
       resetDraft();
-      return { meal, wasEditing };
+      return { ...result, wasEditing };
     }
 
     function editMeal(mealId) {
@@ -813,19 +829,21 @@
         mealId: meal.meal_id,
         mealName: meal.meal_name || "",
         mealLabel: meal.meal_label,
+        customMealLabel: meal.custom_meal_label || "",
         mealType: meal.meal_type || "unspecified",
         namedDishId: meal.named_dish_id || "",
         condimentKnowledge: meal.condiment_knowledge || "",
         time: meal.time,
         items: meal.items.map(cloneItem)
       };
+      dirtyMeta = new Set();
       return getDraft();
     }
 
     function deleteMeal(mealId) {
-      const deleted = store.deleteMeal(mealId);
-      if (deleted && draft.mealId === mealId) resetDraft();
-      return deleted;
+      const result = store.deleteMeal(mealId);
+      if (result.ok && draft.mealId === mealId) resetDraft();
+      return result;
     }
 
     function getNamedDishCandidates() {
@@ -871,6 +889,8 @@
       removeDraftItem,
       setDraftMeta,
       saveDraft,
+      validateDraft,
+      getStorageState: () => { const state = store.inspectStorage(); return { ok: state.ok, code: state.code }; },
       editMeal,
       deleteMeal,
       getNamedDishCandidates,
@@ -1039,12 +1059,14 @@
       return globalScope.setTimeout(callback, 0);
     });
     let language = normalizeLanguage(options.language);
-    let isOpen = false;
+    let isOpen = true;
     let category = "grain";
     let search = "";
     let showAllFoodResults = false;
     let status = "";
     let savePhase = "idle";
+    let detailsOpen = false;
+    let validationCode = "";
     let recentSavedMealId = "";
     let recentSaveWasEditing = false;
     let visionRequestId = 0;
@@ -1514,7 +1536,7 @@
         </div>
         <div class="meal-vision-actions">
           <button type="button" class="meal-text-button" data-vision-clear>${escapeHtml(copy.visionClear)}</button>
-          <button type="button" class="primary-button" data-vision-apply>${escapeHtml(copy.visionApply)}</button>
+          <button type="button" class="primary-button" data-vision-apply disabled aria-describedby="mealVisionPending">${escapeHtml(copy.visionApply)}</button>
         </div>
       `;
     }
@@ -1640,6 +1662,7 @@
             ${renderVisionPreview()}
             <div><h3 id="mealVisionReviewTitle">${escapeHtml(copy.visionReviewTitle)}</h3><p>${escapeHtml(copy.visionReviewHelper)}</p></div>
           </div>
+          <p id="mealVisionPending" class="meal-moment-notice">${escapeHtml(copy.visionPending)}</p>
           ${renderVisionReview()}
         </section>
       `;
@@ -1796,82 +1819,60 @@
       `;
     }
 
+    function validationMessage(code) {
+      const copy = getText(language);
+      if (code === "name_required") return copy.nameRequired;
+      if (code === "invalid_time") return copy.invalidTime;
+      if (["storage_invalid", "storage_read_failed", "record_not_editable"].includes(code)) return copy.storageBlocked;
+      return copy.storageFailed;
+    }
+
     function renderDraft() {
       const copy = getText(language);
       const draft = model.getDraft();
-      const isExpanded = currentCompositionDisclosure.expanded;
-      const itemCount = draft.items.length;
-      const contentId = "mealDraftContent";
-      const compactHeader = `
-        <div class="meal-section-heading meal-draft-heading meal-draft-disclosure-heading">
-          <div>
-            <p class="section-kicker">${draft.mealId ? escapeHtml(copy.editMeal) : escapeHtml(copy.draftKicker)}</p>
-            <h3 id="mealDraftTitle">${escapeHtml(copy.currentMeal)}</h3>
-            ${itemCount ? `<span class="meal-picker-count">${escapeHtml(copy.foodItemCount(itemCount))}</span>` : ""}
-          </div>
-          <button type="button" class="meal-draft-toggle${isExpanded ? " is-expanded" : ""}" data-meal-draft-toggle aria-expanded="${isExpanded}" aria-controls="${contentId}" aria-label="${escapeHtml(isExpanded ? copy.collapseFoodPicker : copy.expandFoodPicker)}"></button>
-        </div>
-      `;
-      if (!isExpanded) {
-        return `<section class="meal-draft is-collapsed" aria-labelledby="mealDraftTitle">${compactHeader}</section>`;
-      }
-      const estimate = model.getDraftEstimate();
-      let estimateText = copy.estimateUnknown;
-      let estimateNote = "";
-      const range = formatRange(estimate.estimated_sodium_min_mg, estimate.estimated_sodium_max_mg, language);
-      if (estimate.estimate_basis === "dish_inclusive" && range) {
-        estimateText = copy.namedDishBasis(range);
-        estimateNote = copy.namedDishBasisHelper;
-      } else if (estimate.sodium_estimate_coverage === "complete" && range) estimateText = copy.estimateComplete(range);
-      else if (estimate.sodium_estimate_coverage === "partial" && range) {
-        estimateText = copy.estimatePartial(range);
-        estimateNote = copy.estimatePartialNote;
-      }
-      const items = draft.items.length
-        ? draft.items.map(renderDraftItem).join("")
-        : `<p class="meal-inline-empty meal-draft-empty">${escapeHtml(copy.currentMealEmpty)}</p>`;
-      const saveFeedback = buildSaveFeedbackModel(savePhase, Boolean(draft.mealId), language);
-      const isSaving = saveFeedback.phase === "saving";
-      const canReflect = isReflectionEligible(draft);
+      const storageState = model.getStorageState();
+      const labels = { ...copy.labels, custom: copy.customLabel };
       return `
-        <section class="meal-draft" aria-labelledby="mealDraftTitle" aria-busy="${isSaving}">
-          ${compactHeader}
-          <div id="${contentId}" class="meal-draft-content">
-            <div class="meal-meta-controls">
-              <label class="meal-meta-control meal-name-control">
-                <span class="meal-meta-label"><span class="meal-meta-icon" aria-hidden="true">🍽️</span><span>${escapeHtml(copy.mealName)}</span></span>
-                <input type="text" data-meal-name value="${escapeHtml(draft.mealName)}" placeholder="${escapeHtml(copy.mealNamePlaceholder)}" aria-describedby="mealNameHelper">
-                <small id="mealNameHelper">${escapeHtml(copy.mealNameHelper)}</small>
-              </label>
-              <label class="meal-meta-control meal-moment-control">
-                <span class="meal-meta-label"><span class="meal-meta-icon" aria-hidden="true">☀️</span><span>${escapeHtml(copy.mealLabel)}</span></span>
-                <select data-meal-label>${renderOptions(copy.labels, draft.mealLabel)}</select>
-              </label>
-              <label class="meal-meta-control meal-time-control">
-                <span class="meal-meta-label"><span class="meal-meta-icon" aria-hidden="true">🕒</span><span>${escapeHtml(copy.mealTime)}</span></span>
-                <input type="time" data-meal-time value="${escapeHtml(draft.time)}">
-              </label>
-            </div>
-            ${renderMealVisual(draft.items)}
-            <div class="meal-draft-list">${items}</div>
-            <div class="meal-draft-footer">
-              <div class="meal-estimate" aria-live="polite">
-                <span>${escapeHtml(copy.draftEstimateTitle)}</span>
-                <strong>${escapeHtml(estimateText)}</strong>
-                ${estimateNote ? `<small>${escapeHtml(estimateNote)}</small>` : ""}
-              </div>
-              <div class="meal-draft-action-group">
-                <small class="meal-reflect-helper">${escapeHtml(copy.reflectMealDraftHelper)}</small>
-                <div class="meal-draft-actions">
-                  <button type="button" class="ghost-button meal-reflect-button" data-reflect-meal-draft${canReflect && !isSaving ? "" : " disabled"}>${escapeHtml(copy.reflectMealDraft)}</button>
-                  ${draft.mealId ? `<button type="button" class="ghost-button" data-cancel-meal-edit>${escapeHtml(copy.cancelEdit)}</button>` : ""}
-                  <button type="button" class="primary-button${isSaving ? " is-saving" : ""}" data-save-meal${draft.items.length && !isSaving ? "" : " disabled"}>${escapeHtml(isSaving ? copy.saving : draft.mealId ? copy.saveChanges : copy.save)}</button>
-                </div>
-              </div>
-            </div>
+        <form class="meal-draft meal-moment-form" data-meal-moment-form novalidate aria-busy="${savePhase === "saving"}">
+          <label class="meal-meta-control meal-name-control">
+            <span>${escapeHtml(copy.mealName)} <span aria-hidden="true">*</span></span>
+            <input type="text" data-meal-name required aria-required="true" value="${escapeHtml(draft.mealName)}" aria-describedby="mealNameHelper mealMomentValidation" aria-invalid="${validationCode === "name_required"}">
+            <small id="mealNameHelper">${escapeHtml(copy.mealNameHelper)}</small>
+          </label>
+          <div class="meal-moment-photo">
+            <p class="meal-moment-notice">${escapeHtml(copy.visionPending)}</p>
+            ${renderVisionHelper()}
           </div>
-        </section>
+          <details class="meal-moment-details" data-meal-details${detailsOpen ? " open" : ""}>
+            <summary>${escapeHtml(copy.additionalDetails)}</summary>
+            <div class="meal-meta-controls">
+              <label class="meal-meta-control"><span>${escapeHtml(copy.mealType)}</span><select data-meal-moment-type>${renderOptions(copy.mealTypes, draft.mealType)}</select></label>
+              <label class="meal-meta-control"><span>${escapeHtml(copy.mealLabel)}</span><select data-meal-label>${renderOptions(labels, draft.mealLabel)}</select></label>
+              ${draft.mealLabel === "custom" ? `<label class="meal-meta-control"><span>${escapeHtml(copy.customOccasion)}</span><input type="text" data-meal-custom-label value="${escapeHtml(draft.customMealLabel)}"></label>` : ""}
+              <label class="meal-meta-control"><span>${escapeHtml(copy.mealTime)}</span><input type="time" step="60" data-meal-time value="${escapeHtml(draft.time)}" aria-describedby="mealMomentValidation" aria-invalid="${validationCode === "invalid_time"}"></label>
+            </div>
+          </details>
+          <p id="mealMomentValidation" data-meal-validation role="alert">${validationCode ? escapeHtml(validationMessage(validationCode)) : ""}</p>
+          ${!storageState.ok ? `<p class="meal-moment-notice" role="alert">${escapeHtml(copy.storageBlocked)}</p>` : ""}
+          <div class="meal-draft-actions">
+            ${draft.mealId ? `<button type="button" class="ghost-button" data-cancel-meal-edit>${escapeHtml(copy.cancelEdit)}</button>` : ""}
+            <button type="submit" class="primary-button" data-save-meal${savePhase === "saving" ? " disabled" : ""}>${escapeHtml(savePhase === "saving" ? copy.saving : draft.mealId ? copy.saveChanges : copy.save)}</button>
+          </div>
+        </form>
       `;
+    }
+
+    function renderHistoricalDetails(meal) {
+      if (!meal.items?.length) return "";
+      const copy = getText(language);
+      const items = meal.items.map((item) => {
+        const name = item.display_name_snapshot || foodName(runtime.getFoodReferenceById(item.food_id)) || item.food_id;
+        const evidenceRange = formatRange(item.sodium_estimate_min_mg, item.sodium_estimate_max_mg, language);
+        const facts = [copy.portions[item.portion_label] || item.portion_label, item.serving_multiplier, copy.preparations[item.preparation] || item.preparation, item.user_adjustment, evidenceRange ? `${evidenceRange} mg` : "", item.confidence, item.source_type, item.source_reference].filter((value) => value !== "" && value != null);
+        return `<li><strong>${escapeHtml(name)}</strong><span>${escapeHtml(facts.join(" · "))}</span></li>`;
+      }).join("");
+      const notes = [meal.meal_note, meal.named_dish_id, meal.condiment_knowledge === "unknown" ? copy.condimentUnknown : ""].filter(Boolean);
+      return `<details class="meal-historical-details"><summary>${escapeHtml(copy.historicalDetails)}</summary><ul>${items}</ul>${notes.map((note) => `<p>${escapeHtml(note)}</p>`).join("")}</details>`;
     }
 
     function renderSavedMeals() {
@@ -1879,15 +1880,14 @@
       const meals = model.getMeals();
       const cards = meals.length ? meals.map((meal) => {
         const card = buildSavedMealCardModel(meal, runtime, language);
-        const unknownCondiments = card.condimentKnowledge === "unknown" ? ` · ${copy.condimentUnknown}` : "";
+        const metadata = [card.time, meal.meal_label === "custom" ? meal.custom_meal_label : meal.meal_label !== "unnamed" ? card.label : "", meal.meal_type !== "unspecified" ? card.mealType : ""].filter(Boolean);
         return `
           <article class="meal-saved-item${meal.meal_id === recentSavedMealId ? " is-recent" : ""}" data-saved-meal="${escapeHtml(meal.meal_id)}">
-            ${renderMealVisual(meal.items, "saved")}
+
             <div class="meal-saved-copy">
-              <p class="meal-saved-meta">${escapeHtml(card.time || "·")} · ${escapeHtml(card.label)} · ${escapeHtml(card.mealType)}${escapeHtml(unknownCondiments)}</p>
+              ${metadata.length ? `<p class="meal-saved-meta">${escapeHtml(metadata.join(" · "))}</p>` : ""}
               <h4>${escapeHtml(card.mealName || card.visual.componentNames.join(" · "))}</h4>
-              ${card.mealName && card.visual.componentNames.length ? `<p class="meal-saved-components">${escapeHtml(card.visual.componentNames.join(" · "))}</p>` : ""}
-              ${meal.named_dish_id && runtime.getNamedDishReferenceById(meal.named_dish_id) && runtime.evaluateNamedDishConsistency(meal).evidence_usable ? `<p class="meal-named-dish-saved">${escapeHtml(copy.namedDishConfirmed)} ${escapeHtml(runtime.getFoodDisplayName(runtime.getNamedDishReferenceById(meal.named_dish_id), language))} · ${escapeHtml(copy.namedDishBasisHelper)}</p>` : ""}
+              ${renderHistoricalDetails(meal)}
             </div>
             <div class="meal-saved-actions">
               <button type="button" class="meal-text-button" data-edit-meal="${escapeHtml(meal.meal_id)}">${escapeHtml(copy.editMeal)}</button>
@@ -1903,7 +1903,7 @@
           <span class="meal-saved-confirmation-copy">
             <span class="meal-saved-confirmation-title">${escapeHtml(recentSaveWasEditing ? copy.updatedLatest : copy.savedLatest)}</span>
             <span aria-hidden="true"> · </span>
-            <span>${escapeHtml(copy.foodItemCount(recentMeal.items.length))}</span>
+            <span>${escapeHtml(recentMeal.meal_name)}</span>
           </span>
         </div>
       ` : "";
@@ -1923,7 +1923,8 @@
 
     function renderReflection() {
       const copy = getText(language);
-      const lines = buildDailyReflectionLines(model.getDailySummary(), language);
+      const count = model.getMeals().length;
+      const lines = count ? [copy.dailyCount(count)] : [...copy.emptyReflection];
       const typeIndicators = buildSavedMealTypeIndicatorModel(model.getMeals());
       const indicators = typeIndicators.totalCount ? `
         <div class="meal-saved-type-indicators" aria-hidden="true">
@@ -1941,10 +1942,56 @@
 
     function render() {
       renderHeader();
-      if (isOpen) content.innerHTML = `${renderMealType()}${renderVisionHelper()}${renderFoodPicker()}${renderNamedDishReference()}${renderDraft()}${renderSavedMeals()}`;
+      if (isOpen) content.innerHTML = `${renderDraft()}${renderSavedMeals()}`;
       renderReflection();
       statusNode.textContent = status;
     }
+
+    function saveMealMoment() {
+      if (savePhase === "saving") return;
+      const validation = model.validateDraft();
+      if (!validation.ok) {
+        validationCode = validation.code;
+        if (validationCode === "invalid_time") detailsOpen = true;
+        status = "";
+        render();
+        root.querySelector(validationCode === "name_required" ? "[data-meal-name]" : "[data-meal-time]")?.focus();
+        return;
+      }
+      const wasEditing = Boolean(model.getDraft().mealId);
+      validationCode = "";
+      savePhase = "saving";
+      status = buildSaveFeedbackModel("saving", wasEditing, language).message;
+      render();
+      scheduleFrame(() => {
+        const result = model.saveDraft();
+        if (!result.ok) {
+          savePhase = "idle";
+          validationCode = result.code;
+          status = "";
+          render();
+          root.querySelector("[data-meal-name]")?.focus();
+          return;
+        }
+        recentSavedMealId = result.meal.meal_id;
+        recentSaveWasEditing = result.wasEditing;
+        savePhase = "saved";
+        detailsOpen = false;
+        clearVisionSession();
+        status = buildSaveFeedbackModel("saved", result.wasEditing, language).message;
+        render();
+        root.querySelector("[data-meal-name]")?.focus({ preventScroll: true });
+      });
+    }
+
+    root.addEventListener("submit", (event) => {
+      if (!event.target.matches("[data-meal-moment-form]")) return;
+      event.preventDefault();
+      saveMealMoment();
+    });
+    root.addEventListener("toggle", (event) => {
+      if (event.target.matches("[data-meal-details]")) detailsOpen = event.target.open;
+    }, true);
 
     function applyMealNameProposalToDraft() {
       if (model.getDraft().mealName) return;
@@ -1981,16 +2028,10 @@
         observeVisionImage(visionSession.file);
         return;
       }
-      if (action.hasAttribute("data-vision-apply") && visionSession.review && visionReview) {
-        applyMealNameProposalToDraft();
-        const result = visionReview.applyVisionReviewToDraft(model, visionSession.review);
-        if (result.addedFoodIds.length) {
-          currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "vision_items_applied", draftItemCount: model.getDraft().items.length });
-        }
-        clearVisionSession();
-        status = result.mealTypeConflict ? getText(language).visionAppliedConflict : getText(language).visionApplied;
+      if (action.hasAttribute("data-vision-apply")) {
+        // S3 is deferred: even a synthetic click cannot apply names or ingredients.
+        status = getText(language).visionPending;
         render();
-        root.querySelector(".meal-draft")?.scrollIntoView({ behavior: scrollBehavior(), block: "nearest" });
         return;
       }
       if (action.dataset.mealCategory) {
@@ -2059,38 +2100,13 @@
         return;
       }
       if (action.hasAttribute("data-save-meal")) {
-        if (savePhase === "saving") return;
-        const draft = model.getDraft();
-        if (!draft.items.length) {
-          status = getText(language).saveNeedsItem;
-          render();
-          return;
-        }
-        const wasEditing = Boolean(draft.mealId);
-        savePhase = "saving";
-        status = buildSaveFeedbackModel("saving", wasEditing, language).message;
-        render();
-        scheduleFrame(() => {
-          const result = model.saveDraft();
-          if (!result) {
-            savePhase = "idle";
-            status = getText(language).saveNeedsItem;
-            render();
-            return;
-          }
-          recentSavedMealId = result.meal.meal_id;
-          recentSaveWasEditing = result.wasEditing;
-          savePhase = "saved";
-          clearVisionSession();
-          foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "reset", draftItemCount: model.getDraft().items.length });
-          currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "reset", draftItemCount: model.getDraft().items.length });
-          status = buildSaveFeedbackModel("saved", result.wasEditing, language).message;
-          render();
-          root.querySelector(".meal-saved-confirmation")?.scrollIntoView({ behavior: scrollBehavior(), block: "nearest" });
-        });
+        event.preventDefault();
+        saveMealMoment();
         return;
       }
       if (action.hasAttribute("data-cancel-meal-edit")) {
+        validationCode = "";
+        detailsOpen = false;
         model.resetDraft();
         clearVisionSession();
         foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "reset", draftItemCount: model.getDraft().items.length });
@@ -2101,6 +2117,8 @@
       }
       if (action.dataset.editMeal) {
         if (model.editMeal(action.dataset.editMeal)) {
+          validationCode = "";
+          detailsOpen = false;
           clearVisionSession();
           savePhase = "idle";
           recentSavedMealId = "";
@@ -2109,17 +2127,20 @@
           foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "draft_loaded" });
           currentCompositionDisclosure = reduceCurrentCompositionDisclosureState(currentCompositionDisclosure, { type: "draft_loaded", draftItemCount: model.getDraft().items.length });
           render();
-          root.querySelector(".meal-draft")?.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
+          root.querySelector("[data-meal-name]")?.focus();
         }
         return;
       }
       if (action.dataset.deleteMeal && confirmAction(getText(language).deleteConfirm)) {
-        if (model.deleteMeal(action.dataset.deleteMeal)) {
+        const deletion = model.deleteMeal(action.dataset.deleteMeal);
+        if (deletion.ok) {
           if (recentSavedMealId === action.dataset.deleteMeal) {
             recentSavedMealId = "";
             savePhase = "idle";
           }
           status = getText(language).deleted;
+        } else {
+          status = validationMessage(deletion.code);
         }
         render();
       }
@@ -2137,6 +2158,10 @@
       }
       if (event.target.matches("[data-meal-name]")) {
         model.setDraftMeta({ mealName: event.target.value });
+        return;
+      }
+      if (event.target.matches("[data-meal-custom-label]")) {
+        model.setDraftMeta({ customMealLabel: event.target.value });
         return;
       }
       if (event.target.matches("[data-meal-search]")) {
@@ -2189,6 +2214,7 @@
         render();
         return;
       }
+      if (event.target.matches("[data-meal-moment-type]")) model.setDraftMeta({ mealType: event.target.value });
       if (event.target.matches("[data-meal-label]")) model.setDraftMeta({ mealLabel: event.target.value });
       if (event.target.matches("[data-meal-time]")) model.setDraftMeta({ time: event.target.value });
       if (event.target.matches("[data-meal-condiment-unknown]")) {
@@ -2211,6 +2237,8 @@
         status = updated ? "" : getText(language).invalidCustom;
       }
       render();
+      const metadataSelector = ["[data-meal-moment-type]", "[data-meal-label]", "[data-meal-time]"].find((selector) => event.target.matches(selector));
+      if (metadataSelector) root.querySelector(metadataSelector)?.focus();
     });
 
     render();
@@ -2219,11 +2247,14 @@
       render,
       setLanguage(nextLanguage) {
         language = normalizeLanguage(nextLanguage);
+        status = "";
         clearMealNameProposalSession();
         model.setLanguage(language);
         render();
       },
       setDate(nextDate) {
+        validationCode = "";
+        detailsOpen = false;
         clearVisionSession();
         model.setDate(nextDate);
         foodItemsDisclosure = reduceFoodItemsDisclosureState(foodItemsDisclosure, { type: "reset", draftItemCount: model.getDraft().items.length });
@@ -2245,6 +2276,7 @@
   }
 
   const api = Object.freeze({
+    MOMENT_TEXT,
     SUPPORTED_LANGUAGES,
     TEXT,
     MEAL_TYPE_ILLUSTRATIONS,

@@ -40,12 +40,12 @@ The fact that it is not SaaS is intentional. Its value is in the design of a use
 
 Latest refinements include:
 
-- a calm, collapsible Meal Composer inside Today for recording multiple optional meals without turning the app into a nutrition dashboard
-- an experimental, optional local Vision helper that accepts PNG, JPEG, WebP, HEIC, and HEIF, then proposes visible Meal Type/components for human review before adding anything to the draft
+- Meal Moment v2 (S0–S2): enter a food name and save; classification, occasion, and time remain optional
+- the existing optional local photo helper remains view-only during this transition; Apply is disabled pending the S3 name-only adaptation
 - a small collapsed read-only local Vision vocabulary view in Log that shows observed labels, counts, and mapping status without adding Food References or changing meals
 - separate local Meal records with create, edit, and gentle targeted delete behavior; meal data does not expand `Daily_Log`
-- hybrid portions, optional preparation, first-class condiments, and source-bound sodium ranges with incomplete evidence shown as unknown or partial rather than zero
-- a Dynamic Daily Meal Reflection Panel derived from saved meals only, using recorded-fact language without scores, guilt, or medical targets
+- historical ingredient records, portions, condiments, named-dish references, and evidence remain preserved; these are not new-entry requirements
+- Today indicators and saved-meal context cues count both record forms and display human-confirmed names without changing Reflection generation
 - runtime-only awareness of the time since the latest earlier `Daily_Log` date, used once in the Reflection opening without schema changes, saved counters, streaks, rewards, or penalties
 - Gentle Mind Note with an Observe → Keep → Release writing invitation, balanced feeling groups, and softer support/practice wording without changing stored columns or historical compatibility
 - Mindful Practice Context before Mind Note using four simple bases: Body, Feeling tone, Mind / Thought, and Dhamma
@@ -154,19 +154,19 @@ Feeling choices are presented in three light groups: gentle/supportive, neutral/
 
 This is a UX, copy, and presentation change only. `Daily_Log`, workbook export/import, Reflection, Signal Engine, Field Review, and historical rows keep their existing contracts.
 
-## Gentle Meal Composition
+## Meal Moment v2 — current S0–S2 implementation
 
-MHB 2.3 adds a compact Meal Composer inside Today. It begins with the broad kind of meal the user recognizes, then lets them record only the visible or remembered components. A user does not need to reconstruct a recipe or know every condiment. They can adjust an approximate portion or optional preparation, save multiple meals for the same day, and later edit or remove a targeted meal. Condiments remain first-class optional items rather than hidden note text; an explicit “condiments unknown” note is distinct from simply not recording one.
+A meal is a human-authorized record, not a required ingredient decomposition. In Today, enter **Food name** and choose **Save meal**. Additional details starts collapsed and contains optional food type, meal occasion, and time. Time remains blank unless supplied; new values use `HH:mm`. Multiple records may share a date.
 
-Meal records are stored locally under a separate versioned source and do not become columns in `Daily_Log`. Sodium appears only as an evidence-backed range. Items without supported evidence remain unknown, and a meal with mixed known and unknown items is shown as partial rather than as a complete total.
+The existing `mhb_meal_records_v1` store accepts new `record_schema_version: "2"` records alongside unversioned historical compositions. There is no migration or startup rewrite. Historical items, evidence, notes, named-dish references, custom occasions, IDs, and creation timestamps survive metadata edits. Unnamed historical meals remain readable; editing them through the new form requires a human-entered name. Saved cards and Log History use a read-only ingredient fallback without persisting a generated name.
 
-For the two human-approved Thai FCD fried-rice references, Meal Composer may offer a compact reference card after matching components are recorded. A suggestion does not change the meal or sodium estimate: the user must explicitly confirm it. The visible value remains a reference per 100 g, not an estimate for the user's whole plate; a conflicting recorded component pauses that reference and safely returns the meal to its component-only or unknown path.
+Storage failures retain the draft and report failure. Unreadable storage blocks mutation without repair/reset; safely preservable unsupported records retain their original JSON text during unrelated saves. Older app versions cannot safely write a store containing v2 records.
 
-The bounded local Vision prototype can send a user-selected PNG, JPEG, WebP, HEIC, or HEIF only to an available Ollama model on this device. For a larger phone image, `Prepare a photo for AI` opens a separate local preparation page that creates a temporary JPEG before returning it to the existing photo helper; no image is saved with the meal. Its observations remain temporary until the user reviews them. Applying selected observations adds only accepted, safely mapped values to the existing draft; it does not save the meal, set a named-dish identity, or create sodium evidence. Manual Meal Composer remains available when the provider is absent or a result is rejected.
+The local photo/preparation entry remains available, but its results are view-only and Apply is disabled pending S3. Type the name manually; AI is never required. Existing local provider, parser, naming model, and image infrastructure are unchanged. The canonical launcher origin remains `http://127.0.0.1:4173`; direct file mode still supports manual entry.
 
-For local Image Prep and Vision on macOS, build once with `./tools/build_mhb_macos_app.sh`, then double-click `dist/Mindful Health Balance.app`. The personal local launcher has no Developer ID or App Store signature; it opens MHB only at canonical `http://127.0.0.1:4173` without exposing the server to the network. If another service owns that port, the launcher stops rather than silently switching to a separate browser-storage context; close that known service and try again. `Start Mindful Health Balance.command` remains the fallback and debugging entry. Opening `index.html` directly still supports manual MHB, but shows a reminder that photo capabilities need the Local Launcher. Manual fallback: `python3 -m http.server 4173 --bind 127.0.0.1`, then open `http://127.0.0.1:4173/index.html`.
+Today indicators and post-generation saved context include Meal Moments. Meal data does not enter Reflection generation, Roots, signals, or `Daily_Log`. The old item-based unsaved draft action is deferred from active entry. Meal export/import is not implemented in S0–S2; Master workbooks and templates remain unchanged. Human field acceptance is pending.
 
-The Daily Meal Reflection Panel is rebuilt from saved meals whenever the recorded day changes. It says `recorded meals`, never claims that unrecorded food was not eaten, and does not score, diagnose, prescribe, or set a medical sodium target. Meal data is not yet connected to the main Reflection renderer or workbook export/import.
+See [the approved contract](docs/design_notes/MEAL_MOMENT_V2_CONTRACT.md). Earlier MHB 2.3 composition descriptions in release history document the previous workflow; the public version badge is unchanged by this slice.
 
 ## Reflection/NuTuenSai
 

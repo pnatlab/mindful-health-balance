@@ -1,5 +1,13 @@
 # MHB 2.3 - Meal Composer UI
 
+## Current active contract — Meal Moment v2 (S0–S2)
+
+The active Today entry is open and name-first, with collapsed optional details. Ingredient selection, portions, sodium and named-dish prompts, and draft Reflection actions are removed from active entry. Existing Vision is view-only with disabled Apply pending S3. Historical items remain inspectable.
+
+[MEAL_MOMENT_V2_CONTRACT.md](MEAL_MOMENT_V2_CONTRACT.md) is the approved current contract. S3 Vision adaptation, S4 Excel, and S5 human field acceptance are deferred. The composition-first decisions below are retained as historical architecture; they do not reinstate active ingredient requirements.
+
+## Historical implementation record
+
 ## Status
 
 - Status: implemented and browser-QA reviewed in MHB 2.3D
